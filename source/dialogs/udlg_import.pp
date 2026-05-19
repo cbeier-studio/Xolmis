@@ -354,7 +354,6 @@ begin
 
       // 6. Check if record exists
       //Exists := False;
-      { #todo : Improve the existing record checking }
       //if not OldRec.IsNew then
       //  Exists := True;
       //if XRow.IndexOfName('id') >= 0 then

@@ -546,7 +546,7 @@ object edtAudioInfo: TedtAudioInfo
           ParentColor = False
           ParentFont = False
         end
-        object eAudioFile: TEditButton
+        object eFilePath: TEditButton
           Left = 16
           Height = 23
           Top = 22
@@ -562,7 +562,7 @@ object edtAudioInfo: TedtAudioInfo
           ShowHint = True
           Spacing = 0
           TabOrder = 0
-          OnButtonClick = eAudioFileButtonClick
+          OnButtonClick = eFilePathButtonClick
           OnEditingDone = eRecordingDateEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress

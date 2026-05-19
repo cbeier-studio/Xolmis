@@ -1343,14 +1343,6 @@ begin
       tbNests:          ActiveQuery := DMG.qNests;
       tbNestRevisions:  ActiveQuery := DMG.qNestRevisions;
       tbEggs:           ActiveQuery := DMG.qEggs;
-      //tbImages: ;
-      //tbAudioLibrary: ;
-      //tbTaxonRanks: ;
-      //tbProjectTeams: ;
-      //tbSurveyTeams: ;
-      //tbNetsEffort: ;
-      //tbSamplePreps: ;
-      //tbPermanentNets: ;
     end;
     { #TODO : Set focus on active form }
   end else

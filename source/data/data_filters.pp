@@ -99,6 +99,8 @@ type
   procedure AddNonZeroIntegerFilter(aSearch: TCustomSearch; const FieldName, Caption: String; YesChecked, NoChecked: Boolean);
   procedure AddTimeFilter(aSearch: TCustomSearch; const FieldName, Caption: String; const TimeStart, TimeEnd: String);
   procedure AddTimeIntervalFilter(aSearch: TCustomSearch; const FieldStart, FieldEnd: String; const TimeStart, TimeEnd: String);
+  procedure AddCharsAsLikeFilters(aSearch: TCustomSearch; const aFieldName, aDisplayName,
+    aValue: String; aUseTablePrefix: Boolean = True);
 
   function TaxonFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String = ''): String;
   function TaxonFilterToSearch(aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
@@ -958,6 +960,30 @@ begin
     aSearch.QuickFilters[sf].Fields.Add(
       TSearchField.Create(FieldEnd, rscEndTime, sdtTime, crEqual, True, QuotedStr(TimeStart)));
   end
+end;
+
+procedure AddCharsAsLikeFilters(aSearch: TCustomSearch; const aFieldName, aDisplayName, aValue: String;
+  aUseTablePrefix: Boolean);
+var
+  sf, i: Integer;
+  Ch: String;
+begin
+  if Trim(aValue) = EmptyStr then
+    Exit;
+
+  sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
+  for i := 1 to Length(aValue) do
+  begin
+    Ch := aValue[i];
+    if Trim(Ch) = EmptyStr then
+      Continue;
+
+    aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(aFieldName, aDisplayName, sdtText,
+      crLike, aUseTablePrefix, Ch));
+  end;
+
+  if aSearch.QuickFilters[sf].Fields.Count = 0 then
+    aSearch.QuickFilters.Delete(sf);
 end;
 
 function TaxonFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String): String;

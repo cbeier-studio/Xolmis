@@ -41,7 +41,7 @@ type
     eDocumentTitle: TEdit;
     eDocumentTime: TEdit;
     eDocumentDate: TEditButton;
-    eDocumentPath: TEditButton;
+    eFilePath: TEditButton;
     lblAuthor: TLabel;
     lblDocumentPath: TLabel;
     lblDocumentType: TLabel;
@@ -75,7 +75,7 @@ type
     procedure eAuthorKeyPress(Sender: TObject; var Key: char);
     procedure eDocumentDateButtonClick(Sender: TObject);
     procedure eDocumentDateEditingDone(Sender: TObject);
-    procedure eDocumentPathButtonClick(Sender: TObject);
+    procedure eFilePathButtonClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -127,7 +127,7 @@ uses
 procedure TedtDocumentInfo.ApplyDarkMode;
 begin
   eDocumentDate.Images := DMM.iEditsDark;
-  eDocumentPath.Images := DMM.iEditsDark;
+  eFilePath.Images := DMM.iEditsDark;
   eAuthor.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
 end;
@@ -205,11 +205,11 @@ begin
   sbSave.Enabled := IsRequiredFilled;
 end;
 
-procedure TedtDocumentInfo.eDocumentPathButtonClick(Sender: TObject);
+procedure TedtDocumentInfo.eFilePathButtonClick(Sender: TObject);
 begin
   DMM.OpenDocs.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenDocs.Execute then
-    eDocumentPath.Text := DMM.OpenDocs.FileName;
+    eFilePath.Text := DMM.OpenDocs.FileName;
 end;
 
 procedure TedtDocumentInfo.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -266,6 +266,19 @@ begin
   cbDocumentType.Items.Add(rsDocMetadata);
   cbDocumentType.Items.Add(rsDocOther);
 
+  with cbLicenseType.Items do
+  begin
+    Add(rsLicenseCopyright);
+    Add(rsLicenseCCBY);
+    Add(rsLicenseCCBYSA);
+    Add(rsLicenseCCBYND);
+    Add(rsLicenseCCBYNC);
+    Add(rsLicenseCCBYNCSA);
+    Add(rsLicenseCCBYNCND);
+    Add(rsLicenseCC0);
+    Add(rsLicenseCommercial);
+  end;
+
   if not FIsNew then
     GetRecord;
 end;
@@ -302,7 +315,7 @@ begin
   eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FDocument.AuthorId);
   eDocumentDate.Text := DateToStr(FDocument.DocumentDate);
   eDocumentTime.Text := TimeToStr(FDocument.DocumentTime);
-  eDocumentPath.Text := CreateAbsolutePath(FDocument.FilePath, xSettings.DocumentsFolder);
+  eFilePath.Text := CreateAbsolutePath(FDocument.FilePath, xSettings.DocumentsFolder);
   cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FDocument.LicenseType);
   eLicenseYear.Text := IntToStr(FDocument.LicenseYear);
   eLicenseOwner.Text := FDocument.LicenseOwner;
@@ -315,7 +328,7 @@ begin
   Result := False;
 
   if (eDocumentDate.Text <> EmptyStr) and
-    (eDocumentPath.Text <> EmptyStr) then
+    (eFilePath.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -343,7 +356,7 @@ begin
   FDocument.AuthorId     := FAuthorId;
   FDocument.DocumentDate := TextToDate(eDocumentDate.Text);
   FDocument.DocumentTime := TextToTime(eDocumentTime.Text);
-  FDocument.FilePath     := ExtractRelativePath(xSettings.DocumentsFolder, eDocumentPath.Text);
+  FDocument.FilePath     := ExtractRelativePath(xSettings.DocumentsFolder, eFilePath.Text);
   FDocument.LicenseType  := cbLicenseType.Text;
   FDocument.LicenseYear  := StrToIntOrZero(eLicenseYear.Text);
   FDocument.LicenseOwner := eLicenseOwner.Text;
@@ -361,7 +374,7 @@ begin
   // Required fields
   if (eDocumentDate.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscDate]));
-  if (eDocumentPath.Text = EmptyStr) then
+  if (eFilePath.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscFileName]));
 
   // Dates
@@ -374,7 +387,19 @@ begin
     ValidTime(eDocumentTime.Text, rscTime, Msgs);
 
   // Files
-  { #todo : Check the Document file path or URL }
+  if (eFilePath.Text <> EmptyStr) then
+  begin
+    if (cbDocumentType.Text = rsDocUrl) then
+    begin
+      if not IsValidURL(eFilePath.Text) then
+        Msgs.Add(Format(rsErrorInvalidURL, [eFilePath.Text]));
+    end
+    else
+    begin
+      if not FileExists(eFilePath.Text) then
+        Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
+    end;
+  end;
 
   if Msgs.Count > 0 then
   begin

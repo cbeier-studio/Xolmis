@@ -5988,14 +5988,14 @@ msgstr ""
 msgid "Playback was used"
 msgstr ""
 
-#: tedtaudioinfo.eaudiofile.buttonhint
-msgctxt "tedtaudioinfo.eaudiofile.buttonhint"
-msgid "Choose file"
-msgstr ""
-
 #: tedtaudioinfo.eauthor.buttonhint
 msgctxt "tedtaudioinfo.eauthor.buttonhint"
 msgid "Find author"
+msgstr ""
+
+#: tedtaudioinfo.efilepath.buttonhint
+msgctxt "tedtaudioinfo.efilepath.buttonhint"
+msgid "Choose file"
 msgstr ""
 
 #: tedtaudioinfo.elatitude.buttonhint
@@ -6874,14 +6874,14 @@ msgctxt "tedtdocumentinfo.edocumentdate.texthint"
 msgid "DD/MM/YYYY"
 msgstr ""
 
-#: tedtdocumentinfo.edocumentpath.buttonhint
-msgctxt "tedtdocumentinfo.edocumentpath.buttonhint"
-msgid "Choose file"
-msgstr ""
-
 #: tedtdocumentinfo.edocumenttime.texthint
 msgctxt "tedtdocumentinfo.edocumenttime.texthint"
 msgid "HH:MM"
+msgstr ""
+
+#: tedtdocumentinfo.efilepath.buttonhint
+msgctxt "tedtdocumentinfo.efilepath.buttonhint"
+msgid "Choose file"
 msgstr ""
 
 #: tedtdocumentinfo.lblauthor.caption
@@ -7304,6 +7304,11 @@ msgctxt "tedtimageinfo.eauthor.buttonhint"
 msgid "Find author"
 msgstr ""
 
+#: tedtimageinfo.efilepath.buttonhint
+msgctxt "tedtimageinfo.efilepath.buttonhint"
+msgid "Choose file"
+msgstr ""
+
 #: tedtimageinfo.eimagedate.buttonhint
 msgctxt "tedtimageinfo.eimagedate.buttonhint"
 msgid "Open calendar"
@@ -7312,11 +7317,6 @@ msgstr ""
 #: tedtimageinfo.eimagedate.texthint
 msgctxt "tedtimageinfo.eimagedate.texthint"
 msgid "DD/MM/YYYY"
-msgstr ""
-
-#: tedtimageinfo.eimagefilename.buttonhint
-msgctxt "tedtimageinfo.eimagefilename.buttonhint"
-msgid "Choose file"
 msgstr ""
 
 #: tedtimageinfo.eimagetime.texthint
@@ -10231,6 +10231,11 @@ msgctxt "tedtvideoinfo.eauthor.buttonhint"
 msgid "Find author"
 msgstr ""
 
+#: tedtvideoinfo.efilepath.buttonhint
+msgctxt "tedtvideoinfo.efilepath.buttonhint"
+msgid "Choose file"
+msgstr ""
+
 #: tedtvideoinfo.elatitude.buttonhint
 msgctxt "tedtvideoinfo.elatitude.buttonhint"
 msgid "Edit/import coordinate"
@@ -10264,11 +10269,6 @@ msgstr ""
 #: tedtvideoinfo.etaxon.buttonhint
 msgctxt "tedtvideoinfo.etaxon.buttonhint"
 msgid "Find taxon"
-msgstr ""
-
-#: tedtvideoinfo.evideofile.buttonhint
-msgctxt "tedtvideoinfo.evideofile.buttonhint"
-msgid "Choose file"
 msgstr ""
 
 #: tedtvideoinfo.lblauthor.caption
@@ -10642,6 +10642,10 @@ msgstr ""
 #: tfrmcustomgrid.cbffwearfilter.texthint
 msgctxt "tfrmcustomgrid.cbffwearfilter.texthint"
 msgid "None"
+msgstr ""
+
+#: tfrmcustomgrid.cbmapprovider.text
+msgid "OpenStreetMap Standard"
 msgstr ""
 
 #: tfrmcustomgrid.cbmaterialfilter.text
@@ -11137,8 +11141,8 @@ msgstr ""
 msgid "Have recaptures"
 msgstr ""
 
-#: tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice
-msgctxt "tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice"
+#: tfrmcustomgrid.mvlegalnoticeplugin.legalnotice
+msgctxt "tfrmcustomgrid.mvlegalnoticeplugin.legalnotice"
 msgid "Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"
 msgstr ""
 
@@ -13935,6 +13939,14 @@ msgstr ""
 msgid "Courtship"
 msgstr ""
 
+#: utils_locale.rsaudioduet
+msgid "Duet"
+msgstr ""
+
+#: utils_locale.rsaudioenvironmental
+msgid "Environmental"
+msgstr ""
+
 #: utils_locale.rsaudioflight
 msgid "Flight call/song"
 msgstr ""
@@ -13950,6 +13962,11 @@ msgstr ""
 
 #: utils_locale.rsaudiononvocal
 msgid "Non vocal/mechanical"
+msgstr ""
+
+#: utils_locale.rsaudioother
+msgctxt "utils_locale.rsaudioother"
+msgid "Other"
 msgstr ""
 
 #: utils_locale.rsaudiorecorded
@@ -15845,6 +15862,11 @@ msgstr ""
 msgid "Value \"%s\" is not a valid time for the field %s."
 msgstr ""
 
+#: utils_locale.rserrorinvalidurl
+#, object-pascal-format
+msgid "Invalid URL: %s"
+msgstr ""
+
 #: utils_locale.rserrorloadingdatabaseschema
 msgid "The database schema was not loaded."
 msgstr ""
@@ -16807,6 +16829,42 @@ msgstr ""
 #: utils_locale.rsleftlegempty
 msgctxt "utils_locale.rsleftlegempty"
 msgid "l-"
+msgstr ""
+
+#: utils_locale.rslicensecc0
+msgid "CC0"
+msgstr ""
+
+#: utils_locale.rslicenseccby
+msgid "CC BY"
+msgstr ""
+
+#: utils_locale.rslicenseccbync
+msgid "CC BY-NC"
+msgstr ""
+
+#: utils_locale.rslicenseccbyncnd
+msgid "CC BY-NC-ND"
+msgstr ""
+
+#: utils_locale.rslicenseccbyncsa
+msgid "CC BY-NC-SA"
+msgstr ""
+
+#: utils_locale.rslicenseccbynd
+msgid "CC BY-ND"
+msgstr ""
+
+#: utils_locale.rslicenseccbysa
+msgid "CC BY-SA"
+msgstr ""
+
+#: utils_locale.rslicensecommercial
+msgid "Commercial"
+msgstr ""
+
+#: utils_locale.rslicensecopyright
+msgid "Copyright"
 msgstr ""
 
 #: utils_locale.rslight

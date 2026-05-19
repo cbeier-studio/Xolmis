@@ -5977,15 +5977,15 @@ msgstr "Info da gravação de áudio"
 msgid "Playback was used"
 msgstr "Playback foi usado"
 
-#: tedtaudioinfo.eaudiofile.buttonhint
-msgctxt "tedtaudioinfo.eaudiofile.buttonhint"
-msgid "Choose file"
-msgstr "Selecionar arquivo"
-
 #: tedtaudioinfo.eauthor.buttonhint
 msgctxt "tedtaudioinfo.eauthor.buttonhint"
 msgid "Find author"
 msgstr "Buscar autor"
+
+#: tedtaudioinfo.efilepath.buttonhint
+msgctxt "tedtaudioinfo.efilepath.buttonhint"
+msgid "Choose file"
+msgstr "Selecionar arquivo"
 
 #: tedtaudioinfo.elatitude.buttonhint
 msgctxt "tedtaudioinfo.elatitude.buttonhint"
@@ -6863,15 +6863,15 @@ msgctxt "tedtdocumentinfo.edocumentdate.texthint"
 msgid "DD/MM/YYYY"
 msgstr "DD/MM/AAAA"
 
-#: tedtdocumentinfo.edocumentpath.buttonhint
-msgctxt "tedtdocumentinfo.edocumentpath.buttonhint"
-msgid "Choose file"
-msgstr "Selecionar arquivo"
-
 #: tedtdocumentinfo.edocumenttime.texthint
 msgctxt "tedtdocumentinfo.edocumenttime.texthint"
 msgid "HH:MM"
 msgstr "HH:MM"
+
+#: tedtdocumentinfo.efilepath.buttonhint
+msgctxt "tedtdocumentinfo.efilepath.buttonhint"
+msgid "Choose file"
+msgstr "Selecionar arquivo"
 
 #: tedtdocumentinfo.lblauthor.caption
 msgctxt "tedtdocumentinfo.lblauthor.caption"
@@ -7293,6 +7293,11 @@ msgctxt "tedtimageinfo.eauthor.buttonhint"
 msgid "Find author"
 msgstr "Buscar autor"
 
+#: tedtimageinfo.efilepath.buttonhint
+msgctxt "tedtimageinfo.efilepath.buttonhint"
+msgid "Choose file"
+msgstr "Selecionar arquivo"
+
 #: tedtimageinfo.eimagedate.buttonhint
 msgctxt "tedtimageinfo.eimagedate.buttonhint"
 msgid "Open calendar"
@@ -7302,11 +7307,6 @@ msgstr "Abrir calendário"
 msgctxt "tedtimageinfo.eimagedate.texthint"
 msgid "DD/MM/YYYY"
 msgstr "DD/MM/AAAA"
-
-#: tedtimageinfo.eimagefilename.buttonhint
-msgctxt "tedtimageinfo.eimagefilename.buttonhint"
-msgid "Choose file"
-msgstr "Selecionar arquivo"
 
 #: tedtimageinfo.eimagetime.texthint
 msgctxt "tedtimageinfo.eimagetime.texthint"
@@ -10219,6 +10219,11 @@ msgctxt "tedtvideoinfo.eauthor.buttonhint"
 msgid "Find author"
 msgstr "Buscar autor"
 
+#: tedtvideoinfo.efilepath.buttonhint
+msgctxt "tedtvideoinfo.efilepath.buttonhint"
+msgid "Choose file"
+msgstr "Selecionar arquivo"
+
 #: tedtvideoinfo.elatitude.buttonhint
 msgctxt "tedtvideoinfo.elatitude.buttonhint"
 msgid "Edit/import coordinate"
@@ -10253,11 +10258,6 @@ msgstr "HH:MM"
 msgctxt "tedtvideoinfo.etaxon.buttonhint"
 msgid "Find taxon"
 msgstr "Buscar táxon"
-
-#: tedtvideoinfo.evideofile.buttonhint
-msgctxt "tedtvideoinfo.evideofile.buttonhint"
-msgid "Choose file"
-msgstr "Selecionar arquivo"
 
 #: tedtvideoinfo.lblauthor.caption
 msgctxt "tedtvideoinfo.lblauthor.caption"
@@ -10631,6 +10631,10 @@ msgstr "Tudo"
 msgctxt "tfrmcustomgrid.cbffwearfilter.texthint"
 msgid "None"
 msgstr "Nenhum"
+
+#: tfrmcustomgrid.cbmapprovider.text
+msgid "OpenStreetMap Standard"
+msgstr ""
 
 #: tfrmcustomgrid.cbmaterialfilter.text
 msgctxt "tfrmcustomgrid.cbmaterialfilter.text"
@@ -11125,8 +11129,8 @@ msgstr "Tem anilhas coloridas"
 msgid "Have recaptures"
 msgstr "Tem recapturas"
 
-#: tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice
-msgctxt "tfrmcustomgrid.mvpluginmanagerlegalnoticeplugin1.legalnotice"
+#: tfrmcustomgrid.mvlegalnoticeplugin.legalnotice
+msgctxt "tfrmcustomgrid.mvlegalnoticeplugin.legalnotice"
 msgid "Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"
 msgstr "Dados de mapa de [https://www.openstreetmap.org/copyright OpenStreetMap e colaboradores]"
 
@@ -13920,6 +13924,14 @@ msgstr "Contato"
 msgid "Courtship"
 msgstr "Corte"
 
+#: utils_locale.rsaudioduet
+msgid "Duet"
+msgstr "Dueto"
+
+#: utils_locale.rsaudioenvironmental
+msgid "Environmental"
+msgstr "Ambiental"
+
 #: utils_locale.rsaudioflight
 msgid "Flight call/song"
 msgstr "Chamado/canto em voo"
@@ -13936,6 +13948,11 @@ msgstr "Ninhego/filhote"
 #: utils_locale.rsaudiononvocal
 msgid "Non vocal/mechanical"
 msgstr "Não vocal/mecânico"
+
+#: utils_locale.rsaudioother
+msgctxt "utils_locale.rsaudioother"
+msgid "Other"
+msgstr "Outro"
 
 #: utils_locale.rsaudiorecorded
 msgctxt "utils_locale.rsaudiorecorded"
@@ -15838,6 +15855,11 @@ msgstr "O valor \"%s\" não é um número válido para o campo %s."
 msgid "Value \"%s\" is not a valid time for the field %s."
 msgstr "O valor \"%s\" não é um horário válido para o campo %s."
 
+#: utils_locale.rserrorinvalidurl
+#, object-pascal-format
+msgid "Invalid URL: %s"
+msgstr "URL inválida: %s"
+
 #: utils_locale.rserrorloadingdatabaseschema
 msgid "The database schema was not loaded."
 msgstr "O esquema do banco de dados não foi carregado."
@@ -16800,6 +16822,42 @@ msgstr "e%s"
 msgctxt "utils_locale.rsleftlegempty"
 msgid "l-"
 msgstr "e-"
+
+#: utils_locale.rslicensecc0
+msgid "CC0"
+msgstr "CC0"
+
+#: utils_locale.rslicenseccby
+msgid "CC BY"
+msgstr "CC BY"
+
+#: utils_locale.rslicenseccbync
+msgid "CC BY-NC"
+msgstr "CC BY-NC"
+
+#: utils_locale.rslicenseccbyncnd
+msgid "CC BY-NC-ND"
+msgstr "CC BY-NC-ND"
+
+#: utils_locale.rslicenseccbyncsa
+msgid "CC BY-NC-SA"
+msgstr "CC BY-NC-SA"
+
+#: utils_locale.rslicenseccbynd
+msgid "CC BY-ND"
+msgstr "CC BY-ND"
+
+#: utils_locale.rslicenseccbysa
+msgid "CC BY-SA"
+msgstr "CC BY-SA"
+
+#: utils_locale.rslicensecommercial
+msgid "Commercial"
+msgstr "Comercial"
+
+#: utils_locale.rslicensecopyright
+msgid "Copyright"
+msgstr "Copyright"
 
 #: utils_locale.rslight
 msgctxt "utils_locale.rslight"

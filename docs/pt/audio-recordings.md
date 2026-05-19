@@ -77,13 +77,20 @@ Para editar informações de uma gravação:
 
 Os tipos de gravação classificam a natureza do áudio capturado. Exemplos incluem:
 
-- **Canto** – Vocalização completa de uma ave.  
-- **Chamado** – Sons curtos de comunicação.  
-- **Alarme** – Chamados de alerta ou angústia.  
-- **Chamado de voo** – Vocalizações durante o voo.  
-- **Dueto** – Vocalizações coordenadas entre indivíduos.  
-- **Ambiental** – Sons de fundo ou acústica do habitat.  
-- **Outro** – Qualquer som não coberto pelas categorias acima.  
+- **Canto** – Vocalização completa de uma ave. 
+- **Dueto** – Vocalizações coordenadas entre indivíduos.
+- **Chamado** – Sons curtos de comunicação.   
+- **Alarme/estresse** – Chamados de alerta ou angústia.  
+- **Territorial** - Ligado ao comportamento territorial.
+- **Côrte** - Durante exibição de côrte.
+- **Agressão** - Durante comportamento agonístico.
+- **Contato** - Vocalizações para manter contato com outras aves do grupo.
+- **Bando** - Vocalizações de um bando inteiro de aves.
+- **Chamado/canto em voo** – Vocalizações durante o voo.  
+- **Ninhego/filhotão** - Vocalizações de ninhegos ou filhotões.
+- **Não vocal/mecânico** - Sons não vocais (asa, cauda, bico, tamborilar).
+- **Ambiental** – Sons de fundo ou acústica do habitat.   
+- **Outro** – Qualquer som não coberto pelas categorias acima.
 
 ### Tipos de licença
 

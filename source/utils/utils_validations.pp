@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Dialogs, DB, SQLDB, Controls, StdCtrls, DBCtrls, RegExpr, StrUtils,
-  DateUtils, Variants,
+  DateUtils, Variants, URIParser,
   utils_system, data_types, utils_gis;
 
 type
@@ -35,6 +35,7 @@ type
 
   { Validations }
   function CheckEmail(const aEmailAddress: String; aMessageList: TStrings = nil): Boolean;
+  function IsValidURL(const S: String): Boolean;
 
   function ValueInRange(aValue, aMin, aMax: Extended; aDisplayName: String; aMessageList: TStrings;
     var aMessageStr: String): Boolean; overload;
@@ -142,6 +143,21 @@ begin
     end
     else
       MsgDlg('', m, mtInformation);
+  end;
+end;
+
+function IsValidURL(const S: String): Boolean;
+var
+  U: TURI;
+begin
+  try
+    U := ParseURI(S);
+    Result :=
+      (U.Protocol <> '') and
+      (U.Host <> '') and
+      (Pos('.', U.Host) > 0);
+  except
+    Result := False;
   end;
 end;
 

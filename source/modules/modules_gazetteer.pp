@@ -76,7 +76,7 @@ begin
       AddExactTextFilter(SearchConfig, COL_SITE_RANK, rscType, SiteRanks[cbSiteRankFilter.ItemIndex - 1]);
     end;
     // Sites
-    { #todo : apply filter for sites in TGazetteerModuleController }
+    SiteFilterToSearch(tvSiteFilter, SearchConfig.QuickFilters);
   end;
 end;
 

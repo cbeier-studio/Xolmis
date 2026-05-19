@@ -509,10 +509,7 @@ begin
     // How was aged
     if eHowAgedFilter.Text <> EmptyStr then
     begin
-      { #todo : Add filter for how was aged chars within a text field }
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_HOW_AGED, rscHowWasAged, sdtText,
-        crLike, True, eHowAgedFilter.Text));
+      AddCharsAsLikeFilters(SearchConfig, COL_HOW_AGED, rscHowWasAged, eHowAgedFilter.Text);
     end;
     // Sex
     if cbSexFilter.ItemIndex > 0 then
@@ -522,10 +519,7 @@ begin
     // How was sexed
     if eHowSexedFilter.Text <> EmptyStr then
     begin
-      { #todo : Add filter for how was sexed chars within a text field }
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_HOW_SEXED, rscHowWasSexed, sdtText,
-        crLike, True, eHowSexedFilter.Text));
+      AddCharsAsLikeFilters(SearchConfig, COL_HOW_SEXED, rscHowWasSexed, eHowSexedFilter.Text);
     end;
     // Cloacal protuberance
     if cbCloacalProtuberanceFilter.ItemIndex > 0 then
@@ -560,10 +554,7 @@ begin
     // Molt limits
     if eMoltLimitsFilter.Text <> EmptyStr then
     begin
-      { #todo : Add filter for molt limits chars within a text field }
-      sf := SearchConfig.QuickFilters.Add(TSearchGroup.Create);
-      SearchConfig.QuickFilters[sf].Fields.Add(TSearchField.Create(COL_MOLT_LIMITS, rscMoltLimits, sdtText,
-        crLike, True, eMoltLimitsFilter.Text));
+      AddCharsAsLikeFilters(SearchConfig, COL_MOLT_LIMITS, rscMoltLimits, eMoltLimitsFilter.Text);
     end;
     // Cycle code
     if eCycleCodeFilter.Text <> EmptyStr then
@@ -757,6 +748,8 @@ begin
 end;
 
 procedure TCapturesModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
+const
+  OUTLIER_FACTOR = 3;
 var
   aTaxon: Integer;
   TaxonField: TField;
@@ -791,42 +784,18 @@ begin
       end;
       'R', 'S':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SuccessBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
       end;
       'C':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
       end;
       'U':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
       end;
     end;
   end
@@ -839,19 +808,13 @@ begin
       (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'S') then
     begin
       //TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark
-      else
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
     end
     else
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
       //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark
-      else
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
     end;
   end
   else
@@ -862,10 +825,7 @@ begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
       //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark
-      else
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
     end;
   end;
 
@@ -879,10 +839,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, CLOACAL_PROTUBERANCE_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -891,10 +848,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, BROOD_PATCH_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -903,10 +857,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, FAT_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -915,10 +866,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, BODY_MOLT_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -927,10 +875,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, FLIGHT_MOLT_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -939,10 +884,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, FEATHER_WEAR_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -951,10 +893,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, SKULL_OSSIFICATION_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end;
 
@@ -968,133 +907,97 @@ begin
   { Paint the cell background yellow for outliers }
   if (Column.FieldName = COL_RIGHT_WING_CHORD) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_FIRST_SECONDARY_CHORD) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_TAIL_LENGTH) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_TARSUS_LENGTH) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_TARSUS_DIAMETER) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_WEIGHT) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_EXPOSED_CULMEN) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_BILL_WIDTH) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_BILL_HEIGHT) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_NOSTRIL_BILL_TIP) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_SKULL_LENGTH) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_KIPPS_DISTANCE) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end;
 end;
@@ -1340,6 +1243,8 @@ begin
 end;
 
 procedure TCapturesSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
+const
+  OUTLIER_FACTOR = 3;
 var
   aTaxon: Integer;
   TaxonField: TField;
@@ -1374,42 +1279,18 @@ begin
       end;
       'R', 'S':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SuccessBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
       end;
       'C':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
       end;
       'U':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
       end;
     end;
   end
@@ -1422,19 +1303,13 @@ begin
       (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'S') then
     begin
       //TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark
-      else
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
     end
     else
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
       //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark
-      else
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
     end;
   end
   else
@@ -1445,10 +1320,7 @@ begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
       //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark
-      else
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
     end;
   end;
 
@@ -1462,10 +1334,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, CLOACAL_PROTUBERANCE_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -1474,10 +1343,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, BROOD_PATCH_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -1486,10 +1352,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, FAT_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -1498,10 +1361,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, BODY_MOLT_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -1510,10 +1370,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, FLIGHT_MOLT_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -1522,10 +1379,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, FEATHER_WEAR_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end
   else
@@ -1534,10 +1388,7 @@ begin
     if (Column.Field.AsString <> '') and
       not (MatchStr(Column.Field.AsString, SKULL_OSSIFICATION_VALUES)) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
     end;
   end;
 
@@ -1551,133 +1402,97 @@ begin
   { Paint the cell background yellow for outliers }
   if (Column.FieldName = COL_RIGHT_WING_CHORD) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_FIRST_SECONDARY_CHORD) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_TAIL_LENGTH) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_TARSUS_LENGTH) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_TARSUS_DIAMETER) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_WEIGHT) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_EXPOSED_CULMEN) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_BILL_WIDTH) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_BILL_HEIGHT) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_NOSTRIL_BILL_TIP) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_SKULL_LENGTH) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end
   else
   if (Column.FieldName = COL_KIPPS_DISTANCE) then
   begin
-    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, 3) then
+    if (Column.Field.AsFloat <> 0.0) and IsOutlier(aTaxon, Column.FieldName, Column.Field.AsFloat, OUTLIER_FACTOR) then
     begin
-      if IsDarkModeEnabled then
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark
-      else
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
     end;
   end;
 end;

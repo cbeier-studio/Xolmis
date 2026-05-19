@@ -78,10 +78,17 @@ To edit the information of an audio recording:
 Recording types classify the nature of the audio captured. Examples include:
 
 - **Song** – Full vocalization of a bird.  
+- **Duet** – Coordinated vocalizations between individuals. 
 - **Call** – Shorter communication sounds.  
-- **Alarm** – Distress or warning calls.  
-- **Flight call** – Vocalizations during flight.  
-- **Duet** – Coordinated vocalizations between individuals.  
+- **Alarm/stress** – Distress or warning calls.  
+- **Territorial** - Linked to territorial behavior.
+- **Courtship** - During courtship display.
+- **Aggression** - During agonistic behavior.
+- **Contact** - Vocalizantions to keep in contact with other birds in the group.
+- **Flock** - Vocalizations of a whole flock of birds.
+- **Flight call/song** – Vocalizations during flight.  
+- **Nestling/fledgling** - Vocalizations of nestlings or fledglings.
+- **Non vocal/mechanical** - Non vocal sounds (wing, tail, beak, drumming).
 - **Environmental** – Background sounds or habitat acoustics.  
 - **Other** – Any sound not covered by the categories above.  
 

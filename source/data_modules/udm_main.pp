@@ -196,7 +196,6 @@ begin
   if logFull then
     LogWarning('Log file reached the max size');
 
-  { #todo : Select database library based on the RDBMS }
   { >> SQLite3 library}
   sqliteLibLoader.ConnectionType := 'SQLite3';
   {$IFDEF MSWINDOWS}

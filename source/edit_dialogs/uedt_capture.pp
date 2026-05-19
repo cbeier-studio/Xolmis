@@ -279,6 +279,7 @@ type
     procedure GetRecord;
     procedure SetRecord;
     function IsRequiredFilled: Boolean;
+    function ConfirmOutlierMeasurements: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
     procedure PaintColorBands(aLeg: TBodyPart);
@@ -298,7 +299,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_gis, utils_validations, utils_conversions,
-  utils_editdialogs, utils_themes, data_types, data_consts, data_getvalue, data_columns, models_taxonomy,
+  utils_editdialogs, utils_themes, utils_math, data_types, data_consts, data_getvalue, data_columns, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -1568,9 +1569,65 @@ begin
   eTaxon.Constraints.MinWidth := eSurvey.Width;
 end;
 
+function TedtCapture.ConfirmOutlierMeasurements: Boolean;
+const
+  OUTLIER_FACTOR = 3;
+var
+  Outliers: TStrings;
+  MsgText: String;
+
+  procedure AddOutlierField(const aFieldName, aFieldLabel: String; aValue: Double);
+  begin
+    if (aValue = 0.0) then
+      Exit;
+
+    if IsOutlier(FTaxonId, aFieldName, aValue, OUTLIER_FACTOR) then
+      Outliers.Add('- ' + aFieldLabel);
+  end;
+
+begin
+  Result := True;
+
+  if (FTaxonId <= 0) then
+    Exit;
+
+  Outliers := TStringList.Create;
+  try
+    AddOutlierField(COL_RIGHT_WING_CHORD, rscRightWingChord, eRightWingChord.Value);
+    AddOutlierField(COL_FIRST_SECONDARY_CHORD, rsc1stSecondaryChord, eFirstSecondaryChord.Value);
+    AddOutlierField(COL_TAIL_LENGTH, rscTailLength, eTailLength.Value);
+    AddOutlierField(COL_TARSUS_LENGTH, rscTarsusLength, eTarsusLength.Value);
+    AddOutlierField(COL_TARSUS_DIAMETER, rscTarsusDiameter, eTarsusDiameter.Value);
+    AddOutlierField(COL_WEIGHT, rscWeight, eWeight.Value);
+    AddOutlierField(COL_SKULL_LENGTH, rscSkullLength, eSkullLength.Value);
+    AddOutlierField(COL_EXPOSED_CULMEN, rscExposedCulmen, eExposedCulmen.Value);
+    AddOutlierField(COL_CULMEN_LENGTH, rscTotalCulmen, eTotalCulmen.Value);
+    AddOutlierField(COL_NOSTRIL_BILL_TIP, rscNostrilToBillTip, eNostrilBillTip.Value);
+    AddOutlierField(COL_BILL_WIDTH, rscBillWidth, eBillWidth.Value);
+    AddOutlierField(COL_BILL_HEIGHT, rscBillHeight, eBillHeight.Value);
+    AddOutlierField(COL_TOTAL_LENGTH, rscTotalLength, eTotalLength.Value);
+    AddOutlierField(COL_KIPPS_DISTANCE, rscKippSDistance, eKippsIndex.Value);
+
+    if Outliers.Count = 0 then
+      Exit;
+
+    MsgText := rsMeasurementsOutliers + ':' + LineEnding + LineEnding +
+      Outliers.Text + LineEnding +
+      'Do you want to continue saving this record?' + LineEnding +
+      'Select "No" to return and review the values.';
+
+    Result := MsgDlg(rsTitleCaution, MsgText, mtConfirmation);
+  finally
+    Outliers.Free;
+  end;
+end;
+
 procedure TedtCapture.sbSaveClick(Sender: TObject);
 begin
   if not ValidateFields then
+    Exit;
+
+  if not ConfirmOutlierMeasurements then
     Exit;
 
   SetRecord;
@@ -1713,9 +1770,6 @@ begin
   ValueInSet(cbFlightFeatherMolt.Text, rsFlightMolt, FLIGHT_MOLT_VALUES, Msgs);
   ValueInSet(cbFlightFeatherWear.Text, rsFlightWear, FEATHER_WEAR_VALUES, Msgs);
   ValueInSet(cbSkullOssification.Text, rscSkullOssification, SKULL_OSSIFICATION_VALUES, Msgs);
-
-  // Outliers
-  { #todo : Validate capture measurements for outliers }
 
   if Msgs.Count > 0 then
   begin

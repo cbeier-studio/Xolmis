@@ -1470,7 +1470,7 @@ object dlgImport: TdlgImport
             item
               ReadOnly = True
               Title.Caption = 'Source field'
-              Width = 214
+              Width = 216
             end          
             item
               Alignment = taCenter
@@ -1482,7 +1482,7 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 214
+              Width = 216
             end>
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
           RowCount = 2
@@ -1493,9 +1493,9 @@ object dlgImport: TdlgImport
           OnSelectCell = gridFieldsSelectCell
           ColWidths = (
             64
-            214
+            216
             60
-            214
+            216
           )
           Cells = (
             2

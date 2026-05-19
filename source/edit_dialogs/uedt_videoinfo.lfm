@@ -547,7 +547,7 @@ object edtVideoInfo: TedtVideoInfo
           ParentColor = False
           ParentFont = False
         end
-        object eVideoFile: TEditButton
+        object eFilePath: TEditButton
           Left = 16
           Height = 23
           Top = 22
@@ -563,7 +563,7 @@ object edtVideoInfo: TedtVideoInfo
           ShowHint = True
           Spacing = 0
           TabOrder = 0
-          OnButtonClick = eVideoFileButtonClick
+          OnButtonClick = eFilePathButtonClick
           OnEditingDone = eRecordingDateEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress

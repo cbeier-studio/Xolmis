@@ -207,6 +207,7 @@ uses
     rsErrorInvalidDateForField = 'Value "%s" is not a valid date for the field %s.';
     rsErrorInvalidTimeForField = 'Value "%s" is not a valid time for the field %s.';
     rsErrorInvalidDateTimeForField = 'Value "%s" is not a valid date and time for the field %s.';
+    rsErrorInvalidURL = 'Invalid URL: %s';
     rsErrorUnsupportedDataTypeForField = 'Unsupported data type for the field %s.';
     rsErrorNotFoundLookupValue = 'Value "%s" was not found in the lookup table "%s".';
     rsErrorRequiredField = 'The field "%s" is required and must not be empty.';
@@ -1290,6 +1291,17 @@ uses
     rsMissingData = 'Missing data';
     rsNotReviewed = 'Not reviewed';
 
+    { Use licenses }
+    rsLicenseCopyright = 'Copyright';
+    rsLicenseCCBY = 'CC BY';
+    rsLicenseCCBYSA = 'CC BY-SA';
+    rsLicenseCCBYND = 'CC BY-ND';
+    rsLicenseCCBYNC = 'CC BY-NC';
+    rsLicenseCCBYNCSA = 'CC BY-NC-SA';
+    rsLicenseCCBYNCND = 'CC BY-NC-ND';
+    rsLicenseCC0 = 'CC0';
+    rsLicenseCommercial = 'Commercial';
+
     { Documents }
     rsDocDocument = 'Document';
     rsDocSpreadsheet = 'Spreadsheet';
@@ -1318,6 +1330,7 @@ uses
     { Audio recordings }
     rsAudioUnknown = 'Unknown';
     rsAudioSong = 'Song';
+    rsAudioDuet = 'Duet';
     rsAudioCall = 'Call';
     rsAudioAlarm = 'Alarm/stress';
     rsAudioTerritorial = 'Territorial';
@@ -1328,6 +1341,8 @@ uses
     rsAudioFlight = 'Flight call/song';
     rsAUdioNestling = 'Nestling/fledgling';
     rsAudioNonVocal = 'Non vocal/mechanical';
+    rsAudioEnvironmental = 'Environmental';
+    rsAudioOther = 'Other';
 
     { Videos }
     rsVideoUnknown = 'Unknown';

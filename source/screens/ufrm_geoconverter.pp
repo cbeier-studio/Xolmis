@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, ComCtrls,
-  Menus, SynEdit, BCPanel, SynEditTypes, SynEditMarks, StrUtils, LConvEncoding,
+  Menus, SynEdit, BCPanel, SynEditTypes, SynEditMarks, StrUtils, LConvEncoding, utils_gis,
   //ucsvhighlighter,
   RegExpr;
 
@@ -108,6 +108,8 @@ type
     //CSVHighlighter: TCSVHighlighter;
     procedure AddMark(aLine: Integer);
     procedure ApplyDarkMode;
+    function DetectCoordinateType(const aText: String): TMapCoordinateType;
+    function NormalizeCoordinates(const aText: String): String;
     function FormatCoordinates(aText: String): String;
     procedure UpdateButtons;
     procedure UpdateCurrentCaretPos;
@@ -120,7 +122,7 @@ var
 
 implementation
 
-uses utils_locale, utils_global, utils_dialogs, utils_gis, utils_themes, udm_main, uDarkStyleParams;
+uses utils_locale, utils_global, utils_dialogs, utils_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -229,38 +231,62 @@ begin
   UpdateCurrentCaretPos;
 end;
 
-function TfrmGeoConverter.FormatCoordinates(aText: String): String;
+function TfrmGeoConverter.DetectCoordinateType(const aText: String): TMapCoordinateType;
 var
   p: Extended;
   X: String;
+begin
+  Result := mcDecimal;
+
+  X := Trim(ExtractDelimited(1, aText, [';']));
+  if X = EmptyStr then
+    Exit;
+
+  if (WordCount(X, DMS_SYMBOLS + [' ']) > 2) or
+    (ExecRegExpr('[NnSsEeWw]|''|"', X)) then
+  begin
+    Result := mcDMS;
+    Exit;
+  end;
+
+  p := 0.0;
+  if (ExecRegExpr('^[0-9]{1,3}[a-zA-Z]{1}$', X)) or
+    ((TryStrToFloat(X, p)) and (p > 180)) then
+    Result := mcUTM;
+end;
+
+function TfrmGeoConverter.NormalizeCoordinates(const aText: String): String;
+begin
+  Result := Trim(aText);
+  if Result = EmptyStr then
+    Exit;
+
+  // Replace Tab separators and normalize surrounding spaces around semicolons.
+  Result := ReplaceRegExpr('\t+', Result, '; ');
+  Result := ReplaceRegExpr('\s*;\s*', Result, '; ');
+
+  // Input like "12.34, -56.78" uses comma as coordinate separator.
+  if (Pos('.', Result) > 0) and (Pos(';', Result) = 0) then
+    Result := StringReplace(Result, ',', ';', [rfReplaceAll, rfIgnoreCase]);
+
+  // Convert decimal dot to local decimal separator when needed.
+  if FormatSettings.DecimalSeparator = ',' then
+    Result := StringReplace(Result, '.', ',', [rfReplaceAll, rfIgnoreCase]);
+
+  Result := ReplaceRegExpr('\h+', Result, ' ');
+end;
+
+function TfrmGeoConverter.FormatCoordinates(aText: String): String;
+var
   pcaret: TPoint;
   aFrom: TMapCoordinateType;
 begin
-  Result := EmptyStr;
-  if Trim(aText) = EmptyStr then
+  Result := NormalizeCoordinates(aText);
+  if Result = EmptyStr then
     Exit;
 
-  aFrom := mcDecimal;
-  p := 0.0;
   pcaret := seConvertFrom.CaretXY;
-
-  // replace <Tab> separator
-  aText := ReplaceRegExpr('\t+', aText, '; ');
-  // replace separator to Semicolon
-  if Pos('.', aText) > 0 then
-    aText := StringReplace(aText, ',', ';', [rfReplaceAll, rfIgnoreCase]);
-  // replace DecimalSeparator if it is a Comma
-  if FormatSettings.DecimalSeparator = ',' then
-    aText := StringReplace(aText, '.', ',', [rfReplaceAll, rfIgnoreCase]);
-  // replace double spaces
-  aText := ReplaceRegExpr('\h+', aText, ' ');
-
-  X := Trim(ExtractDelimited(1, aText, [';']));
-  if WordCount(X, DMS_SYMBOLS + [' ']) > 2 then
-    aFrom := mcDMS
-  else
-  if (ExecRegExpr('^[0-9]{1,3}[a-zA-Z]{1}$', X)) or ((TryStrToFloat(X, p)) and (p > 180)) then
-    aFrom := mcUTM;
+  aFrom := DetectCoordinateType(Result);
 
   case aFrom of
     mcDecimal:
@@ -270,7 +296,7 @@ begin
       end;
     mcDMS:
       begin
-        aText := RemoveSymbolsDMS(aText);
+        Result := RemoveSymbolsDMS(Result);
         cbConvertFrom.ItemIndex := 1;
         cbConvertTo.ItemIndex := 0;
       end;
@@ -281,7 +307,6 @@ begin
       end;
   end;
 
-  Result := aText;
   seConvertFrom.CaretXY := pcaret;
   UpdateButtons;
   UpdateCurrentCaretPos;
@@ -292,7 +317,10 @@ var
   i: Integer;
   S: String;
   MP: TMapPoint;
+  pDMS: TDMSPoint;
+  pUTM: TUTMPoint;
   L: TStrings;
+  MCT: TMapCoordinateType;
 begin
   if seConverted.Lines.Count = 0 then
     Exit;
@@ -304,13 +332,27 @@ begin
   L := TStringList.Create;
   try
     L.Text := seConverted.Lines.Text;
+    MCT := DetectCoordinateType(L[0]);
     try
       for i := 0 to L.Count - 1 do
       begin
         S := Trim(L[i]);
         if S <> EmptyStr then
         begin
-          { #todo : Convert coordinate to decimal format }
+          case MCT of
+            mcDecimal: ;
+            mcDMS:
+            begin
+              if pDMS.FromString(S) then
+                S := DmsToDecimal(pDms).ToString;
+            end;
+            mcUTM:
+            begin
+              if pUTM.FromString(S) then
+                S := UtmToDecimal(pUTM).ToString;
+            end;
+          end;
+
           MP.FromString(S);
           with DMM.tabGeoBank do
           begin

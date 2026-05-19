@@ -41,7 +41,7 @@ type
     eImageTime: TEdit;
     eAuthor: TEditButton;
     eImageDate: TEditButton;
-    eImageFilename: TEditButton;
+    eFilePath: TEditButton;
     eTaxon: TEditButton;
     eLicenseYear: TEdit;
     eLicenseOwner: TEdit;
@@ -93,7 +93,7 @@ type
     procedure eAuthorKeyPress(Sender: TObject; var Key: char);
     procedure eImageDateButtonClick(Sender: TObject);
     procedure eImageDateEditingDone(Sender: TObject);
-    procedure eImageFilenameButtonClick(Sender: TObject);
+    procedure eFilePathButtonClick(Sender: TObject);
     procedure eImageTimeKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
     procedure eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -153,7 +153,7 @@ procedure TedtImageInfo.ApplyDarkMode;
 begin
   eAuthor.Images := DMM.iEditsDark;
   eImageDate.Images := DMM.iEditsDark;
-  eImageFilename.Images := DMM.iEditsDark;
+  eFilePath.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
@@ -226,11 +226,11 @@ begin
   sbSave.Enabled := IsRequiredFilled;
 end;
 
-procedure TedtImageInfo.eImageFilenameButtonClick(Sender: TObject);
+procedure TedtImageInfo.eFilePathButtonClick(Sender: TObject);
 begin
   DMM.OpenImgs.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenImgs.Execute then
-    eImageFilename.Text := DMM.OpenImgs.FileName;
+    eFilePath.Text := DMM.OpenImgs.FileName;
 end;
 
 procedure TedtImageInfo.eImageTimeKeyPress(Sender: TObject; var Key: char);
@@ -470,8 +470,18 @@ begin
     Add(rsApproximatedCoordinate);
     Add(rsReferenceCoordinate);
   end;
-  { #todo : License types combobox list }
-
+  with cbLicenseType.Items do
+  begin
+    Add(rsLicenseCopyright);
+    Add(rsLicenseCCBY);
+    Add(rsLicenseCCBYSA);
+    Add(rsLicenseCCBYND);
+    Add(rsLicenseCCBYNC);
+    Add(rsLicenseCCBYNCSA);
+    Add(rsLicenseCCBYNCND);
+    Add(rsLicenseCC0);
+    Add(rsLicenseCommercial);
+  end;
   if not FIsNew then
     GetRecord;
 end;
@@ -517,7 +527,7 @@ begin
   else
     cbImageType.ItemIndex := -1;
   end;
-  eImageFilename.Text := CreateAbsolutePath(FImage.FilePath, xSettings.ImagesFolder);
+  eFilePath.Text := CreateAbsolutePath(FImage.FilePath, xSettings.ImagesFolder);
   FLocalityId := FImage.LocalityId;
   eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   case FImage.CoordinatePrecision of
@@ -543,7 +553,7 @@ begin
   Result := False;
 
   if (eImageDate.Text <> EmptyStr) and
-    (eImageFilename.Text <> EmptyStr) then
+    (eFilePath.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -581,7 +591,7 @@ begin
   FImage.ImageDate := TextToDate(eImageDate.Text);
   FImage.ImageTime := TextToTime(eImageTime.Text);
   FImage.ImageType := StrToImageType(cbImageType.Text);
-  FImage.FilePath   := ExtractRelativePath(xSettings.ImagesFolder, eImageFilename.Text);
+  FImage.FilePath   := ExtractRelativePath(xSettings.ImagesFolder, eFilePath.Text);
   FImage.LocalityId := FLocalityId;
   FImage.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FImage.Longitude := StrToFloatOrZero(eLongitude.Text);
@@ -606,7 +616,7 @@ begin
   // Required fields
   if (eImageDate.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscDate]));
-  if (eImageFilename.Text = EmptyStr) then
+  if (eFilePath.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscFileName]));
   // Conditional required fields
   if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
@@ -630,7 +640,9 @@ begin
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   // Files
-  { #todo : Check the Image file path }
+  if (eFilePath.Text <> EmptyStr) then
+    if not FileExists(eFilePath.Text) then
+      Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
 
   if Msgs.Count > 0 then
   begin

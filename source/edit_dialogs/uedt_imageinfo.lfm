@@ -7,7 +7,7 @@ object edtImageInfo: TedtImageInfo
   BorderIcons = [biSystemMenu]
   Caption = 'Image info'
   ClientHeight = 681
-  ClientWidth = 413
+  ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
@@ -591,7 +591,7 @@ object edtImageInfo: TedtImageInfo
           ParentColor = False
           ParentFont = False
         end
-        object eImageFilename: TEditButton
+        object eFilePath: TEditButton
           Left = 16
           Height = 23
           Top = 22
@@ -607,7 +607,7 @@ object edtImageInfo: TedtImageInfo
           ShowHint = True
           Spacing = 0
           TabOrder = 0
-          OnButtonClick = eImageFilenameButtonClick
+          OnButtonClick = eFilePathButtonClick
           OnEditingDone = eImageDateEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress

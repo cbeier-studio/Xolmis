@@ -61,6 +61,8 @@ var
   Taxon: TTaxon;
   NestRepo: TNestRepository;
   Nest: TNest;
+  OwnerRepo: TNestOwnerRepository;
+  FOwner: TNestOwner;
   FObserverId: Integer;
   dummyDT: TDateTime;
   FS: TFormatSettings;
@@ -90,6 +92,7 @@ begin
   TaxonRepo := TTaxonRepository.Create(DMM.sqlCon);
   NestRepo := TNestRepository.Create(DMM.sqlCon);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
+  OwnerRepo := TNestOwnerRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -120,6 +123,7 @@ begin
           Taxon := TTaxon.Create;
           Toponimo := TSite.Create;
           Nest := TNest.Create;
+          FOwner := TNestOwner.Create();
 
           // Get taxon
           if (CSV.FieldByName('taxon').AsString <> EmptyStr) then
@@ -208,9 +212,42 @@ begin
             // Insert record history
             WriteRecHistory(tbNests, haCreated, Nest.Id, '', '', '', rsInsertedByImport);
 
+            // Insert nest owners
+            if (CSV.FieldByName('male').AsString <> EmptyStr) then
+            begin
+              FOwner.Clear;
+              OwnerRepo.FindByNest(Nest.Id, GetIndividualKey(CSV.FieldByName('male').AsString), FOwner);
+              if FOwner.IsNew then
+              begin
+                FOwner.NestId := Nest.Id;
+                FOwner.IndividualId := GetIndividualKey(CSV.FieldByName('male').AsString);
+                FOwner.Role := nrlMale;
+                OwnerRepo.Insert(FOwner);
+
+                // Insert record history
+                WriteRecHistory(tbNestOwners, haCreated, FOwner.Id, '', '', '', rsInsertedByImport);
+              end;
+            end;
+
+            if (CSV.FieldByName('female').AsString <> EmptyStr) then
+            begin
+              FOwner.Clear;
+              OwnerRepo.FindByNest(Nest.Id, GetIndividualKey(CSV.FieldByName('female').AsString), FOwner);
+              if FOwner.IsNew then
+              begin
+                FOwner.NestId := Nest.Id;
+                FOwner.IndividualId := GetIndividualKey(CSV.FieldByName('female').AsString);
+                FOwner.Role := nrlFemale;
+                OwnerRepo.Insert(FOwner);
+
+                // Insert record history
+                WriteRecHistory(tbNestOwners, haCreated, FOwner.Id, '', '', '', rsInsertedByImport);
+              end;
+            end;
           end;
 
         finally
+          FreeAndNil(FOwner);
           FreeAndNil(Nest);
           FreeAndNil(Toponimo);
           FreeAndNil(Taxon);
@@ -250,6 +287,7 @@ begin
   finally
     CSV.Close;
     FreeAndNil(CSV);
+    OwnerRepo.Free;
     SiteRepo.Free;
     NestRepo.Free;
     TaxonRepo.Free;

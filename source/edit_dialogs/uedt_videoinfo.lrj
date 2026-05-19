@@ -21,7 +21,7 @@
 {"hash":94959130,"name":"tedtvideoinfo.lbltaxon.caption","sourcebytes":[84,97,120,111,110,58],"value":"Taxon:"},
 {"hash":108945182,"name":"tedtvideoinfo.etaxon.buttonhint","sourcebytes":[70,105,110,100,32,116,97,120,111,110],"value":"Find taxon"},
 {"hash":68845354,"name":"tedtvideoinfo.lblvideofile.caption","sourcebytes":[82,101,99,111,114,100,105,110,103,32,102,105,108,101,58,32,42],"value":"Recording file: *"},
-{"hash":155138629,"name":"tedtvideoinfo.evideofile.buttonhint","sourcebytes":[67,104,111,111,115,101,32,102,105,108,101],"value":"Choose file"},
+{"hash":155138629,"name":"tedtvideoinfo.efilepath.buttonhint","sourcebytes":[67,104,111,111,115,101,32,102,105,108,101],"value":"Choose file"},
 {"hash":13001594,"name":"tedtvideoinfo.lblcameramodel.caption","sourcebytes":[67,97,109,101,114,97,32,109,111,100,101,108,58],"value":"Camera model:"},
 {"hash":41437130,"name":"tedtvideoinfo.lbldistance.caption","sourcebytes":[68,105,115,116,97,110,99,101,32,40,109,41,58],"value":"Distance (m):"},
 {"hash":82666554,"name":"tedtvideoinfo.lblrecordingcontext.caption","sourcebytes":[67,111,110,116,101,120,116,32,111,102,32,116,104,101,32,114,101,99,111,114,100,105,110,103,58],"value":"Context of the recording:"},

@@ -260,7 +260,7 @@ object edtDocumentInfo: TedtDocumentInfo
           ParentColor = False
           ParentFont = False
         end
-        object eDocumentPath: TEditButton
+        object eFilePath: TEditButton
           Left = 16
           Height = 23
           Top = 22
@@ -276,7 +276,7 @@ object edtDocumentInfo: TedtDocumentInfo
           ShowHint = True
           Spacing = 0
           TabOrder = 0
-          OnButtonClick = eDocumentPathButtonClick
+          OnButtonClick = eFilePathButtonClick
           OnEditingDone = eDocumentDateEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = cbDocumentTypeKeyPress

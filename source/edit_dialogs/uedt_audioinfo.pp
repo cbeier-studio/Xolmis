@@ -42,7 +42,7 @@ type
     eLongitude: TEditButton;
     eLatitude: TEditButton;
     eLocality: TEditButton;
-    eAudioFile: TEditButton;
+    eFilePath: TEditButton;
     eTaxon: TEditButton;
     eRecordingContext: TEdit;
     eFilterModel: TEdit;
@@ -124,7 +124,7 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
-    procedure eAudioFileButtonClick(Sender: TObject);
+    procedure eFilePathButtonClick(Sender: TObject);
     procedure eAuthorButtonClick(Sender: TObject);
     procedure eAuthorKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
@@ -184,7 +184,7 @@ procedure TedtAudioInfo.ApplyDarkMode;
 begin
   eAuthor.Images := DMM.iEditsDark;
   eRecordingDate.Images := DMM.iEditsDark;
-  eAudioFile.Images := DMM.iEditsDark;
+  eFilePath.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
@@ -212,11 +212,11 @@ begin
   //  sbSave.Enabled := IsRequiredFilled;
 end;
 
-procedure TedtAudioInfo.eAudioFileButtonClick(Sender: TObject);
+procedure TedtAudioInfo.eFilePathButtonClick(Sender: TObject);
 begin
   DMM.OpenAudios.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenAudios.Execute then
-    eAudioFile.Text := DMM.OpenAudios.FileName;
+    eFilePath.Text := DMM.OpenAudios.FileName;
 end;
 
 procedure TedtAudioInfo.eAuthorButtonClick(Sender: TObject);
@@ -475,6 +475,7 @@ begin
     Clear;
     Add(rsAudioUnknown);
     Add(rsAudioSong);
+    Add(rsAudioDuet);
     Add(rsAudioCall);
     Add(rsAudioAlarm);
     Add(rsAudioTerritorial);
@@ -485,6 +486,8 @@ begin
     Add(rsAudioFlight);
     Add(rsAUdioNestling);
     Add(rsAudioNonVocal);
+    Add(rsAudioEnvironmental);
+    Add(rsAudioOther);
   end;
 
   with cbCoordinatePrecision.Items do
@@ -501,6 +504,19 @@ begin
   cbPrecipitation.Items.Add(rsPrecipitationDrizzle);
   cbPrecipitation.Items.Add(rsPrecipitationRain);
 
+  with cbLicenseType.Items do
+  begin
+    Add(rsLicenseCopyright);
+    Add(rsLicenseCCBY);
+    Add(rsLicenseCCBYSA);
+    Add(rsLicenseCCBYND);
+    Add(rsLicenseCCBYNC);
+    Add(rsLicenseCCBYNCSA);
+    Add(rsLicenseCCBYNCND);
+    Add(rsLicenseCC0);
+    Add(rsLicenseCommercial);
+  end;
+
   if not FIsNew then
     GetRecord;
 end;
@@ -515,6 +531,7 @@ begin
   case FAudio.AudioType of
     atUnknown:      cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioUnknown);
     atSong:         cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioSong);
+    atDuet:         cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioDuet);
     atCall:         cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioCall);
     atAlarm:        cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioAlarm);
     atTerritorial:  cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioTerritorial);
@@ -525,10 +542,12 @@ begin
     atFlight:       cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioFlight);
     atNestling:     cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAUdioNestling);
     atNonVocal:     cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioNonVocal);
+    atEnvironmental: cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioEnvironmental);
+    atOther:        cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioOther);
   else
     cbAudioType.ItemIndex := -1;
   end;
-  eAudioFile.Text := CreateAbsolutePath(FAudio.FilePath, xSettings.AudiosFolder);
+  eFilePath.Text := CreateAbsolutePath(FAudio.FilePath, xSettings.AudiosFolder);
   FLocalityId := FAudio.LocalityId;
   eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FAudio.Longitude);
@@ -578,7 +597,7 @@ begin
   Result := False;
 
   if (eRecordingDate.Text <> EmptyStr) and
-    (eAudioFile.Text <> EmptyStr) then
+    (eFilePath.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -616,7 +635,7 @@ begin
   FAudio.RecordingDate := TextToDate(eRecordingDate.Text);
   FAudio.RecordingTime := TextToTime(eRecordingTime.Text);
   FAudio.AudioType     := StrToAudioType(cbAudioType.Text);
-  FAudio.FilePath      := ExtractRelativePath(xSettings.AudiosFolder, eAudioFile.Text);
+  FAudio.FilePath      := ExtractRelativePath(xSettings.AudiosFolder, eFilePath.Text);
   FAudio.LocalityId    := FLocalityId;
   FAudio.Longitude     := StrToFloatOrZero(eLongitude.Text);
   FAudio.Latitude      := StrToFloatOrZero(eLatitude.Text);
@@ -656,7 +675,7 @@ begin
   // Required fields
   if (eRecordingDate.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscDate]));
-  if (eAudioFile.Text = EmptyStr) then
+  if (eFilePath.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscFileName]));
   // Conditional required fields
   if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
@@ -680,7 +699,9 @@ begin
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   // Files
-  { #todo : Check the Audio file path }
+  if (eFilePath.Text <> EmptyStr) then
+    if not FileExists(eFilePath.Text) then
+      Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
 
   if Msgs.Count > 0 then
   begin

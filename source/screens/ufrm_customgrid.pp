@@ -51,6 +51,7 @@ type
 
   TfrmCustomGrid = class(TForm)
     cbCategoryFilter: TComboBox;
+    cbMapProvider: TComboBox;
     dsVideos: TDataSource;
     eSearch: TEdit;
     gridVideos: TDBGrid;
@@ -68,7 +69,7 @@ type
     pmpAddMunicipalities: TMenuItem;
     pmcColumnAutoAdjustWidth: TMenuItem;
     MvPluginManager: TMvPluginManager;
-    MvPluginManagerLegalNoticePlugin1: TLegalNoticePlugin;
+    mvLegalNoticePlugin: TLegalNoticePlugin;
     MvPluginManagerMapScalePlugin1: TMapScalePlugin;
     cardVideos: TPage;
     pmvAddVideo: TMenuItem;
@@ -929,6 +930,7 @@ type
     tvSiteFilter: TLazVirtualStringTree;
     tvTaxaFilter: TLazVirtualStringTree;
     txtRubricBalance: TLabel;
+    procedure cbMapProviderChange(Sender: TObject);
     procedure DBGColEnter(Sender: TObject);
     procedure DBGColExit(Sender: TObject);
     procedure DBGContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
@@ -1105,8 +1107,6 @@ type
     procedure qAudiosBeforePost(DataSet: TDataSet);
     procedure qAudiosprecipitationGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qAudiosprecipitationSetText(Sender: TField; const aText: string);
-    procedure qAudiosrecording_contextGetText(Sender: TField; var aText: string; DisplayText: Boolean);
-    procedure qAudiosrecording_contextSetText(Sender: TField; const aText: string);
     procedure qDocsBeforePost(DataSet: TDataSet);
     procedure qDocsdocument_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qDocsdocument_typeSetText(Sender: TField; const aText: string);
@@ -2620,6 +2620,18 @@ begin
   finally
     FreeAndNil(dlgAttachMedia);
   end;
+end;
+
+procedure TfrmCustomGrid.cbMapProviderChange(Sender: TObject);
+begin
+  mapGeo.Active := False;
+  mapGeo.MapProvider := cbMapProvider.Text;
+  case cbMapProvider.ItemIndex of
+    0: mvLegalNoticePlugin.LegalNotice := 'Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]';
+    1: mvLegalNoticePlugin.LegalNotice := 'Map data: [https://www.openstreetmap.org/copyright OpenStreetMap] contributors | Map style: [https://opentopomap.org OpenTopoMap]';
+    2: mvLegalNoticePlugin.LegalNotice := '[https://www.bing.com/maps/ Bing Maps]';
+  end;
+  mapGeo.Active := True;
 end;
 
 procedure TfrmCustomGrid.CellKeyPress(Sender: TObject; var Key: Char);
@@ -6268,12 +6280,69 @@ end;
 
 procedure TfrmCustomGrid.qAudiosaudio_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
 begin
-  { #todo : Audio types GetText }
+  case Sender.AsString of
+    'sng': aText := rsAudioSong;
+    'due': aText := rsAudioDuet;
+    'cal': aText := rsAudioCall;
+    'alm': aText := rsAudioAlarm;
+    'ter': aText := rsAudioTerritorial;
+    'cor': aText := rsAudioCourtship;
+    'agg': aText := rsAudioAggression;
+    'con': aText := rsAudioContact;
+    'flk': aText := rsAudioFlock;
+    'fly': aText := rsAudioFlight;
+    'nst': aText := rsAUdioNestling;
+    'nvc': aText := rsAudioNonVocal;
+    'env': aText := rsAudioEnvironmental;
+    'oth': aText := rsAudioOther;
+  end;
+
+  DisplayText := True;
 end;
 
 procedure TfrmCustomGrid.qAudiosaudio_typeSetText(Sender: TField; const aText: string);
 begin
-  { #todo : Audio types SetText }
+  if aText = rsAudioSong then
+    Sender.AsString := 'sng'
+  else
+  if aText = rsAudioDuet then
+    Sender.AsString := 'due'
+  else
+  if aText = rsAudioCall then
+    Sender.AsString := 'cal'
+  else
+  if aText = rsAudioAlarm then
+    Sender.AsString := 'alm'
+  else
+  if aText = rsAudioTerritorial then
+    Sender.AsString := 'ter'
+  else
+  if aText = rsAudioCourtship then
+    Sender.AsString := 'cor'
+  else
+  if aText = rsAudioAggression then
+    Sender.AsString := 'agg'
+  else
+  if aText = rsAudioContact then
+    Sender.AsString := 'con'
+  else
+  if aText = rsAudioFlock then
+    Sender.AsString := 'flk'
+  else
+  if aText = rsAudioFlight then
+    Sender.AsString := 'fly'
+  else
+  if aText = rsAUdioNestling then
+    Sender.AsString := 'nst'
+  else
+  if aText = rsAudioNonVocal then
+    Sender.AsString := 'nvc'
+  else
+  if aText = rsAudioEnvironmental then
+    Sender.AsString := 'env'
+  else
+  if aText = rsAudioOther then
+    Sender.AsString := 'oth';
 end;
 
 procedure TfrmCustomGrid.qAudiosBeforePost(DataSet: TDataSet);
@@ -6317,17 +6386,6 @@ begin
   else
   if aText = rsPrecipitationRain then
     Sender.AsString := 'R';
-end;
-
-procedure TfrmCustomGrid.qAudiosrecording_contextGetText(Sender: TField; var aText: string; DisplayText: Boolean
-  );
-begin
-  { #todo : Recording contexts GetText }
-end;
-
-procedure TfrmCustomGrid.qAudiosrecording_contextSetText(Sender: TField; const aText: string);
-begin
-  { #todo : Recording contexts SetText }
 end;
 
 procedure TfrmCustomGrid.qDocsBeforePost(DataSet: TDataSet);
@@ -6420,12 +6478,133 @@ end;
 
 procedure TfrmCustomGrid.qImagesimage_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
 begin
-  { #todo : Image types GetText }
+  case Sender.AsString of
+    'flank': aText := rsBirdInHandFlank;
+    'belly': aText := rsBirdInHandBelly;
+    'back':  aText := rsBirdInHandBack;
+    'wing':  aText := rsBirdInHandWing;
+    'tail':  aText := rsBirdInHandTail;
+    'head':  aText := rsBirdInHandHead;
+    'feet':  aText := rsBirdInHandFeet;
+    'stand': aText := rsFreeBirdStanding;
+    'fly':   aText := rsFreeBirdFlying;
+    'swim':  aText := rsFreeBirdSwimming;
+    'forr':  aText := rsFreeBirdForraging;
+    'copul': aText := rsFreeBirdCopulating;
+    'build': aText := rsFreeBirdBuildingNest;
+    'disp':  aText := rsFreeBirdDisplaying;
+    'incub': aText := rsFreeBirdIncubating;
+    'vocal': aText := rsFreeBirdVocalizing;
+    'agon':  aText := rsFreeBirdAgonistic;
+    'dead':  aText := rsDeadBird;
+    'flock': aText := rsBirdFlock;
+    'nest':  aText := rsBirdNest;
+    'egg':   aText := rsBirdEgg;
+    'nstln': aText := rsBirdNestling;
+    'paras': aText := rsEctoparasite;
+    'fprnt': aText := rsFootprint;
+    'feath': aText := rsFeather;
+    'feces': aText := rsFeces;
+    'food':  aText := rsFood;
+    'envir': aText := rsEnvironment;
+    'fwork': aText := rsFieldwork;
+    'team':  aText := rsTeam;
+  end;
+
+  DisplayText := True;
 end;
 
 procedure TfrmCustomGrid.qImagesimage_typeSetText(Sender: TField; const aText: string);
 begin
-  { #todo : Image types SetText }
+  if aText = rsBirdInHandFlank then
+    Sender.AsString := 'flank'
+  else
+  if aText = rsBirdInHandBelly then
+    Sender.AsString := 'belly'
+  else
+  if aText = rsBirdInHandBack then
+    Sender.AsString := 'back'
+  else
+  if aText = rsBirdInHandWing then
+    Sender.AsString := 'wing'
+  else
+  if aText = rsBirdInHandTail then
+    Sender.AsString := 'tail'
+  else
+  if aText = rsBirdInHandHead then
+    Sender.AsString := 'head'
+  else
+  if aText = rsBirdInHandFeet then
+    Sender.AsString := 'feet'
+  else
+  if aText = rsFreeBirdStanding then
+    Sender.AsString := 'stand'
+  else
+  if aText = rsFreeBirdFlying then
+    Sender.AsString := 'fly'
+  else
+  if aText = rsFreeBirdSwimming then
+    Sender.AsString := 'swim'
+  else
+  if aText = rsFreeBirdForraging then
+    Sender.AsString := 'forr'
+  else
+  if aText = rsFreeBirdCopulating then
+    Sender.AsString := 'copul'
+  else
+  if aText = rsFreeBirdBuildingNest then
+    Sender.AsString := 'build'
+  else
+  if aText = rsFreeBirdDisplaying then
+    Sender.AsString := 'disp'
+  else
+  if aText = rsFreeBirdIncubating then
+    Sender.AsString := 'incub'
+  else
+  if aText = rsFreeBirdVocalizing then
+    Sender.AsString := 'vocal'
+  else
+  if aText = rsFreeBirdAgonistic then
+    Sender.AsString := 'agon'
+  else
+  if aText = rsDeadBird then
+    Sender.AsString := 'dead'
+  else
+  if aText = rsBirdFlock then
+    Sender.AsString := 'flock'
+  else
+  if aText = rsBirdNest then
+    Sender.AsString := 'nest'
+  else
+  if aText = rsBirdEgg then
+    Sender.AsString := 'egg'
+  else
+  if aText = rsBirdNestling then
+    Sender.AsString := 'nstln'
+  else
+  if aText = rsEctoparasite then
+    Sender.AsString := 'paras'
+  else
+  if aText = rsFootprint then
+    Sender.AsString := 'fprnt'
+  else
+  if aText = rsFeather then
+    Sender.AsString := 'feath'
+  else
+  if aText = rsFeces then
+    Sender.AsString := 'feces'
+  else
+  if aText = rsFood then
+    Sender.AsString := 'food'
+  else
+  if aText = rsEnvironment then
+    Sender.AsString := 'envir'
+  else
+  if aText = rsFieldwork then
+    Sender.AsString := 'fwork'
+  else
+  if aText = rsTeam then
+    Sender.AsString := 'team';
 end;
 
 procedure TfrmCustomGrid.QuickAddChild(aInitialValue: String);
@@ -7210,7 +7389,8 @@ begin
     begin
       for SM in FModule.Submodules do
       begin
-        { #todo : Check if the submodule have records to delete }
+        if SM.DataSet.IsEmpty then
+          Continue;
 
         if SM.TableType in [tbCaptures, tbSightings, tbNests, tbSpecimens] then
         begin

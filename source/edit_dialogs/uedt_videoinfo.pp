@@ -35,7 +35,7 @@ type
     cbVideoType: TComboBox;
     cbLicenseType: TComboBox;
     dsLink: TDataSource;
-    eVideoFile: TEditButton;
+    eFilePath: TEditButton;
     eAuthor: TEditButton;
     eDistance: TFloatSpinEdit;
     eHabitat: TEdit;
@@ -112,7 +112,7 @@ type
     procedure eRecordingTimeKeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
     procedure eTaxonKeyPress(Sender: TObject; var Key: char);
-    procedure eVideoFileButtonClick(Sender: TObject);
+    procedure eFilePathButtonClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -163,7 +163,7 @@ procedure TedtVideoInfo.ApplyDarkMode;
 begin
   eAuthor.Images := DMM.iEditsDark;
   eRecordingDate.Images := DMM.iEditsDark;
-  eVideoFile.Images := DMM.iEditsDark;
+  eFilePath.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
@@ -397,11 +397,11 @@ begin
   end;
 end;
 
-procedure TedtVideoInfo.eVideoFileButtonClick(Sender: TObject);
+procedure TedtVideoInfo.eFilePathButtonClick(Sender: TObject);
 begin
   DMM.OpenVideos.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenVideos.Execute then
-    eVideoFile.Text := DMM.OpenVideos.FileName;
+    eFilePath.Text := DMM.OpenVideos.FileName;
 end;
 
 procedure TedtVideoInfo.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -471,6 +471,19 @@ begin
     Add(rsReferenceCoordinate);
   end;
 
+  with cbLicenseType.Items do
+  begin
+    Add(rsLicenseCopyright);
+    Add(rsLicenseCCBY);
+    Add(rsLicenseCCBYSA);
+    Add(rsLicenseCCBYND);
+    Add(rsLicenseCCBYNC);
+    Add(rsLicenseCCBYNCSA);
+    Add(rsLicenseCCBYNCND);
+    Add(rsLicenseCC0);
+    Add(rsLicenseCommercial);
+  end;
+
   if not FIsNew then
     GetRecord;
 end;
@@ -502,7 +515,7 @@ begin
   else
     cbVideoType.ItemIndex := -1;
   end;
-  eVideoFile.Text := CreateAbsolutePath(FVideo.FilePath, xSettings.VideosFolder);
+  eFilePath.Text := CreateAbsolutePath(FVideo.FilePath, xSettings.VideosFolder);
   FLocalityId := FVideo.LocalityId;
   eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
   eLongitude.Text := FloatToStr(FVideo.Longitude);
@@ -538,7 +551,7 @@ begin
   Result := False;
 
   if (eRecordingDate.Text <> EmptyStr) and
-    (eVideoFile.Text <> EmptyStr) then
+    (eFilePath.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -570,7 +583,7 @@ begin
   FVideo.RecordingDate  := TextToDate(eRecordingDate.Text);
   FVideo.RecordingTime  := TextToTime(eRecordingTime.Text);
   FVideo.VideoType      := StrToVideoType(cbVideoType.Text);
-  FVideo.FilePath       := ExtractRelativePath(xSettings.VideosFolder, eVideoFile.Text);
+  FVideo.FilePath       := ExtractRelativePath(xSettings.VideosFolder, eFilePath.Text);
   FVideo.LocalityId     := FLocalityId;
   FVideo.Longitude      := StrToFloatOrZero(eLongitude.Text);
   FVideo.Latitude       := StrToFloatOrZero(eLatitude.Text);
@@ -610,7 +623,7 @@ begin
   // Required fields
   if (eRecordingDate.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscDate]));
-  if (eVideoFile.Text = EmptyStr) then
+  if (eFilePath.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscFileName]));
   // Conditional required fields
   if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
@@ -634,7 +647,9 @@ begin
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   // Files
-  { #todo : Check the Video file path }
+  if (eFilePath.Text <> EmptyStr) then
+    if not FileExists(eFilePath.Text) then
+      Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
 
   if Msgs.Count > 0 then
   begin

@@ -316,8 +316,6 @@ end;
 
 procedure TedtDatabase.sbSaveClick(Sender: TObject);
 begin
-  { #todo : Test database connection }
-
   FConnectionName := dsConn.DataSet.FieldByName('connection_name').AsString;
 
   edtDatabase.ModalResult := mrOk;

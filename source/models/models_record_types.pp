@@ -371,18 +371,21 @@ type
 
   // Audio recordings
   TAudioType = (
-    atUnknown,      // "UNK" - Unidentified
-    atSong,         // "SON" - Song
-    atCall,         // "CAL" - Call
-    atAlarm,        // "ALM" - Alarm / Stress
-    atTerritorial,  // "TER" - Territorial
-    atCourtship,    // "CRT" - Courtship / Display
-    atAggression,   // "AGR" - Aggression
-    atContact,      // "CNT" - Contact
-    atFlock,        // "FLK" - Flock vocalization
-    atFlight,       // "FLT" - Flight vocalization
-    atNestling,     // "NST" - Chick / nestling
-    atNonVocal      // "NVL" - Non vocal sounds (wings, beak, drumming)
+    atUnknown,      // "unk" - Unidentified
+    atSong,         // "sng" - Song
+    atDuet,         // "due" - Duet
+    atCall,         // "cal" - Call
+    atAlarm,        // "alm" - Alarm / Stress
+    atTerritorial,  // "ter" - Territorial
+    atCourtship,    // "cor" - Courtship / Display
+    atAggression,   // "agg" - Aggression
+    atContact,      // "con" - Contact
+    atFlock,        // "flk" - Flock vocalization
+    atFlight,       // "fly" - Flight vocalization
+    atNestling,     // "nst" - Chick / nestling
+    atNonVocal,     // "nvc" - Non vocal sounds (wings, beak, drumming)
+    atEnvironmental, // "env" - Environmental
+    atOther         // "oth" - Other sounds
   );
 
   // Documents and links
@@ -544,18 +547,21 @@ const
 
   // Audio recordings
   AUDIO_TYPES: array[TAudioType] of string = (
-    'UNK',  // atUnknown
-    'SON',  // atSong
-    'CAL',  // atCall
-    'ALM',  // atAlarm
-    'TER',  // atTerritorial
-    'CRT',  // atCourtship
-    'AGR',  // atAggression
-    'CNT',  // atContact
-    'FLK',  // atFlock
-    'FLT',  // atFlight
-    'NST',  // atNestling
-    'NVL'   // atNonVocal
+    'unk',  // atUnknown
+    'sng',  // atSong
+    'due',  // atDuet
+    'cal',  // atCall
+    'alm',  // atAlarm
+    'ter',  // atTerritorial
+    'cor',  // atCourtship
+    'agg',  // atAggression
+    'con',  // atContact
+    'flk',  // atFlock
+    'fly',  // atFlight
+    'nst',  // atNestling
+    'nvc',  // atNonVocal
+    'env',  // atEnvironmental
+    'oth'   // atOther
   );
 
   // Documents and links

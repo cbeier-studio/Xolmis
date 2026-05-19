@@ -495,38 +495,47 @@ end;
 
 function StrToAudioType(const AValue: String): TAudioType;
 begin
-  if (AValue = rsAudioSong) or (AValue = 'SON') then
+  if (AValue = rsAudioSong) or (AValue = 'sng') then
     Result := atSong
   else
-  if (AValue = rsAudioCall) or (AValue = 'CAL') then
+  if (AValue = rsAudioDuet) or (AValue = 'due') then
+    Result := atDuet
+  else
+  if (AValue = rsAudioCall) or (AValue = 'cal') then
     Result := atCall
   else
-  if (AValue = rsAudioAlarm) or (AValue = 'ALM') then
+  if (AValue = rsAudioAlarm) or (AValue = 'alm') then
     Result := atAlarm
   else
-  if (AValue = rsAudioTerritorial) or (AValue = 'TER') then
+  if (AValue = rsAudioTerritorial) or (AValue = 'ter') then
     Result := atTerritorial
   else
-  if (AValue = rsAudioCourtship) or (AValue = 'CRT') then
+  if (AValue = rsAudioCourtship) or (AValue = 'cor') then
     Result := atCourtship
   else
-  if (AValue = rsAudioAggression) or (AValue = 'AGR') then
+  if (AValue = rsAudioAggression) or (AValue = 'agg') then
     Result := atAggression
   else
-  if (AValue = rsAudioContact) or (AValue = 'CNT') then
+  if (AValue = rsAudioContact) or (AValue = 'con') then
     Result := atContact
   else
-  if (AValue = rsAudioFlock) or (AValue = 'FLK') then
+  if (AValue = rsAudioFlock) or (AValue = 'flk') then
     Result := atFlock
   else
-  if (AValue = rsAudioFlight) or (AValue = 'FLT') then
+  if (AValue = rsAudioFlight) or (AValue = 'fly') then
     Result := atFlight
   else
-  if (AValue = rsAUdioNestling) or (AValue = 'NST') then
+  if (AValue = rsAUdioNestling) or (AValue = 'nst') then
     Result := atNestling
   else
-  if (AValue = rsAudioNonVocal) or (AValue = 'NVL') then
+  if (AValue = rsAudioNonVocal) or (AValue = 'nvc') then
     Result := atNonVocal
+  else
+  if (AValue = rsAudioEnvironmental) or (AValue = 'env') then
+    Result := atEnvironmental
+  else
+  if (AValue = rsAudioOther) or (AValue = 'oth') then
+    Result := atOther
   else
     Result := atUnknown;
 end;
@@ -1204,23 +1213,22 @@ end;
 
 function StrToSiteRank(const AValue: String): TSiteRank;
 begin
-  { #todo : Translate site rank also from numbers }
-  if (AValue = rsCaptionCountry) or (AValue = 'P') then
+  if (AValue = rsCaptionCountry) or (AValue = 'P') or (AValue = '0') then
     Result := srCountry
   else
-  if (AValue = rsCaptionState) or (AValue = 'E') then
+  if (AValue = rsCaptionState) or (AValue = 'E') or (AValue = '1') then
     Result := srState
   else
-  if (AValue = rsCaptionRegion) or (AValue = 'R') then
+  if (AValue = rsCaptionRegion) or (AValue = 'R') or (AValue = '2') then
     Result := srRegion
   else
-  if (AValue = rsCaptionMunicipality) or (AValue = 'M') then
+  if (AValue = rsCaptionMunicipality) or (AValue = 'M') or (AValue = '3') then
     Result := srMunicipality
   else
-  if (AValue = rsCaptionDistrict) or (AValue = 'D') then
+  if (AValue = rsCaptionDistrict) or (AValue = 'D') or (AValue = '4') then
     Result := srDistrict
   else
-  if (AValue = rsCaptionLocality) or (AValue = 'L') then
+  if (AValue = rsCaptionLocality) or (AValue = 'L') or (AValue = '5') then
     Result := srLocality
   else
     Result := srNone;

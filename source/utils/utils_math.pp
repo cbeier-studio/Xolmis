@@ -33,6 +33,9 @@ uses
 
   procedure ClearOutlierCache;
 
+const
+  MIN_OUTLIER_N = 10;
+
 implementation
 
 uses udm_main;
@@ -77,7 +80,7 @@ begin
     ParamByName('ATAXON').AsInteger := aTaxon;
     Open;
 
-    if RecordCount > 3 then
+    if RecordCount >= MIN_OUTLIER_N then
     begin
       SetLength(x, RecordCount);
       First;
