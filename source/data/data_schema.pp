@@ -3447,15 +3447,39 @@ begin
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  // Taxon ID
+  AddField(T, 'taxon_id', rscTaxonID, sdtInteger, False, 0, False, True, tbZooTaxa);
+  T.Fields.Last.Aliases.CommaText := TAXON_ALIASES;
+  T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  // Taxon
+  AddField(T, 'taxon_name', rscTaxon, sdtText, False, 0, False, False, tbZooTaxa);
+  T.Fields.Last.ExportName := 'taxon';
+  T.Fields.Last.LookupInfo.LookupField := COL_TAXON_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_TAXON_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_SCIENTIFIC_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Host eggs
   AddField(T, 'host_eggs_tally', rscEggsHost, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'eggs,eggs quantity,eggs quant,# eggs,ovos,quantidade de ovos,quant de ovos,' +
     '# ovos,host eggs,ovos do hospedeiro,# host eggs,# ovos do hospedeiro';
   T.Fields.Last.Alignment := taRightJustify;
-  T.Fields.Last.SummaryEnabled := False;
-  { #todo : Summary stats for host eggs and nestlings counts in nest revisions }
-  T.Fields.Last.SummaryKind := skGroupStats;
-  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.SummaryEnabled := True;
+  T.Fields.Last.SummaryKind := skNestMaxMean; 
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Host nestlings
   AddField(T, 'host_nestlings_tally', rscNestlingsHost, sdtInteger);
@@ -3463,9 +3487,9 @@ begin
     'quantidade de ninhegos,quant de ninhegos,# ninhegos,host nestlings,ninhegos do hospedeiro,' +
     '# host nestlings,# ninhegos do hospedeiro';
   T.Fields.Last.Alignment := taRightJustify;
-  T.Fields.Last.SummaryEnabled := False;
-  T.Fields.Last.SummaryKind := skGroupStats;
-  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  T.Fields.Last.SummaryEnabled := True;
+  T.Fields.Last.SummaryKind := skNestMaxMean; 
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Nidoparasite ID
   AddField(T, 'nidoparasite_id', rscNidoparasiteID, sdtInteger, False, 0, False, True, tbZooTaxa);
@@ -3495,18 +3519,18 @@ begin
   T.Fields.Last.Aliases.CommaText := 'nidoparasite eggs,parasite eggs,# nidoparasite eggs,# parasite eggs,' +
     'ovos do nidoparasita,ovos do parasita,# ovos do nidoparasita,# ovos do parasita';
   T.Fields.Last.Alignment := taRightJustify;
-  T.Fields.Last.SummaryKind := skGroupStats;
-  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
-  T.Fields.Last.GroupingField := COL_NIDOPARASITE_NAME;
+  T.Fields.Last.SummaryKind := skNestMaxMean; 
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Nidoparasite nestlings
   AddField(T, 'nidoparasite_nestlings_tally', rscNestlingsNidoparasite, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'nidoparasite nestlings,parasite nestlings,ninhegos do nidoparasita,' +
     'ninhegos do parasita,# nidoparasite nestlings,# parasite nestlings,# ninhegos do nidoparasita,' +
     '# ninhegos do parasita';
   T.Fields.Last.Alignment := taRightJustify;
-  T.Fields.Last.SummaryKind := skGroupStats;
-  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
-  T.Fields.Last.GroupingField := COL_NIDOPARASITE_NAME;
+  T.Fields.Last.SummaryKind := skNestMaxMean;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Parasitized by Philornis larvae
   AddField(T, 'have_philornis_larvae', rscHasPhilornisLarvae, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;

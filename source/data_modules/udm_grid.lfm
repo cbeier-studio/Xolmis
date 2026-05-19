@@ -9542,6 +9542,17 @@ object DMG: TDMG
         Size = 100
       end    
       item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
         Name = 'observer_1_name'
         DataType = ftString
         Precision = -1
@@ -9568,14 +9579,17 @@ object DMG: TDMG
     SQL.Strings = (
       'SELECT nr.*,'
       '  n.full_name AS nest_name,'
+      '  n.taxon_id AS taxon_id,'
+      '  z1.scientific_name AS taxon_name,'
       '  p1.abbreviation AS observer_1_name,'
       '  p2.abbreviation AS observer_2_name,'
-      '  z.scientific_name AS nidoparasite_name'
+      '  z2.scientific_name AS nidoparasite_name'
       'FROM nest_revisions AS nr'
       'LEFT JOIN nests AS n ON nr.nest_id = n.nest_id'
       'LEFT JOIN people AS p1 ON nr.observer_1_id = p1.person_id'
       'LEFT JOIN people AS p2 ON nr.observer_2_id = p2.person_id'
-      'LEFT JOIN zoo_taxa AS z ON nr.nidoparasite_id = z.taxon_id'
+      'LEFT JOIN zoo_taxa AS z1 ON n.taxon_id = z1.taxon_id'
+      'LEFT JOIN zoo_taxa AS z2 ON nr.nidoparasite_id = z2.taxon_id'
       'WHERE (nr.active_status = 1)'
       ''
     )
@@ -9765,12 +9779,35 @@ object DMG: TDMG
       OnSetText = qNestRevisionsnest_statusSetText
       Size = 1
     end
+    object qNestRevisionstaxon_id: TLongintField
+      DisplayLabel = 'Taxon ID'
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qNestRevisionstaxon_name: TStringField
+      DisplayLabel = 'Taxon'
+      DisplayWidth = 30
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
     object qNestRevisionshost_eggs_tally: TLongintField
       Alignment = taCenter
       DisplayLabel = '# eggs (host)'
       FieldKind = fkData
       FieldName = 'host_eggs_tally'
-      Index = 10
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9781,7 +9818,7 @@ object DMG: TDMG
       DisplayLabel = '# nestlings (host)'
       FieldKind = fkData
       FieldName = 'host_nestlings_tally'
-      Index = 11
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9791,7 +9828,7 @@ object DMG: TDMG
       DisplayLabel = 'Nidoparasite (ID)'
       FieldKind = fkData
       FieldName = 'nidoparasite_id'
-      Index = 12
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9803,7 +9840,7 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'nidoparasite_name'
-      Index = 13
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -9815,7 +9852,7 @@ object DMG: TDMG
       DisplayLabel = '# eggs (nidoparasite)'
       FieldKind = fkData
       FieldName = 'nidoparasite_eggs_tally'
-      Index = 14
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9826,7 +9863,7 @@ object DMG: TDMG
       DisplayLabel = '# nestlings (nidoparasite)'
       FieldKind = fkData
       FieldName = 'nidoparasite_nestlings_tally'
-      Index = 15
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9837,7 +9874,7 @@ object DMG: TDMG
       DisplayLabel = 'Has Philornis larvae'
       FieldKind = fkData
       FieldName = 'have_philornis_larvae'
-      Index = 16
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9850,7 +9887,7 @@ object DMG: TDMG
       DisplayWidth = 10
       FieldKind = fkData
       FieldName = 'nest_stage'
-      Index = 17
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9864,7 +9901,7 @@ object DMG: TDMG
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 18
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9876,7 +9913,7 @@ object DMG: TDMG
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'nest_revision_id'
-      Index = 19
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -9887,7 +9924,7 @@ object DMG: TDMG
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 20
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9899,7 +9936,7 @@ object DMG: TDMG
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 21
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9910,7 +9947,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 22
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9922,7 +9959,7 @@ object DMG: TDMG
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 23
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9934,7 +9971,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 24
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9946,7 +9983,7 @@ object DMG: TDMG
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 25
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9959,7 +9996,7 @@ object DMG: TDMG
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 26
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -9970,7 +10007,7 @@ object DMG: TDMG
     object qNestRevisionsinactivated_by: TStringField
       FieldKind = fkData
       FieldName = 'inactivated_by'
-      Index = 27
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

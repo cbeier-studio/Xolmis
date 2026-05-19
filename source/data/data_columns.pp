@@ -544,6 +544,8 @@ resourcestring
     AMetrics: TSummaryMetricSet);
   procedure BuildStatsMeasure(aDataSet: TSQLQuery; const aWhereText, AValueField: String;
     AMetrics: TSummaryMetricSet);
+  procedure BuildNestMaxMeanMeasure(aDataSet: TSQLQuery; const aWhereText, ATaxonField, ANestField, AValueField: String;
+    AMetrics: TSummaryMetricSet);
 
   procedure LoadFieldsSettings(aDataSet: TDataSet; const aFileName: String);
   procedure SaveFieldsSettings(aDataSet: TDataSet; const aFileName: String);
@@ -615,7 +617,7 @@ resourcestring
 implementation
 
 uses
-  data_schema;
+  data_schema, utils_global;
 
 procedure AddPercentSelect(aDataSet: TSQLQuery);
 begin
@@ -835,6 +837,32 @@ begin
   aDataSet.SQL.Add('SELECT ' + SelectCols);
   aDataSet.SQL.Add('FROM (' + aWhereText + ')');
   aDataSet.SQL.Add('WHERE ' + V + ' IS NOT NULL');
+end;
+
+// Calcula o máximo por ninho e média por táxon
+procedure BuildNestMaxMeanMeasure(aDataSet: TSQLQuery; const aWhereText, ATaxonField, ANestField, AValueField: String; AMetrics: TSummaryMetricSet);
+var
+  SelectCols: String;
+begin
+  // Primeiro, pega o máximo por ninho
+  // Depois, faz a média desses máximos por táxon
+  SelectCols := ATaxonField + ' AS name';
+  if smMean in AMetrics then
+    SelectCols := SelectCols + ', ROUND(AVG(max_value), 4) AS mean';
+  if smMin in AMetrics then
+    SelectCols := SelectCols + ', MIN(max_value) AS min_val';
+  if smMax in AMetrics then
+    SelectCols := SelectCols + ', MAX(max_value) AS max_val';
+
+  aDataSet.SQL.Add('SELECT ' + SelectCols);
+  aDataSet.SQL.Add('FROM (');
+  aDataSet.SQL.Add('  SELECT ' + ATaxonField + ', ' + ANestField + ', MAX(' + AValueField + ') AS max_value');
+  aDataSet.SQL.Add('  FROM (' + aWhereText + ')');
+  aDataSet.SQL.Add('  WHERE ' + AValueField + ' IS NOT NULL');
+  aDataSet.SQL.Add('  GROUP BY ' + ATaxonField + ', ' + ANestField);
+  aDataSet.SQL.Add(')');
+  aDataSet.SQL.Add('GROUP BY ' + ATaxonField);
+  aDataSet.SQL.Add('ORDER BY ' + ATaxonField + ' ASC');
 end;
 
 procedure LoadFieldsSettings(aDataSet: TDataSet; const aFileName: String);
@@ -2328,6 +2356,8 @@ begin
       case Fields[i].FieldName of
         'marked_status':                Fields[i].DisplayLabel := rscMarkedStatus;
         'nest_id':                      Fields[i].DisplayLabel := rscNestID;
+        'taxon_id':                     Fields[i].DisplayLabel := rscTaxonID;
+        'taxon_name':                   Fields[i].DisplayLabel := rscTaxon;
         'revision_date':                Fields[i].DisplayLabel := rscDate;
         'revision_time':                Fields[i].DisplayLabel := rscTime;
         'observer_1_id':                Fields[i].DisplayLabel := rscObserver1ID;
@@ -4821,12 +4851,17 @@ begin
         BuildGroupStatsMeasure(aDataSet, aWhereText, GroupExpr, F.Name, F.SummaryMetrics);
       skStats:
         BuildStatsMeasure(aDataSet, aWhereText, F.Name, F.SummaryMetrics);
+      skNestMaxMean:
+        BuildNestMaxMeanMeasure(aDataSet, aWhereText, GroupExpr, 'nest_id', F.Name, F.SummaryMetrics);
     else
       Clear;
     end;
 
     if SQL.Count > 0 then
+    begin
+      LogSQL(SQL);
       Open;
+    end;
   end;
   //with aDataSet, SQL do
   //begin

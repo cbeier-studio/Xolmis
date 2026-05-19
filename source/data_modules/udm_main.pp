@@ -239,6 +239,12 @@ begin
   sqlCon.Close;
   sysCon.Close;
 
+  if Assigned(xSettings) then
+  begin
+    xSettings.AppTerminatedOk := True;
+    xSettings.SaveToFile;
+  end;
+
   LogEvent(leaEnd, '-----------------------------------------');
   evLog.Active := False;
 
@@ -246,6 +252,11 @@ begin
     FreeAndNil(ActiveUser);
 
   //xProvider.Free;
+
+  if Assigned(xSettings) then
+  begin
+    xSettings.Free;
+  end;
 end;
 
 procedure TDMM.iCheckboxGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;

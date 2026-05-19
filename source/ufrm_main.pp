@@ -1054,12 +1054,12 @@ begin
   end;
 
   //LogInfo('END -----------------------------------------');
-  if Assigned(xSettings) then
-  begin
-    xSettings.AppTerminatedOk := True;
-    xSettings.SaveToFile;
-    xSettings.Free;
-  end;
+  //if Assigned(xSettings) then
+  //begin
+  //  xSettings.AppTerminatedOk := True;
+  //  xSettings.SaveToFile;
+  //  xSettings.Free;
+  //end;
 
   CloseAction := caFree;
 end;

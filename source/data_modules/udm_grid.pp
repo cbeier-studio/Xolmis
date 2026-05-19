@@ -668,6 +668,8 @@ type
     qNestRevisionsobserver_2_name: TStringField;
     qNestRevisionsrevision_date: TDateField;
     qNestRevisionsrevision_time: TTimeField;
+    qNestRevisionstaxon_id: TLongintField;
+    qNestRevisionstaxon_name: TStringField;
     qNestRevisionsupdate_date: TDateTimeField;
     qNestRevisionsuser_inserted: TLongintField;
     qNestRevisionsuser_updated: TLongintField;

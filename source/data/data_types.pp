@@ -225,7 +225,8 @@ type
       skCategory,      // categories + count
       skBoolean,       // count of TRUE/FALSE
       skDate,          // min/max
-      skGroupStats     // stats grouped by other column
+      skGroupStats,    // stats grouped by other column
+      skNestMaxMean    // max per nest, mean per taxon
     );
 
     TSummaryMetric = (

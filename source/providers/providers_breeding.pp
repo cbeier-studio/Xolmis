@@ -698,14 +698,17 @@ begin
   Result :=
     'SELECT nr.*, ' +
       'n.full_name AS nest_name, ' +
+      'n.taxon_id AS taxon_id, ' +
+      'z1.scientific_name AS taxon_name, ' +
       'p1.abbreviation AS observer_1_name, ' +
       'p2.abbreviation AS observer_2_name, ' +
-      'z.scientific_name AS nidoparasite_name ' +
+      'z2.scientific_name AS nidoparasite_name ' +
     'FROM nest_revisions AS nr ' +
     'LEFT JOIN nests AS n ON nr.nest_id = n.nest_id ' +
     'LEFT JOIN people AS p1 ON nr.observer_1_id = p1.person_id ' +
     'LEFT JOIN people AS p2 ON nr.observer_2_id = p2.person_id ' +
-    'LEFT JOIN zoo_taxa AS z ON nr.nidoparasite_id = z.taxon_id ';
+    'LEFT JOIN zoo_taxa AS z1 ON n.taxon_id = z1.taxon_id ' +
+    'LEFT JOIN zoo_taxa AS z2 ON nr.nidoparasite_id = z2.taxon_id ';
 
   case aWhere of
     swcNone: ;
