@@ -148,6 +148,9 @@ type
   PProvince = ^TProvince;
   PCity = ^TCity;
 
+var
+  GazetteerJSONData: TJSONData = nil;
+  GazetteerJSONArray: TJSONArray = nil;
 
   { Geographic coordinates conversion routines }
 
@@ -197,6 +200,7 @@ type
   function LoadCountriesFromJSON(const Lang: String): TList;
   function LoadCountryFromJSON(const CountryIso: String): TCountry;
   function LoadCitiesFromJSON(CountryIso2, StateIso2: String): TList;
+  procedure FreeGazetteerCache;
 
 
 implementation
@@ -204,6 +208,38 @@ implementation
 uses
   utils_locale, utils_global, utils_conversions, utils_validations, data_columns, data_setparam, models_users,
   udm_main, udlg_geoassist;
+
+function GetGazetteerJSONArray: TJSONArray;
+var
+  FileName, JSONStr: String;
+  StringStream: TStringStream;
+begin
+  if GazetteerJSONArray = nil then
+  begin
+    FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
+    StringStream := TStringStream.Create('');
+    try
+      StringStream.LoadFromFile(FileName);
+      JSONStr := StringStream.DataString;
+      GazetteerJSONData := GetJSON(JSONStr);
+      GazetteerJSONArray := TJSONArray(GazetteerJSONData);
+    finally
+      StringStream.Free;
+    end;
+  end;
+  Result := GazetteerJSONArray;
+end;
+
+procedure FreeGazetteerCache;
+begin
+  if GazetteerJSONArray <> nil then
+    GazetteerJSONArray := nil;
+  if GazetteerJSONData <> nil then
+  begin
+    GazetteerJSONData.Free;
+    GazetteerJSONData := nil;
+  end;
+end;
 
 function RemoveSymbolsDMS(aCoord: String): String;
 begin
@@ -1169,180 +1205,121 @@ end;
 
 function LoadCountriesFromJSON(const Lang: String): TList;
 var
-  JSONData: TJSONData;
   JSONArray: TJSONArray;
   CountryObj, TranslationsObj: TJSONObject;
-  Parser: TJSONParser;
-  FS: TFileStream;
   i: Integer;
   Country: ^TCountry;
   CountryName: String;
-  FileName: String;
 begin
   LogEvent(leaStart, 'Load countries from JSON');
   Result := TList.Create;
-  FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
-  FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
-  try
-    Parser := TJSONParser.Create(FS, True);
-    try
-      JSONData := Parser.Parse;
-      JSONArray := TJSONArray(JSONData);
-
-      for i := 0 to JSONArray.Count - 1 do
-      begin
-        CountryObj := JSONArray.Objects[i];
-        New(Country);
-
-        // get name translations
-        if CountryObj.Find('translations') <> nil then
-        begin
-          TranslationsObj := CountryObj.Objects['translations'];
-          CountryName := TranslationsObj.Get('pt-BR', CountryObj.Get('name', ''));
-        end
-        else
-          CountryName := EmptyStr;
-
-        Country^.Id := CountryObj.Get('id', 0);
-        Country^.Name := CountryObj.Get('name', '');
-        Country^.NamePtbr := CountryName;
-        Country^.Iso2 := CountryObj.Get('iso2', '');
-        Country^.Iso3 := CountryObj.Get('iso3', '');
-        Country^.Capital := CountryObj.Get('capital', '');
-        Country^.Region := CountryObj.Get('region', '');
-        Country^.SubRegion := CountryObj.Get('subregion', '');
-        Result.Add(Country);
-      end;
-    finally
-      Parser.Free;
-      JSONData.Free;
-    end;
-  finally
-    FS.Free;
-    LogEvent(leaFinish, 'Load countries from JSON');
+  JSONArray := GetGazetteerJSONArray;
+  for i := 0 to JSONArray.Count - 1 do
+  begin
+    CountryObj := JSONArray.Objects[i];
+    New(Country);
+    // get name translations
+    if CountryObj.Find('translations') <> nil then
+    begin
+      TranslationsObj := CountryObj.Objects['translations'];
+      CountryName := TranslationsObj.Get('pt-BR', CountryObj.Get('name', ''));
+    end
+    else
+      CountryName := EmptyStr;
+    Country^.Id := CountryObj.Get('id', 0);
+    Country^.Name := CountryObj.Get('name', '');
+    Country^.NamePtbr := CountryName;
+    Country^.Iso2 := CountryObj.Get('iso2', '');
+    Country^.Iso3 := CountryObj.Get('iso3', '');
+    Country^.Capital := CountryObj.Get('capital', '');
+    Country^.Region := CountryObj.Get('region', '');
+    Country^.SubRegion := CountryObj.Get('subregion', '');
+    Result.Add(Country);
   end;
+  LogEvent(leaFinish, 'Load countries from JSON');
   LogInfo(Format('Countries loaded from JSON with %d records', [Result.Count]));
 end;
 
 function LoadCountryFromJSON(const CountryIso: String): TCountry;
 var
-  JSONData: TJSONData;
   JSONArray: TJSONArray;
   CountryObj, TranslationsObj: TJSONObject;
-  Parser: TJSONParser;
-  FS: TFileStream;
   i: Integer;
   CountryPtbr: String;
-  FileName: String;
 begin
   LogEvent(leaStart, 'Load country from JSON');
-  FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
-  FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
-  try
-    Parser := TJSONParser.Create(FS, True);
-    try
-      JSONData := Parser.Parse;
-      JSONArray := TJSONArray(JSONData);
-
-      for i := 0 to JSONArray.Count - 1 do
+  JSONArray := GetGazetteerJSONArray;
+  for i := 0 to JSONArray.Count - 1 do
+  begin
+    CountryObj := JSONArray.Objects[i];
+    if SameText(CountryIso, CountryObj.Get('iso2', '')) then
+    begin
+      // get name translations
+      if CountryObj.Find('translations') <> nil then
       begin
-        CountryObj := JSONArray.Objects[i];
-
-        if SameText(CountryIso, CountryObj.Get('iso2', '')) then
-        begin
-          // get name translations
-          if CountryObj.Find('translations') <> nil then
-          begin
-            TranslationsObj := CountryObj.Objects['translations'];
-            CountryPtbr := TranslationsObj.Get('pt-BR', CountryObj.Get('name', ''));
-          end
-          else
-            CountryPtbr := EmptyStr;
-
-          Result.Id := CountryObj.Get('id', 0);
-          Result.Name := CountryObj.Get('name', '');
-          Result.NamePtbr := CountryPtbr;
-          Result.Iso2 := CountryObj.Get('iso2', '');
-          Result.Iso3 := CountryObj.Get('iso3', '');
-          Result.Capital := CountryObj.Get('capital', '');
-          Result.Region := CountryObj.Get('region', '');
-          Result.SubRegion := CountryObj.Get('subregion', '');
-
-          LogInfo('Country found: ' + Result.Name);
-          Break;
-        end;
-      end;
-    finally
-      Parser.Free;
-      JSONData.Free;
+        TranslationsObj := CountryObj.Objects['translations'];
+        CountryPtbr := TranslationsObj.Get('pt-BR', CountryObj.Get('name', ''));
+      end
+      else
+        CountryPtbr := EmptyStr;
+      Result.Id := CountryObj.Get('id', 0);
+      Result.Name := CountryObj.Get('name', '');
+      Result.NamePtbr := CountryPtbr;
+      Result.Iso2 := CountryObj.Get('iso2', '');
+      Result.Iso3 := CountryObj.Get('iso3', '');
+      Result.Capital := CountryObj.Get('capital', '');
+      Result.Region := CountryObj.Get('region', '');
+      Result.SubRegion := CountryObj.Get('subregion', '');
+      LogInfo('Country found: ' + Result.Name);
+      Break;
     end;
-  finally
-    FS.Free;
-    LogEvent(leaFinish, 'Load country from JSON');
   end;
+  LogEvent(leaFinish, 'Load country from JSON');
 end;
 
 function LoadCitiesFromJSON(CountryIso2, StateIso2: String): TList;
 var
-  JSONData: TJSONData;
   JSONArray: TJSONArray;
   CountryObj, StateObj, CityObj: TJSONObject;
-  Parser: TJSONParser;
-  FS: TFileStream;
   i, j, k: Integer;
   StatesArray, CitiesArray: TJSONArray;
   City: ^TCity;
-  FileName: String;
 begin
   LogEvent(leaStart, 'Load cities from JSON');
   Result := TList.Create;
-  FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
-  FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
-  try
-    Parser := TJSONParser.Create(FS, True);
-    try
-      JSONData := Parser.Parse;
-      JSONArray := TJSONArray(JSONData);
-
-      // iterate countries
-      for i := 0 to JSONArray.Count - 1 do
+  JSONArray := GetGazetteerJSONArray;
+  // iterate countries
+  for i := 0 to JSONArray.Count - 1 do
+  begin
+    CountryObj := JSONArray.Objects[i];
+    if SameText(CountryObj.Get('name', ''), CountryIso2) then
+    begin
+      StatesArray := CountryObj.Arrays['states'];
+      // iterate states
+      for j := 0 to StatesArray.Count - 1 do
       begin
-        CountryObj := JSONArray.Objects[i];
-        if SameText(CountryObj.Get('name', ''), CountryIso2) then
+        StateObj := StatesArray.Objects[j];
+        if SameText(StateObj.Get('name', ''), StateIso2) then
         begin
-          StatesArray := CountryObj.Arrays['states'];
-          // iterate states
-          for j := 0 to StatesArray.Count - 1 do
+          CitiesArray := StateObj.Arrays['cities'];
+          // iterate cities
+          for k := 0 to CitiesArray.Count - 1 do
           begin
-            StateObj := StatesArray.Objects[j];
-            if SameText(StateObj.Get('name', ''), StateIso2) then
-            begin
-              CitiesArray := StateObj.Arrays['cities'];
-              // iterate cities
-              for k := 0 to CitiesArray.Count - 1 do
-              begin
-                CityObj := CitiesArray.Objects[k];
-                New(City);
-                City^.Id := CityObj.Get('id', 0);
-                City^.Name := CityObj.Get('name', '');
-                City^.Latitude := CityObj.Get('latitude', '');
-                City^.Longitude := CityObj.Get('longitude', '');
-                City^.Timezone := CityObj.Get('timezone', '');
-                Result.Add(City);
-              end;
-              Exit; // state found
-            end;
+            CityObj := CitiesArray.Objects[k];
+            New(City);
+            City^.Id := CityObj.Get('id', 0);
+            City^.Name := CityObj.Get('name', '');
+            City^.Latitude := CityObj.Get('latitude', '');
+            City^.Longitude := CityObj.Get('longitude', '');
+            City^.Timezone := CityObj.Get('timezone', '');
+            Result.Add(City);
           end;
+          Exit; // state found
         end;
       end;
-    finally
-      Parser.Free;
-      JSONData.Free;
     end;
-  finally
-    FS.Free;
-    LogEvent(leaFinish, 'Load cities from JSON');
   end;
+  LogEvent(leaFinish, 'Load cities from JSON');
   LogInfo(Format('Cities loaded from JSON with %d records', [Result.Count]));
 end;
 

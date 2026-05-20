@@ -1053,6 +1053,8 @@ begin
     end;
   end;
 
+  FreeGazetteerCache;
+
   //LogInfo('END -----------------------------------------');
   //if Assigned(xSettings) then
   //begin
