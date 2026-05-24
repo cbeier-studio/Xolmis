@@ -329,6 +329,7 @@ type
     SmokeDefault: TColor;
     CardDefault: TColor;
     CardSecondary: TColor;
+    ControlDefault: TColor;
   end;
 
   { Text and on-accent foreground colors }
@@ -564,6 +565,7 @@ begin
     SmokeDefault   := clSmokeBGDefaultDark;
     CardDefault    := clCardBGDefaultDark;
     CardSecondary  := clCardBGSecondaryDark;
+    ControlDefault := TColor($002A2A2A);
   end;
 
   // Text / foreground
@@ -708,6 +710,7 @@ begin
     SmokeDefault   := clSmokeBGDefaultLight;
     CardDefault    := clCardBGDefaultLight;
     CardSecondary  := clCardBGSecondaryLight;
+    ControlDefault := clWindow;
   end;
 
   // Text / foreground

@@ -2439,7 +2439,7 @@ begin
   sbMoreOptions.Images := iButtonsDark;
 
   // Search box
-  pSearch.Background.Color := ActiveTheme.Background.CardSecondary; // clCardBGSecondaryDark;
+  pSearch.Background.Color := ActiveTheme.Background.ControlDefault; // clCardBGSecondaryDark;
   pSearch.Border.Color := ActiveTheme.Background.SolidSecondary; // clSolidBGSecondaryDark;
   pSearch.ParentBackground := True;
   eSearch.Color := pSearch.Background.Color;
@@ -4482,7 +4482,7 @@ begin
     pSearch.Width := 148;
   if IsDarkModeEnabled then
   begin
-    pSearch.Background.Color := ActiveTheme.Background.CardSecondary;
+    pSearch.Background.Color := ActiveTheme.Background.ControlDefault;
     pSearch.Border.Color := ActiveTheme.Background.SolidSecondary;
   end
   else

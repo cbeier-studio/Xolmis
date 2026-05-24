@@ -253,6 +253,7 @@ object cfgPermissions: TcfgPermissions
       ShowCaption = False
       ShowHint = True
       ParentShowHint = False
+      OnClick = sbRefreshRecordsClick
     end
   end
   object pSearch: TBCPanel
@@ -1496,6 +1497,7 @@ object cfgPermissions: TcfgPermissions
     object pmrRefresh: TMenuItem
       Caption = 'Refresh roles'
       ImageIndex = 4
+      OnClick = sbRefreshRecordsClick
     end
     object Separator2: TMenuItem
       Caption = '-'
@@ -1526,10 +1528,12 @@ object cfgPermissions: TcfgPermissions
     object pmpMarkAll: TMenuItem
       Caption = 'Mark all'
       ImageIndex = 15
+      OnClick = pmpMarkAllClick
     end
     object pmpUnmarkAll: TMenuItem
       Caption = 'Unmark all'
       ImageIndex = 16
+      OnClick = pmpUnmarkAllClick
     end
   end
 end

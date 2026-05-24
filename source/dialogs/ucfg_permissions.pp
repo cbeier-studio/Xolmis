@@ -70,10 +70,13 @@ type
     procedure lvRolesSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
     procedure pmpCollapseAllClick(Sender: TObject);
     procedure pmpExpandAllClick(Sender: TObject);
+    procedure pmpMarkAllClick(Sender: TObject);
+    procedure pmpUnmarkAllClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
     procedure sbDeleteClick(Sender: TObject);
     procedure sbEditClick(Sender: TObject);
     procedure sbNewClick(Sender: TObject);
+    procedure sbRefreshRecordsClick(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
     procedure vtPermissionsChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure vtPermissionsFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -90,6 +93,8 @@ type
     procedure LoadPermissionsForRole(const RoleId: Integer);
     procedure LoadCurrentRolePermissions;
     procedure SavePermissionChange(const PermissionId: Integer; Checked: Boolean);
+    procedure UpdateRoleButtons;
+    procedure UpdatePermissionButtons;
   public
 
   end;
@@ -124,7 +129,7 @@ begin
   pmRoles.Images := iButtonsDark;
   pmPermissions.Images := iButtonsDark;
 
-  pSearch.Background.Color := clCardBGDefaultDark;
+  pSearch.Background.Color := ActiveTheme.Background.ControlDefault;
   pSearch.Border.Color := clSolidBGSecondaryDark;
   pSearch.ParentBackground := True;
   eSearch.Color := pSearch.Background.Color;
@@ -204,7 +209,7 @@ procedure TcfgPermissions.eSearchExit(Sender: TObject);
 begin
   if IsDarkModeEnabled then
   begin
-    pSearch.Background.Color := ActiveTheme.Background.CardSecondary;
+    pSearch.Background.Color := ActiveTheme.Background.ControlDefault;
     pSearch.Border.Color := ActiveTheme.Background.SolidSecondary;
   end
   else
@@ -265,6 +270,7 @@ begin
   if lvRoles.Items.Count > 0 then
     lvRoles.Items[0].Selected := True;
   LoadCurrentRolePermissions;
+  UpdateRoleButtons;
 end;
 
 procedure TcfgPermissions.LoadCurrentRolePermissions;
@@ -275,6 +281,7 @@ begin
     vtPermissions.Clear;
 
   sbDelete.Enabled := RoleCanDelete(CurrentRoleId);
+  UpdatePermissionButtons;
 end;
 
 procedure TcfgPermissions.LoadPermissionsForRole(const RoleId: Integer);
@@ -378,6 +385,7 @@ begin
   finally
     vtPermissions.EndUpdate;
     FLoadingPermissions := False;
+    UpdatePermissionButtons;
   end;
 end;
 
@@ -395,6 +403,70 @@ end;
 procedure TcfgPermissions.pmpExpandAllClick(Sender: TObject);
 begin
   vtPermissions.FullExpand();
+end;
+
+procedure TcfgPermissions.pmpMarkAllClick(Sender: TObject);
+var
+  Node: PVirtualNode;
+  NodeData: PPermissionNodeData;
+begin
+  if CurrentRoleId <= 0 then
+    Exit;
+
+  FLoadingPermissions := True;
+  vtPermissions.BeginUpdate;
+  try
+    Node := vtPermissions.GetFirst;
+    while Assigned(Node) do
+    begin
+      NodeData := vtPermissions.GetNodeData(Node);
+      if Assigned(NodeData) and (not NodeData^.IsGroup) and
+         (vtPermissions.CheckType[Node] = ctCheckBox) then
+      begin
+        if vtPermissions.CheckState[Node] <> csCheckedNormal then
+        begin
+          vtPermissions.CheckState[Node] := csCheckedNormal;
+          SavePermissionChange(NodeData^.PermissionId, True);
+        end;
+      end;
+      Node := vtPermissions.GetNext(Node);
+    end;
+  finally
+    vtPermissions.EndUpdate;
+    FLoadingPermissions := False;
+  end;
+end;
+
+procedure TcfgPermissions.pmpUnmarkAllClick(Sender: TObject);
+var
+  Node: PVirtualNode;
+  NodeData: PPermissionNodeData;
+begin
+  if CurrentRoleId <= 0 then
+    Exit;
+
+  FLoadingPermissions := True;
+  vtPermissions.BeginUpdate;
+  try
+    Node := vtPermissions.GetFirst;
+    while Assigned(Node) do
+    begin
+      NodeData := vtPermissions.GetNodeData(Node);
+      if Assigned(NodeData) and (not NodeData^.IsGroup) and
+         (vtPermissions.CheckType[Node] = ctCheckBox) then
+      begin
+        if vtPermissions.CheckState[Node] <> csUncheckedNormal then
+        begin
+          vtPermissions.CheckState[Node] := csUncheckedNormal;
+          SavePermissionChange(NodeData^.PermissionId, False);
+        end;
+      end;
+      Node := vtPermissions.GetNext(Node);
+    end;
+  finally
+    vtPermissions.EndUpdate;
+    FLoadingPermissions := False;
+  end;
 end;
 
 procedure TcfgPermissions.SavePermissionChange(const PermissionId: Integer; Checked: Boolean);
@@ -525,10 +597,32 @@ begin
   LoadRoles;
 end;
 
+procedure TcfgPermissions.sbRefreshRecordsClick(Sender: TObject);
+begin
+  LoadRoles;
+end;
+
 procedure TcfgPermissions.TimerFindTimer(Sender: TObject);
 begin
   TimerFind.Enabled := False;
   LoadCurrentRolePermissions;
+end;
+
+procedure TcfgPermissions.UpdatePermissionButtons;
+begin
+  pmpCollapseAll.Enabled := not vtPermissions.IsEmpty;
+  pmpExpandAll.Enabled := pmpCollapseAll.Enabled;
+  pmpMarkAll.Enabled := pmpCollapseAll.Enabled;
+  pmpUnmarkAll.Enabled := pmpCollapseAll.Enabled;
+end;
+
+procedure TcfgPermissions.UpdateRoleButtons;
+begin
+  sbEdit.Enabled := lvRoles.Items.Count > 0;
+  sbDelete.Enabled := sbEdit.Enabled;
+
+  pmrEdit.Enabled := sbEdit.Enabled;
+  pmrDelete.Enabled := sbDelete.Enabled;
 end;
 
 procedure TcfgPermissions.vtPermissionsChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
