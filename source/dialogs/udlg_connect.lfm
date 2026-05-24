@@ -17,7 +17,7 @@ object dlgConnect: TdlgConnect
   OnShow = FormShow
   object pClient: TPanel
     Left = 0
-    Height = 437
+    Height = 443
     Top = 0
     Width = 280
     Align = alTop
@@ -25,7 +25,7 @@ object dlgConnect: TdlgConnect
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 437
+    ClientHeight = 443
     ClientWidth = 280
     Color = clBtnFace
     ParentBackground = False
@@ -47,7 +47,7 @@ object dlgConnect: TdlgConnect
     object eUsername: TEdit
       Left = 16
       Height = 23
-      Top = 342
+      Top = 348
       Width = 248
       Align = alTop
       BorderSpacing.Bottom = 12
@@ -59,7 +59,7 @@ object dlgConnect: TdlgConnect
     object ePassword: TEditButton
       Left = 16
       Height = 23
-      Top = 398
+      Top = 404
       Width = 248
       Align = alTop
       BorderSpacing.Bottom = 12
@@ -99,7 +99,7 @@ object dlgConnect: TdlgConnect
     object lblUsername: TLabel
       Left = 16
       Height = 15
-      Top = 321
+      Top = 327
       Width = 248
       Align = alTop
       BorderSpacing.Bottom = 6
@@ -110,7 +110,7 @@ object dlgConnect: TdlgConnect
     object lblPassword: TLabel
       Left = 16
       Height = 15
-      Top = 377
+      Top = 383
       Width = 248
       Align = alTop
       BorderSpacing.Bottom = 6
@@ -135,7 +135,7 @@ object dlgConnect: TdlgConnect
       Top = 252
       Width = 248
       Align = alTop
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Bottom = 12
       ItemHeight = 15
       Style = csDropDownList
       TabOrder = 0
@@ -146,7 +146,7 @@ object dlgConnect: TdlgConnect
       Cursor = crHandPoint
       Left = 16
       Height = 15
-      Top = 281
+      Top = 287
       Width = 248
       Align = alTop
       Alignment = taRightJustify
@@ -158,6 +158,7 @@ object dlgConnect: TdlgConnect
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
+      Visible = False
       OnClick = linkManageConnClick
       ColorLinkNormal = 13066075
       ColorLinkMouseover = 9520964
@@ -166,7 +167,7 @@ object dlgConnect: TdlgConnect
   object pBottom: TPanel
     Left = 0
     Height = 43
-    Top = 439
+    Top = 445
     Width = 280
     Align = alTop
     AutoSize = True
@@ -213,7 +214,7 @@ object dlgConnect: TdlgConnect
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 437
+    Top = 443
     Width = 280
     Align = alTop
     LineColor = 9276813

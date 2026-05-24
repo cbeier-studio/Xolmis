@@ -186,7 +186,7 @@ implementation
 uses
   utils_global, utils_locale, utils_themes, utils_conversions, utils_dialogs, utils_taxonomy,
   data_search, data_getvalue, data_consts,
-  models_record_types, models_taxonomy,
+  models_record_types, models_taxonomy, models_access_control, models_users,
   ufrm_main, udm_main, udm_grid, udm_taxa,
   uDarkStyleParams;
 
@@ -1571,8 +1571,8 @@ end;
 
 procedure TfrmTaxa.UpdateButtons;
 begin
-  sbShareRecords.Enabled := dsLink.DataSet.RecordCount > 0;
-  sbPrint.Enabled := sbShareRecords.Enabled;
+  sbShareRecords.Enabled := (ActiveUser.HasPermission(PERM_TAXA_EXPORT)) and not (dsLink.DataSet.IsEmpty);
+  sbPrint.Enabled := (ActiveUser.HasPermission(PERM_TAXA_PRINT)) and not (dsLink.DataSet.IsEmpty);
 end;
 
 end.

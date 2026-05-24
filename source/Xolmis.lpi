@@ -148,7 +148,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="506"/>
+      <BuildNr Value="510"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1652,6 +1652,24 @@
       <Unit>
         <Filename Value="utils\utils_passwords.pp"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="models\models_access_control.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ucfg_permissions.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="cfgPermissions"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_role.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtRole"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
     <Debugger>

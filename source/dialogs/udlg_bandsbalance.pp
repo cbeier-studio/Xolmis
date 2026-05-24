@@ -54,6 +54,7 @@ type
     TimerLoad: TTimer;
     procedure dbgSaldoPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
       AState: TGridDrawState);
+    procedure dsBandsBalanceStateChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure pmgPrintClick(Sender: TObject);
@@ -63,6 +64,7 @@ type
   private
     MediaDiasExpedicao: Integer;
     procedure ApplyDarkMode;
+    procedure UpdateButtons;
   public
 
   end;
@@ -73,7 +75,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_themes, udm_main, udlg_loading, uDarkStyleParams;
+  utils_locale, utils_global, utils_themes, models_users, models_access_control,
+  udm_main, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -104,6 +107,14 @@ begin
 
   dlgLoading.Hide;
   //pMsg.Visible := False;
+
+  UpdateButtons;
+end;
+
+procedure TdlgBandsBalance.UpdateButtons;
+begin
+  pmgSavesAs.Enabled := ActiveUser.HasPermission(PERM_BANDS_EXPORT) and not (qBandsBalance.IsEmpty);
+  pmgPrint.Enabled := ActiveUser.HasPermission(PERM_BANDS_PRINT) and not (qBandsBalance.IsEmpty);
 end;
 
 procedure TdlgBandsBalance.FormDestroy(Sender: TObject);
@@ -141,32 +152,21 @@ begin
         Canvas.Font.Style := Canvas.Font.Style + [fsBold];
         if vSaldo = 0 then
         begin
-          if IsDarkModeEnabled then
-          begin
-            Canvas.Brush.Color := clSystemCriticalBGDark;
-            Canvas.Font.Color := clSystemCriticalFGDark;
-          end
-          else
-          begin
-            Canvas.Brush.Color := clSystemCriticalBGLight;
-            Canvas.Font.Color := clSystemCriticalFGLight;
-          end;
+          Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+          Canvas.Font.Color := ActiveTheme.System.CriticalFG;
         end else
         begin
-          if IsDarkModeEnabled then
-          begin
-            Canvas.Brush.Color := clSystemCautionBGDark;
-            Canvas.Font.Color := clSystemCautionFGDark;
-          end
-          else
-          begin
-            Canvas.Brush.Color := clSystemCautionBGLight;
-            Canvas.Font.Color := clSystemCautionFGLight;
-          end;
+          Canvas.Brush.Color := ActiveTheme.System.CautionBG;
+          Canvas.Font.Color := ActiveTheme.System.CautionFG;
         end;
       end;
     end;
   //end;
+end;
+
+procedure TdlgBandsBalance.dsBandsBalanceStateChange(Sender: TObject);
+begin
+  UpdateButtons;
 end;
 
 procedure TdlgBandsBalance.FormShow(Sender: TObject);

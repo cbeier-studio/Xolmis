@@ -27,10 +27,6 @@ To add a new user, click the **Add** button :material-plus-circle:. To edit an e
 | **Username** | Yes | Login name used to access the database and displayed in change logs |
 | **Fullname** |  | Optional real name of the user |
 | **Access level** | Yes | Defines privileges or restrictions (see below) |
-| **Manage collection** |  | Grants permission to edit collection data |
-| **Print reports** |  | Grants permission to generate, print, or export reports |
-| **Export data** |  | Grants permission to export data |
-| **Import data** |  | Grants permission to import data |
 
 ### Access levels
 
@@ -39,11 +35,20 @@ Access levels define the scope of permissions available to each user:
 | Level | Description |
 | --- | --- |
 | **Administrator** | Highest privileges, full access to all functionalities. Intended for database maintenance and critical tasks. **Not recommended** for everyday data editing. |
-| **Standard** | Default level. Grants access to almost all functionalities. Recommended for daily use and data editing. |
-| **Visitor** | Restricted access. Can only view data, without editing permissions. Useful for external collaborators or audits. |
+| **Supervisor** | Almost all privileges, except editing access levels and permissions. |
+| **Standard** | Default level. Grants access to almost all functionalities for data editing. Recommended for daily use and data editing. |
+| **Reader** | Can only view, export and print records, without editing permissions. | 
+| **Guest** | Restricted access. Can only view data, without editing permissions. Useful for external collaborators or audits. |
 
 !!! note "`admin` user"
     The `admin` user is automatically created when a new database file is initialized. It must **not** be used for trivial tasks like editing data, but reserved for administrative and maintenance operations.
+
+### Editing permissions
+
+Permissions are defined for each access level and can be modified if necessary. To edit permissions, the user must have Administrator access. On the Users screen, click the **Roles and permissions** button in the toolbar above the user list. Select the access level you want to edit from the list on the left side of the screen, then check or uncheck the desired permissions in the list on the right.
+
+!!! warning
+    Access levels must follow a clear hierarchy, where Administrator is the level with the most privileges, followed by Supervisor, Standard, Reader, and finally Guest with the most restricted access. Any newly created access levels should have permissions that fall between Administrator and Guest.
 
 ## Changing a user password
 

@@ -384,6 +384,7 @@ implementation
 uses
   utils_locale, utils_global, utils_dialogs, utils_system, utils_autoupdate, utils_permissions, utils_backup,
   utils_editdialogs, utils_themes, utils_gis,
+  models_access_control,
   models_users, models_geo, models_taxonomy, models_record_types,
   data_management, data_schema, io_core, io_ebird_csv,
   SQLDB,
@@ -885,15 +886,48 @@ end;
 
 procedure TfrmMain.ApplyFormSettings;
 begin
-  // Update active taxonomy
-  //ActiveTaxonomy := xSettings.Taxonomy;
-  // SBarTaxonomy.Caption:= TAXONOMY_NAMES[ActiveTaxonomy];
-
   // Get user permissions
-  actMaintenance.Enabled := ActiveUser.Rank = urAdministrator;
-  actExport.Enabled := ActiveUser.AllowExport;
-  actImport.Enabled := ActiveUser.AllowImport;
-  actPrint.Enabled := ActiveUser.AllowPrint;
+  actDBNew.Enabled := ActiveUser.HasPermission(PERM_DATABASE_CREATE);
+  actMaintenance.Enabled := ActiveUser.HasPermission(PERM_SYSTEM_MAINTENANCE);
+  actManageUsers.Enabled := ActiveUser.HasPermission(PERM_USERS_MANAGE);
+
+  actImport.Enabled := ActiveUser.HasPermission(PERM_IMPORT_WIZARD) or
+    ActiveUser.HasPermission(PERM_IMPORT_XOLMIS_MOBILE) or
+    ActiveUser.HasPermission(PERM_IMPORT_EBIRD) or
+    ActiveUser.HasPermission(PERM_IMPORT_BANDING) or
+    ActiveUser.HasPermission(PERM_IMPORT_NESTS) or
+    ActiveUser.HasPermission(PERM_IMPORT_GEOCOORDS);
+
+  actImportWizard.Enabled := ActiveUser.HasPermission(PERM_IMPORT_WIZARD);
+  actImportXolmisMobile.Enabled := ActiveUser.HasPermission(PERM_IMPORT_XOLMIS_MOBILE);
+  actImportEbird.Enabled := ActiveUser.HasPermission(PERM_IMPORT_EBIRD);
+  actImportCaptures.Enabled := ActiveUser.HasPermission(PERM_IMPORT_BANDING);
+  actImportNests.Enabled := ActiveUser.HasPermission(PERM_IMPORT_NESTS);
+  actImportCoordinates.Enabled := ActiveUser.HasPermission(PERM_IMPORT_GEOCOORDS);
+
+  actOpenTaxa.Enabled := ActiveUser.HasPermission(PERM_TAXA_VIEW);
+  actOpenBotany.Enabled := ActiveUser.HasPermission(PERM_BOTANY_VIEW);
+
+  actOpenGazetteer.Enabled := ActiveUser.HasPermission(PERM_GAZETTEER_VIEW);
+  actOpenNetStations.Enabled := ActiveUser.HasPermission(PERM_SAMPLING_PLOTS_VIEW);
+
+  actOpenInstitutions.Enabled := ActiveUser.HasPermission(PERM_INSTITUTIONS_VIEW);
+  actOpenResearchers.Enabled := ActiveUser.HasPermission(PERM_PEOPLE_VIEW);
+  actOpenProjects.Enabled := ActiveUser.HasPermission(PERM_PROJECTS_VIEW);
+  actOpenPermits.Enabled := ActiveUser.HasPermission(PERM_PERMITS_VIEW);
+  actOpenBands.Enabled := ActiveUser.HasPermission(PERM_BANDS_VIEW);
+
+  actOpenMethods.Enabled := ActiveUser.HasPermission(PERM_METHODS_VIEW);
+  actOpenExpeditions.Enabled := ActiveUser.HasPermission(PERM_SAMPLING_VIEW);
+  actOpenSurveys.Enabled := ActiveUser.HasPermission(PERM_SAMPLING_VIEW);
+  actOpenSightings.Enabled := ActiveUser.HasPermission(PERM_SIGHTINGS_VIEW);
+  actOpenIndividuals.Enabled := ActiveUser.HasPermission(PERM_BIRDS_VIEW);
+  actOpenCaptures.Enabled := ActiveUser.HasPermission(PERM_BIRDS_VIEW);
+  actOpenFeathers.Enabled := ActiveUser.HasPermission(PERM_BIRDS_VIEW);
+  actOpenNests.Enabled := ActiveUser.HasPermission(PERM_BREEDING_VIEW);
+  actOpenNestRevisions.Enabled := ActiveUser.HasPermission(PERM_BREEDING_VIEW);
+  actOpenEggs.Enabled := ActiveUser.HasPermission(PERM_BREEDING_VIEW);
+  actOpenSpecimens.Enabled := ActiveUser.HasPermission(PERM_SPECIMENS_VIEW);
 
   // Update status bar
   UpdateStatusBar;
@@ -1910,7 +1944,7 @@ procedure TfrmMain.SBarMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Inte
 begin
   case SBar.GetPanelIndexAt(X, Y) of
     0: SBar.Hint := Format('%s: %s', [rsCaptionConnection, databaseConnection.Database]);
-    1: SBar.Hint := rsCaptionUser;
+    1: SBar.Hint := Format('%s: %s', [rsCaptionUser, ActiveUser.RoleName]);
   else
     SBar.Hint := EmptyStr;
   end;

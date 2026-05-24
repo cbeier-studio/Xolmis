@@ -102,7 +102,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_themes, data_types, data_search,
+  utils_locale, utils_global, utils_dialogs, utils_themes, data_types, data_search, models_users, models_access_control,
   udm_main, uedt_database,
   uDarkStyleParams;
 
@@ -390,17 +390,21 @@ begin
         sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
         mmTestConnection.Enabled := False;
+        mmOptimizeDB.Enabled := False;
+        mmVacuumDB.Enabled := False;
         eSearch.Enabled := False;
         sbClearSearch.Enabled := False;
       end;
     dsBrowse:
       begin
-        sbNew.Enabled := not (dsConn.DataSet as TSQLQuery).ReadOnly;
-        sbEdit.Enabled := not (dsConn.DataSet as TSQLQuery).ReadOnly and (dsConn.DataSet.RecordCount > 0);
-        sbDelete.Enabled := not (dsConn.DataSet as TSQLQuery).ReadOnly and (dsConn.DataSet.RecordCount > 0);
+        sbNew.Enabled := not (dsConn.DataSet as TSQLQuery).ReadOnly and ActiveUser.HasPermission(PERM_DATABASE_CREATE);
+        sbEdit.Enabled := not (dsConn.DataSet as TSQLQuery).ReadOnly and not (dsConn.DataSet.IsEmpty) and ActiveUser.HasPermission(PERM_DATABASE_EDIT);
+        sbDelete.Enabled := not (dsConn.DataSet as TSQLQuery).ReadOnly and not (dsConn.DataSet.IsEmpty) and ActiveUser.HasPermission(PERM_DATABASE_DELETE);
         sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
-        mmTestConnection.Enabled := dsConn.DataSet.RecordCount > 0;
+        mmTestConnection.Enabled := not (dsConn.DataSet.IsEmpty);
+        mmOptimizeDB.Enabled := not (dsConn.DataSet.IsEmpty) and ActiveUser.HasPermission(PERM_DATABASE_MAINTENANCE);
+        mmVacuumDB.Enabled := not (dsConn.DataSet.IsEmpty) and ActiveUser.HasPermission(PERM_DATABASE_MAINTENANCE);
         eSearch.Enabled := True;
         sbClearSearch.Enabled := True;
       end;
@@ -412,6 +416,8 @@ begin
         sbRefreshRecords.Enabled := False;
         sbClose.Enabled := False;
         mmTestConnection.Enabled := False;
+        mmOptimizeDB.Enabled := False;
+        mmVacuumDB.Enabled := False;
         eSearch.Enabled := False;
         sbClearSearch.Enabled := False;
       end;

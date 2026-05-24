@@ -21,7 +21,8 @@ unit models_users;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core,
+  models_access_control;
 
 type
   { TUser }
@@ -30,18 +31,20 @@ type
   private
     FFullName: String;
     FUserName: String;
-    FRank: TUserRank;
-    FAllowManageCollection: Boolean;
-    FAllowPrint: Boolean;
-    FAllowExport: Boolean;
-    FAllowImport: Boolean;
+    FRoleId: Integer;
+    FRoleName: String;
+    FPermissions: TStringList;
+    procedure SetRoleId(const Value: Integer);
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
+    destructor Destroy; override;
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
     function Clone: TXolmisRecord; reintroduce;
     function IsAdmin: Boolean;
     function IsVisitor: Boolean;
+    function HasPermission(const PermissionName: String): Boolean;
+    procedure LoadPermissions;
     function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
     function EqualsTo(const Other: TUser): Boolean;
     procedure FromJSON(const aJSONString: String); virtual;
@@ -51,11 +54,8 @@ type
   published
     property FullName: String read FFullName write FFullName;
     property UserName: String read FUserName write FUserName;
-    property Rank: TUserRank read FRank write FRank;
-    property AllowManageCollection: Boolean read FAllowManageCollection write FAllowManageCollection;
-    property AllowPrint: Boolean read FAllowPrint write FAllowPrint;
-    property AllowExport: Boolean read FAllowExport write FAllowExport;
-    property AllowImport: Boolean read FAllowImport write FAllowImport;
+    property RoleId: Integer read FRoleId write SetRoleId;
+    property RoleName: String read FRoleName write FRoleName;
   end;
 
   { TUserRepository }
@@ -90,8 +90,18 @@ uses
 constructor TUser.Create(aValue: Integer);
 begin
   inherited Create;
+  FPermissions := TStringList.Create;
+  FPermissions.CaseSensitive := False;
+  FPermissions.Sorted := True;
+  FPermissions.Duplicates := dupIgnore;
   if aValue <> 0 then
     FId := aValue;
+end;
+
+destructor TUser.Destroy;
+begin
+  FreeAndNil(FPermissions);
+  inherited Destroy;
 end;
 
 procedure TUser.Assign(Source: TPersistent);
@@ -101,11 +111,9 @@ begin
   begin
     FFullName := TUser(Source).FullName;
     FUserName := TUser(Source).UserName;
-    FRank := TUser(Source).Rank;
-    FAllowManageCollection := TUser(Source).AllowManageCollection;
-    FAllowPrint := TUser(Source).AllowPrint;
-    FAllowExport := TUser(Source).AllowExport;
-    FAllowImport := TUser(Source).AllowImport;
+    FRoleId := TUser(Source).RoleId;
+    FRoleName := TUser(Source).RoleName;
+    FPermissions.Assign(TUser(Source).FPermissions);
   end;
 end;
 
@@ -114,16 +122,35 @@ begin
   inherited Clear;
   FFullName := EmptyStr;
   FUserName := EmptyStr;
-  FRank := urStandard;
-  FAllowManageCollection := False;
-  FAllowPrint := False;
-  FAllowExport := False;
-  FAllowImport := False;
+  FRoleId := ROLE_STANDARD_ID;
+  FRoleName := EmptyStr;
+  if Assigned(FPermissions) then
+    FPermissions.Clear;
 end;
 
 function TUser.Clone: TXolmisRecord;
 begin
   Result := TUser(inherited Clone);
+end;
+
+procedure TUser.SetRoleId(const Value: Integer);
+begin
+  if FRoleId = Value then
+    Exit;
+
+  FRoleId := Value;
+  FPermissions.Clear;
+end;
+
+function TUser.HasPermission(const PermissionName: String): Boolean;
+begin
+  if FRoleId = ROLE_ADMIN_ID then
+    Exit(True);
+
+  if FPermissions.Count = 0 then
+    LoadPermissions;
+
+  Result := FPermissions.IndexOf(PermissionName) >= 0;
 end;
 
 function TUser.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
@@ -148,15 +175,9 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscUsername, aOld.UserName, FUserName, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscType, aOld.Rank, FRank, R) then
+  if FieldValuesDiff(rscType, aOld.RoleName, FRoleName, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscManageCollection, aOld.AllowManageCollection, FAllowManageCollection, R) then
-    Changes.Add(R);
-  if FieldValuesDiff(rscPrintReports, aOld.AllowPrint, FAllowPrint, R) then
-    Changes.Add(R);
-  if FieldValuesDiff(rscExportData, aOld.AllowExport, FAllowExport, R) then
-    Changes.Add(R);
-  if FieldValuesDiff(rscImportData, aOld.AllowImport, FAllowImport, R) then
+  if FieldValuesDiff('RoleId', aOld.RoleId, FRoleId, R) then
     Changes.Add(R);
 
   Result := Changes.Count > 0;
@@ -176,11 +197,8 @@ begin
     FFullName               := Obj.Get('full_name', '');
     FUserName               := Obj.Get('user_name', '');
     FGuid                   := Obj.Get('guid', '');
-    FRank                   := StrToUserRank(Obj.Get('rank', ''));
-    FAllowManageCollection  := Obj.Get('allow_manage_collection', False);
-    FAllowPrint             := Obj.Get('allow_print', False);
-    FAllowExport            := Obj.Get('allow_export', False);
-    FAllowImport            := Obj.Get('allow_import', False);
+    FRoleId                 := Obj.Get('role_id', ROLE_STANDARD_ID);
+    FRoleName               := Obj.Get('role_name', '');
   finally
     Obj.Free;
   end;
@@ -195,11 +213,8 @@ begin
     JSONObject.Add('full_name', FFullName);
     JSONObject.Add('user_name', FUserName);
     JSONObject.Add('guid', FGuid);
-    JSONObject.Add('rank', USER_RANKS[FRank]);
-    JSONObject.Add('allow_manage_collection', FAllowManageCollection);
-    JSONObject.Add('allow_print', FAllowPrint);
-    JSONObject.Add('allow_export', FAllowExport);
-    JSONObject.Add('allow_import', FAllowImport);
+    JSONObject.Add('role_id', FRoleId);
+    JSONObject.Add('role_name', FRoleName);
 
     Result := JSONObject.AsJSON;
   finally
@@ -209,12 +224,9 @@ end;
 
 function TUser.ToString: String;
 begin
-  Result := Format('User(Id=%d, UserName=%s, FullName=%s, GUID=%s, Rank=%s, ' +
-    'AllowManageCollection=%s, AllowPrint=%s, AllowExport=%s, AllowImport=%s, ' +
+  Result := Format('User(Id=%d, UserName=%s, FullName=%s, GUID=%s, RoleId=%d, RoleName=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FUserName, FFullName, FGuid, USER_RANKS[FRank], BoolToStr(FAllowManageCollection, 'True', 'False'),
-    BoolToStr(FAllowPrint, 'True', 'False'), BoolToStr(FAllowExport, 'True', 'False'),
-    BoolToStr(FAllowImport, 'True', 'False'),
+    [FId, FUserName, FFullName, FGuid, FRoleId, FRoleName,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -227,18 +239,29 @@ begin
     Exit(False);
   end;
 
+  if FRoleId <= 0 then
+  begin
+    Msg := 'Role required.';
+    Exit(False);
+  end;
+
   Msg := '';
   Result := True;
 end;
 
 function TUser.IsAdmin: Boolean;
 begin
-  Result := FRank = urAdministrator;
+  Result := FRoleId = ROLE_ADMIN_ID;
 end;
 
 function TUser.IsVisitor: Boolean;
 begin
-  Result := FRank = urVisitor;
+  Result := FRoleId = ROLE_GUEST_ID;
+end;
+
+procedure TUser.LoadPermissions;
+begin
+  LoadPermissionsForRole(DMM.sqlCon, FRoleId, FPermissions);
 end;
 
 { TUserRepository }
@@ -247,6 +270,7 @@ procedure TUserRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
   R: TUser;
+  RoleText: String;
 begin
   if not (E is TUser) then
     raise Exception.Create('Delete: Expected TUser');
@@ -263,7 +287,7 @@ begin
     if not FTrans.Active then
       FTrans.StartTransaction;
     try
-      Clear;
+      //Clear;
       Add('DELETE FROM %tablename');
       Add('WHERE (%idname = :aid)');
 
@@ -356,7 +380,7 @@ begin
   Qry := NewQuery;
   with Qry, SQL do
   try
-    Clear;
+    //Clear;
     Add(xProvider.Users.SelectTable(swcNone));
     Add('WHERE (user_name = :aname)');
 
@@ -382,8 +406,9 @@ begin
   Qry := NewQuery;
   with Qry, SQL do
   try
-    Clear;
-    Add(xProvider.Users.SelectTable(swcId));
+    //Clear;
+    //Add(xProvider.Users.SelectTable(swcId));
+    Add(xProvider.Users.SelectAll(swcId));
 
     ParamByName('COD').AsInteger := Id;
     Open;
@@ -413,11 +438,16 @@ begin
     R.Guid := FieldByName('uuid').AsString;
     R.FullName := FieldByName('full_name').AsString;
     R.UserName := FieldByName('user_name').AsString;
-    R.Rank := StrToUserRank(FieldByName('user_rank').AsString);
-    R.AllowManageCollection := FieldByName('allow_collection_edit').AsBoolean;
-    R.AllowPrint := FieldByName('allow_print').AsBoolean;
-    R.AllowExport := FieldByName('allow_export').AsBoolean;
-    R.AllowImport := FieldByName('allow_import').AsBoolean;
+    if FindField('role_id') <> nil then
+      R.RoleId := FieldByName('role_id').AsInteger
+    else
+      R.RoleId := LegacyRankToRoleId(FieldByName('user_rank').AsString);
+
+    if FindField('role_name') <> nil then
+      R.RoleName := FieldByName('role_name').AsString
+    else
+      R.RoleName := FieldByName('user_rank').AsString;
+
     R.UserInserted := FieldByName('user_inserted').AsInteger;
     R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
@@ -448,22 +478,23 @@ begin
     R.FullName := ARow.Values['full_name'];
   if ARow.IndexOfName('user_name') >= 0 then
     R.UserName := ARow.Values['user_name'];
+  if ARow.IndexOfName('role_id') >= 0 then
+    R.RoleId := StrToIntDef(ARow.Values['role_id'], ROLE_STANDARD_ID)
+  else
+    if ARow.IndexOfName('user_rank') >= 0 then
+      R.RoleId := LegacyRankToRoleId(ARow.Values['user_rank']);
+  if ARow.IndexOfName('role_name') >= 0 then
+    R.RoleName := ARow.Values['role_name']
+  else
   if ARow.IndexOfName('user_rank') >= 0 then
-    R.Rank := StrToUserRank(ARow.Values['user_rank']);
-  if ARow.IndexOfName('allow_collection_edit') >= 0 then
-    R.AllowManageCollection := StrToBoolDef(ARow.Values['allow_collection_edit'], True);
-  if ARow.IndexOfName('allow_print') >= 0 then
-    R.AllowPrint := StrToBoolDef(ARow.Values['allow_print'], True);
-  if ARow.IndexOfName('allow_export') >= 0 then
-    R.AllowExport := StrToBoolDef(ARow.Values['allow_export'], True);
-  if ARow.IndexOfName('allow_import') >= 0 then
-    R.AllowImport := StrToBoolDef(ARow.Values['allow_import'], True);
+    R.RoleName := ARow.Values['user_rank'];
 end;
 
 procedure TUserRepository.Insert(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
   R: TUser;
+  RoleText: String;
 begin
   if not (E is TUser) then
     raise Exception.Create('Insert: Expected TUser');
@@ -472,17 +503,18 @@ begin
   Qry := NewQuery;
   with Qry, SQL do
   try
-    Clear;
+    //Clear;
     Add(xProvider.Users.Insert);
+
+    RoleText := R.RoleName;
+    if RoleText = EmptyStr then
+      RoleText := GetRoleNameById(DMM.sqlCon, R.RoleId);
 
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('user_name').AsString := R.UserName;
     ParamByName('uuid').AsString := R.Guid;
-    ParamByName('user_rank').AsString := USER_RANKS[R.Rank];
-    ParamByName('allow_collection_edit').AsBoolean := R.AllowManageCollection;
-    ParamByName('allow_print').AsBoolean := R.AllowPrint;
-    ParamByName('allow_export').AsBoolean := R.AllowExport;
-    ParamByName('allow_import').AsBoolean := R.AllowImport;
+    ParamByName('role_id').AsInteger := R.RoleId;
+    ParamByName('user_rank').AsString := RoleText;
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -507,6 +539,7 @@ procedure TUserRepository.Update(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
   R: TUser;
+  RoleText: String;
 begin
   if not (E is TUser) then
     raise Exception.Create('Update: Expected TUser');
@@ -518,17 +551,18 @@ begin
   Qry := NewQuery;
   with Qry, SQL do
   try
-    Clear;
+    //Clear;
     Add(xProvider.Users.Update);
+
+    RoleText := R.RoleName;
+    if RoleText = EmptyStr then
+      RoleText := GetRoleNameById(DMM.sqlCon, R.RoleId);
 
     ParamByName('full_name').AsString := R.FullName;
     ParamByName('user_name').AsString := R.UserName;
     ParamByName('uuid').AsString := R.Guid;
-    ParamByName('user_rank').AsString := USER_RANKS[R.Rank];
-    ParamByName('allow_collection_edit').AsBoolean := R.AllowManageCollection;
-    ParamByName('allow_print').AsBoolean := R.AllowPrint;
-    ParamByName('allow_export').AsBoolean := R.AllowExport;
-    ParamByName('allow_import').AsBoolean := R.AllowImport;
+    ParamByName('role_id').AsInteger := R.RoleId;
+    ParamByName('user_rank').AsString := RoleText;
     ParamByName('marked_status').AsBoolean := R.Marked;
     ParamByName('active_status').AsBoolean := R.Active;
     ParamByName('user_updated').AsInteger := ActiveUser.Id;

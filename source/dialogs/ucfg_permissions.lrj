@@ -1,0 +1,20 @@
+{"version":1,"strings":[
+{"hash":68820595,"name":"tcfgpermissions.caption","sourcebytes":[82,111,108,101,115,32,97,110,100,32,112,101,114,109,105,115,115,105,111,110,115],"value":"Roles and permissions"},
+{"hash":4863637,"name":"tcfgpermissions.btnclose.caption","sourcebytes":[67,108,111,115,101],"value":"Close"},
+{"hash":366117,"name":"tcfgpermissions.lvroles.columns[0].caption","sourcebytes":[82,111,108,101],"value":"Role"},
+{"hash":156067838,"name":"tcfgpermissions.lvroles.columns[1].caption","sourcebytes":[68,101,115,99,114,105,112,116,105,111,110],"value":"Description"},
+{"hash":211259749,"name":"tcfgpermissions.sbnew.hint","sourcebytes":[78,101,119,32,114,111,108,101],"value":"New role"},
+{"hash":79394037,"name":"tcfgpermissions.sbedit.hint","sourcebytes":[69,100,105,116,32,116,104,101,32,115,101,108,101,99,116,101,100,32,114,111,108,101],"value":"Edit the selected role"},
+{"hash":171792613,"name":"tcfgpermissions.sbdelete.hint","sourcebytes":[68,101,108,101,116,101,32,114,111,108,101],"value":"Delete role"},
+{"hash":87468659,"name":"tcfgpermissions.sbrefreshrecords.hint","sourcebytes":[82,101,102,114,101,115,104,32,114,101,99,111,114,100,115],"value":"Refresh records"},
+{"hash":200559694,"name":"tcfgpermissions.esearch.texthint","sourcebytes":[83,101,97,114,99,104,32,112,101,114,109,105,115,115,105,111,110],"value":"Search permission"},
+{"hash":54079704,"name":"tcfgpermissions.sbclearsearch.hint","sourcebytes":[67,108,101,97,114,32,115,101,97,114,99,104],"value":"Clear search"},
+{"hash":211259749,"name":"tcfgpermissions.pmrnew.caption","sourcebytes":[78,101,119,32,114,111,108,101],"value":"New role"},
+{"hash":6807445,"name":"tcfgpermissions.pmredit.caption","sourcebytes":[69,100,105,116,32,114,111,108,101],"value":"Edit role"},
+{"hash":46591491,"name":"tcfgpermissions.pmrrefresh.caption","sourcebytes":[82,101,102,114,101,115,104,32,114,111,108,101,115],"value":"Refresh roles"},
+{"hash":171792613,"name":"tcfgpermissions.pmrdelete.caption","sourcebytes":[68,101,108,101,116,101,32,114,111,108,101],"value":"Delete role"},
+{"hash":138586444,"name":"tcfgpermissions.pmpexpandall.caption","sourcebytes":[69,120,112,97,110,100,32,97,108,108],"value":"Expand all"},
+{"hash":53565100,"name":"tcfgpermissions.pmpcollapseall.caption","sourcebytes":[67,111,108,108,97,112,115,101,32,97,108,108],"value":"Collapse all"},
+{"hash":143483676,"name":"tcfgpermissions.pmpmarkall.caption","sourcebytes":[77,97,114,107,32,97,108,108],"value":"Mark all"},
+{"hash":143172380,"name":"tcfgpermissions.pmpunmarkall.caption","sourcebytes":[85,110,109,97,114,107,32,97,108,108],"value":"Unmark all"}
+]}

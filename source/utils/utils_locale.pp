@@ -21,7 +21,11 @@ unit utils_locale;
 interface
 
 uses
-  Classes;
+  Classes, SysUtils;
+
+function LocalizePermissionGroup(const PermissionGroup: String): String;
+function LocalizePermissionName(const PermissionName: String): String;
+function LocalizePermissionDescription(const PermissionName: String; const FallbackDescription: String = ''): String;
 
   {
     Unicode diacritics (pt-BR):
@@ -755,13 +759,93 @@ uses
     rsEditedByBatch = 'Edited by batch';
     rsEditedByImport = 'Edited by import';
 
-    { Users }
+    { Users and permissions }
     rsStandardUser = 'Standard';
+    rsSupervisorUser = 'Supervisor';
+    rsReaderUser = 'Reader';
     rsAdminUser = 'Administrator';
     rsGuestUser = 'Guest';
+    rsAdminRoleDescription = 'Full access to all modules.';
+    rsSupervisorRoleDescription = 'Operational management role.';
+    rsStandardRoleDescription = 'Default internal user role.';
+    rsReaderRoleDescription = 'Read-only access with export and printing.';
+    rsGuestRoleDescription = 'Minimal read-only access.';
     rsNewPassword = 'New password';
     rsConfirmPassword = 'Confirm password';
     rsSystemAdmin = 'System Administrator';
+    rsRole = 'Role';
+    rsRoles = 'Roles';
+    rsPermissions = 'Permissions';
+    rsRolePermissions = 'Role permissions';
+    rsRoleCannotBeEdited = 'This role cannot be edited.';
+    rsRoleCannotBeDeleted = 'This role cannot be deleted.';
+    rsDeleteRole = 'Delete role';
+    rsDeleteRolePrompt = 'Delete the selected role?';
+    rsPermissionGroupGlobal = 'Global';
+    rsPermissionGroupImport = 'Import';
+    rsPermissionGroupSystem = 'System';
+    rsPermissionGroupAdministration = 'Administration';
+    rsPermissionModuleBirds = 'Bird records';
+    rsPermissionModuleBreeding = 'Breeding records';
+    rsPermissionModuleSampling = 'Sampling records';
+    rsPermissionModuleTaxa = 'Taxa';
+    rsPermissionModuleUsers = 'Users';
+    rsPermissionModuleRoles = 'Roles';
+    rsPermissionModulePermissions = 'Permissions';
+    rsPermissionModuleSystem = 'System';
+    rsPermissionModuleDatabase = 'Database';
+    rsPermissionModuleImport = 'Import';
+    rsPermissionModuleReport = 'Reports';
+    rsPermissionModuleSpecimens = 'Specimens';
+    rsPermissionModuleInstitutions = 'Institutions';
+    rsPermissionModuleGazetteer = 'Gazetteer';
+    rsPermissionModuleBotany = 'Botanical taxa';
+    rsPermissionModuleBands = 'Bands';
+    rsPermissionModuleProjects = 'Projects';
+    rsPermissionModulePermits = 'Permits';
+    rsPermissionModulePeople = 'People';
+    rsPermissionModuleMethods = 'Methods';
+    rsPermissionModuleSamplingPlots = 'Sampling plots';
+    rsPermissionModuleSightings = 'Sightings';
+    rsPermissionActionView = 'View';
+    rsPermissionActionInsert = 'Insert';
+    rsPermissionActionEdit = 'Edit';
+    rsPermissionActionDelete = 'Delete';
+    rsPermissionActionExport = 'Export';
+    rsPermissionActionPrint = 'Print';
+    rsPermissionActionManage = 'Manage';
+    rsPermissionActionCreate = 'Create';
+    rsPermissionActionVerify = 'Verify';
+    rsPermissionDescriptionTemplate = 'Allow %s on %s.';
+    rsPermissionDescriptionVerify = 'Allow verifications of records.';
+    rsPermissionDescriptionRestore = 'Allow restoring deleted records.';
+    rsPermissionDescriptionUndo = 'Allow undoing edits.';
+    rsPermissionDescriptionImportWizard = 'Allow importing data via the import wizard.';
+    rsPermissionDescriptionImportXolmisMobile = 'Allow importing data from Xolmis Mobile.';
+    rsPermissionDescriptionImportBanding = 'Allow importing banding data.';
+    rsPermissionDescriptionImportNests = 'Allow importing nest data.';
+    rsPermissionDescriptionImportEbird = 'Allow importing eBird data.';
+    rsPermissionDescriptionImportGeoCoords = 'Allow importing geographic coordinates.';
+    rsPermissionDescriptionDatabaseMaintenance = 'Allow using database maintenance tools.';
+    rsPermissionDescriptionReportExport = 'Allow exporting reports.';
+    rsPermissionManageUsers = 'Manage users';
+    rsPermissionManageRoles = 'Manage roles';
+    rsPermissionManagePermissions = 'Manage permissions';
+    rsPermissionSystemMaintenance = 'Access maintenance tools';
+    rsPermissionImportWizard = 'Import data via wizard';
+    rsPermissionImportXolmisMobile = 'Import data from Xolmis Mobile';
+    rsPermissionImportBanding = 'Import banding data';
+    rsPermissionImportNesting = 'Import nesting data';
+    rsPermissionImportEbird = 'Import data from eBird';
+    rsPermissionImportCoordinates = 'Import geographical coordinates';
+    rsPermissionVerifyRecords = 'Allow record verifications';
+    rsPermissionRestoreRecords = 'Allow restore deleted records';
+    rsPermissionUndoEdits = 'Allow undo record edits';
+    rsPermissionExportReports = 'Export reports';
+    rsPermissionCreateDatabase = 'Create new database';
+    rsPermissionEditDatabase = 'Edit database connection';
+    rsPermissionDeleteDatabase = 'Delete database connection';
+    rsPermissionDatabaseMaintenance = 'Use database maintenance tools';
 
     { Loading and count }
     rsLoading = 'Loading';
@@ -1544,6 +1628,159 @@ uses
     rsCaptionDisabled = 'Disabled';
 
 implementation
+
+function PermissionToken(const S: String; const Index: Integer): String;
+var
+  P: SizeInt;
+begin
+  Result := '';
+  P := Pos('.', S);
+  if P <= 0 then
+  begin
+    if Index = 0 then
+      Result := S;
+    Exit;
+  end;
+
+  if Index = 0 then
+    Result := Copy(S, 1, P - 1)
+  else
+    Result := Copy(S, P + 1, Length(S) - P);
+end;
+
+function PermissionModuleLabel(const ModuleKey: String): String;
+begin
+  Result := ModuleKey;
+  case LowerCase(ModuleKey) of
+    'specimens': Result := rsTitleSpecimens;
+    'institutions': Result := rsTitleInstitutions;
+    'gazetteer': Result := rsTitleGazetteer;
+    'breeding': Result := rsPermissionModuleBreeding;
+    'botany': Result := rsTitleBotanicalTaxa;
+    'birds': Result := rsPermissionModuleBirds;
+    'bands': Result := rsTitleBands;
+    'projects': Result := rsTitleProjects;
+    'permits': Result := rsTitlePermits;
+    'people': Result := rsTitleResearchers;
+    'methods': Result := rsTitleMethods;
+    'sampling_plots': Result := rsTitleSamplingPlots;
+    'sampling': Result := rsPermissionModuleSampling;
+    'sightings': Result := rsTitleSightings;
+    'taxa': Result := rsPermissionModuleTaxa;
+    'users': Result := rsPermissionModuleUsers;
+    'roles': Result := rsPermissionModuleRoles;
+    'permissions': Result := rsPermissionModulePermissions;
+    'system': Result := rsPermissionModuleSystem;
+    'database': Result := rsPermissionModuleDatabase;
+    'import': Result := rsPermissionModuleImport;
+    'report': Result := rsPermissionModuleReport;
+  end;
+end;
+
+function PermissionActionLabel(const ActionKey: String): String;
+begin
+  Result := ActionKey;
+  case LowerCase(ActionKey) of
+    'view': Result := rsPermissionActionView;
+    'insert': Result := rsPermissionActionInsert;
+    'edit': Result := rsPermissionActionEdit;
+    'delete': Result := rsPermissionActionDelete;
+    'export': Result := rsPermissionActionExport;
+    'print': Result := rsPermissionActionPrint;
+    'manage': Result := rsPermissionActionManage;
+    'create': Result := rsPermissionActionCreate;
+    'verify': Result := rsPermissionActionVerify;
+  end;
+end;
+
+function LocalizePermissionGroup(const PermissionGroup: String): String;
+var
+  G: String;
+begin
+  Result := PermissionGroup;
+  G := LowerCase(Trim(PermissionGroup));
+  case G of
+    'global': Result := rsPermissionGroupGlobal;
+    'import': Result := rsPermissionGroupImport;
+    'system': Result := rsPermissionGroupSystem;
+    'administração', 'administration': Result := rsPermissionGroupAdministration;
+    'sightings': Result := rsPermissionModuleSightings;
+    'taxa': Result := rsPermissionModuleTaxa;
+    'bands': Result := rsPermissionModuleBands;
+    'birds': Result := rsPermissionModuleBirds;
+    'botany': Result := rsPermissionModuleBotany;
+    'breeding': Result := rsPermissionModuleBreeding;
+    'gazetteer': Result := rsPermissionModuleGazetteer;
+    'institutions': Result := rsPermissionModuleInstitutions;
+    'methods': Result := rsPermissionModuleMethods;
+    'people': Result := rsPermissionModulePeople;
+    'permits': Result := rsPermissionModulePermits;
+    'projects': Result := rsPermissionModuleProjects;
+    'sampling': Result := rsPermissionModuleSampling;
+    'sampling plots': Result := rsPermissionModuleSamplingPlots;
+    'specimens': Result := rsPermissionModuleSpecimens;
+  end;
+end;
+
+function LocalizePermissionName(const PermissionName: String): String;
+var
+  ModuleKey: String;
+  ActionKey: String;
+begin
+  ModuleKey := PermissionToken(Trim(PermissionName), 0);
+  ActionKey := PermissionToken(Trim(PermissionName), 1);
+
+  if (ModuleKey = '') or (ActionKey = '') then
+  begin
+    Result := PermissionName;
+    Exit;
+  end;
+
+  Result := PermissionActionLabel(ActionKey) + ' ' + PermissionModuleLabel(ModuleKey);
+end;
+
+function LocalizePermissionDescription(const PermissionName: String; const FallbackDescription: String): String;
+var
+  PName: String;
+  ModuleKey: String;
+  ActionKey: String;
+begin
+  PName := LowerCase(Trim(PermissionName));
+
+  if PName = 'verify.records' then
+    Exit(rsPermissionDescriptionVerify);
+  if PName = 'restore.records' then
+    Exit(rsPermissionDescriptionRestore);
+  if PName = 'undo.edits' then
+    Exit(rsPermissionDescriptionUndo);
+  if PName = 'import.wizard' then
+    Exit(rsPermissionDescriptionImportWizard);
+  if PName = 'import.xolmis_mobile' then
+    Exit(rsPermissionDescriptionImportXolmisMobile);
+  if PName = 'import.banding' then
+    Exit(rsPermissionDescriptionImportBanding);
+  if PName = 'import.nests' then
+    Exit(rsPermissionDescriptionImportNests);
+  if PName = 'import.ebird' then
+    Exit(rsPermissionDescriptionImportEbird);
+  if PName = 'import.geocoords' then
+    Exit(rsPermissionDescriptionImportGeoCoords);
+  if PName = 'database.maintenance' then
+    Exit(rsPermissionDescriptionDatabaseMaintenance);
+  if PName = 'report.export' then
+    Exit(rsPermissionDescriptionReportExport);
+
+  ModuleKey := PermissionToken(PName, 0);
+  ActionKey := PermissionToken(PName, 1);
+
+  if (ModuleKey <> '') and (ActionKey <> '') then
+    Exit(Format(rsPermissionDescriptionTemplate, [LowerCase(PermissionActionLabel(ActionKey)), LowerCase(PermissionModuleLabel(ModuleKey))]));
+
+  if FallbackDescription <> '' then
+    Result := FallbackDescription
+  else
+    Result := PermissionName;
+end;
 
 end.
 

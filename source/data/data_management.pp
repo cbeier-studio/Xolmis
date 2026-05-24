@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 9;
+  SCHEMA_VERSION: Integer = 10;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -47,6 +47,9 @@ const
   procedure WriteDatabaseMetadata(Connection: TSQLConnector; aKey, aValue: String);
 
   procedure CreateDBMetadataTable(Connection: TSQLConnector);
+  procedure CreateRolesTable(Connection: TSQLConnector);
+  procedure CreatePermissionsTable(Connection: TSQLConnector);
+  procedure CreateRolePermissionsTable(Connection: TSQLConnector);
   procedure CreateUsersTable(Connection: TSQLConnector);
   procedure CreateRecordHistoryTable(Connection: TSQLConnector);
   procedure CreateRecordVerificationsTable(Connection: TSQLConnector);
@@ -101,6 +104,7 @@ const
   procedure CreateBandsRunningOutView(Connection: TSQLConnector);
   procedure CreateAvgExpeditionDurationView(Connection: TSQLConnector);
 
+  procedure SeedAccessControlTables(Connection: TSQLConnector);
   procedure CreateAdminUser(Connection: TSQLConnector);
   procedure PopulateMethodsTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
   procedure PopulateTaxonRanksTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
@@ -149,7 +153,7 @@ implementation
 uses
   utils_locale, utils_global, utils_dialogs, utils_conversions, utils_count, utils_debug,
   data_consts, data_schema, data_providers, data_getvalue,
-  models_record_types, models_users, models_methods, models_taxonomy,
+  models_access_control, models_record_types, models_users, models_methods, models_taxonomy,
   udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress, udlg_loading;
 
   {
@@ -305,7 +309,7 @@ begin
   try
     dlgProgress.Title := rsTitleCreateDatabase;
     dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := 52; // Number of tables and views to create
+    dlgProgress.Max := 55; // Number of tables and views to create
     dlgProgress.Position := 0;
     dlgProgress.Show;
     Application.ProcessMessages;
@@ -345,6 +349,24 @@ begin
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleDBMetadata, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateDBMetadataTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Roles
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsRoles, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateRolesTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Permissions
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsPermissions, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreatePermissionsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Role permissions
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsRolePermissions, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateRolePermissionsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Users
@@ -663,6 +685,9 @@ begin
         dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
         Application.ProcessMessages;
         LogDebug('Populating database');
+
+        // Populate user roles and permissions
+        SeedAccessControlTables(Conn);
 
         // Create admin user
         CreateAdminUser(Conn);
@@ -1089,6 +1114,27 @@ begin
 
       end;
 
+      if OldVersion < 10 then
+      begin
+        LogDebug('Upgrading database schema to version 10');
+
+        CreateRolesTable(DMM.sqlCon);
+        CreatePermissionsTable(DMM.sqlCon);
+        CreateRolePermissionsTable(DMM.sqlCon);
+        SeedAccessControlTables(DMM.sqlCon);
+
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE users ADD COLUMN role_id INTEGER REFERENCES roles (role_id) ON UPDATE CASCADE;');
+        DMM.sqlCon.ExecuteDirect('UPDATE users SET role_id = CASE user_rank ' +
+          'WHEN ''A'' THEN ' + IntToStr(ROLE_ADMIN_ID) + ' ' +
+          'WHEN ''V'' THEN ' + IntToStr(ROLE_GUEST_ID) + ' ' +
+          'ELSE ' + IntToStr(ROLE_STANDARD_ID) + ' END ' +
+          'WHERE role_id IS NULL;');
+        DMM.sqlCon.ExecuteDirect('UPDATE users SET user_rank = (SELECT role_name FROM roles WHERE roles.role_id = users.role_id) ' +
+          'WHERE role_id IS NOT NULL;');
+
+        Result := True;
+      end;
+
       if Result then
       begin
         WriteDatabaseMetadata(DMM.sqlCon, 'version', IntToStr(SCHEMA_VERSION));
@@ -1169,6 +1215,40 @@ begin
   LogDebug('Creating db_metadata table');
 
   Connection.ExecuteDirect(xProvider.DBMetadata.CreateTable);
+end;
+
+procedure CreateRolesTable(Connection: TSQLConnector);
+begin
+  LogDebug('Creating roles table');
+  Connection.ExecuteDirect(xProvider.Roles.CreateTable);
+
+  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_roles_name ON roles (' +
+    'role_name COLLATE NOCASE' +
+  ');');
+end;
+
+procedure CreatePermissionsTable(Connection: TSQLConnector);
+begin
+  LogDebug('Creating permissions table');
+  Connection.ExecuteDirect(xProvider.Permissions.CreateTable);
+
+  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_permissions_name ON permissions (' +
+    'permission_name COLLATE NOCASE' +
+  ');');
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permissions_group ON permissions (' +
+    'permission_group COLLATE NOCASE' +
+  ');');
+end;
+
+procedure CreateRolePermissionsTable(Connection: TSQLConnector);
+begin
+  LogDebug('Creating role_permissions table');
+  Connection.ExecuteDirect(xProvider.RolePermissions.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_role_permissions_role ON role_permissions (' +
+    'role_id, permission_id' +
+  ');');
 end;
 
 procedure CreateUsersTable(Connection: TSQLConnector);
@@ -2141,6 +2221,197 @@ begin
     'FROM consecutivo;');
 end;
 
+procedure SeedAccessControlTables(Connection: TSQLConnector);
+var
+  i: Integer;
+  Qry: TSQLQuery;
+begin
+  LogDebug('Seeding access control tables');
+
+  Connection.ExecuteDirect('INSERT INTO roles (role_id, role_name, description, can_delete) VALUES ' +
+    '(' + IntToStr(ROLE_ADMIN_ID) + ', ''' + rsAdminUser + ''', '''+rsAdminRoleDescription+''', 0), ' +
+    '(' + IntToStr(ROLE_SUPERVISOR_ID) + ', ''' + rsSupervisorUser + ''', '''+rsSupervisorRoleDescription+''', 1), ' +
+    '(' + IntToStr(ROLE_STANDARD_ID) + ', ''' + rsStandardUser + ''', '''+rsStandardRoleDescription+''', 0), ' +
+    '(' + IntToStr(ROLE_READER_ID) + ', ''' + rsReaderUser + ''', '''+rsReaderRoleDescription+''', 1), ' +
+    '(' + IntToStr(ROLE_GUEST_ID) + ', ''' + rsGuestUser + ''', '''+rsGuestRoleDescription+''', 0);');
+
+  // Granular permissions seeding
+  Connection.ExecuteDirect('INSERT INTO permissions (permission_id, permission_name, description, permission_group) VALUES ' +
+    // Specimens
+    '(1, ''' + PERM_SPECIMENS_VIEW + ''', ''View specimens'', ''Specimens''), ' +
+    '(2, ''' + PERM_SPECIMENS_INSERT + ''', ''Insert specimens'', ''Specimens''), ' +
+    '(3, ''' + PERM_SPECIMENS_EDIT + ''', ''Edit specimens'', ''Specimens''), ' +
+    '(4, ''' + PERM_SPECIMENS_DELETE + ''', ''Delete specimens'', ''Specimens''), ' +
+    '(5, ''' + PERM_SPECIMENS_EXPORT + ''', ''Export specimens'', ''Specimens''), ' +
+    '(6, ''' + PERM_SPECIMENS_PRINT + ''', ''Print specimens'', ''Specimens''), ' +
+    // Institutions
+    '(7, ''' + PERM_INSTITUTIONS_VIEW + ''', ''View institutions'', ''Institutions''), ' +
+    '(8, ''' + PERM_INSTITUTIONS_INSERT + ''', ''Insert institutions'', ''Institutions''), ' +
+    '(9, ''' + PERM_INSTITUTIONS_EDIT + ''', ''Edit institutions'', ''Institutions''), ' +
+    '(10, ''' + PERM_INSTITUTIONS_DELETE + ''', ''Delete institutions'', ''Institutions''), ' +
+    '(11, ''' + PERM_INSTITUTIONS_EXPORT + ''', ''Export institutions'', ''Institutions''), ' +
+    '(12, ''' + PERM_INSTITUTIONS_PRINT + ''', ''Print institutions'', ''Institutions''), ' +
+    // Gazetteer
+    '(13, ''' + PERM_GAZETTEER_VIEW + ''', ''View gazetteer'', ''Gazetteer''), ' +
+    '(14, ''' + PERM_GAZETTEER_INSERT + ''', ''Insert gazetteer'', ''Gazetteer''), ' +
+    '(15, ''' + PERM_GAZETTEER_EDIT + ''', ''Edit gazetteer'', ''Gazetteer''), ' +
+    '(16, ''' + PERM_GAZETTEER_DELETE + ''', ''Delete gazetteer'', ''Gazetteer''), ' +
+    '(17, ''' + PERM_GAZETTEER_EXPORT + ''', ''Export gazetteer'', ''Gazetteer''), ' +
+    '(18, ''' + PERM_GAZETTEER_PRINT + ''', ''Print gazetteer'', ''Gazetteer''), ' +
+    // Breeding
+    '(19, ''' + PERM_BREEDING_VIEW + ''', ''View breeding'', ''Breeding''), ' +
+    '(20, ''' + PERM_BREEDING_INSERT + ''', ''Insert breeding'', ''Breeding''), ' +
+    '(21, ''' + PERM_BREEDING_EDIT + ''', ''Edit breeding'', ''Breeding''), ' +
+    '(22, ''' + PERM_BREEDING_DELETE + ''', ''Delete breeding'', ''Breeding''), ' +
+    '(23, ''' + PERM_BREEDING_EXPORT + ''', ''Export breeding'', ''Breeding''), ' +
+    '(24, ''' + PERM_BREEDING_PRINT + ''', ''Print breeding'', ''Breeding''), ' +
+    // Botany
+    '(25, ''' + PERM_BOTANY_VIEW + ''', ''View botany'', ''Botany''), ' +
+    '(26, ''' + PERM_BOTANY_INSERT + ''', ''Insert botany'', ''Botany''), ' +
+    '(27, ''' + PERM_BOTANY_EDIT + ''', ''Edit botany'', ''Botany''), ' +
+    '(28, ''' + PERM_BOTANY_DELETE + ''', ''Delete botany'', ''Botany''), ' +
+    '(29, ''' + PERM_BOTANY_EXPORT + ''', ''Export botany'', ''Botany''), ' +
+    '(30, ''' + PERM_BOTANY_PRINT + ''', ''Print botany'', ''Botany''), ' +
+    // Birds
+    '(31, ''' + PERM_BIRDS_VIEW + ''', ''View birds'', ''Birds''), ' +
+    '(32, ''' + PERM_BIRDS_INSERT + ''', ''Insert birds'', ''Birds''), ' +
+    '(33, ''' + PERM_BIRDS_EDIT + ''', ''Edit birds'', ''Birds''), ' +
+    '(34, ''' + PERM_BIRDS_DELETE + ''', ''Delete birds'', ''Birds''), ' +
+    '(35, ''' + PERM_BIRDS_EXPORT + ''', ''Export birds'', ''Birds''), ' +
+    '(36, ''' + PERM_BIRDS_PRINT + ''', ''Print birds'', ''Birds''), ' +
+    // Bands
+    '(37, ''' + PERM_BANDS_VIEW + ''', ''View bands'', ''Bands''), ' +
+    '(38, ''' + PERM_BANDS_INSERT + ''', ''Insert bands'', ''Bands''), ' +
+    '(39, ''' + PERM_BANDS_EDIT + ''', ''Edit bands'', ''Bands''), ' +
+    '(40, ''' + PERM_BANDS_DELETE + ''', ''Delete bands'', ''Bands''), ' +
+    '(41, ''' + PERM_BANDS_EXPORT + ''', ''Export bands'', ''Bands''), ' +
+    '(42, ''' + PERM_BANDS_PRINT + ''', ''Print bands'', ''Bands''), ' +
+    // Projects
+    '(43, ''' + PERM_PROJECTS_VIEW + ''', ''View projects'', ''Projects''), ' +
+    '(44, ''' + PERM_PROJECTS_INSERT + ''', ''Insert projects'', ''Projects''), ' +
+    '(45, ''' + PERM_PROJECTS_EDIT + ''', ''Edit projects'', ''Projects''), ' +
+    '(46, ''' + PERM_PROJECTS_DELETE + ''', ''Delete projects'', ''Projects''), ' +
+    '(47, ''' + PERM_PROJECTS_EXPORT + ''', ''Export projects'', ''Projects''), ' +
+    '(48, ''' + PERM_PROJECTS_PRINT + ''', ''Print projects'', ''Projects''), ' +
+    // Permits
+    '(49, ''' + PERM_PERMITS_VIEW + ''', ''View permits'', ''Permits''), ' +
+    '(50, ''' + PERM_PERMITS_INSERT + ''', ''Insert permits'', ''Permits''), ' +
+    '(51, ''' + PERM_PERMITS_EDIT + ''', ''Edit permits'', ''Permits''), ' +
+    '(52, ''' + PERM_PERMITS_DELETE + ''', ''Delete permits'', ''Permits''), ' +
+    '(53, ''' + PERM_PERMITS_EXPORT + ''', ''Export permits'', ''Permits''), ' +
+    '(54, ''' + PERM_PERMITS_PRINT + ''', ''Print permits'', ''Permits''), ' +
+    // People
+    '(55, ''' + PERM_PEOPLE_VIEW + ''', ''View people'', ''People''), ' +
+    '(56, ''' + PERM_PEOPLE_INSERT + ''', ''Insert people'', ''People''), ' +
+    '(57, ''' + PERM_PEOPLE_EDIT + ''', ''Edit people'', ''People''), ' +
+    '(58, ''' + PERM_PEOPLE_DELETE + ''', ''Delete people'', ''People''), ' +
+    '(59, ''' + PERM_PEOPLE_EXPORT + ''', ''Export people'', ''People''), ' +
+    '(60, ''' + PERM_PEOPLE_PRINT + ''', ''Print people'', ''People''), ' +
+    // Methods
+    '(61, ''' + PERM_METHODS_VIEW + ''', ''View methods'', ''Methods''), ' +
+    '(62, ''' + PERM_METHODS_INSERT + ''', ''Insert methods'', ''Methods''), ' +
+    '(63, ''' + PERM_METHODS_EDIT + ''', ''Edit methods'', ''Methods''), ' +
+    '(64, ''' + PERM_METHODS_DELETE + ''', ''Delete methods'', ''Methods''), ' +
+    '(65, ''' + PERM_METHODS_EXPORT + ''', ''Export methods'', ''Methods''), ' +
+    '(66, ''' + PERM_METHODS_PRINT + ''', ''Print methods'', ''Methods''), ' +
+    // Sampling Plots
+    '(67, ''' + PERM_SAMPLING_PLOTS_VIEW + ''', ''View sampling plots'', ''Sampling Plots''), ' +
+    '(68, ''' + PERM_SAMPLING_PLOTS_INSERT + ''', ''Insert sampling plots'', ''Sampling Plots''), ' +
+    '(69, ''' + PERM_SAMPLING_PLOTS_EDIT + ''', ''Edit sampling plots'', ''Sampling Plots''), ' +
+    '(70, ''' + PERM_SAMPLING_PLOTS_DELETE + ''', ''Delete sampling plots'', ''Sampling Plots''), ' +
+    '(71, ''' + PERM_SAMPLING_PLOTS_EXPORT + ''', ''Export sampling plots'', ''Sampling Plots''), ' +
+    '(72, ''' + PERM_SAMPLING_PLOTS_PRINT + ''', ''Print sampling plots'', ''Sampling Plots''), ' +
+    // Sampling
+    '(73, ''' + PERM_SAMPLING_VIEW + ''', ''View sampling'', ''Sampling''), ' +
+    '(74, ''' + PERM_SAMPLING_INSERT + ''', ''Insert sampling'', ''Sampling''), ' +
+    '(75, ''' + PERM_SAMPLING_EDIT + ''', ''Edit sampling'', ''Sampling''), ' +
+    '(76, ''' + PERM_SAMPLING_DELETE + ''', ''Delete sampling'', ''Sampling''), ' +
+    '(77, ''' + PERM_SAMPLING_EXPORT + ''', ''Export sampling'', ''Sampling''), ' +
+    '(78, ''' + PERM_SAMPLING_PRINT + ''', ''Print sampling'', ''Sampling''), ' +
+    // Sightings
+    '(79, ''' + PERM_SIGHTINGS_VIEW + ''', ''View sightings'', ''Sightings''), ' +
+    '(80, ''' + PERM_SIGHTINGS_INSERT + ''', ''Insert sightings'', ''Sightings''), ' +
+    '(81, ''' + PERM_SIGHTINGS_EDIT + ''', ''Edit sightings'', ''Sightings''), ' +
+    '(82, ''' + PERM_SIGHTINGS_DELETE + ''', ''Delete sightings'', ''Sightings''), ' +
+    '(83, ''' + PERM_SIGHTINGS_EXPORT + ''', ''Export sightings'', ''Sightings''), ' +
+    '(84, ''' + PERM_SIGHTINGS_PRINT + ''', ''Print sightings'', ''Sightings''), ' +
+    // Taxa
+    '(85, ''' + PERM_TAXA_VIEW + ''', ''View taxa'', ''Taxa''), ' +
+    '(86, ''' + PERM_TAXA_EXPORT + ''', ''Export taxa'', ''Taxa''), ' +
+    '(87, ''' + PERM_TAXA_PRINT + ''', ''Print taxa'', ''Taxa''), ' +
+    // Globais e especiais
+    '(88, ''' + PERM_VERIFY_RECORDS + ''', ''Verify records'', ''Global''), ' +
+    '(89, ''' + PERM_RESTORE_RECORDS + ''', ''Restore records'', ''Global''), ' +
+    '(90, ''' + PERM_UNDO_EDITS + ''', ''Undo edits'', ''Global''), ' +
+    '(91, ''' + PERM_REPORT_EXPORT + ''', ''Export reports'', ''Global''), ' +
+    '(92, ''' + PERM_DATABASE_CREATE + ''', ''Create database'', ''System''), ' +
+    '(93, ''' + PERM_DATABASE_EDIT + ''', ''Edit database'', ''System''), ' +
+    '(94, ''' + PERM_DATABASE_DELETE + ''', ''Delete database'', ''System''), ' +
+    '(95, ''' + PERM_DATABASE_MAINTENANCE + ''', ''Database maintenance'', ''System''), ' +
+    // Granular import
+    '(96, ''' + PERM_IMPORT_WIZARD + ''', ''Import wizard'', ''Import''), ' +
+    '(97, ''' + PERM_IMPORT_XOLMIS_MOBILE + ''', ''Import Xolmis mobile'', ''Import''), ' +
+    '(98, ''' + PERM_IMPORT_BANDING + ''', ''Import banding'', ''Import''), ' +
+    '(99, ''' + PERM_IMPORT_NESTS + ''', ''Import nests'', ''Import''), ' +
+    '(100, ''' + PERM_IMPORT_EBIRD + ''', ''Import eBird'', ''Import''), ' +
+    '(101, ''' + PERM_IMPORT_GEOCOORDS + ''', ''Import geographic coordinates'', ''Import''), ' +
+    // Administration
+    '(102, ''' + PERM_USERS_MANAGE + ''', ''Manage users'', ''Administration''), ' +
+    '(103, ''' + PERM_ROLES_MANAGE + ''', ''Manage roles'', ''Administration''), ' +
+    '(104, ''' + PERM_PERMISSIONS_MANAGE + ''', ''Manage permissions'', ''Administration''), ' +
+    '(105, ''' + PERM_SYSTEM_MAINTENANCE + ''', ''System maintenance'', ''Administration'');');
+
+  // Keep permission_name as a stable technical key and localize display fields by active language.
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.Database := Connection;
+    Qry.Transaction := Connection.Transaction;
+    Qry.SQL.Text := 'SELECT permission_id, permission_name, description, permission_group FROM permissions ORDER BY permission_id';
+    Qry.Open;
+    while not Qry.EOF do
+    begin
+      Connection.ExecuteDirect(
+        'UPDATE permissions SET description = ''' +
+          StringReplace(LocalizePermissionDescription(Qry.FieldByName('permission_name').AsString,
+            Qry.FieldByName('description').AsString), '''', '''''', [rfReplaceAll]) +
+          ''', permission_group = ''' +
+          StringReplace(LocalizePermissionGroup(Qry.FieldByName('permission_group').AsString), '''', '''''', [rfReplaceAll]) +
+          ''' WHERE permission_id = ' + IntToStr(Qry.FieldByName('permission_id').AsInteger)
+      );
+      Qry.Next;
+    end;
+    Qry.Close;
+  finally
+    Qry.Free;
+  end;
+
+  // Admin recebe todas as permissões
+  for i := 1 to 105 do
+    Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_ADMIN_ID) + ', ' + IntToStr(i) + ');');
+  // Supervisor
+  for i := 1 to 102 do
+    Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_SUPERVISOR_ID) + ', ' + IntToStr(i) + ');');
+  Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_SUPERVISOR_ID) + ', 105);');
+  // Standard
+  for i := 1 to 89 do
+    Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_STANDARD_ID) + ', ' + IntToStr(i) + ');');
+  Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_STANDARD_ID) + ', 91);');
+  for i := 95 to 101 do
+    Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_STANDARD_ID) + ', ' + IntToStr(i) + ');');
+  // Reader: apenas visualização, exportação e impressão
+  for i := 1 to 84 do
+    if (i mod 6) in [1,5,6] then // view, export, print
+      Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_READER_ID) + ', ' + IntToStr(i) + ');');
+  Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_READER_ID) + ', 85);');
+  Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_READER_ID) + ', 86);');
+  Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_READER_ID) + ', 87);');
+  Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_READER_ID) + ', 91);');
+  // Guest: apenas visualização
+  for i := 1 to 84 do
+    if (i mod 6) = 1 then // view
+      Connection.ExecuteDirect('INSERT INTO role_permissions (role_id, permission_id) VALUES (' + IntToStr(ROLE_GUEST_ID) + ', ' + IntToStr(i) + ');');
+end;
+
 procedure CreateAdminUser(Connection: TSQLConnector);
 var
   FUser: TUser;
@@ -2151,11 +2422,9 @@ begin
   try
     FUser.FullName := rsSystemAdmin;
     FUser.UserName := 'admin';
-    FUser.Rank := urAdministrator;
-    FUser.AllowManageCollection := True;
-    FUser.AllowExport := True;
-    FUser.AllowImport := True;
-    FUser.AllowPrint := True;
+    FUser.RoleId := ROLE_ADMIN_ID;
+    FUser.RoleName := rsAdminUser;
+    FUser.LoadPermissions;
 
     FRepo.Insert(FUser);
   finally

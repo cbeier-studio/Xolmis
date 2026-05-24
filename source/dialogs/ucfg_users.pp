@@ -47,6 +47,7 @@ type
     pmGrid: TPopupMenu;
     pSearch: TBCPanel;
     sbChangePassword: TSpeedButton;
+    sbPermissions: TSpeedButton;
     sbClearSearch: TColorSpeedButton;
     sbClose: TButton;
     sbDelete: TSpeedButton;
@@ -70,6 +71,7 @@ type
     procedure sbDeleteClick(Sender: TObject);
     procedure sbEditClick(Sender: TObject);
     procedure sbNewClick(Sender: TObject);
+    procedure sbPermissionsClick(Sender: TObject);
     procedure sbRefreshRecordsClick(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
   private
@@ -85,6 +87,7 @@ implementation
 
 uses
   utils_global, models_users, data_types, data_management, utils_editdialogs, utils_themes, data_search,
+  models_access_control, ucfg_permissions,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -100,6 +103,7 @@ begin
   sbNew.Images := iButtonsDark;
   sbEdit.Images := iButtonsDark;
   sbChangePassword.Images := iButtonsDark;
+  sbPermissions.Images := iButtonsDark;
   sbRefreshRecords.Images := iButtonsDark;
   sbDelete.Images := iButtonsDark;
   pmGrid.Images := iButtonsDark;
@@ -123,6 +127,7 @@ begin
         sbNew.Enabled := False;
         sbEdit.Enabled := False;
         sbChangePassword.Enabled := False;
+        sbPermissions.Enabled := False;
         sbDelete.Enabled := False;
         sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
@@ -132,9 +137,10 @@ begin
     dsBrowse:
       begin
         sbNew.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly;
-        sbEdit.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and (dsUsers.DataSet.RecordCount > 0);
-        sbChangePassword.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and (dsUsers.DataSet.RecordCount > 0);
-        sbDelete.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and (dsUsers.DataSet.RecordCount > 0);
+        sbEdit.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and not (dsUsers.DataSet.IsEmpty);
+        sbChangePassword.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and not (dsUsers.DataSet.IsEmpty);
+        sbPermissions.Enabled := not (dsUsers.DataSet.IsEmpty) and ActiveUser.HasPermission(PERM_ROLES_MANAGE);
+        sbDelete.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and not (dsUsers.DataSet.IsEmpty);
         sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
         eSearch.Enabled := True;
@@ -145,6 +151,7 @@ begin
         sbNew.Enabled := False;
         sbEdit.Enabled := False;
         sbChangePassword.Enabled := False;
+        sbPermissions.Enabled := False;
         sbDelete.Enabled := False;
         sbRefreshRecords.Enabled := False;
         sbClose.Enabled := False;
@@ -218,7 +225,7 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  if not ActiveUser.HasPermission(PERM_USERS_MANAGE) then
     (dsUsers.DataSet as TSQLQuery).ReadOnly := True;
   if not dsUsers.DataSet.Active then
     dsUsers.DataSet.Open;
@@ -253,6 +260,16 @@ end;
 procedure TcfgUsers.sbNewClick(Sender: TObject);
 begin
   EditUser(True);
+end;
+
+procedure TcfgUsers.sbPermissionsClick(Sender: TObject);
+begin
+  with TcfgPermissions.Create(Self) do
+  try
+    ShowModal;
+  finally
+    Free;
+  end;
 end;
 
 procedure TcfgUsers.sbRefreshRecordsClick(Sender: TObject);

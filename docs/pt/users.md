@@ -39,11 +39,20 @@ Os níveis de acesso definem o escopo de permissões disponíveis para cada usu�
 | Nível | Descrição |
 | --- | --- |
 | **Administrador** | Privilégios máximos, acesso completo a todas as funcionalidades. Destinado à manutenção do banco de dados e tarefas críticas. **Não recomendado** para edição diária de dados. |
+| **Supervisor** | Quase todos privilégios, exceto edição de níveis de acesso e permissões. |
 | **Padrão** | Nível padrão. Concede acesso à maioria das funcionalidades. Recomendado para uso diário e edição de dados. |
-| **Visitante** | Acesso restrito. Pode apenas visualizar dados, sem permissões de edição. Útil para colaboradores externos ou auditorias. |
+| **Leitor** | Pode apenas visualizar, exportar e imprimir registros, sem permissões de edição. |
+| **Convidado** | Acesso restrito. Pode apenas visualizar dados, sem permissões de edição. Útil para colaboradores externos ou auditorias. |
 
 !!! note "`usuário admin`"
     O usuário `admin` é criado automaticamente quando um novo arquivo de banco de dados é inicializado. Ele **não deve** ser usado para tarefas triviais como edição de dados, mas reservado para operações administrativas e de manutenção.
+
+### Editando permissões
+
+As permissões são definidas para cada nível de acesso e podem ser alteradas se houver necessidade. Para editar as permissões o usuário precisa ter acesso de Administrador. Na tela de Usuários, clique no botão **Níveis de acesso e permissões** na barra de ferramentas acima da lista de usuários. Selecione o nível de acesso que deseja editar na lista da esquerda da tela, e marque e desmarque as permissões desejadas na lista da direita.
+
+!!! warning
+    Os níveis de acesso devem respeitar uma hierarquia clara, onde o Administrador é o nível com mais privilégios, seguido de Supervisor, Padrão, Leitor e, por fim, Convidado com o acesso mais restrito. Novos níveis de acesso criados devem ter permissões intermediárias entre Administrador e Convidado.
 
 ## Alterando a senha de um usuário
 

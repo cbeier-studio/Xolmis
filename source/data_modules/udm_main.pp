@@ -56,6 +56,7 @@ type
     OpenDocs: TOpenDialog;
     OpenKmlDlg: TOpenDialog;
     qsConnlast_backup: TDateTimeField;
+    qUsersinactivated_by: TStringField;
     SaveKmlDlg: TSaveDialog;
     tabGeoBank: TMemDataset;
     qsConnconnection_id: TLongintField;
@@ -105,6 +106,7 @@ type
     qUsersfull_name: TStringField;
     qUsersinsert_date: TDateTimeField;
     qUsersmarked_status: TBooleanField;
+    qUsersrole_id: TLongintField;
     qUsersupdate_date: TDateTimeField;
     qUsersuser_id: TLongintField;
     qUsersuser_inserted: TLongintField;
@@ -163,7 +165,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs,
-  data_types, data_management, data_columns, data_schema, data_providers;
+  data_types, data_management, data_columns, data_schema, data_providers, models_access_control;
 
 {$R *.lfm}
 
@@ -331,7 +333,8 @@ end;
 
 procedure TDMM.qUsersAfterInsert(DataSet: TDataSet);
 begin
-  DataSet.FieldByName('user_rank').AsString := 'S';
+  DataSet.FieldByName('role_id').AsInteger := ROLE_STANDARD_ID;
+  DataSet.FieldByName('user_rank').AsString := GetRoleNameById(sqlCon, ROLE_STANDARD_ID);
   DataSet.FieldByName('allow_collection_edit').AsBoolean := True;
   DataSet.FieldByName('allow_print').AsBoolean := True;
   DataSet.FieldByName('allow_export').AsBoolean := True;
@@ -373,6 +376,8 @@ end;
 
 procedure TDMM.qUsersBeforePost(DataSet: TDataSet);
 begin
+  if DataSet.FindField('role_id') <> nil then
+    DataSet.FieldByName('user_rank').AsString := GetRoleNameById(sqlCon, DataSet.FieldByName('role_id').AsInteger);
   SetRecordDateUser(DataSet);
 end;
 
@@ -381,11 +386,7 @@ begin
   if Sender.AsString = EmptyStr then
     Exit;
 
-  case Sender.AsString of
-    'S': aText := rsStandardUser;
-    'A': aText := rsAdminUser;
-    'V': aText := rsGuestUser;
-  end;
+  aText := Sender.AsString;
 
   DisplayText := True;
 end;
@@ -395,14 +396,7 @@ begin
   if aText = EmptyStr then
     Exit;
 
-  if aText = rsStandardUser then
-    Sender.AsString := 'S'
-  else
-  if aText = rsAdminUser then
-    Sender.AsString := 'A'
-  else
-  if aText = rsGuestUser then
-    Sender.AsString := 'V';
+  Sender.AsString := aText;
 end;
 
 procedure TDMM.sqlConAfterDisconnect(Sender: TObject);

@@ -807,6 +807,7 @@ class function TWin32WSCustomListViewDark.CreateHandle(
   const AWinControl: TWinControl; const AParams: TCreateParams): HWND;
 var
   P: TCreateParams;
+  HeaderWnd: HWND;
 begin
   P:= AParams;
   P.ExStyle:= P.ExStyle and not WS_EX_CLIENTEDGE;
@@ -816,6 +817,11 @@ begin
   SetWindowSubclass(Result, @ListViewWindowProc, ID_SUB_LISTVIEW, 0);
   if not (csDesigning in AWinControl.ComponentState) then begin
      EnableDarkStyle(Result);
+
+     // The ListView header is a child window and may not inherit dark style.
+     HeaderWnd:= ListView_GetHeader(Result);
+     if HeaderWnd <> 0 then
+       EnableDarkStyle(HeaderWnd);
   end;
 end;
 
@@ -2142,7 +2148,12 @@ begin
   begin
     P:= GetWindowLongPtr(hwnd, GWL_EXSTYLE);
 
-    if (P and WS_EX_CONTEXTHELP = 0) or (lstrcmpiW(pszClassList, VSCLASS_MONTHCAL) = 0) then
+    // Keep existing conservative interception behavior, but allow Header/ListView
+    // so ListView headers can be dark-drawn.
+    if ((P and WS_EX_CONTEXTHELP = 0) and
+        (lstrcmpiW(pszClassList, VSCLASS_MONTHCAL) <> 0) and
+        (lstrcmpiW(pszClassList, VSCLASS_DARK_HEADER) <> 0) and
+        (lstrcmpiW(pszClassList, 'ListView') <> 0)) then
     begin
       Result:= TrampolineOpenThemeData(hwnd, pszClassList);
       Exit;

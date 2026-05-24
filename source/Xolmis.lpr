@@ -86,10 +86,10 @@ begin
   dlgSplash.UpdateProgress(rsStartingXolmis, 0);
   dlgSplash.UpdateProgress(rsLoadingConnectionDataModule, 10);
   Application.CreateForm(TDMM, DMM);
-  Application.CreateForm(TfrmMain, frmMain);
   dlgSplash.UpdateProgress(rsLoadingDatasetsDataModule, 40);
   dlgSplash.UpdateProgress(rsLoadingDatasetsDataModule, 60);
   dlgSplash.UpdateProgress(rsLoadingMainWindow, 80);
+  Application.CreateForm(TfrmMain, frmMain);
   dlgSplash.UpdateProgress(rsMainWindowLoaded, 100);
   {$IFDEF WINDOWS}
   Application.MainFormOnTaskBar := True;

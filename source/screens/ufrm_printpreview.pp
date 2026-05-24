@@ -127,7 +127,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, udlg_loading, udlg_progress, udm_reports, uDarkStyleParams;
+  utils_locale, utils_global, utils_dialogs, models_access_control, models_users,
+  udlg_loading, udlg_progress, udm_reports, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -425,7 +426,7 @@ end;
 procedure TfrmPrintPreview.UpdateButtons;
 begin
   sbPrint.Enabled := frPreview.AllPages > 0;
-  sbSavePDF.Enabled := frPreview.AllPages > 0;
+  sbSavePDF.Enabled := (ActiveUser.HasPermission(PERM_REPORT_EXPORT)) and (frPreview.AllPages > 0);
 
   sbFirstPage.Enabled := frPreview.Page > 1;
   sbPriorPage.Enabled := frPreview.Page > 1;

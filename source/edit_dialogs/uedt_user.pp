@@ -21,7 +21,7 @@ unit uedt_user;
 interface
 
 uses
-  Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, atshapelinebgra,
+  Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls, atshapelinebgra,
   StdCtrls, Buttons;
 
 type
@@ -30,28 +30,23 @@ type
 
   TedtUser = class(TForm)
     btnHelp: TSpeedButton;
-    cbUserRank: TDBComboBox;
-    ckAllowCollectionEdit: TDBCheckBox;
-    ckAllowExport: TDBCheckBox;
-    ckAllowImport: TDBCheckBox;
-    ckAllowPrint: TDBCheckBox;
+    cbUserRank: TComboBox;
     dsUser: TDataSource;
     eFullName: TDBEdit;
     eUsername: TDBEdit;
     lblFullName: TLabel;
-    lblPermissions: TLabel;
     lblRank: TLabel;
     lblUsername: TLabel;
     lineBottom: TShapeLineBGRA;
     pClient: TPanel;
     pBottom: TPanel;
     pFullName: TPanel;
-    pPermissions: TPanel;
     pRank: TPanel;
     pUsername: TPanel;
     sbCancel: TButton;
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
+    procedure cbUserRankChange(Sender: TObject);
     procedure dsUserDataChange(Sender: TObject; Field: TField);
     procedure eUsernameKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -60,6 +55,8 @@ type
     procedure sbSaveClick(Sender: TObject);
   private
     procedure ApplyDarkMode;
+    procedure LoadRoles;
+    procedure SyncRoleSelection;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
   public
@@ -72,7 +69,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_consts, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, data_types, data_consts, models_access_control, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -88,8 +85,22 @@ begin
   OpenHelp(HELP_USERS);
 end;
 
+procedure TedtUser.cbUserRankChange(Sender: TObject);
+begin
+  if not Assigned(dsUser.DataSet) or not (dsUser.State in [dsInsert, dsEdit]) then
+    Exit;
+
+  if cbUserRank.ItemIndex < 0 then
+    Exit;
+
+  dsUser.DataSet.FieldByName('role_id').AsInteger := PtrInt(cbUserRank.Items.Objects[cbUserRank.ItemIndex]);
+  dsUser.DataSet.FieldByName('user_rank').AsString := cbUserRank.Items[cbUserRank.ItemIndex];
+end;
+
 procedure TedtUser.dsUserDataChange(Sender: TObject; Field: TField);
 begin
+  SyncRoleSelection;
+
   if dsUser.State = dsEdit then
     sbSave.Enabled := IsRequiredFilled and dsUser.DataSet.Modified
   else
@@ -137,9 +148,8 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  cbUserRank.Items.CommaText := rsStandardUser + ',' + rsAdminUser + ',' + rsGuestUser;
-
-  cbUserRank.ItemIndex := cbUserRank.Items.IndexOf(dsUser.DataSet.FieldByName(cbUserRank.DataField).DisplayText);
+  LoadRoles;
+  SyncRoleSelection;
 
   if dsUser.State = dsInsert then
   begin
@@ -152,17 +162,62 @@ begin
   end;
 end;
 
+procedure TedtUser.LoadRoles;
+var
+  Qry: TSQLQuery;
+begin
+  cbUserRank.Items.Clear;
+
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.Database := DMM.sqlCon;
+    Qry.SQL.Text := 'SELECT role_id, role_name FROM roles ORDER BY role_id';
+    Qry.Open;
+    while not Qry.EOF do
+    begin
+      cbUserRank.Items.AddObject(Qry.Fields[1].AsString, TObject(PtrInt(Qry.Fields[0].AsInteger)));
+      Qry.Next;
+    end;
+    Qry.Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TedtUser.SyncRoleSelection;
+var
+  RoleId: Integer;
+  i: Integer;
+begin
+  if not Assigned(dsUser.DataSet) or not dsUser.DataSet.Active then
+    Exit;
+
+  if dsUser.DataSet.FindField('role_id') <> nil then
+    RoleId := dsUser.DataSet.FieldByName('role_id').AsInteger
+  else
+    RoleId := ROLE_STANDARD_ID;
+
+  cbUserRank.ItemIndex := -1;
+  for i := 0 to cbUserRank.Items.Count - 1 do
+    if PtrInt(cbUserRank.Items.Objects[i]) = RoleId then
+    begin
+      cbUserRank.ItemIndex := i;
+      Break;
+    end;
+end;
+
 function TedtUser.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
   if (dsUser.DataSet.FieldByName(COL_USER_NAME).AsString <> EmptyStr) and
-    (dsUser.DataSet.FieldByName(COL_USER_RANK).AsString <> EmptyStr) then
+    (cbUserRank.ItemIndex >= 0) then
     Result := True;
 end;
 
 procedure TedtUser.sbSaveClick(Sender: TObject);
 begin
+  cbUserRankChange(nil);
   ModalResult := mrOK;
 end;
 

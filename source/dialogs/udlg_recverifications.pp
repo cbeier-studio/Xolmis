@@ -60,6 +60,7 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure dbgHistoryPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn; AState: TGridDrawState
       );
+    procedure dsHistoryStateChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -71,6 +72,7 @@ type
     FTableType, FChildType: TTableType;
     FId: Integer;
     procedure ApplyDarkMode;
+    procedure UpdateButtons;
   public
     procedure LoadData;
 
@@ -85,7 +87,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_system, utils_themes,
+  utils_locale, utils_global, utils_system, utils_themes, models_access_control, models_users,
   data_columns, data_management, data_consts,
   udm_main, uDarkStyleParams;
 
@@ -158,6 +160,11 @@ begin
   end;
 end;
 
+procedure TdlgRecVerifications.dsHistoryStateChange(Sender: TObject);
+begin
+  UpdateButtons;
+end;
+
 procedure TdlgRecVerifications.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   qHistory.Close;
@@ -183,6 +190,8 @@ begin
 
   TranslateRecordVerifications(qHistory);
   LoadData;
+
+  UpdateButtons;
 end;
 
 procedure TdlgRecVerifications.LoadData;
@@ -283,6 +292,31 @@ begin
   AddVerification(FTableType, FChildType, FId);
 
   qHistory.Refresh;
+end;
+
+procedure TdlgRecVerifications.UpdateButtons;
+begin
+  case dsHistory.State of
+    dsInactive:
+      begin
+        sbInsertRecord.Enabled := False;
+        sbDelRecord.Enabled := False;
+      end;
+    dsBrowse:
+      begin
+        sbInsertRecord.Enabled := not (dsHistory.DataSet as TSQLQuery).ReadOnly and ActiveUser.HasPermission(PERM_VERIFY_RECORDS);
+        sbDelRecord.Enabled := not (dsHistory.DataSet as TSQLQuery).ReadOnly and not (qHistory.IsEmpty) and ActiveUser.HasPermission(PERM_VERIFY_RECORDS);
+      end;
+    dsEdit, dsInsert:
+      begin
+        sbInsertRecord.Enabled := False;
+        sbDelRecord.Enabled := False;
+      end;
+  end;
+  pmmNewVerification.Enabled := sbInsertRecord.Enabled;
+  pmmDelVerification.Enabled := sbDelRecord.Enabled;
+
+  //qHistory.Refresh;
 end;
 
 end.

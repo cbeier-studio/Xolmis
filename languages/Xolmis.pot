@@ -3565,7 +3565,90 @@ msgctxt "tcfgoptions.sbrestorebackup.caption"
 msgid "Restore"
 msgstr ""
 
+#: tcfgpermissions.btnclose.caption
+msgctxt "tcfgpermissions.btnclose.caption"
+msgid "Close"
+msgstr ""
+
+#: tcfgpermissions.caption
+msgid "Roles and permissions"
+msgstr ""
+
+#: tcfgpermissions.esearch.texthint
+msgid "Search permission"
+msgstr ""
+
+#: tcfgpermissions.lvroles.columns[0].caption
+msgctxt "tcfgpermissions.lvroles.columns[0].caption"
+msgid "Role"
+msgstr ""
+
+#: tcfgpermissions.lvroles.columns[1].caption
+msgctxt "tcfgpermissions.lvroles.columns[1].caption"
+msgid "Description"
+msgstr ""
+
+#: tcfgpermissions.pmpcollapseall.caption
+msgid "Collapse all"
+msgstr ""
+
+#: tcfgpermissions.pmpexpandall.caption
+msgid "Expand all"
+msgstr ""
+
+#: tcfgpermissions.pmpmarkall.caption
+msgid "Mark all"
+msgstr ""
+
+#: tcfgpermissions.pmpunmarkall.caption
+msgid "Unmark all"
+msgstr ""
+
+#: tcfgpermissions.pmrdelete.caption
+msgctxt "tcfgpermissions.pmrdelete.caption"
+msgid "Delete role"
+msgstr ""
+
+#: tcfgpermissions.pmredit.caption
+msgid "Edit role"
+msgstr ""
+
+#: tcfgpermissions.pmrnew.caption
+msgctxt "tcfgpermissions.pmrnew.caption"
+msgid "New role"
+msgstr ""
+
+#: tcfgpermissions.pmrrefresh.caption
+msgid "Refresh roles"
+msgstr ""
+
+#: tcfgpermissions.sbclearsearch.hint
+msgctxt "tcfgpermissions.sbclearsearch.hint"
+msgid "Clear search"
+msgstr ""
+
+#: tcfgpermissions.sbdelete.hint
+msgctxt "tcfgpermissions.sbdelete.hint"
+msgid "Delete role"
+msgstr ""
+
+#: tcfgpermissions.sbedit.hint
+msgctxt "tcfgpermissions.sbedit.hint"
+msgid "Edit the selected role"
+msgstr ""
+
+#: tcfgpermissions.sbnew.hint
+msgctxt "tcfgpermissions.sbnew.hint"
+msgid "New role"
+msgstr ""
+
+#: tcfgpermissions.sbrefreshrecords.hint
+msgctxt "tcfgpermissions.sbrefreshrecords.hint"
+msgid "Refresh records"
+msgstr ""
+
 #: tcfgusers.caption
+msgctxt "tcfgusers.caption"
 msgid "Manage users"
 msgstr ""
 
@@ -3595,6 +3678,7 @@ msgid "Delete"
 msgstr ""
 
 #: tcfgusers.pmgedit.caption
+msgctxt "tcfgusers.pmgedit.caption"
 msgid "Edit"
 msgstr ""
 
@@ -3624,16 +3708,23 @@ msgid "Close"
 msgstr ""
 
 #: tcfgusers.sbdelete.hint
+msgctxt "tcfgusers.sbdelete.hint"
 msgid "Delete user"
 msgstr ""
 
 #: tcfgusers.sbedit.hint
+msgctxt "tcfgusers.sbedit.hint"
 msgid "Edit the selected user"
 msgstr ""
 
 #: tcfgusers.sbnew.hint
 msgctxt "tcfgusers.sbnew.hint"
 msgid "New user"
+msgstr ""
+
+#: tcfgusers.sbpermissions.hint
+msgctxt "tcfgusers.sbpermissions.hint"
+msgid "Manage permissions"
 msgstr ""
 
 #: tcfgusers.sbrefreshrecords.hint
@@ -9152,6 +9243,30 @@ msgctxt "tedtrecverification.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtrole.caption
+msgctxt "tedtrole.caption"
+msgid "Role"
+msgstr ""
+
+#: tedtrole.lbldescription.caption
+msgctxt "tedtrole.lbldescription.caption"
+msgid "Description:"
+msgstr ""
+
+#: tedtrole.lblname.caption
+msgid "Role name: *"
+msgstr ""
+
+#: tedtrole.sbcancel.caption
+msgctxt "tedtrole.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtrole.sbsave.caption
+msgctxt "tedtrole.sbsave.caption"
+msgid "Save"
+msgstr ""
+
 #: tedtsampleprep.btnnew.caption
 msgctxt "tedtsampleprep.btnnew.caption"
 msgid "New"
@@ -10043,33 +10158,9 @@ msgctxt "tedtsurveymember.sbsave.caption"
 msgid "Save"
 msgstr ""
 
-#: tedtuser.ckallowcollectionedit.caption
-msgctxt "tedtuser.ckallowcollectionedit.caption"
-msgid "Manage collection"
-msgstr ""
-
-#: tedtuser.ckallowexport.caption
-msgctxt "tedtuser.ckallowexport.caption"
-msgid "Export data"
-msgstr ""
-
-#: tedtuser.ckallowimport.caption
-msgctxt "tedtuser.ckallowimport.caption"
-msgid "Import data"
-msgstr ""
-
-#: tedtuser.ckallowprint.caption
-msgctxt "tedtuser.ckallowprint.caption"
-msgid "Print reports"
-msgstr ""
-
 #: tedtuser.lblfullname.caption
 msgctxt "tedtuser.lblfullname.caption"
 msgid "Full name:"
-msgstr ""
-
-#: tedtuser.lblpermissions.caption
-msgid "Permissions:"
 msgstr ""
 
 #: tedtuser.lblrank.caption
@@ -13850,6 +13941,10 @@ msgstr ""
 msgid "Add media files"
 msgstr ""
 
+#: utils_locale.rsadminroledescription
+msgid "Full access to all modules."
+msgstr ""
+
 #: utils_locale.rsadminuser
 msgctxt "utils_locale.rsadminuser"
 msgid "Administrator"
@@ -15243,6 +15338,15 @@ msgctxt "utils_locale.rsdeleterecordtitle"
 msgid "Delete record"
 msgstr ""
 
+#: utils_locale.rsdeleterole
+msgctxt "utils_locale.rsdeleterole"
+msgid "Delete role"
+msgstr ""
+
+#: utils_locale.rsdeleteroleprompt
+msgid "Delete the selected role?"
+msgstr ""
+
 #: utils_locale.rsdeleterowprompt
 msgctxt "utils_locale.rsdeleterowprompt"
 msgid "Do you really want to delete the selected row?"
@@ -16417,6 +16521,10 @@ msgstr ""
 #: utils_locale.rsgoalreached
 msgctxt "utils_locale.rsgoalreached"
 msgid "Reached"
+msgstr ""
+
+#: utils_locale.rsguestroledescription
+msgid "Minimal read-only access."
 msgstr ""
 
 #: utils_locale.rsguestuser
@@ -17915,6 +18023,299 @@ msgctxt "utils_locale.rsperiodicreportnotification"
 msgid "Periodic report"
 msgstr ""
 
+#: utils_locale.rspermissionactioncreate
+msgid "Create"
+msgstr ""
+
+#: utils_locale.rspermissionactiondelete
+msgctxt "utils_locale.rspermissionactiondelete"
+msgid "Delete"
+msgstr ""
+
+#: utils_locale.rspermissionactionedit
+msgctxt "utils_locale.rspermissionactionedit"
+msgid "Edit"
+msgstr ""
+
+#: utils_locale.rspermissionactionexport
+msgctxt "utils_locale.rspermissionactionexport"
+msgid "Export"
+msgstr ""
+
+#: utils_locale.rspermissionactioninsert
+msgid "Insert"
+msgstr ""
+
+#: utils_locale.rspermissionactionmanage
+msgid "Manage"
+msgstr ""
+
+#: utils_locale.rspermissionactionprint
+msgctxt "utils_locale.rspermissionactionprint"
+msgid "Print"
+msgstr ""
+
+#: utils_locale.rspermissionactionverify
+msgid "Verify"
+msgstr ""
+
+#: utils_locale.rspermissionactionview
+msgid "View"
+msgstr ""
+
+#: utils_locale.rspermissioncreatedatabase
+msgid "Create new database"
+msgstr ""
+
+#: utils_locale.rspermissiondatabasemaintenance
+msgid "Use database maintenance tools"
+msgstr ""
+
+#: utils_locale.rspermissiondeletedatabase
+msgid "Delete database connection"
+msgstr ""
+
+#: utils_locale.rspermissiondescriptiondatabasemaintenance
+msgid "Allow using database maintenance tools."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptionimportbanding
+msgid "Allow importing banding data."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptionimportebird
+msgid "Allow importing eBird data."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptionimportgeocoords
+msgid "Allow importing geographic coordinates."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptionimportnests
+msgid "Allow importing nest data."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptionimportwizard
+msgid "Allow importing data via the import wizard."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptionimportxolmismobile
+msgid "Allow importing data from Xolmis Mobile."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptionreportexport
+msgid "Allow exporting reports."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptionrestore
+msgid "Allow restoring deleted records."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptiontemplate
+#, object-pascal-format
+msgid "Allow %s on %s."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptionundo
+msgid "Allow undoing edits."
+msgstr ""
+
+#: utils_locale.rspermissiondescriptionverify
+msgid "Allow verifications of records."
+msgstr ""
+
+#: utils_locale.rspermissioneditdatabase
+msgid "Edit database connection"
+msgstr ""
+
+#: utils_locale.rspermissionexportreports
+msgid "Export reports"
+msgstr ""
+
+#: utils_locale.rspermissiongroupadministration
+msgid "Administration"
+msgstr ""
+
+#: utils_locale.rspermissiongroupglobal
+msgid "Global"
+msgstr ""
+
+#: utils_locale.rspermissiongroupimport
+msgctxt "utils_locale.rspermissiongroupimport"
+msgid "Import"
+msgstr ""
+
+#: utils_locale.rspermissiongroupsystem
+msgctxt "utils_locale.rspermissiongroupsystem"
+msgid "System"
+msgstr ""
+
+#: utils_locale.rspermissionimportbanding
+msgctxt "utils_locale.rspermissionimportbanding"
+msgid "Import banding data"
+msgstr ""
+
+#: utils_locale.rspermissionimportcoordinates
+msgid "Import geographical coordinates"
+msgstr ""
+
+#: utils_locale.rspermissionimportebird
+msgid "Import data from eBird"
+msgstr ""
+
+#: utils_locale.rspermissionimportnesting
+msgctxt "utils_locale.rspermissionimportnesting"
+msgid "Import nesting data"
+msgstr ""
+
+#: utils_locale.rspermissionimportwizard
+msgid "Import data via wizard"
+msgstr ""
+
+#: utils_locale.rspermissionimportxolmismobile
+msgid "Import data from Xolmis Mobile"
+msgstr ""
+
+#: utils_locale.rspermissionmanagepermissions
+msgctxt "utils_locale.rspermissionmanagepermissions"
+msgid "Manage permissions"
+msgstr ""
+
+#: utils_locale.rspermissionmanageroles
+msgid "Manage roles"
+msgstr ""
+
+#: utils_locale.rspermissionmanageusers
+msgctxt "utils_locale.rspermissionmanageusers"
+msgid "Manage users"
+msgstr ""
+
+#: utils_locale.rspermissionmodulebands
+msgctxt "utils_locale.rspermissionmodulebands"
+msgid "Bands"
+msgstr ""
+
+#: utils_locale.rspermissionmodulebirds
+msgid "Bird records"
+msgstr ""
+
+#: utils_locale.rspermissionmodulebotany
+msgctxt "utils_locale.rspermissionmodulebotany"
+msgid "Botanical taxa"
+msgstr ""
+
+#: utils_locale.rspermissionmodulebreeding
+msgid "Breeding records"
+msgstr ""
+
+#: utils_locale.rspermissionmoduledatabase
+msgctxt "utils_locale.rspermissionmoduledatabase"
+msgid "Database"
+msgstr ""
+
+#: utils_locale.rspermissionmodulegazetteer
+msgctxt "utils_locale.rspermissionmodulegazetteer"
+msgid "Gazetteer"
+msgstr ""
+
+#: utils_locale.rspermissionmoduleimport
+msgctxt "utils_locale.rspermissionmoduleimport"
+msgid "Import"
+msgstr ""
+
+#: utils_locale.rspermissionmoduleinstitutions
+msgctxt "utils_locale.rspermissionmoduleinstitutions"
+msgid "Institutions"
+msgstr ""
+
+#: utils_locale.rspermissionmodulemethods
+msgctxt "utils_locale.rspermissionmodulemethods"
+msgid "Methods"
+msgstr ""
+
+#: utils_locale.rspermissionmodulepeople
+msgid "People"
+msgstr ""
+
+#: utils_locale.rspermissionmodulepermissions
+msgctxt "utils_locale.rspermissionmodulepermissions"
+msgid "Permissions"
+msgstr ""
+
+#: utils_locale.rspermissionmodulepermits
+msgctxt "utils_locale.rspermissionmodulepermits"
+msgid "Permits"
+msgstr ""
+
+#: utils_locale.rspermissionmoduleprojects
+msgctxt "utils_locale.rspermissionmoduleprojects"
+msgid "Projects"
+msgstr ""
+
+#: utils_locale.rspermissionmodulereport
+msgid "Reports"
+msgstr ""
+
+#: utils_locale.rspermissionmoduleroles
+msgctxt "utils_locale.rspermissionmoduleroles"
+msgid "Roles"
+msgstr ""
+
+#: utils_locale.rspermissionmodulesampling
+msgid "Sampling records"
+msgstr ""
+
+#: utils_locale.rspermissionmodulesamplingplots
+msgctxt "utils_locale.rspermissionmodulesamplingplots"
+msgid "Sampling plots"
+msgstr ""
+
+#: utils_locale.rspermissionmodulesightings
+msgctxt "utils_locale.rspermissionmodulesightings"
+msgid "Sightings"
+msgstr ""
+
+#: utils_locale.rspermissionmodulespecimens
+msgctxt "utils_locale.rspermissionmodulespecimens"
+msgid "Specimens"
+msgstr ""
+
+#: utils_locale.rspermissionmodulesystem
+msgctxt "utils_locale.rspermissionmodulesystem"
+msgid "System"
+msgstr ""
+
+#: utils_locale.rspermissionmoduletaxa
+msgctxt "utils_locale.rspermissionmoduletaxa"
+msgid "Taxa"
+msgstr ""
+
+#: utils_locale.rspermissionmoduleusers
+msgctxt "utils_locale.rspermissionmoduleusers"
+msgid "Users"
+msgstr ""
+
+#: utils_locale.rspermissionrestorerecords
+msgid "Allow restore deleted records"
+msgstr ""
+
+#: utils_locale.rspermissions
+msgctxt "utils_locale.rspermissions"
+msgid "Permissions"
+msgstr ""
+
+#: utils_locale.rspermissionsystemmaintenance
+msgid "Access maintenance tools"
+msgstr ""
+
+#: utils_locale.rspermissionundoedits
+msgid "Allow undo record edits"
+msgstr ""
+
+#: utils_locale.rspermissionverifyrecords
+msgid "Allow record verifications"
+msgstr ""
+
 #: utils_locale.rspermitactive
 msgctxt "utils_locale.rspermitactive"
 msgid "Active"
@@ -18259,6 +18660,14 @@ msgstr ""
 msgid "Single quote"
 msgstr ""
 
+#: utils_locale.rsreaderroledescription
+msgid "Read-only access with export and printing."
+msgstr ""
+
+#: utils_locale.rsreaderuser
+msgid "Reader"
+msgstr ""
+
 #: utils_locale.rsrecnoempty
 msgctxt "utils_locale.rsrecnoempty"
 msgid "record 0 of 0"
@@ -18455,6 +18864,28 @@ msgstr ""
 #: utils_locale.rsrightlegempty
 msgctxt "utils_locale.rsrightlegempty"
 msgid "r-"
+msgstr ""
+
+#: utils_locale.rsrole
+msgctxt "utils_locale.rsrole"
+msgid "Role"
+msgstr ""
+
+#: utils_locale.rsrolecannotbedeleted
+msgid "This role cannot be deleted."
+msgstr ""
+
+#: utils_locale.rsrolecannotbeedited
+msgid "This role cannot be edited."
+msgstr ""
+
+#: utils_locale.rsrolepermissions
+msgid "Role permissions"
+msgstr ""
+
+#: utils_locale.rsroles
+msgctxt "utils_locale.rsroles"
+msgid "Roles"
 msgstr ""
 
 #: utils_locale.rsrow
@@ -18777,6 +19208,10 @@ msgctxt "utils_locale.rsspecimentissues"
 msgid "Tissues"
 msgstr ""
 
+#: utils_locale.rsstandardroledescription
+msgid "Default internal user role."
+msgstr ""
+
 #: utils_locale.rsstandarduser
 msgctxt "utils_locale.rsstandarduser"
 msgid "Standard"
@@ -18963,6 +19398,14 @@ msgctxt "utils_locale.rssummary"
 msgid "Summary"
 msgstr ""
 
+#: utils_locale.rssupervisorroledescription
+msgid "Operational management role."
+msgstr ""
+
+#: utils_locale.rssupervisoruser
+msgid "Supervisor"
+msgstr ""
+
 #: utils_locale.rssupportanthropic
 msgctxt "utils_locale.rssupportanthropic"
 msgid "Anthropic"
@@ -19108,6 +19551,7 @@ msgid "Bands running out"
 msgstr ""
 
 #: utils_locale.rstitlebotanicaltaxa
+msgctxt "utils_locale.rstitlebotanicaltaxa"
 msgid "Botanical taxa"
 msgstr ""
 

@@ -3542,7 +3542,90 @@ msgctxt "tcfgoptions.sbrestorebackup.caption"
 msgid "Restore"
 msgstr "Restaurar"
 
+#: tcfgpermissions.btnclose.caption
+msgctxt "tcfgpermissions.btnclose.caption"
+msgid "Close"
+msgstr "Fechar"
+
+#: tcfgpermissions.caption
+msgid "Roles and permissions"
+msgstr "Níveis de acesso e permissões"
+
+#: tcfgpermissions.esearch.texthint
+msgid "Search permission"
+msgstr "Pesquisar permissão"
+
+#: tcfgpermissions.lvroles.columns[0].caption
+msgctxt "tcfgpermissions.lvroles.columns[0].caption"
+msgid "Role"
+msgstr "Nível de acesso"
+
+#: tcfgpermissions.lvroles.columns[1].caption
+msgctxt "tcfgpermissions.lvroles.columns[1].caption"
+msgid "Description"
+msgstr "Descrição"
+
+#: tcfgpermissions.pmpcollapseall.caption
+msgid "Collapse all"
+msgstr "Colapsar tudo"
+
+#: tcfgpermissions.pmpexpandall.caption
+msgid "Expand all"
+msgstr "Expandir tudo"
+
+#: tcfgpermissions.pmpmarkall.caption
+msgid "Mark all"
+msgstr "Marcar todos"
+
+#: tcfgpermissions.pmpunmarkall.caption
+msgid "Unmark all"
+msgstr "Desmarcar todos"
+
+#: tcfgpermissions.pmrdelete.caption
+msgctxt "tcfgpermissions.pmrdelete.caption"
+msgid "Delete role"
+msgstr "Apagar nível de acesso"
+
+#: tcfgpermissions.pmredit.caption
+msgid "Edit role"
+msgstr "Editar nível de acesso"
+
+#: tcfgpermissions.pmrnew.caption
+msgctxt "tcfgpermissions.pmrnew.caption"
+msgid "New role"
+msgstr "Novo nível de acesso"
+
+#: tcfgpermissions.pmrrefresh.caption
+msgid "Refresh roles"
+msgstr "Atualizar níveis de acesso"
+
+#: tcfgpermissions.sbclearsearch.hint
+msgctxt "tcfgpermissions.sbclearsearch.hint"
+msgid "Clear search"
+msgstr "Limpar busca"
+
+#: tcfgpermissions.sbdelete.hint
+msgctxt "tcfgpermissions.sbdelete.hint"
+msgid "Delete role"
+msgstr "Apagar nível de acesso"
+
+#: tcfgpermissions.sbedit.hint
+msgctxt "tcfgpermissions.sbedit.hint"
+msgid "Edit the selected role"
+msgstr "Editar o nível de acesso selecionado"
+
+#: tcfgpermissions.sbnew.hint
+msgctxt "tcfgpermissions.sbnew.hint"
+msgid "New role"
+msgstr "Novo nível de acesso"
+
+#: tcfgpermissions.sbrefreshrecords.hint
+msgctxt "tcfgpermissions.sbrefreshrecords.hint"
+msgid "Refresh records"
+msgstr "Atualizar registros"
+
 #: tcfgusers.caption
+msgctxt "tcfgusers.caption"
 msgid "Manage users"
 msgstr "Gerenciar usuários"
 
@@ -3572,6 +3655,7 @@ msgid "Delete"
 msgstr "Apagar"
 
 #: tcfgusers.pmgedit.caption
+msgctxt "tcfgusers.pmgedit.caption"
 msgid "Edit"
 msgstr "Editar"
 
@@ -3601,16 +3685,24 @@ msgid "Close"
 msgstr "Fechar"
 
 #: tcfgusers.sbdelete.hint
+msgctxt "tcfgusers.sbdelete.hint"
 msgid "Delete user"
 msgstr "Apagar usuário"
 
 #: tcfgusers.sbedit.hint
+msgctxt "tcfgusers.sbedit.hint"
 msgid "Edit the selected user"
 msgstr "Editar o usuário selecionado"
 
 #: tcfgusers.sbnew.hint
+msgctxt "tcfgusers.sbnew.hint"
 msgid "New user"
 msgstr "Novo usuário"
+
+#: tcfgusers.sbpermissions.hint
+msgctxt "tcfgusers.sbpermissions.hint"
+msgid "Manage permissions"
+msgstr "Gerenciar permissões"
 
 #: tcfgusers.sbrefreshrecords.hint
 msgctxt "tcfgusers.sbrefreshrecords.hint"
@@ -9140,6 +9232,30 @@ msgctxt "tedtrecverification.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtrole.caption
+msgctxt "tedtrole.caption"
+msgid "Role"
+msgstr "Nível de acesso"
+
+#: tedtrole.lbldescription.caption
+msgctxt "tedtrole.lbldescription.caption"
+msgid "Description:"
+msgstr "Descrição:"
+
+#: tedtrole.lblname.caption
+msgid "Role name: *"
+msgstr "Nome do nível de acesso: *"
+
+#: tedtrole.sbcancel.caption
+msgctxt "tedtrole.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tedtrole.sbsave.caption
+msgctxt "tedtrole.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
+
 #: tedtsampleprep.btnnew.caption
 msgctxt "tedtsampleprep.btnnew.caption"
 msgid "New"
@@ -10031,34 +10147,10 @@ msgctxt "tedtsurveymember.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
-#: tedtuser.ckallowcollectionedit.caption
-msgctxt "tedtuser.ckallowcollectionedit.caption"
-msgid "Manage collection"
-msgstr "Gerenciar acervo"
-
-#: tedtuser.ckallowexport.caption
-msgctxt "tedtuser.ckallowexport.caption"
-msgid "Export data"
-msgstr "Exportar dados"
-
-#: tedtuser.ckallowimport.caption
-msgctxt "tedtuser.ckallowimport.caption"
-msgid "Import data"
-msgstr "Importar dados"
-
-#: tedtuser.ckallowprint.caption
-msgctxt "tedtuser.ckallowprint.caption"
-msgid "Print reports"
-msgstr "Imprimir relatórios"
-
 #: tedtuser.lblfullname.caption
 msgctxt "tedtuser.lblfullname.caption"
 msgid "Full name:"
 msgstr "Nome completo:"
-
-#: tedtuser.lblpermissions.caption
-msgid "Permissions:"
-msgstr "Permissões:"
 
 #: tedtuser.lblrank.caption
 msgid "Access level: *"
@@ -13835,6 +13927,10 @@ msgstr "A fazer"
 msgid "Add media files"
 msgstr "Adicionar mídias"
 
+#: utils_locale.rsadminroledescription
+msgid "Full access to all modules."
+msgstr "Acesso total a todos módulos."
+
 #: utils_locale.rsadminuser
 msgctxt "utils_locale.rsadminuser"
 msgid "Administrator"
@@ -15236,6 +15332,15 @@ msgctxt "utils_locale.rsdeleterecordtitle"
 msgid "Delete record"
 msgstr "Apagar registro"
 
+#: utils_locale.rsdeleterole
+msgctxt "utils_locale.rsdeleterole"
+msgid "Delete role"
+msgstr "Apagar nível de acesso"
+
+#: utils_locale.rsdeleteroleprompt
+msgid "Delete the selected role?"
+msgstr "Apagar o nível de acesso selecionado?"
+
 #: utils_locale.rsdeleterowprompt
 msgctxt "utils_locale.rsdeleterowprompt"
 msgid "Do you really want to delete the selected row?"
@@ -16411,6 +16516,10 @@ msgstr "Pendente"
 msgctxt "utils_locale.rsgoalreached"
 msgid "Reached"
 msgstr "Alcançado"
+
+#: utils_locale.rsguestroledescription
+msgid "Minimal read-only access."
+msgstr "Acesso mínimo somente leitura."
 
 #: utils_locale.rsguestuser
 msgctxt "utils_locale.rsguestuser"
@@ -18066,6 +18175,299 @@ msgctxt "utils_locale.rsperiodicreportnotification"
 msgid "Periodic report"
 msgstr "Relatório periódico"
 
+#: utils_locale.rspermissionactioncreate
+msgid "Create"
+msgstr "Criar"
+
+#: utils_locale.rspermissionactiondelete
+msgctxt "utils_locale.rspermissionactiondelete"
+msgid "Delete"
+msgstr "Apagar"
+
+#: utils_locale.rspermissionactionedit
+msgctxt "utils_locale.rspermissionactionedit"
+msgid "Edit"
+msgstr "Editar"
+
+#: utils_locale.rspermissionactionexport
+msgctxt "utils_locale.rspermissionactionexport"
+msgid "Export"
+msgstr "Exportar"
+
+#: utils_locale.rspermissionactioninsert
+msgid "Insert"
+msgstr "Inserir"
+
+#: utils_locale.rspermissionactionmanage
+msgid "Manage"
+msgstr "Gerenciar"
+
+#: utils_locale.rspermissionactionprint
+msgctxt "utils_locale.rspermissionactionprint"
+msgid "Print"
+msgstr "Imprimir"
+
+#: utils_locale.rspermissionactionverify
+msgid "Verify"
+msgstr "Verificar"
+
+#: utils_locale.rspermissionactionview
+msgid "View"
+msgstr "Visualizar"
+
+#: utils_locale.rspermissioncreatedatabase
+msgid "Create new database"
+msgstr "Cria novo banco de dados"
+
+#: utils_locale.rspermissiondatabasemaintenance
+msgid "Use database maintenance tools"
+msgstr "Usar ferramentas de manutenção do banco de dados"
+
+#: utils_locale.rspermissiondeletedatabase
+msgid "Delete database connection"
+msgstr "Apagar conexão do banco de dados"
+
+#: utils_locale.rspermissiondescriptiondatabasemaintenance
+msgid "Allow using database maintenance tools."
+msgstr "Permite usar ferramentas de manutenção do banco de dados."
+
+#: utils_locale.rspermissiondescriptionimportbanding
+msgid "Allow importing banding data."
+msgstr "Permite importar dados de anilhamento."
+
+#: utils_locale.rspermissiondescriptionimportebird
+msgid "Allow importing eBird data."
+msgstr "Permite importar dados do eBird."
+
+#: utils_locale.rspermissiondescriptionimportgeocoords
+msgid "Allow importing geographic coordinates."
+msgstr "Permite importar coordenadas geográficas."
+
+#: utils_locale.rspermissiondescriptionimportnests
+msgid "Allow importing nest data."
+msgstr "Permite importar dados de nidificação."
+
+#: utils_locale.rspermissiondescriptionimportwizard
+msgid "Allow importing data via the import wizard."
+msgstr "Permite importar dados via assistente de importação."
+
+#: utils_locale.rspermissiondescriptionimportxolmismobile
+msgid "Allow importing data from Xolmis Mobile."
+msgstr "Permite importar dados do Xolmis Mobile."
+
+#: utils_locale.rspermissiondescriptionreportexport
+msgid "Allow exporting reports."
+msgstr "Permite exportar relatórios."
+
+#: utils_locale.rspermissiondescriptionrestore
+msgid "Allow restoring deleted records."
+msgstr "Permite restaurar registros apagados."
+
+#: utils_locale.rspermissiondescriptiontemplate
+#, object-pascal-format
+msgid "Allow %s on %s."
+msgstr "Permite %s em %s"
+
+#: utils_locale.rspermissiondescriptionundo
+msgid "Allow undoing edits."
+msgstr "Permite desfazer edições."
+
+#: utils_locale.rspermissiondescriptionverify
+msgid "Allow verifications of records."
+msgstr "Permite verificações de registros."
+
+#: utils_locale.rspermissioneditdatabase
+msgid "Edit database connection"
+msgstr "Editar conexão do banco de dados"
+
+#: utils_locale.rspermissionexportreports
+msgid "Export reports"
+msgstr "Exportar relatórios"
+
+#: utils_locale.rspermissiongroupadministration
+msgid "Administration"
+msgstr "Administração"
+
+#: utils_locale.rspermissiongroupglobal
+msgid "Global"
+msgstr "Global"
+
+#: utils_locale.rspermissiongroupimport
+msgctxt "utils_locale.rspermissiongroupimport"
+msgid "Import"
+msgstr "Importar"
+
+#: utils_locale.rspermissiongroupsystem
+msgctxt "utils_locale.rspermissiongroupsystem"
+msgid "System"
+msgstr "Sistema"
+
+#: utils_locale.rspermissionimportbanding
+msgctxt "utils_locale.rspermissionimportbanding"
+msgid "Import banding data"
+msgstr "Importar dados de anilhamento"
+
+#: utils_locale.rspermissionimportcoordinates
+msgid "Import geographical coordinates"
+msgstr "Importar coordenadas geográficas"
+
+#: utils_locale.rspermissionimportebird
+msgid "Import data from eBird"
+msgstr "Importar dados do eBird"
+
+#: utils_locale.rspermissionimportnesting
+msgctxt "utils_locale.rspermissionimportnesting"
+msgid "Import nesting data"
+msgstr "Importar dados de nidificação"
+
+#: utils_locale.rspermissionimportwizard
+msgid "Import data via wizard"
+msgstr "Importar dados via assistente"
+
+#: utils_locale.rspermissionimportxolmismobile
+msgid "Import data from Xolmis Mobile"
+msgstr "Importar dados do Xolmis Mobile"
+
+#: utils_locale.rspermissionmanagepermissions
+msgctxt "utils_locale.rspermissionmanagepermissions"
+msgid "Manage permissions"
+msgstr "Gerenciar permissões"
+
+#: utils_locale.rspermissionmanageroles
+msgid "Manage roles"
+msgstr "Gerenciar níveis de acesso"
+
+#: utils_locale.rspermissionmanageusers
+msgctxt "utils_locale.rspermissionmanageusers"
+msgid "Manage users"
+msgstr "Gerenciar usuários"
+
+#: utils_locale.rspermissionmodulebands
+msgctxt "utils_locale.rspermissionmodulebands"
+msgid "Bands"
+msgstr "Anilhas"
+
+#: utils_locale.rspermissionmodulebirds
+msgid "Bird records"
+msgstr "Registros de aves"
+
+#: utils_locale.rspermissionmodulebotany
+msgctxt "utils_locale.rspermissionmodulebotany"
+msgid "Botanical taxa"
+msgstr "Táxons botânicos"
+
+#: utils_locale.rspermissionmodulebreeding
+msgid "Breeding records"
+msgstr "Registros reprodutivos"
+
+#: utils_locale.rspermissionmoduledatabase
+msgctxt "utils_locale.rspermissionmoduledatabase"
+msgid "Database"
+msgstr "Banco de dados"
+
+#: utils_locale.rspermissionmodulegazetteer
+msgctxt "utils_locale.rspermissionmodulegazetteer"
+msgid "Gazetteer"
+msgstr "Gazetteer"
+
+#: utils_locale.rspermissionmoduleimport
+msgctxt "utils_locale.rspermissionmoduleimport"
+msgid "Import"
+msgstr "Importar"
+
+#: utils_locale.rspermissionmoduleinstitutions
+msgctxt "utils_locale.rspermissionmoduleinstitutions"
+msgid "Institutions"
+msgstr "Instituições"
+
+#: utils_locale.rspermissionmodulemethods
+msgctxt "utils_locale.rspermissionmodulemethods"
+msgid "Methods"
+msgstr "Métodos"
+
+#: utils_locale.rspermissionmodulepeople
+msgid "People"
+msgstr "Pessoas"
+
+#: utils_locale.rspermissionmodulepermissions
+msgctxt "utils_locale.rspermissionmodulepermissions"
+msgid "Permissions"
+msgstr "Permissões"
+
+#: utils_locale.rspermissionmodulepermits
+msgctxt "utils_locale.rspermissionmodulepermits"
+msgid "Permits"
+msgstr "Licenças"
+
+#: utils_locale.rspermissionmoduleprojects
+msgctxt "utils_locale.rspermissionmoduleprojects"
+msgid "Projects"
+msgstr "Projetos"
+
+#: utils_locale.rspermissionmodulereport
+msgid "Reports"
+msgstr "Relatórios"
+
+#: utils_locale.rspermissionmoduleroles
+msgctxt "utils_locale.rspermissionmoduleroles"
+msgid "Roles"
+msgstr "Níveis de acesso"
+
+#: utils_locale.rspermissionmodulesampling
+msgid "Sampling records"
+msgstr "Registros de amostragem"
+
+#: utils_locale.rspermissionmodulesamplingplots
+msgctxt "utils_locale.rspermissionmodulesamplingplots"
+msgid "Sampling plots"
+msgstr "Parcelas amostrais"
+
+#: utils_locale.rspermissionmodulesightings
+msgctxt "utils_locale.rspermissionmodulesightings"
+msgid "Sightings"
+msgstr "Observações"
+
+#: utils_locale.rspermissionmodulespecimens
+msgctxt "utils_locale.rspermissionmodulespecimens"
+msgid "Specimens"
+msgstr "Espécimes"
+
+#: utils_locale.rspermissionmodulesystem
+msgctxt "utils_locale.rspermissionmodulesystem"
+msgid "System"
+msgstr "Sistema"
+
+#: utils_locale.rspermissionmoduletaxa
+msgctxt "utils_locale.rspermissionmoduletaxa"
+msgid "Taxa"
+msgstr "Táxons"
+
+#: utils_locale.rspermissionmoduleusers
+msgctxt "utils_locale.rspermissionmoduleusers"
+msgid "Users"
+msgstr "Usuários"
+
+#: utils_locale.rspermissionrestorerecords
+msgid "Allow restore deleted records"
+msgstr "Permite restaurar registros apagados"
+
+#: utils_locale.rspermissions
+msgctxt "utils_locale.rspermissions"
+msgid "Permissions"
+msgstr "Permissões"
+
+#: utils_locale.rspermissionsystemmaintenance
+msgid "Access maintenance tools"
+msgstr "Acessar ferramentas de manutenção"
+
+#: utils_locale.rspermissionundoedits
+msgid "Allow undo record edits"
+msgstr "Permite desfazer edição de registros"
+
+#: utils_locale.rspermissionverifyrecords
+msgid "Allow record verifications"
+msgstr "Permite verificações de registros"
+
 #: utils_locale.rspermitactive
 msgctxt "utils_locale.rspermitactive"
 msgid "Active"
@@ -18420,6 +18822,14 @@ msgstr "Aspas duplas"
 msgid "Single quote"
 msgstr "Aspas simples"
 
+#: utils_locale.rsreaderroledescription
+msgid "Read-only access with export and printing."
+msgstr "Acesso somente leitura com exportação e impressão."
+
+#: utils_locale.rsreaderuser
+msgid "Reader"
+msgstr "Leitor"
+
 #: utils_locale.rsrecnoempty
 msgctxt "utils_locale.rsrecnoempty"
 msgid "record 0 of 0"
@@ -18623,6 +19033,28 @@ msgstr "d%s"
 msgctxt "utils_locale.rsrightlegempty"
 msgid "r-"
 msgstr "d-"
+
+#: utils_locale.rsrole
+msgctxt "utils_locale.rsrole"
+msgid "Role"
+msgstr "Nível de acesso"
+
+#: utils_locale.rsrolecannotbedeleted
+msgid "This role cannot be deleted."
+msgstr "Este nível de acesso não pode ser apagado."
+
+#: utils_locale.rsrolecannotbeedited
+msgid "This role cannot be edited."
+msgstr "Este nível de acesso não pode ser editado."
+
+#: utils_locale.rsrolepermissions
+msgid "Role permissions"
+msgstr "Permissões do nível de acesso"
+
+#: utils_locale.rsroles
+msgctxt "utils_locale.rsroles"
+msgid "Roles"
+msgstr "Níveis de acesso"
 
 #: utils_locale.rsrow
 #, object-pascal-format
@@ -18944,6 +19376,10 @@ msgctxt "utils_locale.rsspecimentissues"
 msgid "Tissues"
 msgstr "Tecidos"
 
+#: utils_locale.rsstandardroledescription
+msgid "Default internal user role."
+msgstr "Nível de acesso de usuário padrão."
+
 #: utils_locale.rsstandarduser
 msgctxt "utils_locale.rsstandarduser"
 msgid "Standard"
@@ -19130,6 +19566,14 @@ msgctxt "utils_locale.rssummary"
 msgid "Summary"
 msgstr "Resumo"
 
+#: utils_locale.rssupervisorroledescription
+msgid "Operational management role."
+msgstr "Nível de acesso de gerenciamento operacional."
+
+#: utils_locale.rssupervisoruser
+msgid "Supervisor"
+msgstr "Supervisor"
+
 #: utils_locale.rssupportanthropic
 msgctxt "utils_locale.rssupportanthropic"
 msgid "Anthropic"
@@ -19275,6 +19719,7 @@ msgid "Bands running out"
 msgstr "Anilhas acabando"
 
 #: utils_locale.rstitlebotanicaltaxa
+msgctxt "utils_locale.rstitlebotanicaltaxa"
 msgid "Botanical taxa"
 msgstr "Táxons botânicos"
 
@@ -19844,13 +20289,11 @@ msgid "Courtship/display"
 msgstr "Corte/exibição"
 
 #: utils_locale.rsvideoenvironmental
-#, fuzzy
 msgctxt "utils_locale.rsvideoenvironmental"
 msgid "Environmental"
 msgstr "Ambiental"
 
 #: utils_locale.rsvideofieldwork
-#, fuzzy
 msgctxt "utils_locale.rsvideofieldwork"
 msgid "Fieldwork"
 msgstr "Trabalho de campo"
@@ -19893,7 +20336,6 @@ msgid "Nestlings"
 msgstr "Ninhegos"
 
 #: utils_locale.rsvideoother
-#, fuzzy
 msgctxt "utils_locale.rsvideoother"
 msgid "Other"
 msgstr "Outro"
@@ -19979,4 +20421,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-

@@ -9,7 +9,7 @@ object dlgBandsBalance: TdlgBandsBalance
   ClientWidth = 320
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object pBottom: TPanel
@@ -348,6 +348,7 @@ object dlgBandsBalance: TdlgBandsBalance
   object dsBandsBalance: TDataSource
     AutoEdit = False
     DataSet = qBandsBalance
+    OnStateChange = dsBandsBalanceStateChange
     Left = 208
     Top = 96
   end
@@ -434,7 +435,6 @@ object dlgBandsBalance: TdlgBandsBalance
   end
   object FrPrintGrid1: TFrPrintGrid
     DBGrid = dbgSaldo
-    TitleFont.Color = 6579300
     Caption = 'Bands balance'
     PrinterIndex = -1
     ShowCaption = True

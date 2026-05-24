@@ -1300,6 +1300,13 @@ type
     procedure SetVideos;
 
     function Search(aValue: String): Boolean;
+    function GetPermissionForTableAction(const ATable: TTableType; const AAction: String): String;
+    function HasTablePermission(const ATable: TTableType; const AAction: String): Boolean;
+    function CanInsertTable(const ATable: TTableType): Boolean;
+    function CanEditTable(const ATable: TTableType): Boolean;
+    function CanDeleteTable(const ATable: TTableType): Boolean;
+    function CanExportTable(const ATable: TTableType): Boolean;
+    function CanPrintTable(const ATable: TTableType): Boolean;
 
     procedure Summary;
 
@@ -1371,7 +1378,7 @@ uses
   utils_locale, utils_global, utils_system, utils_themes, utils_editdialogs, utils_dialogs, utils_math,
   utils_finddialogs, utils_print, utils_validations, utils_gis, utils_taxonomy, utils_graphics,
   data_management, data_getvalue, data_columns, data_blobs, data_setparam, data_consts,
-  models_taxonomy, models_users, models_record_types,
+  models_access_control, models_taxonomy, models_users, models_record_types,
   modules_bands, modules_birds, modules_botany, modules_breeding, modules_gazetteer, modules_institutions,
   modules_methods, modules_people, modules_permits, modules_projects, modules_sampling, modules_sampling_plots,
   modules_sightings, modules_specimens,
@@ -1400,6 +1407,180 @@ begin
   end;
 
   Result := Result + LineEnding + 'ORDER BY ' + AOrderBy;
+end;
+
+function TfrmCustomGrid.GetPermissionForTableAction(const ATable: TTableType; const AAction: String): String;
+begin
+  Result := EmptyStr;
+
+  case ATable of
+    tbGazetteer:
+      case AAction of
+        'VIEW': Result := PERM_GAZETTEER_VIEW;
+        'INSERT': Result := PERM_GAZETTEER_INSERT;
+        'EDIT': Result := PERM_GAZETTEER_EDIT;
+        'DELETE': Result := PERM_GAZETTEER_DELETE;
+        'EXPORT': Result := PERM_GAZETTEER_EXPORT;
+        'PRINT': Result := PERM_GAZETTEER_PRINT;
+      end;
+    tbSamplingPlots, tbPermanentNets:
+      case AAction of
+        'VIEW': Result := PERM_SAMPLING_PLOTS_VIEW;
+        'INSERT': Result := PERM_SAMPLING_PLOTS_INSERT;
+        'EDIT': Result := PERM_SAMPLING_PLOTS_EDIT;
+        'DELETE': Result := PERM_SAMPLING_PLOTS_DELETE;
+        'EXPORT': Result := PERM_SAMPLING_PLOTS_EXPORT;
+        'PRINT': Result := PERM_SAMPLING_PLOTS_PRINT;
+      end;
+    tbInstitutions:
+      case AAction of
+        'VIEW': Result := PERM_INSTITUTIONS_VIEW;
+        'INSERT': Result := PERM_INSTITUTIONS_INSERT;
+        'EDIT': Result := PERM_INSTITUTIONS_EDIT;
+        'DELETE': Result := PERM_INSTITUTIONS_DELETE;
+        'EXPORT': Result := PERM_INSTITUTIONS_EXPORT;
+        'PRINT': Result := PERM_INSTITUTIONS_PRINT;
+      end;
+    tbPeople:
+      case AAction of
+        'VIEW': Result := PERM_PEOPLE_VIEW;
+        'INSERT': Result := PERM_PEOPLE_INSERT;
+        'EDIT': Result := PERM_PEOPLE_EDIT;
+        'DELETE': Result := PERM_PEOPLE_DELETE;
+        'EXPORT': Result := PERM_PEOPLE_EXPORT;
+        'PRINT': Result := PERM_PEOPLE_PRINT;
+      end;
+    tbProjects, tbProjectTeams, tbProjectGoals, tbProjectChronograms, tbProjectBudgets, tbProjectExpenses:
+      case AAction of
+        'VIEW': Result := PERM_PROJECTS_VIEW;
+        'INSERT': Result := PERM_PROJECTS_INSERT;
+        'EDIT': Result := PERM_PROJECTS_EDIT;
+        'DELETE': Result := PERM_PROJECTS_DELETE;
+        'EXPORT': Result := PERM_PROJECTS_EXPORT;
+        'PRINT': Result := PERM_PROJECTS_PRINT;
+      end;
+    tbPermits:
+      case AAction of
+        'VIEW': Result := PERM_PERMITS_VIEW;
+        'INSERT': Result := PERM_PERMITS_INSERT;
+        'EDIT': Result := PERM_PERMITS_EDIT;
+        'DELETE': Result := PERM_PERMITS_DELETE;
+        'EXPORT': Result := PERM_PERMITS_EXPORT;
+        'PRINT': Result := PERM_PERMITS_PRINT;
+      end;
+    tbBotanicTaxa:
+      case AAction of
+        'VIEW': Result := PERM_BOTANY_VIEW;
+        'INSERT': Result := PERM_BOTANY_INSERT;
+        'EDIT': Result := PERM_BOTANY_EDIT;
+        'DELETE': Result := PERM_BOTANY_DELETE;
+        'EXPORT': Result := PERM_BOTANY_EXPORT;
+        'PRINT': Result := PERM_BOTANY_PRINT;
+      end;
+    tbBands, tbBandHistory:
+      case AAction of
+        'VIEW': Result := PERM_BANDS_VIEW;
+        'INSERT': Result := PERM_BANDS_INSERT;
+        'EDIT': Result := PERM_BANDS_EDIT;
+        'DELETE': Result := PERM_BANDS_DELETE;
+        'EXPORT': Result := PERM_BANDS_EXPORT;
+        'PRINT': Result := PERM_BANDS_PRINT;
+      end;
+    tbIndividuals, tbCaptures, tbFeathers:
+      case AAction of
+        'VIEW': Result := PERM_BIRDS_VIEW;
+        'INSERT': Result := PERM_BIRDS_INSERT;
+        'EDIT': Result := PERM_BIRDS_EDIT;
+        'DELETE': Result := PERM_BIRDS_DELETE;
+        'EXPORT': Result := PERM_BIRDS_EXPORT;
+        'PRINT': Result := PERM_BIRDS_PRINT;
+      end;
+    tbNests, tbNestOwners, tbNestRevisions, tbEggs:
+      case AAction of
+        'VIEW': Result := PERM_BREEDING_VIEW;
+        'INSERT': Result := PERM_BREEDING_INSERT;
+        'EDIT': Result := PERM_BREEDING_EDIT;
+        'DELETE': Result := PERM_BREEDING_DELETE;
+        'EXPORT': Result := PERM_BREEDING_EXPORT;
+        'PRINT': Result := PERM_BREEDING_PRINT;
+      end;
+    tbMethods:
+      case AAction of
+        'VIEW': Result := PERM_METHODS_VIEW;
+        'INSERT': Result := PERM_METHODS_INSERT;
+        'EDIT': Result := PERM_METHODS_EDIT;
+        'DELETE': Result := PERM_METHODS_DELETE;
+        'EXPORT': Result := PERM_METHODS_EXPORT;
+        'PRINT': Result := PERM_METHODS_PRINT;
+      end;
+    tbExpeditions, tbSurveys, tbSurveyTeams, tbNetsEffort, tbWeatherLogs, tbVegetation:
+      case AAction of
+        'VIEW': Result := PERM_SAMPLING_VIEW;
+        'INSERT': Result := PERM_SAMPLING_INSERT;
+        'EDIT': Result := PERM_SAMPLING_EDIT;
+        'DELETE': Result := PERM_SAMPLING_DELETE;
+        'EXPORT': Result := PERM_SAMPLING_EXPORT;
+        'PRINT': Result := PERM_SAMPLING_PRINT;
+      end;
+    tbSightings:
+      case AAction of
+        'VIEW': Result := PERM_SIGHTINGS_VIEW;
+        'INSERT': Result := PERM_SIGHTINGS_INSERT;
+        'EDIT': Result := PERM_SIGHTINGS_EDIT;
+        'DELETE': Result := PERM_SIGHTINGS_DELETE;
+        'EXPORT': Result := PERM_SIGHTINGS_EXPORT;
+        'PRINT': Result := PERM_SIGHTINGS_PRINT;
+      end;
+    tbSpecimens, tbSamplePreps, tbSpecimenCollectors:
+      case AAction of
+        'VIEW': Result := PERM_SPECIMENS_VIEW;
+        'INSERT': Result := PERM_SPECIMENS_INSERT;
+        'EDIT': Result := PERM_SPECIMENS_EDIT;
+        'DELETE': Result := PERM_SPECIMENS_DELETE;
+        'EXPORT': Result := PERM_SPECIMENS_EXPORT;
+        'PRINT': Result := PERM_SPECIMENS_PRINT;
+      end;
+  end;
+end;
+
+function TfrmCustomGrid.HasTablePermission(const ATable: TTableType; const AAction: String): Boolean;
+var
+  PermissionName: String;
+begin
+  Result := False;
+  if not Assigned(ActiveUser) then
+    Exit;
+
+  PermissionName := GetPermissionForTableAction(ATable, AAction);
+  if PermissionName = EmptyStr then
+    Exit;
+
+  Result := ActiveUser.HasPermission(PermissionName);
+end;
+
+function TfrmCustomGrid.CanInsertTable(const ATable: TTableType): Boolean;
+begin
+  Result := HasTablePermission(ATable, 'INSERT');
+end;
+
+function TfrmCustomGrid.CanEditTable(const ATable: TTableType): Boolean;
+begin
+  Result := HasTablePermission(ATable, 'EDIT');
+end;
+
+function TfrmCustomGrid.CanDeleteTable(const ATable: TTableType): Boolean;
+begin
+  Result := HasTablePermission(ATable, 'DELETE');
+end;
+
+function TfrmCustomGrid.CanExportTable(const ATable: TTableType): Boolean;
+begin
+  Result := HasTablePermission(ATable, 'EXPORT');
+end;
+
+function TfrmCustomGrid.CanPrintTable(const ATable: TTableType): Boolean;
+begin
+  Result := HasTablePermission(ATable, 'PRINT');
 end;
 
 { TStringMemoEditor }
@@ -4470,6 +4651,9 @@ var
   SupportedDocs: TStringList;
   importingMediaTypes, unsupportedMedia: TAttachMediaTypes;
 begin
+  if not (CanInsertTable(FTableType)) then
+    Exit;
+
   if (FModule.SupportedMedia = []) then
   begin
     MsgDlg(rsTitleInformation, rsModuleDoesNotSupportAttachments, mtInformation);
@@ -5262,8 +5446,8 @@ begin
     {$ENDIF}
     LoadColumnsConfig;
     AddGridColumns(FTableType, DBG);
-    if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-      (dsLink.DataSet as TSQLQuery).ReadOnly := True;
+    //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+    //  (dsLink.DataSet as TSQLQuery).ReadOnly := True;
     if not (dsLink.DataSet.Active) then
       dsLink.DataSet.Open;
     UpdateGridTitles(DBG, FSearch);
@@ -5325,10 +5509,10 @@ procedure TfrmCustomGrid.OpenExpeditionChilds;
 begin
   AddGridColumns(tbSurveys, gridChild1);
   dsLink1.DataSet.Open;
-  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  begin
-    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-  end;
+  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  //begin
+  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+  //end;
 end;
 
 procedure TfrmCustomGrid.OpenIndividualChilds;
@@ -5343,14 +5527,14 @@ begin
   dsLink4.DataSet.Open;
   AddGridColumns(tbSpecimens, gridChild5);
   dsLink5.DataSet.Open;
-  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  begin
-    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
-  end;
+  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  //begin
+  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
+  //end;
 end;
 
 procedure TfrmCustomGrid.OpenNestChilds;
@@ -5361,12 +5545,12 @@ begin
   dsLink2.DataSet.Open;
   AddGridColumns(tbEggs, gridChild3);
   dsLink3.DataSet.Open;
-  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  begin
-    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-  end;
+  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  //begin
+  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+  //end;
 end;
 
 procedure TfrmCustomGrid.OpenProjectChilds;
@@ -5381,24 +5565,24 @@ begin
   dsLink4.DataSet.Open;
   AddGridColumns(tbProjectExpenses, gridChild5);
   dsLink5.DataSet.Open;
-  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  begin
-    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
-  end;
+  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  //begin
+  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
+  //end;
 end;
 
 procedure TfrmCustomGrid.OpenSamplingPlotChilds;
 begin
   AddGridColumns(tbPermanentNets, gridChild1);
   dsLink1.DataSet.Open;
-  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  begin
-    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-  end;
+  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  //begin
+  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+  //end;
 end;
 
 procedure TfrmCustomGrid.OpenSpecimenChilds;
@@ -5407,11 +5591,11 @@ begin
   dsLink1.DataSet.Open;
   AddGridColumns(tbSamplePreps, gridChild2);
   dsLink2.DataSet.Open;
-  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  begin
-    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-  end;
+  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  //begin
+  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+  //end;
 end;
 
 procedure TfrmCustomGrid.OpenSurveyChilds;
@@ -5428,15 +5612,15 @@ begin
   dsLink5.DataSet.Open;
   AddGridColumns(tbVegetation, gridChild6);
   dsLink6.DataSet.Open;
-  if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  begin
-    (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
-    (dsLink6.DataSet as TSQLQuery).ReadOnly := True;
-  end;
+  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
+  //begin
+  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
+  //  (dsLink6.DataSet as TSQLQuery).ReadOnly := True;
+  //end;
 end;
 
 procedure TfrmCustomGrid.pClientResize(Sender: TObject);
@@ -9052,9 +9236,9 @@ begin
     end;
     dsBrowse:
     begin
-      sbAddAudio.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbAudioInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbDelAudio.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbAddAudio.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
+      sbAudioInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelAudio.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
       sbPlayAudio.Enabled := (aDataSet.RecordCount > 0);
 
     end;
@@ -9138,14 +9322,14 @@ begin
     end;
     dsBrowse:
     begin
-      sbInsertRecord.Enabled := not (TSQLQuery(aDataSet).ReadOnly);
-      sbEditRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbDelRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbRecordHistory.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbRecordVerifications.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbShareRecords.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowExport);
-      sbPrint.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowPrint);
-      sbMarkRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbInsertRecord.Enabled := not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
+      sbEditRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
+      sbRecordHistory.Enabled := (aDataSet.RecordCount > 0);
+      sbRecordVerifications.Enabled := (aDataSet.RecordCount > 0);
+      sbShareRecords.Enabled := (aDataSet.RecordCount > 0) and CanExportTable(FTableType);
+      sbPrint.Enabled := (aDataSet.RecordCount > 0) and CanPrintTable(FTableType);
+      sbMarkRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
 
       sbFirstRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
       sbPriorRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
@@ -9215,11 +9399,19 @@ begin
   pmgRecordVerifications.Enabled := sbRecordVerifications.Enabled;
   sbInsertBatch.Enabled := sbInsertRecord.Enabled;
   sbQuickEntry.Enabled := sbInsertRecord.Enabled;
-  sbMoreOptions.Enabled := sbShareRecords.Enabled;
+  //sbMoreOptions.Enabled := sbShareRecords.Enabled;
 
   sbClearFilters.Enabled := FSearch.QuickFilters.Count > 0;
   sbClearAllFilters.Enabled := sbClearFilters.Enabled;
   sbEmptyClearAll.Visible := (FSearch.QuickFilters.Count > 0) or (FSearchString <> EmptyStr);
+  sbShareMapPoints.Enabled := sbShareRecords.Enabled;
+
+  pmpReceiveBands.Enabled := sbRecordHistory.Enabled;
+  pmpTransferBandsTo.Enabled := sbRecordHistory.Enabled;
+  pmpBandHistory.Enabled := sbRecordHistory.Enabled;
+  pmpBandsBalance.Enabled := sbRecordHistory.Enabled;
+  pmpAddCountriesAndStates.Enabled := sbInsertRecord.Enabled;
+  pmpAddMunicipalities.Enabled := sbInsertRecord.Enabled;
 
   // Update the record count
   if dsLink.DataSet.RecordCount = 1 then
@@ -9270,12 +9462,12 @@ begin
     end;
     dsBrowse:
     begin
-      sbAddChild.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbEditChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbDelChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbAddChild.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FChildTable);
+      sbEditChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FChildTable);
+      sbDelChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FChildTable);
       sbChildHistory.Enabled := (aDataSet.RecordCount > 0);
       sbChildVerifications.Enabled := (aDataSet.RecordCount > 0);
-      sbShareChild.Enabled := (aDataSet.RecordCount > 0) and (ActiveUser.AllowExport);
+      sbShareChild.Enabled := (aDataSet.RecordCount > 0) and CanExportTable(FChildTable);
       sbRefreshChild.Enabled := True;
       sbFirstChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
       sbPriorChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
@@ -9414,9 +9606,9 @@ begin
     end;
     dsBrowse:
     begin
-      sbAddDoc.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbDocInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbDelDoc.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbAddDoc.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
+      sbDocInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelDoc.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
       sbOpenDoc.Enabled := (aDataSet.RecordCount > 0);
 
     end;
@@ -9481,9 +9673,9 @@ begin
     end;
     dsBrowse:
     begin
-      sbAddImage.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbImageInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbDelImage.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbAddImage.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
+      sbImageInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelImage.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
       sbViewImage.Enabled := (aDataSet.RecordCount > 0);
 
     end;
@@ -9514,8 +9706,8 @@ begin
     end;
     dsBrowse:
     begin
-      sbRestoreRecord.Enabled := (aDataset.RecordCount > 0);
-      sbDelPermanently.Enabled := (aDataset.RecordCount > 0);
+      sbRestoreRecord.Enabled := (aDataset.RecordCount > 0) and ActiveUser.HasPermission(PERM_RESTORE_RECORDS);
+      sbDelPermanently.Enabled := (aDataset.RecordCount > 0) and CanDeleteTable(FTableType);
     end;
     dsEdit, dsInsert:
     begin
@@ -9559,9 +9751,9 @@ begin
     end;
     dsBrowse:
     begin
-      sbAddVideo.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbVideoInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
-      sbDelVideo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly);
+      sbAddVideo.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
+      sbVideoInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelVideo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
       sbPlayVideo.Enabled := (aDataSet.RecordCount > 0);
 
     end;

@@ -50,6 +50,7 @@ begin
     if dlgLogin.ShowModal = mrOk then
     begin
       Repo.GetById(dlgLogin.UserCodigo, ActiveUser);
+      ActiveUser.LoadPermissions;
       LogInfo('Login Ok');
       Result := True;
     end
@@ -115,7 +116,6 @@ end;
 
 function GetUserPermission(aUser: Integer; aPerm: String): Boolean;
 var
-  a: Boolean;
   Qry: TSQLQuery;
 begin
   Result := False;
@@ -123,21 +123,21 @@ begin
   Qry := TSQLQuery.Create(DMM.sqlCon);
   with Qry, SQL do
   try
-    MacroCheck := True;
     DataBase := DMM.sqlCon;
     Clear;
-    Add('SELECT user_id, %perm FROM users');
-    Add('WHERE (user_id = :auser)');
-    MacroByName('PERM').Value := aPerm;
-    ParamByName('AUSER').DataType := ftInteger;
+    Add('SELECT 1 FROM users AS u');
+    Add('INNER JOIN role_permissions AS rp ON rp.role_id = u.role_id');
+    Add('INNER JOIN permissions AS p ON p.permission_id = rp.permission_id');
+    Add('WHERE (u.user_id = :auser)');
+    Add('AND (p.permission_name = :perm)');
+    Add('LIMIT 1');
     ParamByName('AUSER').AsInteger := aUser;
+    ParamByName('PERM').AsString := aPerm;
     Open;
-    a := FieldByName(aPerm).AsBoolean;
-    Close;
+    Result := not EOF;
   finally
     FreeAndNil(Qry);
   end;
-  Result := a;
 end;
 
 end.

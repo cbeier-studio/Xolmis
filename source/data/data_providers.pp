@@ -85,6 +85,33 @@ type
     function Delete: string;
   end;
 
+  IRolesSQL = interface ['{47C9D2CC-6E0B-4F35-B0C9-7D8D4D0C5B8D}']
+    function CreateTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Insert: string;
+    function Update: string;
+    function Delete: string;
+  end;
+
+  IPermissionsSQL = interface ['{56A8F7A6-4AF4-4EE4-B7B8-9A0A2A9E3A6C}']
+    function CreateTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Insert: string;
+    function Update: string;
+    function Delete: string;
+  end;
+
+  IRolePermissionsSQL = interface ['{5D5CF5BC-6A05-46A9-8159-94BC2DF1D6D8}']
+    function CreateTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Insert: string;
+    function Update: string;
+    function Delete: string;
+  end;
+
   IDBMetadataSQL = interface ['{FBCA059E-FEE1-4076-AEC9-3BCEE7523166}']
     function CreateTable: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
@@ -510,6 +537,7 @@ type
     function Individuals: IIndividualsSQL;
     function Institutions: IInstitutionsSQL;
     function Methods: IMethodsSQL;
+    function Permissions: IPermissionsSQL;
     function NestRevisions: INestRevisionsSQL;
     function NestOwners: INestOwnersSQL;
     function Nests: INestsSQL;
@@ -517,6 +545,8 @@ type
     function People: IPeopleSQL;
     function PermanentNets: IPermanentNetsSQL;
     function Permits: IPermitsSQL;
+    function RolePermissions: IRolePermissionsSQL;
+    function Roles: IRolesSQL;
     function PoiLibrary: IPoiLibrarySQL;
     function ProjectBudgets: IProjectBudgetsSQL;
     function ProjectChronograms: IProjectChronogramsSQL;
@@ -564,6 +594,7 @@ type
     FIndividuals: IIndividualsSQL;
     FInstitutions: IInstitutionsSQL;
     FMethods: IMethodsSQL;
+    FPermissions: IPermissionsSQL;
     FNestRevisions: INestRevisionsSQL;
     FNestOwners: INestOwnersSQL;
     FNests: INestsSQL;
@@ -571,6 +602,8 @@ type
     FPeople: IPeopleSQL;
     FPermanentNets: IPermanentNetsSQL;
     FPermits: IPermitsSQL;
+    FRolePermissions: IRolePermissionsSQL;
+    FRoles: IRolesSQL;
     FPoiLibrary: IPoiLibrarySQL;
     FProjectBudgets: IProjectBudgetsSQL;
     FProjectChronograms: IProjectChronogramsSQL;
@@ -615,6 +648,7 @@ type
     function Individuals: IIndividualsSQL;
     function Institutions: IInstitutionsSQL;
     function Methods: IMethodsSQL;
+    function Permissions: IPermissionsSQL;
     function NestRevisions: INestRevisionsSQL;
     function NestOwners: INestOwnersSQL;
     function Nests: INestsSQL;
@@ -622,6 +656,8 @@ type
     function People: IPeopleSQL;
     function PermanentNets: IPermanentNetsSQL;
     function Permits: IPermitsSQL;
+    function RolePermissions: IRolePermissionsSQL;
+    function Roles: IRolesSQL;
     function PoiLibrary: IPoiLibrarySQL;
     function ProjectBudgets: IProjectBudgetsSQL;
     function ProjectChronograms: IProjectChronogramsSQL;
@@ -679,6 +715,7 @@ begin
   FIndividuals        := TIndividualsSQL.Create(FBackend);
   FInstitutions       := TInstitutionsSQL.Create(FBackend);
   FMethods            := TMethodsSQL.Create(FBackend);
+  FPermissions        := TPermissionsSQL.Create(FBackend);
   FNestOwners         := TNestOwnersSQL.Create(FBackend);
   FNestRevisions      := TNestRevisionsSQL.Create(FBackend);
   FNests              := TNestsSQL.Create(FBackend);
@@ -686,6 +723,8 @@ begin
   FPeople             := TPeopleSQL.Create(FBackend);
   FPermanentNets      := TPermanentNetsSQL.Create(FBackend);
   FPermits            := TPermitsSQL.Create(FBackend);
+  FRolePermissions    := TRolePermissionsSQL.Create(FBackend);
+  FRoles              := TRolesSQL.Create(FBackend);
   FPoiLibrary         := TPoiLibrarySQL.Create(FBackend);
   FProjectBudgets     := TProjectBudgetsSQL.Create(FBackend);
   FProjectChronograms := TProjectChronogramsSQL.Create(FBackend);
@@ -800,6 +839,11 @@ begin
   Result := FMethods;
 end;
 
+function TSQLProvider.Permissions: IPermissionsSQL;
+begin
+  Result := FPermissions;
+end;
+
 function TSQLProvider.NestOwners: INestOwnersSQL;
 begin
   Result := FNestOwners;
@@ -833,6 +877,16 @@ end;
 function TSQLProvider.Permits: IPermitsSQL;
 begin
   Result := FPermits;
+end;
+
+function TSQLProvider.RolePermissions: IRolePermissionsSQL;
+begin
+  Result := FRolePermissions;
+end;
+
+function TSQLProvider.Roles: IRolesSQL;
+begin
+  Result := FRoles;
 end;
 
 function TSQLProvider.PoiLibrary: IPoiLibrarySQL;
