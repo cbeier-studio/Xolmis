@@ -9,8 +9,8 @@ Xolmis is an ornithological data management system intended for researchers and 
 
 ![Xolmis screenshot](https://github.com/user-attachments/assets/8079e3ce-4cd2-40e8-aac6-54616410eb65)
 
-
-:dove: _Xolmis_ is a genus of Neotropical passerines. Today it is represented by two species: [_Xolmis irupero_](https://www.wikiaves.com.br/wiki/noivinha) and [_Xolmis velatus_](https://www.wikiaves.com.br/wiki/noivinha-branca).
+> [!NOTE]
+> :dove: _Xolmis_ is a genus of Neotropical passerines. Today it is represented by two species: [_Xolmis irupero_](https://www.wikiaves.com.br/wiki/noivinha) and [_Xolmis velatus_](https://www.wikiaves.com.br/wiki/noivinha-branca).
 
 ## Features
 

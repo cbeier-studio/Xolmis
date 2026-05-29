@@ -759,6 +759,13 @@ Table permanent_nets {
 
 Ref: permanent_nets.sampling_plot_id > sampling_plots.sampling_plot_id [delete: cascade, update: cascade]
 
+Table permissions {
+    permission_id integer [primary key, increment, unique, not null]
+    permission_name varchar(80) [not null, unique]
+    description varchar(255)
+    permission_group varchar(80)
+}
+
 Table permits {
     permit_id integer [primary key, increment, unique, not null]
     project_id integer
@@ -950,6 +957,25 @@ Table record_verifications {
 }
 
 Ref: record_verifications.person_id > people.person_id [update: cascade]
+
+Table role_permissions {
+    role_id integer [not null]
+    permission_id integer [not null]
+
+    indexes {
+        (role_id, permission_id) [pk]
+    }
+}
+
+Ref: role_permissions.role_id > roles.role_id [delete: cascade, update: cascade]
+Ref: role_permissions.permission_id > permissions.permission_id [delete: cascade, update: cascade]
+
+Table roles {
+    role_id integer [primary key, increment, unique, not null]
+    role_name varchar(60) [not null, unique]
+    description varchar(255)
+    can_delete boolean [default: true]
+}
 
 Table sample_preps {
     sample_prep_id integer [primary key, increment, unique, not null]
@@ -1187,6 +1213,7 @@ Table users {
     user_name varchar(30) [unique, not null]
     user_password text
     user_rank varchar(5)
+    role_id integer
     allow_collection_edit boolean [default: true]
     allow_print boolean [default: true]
     allow_export boolean [default: true]
@@ -1198,6 +1225,8 @@ Table users {
         full_name [name: 'idx_user_fullname', note: 'COLLATE NOCASE']
     }
 }
+
+Ref: users.role_id -> roles.role_id [update: cascade]
 
 Table vegetation {
     vegetation_id integer [primary key, increment, unique, not null]
