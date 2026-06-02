@@ -20037,4 +20037,1028 @@ object DMG: TDMG
     Left = 610
     Top = 584
   end
+  object qSightingPois: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'poi_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sample_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'sample_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'poi_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'altitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'coordinate_precision'
+        DataType = ftString
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'observer_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sighting_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'survey_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'observer_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'sighting_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'survey_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end>
+    AfterCancel = qSightingPoisAfterCancel
+    AfterPost = qSightingPoisAfterPost
+    BeforeEdit = qSightingPoisBeforeEdit
+    BeforePost = qSightingPoisBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT poi.*,'
+      '  p.abbreviation AS observer_name,'
+      '  z.scientific_name AS taxon_name,'
+      '  i.full_name AS individual_name,'
+      '  s.full_name AS sighting_name,'
+      '  sv.full_name AS survey_name'
+      'FROM poi_library AS poi'
+      'LEFT JOIN people AS P ON poi.observer_id = p.person_id'
+      'LEFT JOIN zoo_taxa AS z ON poi.taxon_id = z.taxon_id'
+      'LEFT JOIN individuals AS i ON poi.individual_id = i.individual_id'
+      'LEFT JOIN sightings AS s ON poi.sighting_id = s.sighting_id'
+      'LEFT JOIN surveys AS sv ON poi.survey_id = sv.survey_id'
+      'WHERE (poi.sighting_id = :sighting_id)'
+      '  AND (poi.active_status = 1)'
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO poi_library ('
+      '  sample_date,'
+      '  sample_time,'
+      '  poi_name,'
+      '  longitude,'
+      '  latitude,'
+      '  coordinate_precision,'
+      '  altitude,'
+      '  observer_id,'
+      '  taxon_id,'
+      '  individual_id,'
+      '  sighting_id,'
+      '  survey_id,'
+      '  notes,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :sample_date,'
+      '  :sample_time,'
+      '  :poi_name,'
+      '  :longitude,'
+      '  :latitude,'
+      '  :coordinate_precision,'
+      '  :altitude,'
+      '  :observer_id,'
+      '  :taxon_id,'
+      '  :individual_id,'
+      '  :sighting_id,'
+      '  :survey_id,'
+      '  :notes,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+      ''
+    )
+    UpdateSQL.Strings = (
+      'UPDATE poi_library SET'
+      '  sample_date = :sample_date,'
+      '  sample_time = :sample_time,'
+      '  poi_name = :poi_name,'
+      '  longitude = :longitude,'
+      '  latitude = :latitude,'
+      '  coordinate_precision = :coordinate_precision,'
+      '  altitude = :altitude,'
+      '  observer_id = :observer_id,'
+      '  taxon_id = :taxon_id,'
+      '  individual_id = :individual_id,'
+      '  sighting_id = :sighting_id,'
+      '  survey_id = :survey_id,'
+      '  notes = :notes,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (poi_id = :poi_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'sighting_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsSightings
+    Left = 205
+    Top = 200
+    object qSightingPoismarked_status: TBooleanField
+      Alignment = taCenter
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingPoissample_date: TDateField
+      FieldKind = fkData
+      FieldName = 'sample_date'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qSightingPoissample_time: TTimeField
+      FieldKind = fkData
+      FieldName = 'sample_time'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingPoispoi_name: TStringField
+      FieldKind = fkData
+      FieldName = 'poi_name'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSightingPoislongitude: TFloatField
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSightingPoislatitude: TFloatField
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSightingPoisaltitude: TFloatField
+      FieldKind = fkData
+      FieldName = 'altitude'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSightingPoiscoordinate_precision: TStringField
+      FieldKind = fkData
+      FieldName = 'coordinate_precision'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qSightingPoiscoordinate_precisionGetText
+      OnSetText = qSightingPoiscoordinate_precisionSetText
+      Size = 3
+    end
+    object qSightingPoisobserver_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'observer_id'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoisobserver_name: TStringField
+      FieldKind = fkData
+      FieldName = 'observer_name'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qSightingPoistaxon_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoistaxon_name: TStringField
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qSightingPoisindividual_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoisindividual_name: TStringField
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
+    object qSightingPoissighting_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'sighting_id'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoissighting_name: TStringField
+      FieldKind = fkData
+      FieldName = 'sighting_name'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qSightingPoissurvey_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'survey_id'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoissurvey_name: TStringField
+      FieldKind = fkData
+      FieldName = 'survey_name'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qSightingPoisnotes: TMemoField
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qSightingPoispoi_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'poi_id'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingPoisuser_inserted: TLongintField
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoisuser_updated: TLongintField
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoisinsert_date: TDateTimeField
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoisupdate_date: TDateTimeField
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoisexported_status: TBooleanField
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingPoisactive_status: TBooleanField
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingPoisinactivated_by: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
+  end
+  object dsSightingPois: TDataSource
+    DataSet = qSightingPois
+    Left = 282
+    Top = 200
+  end
+  object qPois: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'poi_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sample_date'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'sample_time'
+        DataType = ftTime
+        Precision = -1
+      end    
+      item
+        Name = 'poi_name'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'longitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'latitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'altitude'
+        DataType = ftFloat
+        Precision = -1
+      end    
+      item
+        Name = 'coordinate_precision'
+        DataType = ftString
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'observer_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'taxon_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'individual_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'sighting_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'survey_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'notes'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'user_inserted'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'user_updated'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'insert_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'update_date'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'exported_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'marked_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'active_status'
+        DataType = ftBoolean
+        Precision = -1
+      end    
+      item
+        Name = 'inactivated_by'
+        DataType = ftString
+        Precision = -1
+        Size = 5
+      end    
+      item
+        Name = 'observer_name'
+        DataType = ftString
+        Precision = -1
+        Size = 10
+      end    
+      item
+        Name = 'taxon_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'individual_name'
+        DataType = ftString
+        Precision = -1
+        Size = 120
+      end    
+      item
+        Name = 'sighting_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'survey_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end>
+    AfterCancel = qPoisAfterCancel
+    AfterPost = qPoisAfterPost
+    BeforeEdit = qPoisBeforeEdit
+    BeforePost = qPoisBeforePost
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT poi.*,'
+      '  p.abbreviation AS observer_name,'
+      '  z.scientific_name AS taxon_name,'
+      '  i.full_name AS individual_name,'
+      '  s.full_name AS sighting_name,'
+      '  sv.full_name AS survey_name'
+      'FROM poi_library AS poi'
+      'LEFT JOIN people AS P ON poi.observer_id = p.person_id'
+      'LEFT JOIN zoo_taxa AS z ON poi.taxon_id = z.taxon_id'
+      'LEFT JOIN individuals AS i ON poi.individual_id = i.individual_id'
+      'LEFT JOIN sightings AS s ON poi.sighting_id = s.sighting_id'
+      'LEFT JOIN surveys AS sv ON poi.survey_id = sv.survey_id'
+      'WHERE (poi.active_status = 1)'
+    )
+    InsertSQL.Strings = (
+      'INSERT INTO poi_library ('
+      '  sample_date,'
+      '  sample_time,'
+      '  poi_name,'
+      '  longitude,'
+      '  latitude,'
+      '  altitude,'
+      '  observer_id,'
+      '  taxon_id,'
+      '  individual_id,'
+      '  sighting_id,'
+      '  survey_id,'
+      '  notes,'
+      '  user_inserted,'
+      '  insert_date)'
+      'VALUES ('
+      '  :sample_date,'
+      '  :sample_time,'
+      '  :poi_name,'
+      '  :longitude,'
+      '  :latitude,'
+      '  :altitude,'
+      '  :observer_id,'
+      '  :taxon_id,'
+      '  :individual_id,'
+      '  :sighting_id,'
+      '  :survey_id,'
+      '  :notes,'
+      '  :user_inserted,'
+      '  datetime(''now'',''subsec''))'
+      ''
+    )
+    UpdateSQL.Strings = (
+      'UPDATE poi_library SET'
+      '  sample_date = :sample_date,'
+      '  sample_time = :sample_time,'
+      '  poi_name = :poi_name,'
+      '  longitude = :longitude,'
+      '  latitude = :latitude,'
+      '  altitude = :altitude,'
+      '  observer_id = :observer_id,'
+      '  taxon_id = :taxon_id,'
+      '  individual_id = :individual_id,'
+      '  sighting_id = :sighting_id,'
+      '  survey_id = :survey_id,'
+      '  notes = :notes,'
+      '  user_updated = :user_updated,'
+      '  update_date = datetime(''now'',''subsec''),'
+      '  exported_status = :exported_status,'
+      '  marked_status = :marked_status,'
+      '  active_status = :active_status'
+      'WHERE (poi_id = :poi_id)'
+      ''
+    )
+    Options = [sqoAutoApplyUpdates]
+    Params = <>
+    Macros = <>
+    Left = 205
+    Top = 488
+    object qSightingPoismarked_status1: TBooleanField
+      Alignment = taCenter
+      FieldKind = fkData
+      FieldName = 'marked_status'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingPoissample_date1: TDateField
+      FieldKind = fkData
+      FieldName = 'sample_date'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+    end
+    object qSightingPoissample_time1: TTimeField
+      FieldKind = fkData
+      FieldName = 'sample_time'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingPoispoi_name1: TStringField
+      FieldKind = fkData
+      FieldName = 'poi_name'
+      Index = 3
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 60
+    end
+    object qSightingPoislongitude1: TFloatField
+      FieldKind = fkData
+      FieldName = 'longitude'
+      Index = 4
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSightingPoislatitude1: TFloatField
+      FieldKind = fkData
+      FieldName = 'latitude'
+      Index = 5
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSightingPoiscoordinate_precision1: TStringField
+      FieldKind = fkData
+      FieldName = 'coordinate_precision'
+      Index = 6
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      OnGetText = qSightingPoiscoordinate_precisionGetText
+      OnSetText = qSightingPoiscoordinate_precisionSetText
+      Size = 3
+    end
+    object qSightingPoisaltitude1: TFloatField
+      FieldKind = fkData
+      FieldName = 'altitude'
+      Index = 7
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Precision = -1
+    end
+    object qSightingPoisobserver_id1: TLongintField
+      FieldKind = fkData
+      FieldName = 'observer_id'
+      Index = 8
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPoisobserver_name: TStringField
+      FieldKind = fkData
+      FieldName = 'observer_name'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object qSightingPoistaxon_id1: TLongintField
+      FieldKind = fkData
+      FieldName = 'taxon_id'
+      Index = 10
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPoistaxon_name: TStringField
+      FieldKind = fkData
+      FieldName = 'taxon_name'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qSightingPoisindividual_id1: TLongintField
+      FieldKind = fkData
+      FieldName = 'individual_id'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPoisindividual_name: TStringField
+      FieldKind = fkData
+      FieldName = 'individual_name'
+      Index = 13
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 120
+    end
+    object qSightingPoissighting_id1: TLongintField
+      FieldKind = fkData
+      FieldName = 'sighting_id'
+      Index = 14
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPoissighting_name: TStringField
+      FieldKind = fkData
+      FieldName = 'sighting_name'
+      Index = 15
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qSightingPoissurvey_id1: TLongintField
+      FieldKind = fkData
+      FieldName = 'survey_id'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qPoissurvey_name: TStringField
+      FieldKind = fkData
+      FieldName = 'survey_name'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 100
+    end
+    object qSightingPoisnotes1: TMemoField
+      FieldKind = fkData
+      FieldName = 'notes'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftMemo
+      Transliterate = False
+    end
+    object qSightingPoispoi_id1: TLongintField
+      FieldKind = fkData
+      FieldName = 'poi_id'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
+    object qSightingPoisuser_inserted1: TLongintField
+      FieldKind = fkData
+      FieldName = 'user_inserted'
+      Index = 20
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoisuser_updated1: TLongintField
+      FieldKind = fkData
+      FieldName = 'user_updated'
+      Index = 21
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoisinsert_date1: TDateTimeField
+      FieldKind = fkData
+      FieldName = 'insert_date'
+      Index = 22
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoisupdate_date1: TDateTimeField
+      FieldKind = fkData
+      FieldName = 'update_date'
+      Index = 23
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
+    object qSightingPoisexported_status1: TBooleanField
+      FieldKind = fkData
+      FieldName = 'exported_status'
+      Index = 24
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingPoisactive_status1: TBooleanField
+      FieldKind = fkData
+      FieldName = 'active_status'
+      Index = 25
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      DisplayValues = 'True;False'
+    end
+    object qSightingPoisinactivated_by1: TStringField
+      FieldKind = fkData
+      FieldName = 'inactivated_by'
+      Index = 26
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+      Size = 5
+    end
+  end
+  object dsPois: TDataSource
+    DataSet = qPois
+    Left = 282
+    Top = 488
+  end
 end

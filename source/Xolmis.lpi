@@ -24,7 +24,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="117">
+      <ExcludedIdentifiers Count="119">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -90,65 +90,67 @@
         <Item63 Value="tfrmcustomgrid.lblrecyclewarning.caption"/>
         <Item64 Value="tfrmcustomgrid.txtProjectBalance.caption"/>
         <Item65 Value="tfrmcustomgrid.txtRubricBalance.caption"/>
-        <Item66 Value="tdlgGeoAssist.pDecimal.caption"/>
-        <Item67 Value="tdlgImportCaptures.lblTitleImportFinished.Caption"/>
-        <Item68 Value="tdlgImportCaptures.lblSubtitleImportFinished.Caption"/>
-        <Item69 Value="tdlgImportNests.lblTitleImportFinished.Caption"/>
-        <Item70 Value="tdlgImportNests.lblSubtitleImportFinished.Caption"/>
-        <Item71 Value="tcfgDatabase.vtConnections.Columns[0].Text"/>
-        <Item72 Value="tfrmimageviewer.lblzoom.caption"/>
-        <Item73 Value="tfrmimageviewer.lblsize.caption"/>
-        <Item74 Value="tfrmprintpreview.lblzoom.caption"/>
-        <Item75 Value="tfrmprintpreview.lblpage.caption"/>
-        <Item76 Value="tdlgImportXMobile.txtDataType.Caption"/>
-        <Item77 Value="tdlgImportXMobile.txtListType.Caption"/>
-        <Item78 Value="tedtNetEffort.txtNetArea.Caption"/>
-        <Item79 Value="tedtNetEffort.txtTotalOpenTime.Caption"/>
-        <Item80 Value="tedtSurvey.txtNetEffort.Caption"/>
-        <Item81 Value="tedtEgg.txtVolume.Caption"/>
-        <Item82 Value="tedtProjectMember.Caption"/>
-        <Item83 Value="tedtSurveyMember.Caption"/>
-        <Item84 Value="tedtCollector.Caption"/>
-        <Item85 Value="tedtProjectGoal.Caption"/>
-        <Item86 Value="tedtProjectActivity.Caption"/>
-        <Item87 Value="tedtProjectRubric.Caption"/>
-        <Item88 Value="tedtProjectExpense.Caption"/>
-        <Item89 Value="tedtFeather.Caption"/>
-        <Item90 Value="tfrmMaintenance.lblDatabaseBackup.Caption"/>
-        <Item91 Value="tfrmMaintenance.lblManageLogs.Caption"/>
-        <Item92 Value="tfrmMaintenance.lblClearTemporaryFiles.Caption"/>
-        <Item93 Value="tfrmMaintenance.lblRecreateImageThumbnails.Caption"/>
-        <Item94 Value="tfrmTaxa.txtNestProductivity.Caption"/>
-        <Item95 Value="tdlgLoading.Caption"/>
-        <Item96 Value="tdlgLoading.lblLoading.Caption"/>
-        <Item97 Value="tdlgSplash.lblAppName.Caption"/>
-        <Item98 Value="tdlgSplash.lblProgress.Caption"/>
-        <Item99 Value="tdlgSelectRecord.lblSelectInfo.Caption"/>
-        <Item100 Value="tbatchBandsTransfer.txtSender.Caption"/>
-        <Item101 Value="tdlgAbout.linkClements.Hint"/>
-        <Item102 Value="tfrmMain.SBar.Panels[3].Text"/>
-        <Item103 Value="tfrmMain.SBar.Panels[4].Text"/>
-        <Item104 Value="tfrmMain.SBar.Panels[5].Text"/>
-        <Item105 Value="tdlgTourTip.Caption"/>
-        <Item106 Value="tdlgTourTip.lblText.Caption"/>
-        <Item107 Value="tdlgBigTip.Caption"/>
-        <Item108 Value="tdlgBigTip.lblText.Caption"/>
-        <Item109 Value="tdlgBigTip.lblTitle.Caption"/>
-        <Item110 Value="tdlgGazetteerAutofill.lblHint.Caption"/>
-        <Item111 Value="tdlgGazetteerAutofill.lblState.Caption"/>
-        <Item112 Value="tdlgExport.cbquotechar.Text"/>
-        <Item113 Value="tdlgExport.cbTimeFormat.Text"/>
-        <Item114 Value="tdlgExport.cbIndentation.Text"/>
-        <Item115 Value="tdlgExport.cbDateFormat.Text"/>
-        <Item116 Value="tdlgExport.cbDelimiter.Text"/>
-        <Item117 Value="tdlgExport.cbDecimalSeparator.Text"/>
+        <Item66 Value="tfrmcustomgrid.cbMapProvider.Text"/>
+        <Item67 Value="tdlgGeoAssist.pDecimal.caption"/>
+        <Item68 Value="tdlgImportCaptures.lblTitleImportFinished.Caption"/>
+        <Item69 Value="tdlgImportCaptures.lblSubtitleImportFinished.Caption"/>
+        <Item70 Value="tdlgImportNests.lblTitleImportFinished.Caption"/>
+        <Item71 Value="tdlgImportNests.lblSubtitleImportFinished.Caption"/>
+        <Item72 Value="tcfgDatabase.vtConnections.Columns[0].Text"/>
+        <Item73 Value="tfrmimageviewer.lblzoom.caption"/>
+        <Item74 Value="tfrmimageviewer.lblsize.caption"/>
+        <Item75 Value="tfrmprintpreview.lblzoom.caption"/>
+        <Item76 Value="tfrmprintpreview.lblpage.caption"/>
+        <Item77 Value="tdlgImportXMobile.txtDataType.Caption"/>
+        <Item78 Value="tdlgImportXMobile.txtListType.Caption"/>
+        <Item79 Value="tedtNetEffort.txtNetArea.Caption"/>
+        <Item80 Value="tedtNetEffort.txtTotalOpenTime.Caption"/>
+        <Item81 Value="tedtSurvey.txtNetEffort.Caption"/>
+        <Item82 Value="tedtEgg.txtVolume.Caption"/>
+        <Item83 Value="tedtProjectMember.Caption"/>
+        <Item84 Value="tedtSurveyMember.Caption"/>
+        <Item85 Value="tedtCollector.Caption"/>
+        <Item86 Value="tedtProjectGoal.Caption"/>
+        <Item87 Value="tedtProjectActivity.Caption"/>
+        <Item88 Value="tedtProjectRubric.Caption"/>
+        <Item89 Value="tedtProjectExpense.Caption"/>
+        <Item90 Value="tedtFeather.Caption"/>
+        <Item91 Value="tfrmMaintenance.lblDatabaseBackup.Caption"/>
+        <Item92 Value="tfrmMaintenance.lblManageLogs.Caption"/>
+        <Item93 Value="tfrmMaintenance.lblClearTemporaryFiles.Caption"/>
+        <Item94 Value="tfrmMaintenance.lblRecreateImageThumbnails.Caption"/>
+        <Item95 Value="tfrmTaxa.txtNestProductivity.Caption"/>
+        <Item96 Value="tdlgLoading.Caption"/>
+        <Item97 Value="tdlgLoading.lblLoading.Caption"/>
+        <Item98 Value="tdlgSplash.lblAppName.Caption"/>
+        <Item99 Value="tdlgSplash.lblProgress.Caption"/>
+        <Item100 Value="tdlgSelectRecord.lblSelectInfo.Caption"/>
+        <Item101 Value="tbatchBandsTransfer.txtSender.Caption"/>
+        <Item102 Value="tdlgAbout.linkClements.Hint"/>
+        <Item103 Value="tfrmMain.SBar.Panels[3].Text"/>
+        <Item104 Value="tfrmMain.SBar.Panels[4].Text"/>
+        <Item105 Value="tfrmMain.SBar.Panels[5].Text"/>
+        <Item106 Value="tdlgTourTip.Caption"/>
+        <Item107 Value="tdlgTourTip.lblText.Caption"/>
+        <Item108 Value="tdlgBigTip.Caption"/>
+        <Item109 Value="tdlgBigTip.lblText.Caption"/>
+        <Item110 Value="tdlgBigTip.lblTitle.Caption"/>
+        <Item111 Value="tdlgGazetteerAutofill.lblHint.Caption"/>
+        <Item112 Value="tdlgGazetteerAutofill.lblState.Caption"/>
+        <Item113 Value="tdlgExport.cbquotechar.Text"/>
+        <Item114 Value="tdlgExport.cbTimeFormat.Text"/>
+        <Item115 Value="tdlgExport.cbIndentation.Text"/>
+        <Item116 Value="tdlgExport.cbDateFormat.Text"/>
+        <Item117 Value="tdlgExport.cbDelimiter.Text"/>
+        <Item118 Value="tdlgExport.cbDecimalSeparator.Text"/>
+        <Item119 Value="tedtPoi.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="510"/>
+      <BuildNr Value="511"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1668,6 +1670,17 @@
         <Filename Value="edit_dialogs\uedt_role.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtRole"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="modules\modules_pois.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="edit_dialogs\uedt_poi.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="edtPoi"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>

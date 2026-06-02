@@ -8869,6 +8869,156 @@ msgctxt "tedtperson.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtpoi.btnnew.caption
+msgctxt "tedtpoi.btnnew.caption"
+msgid "New"
+msgstr "Novo"
+
+#: tedtpoi.edate.buttonhint
+msgctxt "tedtpoi.edate.buttonhint"
+msgid "Open calendar"
+msgstr "Abrir calendário"
+
+#: tedtpoi.edate.texthint
+msgctxt "tedtpoi.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr "DD/MM/AAAA"
+
+#: tedtpoi.eindividual.buttonhint
+msgctxt "tedtpoi.eindividual.buttonhint"
+msgid "Find individual"
+msgstr "Buscar indivíduo"
+
+#: tedtpoi.elatitude.buttonhint
+msgctxt "tedtpoi.elatitude.buttonhint"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
+
+#: tedtpoi.elongitude.buttonhint
+msgctxt "tedtpoi.elongitude.buttonhint"
+msgid "Open coordinates editor"
+msgstr "Abrir editor de coordenadas"
+
+#: tedtpoi.eobserver.buttonhint
+msgctxt "tedtpoi.eobserver.buttonhint"
+msgid "Find observer"
+msgstr "Buscar observador"
+
+#: tedtpoi.esighting.buttonhint
+msgctxt "tedtpoi.esighting.buttonhint"
+msgid "Find sighting"
+msgstr "Buscar observação"
+
+#: tedtpoi.esurvey.buttonhint
+msgctxt "tedtpoi.esurvey.buttonhint"
+msgid "Find survey"
+msgstr "Buscar amostragem"
+
+#: tedtpoi.etaxon.buttonhint
+msgctxt "tedtpoi.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr "Buscar táxon"
+
+#: tedtpoi.etime.texthint
+msgctxt "tedtpoi.etime.texthint"
+msgid "HH:MM"
+msgstr "HH:MM"
+
+#: tedtpoi.lblaltitude.caption
+msgctxt "tedtpoi.lblaltitude.caption"
+msgid "Altitude (m):"
+msgstr "Altitude (m):"
+
+#: tedtpoi.lblbandstatus4.caption
+msgctxt "tedtpoi.lblbandstatus4.caption"
+msgid "Longitude:"
+msgstr "Longitude:"
+
+#: tedtpoi.lblbandstatus9.caption
+msgctxt "tedtpoi.lblbandstatus9.caption"
+msgid "Latitude:"
+msgstr "Latitude:"
+
+#: tedtpoi.lblcoordinatesprecision.caption
+msgctxt "tedtpoi.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr "Precisão da coordenada:"
+
+#: tedtpoi.lbldate.caption
+msgctxt "tedtpoi.lbldate.caption"
+msgid "Date: *"
+msgstr "Data: *"
+
+#: tedtpoi.lblindividual.caption
+msgctxt "tedtpoi.lblindividual.caption"
+msgid "Individual:"
+msgstr "Indivíduo:"
+
+#: tedtpoi.lblname.caption
+msgctxt "tedtpoi.lblname.caption"
+msgid "Name: *"
+msgstr "Nome: *"
+
+#: tedtpoi.lblnotes.caption
+msgctxt "tedtpoi.lblnotes.caption"
+msgid "Notes:"
+msgstr "Anotações:"
+
+#: tedtpoi.lblobserver.caption
+msgctxt "tedtpoi.lblobserver.caption"
+msgid "Observer:"
+msgstr "Observador:"
+
+#: tedtpoi.lblsighting.caption
+msgctxt "tedtpoi.lblsighting.caption"
+msgid "Sighting:"
+msgstr "Observação:"
+
+#: tedtpoi.lblsurvey.caption
+msgctxt "tedtpoi.lblsurvey.caption"
+msgid "Survey:"
+msgstr "Amostragem:"
+
+#: tedtpoi.lbltaxon.caption
+msgctxt "tedtpoi.lbltaxon.caption"
+msgid "Taxon: *"
+msgstr "Táxon: *"
+
+#: tedtpoi.lbltime.caption
+msgctxt "tedtpoi.lbltime.caption"
+msgid "Time:"
+msgstr "Hora:"
+
+#: tedtpoi.pmnnewindividual.caption
+msgctxt "tedtpoi.pmnnewindividual.caption"
+msgid "New individual"
+msgstr "Novo indivíduo"
+
+#: tedtpoi.pmnnewobserver.caption
+msgctxt "tedtpoi.pmnnewobserver.caption"
+msgid "New observer"
+msgstr "Novo observador"
+
+#: tedtpoi.pmnnewsighting.caption
+msgctxt "tedtpoi.pmnnewsighting.caption"
+msgid "New sighting"
+msgstr "Nova observação"
+
+#: tedtpoi.pmnnewsurvey.caption
+msgctxt "tedtpoi.pmnnewsurvey.caption"
+msgid "New survey"
+msgstr "Nova amostragem"
+
+#: tedtpoi.sbcancel.caption
+msgctxt "tedtpoi.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tedtpoi.sbsave.caption
+msgctxt "tedtpoi.sbsave.caption"
+msgid "Save"
+msgstr "Salvar"
+
 #: tedtproject.eenddate.buttonhint
 msgctxt "tedtproject.eenddate.buttonhint"
 msgid "Open calendar"
@@ -9690,6 +9840,7 @@ msgid "Abbreviation:"
 msgstr "Abreviatura:"
 
 #: tedtsite.lblaltitude.caption
+msgctxt "tedtsite.lblaltitude.caption"
 msgid "Altitude (m):"
 msgstr "Altitude (m):"
 
@@ -10724,10 +10875,6 @@ msgctxt "tfrmcustomgrid.cbffwearfilter.texthint"
 msgid "None"
 msgstr "Nenhum"
 
-#: tfrmcustomgrid.cbmapprovider.text
-msgid "OpenStreetMap Standard"
-msgstr ""
-
 #: tfrmcustomgrid.cbmaterialfilter.text
 msgctxt "tfrmcustomgrid.cbmaterialfilter.text"
 msgid "All"
@@ -11349,6 +11496,10 @@ msgstr "Novo &dono do ninho"
 msgid "New nest re&vision"
 msgstr "Nova re&visão de ninho"
 
+#: tfrmcustomgrid.pmcnewoccurrencepoint.caption
+msgid "New occurrence point"
+msgstr "Novo ponto de ocorrência"
+
 #: tfrmcustomgrid.pmcnewpermanentnet.caption
 msgid "New permanent mistnet"
 msgstr "Nova rede permanente"
@@ -11394,7 +11545,7 @@ msgstr "Nova amostra de vegetação"
 
 #: tfrmcustomgrid.pmcnewweatherlog.caption
 msgid "New &weather log"
-msgstr "Novo log do tempo"
+msgstr "Novo log do clima"
 
 #: tfrmcustomgrid.pmcrecordhistory.caption
 msgctxt "tfrmcustomgrid.pmcrecordhistory.caption"
@@ -14553,6 +14704,11 @@ msgctxt "utils_locale.rscaptionfather"
 msgid "Father"
 msgstr "Pai"
 
+#: utils_locale.rscaptionfeather
+msgctxt "utils_locale.rscaptionfeather"
+msgid "Feather"
+msgstr "Pena"
+
 #: utils_locale.rscaptionfeathers
 msgctxt "utils_locale.rscaptionfeathers"
 msgid "Feathers"
@@ -14678,6 +14834,10 @@ msgctxt "utils_locale.rscaptionobserver"
 msgid "Observer"
 msgstr "Observador"
 
+#: utils_locale.rscaptionoccurrencepoint
+msgid "Occurrence point"
+msgstr "Ponto de ocorrência"
+
 #: utils_locale.rscaptionorder
 msgctxt "utils_locale.rscaptionorder"
 msgid "Order"
@@ -14763,6 +14923,10 @@ msgctxt "utils_locale.rscaptionspecies"
 msgid "Species"
 msgstr "Espécie"
 
+#: utils_locale.rscaptionspecimen
+msgid "Specimen"
+msgstr "Espécime"
+
 #: utils_locale.rscaptionsspgroup
 msgctxt "utils_locale.rscaptionsspgroup"
 msgid "Subspecific group"
@@ -14831,7 +14995,7 @@ msgstr "Versão"
 #: utils_locale.rscaptionweatherlogentry
 msgctxt "utils_locale.rscaptionweatherlogentry"
 msgid "Weather log entry"
-msgstr "Registro do tempo"
+msgstr "Registro do clima"
 
 #: utils_locale.rscaptionyes
 msgctxt "utils_locale.rscaptionyes"
@@ -17246,7 +17410,7 @@ msgstr "Importando dados de vegetação..."
 #: utils_locale.rsmobileimportingweather
 msgctxt "utils_locale.rsmobileimportingweather"
 msgid "Importing weather data..."
-msgstr "Importando dados do tempo..."
+msgstr "Importando dados do clima..."
 
 #: utils_locale.rsmobilemackinnonlist
 msgctxt "utils_locale.rsmobilemackinnonlist"
@@ -17349,7 +17513,7 @@ msgstr "Vegetação já registrada: %s"
 #, object-pascal-format
 msgctxt "utils_locale.rsmobileweatherexists"
 msgid "Weather already recorded: %s"
-msgstr "Tempo já registrado: %s"
+msgstr "Clima já registrado: %s"
 
 #: utils_locale.rsmodificationsnotsaved
 msgctxt "utils_locale.rsmodificationsnotsaved"
@@ -19928,6 +20092,10 @@ msgstr "Nenhuma conexão encontrada"
 msgid "No internet connection"
 msgstr "Sem conexão com a internet"
 
+#: utils_locale.rstitleoccurrencepoints
+msgid "Occurrence points"
+msgstr "Pontos de ocorrência"
+
 #: utils_locale.rstitlepermanentnets
 msgctxt "utils_locale.rstitlepermanentnets"
 msgid "Permanent nets"
@@ -20095,7 +20263,7 @@ msgstr "Vídeos"
 #: utils_locale.rstitleweather
 msgctxt "utils_locale.rstitleweather"
 msgid "Weather"
-msgstr "Tempo"
+msgstr "Clima"
 
 #: utils_locale.rstitlezootaxa
 msgctxt "utils_locale.rstitlezootaxa"

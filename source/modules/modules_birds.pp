@@ -90,7 +90,7 @@ implementation
 uses
   utils_locale, utils_global, utils_themes, utils_math, utils_graphics, utils_validations, utils_system,
   data_consts, data_columns, data_filters, data_getvalue,
-  modules_sightings, modules_breeding, modules_specimens,
+  modules_sightings, modules_breeding, modules_specimens, modules_pois,
   models_media, models_record_types, uDarkStyleParams,
   udm_main, udm_grid, udm_sampling, udm_individuals, ufrm_customgrid;
 
@@ -114,6 +114,7 @@ begin
   FSubmodules.Add(TSightingsSubmoduleController.create(FOwner));
   FSubmodules.Add(TNestsSubmoduleController.Create(FOwner));
   FSubmodules.Add(TSpecimensSubmoduleController.Create(FOwner));
+  FSubmodules.Add(TPoiSubmoduleController.Create(FOwner));
 end;
 
 procedure TIndividualsModuleController.ApplyFilters;

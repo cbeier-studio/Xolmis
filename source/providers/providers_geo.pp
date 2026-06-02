@@ -500,7 +500,7 @@ begin
       'observer_id     INTEGER      REFERENCES people (person_id),' +
       'taxon_id        INTEGER      REFERENCES zoo_taxa (taxon_id),' +
       'individual_id   INTEGER      REFERENCES individuals (individual_id) ON DELETE CASCADE,' +
-      'sighting_id     INTEGER,' +
+      'sighting_id     INTEGER      REFERENCES sightings (sighting_id) ON UPDATE CASCADE,' +
       'survey_id       INTEGER      REFERENCES surveys (survey_id),' +
       'notes           TEXT,' +
       'user_inserted   INTEGER,' +
@@ -530,6 +530,7 @@ begin
       'poi_name, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'altitude, ' +
       'observer_id, ' +
       'taxon_id, ' +
@@ -545,6 +546,7 @@ begin
       ':poi_name, ' +
       ':longitude, ' +
       ':latitude, ' +
+      ':coordinate_precision, ' +
       ':altitude, ' +
       ':observer_id, ' +
       ':taxon_id, ' +
@@ -603,6 +605,7 @@ begin
       'poi_name, ' +
       'longitude, ' +
       'latitude, ' +
+      'coordinate_precision, ' +
       'altitude, ' +
       'observer_id, ' +
       'taxon_id, ' +
@@ -649,6 +652,7 @@ begin
       'poi_name = :poi_name, ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
+      'coordinate_precision = :coordinate_precision, ' +
       'altitude = :altitude, ' +
       'observer_id = :observer_id, ' +
       'taxon_id = :taxon_id, ' +

@@ -543,7 +543,7 @@ begin
 
   if FIsNew then
   begin
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionEgg)]);
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSpecimen)]);
     if FSpecimen.TaxonId > 0 then
     begin
       FTaxonId := FSpecimen.TaxonId;
@@ -564,7 +564,7 @@ begin
   end
   else
   begin
-    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionEgg)]);
+    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSpecimen)]);
     GetRecord;
   end;
 end;

@@ -88,7 +88,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnPrepareCanvas = gridRecordPrepareCanvas
           ColWidths = (
             100
-            348
+            327
           )
         end
       end
@@ -8775,11 +8775,37 @@ object frmCustomGrid: TfrmCustomGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 504
+            Width = 671
             Align = alClient
             Color = clWindow
             Columns = <>
             DataSource = dsLink6
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
+            PopupMenu = pmGridChild
+            TabOrder = 0
+            TitleImageList = iHeaders
+            TitleStyle = tsNative
+            OnContextPopup = gridChild1ContextPopup
+            OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
+            OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
+            OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
+            OnPrepareCanvas = DBGPrepareCanvas
+            OnSelectEditor = DBGSelectEditor
+          end
+        end
+        object pgChild7: TPage
+          object gridChild7: TDBGrid
+            Left = 0
+            Height = 164
+            Top = 0
+            Width = 671
+            Align = alClient
+            Color = clWindow
+            Columns = <>
+            DataSource = dsLink7
             Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
             PopupMenu = pmGridChild
             TabOrder = 0
@@ -10658,6 +10684,12 @@ object frmCustomGrid: TfrmCustomGrid
       ImageIndex = 25
       Visible = False
       OnClick = pmcNewExpenseClick
+    end
+    object pmcNewOccurrencePoint: TMenuItem
+      Caption = 'New occurrence point'
+      ImageIndex = 11
+      Visible = False
+      OnClick = pmcNewOccurrencePointClick
     end
   end
   object dsLink: TDataSource
@@ -29494,5 +29526,11 @@ object frmCustomGrid: TfrmCustomGrid
     OnTimer = TimerFindTimer
     Left = 352
     Top = 120
+  end
+  object dsLink7: TDataSource
+    OnStateChange = dsLink7StateChange
+    OnDataChange = dsLink7DataChange
+    Left = 288
+    Top = 512
   end
 end

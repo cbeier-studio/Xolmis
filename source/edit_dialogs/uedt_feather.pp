@@ -365,7 +365,7 @@ begin
 
   if FIsNew then
   begin
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSurvey)]);
+    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionFeather)]);
     if not DateIsNull(FFeather.SampleDate) then
       eDate.Text := DateToStr(FFeather.SampleDate);
     if not TimeIsNull(FFeather.SampleTime) then
@@ -401,7 +401,7 @@ begin
   end
   else
   begin
-    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSurvey)]);
+    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionFeather)]);
     GetRecord;
     sbSave.Enabled := IsRequiredFilled;
   end;

@@ -8879,6 +8879,156 @@ msgctxt "tedtperson.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtpoi.btnnew.caption
+msgctxt "tedtpoi.btnnew.caption"
+msgid "New"
+msgstr ""
+
+#: tedtpoi.edate.buttonhint
+msgctxt "tedtpoi.edate.buttonhint"
+msgid "Open calendar"
+msgstr ""
+
+#: tedtpoi.edate.texthint
+msgctxt "tedtpoi.edate.texthint"
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: tedtpoi.eindividual.buttonhint
+msgctxt "tedtpoi.eindividual.buttonhint"
+msgid "Find individual"
+msgstr ""
+
+#: tedtpoi.elatitude.buttonhint
+msgctxt "tedtpoi.elatitude.buttonhint"
+msgid "Open coordinates editor"
+msgstr ""
+
+#: tedtpoi.elongitude.buttonhint
+msgctxt "tedtpoi.elongitude.buttonhint"
+msgid "Open coordinates editor"
+msgstr ""
+
+#: tedtpoi.eobserver.buttonhint
+msgctxt "tedtpoi.eobserver.buttonhint"
+msgid "Find observer"
+msgstr ""
+
+#: tedtpoi.esighting.buttonhint
+msgctxt "tedtpoi.esighting.buttonhint"
+msgid "Find sighting"
+msgstr ""
+
+#: tedtpoi.esurvey.buttonhint
+msgctxt "tedtpoi.esurvey.buttonhint"
+msgid "Find survey"
+msgstr ""
+
+#: tedtpoi.etaxon.buttonhint
+msgctxt "tedtpoi.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
+#: tedtpoi.etime.texthint
+msgctxt "tedtpoi.etime.texthint"
+msgid "HH:MM"
+msgstr ""
+
+#: tedtpoi.lblaltitude.caption
+msgctxt "tedtpoi.lblaltitude.caption"
+msgid "Altitude (m):"
+msgstr ""
+
+#: tedtpoi.lblbandstatus4.caption
+msgctxt "tedtpoi.lblbandstatus4.caption"
+msgid "Longitude:"
+msgstr ""
+
+#: tedtpoi.lblbandstatus9.caption
+msgctxt "tedtpoi.lblbandstatus9.caption"
+msgid "Latitude:"
+msgstr ""
+
+#: tedtpoi.lblcoordinatesprecision.caption
+msgctxt "tedtpoi.lblcoordinatesprecision.caption"
+msgid "Coordinates precision:"
+msgstr ""
+
+#: tedtpoi.lbldate.caption
+msgctxt "tedtpoi.lbldate.caption"
+msgid "Date: *"
+msgstr ""
+
+#: tedtpoi.lblindividual.caption
+msgctxt "tedtpoi.lblindividual.caption"
+msgid "Individual:"
+msgstr ""
+
+#: tedtpoi.lblname.caption
+msgctxt "tedtpoi.lblname.caption"
+msgid "Name: *"
+msgstr ""
+
+#: tedtpoi.lblnotes.caption
+msgctxt "tedtpoi.lblnotes.caption"
+msgid "Notes:"
+msgstr ""
+
+#: tedtpoi.lblobserver.caption
+msgctxt "tedtpoi.lblobserver.caption"
+msgid "Observer:"
+msgstr ""
+
+#: tedtpoi.lblsighting.caption
+msgctxt "tedtpoi.lblsighting.caption"
+msgid "Sighting:"
+msgstr ""
+
+#: tedtpoi.lblsurvey.caption
+msgctxt "tedtpoi.lblsurvey.caption"
+msgid "Survey:"
+msgstr ""
+
+#: tedtpoi.lbltaxon.caption
+msgctxt "tedtpoi.lbltaxon.caption"
+msgid "Taxon: *"
+msgstr ""
+
+#: tedtpoi.lbltime.caption
+msgctxt "tedtpoi.lbltime.caption"
+msgid "Time:"
+msgstr ""
+
+#: tedtpoi.pmnnewindividual.caption
+msgctxt "tedtpoi.pmnnewindividual.caption"
+msgid "New individual"
+msgstr ""
+
+#: tedtpoi.pmnnewobserver.caption
+msgctxt "tedtpoi.pmnnewobserver.caption"
+msgid "New observer"
+msgstr ""
+
+#: tedtpoi.pmnnewsighting.caption
+msgctxt "tedtpoi.pmnnewsighting.caption"
+msgid "New sighting"
+msgstr ""
+
+#: tedtpoi.pmnnewsurvey.caption
+msgctxt "tedtpoi.pmnnewsurvey.caption"
+msgid "New survey"
+msgstr ""
+
+#: tedtpoi.sbcancel.caption
+msgctxt "tedtpoi.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tedtpoi.sbsave.caption
+msgctxt "tedtpoi.sbsave.caption"
+msgid "Save"
+msgstr ""
+
 #: tedtproject.eenddate.buttonhint
 msgctxt "tedtproject.eenddate.buttonhint"
 msgid "Open calendar"
@@ -9701,6 +9851,7 @@ msgid "Abbreviation:"
 msgstr ""
 
 #: tedtsite.lblaltitude.caption
+msgctxt "tedtsite.lblaltitude.caption"
 msgid "Altitude (m):"
 msgstr ""
 
@@ -10735,10 +10886,6 @@ msgctxt "tfrmcustomgrid.cbffwearfilter.texthint"
 msgid "None"
 msgstr ""
 
-#: tfrmcustomgrid.cbmapprovider.text
-msgid "OpenStreetMap Standard"
-msgstr ""
-
 #: tfrmcustomgrid.cbmaterialfilter.text
 msgctxt "tfrmcustomgrid.cbmaterialfilter.text"
 msgid "All"
@@ -11358,6 +11505,10 @@ msgstr ""
 
 #: tfrmcustomgrid.pmcnewnestrevision.caption
 msgid "New nest re&vision"
+msgstr ""
+
+#: tfrmcustomgrid.pmcnewoccurrencepoint.caption
+msgid "New occurrence point"
 msgstr ""
 
 #: tfrmcustomgrid.pmcnewpermanentnet.caption
@@ -14561,6 +14712,11 @@ msgctxt "utils_locale.rscaptionfather"
 msgid "Father"
 msgstr ""
 
+#: utils_locale.rscaptionfeather
+msgctxt "utils_locale.rscaptionfeather"
+msgid "Feather"
+msgstr ""
+
 #: utils_locale.rscaptionfeathers
 msgctxt "utils_locale.rscaptionfeathers"
 msgid "Feathers"
@@ -14686,6 +14842,10 @@ msgctxt "utils_locale.rscaptionobserver"
 msgid "Observer"
 msgstr ""
 
+#: utils_locale.rscaptionoccurrencepoint
+msgid "Occurrence point"
+msgstr ""
+
 #: utils_locale.rscaptionorder
 msgctxt "utils_locale.rscaptionorder"
 msgid "Order"
@@ -14769,6 +14929,10 @@ msgstr ""
 #: utils_locale.rscaptionspecies
 msgctxt "utils_locale.rscaptionspecies"
 msgid "Species"
+msgstr ""
+
+#: utils_locale.rscaptionspecimen
+msgid "Specimen"
 msgstr ""
 
 #: utils_locale.rscaptionsspgroup
@@ -19758,6 +19922,10 @@ msgstr ""
 
 #: utils_locale.rstitlenointernetconnection
 msgid "No internet connection"
+msgstr ""
+
+#: utils_locale.rstitleoccurrencepoints
+msgid "Occurrence points"
 msgstr ""
 
 #: utils_locale.rstitlepermanentnets

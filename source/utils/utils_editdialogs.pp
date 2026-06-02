@@ -48,6 +48,7 @@ uses
   function EditPermanentNet(aDataSet: TDataSet; aNetStation: Integer; IsNew: Boolean = False): Boolean;
   function EditPermit(aDataSet: TDataSet; aProject: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditPerson(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
+  function EditPoi(aDataSet: TDataSet; aSurvey: Integer = 0; aSighting: Integer = 0; aIndividual: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditProject(aDataSet: TDataSet; IsNew: Boolean = False): Boolean;
   function EditProjectActivity(aDataSet: TDataSet; aProject: Integer = 0; aGoal: Integer = 0; IsNew: Boolean = False): Boolean;
   function EditProjectExpense(aDataSet: TDataSet; aProject: Integer = 0; aRubric: Integer = 0; IsNew: Boolean = False): Boolean;
@@ -80,7 +81,7 @@ uses
   uedt_method, uedt_weatherlog, uedt_project, uedt_permit, uedt_specimen, uedt_sampleprep, uedt_nestowner,
   uedt_imageinfo, uedt_audioinfo, uedt_documentinfo, uedt_vegetation, uedt_database, uedt_collector,
   uedt_projectmember, uedt_surveymember, uedt_projectgoal, uedt_projectactivity, uedt_projectrubric,
-  uedt_projectexpense, uedt_feather, uedt_videoinfo;
+  uedt_projectexpense, uedt_feather, uedt_videoinfo, uedt_poi;
 
 function EditMethod(aDataSet: TDataSet; IsNew: Boolean): Boolean;
 var
@@ -3093,6 +3094,98 @@ begin
     FRepo.Free;
     FreeAndNil(edtVideoInfo);
     LogEvent(leaClose, 'Video edit dialog');
+  end;
+end;
+
+function EditPoi(aDataSet: TDataSet; aSurvey: Integer; aSighting: Integer; aIndividual: Integer; IsNew: Boolean
+  ): Boolean;
+var
+  FRecord, FOldRecord: TPoi;
+  FRepo: TPoiRepository;
+  aTime: Variant;
+begin
+  LogEvent(leaOpen, 'Occurrence point edit dialog');
+  Application.CreateForm(TedtPoi, edtPoi);
+  FRepo := TPoiRepository.Create(DMM.sqlCon);
+  FOldRecord := nil;
+  with edtPoi do
+  try
+    dsLink.DataSet := aDataSet;
+    IsNewRecord := IsNew;
+    if IsNew then
+    begin
+      FRecord := TPoi.Create();
+      if aIndividual > 0 then
+        FRecord.TaxonId := GetFieldValue(TBL_INDIVIDUALS, COL_TAXON_ID, COL_INDIVIDUAL_ID, aIndividual);
+      if aSurvey > 0 then
+      begin
+        FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_CAPTURES, COL_CAPTURE_DATE, COL_CAPTURE_ID, aSurvey));
+        aTime := GetFieldValue(TBL_CAPTURES, COL_CAPTURE_TIME, COL_CAPTURE_ID, aSurvey);
+        if aTime <> Null then
+          FRecord.SampleTime := VarToDateTime(aTime);
+      end;
+      if aSighting > 0 then
+      begin
+        FRecord.TaxonId := GetFieldValue(TBL_SIGHTINGS, COL_TAXON_ID, COL_SIGHTING_ID, aSighting);
+        FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_SIGHTINGS, COL_SIGHTING_DATE, COL_SIGHTING_ID, aSighting));
+        aTime := GetFieldValue(TBL_SIGHTINGS, COL_SIGHTING_TIME, COL_SIGHTING_ID, aSighting);
+        if aTime <> Null then
+          FRecord.SampleTime := VarToDateTime(aTime);
+        FRecord.ObserverId := GetFieldValue(TBL_SIGHTINGS, COL_OBSERVER_ID, COL_SIGHTING_ID, aSighting);
+      end;
+      EditSourceStr := rsInsertedByForm;
+    end else
+    begin
+      FOldRecord := TPoi.Create();
+      FRecord := TPoi.Create();
+      FRepo.Hydrate(aDataSet, FOldRecord);
+      FRecord.Assign(FOldRecord);
+      EditSourceStr := rsEditedByForm;
+    end;
+    Poi := FRecord;
+    IndividualId := aIndividual;
+    SurveyId := aSurvey;
+    SightingId := aSighting;
+    Result := ShowModal = mrOk;
+    if Result then
+    begin
+      if not DMM.sqlTrans.Active then
+        DMM.sqlTrans.StartTransaction;
+      try
+        FRepo.Save(Poi);
+
+        { Save changes to the record history }
+        if Assigned(FOldRecord) then
+        begin
+          WriteDiff(tbPoiLibrary, FOldRecord, Poi, EditSourceStr);
+        end
+        else
+          WriteRecHistory(tbPoiLibrary, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        DMM.sqlTrans.CommitRetaining;
+      except
+        DMM.sqlTrans.RollbackRetaining;
+        raise;
+      end;
+
+      // Go to record
+      if not aDataSet.Active then
+        Exit;
+      aDataSet.DisableControls;
+      try
+        aDataSet.Refresh;
+        aDataSet.Locate(COL_POI_ID, Poi.Id, []);
+      finally
+        aDataSet.EnableControls;
+      end;
+    end;
+  finally
+    if Assigned(FOldRecord) then
+      FreeAndNil(FOldRecord);
+    FRecord.Free;
+    FRepo.Free;
+    FreeAndNil(edtPoi);
+    LogEvent(leaClose, 'Occurrence point edit dialog');
   end;
 end;
 

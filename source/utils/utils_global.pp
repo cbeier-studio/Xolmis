@@ -122,6 +122,7 @@ const
   HELP_TAXA: String             = 'taxa.html';
   HELP_USERS: String            = 'users.html';
   HELP_VIDEOS: String           = 'videos.html';
+  HELP_OCCURRENCE_POINTS: String = 'occurrence-points.html';
 
   HELP_ADDING_AND_EDITING_DATA: String    = 'adding-and-editing-data.html';
   HELP_CONNECTIONS: String                = 'connections.html';

@@ -32,11 +32,13 @@ type
   { TDMG }
 
   TDMG = class(TDataModule)
+    dsSightingPois: TDataSource;
     dsProjectGoals: TDataSource;
     dsProjectChronogram: TDataSource;
     dsProjectBudget: TDataSource;
     dsProjectExpenses: TDataSource;
     dsFeathers: TDataSource;
+    dsPois: TDataSource;
     dsTaxa: TDataSource;
     dsBandHistory: TDataSource;
     dsIndividuals: TDataSource;
@@ -700,6 +702,61 @@ type
     qPermitsinactivated_by: TStringField;
     qPermitsnotes: TMemoField;
     qPermitspermit_status: TStringField;
+    qPoisindividual_name: TStringField;
+    qPoisobserver_name: TStringField;
+    qPoissighting_name: TStringField;
+    qPoissurvey_name: TStringField;
+    qPoistaxon_name: TStringField;
+    qSightingPois: TSQLQuery;
+    qPois: TSQLQuery;
+    qSightingPoisactive_status: TBooleanField;
+    qSightingPoisactive_status1: TBooleanField;
+    qSightingPoisaltitude: TFloatField;
+    qSightingPoisaltitude1: TFloatField;
+    qSightingPoiscoordinate_precision: TStringField;
+    qSightingPoiscoordinate_precision1: TStringField;
+    qSightingPoisexported_status: TBooleanField;
+    qSightingPoisexported_status1: TBooleanField;
+    qSightingPoisinactivated_by: TStringField;
+    qSightingPoisinactivated_by1: TStringField;
+    qSightingPoisindividual_id: TLongintField;
+    qSightingPoisindividual_id1: TLongintField;
+    qSightingPoisindividual_name: TStringField;
+    qSightingPoisinsert_date: TDateTimeField;
+    qSightingPoisinsert_date1: TDateTimeField;
+    qSightingPoislatitude: TFloatField;
+    qSightingPoislatitude1: TFloatField;
+    qSightingPoislongitude: TFloatField;
+    qSightingPoislongitude1: TFloatField;
+    qSightingPoismarked_status: TBooleanField;
+    qSightingPoismarked_status1: TBooleanField;
+    qSightingPoisnotes: TMemoField;
+    qSightingPoisnotes1: TMemoField;
+    qSightingPoisobserver_id: TLongintField;
+    qSightingPoisobserver_id1: TLongintField;
+    qSightingPoisobserver_name: TStringField;
+    qSightingPoispoi_id: TLongintField;
+    qSightingPoispoi_id1: TLongintField;
+    qSightingPoispoi_name: TStringField;
+    qSightingPoispoi_name1: TStringField;
+    qSightingPoissample_date: TDateField;
+    qSightingPoissample_date1: TDateField;
+    qSightingPoissample_time: TTimeField;
+    qSightingPoissample_time1: TTimeField;
+    qSightingPoissighting_id: TLongintField;
+    qSightingPoissighting_id1: TLongintField;
+    qSightingPoissighting_name: TStringField;
+    qSightingPoissurvey_id: TLongintField;
+    qSightingPoissurvey_id1: TLongintField;
+    qSightingPoissurvey_name: TStringField;
+    qSightingPoistaxon_id: TLongintField;
+    qSightingPoistaxon_id1: TLongintField;
+    qSightingPoistaxon_name: TStringField;
+    qSightingPoisupdate_date: TDateTimeField;
+    qSightingPoisupdate_date1: TDateTimeField;
+    qSightingPoisuser_inserted: TLongintField;
+    qSightingPoisuser_inserted1: TLongintField;
+    qSightingPoisuser_updated: TLongintField;
     qProjectBudgetactive_status: TBooleanField;
     qProjectBudgetamount: TFloatField;
     qProjectBudgetbudget_id: TLongintField;
@@ -797,6 +854,7 @@ type
     qSamplingPlotssampling_plot_id: TLongintField;
     qSamplingPlotsstate_id: TLongintField;
     qSamplingPlotsstate_name: TStringField;
+    qSightingPoisuser_updated1: TLongintField;
     qSightingscoordinate_precision: TStringField;
     qSightingscountry_id: TLongintField;
     qSightingsfamily_id: TLongintField;
@@ -1431,6 +1489,16 @@ type
     procedure qPermanentNetscoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qPermitspermit_statusGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qPermitspermit_statusSetText(Sender: TField; const aText: string);
+    procedure qPoisAfterCancel(DataSet: TDataSet);
+    procedure qPoisAfterPost(DataSet: TDataSet);
+    procedure qPoisBeforeEdit(DataSet: TDataSet);
+    procedure qPoisBeforePost(DataSet: TDataSet);
+    procedure qSightingPoisAfterCancel(DataSet: TDataSet);
+    procedure qSightingPoisAfterPost(DataSet: TDataSet);
+    procedure qSightingPoisBeforeEdit(DataSet: TDataSet);
+    procedure qSightingPoisBeforePost(DataSet: TDataSet);
+    procedure qSightingPoiscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qSightingPoiscoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qProjectChronogramprogress_statusGetText(Sender: TField;
       var aText: string; DisplayText: Boolean);
     procedure qProjectChronogramprogress_statusSetText(Sender: TField;
@@ -1544,6 +1612,7 @@ type
     OldNest: TNest;
     OldNestRevision: TNestRevision;
     OldEgg: TEgg;
+    OldPoi: TPoi;
   public
 
   end;
@@ -1584,6 +1653,8 @@ begin
   TranslateExpeditions(qExpeditions);
   TranslateSurveys(qSurveys);
   TranslateSightings(qSightings);
+  TranslatePoiLibrary(qSightingPois);
+  TranslatePoiLibrary(qPois);
   TranslateBands(qBands);
   TranslateBandHistory(qBandHistory);
   TranslateIndividuals(qIndividuals);
@@ -4216,6 +4287,129 @@ begin
   else
   if aText = rsPermitOther then
     Sender.AsString := 'O';
+end;
+
+procedure TDMG.qPoisAfterCancel(DataSet: TDataSet);
+begin
+  if Assigned(OldPoi) then
+    FreeAndNil(OldPoi);
+end;
+
+procedure TDMG.qPoisAfterPost(DataSet: TDataSet);
+var
+  Repo: TPoiRepository;
+  NewPoi: TPoi;
+begin
+  { Save changes to the record history }
+  if Assigned(OldPoi) then
+  begin
+    Repo := TPoiRepository.Create(DMM.sqlCon);
+    NewPoi := TPoi.Create;
+    Repo.Hydrate(DataSet, NewPoi);
+    try
+      WriteDiff(tbPoiLibrary, OldPoi, NewPoi, EditSourceStr);
+    finally
+      FreeAndNil(NewPoi);
+      FreeAndNil(OldPoi);
+      Repo.Free;
+    end;
+  end
+  else
+    WriteRecHistory(tbPoiLibrary, haCreated, 0, '', '', '', rsInsertedByForm);
+end;
+
+procedure TDMG.qPoisBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TPoiRepository;
+begin
+  Repo := TPoiRepository.Create(DMM.sqlCon);
+  try
+    OldPoi := TPoi.Create();
+    Repo.Hydrate(DataSet, OldPoi);
+  finally
+    Repo.Free;
+  end;
+end;
+
+procedure TDMG.qPoisBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+end;
+
+procedure TDMG.qSightingPoisAfterCancel(DataSet: TDataSet);
+begin
+  if Assigned(OldPoi) then
+    FreeAndNil(OldPoi);
+end;
+
+procedure TDMG.qSightingPoisAfterPost(DataSet: TDataSet);
+var
+  Repo: TPoiRepository;
+  NewPoi: TPoi;
+begin
+  { Save changes to the record history }
+  if Assigned(OldPoi) then
+  begin
+    Repo := TPoiRepository.Create(DMM.sqlCon);
+    NewPoi := TPoi.Create;
+    Repo.Hydrate(DataSet, NewPoi);
+    try
+      WriteDiff(tbPoiLibrary, OldPoi, NewPoi, EditSourceStr);
+    finally
+      FreeAndNil(NewPoi);
+      FreeAndNil(OldPoi);
+      Repo.Free;
+    end;
+  end
+  else
+    WriteRecHistory(tbPoiLibrary, haCreated, 0, '', '', '', rsInsertedByForm);
+end;
+
+procedure TDMG.qSightingPoisBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TPoiRepository;
+begin
+  Repo := TPoiRepository.Create(DMM.sqlCon);
+  try
+    OldPoi := TPoi.Create();
+    Repo.Hydrate(DataSet, OldPoi);
+  finally
+    Repo.Free;
+  end;
+end;
+
+procedure TDMG.qSightingPoisBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+end;
+
+procedure TDMG.qSightingPoiscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qSightingPoiscoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
 end;
 
 procedure TDMG.qProjectChronogramprogress_statusGetText(Sender: TField;

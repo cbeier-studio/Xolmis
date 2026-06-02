@@ -101,6 +101,7 @@ type
     FPoiName: String;
     FLongitude: Extended;
     FLatitude: Extended;
+    FCoordinatePrecision: TCoordinatePrecision;
     FAltitude: Double;
     FObserverId: Integer;
     FTaxonId: Integer;
@@ -125,6 +126,7 @@ type
     property PoiName: String read FPoiName write FPoiName;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
+    property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property Altitude: Double read FAltitude write FAltitude;
     property ObserverId: Integer read FObserverId write FObserverId;
     property TaxonId: Integer read FTaxonId write FTaxonId;
@@ -849,6 +851,7 @@ begin
     FPoiName := TPoi(Source).PoiName;
     FLongitude := TPoi(Source).Longitude;
     FLatitude := TPoi(Source).Latitude;
+    FCoordinatePrecision := TPoi(Source).CoordinatePrecision;
     FAltitude := TPoi(Source).Altitude;
     FObserverId := TPoi(Source).ObserverId;
     FTaxonId := TPoi(Source).TaxonId;
@@ -867,6 +870,7 @@ begin
   FPoiName := EmptyStr;
   FLongitude := 0.0;
   FLatitude := 0.0;
+  FCoordinatePrecision := cpEmpty;
   FAltitude := 0.0;
   FObserverId := 0;
   FTaxonId := 0;
@@ -909,6 +913,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscLongitude, aOld.Longitude, FLongitude, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscAltitude, aOld.Altitude, FAltitude, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
@@ -943,6 +949,7 @@ begin
     FPoiName      := Obj.Get('poi_name', '');
     FLongitude    := Obj.Get('longitude', 0.0);
     FLatitude     := Obj.Get('latitude', 0.0);
+    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FAltitude     := Obj.Get('altitude', 0.0);
     FObserverId   := Obj.Get('observer_id', 0);
     FTaxonId      := Obj.Get('taxon_id', 0);
@@ -966,6 +973,7 @@ begin
     JSONObject.Add('poi_name', FPoiName);
     JSONObject.Add('longitude', FLongitude);
     JSONObject.Add('latitude', FLatitude);
+    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('altitude', FAltitude);
     JSONObject.Add('observer_id', FObserverId);
     JSONObject.Add('taxon_id', FTaxonId);
@@ -982,10 +990,11 @@ end;
 
 function TPoi.ToString: String;
 begin
-  Result := Format('Poi(Id=%d, SampleDate=%s, SampleTime=%s, PoiName=%s, Longitude=%f, Latitude=%f, ' +
+  Result := Format('Poi(Id=%d, SampleDate=%s, SampleTime=%s, PoiName=%s, Longitude=%f, Latitude=%f, CoordinatePrecision=%s, ' +
     'Altitude=%f, ObserverId=%d, TaxonId=%d, IndividualId=%d, SightingId=%d, SurveyId=%d, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Acitve=%s)',
-    [FId, DateToStr(FSampleDate), TimeToStr(FSampleTime), FPoiName, FLongitude, FLatitude, FAltitude, FObserverId,
+    [FId, DateToStr(FSampleDate), TimeToStr(FSampleTime), FPoiName, FLongitude, FLatitude,
+    COORDINATE_PRECISIONS[FCoordinatePrecision], FAltitude, FObserverId,
     FTaxonId, FIndividualId, FSightingId, FSurveyId, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
@@ -1185,6 +1194,7 @@ begin
     R.PoiName := FieldByName('poi_name').AsString;
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
+    R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.Altitude := FieldByName('altitude').AsFloat;
     R.ObserverId := FieldByName('observer_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
@@ -1225,6 +1235,8 @@ begin
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
+  if ARow.IndexOfName('coordinate_precision') >= 0 then
+    R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('altitude') >= 0 then
     R.Altitude := StrToFloatDef(ARow.Values['altitude'], 0);
   if ARow.IndexOfName('observer_id') >= 0 then
@@ -1260,6 +1272,7 @@ begin
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);
     ParamByName('poi_name').AsString := R.PoiName;
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetFloatParam(ParamByName('altitude'), R.Altitude);
     SetForeignParam(ParamByName('observer_id'), R.ObserverId);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
@@ -1309,6 +1322,7 @@ begin
     SetTimeParam(ParamByName('sample_time'), R.SampleTime);
     ParamByName('poi_name').AsString := R.PoiName;
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
+    SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetFloatParam(ParamByName('altitude'), R.Altitude);
     SetForeignParam(ParamByName('observer_id'), R.ObserverId);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);

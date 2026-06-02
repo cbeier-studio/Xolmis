@@ -21,7 +21,8 @@ unit udm_sampling;
 interface
 
 uses
-  Classes, SysUtils, SQLDB, DB, LResources, StrUtils, models_birds, models_sampling, models_bands, models_sightings;
+  Classes, SysUtils, SQLDB, DB, LResources, StrUtils, models_birds, models_sampling, models_bands, models_sightings,
+  models_geo;
 
 type
 
@@ -30,6 +31,7 @@ type
   TDMS = class(TDataModule)
     dsCaptures: TDataSource;
     dsNetsEffort: TDataSource;
+    dsPois: TDataSource;
     dsSightings: TDataSource;
     dsSurveys: TDataSource;
     dsSurveyTeam: TDataSource;
@@ -221,6 +223,34 @@ type
     qNetsEffortupdate_date: TDateTimeField;
     qNetsEffortuser_inserted: TLongintField;
     qNetsEffortuser_updated: TLongintField;
+    qPois: TSQLQuery;
+    qPoisactive_status: TBooleanField;
+    qPoisaltitude: TFloatField;
+    qPoiscoordinate_precision: TStringField;
+    qPoisexported_status: TBooleanField;
+    qPoisinactivated_by: TStringField;
+    qPoisindividual_id: TLongintField;
+    qPoisindividual_name: TStringField;
+    qPoisinsert_date: TDateTimeField;
+    qPoislatitude: TFloatField;
+    qPoislongitude: TFloatField;
+    qPoismarked_status: TBooleanField;
+    qPoisnotes: TMemoField;
+    qPoisobserver_id: TLongintField;
+    qPoisobserver_name: TStringField;
+    qPoispoi_id: TLongintField;
+    qPoispoi_name: TStringField;
+    qPoissample_date: TDateField;
+    qPoissample_time: TTimeField;
+    qPoissighting_id: TLongintField;
+    qPoissighting_name: TStringField;
+    qPoissurvey_id: TLongintField;
+    qPoissurvey_name: TStringField;
+    qPoistaxon_id: TLongintField;
+    qPoistaxon_name: TStringField;
+    qPoisupdate_date: TDateTimeField;
+    qPoisuser_inserted: TLongintField;
+    qPoisuser_updated: TLongintField;
     qSightings: TSQLQuery;
     qSightingsactive_status: TBooleanField;
     qSightingsadults_tally: TStringField;
@@ -462,6 +492,12 @@ type
     procedure qNetsEffortBeforePost(DataSet: TDataSet);
     procedure qNetsEffortcoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qNetsEffortcoordinate_precisionSetText(Sender: TField; const aText: string);
+    procedure qPoisAfterCancel(DataSet: TDataSet);
+    procedure qPoisAfterPost(DataSet: TDataSet);
+    procedure qPoisBeforeEdit(DataSet: TDataSet);
+    procedure qPoisBeforePost(DataSet: TDataSet);
+    procedure qPoiscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qPoiscoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qSightingsAfterCancel(DataSet: TDataSet);
     procedure qSightingsAfterInsert(DataSet: TDataSet);
     procedure qSightingsAfterPost(DataSet: TDataSet);
@@ -503,6 +539,7 @@ type
     OldSighting: TSighting;
     OldWeatherLog: TWeatherLog;
     OldVegetation: TVegetation;
+    OldPoi: TPoi;
   public
 
   end;
@@ -526,6 +563,7 @@ begin
   TranslateNetsEffort(qNetsEffort);
   TranslateWeatherLogs(qWeatherLogs);
   TranslateVegetation(qVegetation);
+  TranslatePoiLibrary(qPois);
 end;
 
 procedure TDMS.qCapturesAfterCancel(DataSet: TDataSet);
@@ -1058,6 +1096,82 @@ begin
 end;
 
 procedure TDMS.qNetsEffortcoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
+end;
+
+procedure TDMS.qPoisAfterCancel(DataSet: TDataSet);
+begin
+  if Assigned(OldPoi) then
+    FreeAndNil(OldPoi);
+end;
+
+procedure TDMS.qPoisAfterPost(DataSet: TDataSet);
+var
+  Repo: TPoiRepository;
+  NewPoi: TPoi;
+begin
+  { Save changes to the record history }
+  if Assigned(OldPoi) then
+  begin
+    Repo := TPoiRepository.Create(DMM.sqlCon);
+    NewPoi := TPoi.Create;
+    Repo.Hydrate(DataSet, NewPoi);
+    try
+      WriteDiff(tbPoiLibrary, OldPoi, NewPoi, EditSourceStr);
+    finally
+      FreeAndNil(NewPoi);
+      FreeAndNil(OldPoi);
+      Repo.Free;
+    end;
+  end
+  else
+    WriteRecHistory(tbPoiLibrary, haCreated, 0, '', '', '', rsInsertedByForm);
+end;
+
+procedure TDMS.qPoisBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TPoiRepository;
+begin
+  Repo := TPoiRepository.Create(DMM.sqlCon);
+  try
+    OldPoi := TPoi.Create();
+    Repo.Hydrate(DataSet, OldPoi);
+  finally
+    Repo.Free;
+  end;
+end;
+
+procedure TDMS.qPoisBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+end;
+
+procedure TDMS.qPoiscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMS.qPoiscoordinate_precisionSetText(Sender: TField; const aText: string);
 begin
   if aText = EmptyStr then
     Exit;

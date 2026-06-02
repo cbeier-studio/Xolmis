@@ -718,6 +718,7 @@ object edtSpecimen: TedtSpecimen
           Style = csDropDownList
           TabOrder = 0
           OnKeyDown = FormKeyDown
+          OnKeyPress = eFieldNumberKeyPress
         end
       end
       object pInstitution: TPanel

@@ -566,6 +566,7 @@ resourcestring
   procedure SummaryNestRevisions(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryPeople(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryPermits(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
+  procedure SummaryPoiLibrary(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummaryProjects(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummarySamplingPlots(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
   procedure SummarySightings(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String = '');
@@ -5465,6 +5466,7 @@ begin
         'sample_time':            Fields[i].DisplayLabel := rscTime;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
+        'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
         'altitude':               Fields[i].DisplayLabel := rscAltitude;
         'observer_id':            Fields[i].DisplayLabel := rscObserverID;
         'observer_name':          Fields[i].DisplayLabel := rscObserver;
@@ -5476,6 +5478,7 @@ begin
         'sighting_name':          Fields[i].DisplayLabel := rscSighting;
         'survey_id':              Fields[i].DisplayLabel := rscSurveyID;
         'survey_name':            Fields[i].DisplayLabel := rscSurvey;
+        'notes':                  Fields[i].DisplayLabel := rscNotes;
         'poi_id':                 Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
         'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
@@ -5831,6 +5834,56 @@ begin
       Result := aDataSet.Fields[i].FieldName;
       Exit;
     end;
+  end;
+end;
+
+procedure SummaryPoiLibrary(aDataSet: TSQLQuery; aFieldName: String; aWhereText: String);
+var
+  Tbl: TTableSchema;
+  F: TFieldSchema;
+  GroupExpr: String;
+begin
+  with aDataSet, SQL do
+  begin
+    Close;
+    Clear;
+
+    if aWhereText = '' then
+      Exit;
+
+    Tbl := nil;
+    if Assigned(DBSchema) then
+      Tbl := DBSchema.GetTable(tbPoiLibrary);
+    if not Assigned(Tbl) then
+      Exit;
+
+    F := Tbl.GetField(aFieldName);
+    if not Assigned(F) then
+      Exit;
+    if not F.SummaryEnabled then
+      Exit;
+
+    GroupExpr := F.GroupingField;
+    if GroupExpr = '' then
+      GroupExpr := F.Name;
+
+    case F.SummaryKind of
+      skCount:
+        BuildCountGrouped(aDataSet, aWhereText, GroupExpr, GroupExpr);
+      skSum:
+        BuildBooleanSum(aDataSet, aWhereText, F.Name, F.DisplayName);
+      skCountNotNull:
+        BuildCountNotNull(aDataSet, aWhereText, F.Name, F.DisplayName);
+      skGroupStats:
+        BuildGroupStatsMeasure(aDataSet, aWhereText, GroupExpr, F.Name, F.SummaryMetrics);
+      skStats:
+        BuildStatsMeasure(aDataSet, aWhereText, F.Name, F.SummaryMetrics);
+    else
+      Clear;
+    end;
+
+    if SQL.Count > 0 then
+      Open;
   end;
 end;
 

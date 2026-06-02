@@ -318,6 +318,7 @@
 {"hash":228239609,"name":"tfrmcustomgrid.pmcnewchronogramactivity.caption","sourcebytes":[78,101,119,32,99,104,114,111,110,111,103,114,97,109,32,97,99,116,105,118,105,116,121],"value":"New chronogram activity"},
 {"hash":84993197,"name":"tfrmcustomgrid.pmcnewbudgetitem.caption","sourcebytes":[78,101,119,32,98,117,100,103,101,116,32,105,116,101,109],"value":"New budget item"},
 {"hash":211979509,"name":"tfrmcustomgrid.pmcnewexpense.caption","sourcebytes":[78,101,119,32,101,120,112,101,110,115,101],"value":"New expense"},
+{"hash":125478948,"name":"tfrmcustomgrid.pmcnewoccurrencepoint.caption","sourcebytes":[78,101,119,32,111,99,99,117,114,114,101,110,99,101,32,112,111,105,110,116],"value":"New occurrence point"},
 {"hash":2800388,"name":"tfrmcustomgrid.pmcedit.caption","sourcebytes":[38,69,100,105,116],"value":"&Edit"},
 {"hash":228239609,"name":"tfrmcustomgrid.pmcnewprojectactivityfromgoal.caption","sourcebytes":[78,101,119,32,99,104,114,111,110,111,103,114,97,109,32,97,99,116,105,118,105,116,121],"value":"New chronogram activity"},
 {"hash":211979509,"name":"tfrmcustomgrid.pmcnewexpensefromrubric.caption","sourcebytes":[78,101,119,32,101,120,112,101,110,115,101],"value":"New expense"},

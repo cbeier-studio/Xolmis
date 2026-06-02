@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, SQLDB, DB, StrUtils, models_birds, models_sampling, models_breeding, models_sightings,
-  models_specimens;
+  models_specimens, models_geo;
 
 type
 
@@ -34,6 +34,7 @@ type
     dsNests: TDataSource;
     dsSightings: TDataSource;
     dsSpecimens: TDataSource;
+    dsPois: TDataSource;
     qCaptures: TSQLQuery;
     qCapturesactive_status: TBooleanField;
     qCapturesannotator_id: TLongintField;
@@ -368,6 +369,34 @@ type
     qNestsupdate_date: TDateTimeField;
     qNestsuser_inserted: TLongintField;
     qNestsuser_updated: TLongintField;
+    qPois: TSQLQuery;
+    qPoisactive_status: TBooleanField;
+    qPoisaltitude: TFloatField;
+    qPoiscoordinate_precision: TStringField;
+    qPoisexported_status: TBooleanField;
+    qPoisinactivated_by: TStringField;
+    qPoisindividual_id: TLongintField;
+    qPoisindividual_name: TStringField;
+    qPoisinsert_date: TDateTimeField;
+    qPoislatitude: TFloatField;
+    qPoislongitude: TFloatField;
+    qPoismarked_status: TBooleanField;
+    qPoisnotes: TMemoField;
+    qPoisobserver_id: TLongintField;
+    qPoisobserver_name: TStringField;
+    qPoispoi_id: TLongintField;
+    qPoispoi_name: TStringField;
+    qPoissample_date: TDateField;
+    qPoissample_time: TTimeField;
+    qPoissighting_id: TLongintField;
+    qPoissighting_name: TStringField;
+    qPoissurvey_id: TLongintField;
+    qPoissurvey_name: TStringField;
+    qPoistaxon_id: TLongintField;
+    qPoistaxon_name: TStringField;
+    qPoisupdate_date: TDateTimeField;
+    qPoisuser_inserted: TLongintField;
+    qPoisuser_updated: TLongintField;
     qSightings: TSQLQuery;
     qSightingsactive_status: TBooleanField;
     qSightingsadults_tally: TStringField;
@@ -430,15 +459,10 @@ type
     qSightingsuser_updated: TLongintField;
     qSpecimens: TSQLQuery;
     qSpecimensactive_status: TBooleanField;
-    qSpecimensactive_status1: TBooleanField;
     qSpecimenscollection_date: TDateField;
-    qSpecimenscollection_date1: TDateField;
     qSpecimenscollection_day: TLongintField;
-    qSpecimenscollection_day1: TLongintField;
     qSpecimenscollection_month: TLongintField;
-    qSpecimenscollection_month1: TLongintField;
     qSpecimenscollection_year: TLongintField;
-    qSpecimenscollection_year1: TLongintField;
     qSpecimenscollectors1: TStringField;
     qSpecimenscollector_5: TLongintField;
     qSpecimenscollector_6: TLongintField;
@@ -446,69 +470,39 @@ type
     qSpecimenscollector_8: TLongintField;
     qSpecimenscoordinate_precision: TStringField;
     qSpecimenscountry_id: TLongintField;
-    qSpecimenscountry_id1: TLongintField;
     qSpecimensegg_id: TLongintField;
-    qSpecimensegg_id1: TLongintField;
     qSpecimensegg_name: TStringField;
-    qSpecimensegg_name1: TStringField;
     qSpecimensexported_status: TBooleanField;
-    qSpecimensexported_status1: TBooleanField;
     qSpecimensfamily_id: TLongintField;
-    qSpecimensfamily_id1: TLongintField;
     qSpecimensfield_number: TStringField;
-    qSpecimensfield_number1: TStringField;
     qSpecimensfull_name: TStringField;
-    qSpecimensfull_name1: TStringField;
     qSpecimensgenus_id: TLongintField;
-    qSpecimensgenus_id1: TLongintField;
     qSpecimensinactivated_by: TStringField;
     qSpecimensindividual_id: TLongintField;
-    qSpecimensindividual_id1: TLongintField;
     qSpecimensindividual_name: TStringField;
-    qSpecimensindividual_name1: TStringField;
     qSpecimensinsert_date: TDateTimeField;
-    qSpecimensinsert_date1: TDateTimeField;
     qSpecimensinstitution_id: TLongintField;
     qSpecimensinstitution_name: TStringField;
     qSpecimenslatitude: TFloatField;
-    qSpecimenslatitude1: TFloatField;
     qSpecimenslocality_id: TLongintField;
-    qSpecimenslocality_id1: TLongintField;
     qSpecimenslocality_name: TStringField;
-    qSpecimenslocality_name1: TStringField;
     qSpecimenslongitude: TFloatField;
-    qSpecimenslongitude1: TFloatField;
     qSpecimensmarked_status: TBooleanField;
-    qSpecimensmarked_status1: TBooleanField;
     qSpecimensmunicipality_id: TLongintField;
-    qSpecimensmunicipality_id1: TLongintField;
     qSpecimensnest_id: TLongintField;
-    qSpecimensnest_id1: TLongintField;
     qSpecimensnest_name: TStringField;
-    qSpecimensnest_name1: TStringField;
     qSpecimensnotes: TMemoField;
-    qSpecimensnotes1: TMemoField;
     qSpecimensorder_id: TLongintField;
-    qSpecimensorder_id1: TLongintField;
     qSpecimenssample_type: TStringField;
-    qSpecimenssample_type1: TStringField;
     qSpecimensspecies_id: TLongintField;
-    qSpecimensspecies_id1: TLongintField;
     qSpecimensspecimen_id: TAutoIncField;
-    qSpecimensspecimen_id1: TAutoIncField;
     qSpecimensstate_id: TLongintField;
-    qSpecimensstate_id1: TLongintField;
     qSpecimenssubfamily_id1: TLongintField;
     qSpecimenstaxon_id: TLongintField;
-    qSpecimenstaxon_id1: TLongintField;
     qSpecimenstaxon_name: TStringField;
-    qSpecimenstaxon_name1: TStringField;
     qSpecimensupdate_date: TDateTimeField;
-    qSpecimensupdate_date1: TDateTimeField;
     qSpecimensuser_inserted: TLongintField;
-    qSpecimensuser_inserted1: TLongintField;
     qSpecimensuser_updated: TLongintField;
-    qSpecimensuser_updated1: TLongintField;
     procedure DataModuleCreate(Sender: TObject);
     procedure qCapturesAfterCancel(DataSet: TDataSet);
     procedure qCapturesAfterInsert(DataSet: TDataSet);
@@ -565,6 +559,12 @@ type
     procedure qNestssupport_typeGetText(Sender: TField;
       var aText: string; DisplayText: Boolean);
     procedure qNestssupport_typeSetText(Sender: TField; const aText: string);
+    procedure qPoisAfterCancel(DataSet: TDataSet);
+    procedure qPoisAfterPost(DataSet: TDataSet);
+    procedure qPoisBeforeEdit(DataSet: TDataSet);
+    procedure qPoisBeforePost(DataSet: TDataSet);
+    procedure qPoiscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qPoiscoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qSightingsAfterCancel(DataSet: TDataSet);
     procedure qSightingsAfterInsert(DataSet: TDataSet);
     procedure qSightingsAfterPost(DataSet: TDataSet);
@@ -587,6 +587,7 @@ type
     OldSighting: TSighting;
     OldSpecimen: TSpecimen;
     OldNest: TNest;
+    OldPoi: TPoi;
   public
 
   end;
@@ -610,6 +611,7 @@ begin
   TranslateFeathers(qFeathers);
   TranslateNests(qNests);
   TranslateSpecimens(qSpecimens);
+  TranslatePoiLibrary(qPois);
 end;
 
 procedure TDMI.qCapturescapture_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -1512,6 +1514,82 @@ begin
   else
   if aText = rsSupportOther then
     Sender.AsString := 'O';
+end;
+
+procedure TDMI.qPoisAfterCancel(DataSet: TDataSet);
+begin
+  if Assigned(OldPoi) then
+    FreeAndNil(OldPoi);
+end;
+
+procedure TDMI.qPoisAfterPost(DataSet: TDataSet);
+var
+  Repo: TPoiRepository;
+  NewPoi: TPoi;
+begin
+  { Save changes to the record history }
+  if Assigned(OldPoi) then
+  begin
+    Repo := TPoiRepository.Create(DMM.sqlCon);
+    NewPoi := TPoi.Create;
+    Repo.Hydrate(DataSet, NewPoi);
+    try
+      WriteDiff(tbPoiLibrary, OldPoi, NewPoi, EditSourceStr);
+    finally
+      FreeAndNil(NewPoi);
+      FreeAndNil(OldPoi);
+      Repo.Free;
+    end;
+  end
+  else
+    WriteRecHistory(tbPoiLibrary, haCreated, 0, '', '', '', rsInsertedByForm);
+end;
+
+procedure TDMI.qPoisBeforeEdit(DataSet: TDataSet);
+var
+  Repo: TPoiRepository;
+begin
+  Repo := TPoiRepository.Create(DMM.sqlCon);
+  try
+    OldPoi := TPoi.Create();
+    Repo.Hydrate(DataSet, OldPoi);
+  finally
+    Repo.Free;
+  end;
+end;
+
+procedure TDMI.qPoisBeforePost(DataSet: TDataSet);
+begin
+  SetRecordDateUser(DataSet);
+end;
+
+procedure TDMI.qPoiscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'E': aText := rsExactCoordinate;
+    'A': aText := rsApproximatedCoordinate;
+    'R': aText := rsReferenceCoordinate;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMI.qPoiscoordinate_precisionSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsExactCoordinate then
+    Sender.AsString := 'E'
+  else
+  if aText = rsApproximatedCoordinate then
+    Sender.AsString := 'A'
+  else
+  if aText = rsReferenceCoordinate then
+    Sender.AsString := 'R';
 end;
 
 procedure TDMI.qSightingsAfterCancel(DataSet: TDataSet);

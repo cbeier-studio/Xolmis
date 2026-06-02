@@ -53,7 +53,7 @@ implementation
 
 uses
   utils_locale, utils_graphics, utils_themes, utils_validations, utils_system,
-  data_consts, data_columns, data_filters, models_media,
+  data_consts, data_columns, data_filters, models_media, modules_pois,
   udm_main, udm_grid, udm_sampling, udm_individuals, ufrm_customgrid, uDarkStyleParams;
 
 { TSightingsModuleController }
@@ -73,6 +73,8 @@ begin
     fufIndividual, fufIsOnEbird, fufOutOfSample];
 
   AddDefaultSort(COL_SIGHTING_DATE, sdDescending);
+
+  FSubmodules.Add(TPoiSubmoduleController.Create(FOwner));
 end;
 
 procedure TSightingsModuleController.ApplyFilters;

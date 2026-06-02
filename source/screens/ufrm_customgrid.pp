@@ -52,8 +52,10 @@ type
   TfrmCustomGrid = class(TForm)
     cbCategoryFilter: TComboBox;
     cbMapProvider: TComboBox;
+    dsLink7: TDataSource;
     dsVideos: TDataSource;
     eSearch: TEdit;
+    gridChild7: TDBGrid;
     gridVideos: TDBGrid;
     icoCategoryFilter: TImage;
     iconSearch: TImage;
@@ -62,6 +64,8 @@ type
     lblCategoryFilter: TLabel;
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
+    pmcNewOccurrencePoint: TMenuItem;
+    pgChild7: TPage;
     pmcAutoSizeColumns: TMenuItem;
     pmpReceiveBands: TMenuItem;
     pCategoryFilter: TBCPanel;
@@ -967,6 +971,8 @@ type
     procedure dsLink5StateChange(Sender: TObject);
     procedure dsLink6DataChange(Sender: TObject; Field: TField);
     procedure dsLink6StateChange(Sender: TObject);
+    procedure dsLink7DataChange(Sender: TObject; Field: TField);
+    procedure dsLink7StateChange(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure dsLinkStateChange(Sender: TObject);
     procedure dsRecycleStateChange(Sender: TObject);
@@ -1051,6 +1057,7 @@ type
     procedure pmcNewNestClick(Sender: TObject);
     procedure pmcNewNestOwnerClick(Sender: TObject);
     procedure pmcNewNestRevisionClick(Sender: TObject);
+    procedure pmcNewOccurrencePointClick(Sender: TObject);
     procedure pmcNewPermanentNetClick(Sender: TObject);
     procedure pmcNewProjectActivityFromGoalClick(Sender: TObject);
     procedure pmcNewProjectGoalClick(Sender: TObject);
@@ -1276,6 +1283,7 @@ type
     procedure OpenNestChilds;
     procedure OpenProjectChilds;
     procedure OpenSamplingPlotChilds;
+    procedure OpenSightingChilds;
     procedure OpenSpecimenChilds;
     procedure OpenSurveyChilds;
 
@@ -1381,7 +1389,7 @@ uses
   models_access_control, models_taxonomy, models_users, models_record_types,
   modules_bands, modules_birds, modules_botany, modules_breeding, modules_gazetteer, modules_institutions,
   modules_methods, modules_people, modules_permits, modules_projects, modules_sampling, modules_sampling_plots,
-  modules_sightings, modules_specimens,
+  modules_sightings, modules_specimens, modules_pois,
   udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
   {$IFDEF DEBUG}utils_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
@@ -1407,180 +1415,6 @@ begin
   end;
 
   Result := Result + LineEnding + 'ORDER BY ' + AOrderBy;
-end;
-
-function TfrmCustomGrid.GetPermissionForTableAction(const ATable: TTableType; const AAction: String): String;
-begin
-  Result := EmptyStr;
-
-  case ATable of
-    tbGazetteer:
-      case AAction of
-        'VIEW': Result := PERM_GAZETTEER_VIEW;
-        'INSERT': Result := PERM_GAZETTEER_INSERT;
-        'EDIT': Result := PERM_GAZETTEER_EDIT;
-        'DELETE': Result := PERM_GAZETTEER_DELETE;
-        'EXPORT': Result := PERM_GAZETTEER_EXPORT;
-        'PRINT': Result := PERM_GAZETTEER_PRINT;
-      end;
-    tbSamplingPlots, tbPermanentNets:
-      case AAction of
-        'VIEW': Result := PERM_SAMPLING_PLOTS_VIEW;
-        'INSERT': Result := PERM_SAMPLING_PLOTS_INSERT;
-        'EDIT': Result := PERM_SAMPLING_PLOTS_EDIT;
-        'DELETE': Result := PERM_SAMPLING_PLOTS_DELETE;
-        'EXPORT': Result := PERM_SAMPLING_PLOTS_EXPORT;
-        'PRINT': Result := PERM_SAMPLING_PLOTS_PRINT;
-      end;
-    tbInstitutions:
-      case AAction of
-        'VIEW': Result := PERM_INSTITUTIONS_VIEW;
-        'INSERT': Result := PERM_INSTITUTIONS_INSERT;
-        'EDIT': Result := PERM_INSTITUTIONS_EDIT;
-        'DELETE': Result := PERM_INSTITUTIONS_DELETE;
-        'EXPORT': Result := PERM_INSTITUTIONS_EXPORT;
-        'PRINT': Result := PERM_INSTITUTIONS_PRINT;
-      end;
-    tbPeople:
-      case AAction of
-        'VIEW': Result := PERM_PEOPLE_VIEW;
-        'INSERT': Result := PERM_PEOPLE_INSERT;
-        'EDIT': Result := PERM_PEOPLE_EDIT;
-        'DELETE': Result := PERM_PEOPLE_DELETE;
-        'EXPORT': Result := PERM_PEOPLE_EXPORT;
-        'PRINT': Result := PERM_PEOPLE_PRINT;
-      end;
-    tbProjects, tbProjectTeams, tbProjectGoals, tbProjectChronograms, tbProjectBudgets, tbProjectExpenses:
-      case AAction of
-        'VIEW': Result := PERM_PROJECTS_VIEW;
-        'INSERT': Result := PERM_PROJECTS_INSERT;
-        'EDIT': Result := PERM_PROJECTS_EDIT;
-        'DELETE': Result := PERM_PROJECTS_DELETE;
-        'EXPORT': Result := PERM_PROJECTS_EXPORT;
-        'PRINT': Result := PERM_PROJECTS_PRINT;
-      end;
-    tbPermits:
-      case AAction of
-        'VIEW': Result := PERM_PERMITS_VIEW;
-        'INSERT': Result := PERM_PERMITS_INSERT;
-        'EDIT': Result := PERM_PERMITS_EDIT;
-        'DELETE': Result := PERM_PERMITS_DELETE;
-        'EXPORT': Result := PERM_PERMITS_EXPORT;
-        'PRINT': Result := PERM_PERMITS_PRINT;
-      end;
-    tbBotanicTaxa:
-      case AAction of
-        'VIEW': Result := PERM_BOTANY_VIEW;
-        'INSERT': Result := PERM_BOTANY_INSERT;
-        'EDIT': Result := PERM_BOTANY_EDIT;
-        'DELETE': Result := PERM_BOTANY_DELETE;
-        'EXPORT': Result := PERM_BOTANY_EXPORT;
-        'PRINT': Result := PERM_BOTANY_PRINT;
-      end;
-    tbBands, tbBandHistory:
-      case AAction of
-        'VIEW': Result := PERM_BANDS_VIEW;
-        'INSERT': Result := PERM_BANDS_INSERT;
-        'EDIT': Result := PERM_BANDS_EDIT;
-        'DELETE': Result := PERM_BANDS_DELETE;
-        'EXPORT': Result := PERM_BANDS_EXPORT;
-        'PRINT': Result := PERM_BANDS_PRINT;
-      end;
-    tbIndividuals, tbCaptures, tbFeathers:
-      case AAction of
-        'VIEW': Result := PERM_BIRDS_VIEW;
-        'INSERT': Result := PERM_BIRDS_INSERT;
-        'EDIT': Result := PERM_BIRDS_EDIT;
-        'DELETE': Result := PERM_BIRDS_DELETE;
-        'EXPORT': Result := PERM_BIRDS_EXPORT;
-        'PRINT': Result := PERM_BIRDS_PRINT;
-      end;
-    tbNests, tbNestOwners, tbNestRevisions, tbEggs:
-      case AAction of
-        'VIEW': Result := PERM_BREEDING_VIEW;
-        'INSERT': Result := PERM_BREEDING_INSERT;
-        'EDIT': Result := PERM_BREEDING_EDIT;
-        'DELETE': Result := PERM_BREEDING_DELETE;
-        'EXPORT': Result := PERM_BREEDING_EXPORT;
-        'PRINT': Result := PERM_BREEDING_PRINT;
-      end;
-    tbMethods:
-      case AAction of
-        'VIEW': Result := PERM_METHODS_VIEW;
-        'INSERT': Result := PERM_METHODS_INSERT;
-        'EDIT': Result := PERM_METHODS_EDIT;
-        'DELETE': Result := PERM_METHODS_DELETE;
-        'EXPORT': Result := PERM_METHODS_EXPORT;
-        'PRINT': Result := PERM_METHODS_PRINT;
-      end;
-    tbExpeditions, tbSurveys, tbSurveyTeams, tbNetsEffort, tbWeatherLogs, tbVegetation:
-      case AAction of
-        'VIEW': Result := PERM_SAMPLING_VIEW;
-        'INSERT': Result := PERM_SAMPLING_INSERT;
-        'EDIT': Result := PERM_SAMPLING_EDIT;
-        'DELETE': Result := PERM_SAMPLING_DELETE;
-        'EXPORT': Result := PERM_SAMPLING_EXPORT;
-        'PRINT': Result := PERM_SAMPLING_PRINT;
-      end;
-    tbSightings:
-      case AAction of
-        'VIEW': Result := PERM_SIGHTINGS_VIEW;
-        'INSERT': Result := PERM_SIGHTINGS_INSERT;
-        'EDIT': Result := PERM_SIGHTINGS_EDIT;
-        'DELETE': Result := PERM_SIGHTINGS_DELETE;
-        'EXPORT': Result := PERM_SIGHTINGS_EXPORT;
-        'PRINT': Result := PERM_SIGHTINGS_PRINT;
-      end;
-    tbSpecimens, tbSamplePreps, tbSpecimenCollectors:
-      case AAction of
-        'VIEW': Result := PERM_SPECIMENS_VIEW;
-        'INSERT': Result := PERM_SPECIMENS_INSERT;
-        'EDIT': Result := PERM_SPECIMENS_EDIT;
-        'DELETE': Result := PERM_SPECIMENS_DELETE;
-        'EXPORT': Result := PERM_SPECIMENS_EXPORT;
-        'PRINT': Result := PERM_SPECIMENS_PRINT;
-      end;
-  end;
-end;
-
-function TfrmCustomGrid.HasTablePermission(const ATable: TTableType; const AAction: String): Boolean;
-var
-  PermissionName: String;
-begin
-  Result := False;
-  if not Assigned(ActiveUser) then
-    Exit;
-
-  PermissionName := GetPermissionForTableAction(ATable, AAction);
-  if PermissionName = EmptyStr then
-    Exit;
-
-  Result := ActiveUser.HasPermission(PermissionName);
-end;
-
-function TfrmCustomGrid.CanInsertTable(const ATable: TTableType): Boolean;
-begin
-  Result := HasTablePermission(ATable, 'INSERT');
-end;
-
-function TfrmCustomGrid.CanEditTable(const ATable: TTableType): Boolean;
-begin
-  Result := HasTablePermission(ATable, 'EDIT');
-end;
-
-function TfrmCustomGrid.CanDeleteTable(const ATable: TTableType): Boolean;
-begin
-  Result := HasTablePermission(ATable, 'DELETE');
-end;
-
-function TfrmCustomGrid.CanExportTable(const ATable: TTableType): Boolean;
-begin
-  Result := HasTablePermission(ATable, 'EXPORT');
-end;
-
-function TfrmCustomGrid.CanPrintTable(const ATable: TTableType): Boolean;
-begin
-  Result := HasTablePermission(ATable, 'PRINT');
 end;
 
 { TStringMemoEditor }
@@ -1837,6 +1671,7 @@ begin
         2: FParentForm.ChildTable := tbSightings;
         3: FParentForm.ChildTable := tbNests;
         4: FParentForm.ChildTable := tbSpecimens;
+        5: FParentForm.ChildTable := tbPoiLibrary;
       end;
     tbNests:
       case FParentForm.nbChilds.PageIndex of
@@ -1869,6 +1704,11 @@ begin
         3: FParentForm.ChildTable := tbCaptures;
         4: FParentForm.ChildTable := tbSightings;
         5: FParentForm.ChildTable := tbVegetation;
+        6: FParentForm.ChildTable := tbPoiLibrary;
+      end;
+    tbSightings:
+      case FParentForm.nbChilds.PageIndex of
+        0: FParentForm.ChildTable := tbPoiLibrary;
       end;
     tbSpecimens:
       case FParentForm.nbChilds.PageIndex of
@@ -1910,6 +1750,7 @@ begin
     3: FParentForm.UpdateChildButtons(FParentForm.dsLink4.DataSet);
     4: FParentForm.UpdateChildButtons(FParentForm.dsLink5.DataSet);
     5: FParentForm.UpdateChildButtons(FParentForm.dsLink6.DataSet);
+    6: FParentForm.UpdateChildButtons(FParentForm.dsLink7.DataSet);
   end;
 
   FParentForm.UpdateChildStatus;
@@ -1948,6 +1789,180 @@ begin
 end;
 
 { TfrmCustomGrid }
+
+function TfrmCustomGrid.GetPermissionForTableAction(const ATable: TTableType; const AAction: String): String;
+begin
+  Result := EmptyStr;
+
+  case ATable of
+    tbGazetteer:
+      case AAction of
+        'VIEW': Result := PERM_GAZETTEER_VIEW;
+        'INSERT': Result := PERM_GAZETTEER_INSERT;
+        'EDIT': Result := PERM_GAZETTEER_EDIT;
+        'DELETE': Result := PERM_GAZETTEER_DELETE;
+        'EXPORT': Result := PERM_GAZETTEER_EXPORT;
+        'PRINT': Result := PERM_GAZETTEER_PRINT;
+      end;
+    tbSamplingPlots, tbPermanentNets:
+      case AAction of
+        'VIEW': Result := PERM_SAMPLING_PLOTS_VIEW;
+        'INSERT': Result := PERM_SAMPLING_PLOTS_INSERT;
+        'EDIT': Result := PERM_SAMPLING_PLOTS_EDIT;
+        'DELETE': Result := PERM_SAMPLING_PLOTS_DELETE;
+        'EXPORT': Result := PERM_SAMPLING_PLOTS_EXPORT;
+        'PRINT': Result := PERM_SAMPLING_PLOTS_PRINT;
+      end;
+    tbInstitutions:
+      case AAction of
+        'VIEW': Result := PERM_INSTITUTIONS_VIEW;
+        'INSERT': Result := PERM_INSTITUTIONS_INSERT;
+        'EDIT': Result := PERM_INSTITUTIONS_EDIT;
+        'DELETE': Result := PERM_INSTITUTIONS_DELETE;
+        'EXPORT': Result := PERM_INSTITUTIONS_EXPORT;
+        'PRINT': Result := PERM_INSTITUTIONS_PRINT;
+      end;
+    tbPeople:
+      case AAction of
+        'VIEW': Result := PERM_PEOPLE_VIEW;
+        'INSERT': Result := PERM_PEOPLE_INSERT;
+        'EDIT': Result := PERM_PEOPLE_EDIT;
+        'DELETE': Result := PERM_PEOPLE_DELETE;
+        'EXPORT': Result := PERM_PEOPLE_EXPORT;
+        'PRINT': Result := PERM_PEOPLE_PRINT;
+      end;
+    tbProjects, tbProjectTeams, tbProjectGoals, tbProjectChronograms, tbProjectBudgets, tbProjectExpenses:
+      case AAction of
+        'VIEW': Result := PERM_PROJECTS_VIEW;
+        'INSERT': Result := PERM_PROJECTS_INSERT;
+        'EDIT': Result := PERM_PROJECTS_EDIT;
+        'DELETE': Result := PERM_PROJECTS_DELETE;
+        'EXPORT': Result := PERM_PROJECTS_EXPORT;
+        'PRINT': Result := PERM_PROJECTS_PRINT;
+      end;
+    tbPermits:
+      case AAction of
+        'VIEW': Result := PERM_PERMITS_VIEW;
+        'INSERT': Result := PERM_PERMITS_INSERT;
+        'EDIT': Result := PERM_PERMITS_EDIT;
+        'DELETE': Result := PERM_PERMITS_DELETE;
+        'EXPORT': Result := PERM_PERMITS_EXPORT;
+        'PRINT': Result := PERM_PERMITS_PRINT;
+      end;
+    tbBotanicTaxa:
+      case AAction of
+        'VIEW': Result := PERM_BOTANY_VIEW;
+        'INSERT': Result := PERM_BOTANY_INSERT;
+        'EDIT': Result := PERM_BOTANY_EDIT;
+        'DELETE': Result := PERM_BOTANY_DELETE;
+        'EXPORT': Result := PERM_BOTANY_EXPORT;
+        'PRINT': Result := PERM_BOTANY_PRINT;
+      end;
+    tbBands, tbBandHistory:
+      case AAction of
+        'VIEW': Result := PERM_BANDS_VIEW;
+        'INSERT': Result := PERM_BANDS_INSERT;
+        'EDIT': Result := PERM_BANDS_EDIT;
+        'DELETE': Result := PERM_BANDS_DELETE;
+        'EXPORT': Result := PERM_BANDS_EXPORT;
+        'PRINT': Result := PERM_BANDS_PRINT;
+      end;
+    tbIndividuals, tbCaptures, tbFeathers:
+      case AAction of
+        'VIEW': Result := PERM_BIRDS_VIEW;
+        'INSERT': Result := PERM_BIRDS_INSERT;
+        'EDIT': Result := PERM_BIRDS_EDIT;
+        'DELETE': Result := PERM_BIRDS_DELETE;
+        'EXPORT': Result := PERM_BIRDS_EXPORT;
+        'PRINT': Result := PERM_BIRDS_PRINT;
+      end;
+    tbNests, tbNestOwners, tbNestRevisions, tbEggs:
+      case AAction of
+        'VIEW': Result := PERM_BREEDING_VIEW;
+        'INSERT': Result := PERM_BREEDING_INSERT;
+        'EDIT': Result := PERM_BREEDING_EDIT;
+        'DELETE': Result := PERM_BREEDING_DELETE;
+        'EXPORT': Result := PERM_BREEDING_EXPORT;
+        'PRINT': Result := PERM_BREEDING_PRINT;
+      end;
+    tbMethods:
+      case AAction of
+        'VIEW': Result := PERM_METHODS_VIEW;
+        'INSERT': Result := PERM_METHODS_INSERT;
+        'EDIT': Result := PERM_METHODS_EDIT;
+        'DELETE': Result := PERM_METHODS_DELETE;
+        'EXPORT': Result := PERM_METHODS_EXPORT;
+        'PRINT': Result := PERM_METHODS_PRINT;
+      end;
+    tbExpeditions, tbSurveys, tbSurveyTeams, tbNetsEffort, tbWeatherLogs, tbVegetation:
+      case AAction of
+        'VIEW': Result := PERM_SAMPLING_VIEW;
+        'INSERT': Result := PERM_SAMPLING_INSERT;
+        'EDIT': Result := PERM_SAMPLING_EDIT;
+        'DELETE': Result := PERM_SAMPLING_DELETE;
+        'EXPORT': Result := PERM_SAMPLING_EXPORT;
+        'PRINT': Result := PERM_SAMPLING_PRINT;
+      end;
+    tbSightings, tbPoiLibrary:
+      case AAction of
+        'VIEW': Result := PERM_SIGHTINGS_VIEW;
+        'INSERT': Result := PERM_SIGHTINGS_INSERT;
+        'EDIT': Result := PERM_SIGHTINGS_EDIT;
+        'DELETE': Result := PERM_SIGHTINGS_DELETE;
+        'EXPORT': Result := PERM_SIGHTINGS_EXPORT;
+        'PRINT': Result := PERM_SIGHTINGS_PRINT;
+      end;
+    tbSpecimens, tbSamplePreps, tbSpecimenCollectors:
+      case AAction of
+        'VIEW': Result := PERM_SPECIMENS_VIEW;
+        'INSERT': Result := PERM_SPECIMENS_INSERT;
+        'EDIT': Result := PERM_SPECIMENS_EDIT;
+        'DELETE': Result := PERM_SPECIMENS_DELETE;
+        'EXPORT': Result := PERM_SPECIMENS_EXPORT;
+        'PRINT': Result := PERM_SPECIMENS_PRINT;
+      end;
+  end;
+end;
+
+function TfrmCustomGrid.HasTablePermission(const ATable: TTableType; const AAction: String): Boolean;
+var
+  PermissionName: String;
+begin
+  Result := False;
+  if not Assigned(ActiveUser) then
+    Exit;
+
+  PermissionName := GetPermissionForTableAction(ATable, AAction);
+  if PermissionName = EmptyStr then
+    Exit;
+
+  Result := ActiveUser.HasPermission(PermissionName);
+end;
+
+function TfrmCustomGrid.CanInsertTable(const ATable: TTableType): Boolean;
+begin
+  Result := HasTablePermission(ATable, 'INSERT');
+end;
+
+function TfrmCustomGrid.CanEditTable(const ATable: TTableType): Boolean;
+begin
+  Result := HasTablePermission(ATable, 'EDIT');
+end;
+
+function TfrmCustomGrid.CanDeleteTable(const ATable: TTableType): Boolean;
+begin
+  Result := HasTablePermission(ATable, 'DELETE');
+end;
+
+function TfrmCustomGrid.CanExportTable(const ATable: TTableType): Boolean;
+begin
+  Result := HasTablePermission(ATable, 'EXPORT');
+end;
+
+function TfrmCustomGrid.CanPrintTable(const ATable: TTableType): Boolean;
+begin
+  Result := HasTablePermission(ATable, 'PRINT');
+end;
 
 procedure TfrmCustomGrid.AddAudio(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
 var
@@ -2150,6 +2165,7 @@ begin
         2: EditSighting(DMI.qSightings, 0, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, isNew);
         3: EditNest(DMI.qNests, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, isNew);
         4: EditSpecimen(DMI.qSpecimens, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, isNew);
+        5: EditPoi(DMI.qPois, 0, 0, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, isNew);
       end;
     tbNests:
       case nbChilds.PageIndex of
@@ -2169,6 +2185,11 @@ begin
         3: EditCapture(DMS.qCaptures, 0, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, isNew);
         4: EditSighting(DMS.qSightings, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, 0, isNew);
         5: EditVegetation(DMS.qVegetation, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, isNew);
+        6: EditPoi(DMS.qPois, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, 0, 0, isNew);
+      end;
+    tbSightings:
+      case nbChilds.PageIndex of
+        0: EditPoi(DMG.qSightingPois, 0, dsLink.DataSet.FieldByName(COL_SIGHTING_ID).AsInteger, 0, isNew);
       end;
     tbSpecimens:
       case nbChilds.PageIndex of
@@ -3140,6 +3161,7 @@ begin
     tbSurveys:        FModule := TSurveysModuleController.Create(Self);
     tbSightings:      FModule := TSightingsModuleController.Create(Self);
     tbSpecimens:      FModule := TSpecimensModuleController.Create(Self);
+    tbPoiLibrary:     FModule := TPoiModuleController.Create(Self);
   else
     raise Exception.Create(rsErrorModuleNotSupported);
   end;
@@ -3851,7 +3873,10 @@ begin
     FModule.Submodules[4].PrepareCanvas(Column, Sender)
   else
   if (Sender = gridChild6) and (Assigned(gridChild6.DataSource)) then
-    FModule.Submodules[5].PrepareCanvas(Column, Sender);
+    FModule.Submodules[5].PrepareCanvas(Column, Sender)
+  else
+  if (Sender = gridChild7) and (Assigned(gridChild7.DataSource)) then
+    FModule.Submodules[6].PrepareCanvas(Column, Sender);
 
   // Here you choose what column will be affected (the columns of the DBGrid not SQL).
   //if Column.Field.DataType in [ftMemo,ftWideMemo] then
@@ -3996,6 +4021,17 @@ procedure TfrmCustomGrid.dsLink6StateChange(Sender: TObject);
 begin
   if Assigned(dsLink6.DataSet) and (nbChilds.PageIndex = 5) then
     UpdateChildButtons(dsLink6.DataSet);
+end;
+
+procedure TfrmCustomGrid.dsLink7DataChange(Sender: TObject; Field: TField);
+begin
+  HandleChildDataChange(6);
+end;
+
+procedure TfrmCustomGrid.dsLink7StateChange(Sender: TObject);
+begin
+  if Assigned(dsLink7.DataSet) and (nbChilds.PageIndex = 6) then
+    UpdateChildButtons(dsLink7.DataSet);
 end;
 
 procedure TfrmCustomGrid.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -4540,6 +4576,8 @@ begin
   if qRecycle.Active then
     qRecycle.Close;
 
+  if Assigned(dsLink7.DataSet) then
+    dsLink7.DataSet.Close;
   if Assigned(dsLink6.DataSet) then
     dsLink6.DataSet.Close;
   if Assigned(dsLink5.DataSet) then
@@ -5469,6 +5507,7 @@ begin
       tbNests:          OpenNestChilds;
       tbExpeditions:    OpenExpeditionChilds;
       tbSurveys:        OpenSurveyChilds;
+      tbSightings:      OpenSightingChilds;
       tbSpecimens:      OpenSpecimenChilds;
       tbSamplingPlots:  OpenSamplingPlotChilds;
       tbProjects:       OpenProjectChilds;
@@ -5527,6 +5566,8 @@ begin
   dsLink4.DataSet.Open;
   AddGridColumns(tbSpecimens, gridChild5);
   dsLink5.DataSet.Open;
+  AddGridColumns(tbPoiLibrary, gridChild6);
+  dsLink6.DataSet.Open;
   //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
   //begin
   //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
@@ -5585,6 +5626,12 @@ begin
   //end;
 end;
 
+procedure TfrmCustomGrid.OpenSightingChilds;
+begin
+  AddGridColumns(tbPoiLibrary, gridChild1);
+  dsLink1.DataSet.Open;
+end;
+
 procedure TfrmCustomGrid.OpenSpecimenChilds;
 begin
   AddGridColumns(tbSpecimenCollectors, gridChild1);
@@ -5612,6 +5659,8 @@ begin
   dsLink5.DataSet.Open;
   AddGridColumns(tbVegetation, gridChild6);
   dsLink6.DataSet.Open;
+  AddGridColumns(tbPoiLibrary, gridChild7);
+  dsLink7.DataSet.Open;
   //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
   //begin
   //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
@@ -5704,6 +5753,7 @@ begin
     3: gridChild4.AutoAdjustColumns;
     4: gridChild5.AutoAdjustColumns;
     5: gridChild6.AutoAdjustColumns;
+    6: gridChild7.AutoAdjustColumns;
   end;
 end;
 
@@ -5858,6 +5908,20 @@ begin
   EditNestRevision(DMB.qNestRevisions, dsLink.DataSet.FieldByName(COL_NEST_ID).AsInteger, True);
 
   UpdateChildButtons(DMB.qNestRevisions);
+end;
+
+procedure TfrmCustomGrid.pmcNewOccurrencePointClick(Sender: TObject);
+begin
+  case FTableType of
+    tbIndividuals:
+      EditPoi(DMI.qPois, 0, 0, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, True);
+    tbSurveys:
+      EditPoi(DMS.qPois, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger, 0, 0, True);
+    tbSightings:
+      EditPoi(DMG.qSightingPois, 0, dsLink.DataSet.FieldByName(COL_SIGHTING_ID).AsInteger, 0, True);
+  end;
+
+  UpdateChildBar;
 end;
 
 procedure TfrmCustomGrid.pmcNewPermanentNetClick(Sender: TObject);
@@ -7343,6 +7407,7 @@ begin
     3: aDataSet := gridChild4.DataSource.DataSet;
     4: aDataSet := gridChild5.DataSource.DataSet;
     5: aDataSet := gridChild6.DataSource.DataSet;
+    6: aDataSet := gridChild7.DataSource.DataSet;
   end;
   aKeyField := GetPrimaryKey(aDataSet);
 
@@ -7366,6 +7431,7 @@ begin
     3: DS := dsLink4.DataSet;
     4: DS := dsLink5.DataSet;
     5: DS := dsLink6.DataSet;
+    6: DS := dsLink7.DataSet;
   end;
   ShowVerifications(FTableType, FChildTable, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
 end;
@@ -7449,6 +7515,7 @@ begin
           2: DeleteRecord(tbSightings, DMI.qSightings);
           3: DeleteRecord(tbNests, DMI.qNests);
           4: DeleteRecord(tbSpecimens, DMI.qSpecimens);
+          5: DeleteRecord(tbPoiLibrary, DMI.qPois);
         end;
       tbNests:
         case nbChilds.PageIndex of
@@ -7468,6 +7535,11 @@ begin
           3: DeleteRecord(tbCaptures, DMS.qCaptures);
           4: DeleteRecord(tbSightings, DMS.qSightings);
           5: DeleteRecord(tbVegetation, DMS.qVegetation);
+          6: DeleteRecord(tbPoiLibrary, DMS.qPois);
+        end;
+      tbSightings:
+        case nbChilds.PageIndex of
+          0: DeleteRecord(tbPoiLibrary, DMG.qSightingPois);
         end;
       tbSpecimens:
         case nbChilds.PageIndex of
@@ -7481,6 +7553,7 @@ begin
     dsLink4.DataSet.Refresh;
     dsLink5.DataSet.Refresh;
     dsLink6.DataSet.Refresh;
+    dsLink7.DataSet.Refresh;
   finally
     UpdateChildBar;
     isWorking := False;
@@ -8075,6 +8148,7 @@ begin
       3: DS := dsLink4.DataSet;
       4: DS := dsLink5.DataSet;
       5: DS := dsLink6.DataSet;
+      6: DS := dsLink7.DataSet;
     end;
     if not DS.Active then
       DS.Open;
@@ -8088,6 +8162,7 @@ begin
       gridChild4.AutoAdjustColumns;
       gridChild5.AutoAdjustColumns;
       gridChild6.AutoAdjustColumns;
+      gridChild7.AutoAdjustColumns;
     end;
   finally
     isWorking := False;
@@ -8208,6 +8283,7 @@ begin
     3: ExportDlg(dsLink4.DataSet);
     4: ExportDlg(dsLink5.DataSet);
     5: ExportDlg(dsLink6.DataSet);
+    6: ExportDlg(dsLink7.DataSet);
   end;
 end;
 
@@ -8469,7 +8545,10 @@ begin
     FModule.Submodules[4].ConfigureColumns
   else
   if aGrid = gridChild6 then
-    FModule.Submodules[5].ConfigureColumns;
+    FModule.Submodules[5].ConfigureColumns
+  else
+  if aGrid = gridChild7 then
+    FModule.Submodules[6].ConfigureColumns;
 
   //aGrid.OptionsExtra := aGrid.OptionsExtra - [dgeAutoColumns];
 
@@ -8645,6 +8724,7 @@ begin
         3: dsLink4.DataSet := FModule.Submodules[i].DataSet;
         4: dsLink5.DataSet := FModule.Submodules[i].DataSet;
         5: dsLink6.DataSet := FModule.Submodules[i].DataSet;
+        6: dsLink7.DataSet := FModule.Submodules[i].DataSet;
       end;
     end;
   end;
@@ -8663,6 +8743,8 @@ begin
   pmcNewEgg.Visible := (FModule.TableType = tbNests);
 
   pmcNewPermanentNet.Visible := (FModule.TableType = tbSamplingPlots);
+
+  pmcNewOccurrencePoint.Visible := (FModule.TableType in [tbSightings, tbSurveys, tbIndividuals]);
 
   pmcNewProjectMember.Visible := (FModule.TableType = tbProjects);
   pmcNewProjectGoal.Visible := (FModule.TableType = tbProjects);
@@ -8802,6 +8884,11 @@ begin
     tbSpecimenCollectors: ;
     tbImages: ;
     tbAudioLibrary: ;
+    tbPoiLibrary:
+    begin
+      qRecycle.MacroByName('FID').AsString := COL_POI_ID;
+      qRecycle.MacroByName('FNAME').AsString := COL_POI_NAME;
+    end;
   end;
   qRecycle.MacroByName('FTABLE').AsString := TABLE_NAMES[FTableType];
   lblRecycleId.DataField := qRecycle.MacroByName('FID').AsString;
@@ -8937,6 +9024,7 @@ begin
       tbSpecimens:          SummarySpecimens(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
       //tbSamplePreps: ;
       //tbSpecimenCollectors: ;
+      tbPoiLibrary:         SummaryPoiLibrary(qChart, DBG.SelectedColumn.FieldName, FSearch.SQLString);
     end;
     TranslateSummary(qChart);
     gridSummary.AutoAdjustColumns;
@@ -8965,6 +9053,7 @@ begin
     3: DS := dsLink4.DataSet;
     4: DS := dsLink5.DataSet;
     5: DS := dsLink6.DataSet;
+    6: DS := dsLink7.DataSet;
   end;
 
   aId := DS.FieldByName(GetPrimaryKey(DS)).AsInteger;
@@ -9271,6 +9360,7 @@ begin
     gridChild4.Options := gridChild4.Options + [dgAutoSizeColumns];
     gridChild5.Options := gridChild5.Options + [dgAutoSizeColumns];
     gridChild6.Options := gridChild6.Options + [dgAutoSizeColumns];
+    gridChild7.Options := gridChild7.Options + [dgAutoSizeColumns];
   end
   else
   begin
@@ -9281,6 +9371,7 @@ begin
     gridChild4.Options := gridChild4.Options - [dgAutoSizeColumns];
     gridChild5.Options := gridChild5.Options - [dgAutoSizeColumns];
     gridChild6.Options := gridChild6.Options - [dgAutoSizeColumns];
+    gridChild7.Options := gridChild7.Options - [dgAutoSizeColumns];
   end;
 end;
 
@@ -9433,6 +9524,7 @@ begin
       3: UpdateChildButtons(dsLink4.DataSet);
       4: UpdateChildButtons(dsLink5.DataSet);
       5: UpdateChildButtons(dsLink6.DataSet);
+      6: UpdateChildButtons(dsLink7.DataSet);
     end;
 end;
 
@@ -9727,6 +9819,7 @@ begin
   gridChild4.DefaultRowHeight := xSettings.DefaultRowHeight;
   gridChild5.DefaultRowHeight := xSettings.DefaultRowHeight;
   gridChild6.DefaultRowHeight := xSettings.DefaultRowHeight;
+  gridChild7.DefaultRowHeight := xSettings.DefaultRowHeight;
 
   gridRecord.DefaultRowHeight := xSettings.DefaultRowHeight;
   gridAudios.DefaultRowHeight := xSettings.DefaultRowHeight;

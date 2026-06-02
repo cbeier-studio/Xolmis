@@ -123,7 +123,7 @@ begin
     AddLookupFilter(SearchConfig, [COL_EGG_ID], [rscEgg], EggIdFilter);
     // Individual
     AddLookupFilter(SearchConfig, [COL_INDIVIDUAL_ID], [rscIndividual], IndividualIdFilter);
-    // Individual
+    // Institution
     AddLookupFilter(SearchConfig, [COL_INSTITUTION_ID], [rscInstitution], InstitutionIdFilter);
   end;
 end;

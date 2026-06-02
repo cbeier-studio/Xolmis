@@ -91,6 +91,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsTitleBandHistory = 'Band history';
     rsTitleSpecimenCollectors = 'Collectors';
     rsTitlePoiLibrary = 'Points of interest';
+    rsTitleOccurrencePoints = 'Occurrence points';
     rsTitleImages = 'Images';
     rsTitleDocuments = 'Documents and links';
     rsTitleAudioLibrary = 'Audio recordings';
@@ -1604,6 +1605,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsCaptionPermanentNet = 'Permanent mistnet';
     rsCaptionPerson = 'Researcher';
     rsCaptionSighting = 'Sighting';
+    rsCaptionSpecimen = 'Specimen';
     rsCaptionToponym = 'Toponym';
     rsCaptionSurvey = 'Survey';
     rsCaptionConnection = 'Connection';
@@ -1623,7 +1625,9 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsCaptionChronogram = 'Chronogram';
     rsCaptionBudget = 'Budget';
     rsCaptionExpenses = 'Expenses';
+    rsCaptionFeather = 'Feather';
     rsCaptionFeathers = 'Feathers';
+    rsCaptionOccurrencePoint = 'Occurrence point';
     rsCaptionEnabled = 'Enabled';
     rsCaptionDisabled = 'Disabled';
 

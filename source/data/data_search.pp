@@ -43,6 +43,8 @@ uses
     aSorting: String = ''; aDirection: String = '');
   procedure SetGazetteerSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
+  procedure SetPoiLibrarySQL(const aSQL: TStrings; aFilter: TFilterValue;
+    aSorting: String = ''; aDirection: String = '');
   procedure SetSamplingPlotsSQL(const aSQL: TStrings; aFilter: TFilterValue;
     aSorting: String = ''; aDirection: String = '');
   procedure SetInstitutionsSQL(const aSQL: TStrings; aFilter: TFilterValue;
@@ -234,6 +236,11 @@ begin
       ;
     tbAudioLibrary:
       ;
+    tbPoiLibrary:
+      begin
+        SetPoiLibrarySQL(aSQL, fvNone);
+        //aAlias := TABLE_ALIASES[aTable] + '.';
+      end;
   end;
 
 end;
@@ -977,6 +984,36 @@ begin
         Add(xProvider.Connections.SelectAll(swcActiveMarked));
       fvDeleted:
         Add(xProvider.Connections.SelectAll(swcInactive));
+    end;
+    if Trim(aSorting) <> '' then
+    begin
+      if aDirection = '' then
+        AD := 'ASC'
+      else
+        AD := aDirection;
+      Add('ORDER BY ' + aSorting + {' COLLATE pt_BR ' +} AD);
+    end;
+  end;
+end;
+
+procedure SetPoiLibrarySQL(const aSQL: TStrings; aFilter: TFilterValue; aSorting: String; aDirection: String);
+var
+  AD: String;
+begin
+  with aSQL do
+  begin
+    Clear;
+    case aFilter of
+      fvNone:
+        Add(xProvider.PoiLibrary.SelectAll(swcNone));
+      fvReset:
+        Add(xProvider.PoiLibrary.SelectAll(swcActiveEmpty));
+      fvAll:
+        Add(xProvider.PoiLibrary.SelectAll(swcActiveAll));
+      fvMarked:
+        Add(xProvider.PoiLibrary.SelectAll(swcActiveMarked));
+      fvDeleted:
+        Add(xProvider.PoiLibrary.SelectAll(swcInactive));
     end;
     if Trim(aSorting) <> '' then
     begin

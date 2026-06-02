@@ -107,7 +107,7 @@ implementation
 uses
   utils_locale, utils_graphics, utils_themes, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media,
-  modules_birds, modules_sightings,
+  modules_birds, modules_sightings, modules_pois,
   uDarkStyleParams,
   udm_main, udm_grid, udm_sampling, ufrm_customgrid;
 
@@ -297,6 +297,7 @@ begin
   FSubmodules.Add(TCapturesSubmoduleController.Create(FOwner));
   FSubmodules.Add(TSightingsSubmoduleController.Create(FOwner));
   FSubmodules.Add(TVegetationsSubmoduleController.Create(FOwner));
+  FSubmodules.Add(TPoiSubmoduleController.Create(FOwner));
 end;
 
 procedure TSurveysModuleController.ApplyFilters;
