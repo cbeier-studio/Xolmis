@@ -97,6 +97,7 @@ type
     procedure ImportDataNetEfforts;
     procedure ImportDataPermanentNets;
     procedure ImportDataPermits;
+    procedure ImportDataPoiLibrary;
     procedure ImportDataProjectBudgets;
     procedure ImportDataProjectChronograms;
     procedure ImportDataProjectExpenses;
@@ -442,7 +443,7 @@ begin
     tbProjectChronograms:   ImportDataProjectChronograms;
     tbProjectBudgets:       ImportDataProjectBudgets;
     tbProjectExpenses:      ImportDataProjectExpenses;
-    tbPoiLibrary: ;
+    tbPoiLibrary:           ImportDataPoiLibrary;
   end;
 
   ResetGrid;
@@ -1293,6 +1294,52 @@ begin
 
         // Insert record history
         WriteRecHistory(tbPermits, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
+      end;
+    finally
+      Repo.Free;
+      FreeAndNil(Obj);
+    end;
+
+    DMM.sqlTrans.CommitRetaining;
+  except
+    DMM.sqlTrans.RollbackRetaining;
+    raise;
+  end;
+end;
+
+procedure TfrmQuickEntry.ImportDataPoiLibrary;
+var
+  Obj: TPoi;
+  Repo: TPoiRepository;
+  r: Integer;
+begin
+  if not DMM.sqlTrans.Active then
+    DMM.sqlTrans.StartTransaction;
+  try
+    Obj := TPoi.Create();
+    Repo := TPoiRepository.Create(DMM.sqlCon);
+    try
+      for r := qeGrid.FixedRows to qeGrid.RowCount - 1 do
+      begin
+        Obj.Clear;
+        Obj.PoiName := CellValue(COL_POI_NAME, r);
+        Obj.SampleDate := StrToDateDef(CellValue(COL_SAMPLE_DATE, r), NullDate);
+        Obj.SampleTime := StrToTimeDef(CellValue(COL_SAMPLE_TIME, r), NullTime);
+        Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);
+        Obj.Latitude := StrToFloatDef(CellValue(COL_LATITUDE, r), 0.0);
+        Obj.CoordinatePrecision := StrToCoordinatePrecision(CellValue(COL_COORDINATE_PRECISION, r));
+        Obj.Altitude := StrToFloatDef(CellValue(COL_ALTITUDE, r), 0.0);
+        Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
+        Obj.ObserverId := GetPersonKey(CellValue(COL_RESEARCHER_NAME, r));
+        Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_INDIVIDUAL_NAME, r));
+        Obj.SightingId := GetKey(TBL_SIGHTINGS, COL_SIGHTING_ID, COL_FULL_NAME, CellValue(COL_SIGHTING_NAME, r));
+        Obj.SurveyId := GetKey(TBL_SURVEYS, COL_SURVEY_ID, COL_FULL_NAME, CellValue(COL_SURVEY_NAME, r));
+        Obj.Notes := CellValue(COL_NOTES, r);
+
+        Repo.Insert(Obj);
+
+        // Insert record history
+        WriteRecHistory(tbPoiLibrary, haCreated, Obj.Id, '', '', '', rsInsertedByQuickEntry);
       end;
     finally
       Repo.Free;

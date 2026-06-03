@@ -681,6 +681,7 @@ begin
     tbAudioLibrary:         FDS := DMG.qAudio;
     tbDocuments:            FDS := DMG.qDocuments;
     tbVegetation:           FDS := DMS.qVegetation;
+    tbPoiLibrary:           FDS := DMG.qPois;
   end;
 
   FFieldMap.Map[FFieldIndex].LookupField := GetFieldName(FDS, cbLookupField.Text);
@@ -1893,6 +1894,7 @@ begin
     Add(rsTitleVegetation);
     Add(rsTitleMethods);
     Add(rsTitleSightings);
+    Add(rsTitleOccurrencePoints);
     Add(rsTitleSpecimens);
     Add(rsTitleSamplePreps);
     Add(rsTitleCollectors);

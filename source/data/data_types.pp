@@ -586,7 +586,7 @@ begin
   TablesDict.Add(rsTitleImages, tbImages);
   TablesDict.Add(rsTitleAudioLibrary, tbAudioLibrary);
   TablesDict.Add(rsTitleDocuments, tbDocuments);
-  TablesDict.Add(rsTitlePoiLibrary, tbPoiLibrary);
+  TablesDict.Add(rsTitleOccurrencePoints, tbPoiLibrary);
   TablesDict.Add(rsTitleVideos, tbVideos);
 end;
 
@@ -638,7 +638,7 @@ begin
   LocaleTablesDict.Add(tbImages, rsTitleImages);
   LocaleTablesDict.Add(tbAudioLibrary, rsTitleAudioLibrary);
   LocaleTablesDict.Add(tbDocuments, rsTitleDocuments);
-  LocaleTablesDict.Add(tbPoiLibrary, rsTitlePoiLibrary);
+  LocaleTablesDict.Add(tbPoiLibrary, rsTitleOccurrencePoints);
   LocaleTablesDict.Add(tbVideos, rsTitleVideos);
 end;
 
