@@ -133,6 +133,7 @@ type
     qVideosuser_updated: TLongintField;
     qVideosvideo_id: TLongintField;
     qVideosvideo_type: TStringField;
+    sbAddChild: TSpeedButton;
     sbAddVideo: TSpeedButton;
     sbAddFeathersBatch: TSpeedButton;
     sbClearSearch: TColorSpeedButton;
@@ -799,7 +800,6 @@ type
     rbRecordInEbirdNo: TRadioButton;
     rbOutOfSampleYes: TRadioButton;
     rbWithColorBandsYes: TRadioButton;
-    sbAddChild: TSpeedButton;
     sbAddAudio: TSpeedButton;
     sbChildHistory: TSpeedButton;
     sbClearFilters: TSpeedButton;
@@ -1244,6 +1244,7 @@ type
     FSidePanelFactor: Double;
     FChildPanelFactor: Double;
     FDragging: Boolean;
+    FPopupTotalHeight: Integer;
     cellMemo: TMemo;
 
     panelTabs: specialize TFPGList<TCustomPanelTab>;
@@ -7197,12 +7198,12 @@ begin
   if isWorking then
     Exit;
 
-  if not pChild.Visible then
-  begin
-    with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
-      pmAddChild.Popup(X, Y);
-  end
-  else
+  //if not pChild.Visible then
+  //begin
+  //  with TSpeedButton(Sender).ClientToScreen(point(0, -1)) do
+  //    pmAddChild.Popup(X, Y);
+  //end
+  //else
   begin
     isWorking := True;
     try

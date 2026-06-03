@@ -8428,7 +8428,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pChildToolbar
           AnchorSideTop.Side = asrCenter
-          Left = 318
+          Left = 362
           Height = 34
           Hint = 'Edit selected record'
           Top = 3
@@ -8475,7 +8475,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pChildToolbar
           AnchorSideTop.Side = asrCenter
-          Left = 149
+          Left = 193
           Height = 23
           Top = 9
           Width = 159
@@ -8491,7 +8491,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pChildToolbar
           AnchorSideTop.Side = asrCenter
-          Left = 372
+          Left = 416
           Height = 30
           Top = 5
           Width = 4
@@ -8518,7 +8518,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pChildToolbar
           AnchorSideTop.Side = asrCenter
-          Left = 396
+          Left = 440
           Height = 34
           Hint = 'Export records'
           Top = 3
@@ -8541,7 +8541,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pChildToolbar
           AnchorSideTop.Side = asrCenter
-          Left = 61
+          Left = 105
           Height = 34
           Hint = 'New batch of mistnets'
           Top = 3
@@ -8591,7 +8591,7 @@ object frmCustomGrid: TfrmCustomGrid
           AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pChildToolbar
           AnchorSideTop.Side = asrCenter
-          Left = 105
+          Left = 149
           Height = 34
           Hint = 'New batch of feathers'
           Top = 3
@@ -8611,15 +8611,17 @@ object frmCustomGrid: TfrmCustomGrid
           OnClick = sbAddFeathersBatchClick
         end
         object sbQuickEntryChild: TSpeedButton
-          AnchorSideLeft.Control = pChildToolbar
+          AnchorSideLeft.Control = sbAddChild
+          AnchorSideLeft.Side = asrBottom
           AnchorSideTop.Control = pChildToolbar
           AnchorSideTop.Side = asrCenter
-          Left = 17
+          Left = 61
           Height = 34
           Hint = 'Quick Entry'
           Top = 3
           Width = 34
           AutoSize = True
+          BorderSpacing.Left = 10
           BorderSpacing.Right = 10
           DisabledImageIndex = 107
           Enabled = False
@@ -8630,6 +8632,28 @@ object frmCustomGrid: TfrmCustomGrid
           ShowHint = True
           ParentShowHint = False
           OnClick = sbQuickEntryChildClick
+        end
+        object sbAddChild: TSpeedButton
+          AnchorSideLeft.Control = pChildToolbar
+          AnchorSideTop.Control = pChildToolbar
+          AnchorSideTop.Side = asrCenter
+          Left = 17
+          Height = 34
+          Hint = 'New related record'
+          Top = 3
+          Width = 34
+          AutoSize = True
+          BorderSpacing.Right = 10
+          DisabledImageIndex = 1
+          Enabled = False
+          Flat = True
+          Images = iButtons
+          ImageIndex = 0
+          ImageWidth = 24
+          ShowCaption = False
+          ShowHint = True
+          ParentShowHint = False
+          OnClick = sbAddChildClick
         end
       end
       object nbChilds: TNotebook
@@ -9591,8 +9615,8 @@ object frmCustomGrid: TfrmCustomGrid
     end
     object pChildsBar: TBCPanel
       Left = 8
-      Height = 42
-      Top = 320
+      Height = 40
+      Top = 322
       Width = 904
       Align = alBottom
       AutoSize = True
@@ -9640,13 +9664,11 @@ object frmCustomGrid: TfrmCustomGrid
       TabOrder = 3
       Visible = False
       object pChildTag1: TBCPanel
-        AnchorSideLeft.Control = sbAddChild
         AnchorSideLeft.Side = asrBottom
-        AnchorSideTop.Control = sbAddChild
         AnchorSideTop.Side = asrCenter
-        Left = 70
+        Left = 16
         Height = 32
-        Top = 5
+        Top = 4
         Width = 99
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16
@@ -9687,6 +9709,7 @@ object frmCustomGrid: TfrmCustomGrid
         Rounding.RoundX = 4
         Rounding.RoundY = 4
         TabOrder = 0
+        Visible = False
         object lblChildTag1: TLabel
           AnchorSideLeft.Control = pChildTag1
           AnchorSideTop.Control = pChildTag1
@@ -9760,30 +9783,10 @@ object frmCustomGrid: TfrmCustomGrid
           end
         end
       end
-      object sbAddChild: TSpeedButton
-        Left = 16
-        Height = 34
-        Hint = 'New related record'
-        Top = 4
-        Width = 34
-        Align = alLeft
-        AutoSize = True
-        BorderSpacing.Right = 20
-        DisabledImageIndex = 1
-        Enabled = False
-        Flat = True
-        Images = iButtons
-        ImageIndex = 0
-        ImageWidth = 24
-        ShowCaption = False
-        ShowHint = True
-        ParentShowHint = False
-        OnClick = sbAddChildClick
-      end
     end
     object pGrid: TBCPanel
       Left = 8
-      Height = 264
+      Height = 266
       Top = 48
       Width = 904
       Align = alClient
@@ -9823,7 +9826,7 @@ object frmCustomGrid: TfrmCustomGrid
       TabOrder = 4
       object DBG: TDBGrid
         Left = 0
-        Height = 232
+        Height = 234
         Top = 0
         Width = 904
         Align = alClient
@@ -9857,7 +9860,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Side = asrBottom
         Left = 0
         Height = 32
-        Top = 232
+        Top = 234
         Width = 904
         Align = alBottom
         ChildSizing.LeftRightSpacing = 16
@@ -10072,7 +10075,7 @@ object frmCustomGrid: TfrmCustomGrid
         AnchorSideTop.Side = asrCenter
         Left = 339
         Height = 187
-        Top = 23
+        Top = 24
         Width = 226
         AutoSize = True
         ChildSizing.LeftRightSpacing = 16
