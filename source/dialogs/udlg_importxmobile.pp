@@ -1196,6 +1196,7 @@ var
   aPoi, aOldPoi: TPoi;
   aTaxonId, aObserverId: Integer;
   Poi: TMobilePoi;
+  aPoiName: String;
 begin
   if Species.FPoiList.Count > 0 then
   begin
@@ -1208,8 +1209,9 @@ begin
         aPoi.Clear;
         aTaxonId := GetValidTaxon(Species.FSpeciesName);
         aObserverId := GetPersonKey(Inventory.FObserver);
+        aPoiName := Format('%s - POI #%d', [Species.FSpeciesName, Poi.FId]);
 
-        aRepo.FindBy(COL_POI_NAME, Format('%s - POI #%d', [Species.FSpeciesName, Poi.FId]), aPoi);
+        aRepo.FindBy(COL_POI_NAME, aPoiName, aPoi);
         if aPoi.Id > 0 then
         begin
           // if POI exists, update it
@@ -1217,7 +1219,7 @@ begin
           aRepo.GetById(aPoi.Id, aOldPoi);
           try
             Poi.ToPoi(aPoi);
-            aPoi.PoiName := Format('%s - POI #%d', [Species.FSpeciesName, Poi.FId]);
+            aPoi.PoiName := aPoiName;
             aPoi.ObserverId := aObserverId;
             aPoi.TaxonId := aTaxonId;
             //aPoi.IndividualId := ;
@@ -1238,7 +1240,7 @@ begin
         begin
           // if sighting does not exist, insert it
           Poi.ToPoi(aPoi);
-          aPoi.PoiName := Format('%s - POI #%d', [Species.FSpeciesName, Poi.FId]);
+          aPoi.PoiName := aPoiName;
           aPoi.SurveyId := Inventory.FSurveyKey;
           aPoi.SightingId := Species.FSightingKey;
           aPoi.ObserverId := aObserverId;

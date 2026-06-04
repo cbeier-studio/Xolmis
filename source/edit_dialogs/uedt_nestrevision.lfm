@@ -1,13 +1,13 @@
 object edtNestRevision: TedtNestRevision
   Left = 352
-  Height = 620
+  Height = 633
   Top = 33
-  Width = 413
+  Width = 416
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'New nest revision'
-  ClientHeight = 620
-  ClientWidth = 413
+  ClientHeight = 633
+  ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto

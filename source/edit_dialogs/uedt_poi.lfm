@@ -3,10 +3,12 @@ object edtPoi: TedtPoi
   Height = 658
   Top = 250
   Width = 439
+  AutoSize = True
   BorderStyle = bsDialog
   Caption = 'Edit occurrence point'
   ClientHeight = 658
   ClientWidth = 439
+  Constraints.MinWidth = 416
   Position = poScreenCenter
   LCLVersion = '4.6.0.0'
   OnKeyDown = FormKeyDown

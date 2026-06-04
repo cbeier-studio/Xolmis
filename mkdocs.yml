@@ -59,6 +59,7 @@ nav:
       - Expeditions: expeditions.md
       - Surveys: surveys.md
       - Sightings: sightings.md
+      - Occurrence points: occurrence-points.md
       - Specimens: specimens.md
       - Individuals: individuals.md
       - Captures: captures.md
@@ -180,6 +181,7 @@ plugins:
                 - Expedições: expeditions.md
                 - Amostragens: surveys.md
                 - Observações: sightings.md
+                - Pontos de ocorrência: occurrence-points.md
                 - Espécimes: specimens.md
                 - Indivíduos: individuals.md
                 - Capturas: captures.md

@@ -318,6 +318,8 @@ begin
   aPoi.SampleTime := FSampleTime;
   aPoi.Longitude := FLongitude;
   aPoi.Latitude := FLatitude;
+  if (FLongitude <> 0) and (FLatitude <> 0) then
+    aPoi.CoordinatePrecision := cpExact;
   aPoi.Notes := FNotes;
 end;
 
