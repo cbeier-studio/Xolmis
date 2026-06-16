@@ -60,7 +60,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_themes, udm_grid, uDarkStyleParams;
+  utils_locale, utils_global, utils_themes, udm_grid, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -68,9 +68,11 @@ uses
 
 procedure TdlgBandHistory.ApplyDarkMode;
 begin
-  SBox.Color := clCardBGDefaultDark;
+  SBox.Color := ActiveTheme.Background.CardDefault;
 
-  lblBandName.Font.Color := clVioletFG1Dark;
+  lblBandName.Font.Color := ActiveTheme.Interactive.WindowTitle;
+
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TdlgBandHistory.btnHelpClick(Sender: TObject);

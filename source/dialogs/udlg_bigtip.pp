@@ -63,9 +63,9 @@ uses
 
 procedure TdlgBigTip.ApplyDarkMode;
 begin
-  Color := clVioletBG1Dark;
+  Color := ActiveTheme.Interactive.SelectionBackground;
 
-  lblTitle.Font.Color := clVioletFG1Dark;
+  lblTitle.Font.Color := ActiveTheme.Interactive.WindowTitle;
 
   imgTip.Images := iTipDark;
 end;

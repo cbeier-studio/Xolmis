@@ -101,7 +101,7 @@ begin
   eNewPassword.Images := iButtonsDark;
   eConfirmPassword.Images := iButtonsDark;
 
-  lblUsername.Font.Color := clVioletFG1Dark;
+  lblUsername.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
 procedure TdlgChangePassword.eNewPasswordButtonClick(Sender: TObject);

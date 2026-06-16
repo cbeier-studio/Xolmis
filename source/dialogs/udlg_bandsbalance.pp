@@ -126,9 +126,9 @@ end;
 
 procedure TdlgBandsBalance.ApplyDarkMode;
 begin
-  pMsg.Background.Color := clCardBGDefaultDark;
-  pMsg.Border.Color := clCardBGSecondaryDark;
-  pMsg.FontEx.Color := clTextPrimaryDark;
+  pMsg.Background.Color := ActiveTheme.Background.CardDefault;
+  pMsg.Border.Color := ActiveTheme.Border.Default;
+  pMsg.FontEx.Color := ActiveTheme.Foreground.TextPrimary;
   pMsg.Color := dbgSaldo.Color;
 
   pmGrid.Images := iPopupDark;

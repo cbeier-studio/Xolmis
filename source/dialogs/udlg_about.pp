@@ -79,25 +79,33 @@ uses
 
 procedure TdlgAbout.ApplyDarkMode;
 begin
-  pTitle.Color := clSolidBGBaseDark;
+  pTitle.Color := ActiveTheme.Background.SolidBase;
   //pContent.Color := clVioletBG1Dark;
 
-  pVersion.Background.Color := clSolidBGSecondaryDark;
-  pVersion.Border.Color := clSystemSolidNeutralFGDark;
-  pClements.Background.Color := clSolidBGSecondaryDark;
-  pClements.Border.Color := clSystemSolidNeutralFGDark;
+  pVersion.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pVersion.Border.Color := ActiveTheme.Border.Default;
+  pClements.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pClements.Border.Color := ActiveTheme.Border.Default;
   //pIOC.Background.Color := clCardBGDefaultDark;
   //pIOC.Border.Color := clCardBGSecondaryDark;
   //pCBRO.Background.Color := clCardBGDefaultDark;
   //pCBRO.Border.Color := clCardBGSecondaryDark;
 
-  lblAppName.Font.Color := clVioletFG1Dark;
-  linkClementsVersion.Font.Color := clVioletFG1Dark;
-  linkWebsite.Font.Color := clVioletFG1Dark;
-  linkPrivacy.Font.Color := clVioletFG1Dark;
-  linkLicense.Font.Color := clVioletFG1Dark;
-  linkThirdParty.Font.Color := clVioletFG1Dark;
-  pAppVersion.Font.Color := clTextPrimaryDark;
+  lblAppName.Font.Color := ActiveTheme.Interactive.WindowTitle;
+
+  linkClementsVersion.ColorLinkNormal := ActiveTheme.Interactive.Link;
+  linkClementsVersion.ColorLinkMouseover := ActiveTheme.Interactive.LinkHover;
+  linkWebsite.ColorLinkNormal := ActiveTheme.Interactive.Link;
+  linkWebsite.ColorLinkMouseover := ActiveTheme.Interactive.LinkHover;
+  linkPrivacy.ColorLinkNormal := ActiveTheme.Interactive.Link;
+  linkPrivacy.ColorLinkMouseover := ActiveTheme.Interactive.LinkHover;
+  linkLicense.ColorLinkNormal := ActiveTheme.Interactive.Link;
+  linkLicense.ColorLinkMouseover := ActiveTheme.Interactive.LinkHover;
+  linkThirdParty.ColorLinkNormal := ActiveTheme.Interactive.Link;
+  linkThirdParty.ColorLinkMouseover := ActiveTheme.Interactive.LinkHover;
+
+  pAppVersion.Font.Color := ActiveTheme.Foreground.TextPrimary;
+  pClementsVersion.Font.Color := ActiveTheme.Interactive.WindowTitle;
 
   sbCopy.Images := iButtonsDark;
 end;

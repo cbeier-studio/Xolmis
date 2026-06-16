@@ -77,6 +77,7 @@ type
   TdlgPlantminer = class(TForm)
     icoInfo: TImage;
     iIcons: TImageList;
+    iIconsDark: TImageList;
     msgInfo: TLabel;
     lineBottom: TShapeLineBGRA;
     pInfo: TPanel;
@@ -95,6 +96,7 @@ type
     RegPM: String;
     xNome, xFam, xGen, xSp, xAut, xNvInfra, xInfra: String;
     PM: TPlantList;
+    procedure ApplyDarkMode;
     procedure GetPlantminer;
   public
     procedure SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);
@@ -114,7 +116,7 @@ var
 
 implementation
 
-uses utils_locale, utils_global, utils_system, utils_dialogs;
+uses utils_locale, utils_global, utils_system, utils_dialogs, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -207,6 +209,11 @@ end;
 
 { TdlgPlantminer }
 
+procedure TdlgPlantminer.ApplyDarkMode;
+begin
+  icoInfo.Images := iIconsDark;
+end;
+
 procedure TdlgPlantminer.FormKeyPress(Sender: TObject; var Key: char);
 begin
   // CANCELAR
@@ -245,6 +252,9 @@ begin
   {$IFDEF MSWINDOWS}
   SetRoundedCorners(Self.Handle, rcSmall);
   {$ENDIF}
+
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
 
   // Busca no Plantminer
   ExtNome := (StringReplace(ExtNome, ' ', '%20', [rfReplaceAll]));

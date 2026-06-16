@@ -228,6 +228,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorValidationFailed = 'Data validation found issues.';
     rsErrorSavingPDF = 'Error saving PDF.';
     rsErrorSavingMediaPaths = 'Error saving the media paths: %s';
+    rsErrorTaxonNotFound = 'Taxon "%s" not found.';
 
     { Warning messages }
     rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';
@@ -1459,11 +1460,13 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsDecimalSeparatorPeriod = 'Period';
     rsQuoteCharDouble = 'Double quote';
     rsQuoteCharSingle = 'Single quote';
-    rsImportStrategyAppend = 'Append';
-    rsImportStrategyReplace = 'Replace';
-    rsImportStrategyUpdate = 'Update';
+    rsImportIgnoreExisting = 'Ignore existing';
+    rsImportReplaceExisting = 'Replace existing';
+    rsImportAllowDuplicates = 'Allow duplicates';
     rsAbortOnError = 'Abort on first error';
     rsIgnoreErrors = 'Ignore and log errors';
+    rsImportAbortUnknownTaxon = 'Abort importing';
+    rsImportIgnoreUnknownTaxon = 'Ignore and keep importing';
     rsSystemEncoding = 'System encoding';
     rsNullIgnore = 'Ignore';
     rsNullDefaultValue = 'Default value';

@@ -14,7 +14,7 @@ object dlgTourTip: TdlgTourTip
   Constraints.MinWidth = 320
   FormStyle = fsStayOnTop
   ShowInTaskBar = stNever
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnCreate = FormCreate
   OnShow = FormShow
   object lblText: TLabel

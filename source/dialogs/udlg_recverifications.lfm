@@ -212,17 +212,17 @@ object dlgRecVerifications: TdlgRecVerifications
       end    
       item
         Title.Caption = 'Status'
-        Width = 217
+        Width = 210
         FieldName = 'verification_status'
       end    
       item
         Title.Caption = 'Researcher'
-        Width = 217
+        Width = 210
         FieldName = 'person_name'
       end    
       item
         Title.Caption = 'Notes'
-        Width = 217
+        Width = 210
         FieldName = 'notes'
       end>
     DataSource = dsHistory

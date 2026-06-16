@@ -29,7 +29,6 @@ object dlgExport: TdlgExport
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 42
     ClientWidth = 814
-    Color = 15987699
     ParentBackground = False
     ParentColor = False
     TabOrder = 2

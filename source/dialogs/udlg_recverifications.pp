@@ -103,7 +103,7 @@ begin
 
   pmGrid.Images := iButtonsDark;
 
-  txtRecordId.Font.Color := clVioletFG1Dark;
+  txtRecordId.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
 procedure TdlgRecVerifications.btnHelpClick(Sender: TObject);

@@ -59,25 +59,25 @@ object dlgBandsBalance: TdlgBandsBalance
         Font.Style = [fsBold]
         Title.Alignment = taCenter
         Title.Caption = 'Size'
-        Width = 80
+        Width = 76
         FieldName = 'band_size'
       end    
       item
         Title.Alignment = taCenter
         Title.Caption = 'Leftover'
-        Width = 80
+        Width = 76
         FieldName = 'saldo'
       end    
       item
         Title.Alignment = taCenter
         Title.Caption = 'Avg./day'
-        Width = 80
+        Width = 76
         FieldName = 'media_dia'
       end    
       item
         Title.Alignment = taCenter
         Title.Caption = 'Max./day'
-        Width = 80
+        Width = 75
         FieldName = 'maximo_dia'
       end>
     DataSource = dsBandsBalance

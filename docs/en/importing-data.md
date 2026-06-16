@@ -179,17 +179,23 @@ To import JSON files from Xolmis Mobile:
 
 1. Open the import wizard in the main menu: **File → Import → Xolmis Mobile**.  
 2. In the dialog, choose the source file. The system will automatically validate the file and indicate whether it is acceptable. Optionally, you can select an **expedition** to associate with the imported data.
-3. Click **Next** to proceed. The records from the file will be listed.  
+3. Define what to do when a record already exists in the database.
+      - Ignore existing records.
+      - Update existing records.
+4. Define what to do when a species was not found in the database.
+      - Abort import. No data will be saved.
+      - Ignore and keep importing.
+5. Define what to do if an error occurr during import.
+      - Abort import. No data will be saved.
+      - Ignore and keep importing.
+6. Click **Next** to proceed. The records from the file will be listed.  
       - You can uncheck records you do not want to import.  
       - Some fields may be filled automatically if matching data already exists.  
       - **Observer** and **Locality** are required fields.  
       - The **Record** column corresponds to the database record for each file entry.  
-4. Click **Next** again to start the import.  
-      - Records without a corresponding database entry will be inserted.  
-      - Records with a match will be updated.  
-5. The progress will be displayed in the dialog. You can stop the process at any time by clicking **Cancel**.  
-6. When finished, the dialog will show the result.  
-      - If errors occurred, no data will be saved.  
+7. Click **Next** again to start the import.  
+8. The progress will be displayed in the dialog. You can stop the process at any time by clicking **Cancel**.  
+9. When finished, the dialog will show the result.  
       - You can retry with **Try Again** or save the import log with **Save Log** to investigate issues.
 
 ## eBird records

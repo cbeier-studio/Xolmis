@@ -365,7 +365,7 @@ begin
       // 7. Apply writing policy
       case FImportSettings.ExistingRecordPolicy of
 
-        erpInsertOnly:
+        erpIgnoreExisting:
           if not Exists then
           begin
             Repo.Insert(Rec);
@@ -378,9 +378,10 @@ begin
             AppendLog(Format(rsExistingRecordOmitted, [XRow.CommaText]));
           end;
 
-        erpReplaceExisting:
+        erpUpdateExisting:
           if Exists then
           begin
+            { #todo : Implement update record policy }
             Repo.Update(Rec);
             // Insert record history
             WriteDiff(FTableType, OldRec, Rec, rsEditedByImport);
@@ -389,21 +390,12 @@ begin
           end
           else
           begin
-            // Log new record omitted
-            AppendLog(Format(rsNewRecordOmitted, [XRow.CommaText]));
+            Repo.Insert(Rec);
+            // Insert record history
+            WriteRecHistory(FTableType, haCreated, Rec.Id, '', '', '', rsInsertedByImport);
           end;
 
-        erpInsertNewUpdateExisting:
-          if Exists then
-          begin
-            Repo.Update(Rec);
-            // Insert record history
-            WriteDiff(FTableType, OldRec, Rec, rsEditedByImport);
-
-            // Log updated record
-            AppendLog(Format(rsRecordUpdated, [Rec.Id]));
-          end
-          else
+        erpAllowDuplicates:
           begin
             Repo.Insert(Rec);
             // Insert record history
@@ -465,72 +457,72 @@ begin
   sbSaveLog.Images := iButtonsDark;
   arrowReplaceChars.Images := iButtonsDark;
 
-  pSourceFile.Background.Color := clSolidBGSecondaryDark;
-  pSourceFile.Border.Color := clSystemSolidNeutralFGDark;
-  pTarget.Background.Color := clSolidBGSecondaryDark;
-  pTarget.Border.Color := clSystemSolidNeutralFGDark;
-  pImportProfiles.Background.Color := clSolidBGSecondaryDark;
-  pImportProfiles.Border.Color := clSystemSolidNeutralFGDark;
-  pExistingRecordPolicy.Background.Color := clSolidBGSecondaryDark;
-  pExistingRecordPolicy.Border.Color := clSystemSolidNeutralFGDark;
-  pErrorHandling.Background.Color := clSolidBGSecondaryDark;
-  pErrorHandling.Border.Color := clSystemSolidNeutralFGDark;
-  pEncoding.Background.Color := clSolidBGSecondaryDark;
-  pEncoding.Border.Color := clSystemSolidNeutralFGDark;
-  pHaveHeader.Background.Color := clSolidBGSecondaryDark;
-  pHaveHeader.Border.Color := clSystemSolidNeutralFGDark;
-  pDelimiter.Background.Color := clSolidBGSecondaryDark;
-  pDelimiter.Border.Color := clSystemSolidNeutralFGDark;
-  pDecimalSeparator.Background.Color := clSolidBGSecondaryDark;
-  pDecimalSeparator.Border.Color := clSystemSolidNeutralFGDark;
-  pDateFormat.Background.Color := clSolidBGSecondaryDark;
-  pDateFormat.Border.Color := clSystemSolidNeutralFGDark;
-  pKeyPath.Background.Color := clSolidBGSecondaryDark;
-  pKeyPath.Border.Color := clSystemSolidNeutralFGDark;
-  pSheet.Background.Color := clSolidBGSecondaryDark;
-  pSheet.Border.Color := clSystemSolidNeutralFGDark;
-  pRecordXPath.Background.Color := clSolidBGSecondaryDark;
-  pRecordXPath.Border.Color := clSystemSolidNeutralFGDark;
-  pPrimaryKey.Background.Color := clSolidBGSecondaryDark;
-  pPrimaryKey.Border.Color := clSystemSolidNeutralFGDark;
-  pDataType.Background.Color := clSolidBGSecondaryDark;
-  pDataType.Border.Color := clSystemSolidNeutralFGDark;
-  pLookupTable.Background.Color := clSolidBGSecondaryDark;
-  pLookupTable.Border.Color := clSystemSolidNeutralFGDark;
-  pLookupField.Background.Color := clSolidBGSecondaryDark;
-  pLookupField.Border.Color := clSystemSolidNeutralFGDark;
-  pNullHandling.Background.Color := clSolidBGSecondaryDark;
-  pNullHandling.Border.Color := clSystemSolidNeutralFGDark;
-  pArrayHandling.Background.Color := clSolidBGSecondaryDark;
-  pArrayHandling.Border.Color := clSystemSolidNeutralFGDark;
-  pCoordinateAxis.Background.Color := clSolidBGSecondaryDark;
-  pCoordinateAxis.Border.Color := clSystemSolidNeutralFGDark;
-  pTrimValue.Background.Color := clSolidBGSecondaryDark;
-  pTrimValue.Border.Color := clSystemSolidNeutralFGDark;
-  pBooleanValue.Background.Color := clSolidBGSecondaryDark;
-  pBooleanValue.Border.Color := clSystemSolidNeutralFGDark;
-  pTextCase.Background.Color := clSolidBGSecondaryDark;
-  pTextCase.Border.Color := clSystemSolidNeutralFGDark;
-  pRemoveAccents.Background.Color := clSolidBGSecondaryDark;
-  pRemoveAccents.Border.Color := clSystemSolidNeutralFGDark;
-  pNormalizeWhitespace.Background.Color := clSolidBGSecondaryDark;
-  pNormalizeWhitespace.Border.Color := clSystemSolidNeutralFGDark;
-  pReplaceChars.Background.Color := clSolidBGSecondaryDark;
-  pReplaceChars.Border.Color := clSystemSolidNeutralFGDark;
-  pRoundValue.Background.Color := clSolidBGSecondaryDark;
-  pRoundValue.Border.Color := clSystemSolidNeutralFGDark;
-  pScaleValue.Background.Color := clSolidBGSecondaryDark;
-  pScaleValue.Border.Color := clSystemSolidNeutralFGDark;
-  pExtractDatePart.Background.Color := clSolidBGSecondaryDark;
-  pExtractDatePart.Border.Color := clSystemSolidNeutralFGDark;
-  pConvertCoordinates.Background.Color := clSolidBGSecondaryDark;
-  pConvertCoordinates.Border.Color := clSystemSolidNeutralFGDark;
+  pSourceFile.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pSourceFile.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pTarget.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pTarget.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pImportProfiles.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pImportProfiles.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pExistingRecordPolicy.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pExistingRecordPolicy.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pErrorHandling.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pErrorHandling.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pEncoding.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pEncoding.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pHaveHeader.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pHaveHeader.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pDelimiter.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pDelimiter.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pDecimalSeparator.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pDecimalSeparator.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pDateFormat.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pDateFormat.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pKeyPath.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pKeyPath.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pSheet.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pSheet.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pRecordXPath.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pRecordXPath.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pPrimaryKey.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pPrimaryKey.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pDataType.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pDataType.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pLookupTable.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pLookupTable.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pLookupField.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pLookupField.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pNullHandling.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pNullHandling.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pArrayHandling.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pArrayHandling.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pCoordinateAxis.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pCoordinateAxis.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pTrimValue.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pTrimValue.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pBooleanValue.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pBooleanValue.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pTextCase.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pTextCase.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pRemoveAccents.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pRemoveAccents.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pNormalizeWhitespace.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pNormalizeWhitespace.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pReplaceChars.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pReplaceChars.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pRoundValue.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pRoundValue.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pScaleValue.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pScaleValue.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pExtractDatePart.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pExtractDatePart.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pConvertCoordinates.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pConvertCoordinates.Border.Color := ActiveTheme.System.SolidNeutralFG;
 
-  lblTitleSource.Font.Color := clVioletFG1Dark;
-  lblTitleSettings.Font.Color := clVioletFG1Dark;
-  lblTitleFields.Font.Color := clVioletFG1Dark;
-  lblTitleConfirm.Font.Color := clVioletFG1Dark;
-  lblTitleProgress.Font.Color := clVioletFG1Dark;
+  lblTitleSource.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleSettings.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleFields.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleConfirm.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleProgress.Font.Color := ActiveTheme.Interactive.WindowTitle;
 
   tsHaveHeader.Color := pHaveHeader.Background.Color;
   tsPrimaryKey.Color := pPrimaryKey.Background.Color;
@@ -1106,9 +1098,9 @@ begin
 
   // Translate comboboxes' items
   cbExistingRecordPolicy.Items.Clear;
-  cbExistingRecordPolicy.Items.Add(rsImportStrategyAppend);
-  cbExistingRecordPolicy.Items.Add(rsImportStrategyReplace);
-  cbExistingRecordPolicy.Items.Add(rsImportStrategyUpdate);
+  cbExistingRecordPolicy.Items.Add(rsImportIgnoreExisting);
+  cbExistingRecordPolicy.Items.Add(rsImportReplaceExisting);
+  //cbExistingRecordPolicy.Items.Add(rsImportAllowDuplicates);
   cbErrorHandling.Items.Clear;
   cbErrorHandling.Items.Add(rsAbortOnError);
   cbErrorHandling.Items.Add(rsIgnoreErrors);
@@ -1716,9 +1708,9 @@ begin
   if FSavedSettings <> EmptyStr then
   begin
     case FImportSettings.ExistingRecordPolicy of
-      erpInsertOnly:  cbExistingRecordPolicy.ItemIndex := 0;
-      erpReplaceExisting: cbExistingRecordPolicy.ItemIndex := 1;
-      erpInsertNewUpdateExisting:  cbExistingRecordPolicy.ItemIndex := 2;
+      erpIgnoreExisting:  cbExistingRecordPolicy.ItemIndex := 0;
+      erpUpdateExisting: cbExistingRecordPolicy.ItemIndex := 1;
+      //erpAllowDuplicates:  cbExistingRecordPolicy.ItemIndex := 2;
     end;
     case FImportSettings.ErrorHandling of
       iehAbort:  cbErrorHandling.ItemIndex := 0;
@@ -2445,9 +2437,9 @@ var
 begin
   { Strategy }
   case cbExistingRecordPolicy.ItemIndex of
-    0: FImportSettings.ExistingRecordPolicy := erpInsertOnly;
-    1: FImportSettings.ExistingRecordPolicy := erpReplaceExisting;
-    2: FImportSettings.ExistingRecordPolicy := erpInsertNewUpdateExisting;
+    0: FImportSettings.ExistingRecordPolicy := erpIgnoreExisting;
+    1: FImportSettings.ExistingRecordPolicy := erpUpdateExisting;
+    //2: FImportSettings.ExistingRecordPolicy := erpAllowDuplicates;
   end;
   { Error handling }
   case cbErrorHandling.ItemIndex of

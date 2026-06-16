@@ -121,7 +121,7 @@ resourcestring
   rscAreaShape = 'Area shape';
   rscLocality = 'Locality';
   rscLocalityID = 'Locality ID';
-  rscMistnetNr = 'Mistnet nr.';
+  rscMistnetNr = 'Mistnet nº';
   rscMistnetStationID = 'Mistnet station ID';
   rscDurationDays = 'Duration (days)';
   rscMistnetRounds = 'Mistnet rounds';
@@ -189,7 +189,7 @@ resourcestring
   rscCarrier = 'Carrier';
   rscReported = 'Reported';
   rscBandID = 'Band ID';
-  rscOrderNr = 'Order nr.';
+  rscOrderNr = 'Order nº';
   rscSenderID = 'Sender ID';
   rscSender = 'Sender';
   rscRequesterID = 'Requester ID';
@@ -275,8 +275,8 @@ resourcestring
   rscPhotographer2ID = 'Photographer 2 ID';
   rscPhotographer2 = 'Photographer 2';
   rscCamera = 'Camera';
-  rscInitialPhotoNr = 'Initial photo nr.';
-  rscFinalPhotoNr = 'Final photo nr.';
+  rscInitialPhotoNr = 'Initial photo nº';
+  rscFinalPhotoNr = 'Final photo nº';
   rscEscaped = 'Escaped';
   rscNeedsReview = 'Needs review';
   rscCaptureID = 'Capture ID';
@@ -395,8 +395,8 @@ resourcestring
   rscEgg = 'Egg';
   rscCollector = 'Collector';
   rscSpecimenID = 'Specimen ID';
-  rscAccessionNr = 'Accession nr.';
-  rscDuplicateNr = 'Duplicate nr.';
+  rscAccessionNr = 'Accession nº';
+  rscDuplicateNr = 'Duplicate nº';
   rscPreparationDate = 'Preparation date';
   rscPreparerID = 'Preparer ID';
   rscPreparer = 'Preparer';
@@ -492,7 +492,7 @@ resourcestring
   rscMicModel = 'Microphone model';
   rscFilterModel = 'Filter model';
   rscCameraModel = 'Camera model';
-  rscProtocolNr = 'Protocol nr.';
+  rscProtocolNr = 'Protocol nº';
   rscMainGoal = 'Main goal';
   rscRisks = 'Risks';
   rscTargetDate = 'Target date';
@@ -506,7 +506,7 @@ resourcestring
   rscFeatherID = 'Feather ID';
   rscSymmetry = 'Symmetry';
   rscFeatherTrait = 'Feather trait';
-  rscFeatherNumber = 'Feather number';
+  rscFeatherNumber = 'Feather nº';
   rscBodySide = 'Body side';
   rscPercentGrown = 'Percent grown';
   rscArea = 'Area';

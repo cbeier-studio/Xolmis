@@ -27,7 +27,7 @@ msgstr ""
 
 #: data_columns.rscaccessionnr
 msgctxt "data_columns.rscaccessionnr"
-msgid "Accession nr."
+msgid "Accession nº"
 msgstr ""
 
 #: data_columns.rscaccesslevel
@@ -544,7 +544,7 @@ msgstr ""
 
 #: data_columns.rscduplicatenr
 msgctxt "data_columns.rscduplicatenr"
-msgid "Duplicate nr."
+msgid "Duplicate nº"
 msgstr ""
 
 #: data_columns.rscdurationdays
@@ -728,7 +728,7 @@ msgstr ""
 
 #: data_columns.rscfeathernumber
 msgctxt "data_columns.rscfeathernumber"
-msgid "Feather number"
+msgid "Feather nº"
 msgstr ""
 
 #: data_columns.rscfeathers
@@ -773,7 +773,7 @@ msgstr ""
 
 #: data_columns.rscfinalphotonr
 msgctxt "data_columns.rscfinalphotonr"
-msgid "Final photo nr."
+msgid "Final photo nº"
 msgstr ""
 
 #: data_columns.rscflightdirection
@@ -1021,7 +1021,7 @@ msgstr ""
 
 #: data_columns.rscinitialphotonr
 msgctxt "data_columns.rscinitialphotonr"
-msgid "Initial photo nr."
+msgid "Initial photo nº"
 msgstr ""
 
 #: data_columns.rscinsertdate
@@ -1293,7 +1293,7 @@ msgstr ""
 
 #: data_columns.rscmistnetnr
 msgctxt "data_columns.rscmistnetnr"
-msgid "Mistnet nr."
+msgid "Mistnet nº"
 msgstr ""
 
 #: data_columns.rscmistnetrounds
@@ -1528,7 +1528,7 @@ msgstr ""
 
 #: data_columns.rscordernr
 msgctxt "data_columns.rscordernr"
-msgid "Order nr."
+msgid "Order nº"
 msgstr ""
 
 #: data_columns.rscotherportuguesenames
@@ -1864,7 +1864,7 @@ msgstr ""
 
 #: data_columns.rscprotocolnr
 msgctxt "data_columns.rscprotocolnr"
-msgid "Protocol nr."
+msgid "Protocol nº"
 msgstr ""
 
 #: data_columns.rscquantphilornislarvae
@@ -4852,7 +4852,8 @@ msgid "Abort on first error"
 msgstr ""
 
 #: tdlgimport.cbexistingrecordpolicy.text
-msgid "Update existing"
+msgctxt "tdlgimport.cbexistingrecordpolicy.text"
+msgid "Replace existing"
 msgstr ""
 
 #: tdlgimport.cbextractdatepart.text
@@ -4981,6 +4982,7 @@ msgid "Error handling"
 msgstr ""
 
 #: tdlgimport.lblexistingrecordpolicy.caption
+msgctxt "tdlgimport.lblexistingrecordpolicy.caption"
 msgid "Existing records policy"
 msgstr ""
 
@@ -5091,6 +5093,7 @@ msgid "Importing"
 msgstr ""
 
 #: tdlgimport.lbltitlesettings.caption
+msgctxt "tdlgimport.lbltitlesettings.caption"
 msgid "Import settings"
 msgstr ""
 
@@ -5436,7 +5439,7 @@ msgid "Observer *"
 msgstr ""
 
 #: tdlgimportxmobile.gridmap.columns[3].title.caption
-msgid "List nr."
+msgid "List nº"
 msgstr ""
 
 #: tdlgimportxmobile.gridmap.columns[4].title.caption
@@ -5449,9 +5452,18 @@ msgctxt "tdlgimportxmobile.gridmap.columns[5].title.caption"
 msgid "Record"
 msgstr ""
 
+#: tdlgimportxmobile.lblerrorhandling.caption
+msgid "If an error occurr during import"
+msgstr ""
+
+#: tdlgimportxmobile.lblexistingrecordpolicy.caption
+msgctxt "tdlgimportxmobile.lblexistingrecordpolicy.caption"
+msgid "Existing records policy"
+msgstr ""
+
 #: tdlgimportxmobile.lblexpedition.caption
 msgctxt "tdlgimportxmobile.lblexpedition.caption"
-msgid "Expedition:"
+msgid "Expedition"
 msgstr ""
 
 #: tdlgimportxmobile.lblmapinstruction.caption
@@ -5471,6 +5483,11 @@ msgstr ""
 msgid "Select a source file to import. Fields with asterisk are required."
 msgstr ""
 
+#: tdlgimportxmobile.lbltitleimportsettings.caption
+msgctxt "tdlgimportxmobile.lbltitleimportsettings.caption"
+msgid "Import settings"
+msgstr ""
+
 #: tdlgimportxmobile.lbltitlemap.caption
 msgid "Records"
 msgstr ""
@@ -5485,9 +5502,8 @@ msgctxt "tdlgimportxmobile.lbltitlesource.caption"
 msgid "Source"
 msgstr ""
 
-#: tdlgimportxmobile.msgsourcefile.caption
-msgctxt "tdlgimportxmobile.msgsourcefile.caption"
-msgid "File not selected."
+#: tdlgimportxmobile.lblunknowntaxa.caption
+msgid "Unknown taxon found"
 msgstr ""
 
 #: tdlgimportxmobile.opendlg.title
@@ -16255,6 +16271,11 @@ msgstr ""
 msgid "Table not supported in documents and links."
 msgstr ""
 
+#: utils_locale.rserrortaxonnotfound
+#, object-pascal-format
+msgid "Taxon \"%s\" not found."
+msgstr ""
+
 #: utils_locale.rserrortitlehelpnotfound
 msgctxt "utils_locale.rserrortitlehelpnotfound"
 msgid "Help files not found!"
@@ -16807,6 +16828,16 @@ msgstr ""
 msgid "No image file path"
 msgstr ""
 
+#: utils_locale.rsimportabortunknowntaxon
+msgctxt "utils_locale.rsimportabortunknowntaxon"
+msgid "Abort importing"
+msgstr ""
+
+#: utils_locale.rsimportallowduplicates
+msgctxt "utils_locale.rsimportallowduplicates"
+msgid "Allow duplicates"
+msgstr ""
+
 #: utils_locale.rsimportaudiostitle
 msgctxt "utils_locale.rsimportaudiostitle"
 msgid "Import audio files"
@@ -16837,6 +16868,15 @@ msgstr ""
 
 #: utils_locale.rsimportfilestitle
 msgid "Import files"
+msgstr ""
+
+#: utils_locale.rsimportignoreexisting
+msgctxt "utils_locale.rsimportignoreexisting"
+msgid "Ignore existing"
+msgstr ""
+
+#: utils_locale.rsimportignoreunknowntaxon
+msgid "Ignore and keep importing"
 msgstr ""
 
 #: utils_locale.rsimportimagestitle
@@ -16888,18 +16928,9 @@ msgstr ""
 msgid "Importing XML"
 msgstr ""
 
-#: utils_locale.rsimportstrategyappend
-msgctxt "utils_locale.rsimportstrategyappend"
-msgid "Append"
-msgstr ""
-
-#: utils_locale.rsimportstrategyreplace
-msgid "Replace"
-msgstr ""
-
-#: utils_locale.rsimportstrategyupdate
-msgctxt "utils_locale.rsimportstrategyupdate"
-msgid "Update"
+#: utils_locale.rsimportreplaceexisting
+msgctxt "utils_locale.rsimportreplaceexisting"
+msgid "Replace existing"
 msgstr ""
 
 #: utils_locale.rsimportusexolmismobileimporter

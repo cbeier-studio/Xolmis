@@ -45,6 +45,7 @@ type
     procedure sbOKClick(Sender: TObject);
   private
     xCiclo: String;
+    procedure ApplyDarkMode;
     function CycleCode: String;
   public
     property Ciclo: String read xCiclo write xCiclo;
@@ -55,11 +56,51 @@ var
 
 implementation
 
-uses utils_locale, utils_global, utils_dialogs;
+uses utils_locale, utils_global, utils_dialogs, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TlstCycleCode }
+
+procedure TlstCycleCode.ApplyDarkMode;
+begin
+  pCode.Background.Color := ActiveTheme.Interactive.SelectionBackground;
+end;
+
+function TlstCycleCode.CycleCode: String;
+var
+  F, S, T: String;
+begin
+  Result := '';
+
+  case rgFirst.ItemIndex of
+   -1: F := '-';
+    0: F := 'U';
+    1: F := 'D';
+    2: F := 'F';
+    3: F := 'S';
+    4: F := 'T';
+    5: F := '4';
+    6: F := '5';
+  end;
+  case rgSecond.ItemIndex of
+   -1: S := '-';
+    0: S := 'C';
+    1: S := 'P';
+    2: S := 'A';
+  end;
+  case rgThird.ItemIndex of
+   -1: T := '-';
+    0: T := 'U';
+    1: T := 'J';
+    2: T := 'S';
+    3: T := 'F';
+    4: T := 'B';
+    5: T := 'A';
+  end;
+
+  Result := F + S + T;
+end;
 
 procedure TlstCycleCode.FormCreate(Sender: TObject);
 begin
@@ -95,6 +136,9 @@ var
   C: Char;
   // i: Integer;
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   rgFirst.Items.CommaText := rsMoltCycles;
   rgSecond.Items.CommaText := rsMoltings;
   rgThird.Items.CommaText := rsPlumages;
@@ -156,41 +200,6 @@ begin
   Ciclo := CycleCode;
 
   ModalResult := mrOK;
-end;
-
-function TlstCycleCode.CycleCode: String;
-var
-  F, S, T: String;
-begin
-  Result := '';
-
-  case rgFirst.ItemIndex of
-   -1: F := '-';
-    0: F := 'U';
-    1: F := 'D';
-    2: F := 'F';
-    3: F := 'S';
-    4: F := 'T';
-    5: F := '4';
-    6: F := '5';
-  end;
-  case rgSecond.ItemIndex of
-   -1: S := '-';
-    0: S := 'C';
-    1: S := 'P';
-    2: S := 'A';
-  end;
-  case rgThird.ItemIndex of
-   -1: T := '-';
-    0: T := 'U';
-    1: T := 'J';
-    2: T := 'S';
-    3: T := 'F';
-    4: T := 'B';
-    5: T := 'A';
-  end;
-
-  Result := F + S + T;
 end;
 
 end.

@@ -140,18 +140,18 @@ begin
 
   icoImportFinished.Images := imgFinishedDark;
 
-  pJournalFile.Background.Color := clSolidBGSecondaryDark;
-  pJournalFile.Border.Color := clSystemSolidNeutralFGDark;
-  pEffortFile.Background.Color := clSolidBGSecondaryDark;
-  pEffortFile.Border.Color := clSystemSolidNeutralFGDark;
-  pCaptureFile.Background.Color := clSolidBGSecondaryDark;
-  pCaptureFile.Border.Color := clSystemSolidNeutralFGDark;
+  pJournalFile.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pJournalFile.Border.Color := ActiveTheme.Border.Default;
+  pEffortFile.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pEffortFile.Border.Color := ActiveTheme.Border.Default;
+  pCaptureFile.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pCaptureFile.Border.Color := ActiveTheme.Border.Default;
 
-  pGenerateFiles.Background.Color := clSystemCautionBGDark;
-  pGenerateFiles.Border.Color := clSystemCautionFGDark;
+  pGenerateFiles.Background.Color := ActiveTheme.System.CautionBG;
+  pGenerateFiles.Border.Color := ActiveTheme.System.CautionFG;
 
-  lblTitleImportFiles.Font.Color := clVioletFG1Dark;
-  lblTitleImportFinished.Font.Color := clVioletFG1Dark;
+  lblTitleImportFiles.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleImportFinished.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
 procedure TdlgImportCaptures.btnGenerateFilesClick(Sender: TObject);

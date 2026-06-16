@@ -15,7 +15,7 @@ object dlgBigTip: TdlgBigTip
   Constraints.MinWidth = 430
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnShow = FormShow
   object lblTitle: TLabel
     AnchorSideLeft.Control = Owner

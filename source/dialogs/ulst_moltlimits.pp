@@ -43,6 +43,7 @@ type
     procedure sbOKClick(Sender: TObject);
   private
     xLimits: String;
+    procedure ApplyDarkMode;
     function LimitsCode: String;
   public
     property Limites: String read xLimits write xLimits;
@@ -53,11 +54,16 @@ var
 
 implementation
 
-uses utils_locale, utils_global, utils_dialogs;
+uses utils_locale, utils_global, utils_dialogs, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
 { TlstMoltLimits }
+
+procedure TlstMoltLimits.ApplyDarkMode;
+begin
+  pCode.Background.Color := ActiveTheme.Interactive.SelectionBackground;
+end;
 
 procedure TlstMoltLimits.cklLimitsClickCheck(Sender: TObject);
 begin
@@ -99,6 +105,9 @@ var
   C: Char;
   i: Integer;
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   cklLimits.Items.CommaText := rsMoltLimitsList;
 
   if Length(Limites) > 0 then

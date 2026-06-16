@@ -105,7 +105,7 @@ object dlgDiagnostic: TdlgDiagnostic
     )
     ColWidths = (
       64
-      528
+      507
     )
   end
   object iButtons: TImageList

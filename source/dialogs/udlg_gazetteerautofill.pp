@@ -68,7 +68,7 @@ uses
 
 procedure TdlgGazetteerAutofill.ApplyDarkMode;
 begin
-  lblState.Font.Color := clVioletFG1Dark;
+  lblState.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
 procedure TdlgGazetteerAutofill.FormDestroy(Sender: TObject);

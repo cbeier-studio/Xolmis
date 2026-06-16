@@ -29,7 +29,7 @@ msgstr "Resumo"
 
 #: data_columns.rscaccessionnr
 msgctxt "data_columns.rscaccessionnr"
-msgid "Accession nr."
+msgid "Accession nº"
 msgstr "Nº de tombo"
 
 #: data_columns.rscaccesslevel
@@ -546,7 +546,7 @@ msgstr "Anilha dupla ID"
 
 #: data_columns.rscduplicatenr
 msgctxt "data_columns.rscduplicatenr"
-msgid "Duplicate nr."
+msgid "Duplicate nº"
 msgstr "Nº da duplicata"
 
 #: data_columns.rscdurationdays
@@ -730,7 +730,7 @@ msgstr "Ácaros das penas"
 
 #: data_columns.rscfeathernumber
 msgctxt "data_columns.rscfeathernumber"
-msgid "Feather number"
+msgid "Feather nº"
 msgstr "Nº da pena"
 
 #: data_columns.rscfeathers
@@ -775,7 +775,7 @@ msgstr "Modelo do filtro"
 
 #: data_columns.rscfinalphotonr
 msgctxt "data_columns.rscfinalphotonr"
-msgid "Final photo nr."
+msgid "Final photo nº"
 msgstr "Nº da foto final"
 
 #: data_columns.rscflightdirection
@@ -1023,7 +1023,7 @@ msgstr "Infraespecífico"
 
 #: data_columns.rscinitialphotonr
 msgctxt "data_columns.rscinitialphotonr"
-msgid "Initial photo nr."
+msgid "Initial photo nº"
 msgstr "Nº da foto inicial"
 
 #: data_columns.rscinsertdate
@@ -1295,7 +1295,7 @@ msgstr "Malha da rede (mm)"
 
 #: data_columns.rscmistnetnr
 msgctxt "data_columns.rscmistnetnr"
-msgid "Mistnet nr."
+msgid "Mistnet nº"
 msgstr "Nº da rede"
 
 #: data_columns.rscmistnetrounds
@@ -1530,7 +1530,7 @@ msgstr "Ordem ID"
 
 #: data_columns.rscordernr
 msgctxt "data_columns.rscordernr"
-msgid "Order nr."
+msgid "Order nº"
 msgstr "Nº do pedido"
 
 #: data_columns.rscotherportuguesenames
@@ -1866,7 +1866,7 @@ msgstr "% das árvores"
 
 #: data_columns.rscprotocolnr
 msgctxt "data_columns.rscprotocolnr"
-msgid "Protocol nr."
+msgid "Protocol nº"
 msgstr "Nº de protocolo"
 
 #: data_columns.rscquantphilornislarvae
@@ -4832,8 +4832,9 @@ msgid "Abort on first error"
 msgstr "Parar no primeiro erro"
 
 #: tdlgimport.cbexistingrecordpolicy.text
-msgid "Update existing"
-msgstr "Atualizar existente"
+msgctxt "tdlgimport.cbexistingrecordpolicy.text"
+msgid "Replace existing"
+msgstr "Substituir existentes"
 
 #: tdlgimport.cbextractdatepart.text
 msgctxt "tdlgimport.cbextractdatepart.text"
@@ -4961,6 +4962,7 @@ msgid "Error handling"
 msgstr "Gerenciamento de erros"
 
 #: tdlgimport.lblexistingrecordpolicy.caption
+msgctxt "tdlgimport.lblexistingrecordpolicy.caption"
 msgid "Existing records policy"
 msgstr "Política de registros existentes"
 
@@ -5071,6 +5073,7 @@ msgid "Importing"
 msgstr "Importando"
 
 #: tdlgimport.lbltitlesettings.caption
+msgctxt "tdlgimport.lbltitlesettings.caption"
 msgid "Import settings"
 msgstr "Configurações de importação"
 
@@ -5416,7 +5419,7 @@ msgid "Observer *"
 msgstr "Observador *"
 
 #: tdlgimportxmobile.gridmap.columns[3].title.caption
-msgid "List nr."
+msgid "List nº"
 msgstr "Lista nº"
 
 #: tdlgimportxmobile.gridmap.columns[4].title.caption
@@ -5429,10 +5432,19 @@ msgctxt "tdlgimportxmobile.gridmap.columns[5].title.caption"
 msgid "Record"
 msgstr "Registro"
 
+#: tdlgimportxmobile.lblerrorhandling.caption
+msgid "If an error occurr during import"
+msgstr "Se um erro ocorrer durante a importação"
+
+#: tdlgimportxmobile.lblexistingrecordpolicy.caption
+msgctxt "tdlgimportxmobile.lblexistingrecordpolicy.caption"
+msgid "Existing records policy"
+msgstr "Política de registros existentes"
+
 #: tdlgimportxmobile.lblexpedition.caption
 msgctxt "tdlgimportxmobile.lblexpedition.caption"
-msgid "Expedition:"
-msgstr "Expedição:"
+msgid "Expedition"
+msgstr "Expedição"
 
 #: tdlgimportxmobile.lblmapinstruction.caption
 msgid "Confirm the relations between the data to be imported and the database. "
@@ -5451,6 +5463,11 @@ msgstr "Arquivo de origem: *"
 msgid "Select a source file to import. Fields with asterisk are required."
 msgstr "Selecione um arquivo de origem para importar. Campos com asterisco são obrigatórios."
 
+#: tdlgimportxmobile.lbltitleimportsettings.caption
+msgctxt "tdlgimportxmobile.lbltitleimportsettings.caption"
+msgid "Import settings"
+msgstr "Configurações de importação"
+
 #: tdlgimportxmobile.lbltitlemap.caption
 msgid "Records"
 msgstr "Registros"
@@ -5465,10 +5482,9 @@ msgctxt "tdlgimportxmobile.lbltitlesource.caption"
 msgid "Source"
 msgstr "Origem"
 
-#: tdlgimportxmobile.msgsourcefile.caption
-msgctxt "tdlgimportxmobile.msgsourcefile.caption"
-msgid "File not selected."
-msgstr "Arquivo não selecionado."
+#: tdlgimportxmobile.lblunknowntaxa.caption
+msgid "Unknown taxon found"
+msgstr "Táxon desconhecido encontrado"
 
 #: tdlgimportxmobile.opendlg.title
 msgctxt "tdlgimportxmobile.opendlg.title"
@@ -16249,6 +16265,11 @@ msgstr "Tabela \"%s\" não encontrada."
 msgid "Table not supported in documents and links."
 msgstr "Tabela não suportada em documentos e links."
 
+#: utils_locale.rserrortaxonnotfound
+#, object-pascal-format
+msgid "Taxon \"%s\" not found."
+msgstr "Táxon \"%s\" não encontrado."
+
 #: utils_locale.rserrortitlehelpnotfound
 msgctxt "utils_locale.rserrortitlehelpnotfound"
 msgid "Help files not found!"
@@ -16294,12 +16315,12 @@ msgstr "Validação de dados encontrou problemas."
 #: utils_locale.rserrorvalueexceededmaxlength
 #, object-pascal-format
 msgid "The value \"%s\" exceeds the allowed maximum length (%d) for the field \"%s\"."
-msgstr "O valor \"%s\" excede o comprimento máximo permitido (%d) para o campo \"%s\","
+msgstr "O valor \"%s\" excede o comprimento máximo permitido (%d) para o campo \"%s\"."
 
 #: utils_locale.rserrorvaluenotallowedforfield
 #, object-pascal-format
 msgid "The value \"%s\" is not allowed for the field \"%s\". Valid values: %s"
-msgstr "O valor \"%s\" não é permitido para o campo \"%s\". Valores válidos: %s."
+msgstr "O valor \"%s\" não é permitido para o campo \"%s\". Valores válidos: %s"
 
 #: utils_locale.rserrorwritingadminpassword
 #, object-pascal-format
@@ -16801,6 +16822,15 @@ msgstr "Formato de imagem não suportado: %s"
 msgid "No image file path"
 msgstr "Sem caminho da imagem"
 
+#: utils_locale.rsimportabortunknowntaxon
+msgid "Abort importing"
+msgstr "Abortar importação"
+
+#: utils_locale.rsimportallowduplicates
+msgctxt "utils_locale.rsimportallowduplicates"
+msgid "Allow duplicates"
+msgstr "Permitir duplicações"
+
 #: utils_locale.rsimportaudiostitle
 msgctxt "utils_locale.rsimportaudiostitle"
 msgid "Import audio files"
@@ -16832,6 +16862,15 @@ msgstr "Importar dados do eBird"
 #: utils_locale.rsimportfilestitle
 msgid "Import files"
 msgstr "Importar arquivos"
+
+#: utils_locale.rsimportignoreexisting
+msgctxt "utils_locale.rsimportignoreexisting"
+msgid "Ignore existing"
+msgstr "Ignorar existentes"
+
+#: utils_locale.rsimportignoreunknowntaxon
+msgid "Ignore and keep importing"
+msgstr "Ignorar e continuar importando"
 
 #: utils_locale.rsimportimagestitle
 msgctxt "utils_locale.rsimportimagestitle"
@@ -16881,19 +16920,10 @@ msgstr "Importando XLSX"
 msgid "Importing XML"
 msgstr "Importando XML"
 
-#: utils_locale.rsimportstrategyappend
-msgctxt "utils_locale.rsimportstrategyappend"
-msgid "Append"
-msgstr "Inserir"
-
-#: utils_locale.rsimportstrategyreplace
-msgid "Replace"
-msgstr "Substituir"
-
-#: utils_locale.rsimportstrategyupdate
-msgctxt "utils_locale.rsimportstrategyupdate"
-msgid "Update"
-msgstr "Atualizar"
+#: utils_locale.rsimportreplaceexisting
+msgctxt "utils_locale.rsimportreplaceexisting"
+msgid "Replace existing"
+msgstr "Substituir existentes"
 
 #: utils_locale.rsimportusexolmismobileimporter
 msgid "This file was exported by Xolmis Mobile. Please use \"Import from Xolmis Mobile\" instead of the Import Wizard."
@@ -18430,7 +18460,7 @@ msgstr "Permite restaurar registros apagados."
 #: utils_locale.rspermissiondescriptiontemplate
 #, object-pascal-format
 msgid "Allow %s on %s."
-msgstr "Permite %s em %s"
+msgstr "Permite %s em %s."
 
 #: utils_locale.rspermissiondescriptionundo
 msgid "Allow undoing edits."

@@ -52,6 +52,7 @@ type
       var InitialStates: TVirtualNodeInitStates);
   private
     FHowAged: String;
+    procedure ApplyDarkMode;
     //function HowAgedCode: String;
     procedure UpdateHowAgedCode;
     procedure UpdateCheckedByCode;
@@ -64,7 +65,7 @@ var
 
 implementation
 
-uses utils_locale, utils_global, utils_dialogs;
+uses utils_locale, utils_global, utils_dialogs, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -76,6 +77,11 @@ type
   end;
 
 { TlstHowSexedAged }
+
+procedure TlstHowSexedAged.ApplyDarkMode;
+begin
+  pCode.Background.Color := ActiveTheme.Interactive.SelectionBackground;
+end;
 
 procedure TlstHowSexedAged.cklAgedClickCheck(Sender: TObject);
 begin
@@ -125,6 +131,9 @@ var
   C: Char;
   i: Integer;
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   //cklAged.Items.CommaText := rsHowAgedSexedList;
 
   if Length(FHowAged) > 0 then

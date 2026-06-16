@@ -89,9 +89,9 @@ uses
 
 procedure TdlgRecHistory.ApplyDarkMode;
 begin
-  SBox.Color := clCardBGDefaultDark;
+  SBox.Color := ActiveTheme.Background.CardDefault;
 
-  txtRecordId.Font.Color := clVioletFG1Dark;
+  txtRecordId.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
 procedure TdlgRecHistory.btnHelpClick(Sender: TObject);

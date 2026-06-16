@@ -52,6 +52,7 @@ type
       var InitialStates: TVirtualNodeInitStates);
   private
     FBreedingStatus: String;
+    procedure ApplyDarkMode;
     //function BreedingCode: String;
     procedure UpdateBreedingCode;
     procedure UpdateCheckedByCode;
@@ -64,7 +65,7 @@ var
 
 implementation
 
-uses utils_locale, utils_global, utils_dialogs;
+uses utils_locale, utils_global, utils_dialogs, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -76,6 +77,11 @@ type
   end;
 
 { TlstBreedingStatus }
+
+procedure TlstBreedingStatus.ApplyDarkMode;
+begin
+  pCode.Background.Color := ActiveTheme.Interactive.SelectionBackground;
+end;
 
 procedure TlstBreedingStatus.cklBreedClickCheck(Sender: TObject);
 begin
@@ -127,6 +133,9 @@ var
   i: Integer;
   //Codes: TStringList;
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
   //cklBreed.Items.CommaText := rsBreedingCodes;
 
   if Length(FBreedingStatus) > 0 then

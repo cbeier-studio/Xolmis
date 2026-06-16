@@ -53,7 +53,7 @@ uses
 
 procedure TdlgSplash.ApplyDarkMode;
 begin
-  lblAppName.Font.Color := clVioletFG1Dark;
+  lblAppName.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
 procedure TdlgSplash.FormShow(Sender: TObject);

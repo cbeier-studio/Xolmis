@@ -115,15 +115,30 @@ type
   end;
 
   TExistingRecordPolicy = (
-    erpInsertOnly,                // Insert new rows only, ignore existing ones
-    erpReplaceExisting,           // Replace existing rows entirely, including null values
-    erpInsertNewUpdateExisting    // Update existing rows, insert missing ones
+    erpIgnoreExisting,            // Insert new rows only, ignore existing ones
+    erpUpdateExisting,            // Replace existing rows entirely, including null values
+    erpAllowDuplicates            // Insert rows even if they already exist
   );
-  TImportErrorHandling = (iehAbort, iehIgnore);
+  TImportErrorHandling = (
+    iehAbort,         // Abort import process
+    iehIgnore         // Log record with error and keep importing
+  );
+  TUpdateRecordPolicy = (
+    urpKeepMostRecent, // Update with the most recent record
+    urpMerge,          // Merge record data
+    urpOverwrite       // Overwrite the existing record
+  );
+  TUnknownTaxonPolicy = (
+    utpAsk,           // Always ask what to do
+    utpAbort,         // Abort import process
+    utpIgnore         // Ignore record entirely
+  );
 
   // Import options
   TImportOptions = record
     ExistingRecordPolicy: TExistingRecordPolicy;
+    UpdateRecordPolicy: TUpdateRecordPolicy;
+    UnknownTaxonPolicy: TUnknownTaxonPolicy;
     ErrorHandling: TImportErrorHandling;
     Encoding: String;         // 'UTF-8', 'latin1', 'Windows-1252' etc.
     Delimiter: Char;          // CSV/TSV

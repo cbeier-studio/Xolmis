@@ -178,18 +178,24 @@ O Xolmis possui um aplicativo móvel complementar, [Xolmis Mobile](xolmis-mobile
 Para importar arquivos JSON do Xolmis Mobile:
 
 1. Abra o assistente de importação no menu principal: **Arquivo → Importar → Xolmis Mobile**.  
-2. No diálogo, escolha o arquivo de origem. O sistema validará automaticamente o arquivo e indicará se ele é aceitável. Opcionalmente, você pode selecionar uma **expedição** para associar aos dados importados.  
-3. Clique em **Avançar** para prosseguir. Os registros do arquivo serão listados.  
+2. No diálogo, escolha o arquivo de origem. O sistema validará automaticamente o arquivo e indicará se ele é aceitável. Opcionalmente, você pode selecionar uma **expedição** para associar aos dados importados.
+3. Defina o que fazer quando o registro já existe no banco de dados.
+      - Ignorar registros existentes.
+      - Atualizar registros existentes.
+4. Defina o que fazer quando uma espécie não for encontrada no banco de dados.
+      - Abortar a importação. Nenhum dado será salvo.
+      - Ignorar e continuar a importação.
+5. Defina o que fazer se ocorrer um erro durante a importação.
+      - Abortar a importação. Nenhum dado será salvo.
+      - Ignorar e continuar a importação.
+6. Clique em **Avançar** para prosseguir. Os registros do arquivo serão listados.  
       - Você pode desmarcar registros que não deseja importar.  
       - Alguns campos podem ser preenchidos automaticamente se dados correspondentes já existirem.  
       - **Observador** e **Localidade** são campos obrigatórios.  
       - A coluna **Registro** corresponde ao registro do banco de dados para cada entrada do arquivo.  
-4. Clique em **Avançar** novamente para iniciar a importação.  
-      - Registros sem correspondência no banco serão inseridos.  
-      - Registros com correspondência serão atualizados.  
-5. O progresso será exibido no diálogo. Você pode interromper o processo a qualquer momento clicando em **Cancelar**.  
-6. Ao finalizar, o diálogo mostrará o resultado.  
-      - Se ocorrerem erros, nenhum dado será salvo.  
+7. Clique em **Avançar** novamente para iniciar a importação.  
+8. O progresso será exibido no diálogo. Você pode interromper o processo a qualquer momento clicando em **Cancelar**.  
+9. Ao finalizar, o diálogo mostrará o resultado.  
       - Você pode tentar novamente com **Tentar novamente** ou salvar o log de importação com **Salvar log** para investigar problemas.  
 
 ## Registros eBird

@@ -32,21 +32,32 @@ type
 
   TdlgImportXMobile = class(TForm)
     btnHelp: TBitBtn;
-    eSourceFile: TEditButton;
+    cbErrorHandling: TComboBox;
+    cbUnknownTaxa: TComboBox;
+    cbExistingRecordPolicy: TComboBox;
     eExpedition: TEditButton;
+    eSourceFile: TEditButton;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     icoFileStatus: TImage;
     icoImportFinished: TImage;
     imgFinished: TImageList;
     imgFinishedDark: TImageList;
-    lblMapInstruction: TLabel;
     lblExpedition: TLabel;
+    lblErrorHandling: TLabel;
+    lblUnknownTaxa: TLabel;
+    lblExistingRecordPolicy: TLabel;
+    lblTitleImportSettings: TLabel;
+    lblMapInstruction: TLabel;
     lblTitleProgress: TLabel;
     msgSourceFile: TLabel;
     lblTitleMap: TLabel;
     mProgress: TMemo;
     pContentMap: TPanel;
+    pExpedition: TBCPanel;
+    pErrorHandling: TBCPanel;
+    pUnknownTaxa: TBCPanel;
+    pExistingRecordPolicy: TBCPanel;
     pgMap: TPage;
     PBar: TProgressBar;
     pTitleMap: TPanel;
@@ -75,6 +86,7 @@ type
     procedure eExpeditionKeyPress(Sender: TObject; var Key: char);
     procedure eSourceFileButtonClick(Sender: TObject);
     procedure eSourceFileChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -89,6 +101,7 @@ type
     procedure sbSaveLogClick(Sender: TObject);
   private
     FSourceFile: String;
+    FImportSettings: TImportOptions;
     FObserverKey, FSurveyKey, FNestKey: Integer;
     FExpeditionId: Integer;
     FContentType: TMobileContentType;
@@ -98,18 +111,16 @@ type
     FSpecimenList: TMobileSpecimenList;
     FSurvey: TSurvey;
     FNest: TNest;
-    //JSON: TFileStream;
     JSONData: TJSONData;
     JSONObject, SpeciesObject, PoiObject, VegetationObject, WeatherObject: TJSONObject;
     RevisionObject, EggObject: TJSONObject;
     JSONArray, SpeciesArray, PoisArray, VegetationArray, WeatherArray: TJSONArray;
     RevisionArray, EggArray: TJSONArray;
     procedure ApplyDarkMode;
-    function AddSurvey: Integer;
-    function AddNest: Integer;
     function AddNestOwner(aNestId, aIndividualId: Integer; aRole: TNestRole): Integer;
     procedure AppendLog(const aMsg: String);
     function GetContentType: TMobileContentType;
+    procedure GetImportSettings;
     function GetMethodFromInventory(aInventory: TMobileInventory): Integer;
     function GetNestFromMobile(aNest: TMobileNest): Integer;
     function GetSpecimenFromMobile(aSpecimen: TMobileSpecimen): Integer;
@@ -134,6 +145,7 @@ type
     procedure LoadMapGrid;
     function ObserverExists(aObserver: String): Boolean;
     function LocalityExists(aLocality: String): Boolean;
+    procedure SetImportSettings;
   public
 
   end;
@@ -152,64 +164,6 @@ uses
 {$R *.lfm}
 
 { TdlgImportXMobile }
-
-function TdlgImportXMobile.AddNest: Integer;
-var
-  CloseQueryAfter: Boolean;
-  aDataSet: TDataSet;
-  f: QWord;
-  aFate: String;
-begin
-  Result := 0;
-  aDataSet := DMG.qNests;
-
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
-
-  Application.CreateForm(TedtNest, edtNest);
-  with edtNest do
-  try
-    dsLink.DataSet := aDataSet;
-
-    aDataSet.Insert;
-    EditSourceStr := rsInsertedByForm;
-
-    f := JSONObject.Get('nestFate', 0);
-    case f of
-      0: aFate := 'U';
-      1: aFate := 'S';
-      2: aFate := 'P';
-    end;
-
-    aDataSet.FieldByName(COL_FOUND_DATE).AsDateTime := StrToDate(JSONObject.Get('foundTime', ''));
-    aDataSet.FieldByName(COL_LAST_DATE).AsDateTime := StrToDate(JSONObject.Get('lastTime', ''));
-    aDataSet.FieldByName(COL_FIELD_NUMBER).AsString := JSONObject.Get('fieldNumber', '');
-    aDataSet.FieldByName(COL_TAXON_ID).AsInteger := GetValidTaxon(JSONObject.Get('speciesName', ''));
-    aDataSet.FieldByName(COL_LOCALITY_ID).AsInteger := GetSiteKey(JSONObject.Get('localityName', ''));
-    aDataSet.FieldByName(COL_LONGITUDE).AsFloat := JSONObject.Get('longitude', 0.0);
-    aDataSet.FieldByName(COL_LATITUDE).AsFloat := JSONObject.Get('latitude', 0.0);
-    aDataSet.FieldByName(COL_OTHER_SUPPORT).AsString := JSONObject.Get('support', '');
-    aDataSet.FieldByName(COL_HEIGHT_ABOVE_GROUND).AsFloat := JSONObject.Get('heightAboveGround', 0.0);
-    aDataSet.FieldByName(COL_NEST_FATE).AsString := aFate;
-
-    if ShowModal = mrOk then
-    begin
-      aDataSet.Post;
-      Result := GetLastInsertedKey(tbNests);
-    end
-    else
-      aDataSet.Cancel;
-  finally
-    FreeAndNil(edtNest);
-  end;
-
-  if CloseQueryAfter then
-    aDataSet.Close;
-end;
 
 function TdlgImportXMobile.AddNestOwner(aNestId, aIndividualId: Integer; aRole: TNestRole): Integer;
 var
@@ -237,66 +191,6 @@ begin
   end;
 end;
 
-function TdlgImportXMobile.AddSurvey: Integer;
-var
-  CloseQueryAfter: Boolean;
-  aDataSet: TDataSet;
-  sdt, y, m, d, stm, etm: String;
-begin
-  Result := 0;
-  aDataSet := DMG.qSurveys;
-
-  CloseQueryAfter := False;
-  if not aDataSet.Active then
-  begin
-    aDataSet.Open;
-    CloseQueryAfter := True;
-  end;
-
-  Application.CreateForm(TedtSurvey, edtSurvey);
-  with edtSurvey do
-  try
-    dsLink.DataSet := aDataSet;
-
-    aDataSet.Insert;
-    EditSourceStr := rsInsertedByForm;
-
-    sdt := ExtractWord(1, JSONObject.Get('startTime', ''), ['T']);
-    y := ExtractDelimited(1, sdt, ['-']);
-    m := ExtractDelimited(2, sdt, ['-']);
-    d := ExtractDelimited(3, sdt, ['-']);
-    sdt := Concat(d, '/', m, '/', y);
-
-    stm := ExtractWord(2, JSONObject.Get('startTime', ''), ['T']);
-
-    etm := ExtractWord(2, JSONObject.Get('endTime', ''), ['T']);
-
-    aDataSet.FieldByName(COL_SURVEY_DATE).AsDateTime := StrToDate(sdt);
-    aDataSet.FieldByName(COL_START_TIME).AsDateTime := StrToTime(ExtractWord(1, stm, ['.']));
-    aDataSet.FieldByName(COL_END_TIME).AsDateTime := StrToTime(ExtractWord(1, etm, ['.']));
-    aDataSet.FieldByName(COL_DURATION).AsInteger := MinutesBetween(aDataSet.FieldByName(COL_START_TIME).AsDateTime,
-                                                          aDataSet.FieldByName(COL_END_TIME).AsDateTime);
-    aDataSet.FieldByName(COL_SAMPLE_ID).AsString := JSONObject.Get('id', '');
-    aDataSet.FieldByName(COL_START_LONGITUDE).AsFloat := JSONObject.Get('startLongitude', 0.0);
-    aDataSet.FieldByName(COL_START_LATITUDE).AsFloat := JSONObject.Get('startLatitude', 0.0);
-    aDataSet.FieldByName(COL_END_LONGITUDE).AsFloat := JSONObject.Get('endLongitude', 0.0);
-    aDataSet.FieldByName(COL_END_LATITUDE).AsFloat := JSONObject.Get('endLatitude', 0.0);
-
-    if ShowModal = mrOk then
-    begin
-      aDataSet.Post;
-      Result := GetLastInsertedKey(tbSurveys);
-    end
-    else
-      aDataSet.Cancel;
-  finally
-    FreeAndNil(edtSurvey);
-  end;
-
-  if CloseQueryAfter then
-    aDataSet.Close;
-end;
-
 procedure TdlgImportXMobile.AppendLog(const aMsg: String);
 begin
   mProgress.Lines.Append(aMsg);
@@ -317,9 +211,19 @@ begin
   eSourceFile.Images := iButtonsDark;
   eExpedition.Images := iButtonsDark;
 
-  lblTitleSource.Font.Color := clVioletFG1Dark;
-  lblTitleMap.Font.Color := clVioletFG1Dark;
-  lblTitleProgress.Font.Color := clVioletFG1Dark;
+  lblTitleSource.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleImportSettings.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleMap.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleProgress.Font.Color := ActiveTheme.Interactive.WindowTitle;
+
+  pExpedition.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pExpedition.Border.Color := ActiveTheme.Border.Default;
+  pExistingRecordPolicy.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pExistingRecordPolicy.Border.Color := ActiveTheme.Border.Default;
+  pUnknownTaxa.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pUnknownTaxa.Border.Color := ActiveTheme.Border.Default;
+  pErrorHandling.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pErrorHandling.Border.Color := ActiveTheme.Border.Default;
 
   icoFileStatus.Images := imgFinishedDark;
   icoImportFinished.Images := imgFinishedDark;
@@ -414,20 +318,14 @@ begin
       begin
         icoFileStatus.ImageIndex := 3;
         msgSourceFile.Caption := rsMobileErrorInvalidFileFormat;
-        if IsDarkModeEnabled then
-          msgSourceFile.Font.Color := clSystemCriticalFGDark
-        else
-          msgSourceFile.Font.Color := clSystemCriticalFGLight;
+        msgSourceFile.Font.Color := ActiveTheme.System.CriticalFG;
       end;
     end
     else
     begin
       icoFileStatus.ImageIndex := 3;
       msgSourceFile.Caption := rsMobileErrorOpeningFile;
-      if IsDarkModeEnabled then
-        msgSourceFile.Font.Color := clSystemCriticalFGDark
-      else
-        msgSourceFile.Font.Color := clSystemCriticalFGLight;
+      msgSourceFile.Font.Color := ActiveTheme.System.CriticalFG;
     end;
   end
   else
@@ -435,23 +333,26 @@ begin
     if eSourceFile.Text = EmptyStr then
     begin
       msgSourceFile.Caption := rsMobileFileNotSelected;
-      icoFileStatus.ImageIndex := -1;
+      icoFileStatus.ImageIndex := 5;
     end
     else
     begin
       msgSourceFile.Caption := rsMobileFileNotFound;
       icoFileStatus.ImageIndex := 3;
     end;
-
-    if IsDarkModeEnabled then
-      msgSourceFile.Font.Color := clSystemCriticalFGDark
-    else
-      msgSourceFile.Font.Color := clSystemCriticalFGLight;
+    msgSourceFile.Font.Color := ActiveTheme.System.CriticalFG;
   end;
 
-  lblExpedition.Visible := (FContentType in [mctInventories]);
-  eExpedition.Visible := lblExpedition.Visible;
+  pExpedition.Visible := (FContentType in [mctInventories]);
+
   sbNext.Enabled := (FContentType <> mctEmpty) and IsRequiredFilledSource;
+end;
+
+procedure TdlgImportXMobile.FormCreate(Sender: TObject);
+begin
+  FImportSettings.ExistingRecordPolicy := erpUpdateExisting;
+  FImportSettings.UnknownTaxonPolicy := utpAbort;
+  FImportSettings.ErrorHandling := iehAbort;
 end;
 
 procedure TdlgImportXMobile.FormDestroy(Sender: TObject);
@@ -522,6 +423,26 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  with cbExistingRecordPolicy.Items do
+  begin
+    Clear;
+    Add(rsImportIgnoreExisting);
+    Add(rsImportReplaceExisting);
+  end;
+  with cbUnknownTaxa.Items do
+  begin
+    Clear;
+    Add(rsImportAbortUnknownTaxon);
+    Add(rsImportIgnoreUnknownTaxon);
+  end;
+  with cbErrorHandling.Items do
+  begin
+    Clear;
+    Add(rsAbortOnError);
+    Add(rsIgnoreErrors);
+  end;
+  GetImportSettings;
+
   eSourceFileChange(nil);
 end;
 
@@ -563,6 +484,24 @@ begin
     FirstItem := JSONArray.Items[0];
     if (not Assigned(FirstItem)) or (FirstItem.JSONType <> jtObject) then
       Exit;
+  end;
+end;
+
+procedure TdlgImportXMobile.GetImportSettings;
+begin
+  case FImportSettings.ExistingRecordPolicy of
+    erpIgnoreExisting:  cbExistingRecordPolicy.ItemIndex := 0;
+    erpUpdateExisting:  cbExistingRecordPolicy.ItemIndex := 1;
+    //erpAllowDuplicates: cbExistingRecordPolicy.ItemIndex := 2;
+  end;
+  case FImportSettings.UnknownTaxonPolicy of
+    //utpAsk:     cbUnknownTaxa.ItemIndex := 0;
+    utpAbort:   cbUnknownTaxa.ItemIndex := 0;
+    utpIgnore:  cbUnknownTaxa.ItemIndex := 1;
+  end;
+  case FImportSettings.ErrorHandling of
+    iehAbort:   cbErrorHandling.ItemIndex := 0;
+    iehIgnore:  cbErrorHandling.ItemIndex := 1;
   end;
 end;
 
@@ -813,10 +752,7 @@ begin
   end;
 
   if HaveError then
-    if IsDarkModeEnabled then
-      Grid.Canvas.Brush.Color := clSystemCriticalBGDark
-    else
-      Grid.Canvas.Brush.Color := clSystemCriticalBGLight;
+    Grid.Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
 end;
 
 procedure TdlgImportXMobile.gridMapSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
@@ -851,9 +787,30 @@ begin
           aOldEgg := TEgg.Create(aEgg.Id);
           try
             Egg.ToEgg(aEgg);
-            Repo.Update(aEgg);
-            // write record history
-            WriteDiff(tbEggs, aOldEgg, aEgg, rsEditedByImport);
+            if (aEgg.TaxonId = 0) then
+              case FImportSettings.UnknownTaxonPolicy of
+                utpAsk: ;
+                utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Egg.FSpeciesName]);
+                utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Egg.FSpeciesName]));
+              end;
+            case FImportSettings.ExistingRecordPolicy of
+              erpIgnoreExisting: ;
+              erpUpdateExisting:
+              begin
+                Repo.Update(aEgg);
+                // write record history
+                WriteDiff(tbEggs, aOldEgg, aEgg, rsEditedByImport);
+              end;
+              erpAllowDuplicates:
+              begin
+                aEgg.NestId := Nest.FNestKey;
+                aEgg.ObserverId := aObserverId;
+                aEgg.EggSeq := StrToInt(ExtractDelimited(2, Egg.FFieldNumber, ['-']));
+                Repo.Insert(aEgg);
+                // write record history
+                WriteRecHistory(tbEggs, haCreated, 0, '', '', '', rsInsertedByImport);
+              end;
+            end;
           finally
             FreeAndNil(aOldEgg);
           end;
@@ -862,6 +819,12 @@ begin
         begin
           // if egg does not exist, insert it
           Egg.ToEgg(aEgg);
+          if (aEgg.TaxonId = 0) then
+            case FImportSettings.UnknownTaxonPolicy of
+              utpAsk: ;
+              utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Egg.FSpeciesName]);
+              utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Egg.FSpeciesName]));
+            end;
           aEgg.NestId := Nest.FNestKey;
           aEgg.ObserverId := aObserverId;
           aEgg.EggSeq := StrToInt(ExtractDelimited(2, Egg.FFieldNumber, ['-']));
@@ -885,8 +848,10 @@ var
   p, j, aSurveyKey, aObserverKey: Integer;
   Inventory: TMobileInventory;
   aObserver: String;
+  stopWithError: Boolean;
 begin
   nbPages.PageIndex := 2;
+  stopWithError := False;
 
   if stopProcess then
     Exit;
@@ -901,20 +866,21 @@ begin
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
   LogEvent(leaStart, 'Import inventories from JSON');
-  try
-    SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
-    aSurvey := TSurvey.Create();
-    try
-      // iterate through inventories list
-      for Inventory in FInventoryList do
-      begin
-        Inc(p);
-        aSurvey.Clear;
-        aSurveyKey := 0;
 
+  SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
+  aSurvey := TSurvey.Create();
+  try
+    // iterate through inventories list
+    for Inventory in FInventoryList do
+    begin
+      Inc(p);
+      aSurvey.Clear;
+      aSurveyKey := 0;
+
+      try
         if Inventory.FImport then
         begin
-          if Inventory.FSurveyKey > 0 then
+          if (Inventory.FSurveyKey > 0) then
           begin
             // update survey, if already exists
             aSurveyKey := Inventory.FSurveyKey;
@@ -923,9 +889,23 @@ begin
               SurveyRepo.GetById(aSurveyKey, aSurvey);
               Inventory.ToSurvey(aSurvey);
               aSurvey.ExpeditionId := FExpeditionId;
-              SurveyRepo.Update(aSurvey);
-              // write record history
-              WriteDiff(tbSurveys, aOldSurvey, aSurvey, rsEditedByImport);
+              case FImportSettings.ExistingRecordPolicy of
+                erpIgnoreExisting: ;
+                erpUpdateExisting:
+                begin
+                  SurveyRepo.Update(aSurvey);
+                  // write record history
+                  WriteDiff(tbSurveys, aOldSurvey, aSurvey, rsEditedByImport);
+                end;
+                erpAllowDuplicates:
+                begin
+                  SurveyRepo.Insert(aSurvey);
+                  aSurveyKey := aSurvey.Id;
+                  Inventory.FSurveyKey := aSurveyKey;
+                  // write record history
+                  WriteRecHistory(tbSurveys, haCreated, 0, '', '', '', rsInsertedByImport);
+                end;
+              end;
             finally
               FreeAndNil(aOldSurvey);
             end;
@@ -966,40 +946,49 @@ begin
               [aSurveyKey, GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, aSurveyKey)]));
           end;
         end;
-
-        PBar.Position := p;
-        Application.ProcessMessages;
-
-        if stopProcess then
-          Break;
+      except
+        on E: Exception do
+        begin
+          AppendLog(Format(rsErrorImporting, [E.Message]));
+          if FImportSettings.ErrorHandling = iehAbort then
+          begin
+            stopWithError := True;
+            stopProcess := True;
+            Break;
+          end;
+        end;
       end;
 
-    finally
-      FreeAndNil(aSurvey);
-      SurveyRepo.Free;
+      PBar.Position := p;
+      Application.ProcessMessages;
+
+      if stopProcess then
+        Break;
     end;
 
-  except
-    on E: Exception do
-    begin
-      AppendLog(Format(rsErrorImporting, [E.Message]));
-      DMM.sqlTrans.RollbackRetaining;
-      lblProgressInstruction.Caption := rsErrorImportFinished;
-      icoImportFinished.ImageIndex := 1;
-      sbCancel.Caption := rsCaptionClose;
-      sbRetry.Visible := True;
-      sbSaveLog.Visible := True;
-    end;
+  finally
+    FreeAndNil(aSurvey);
+    SurveyRepo.Free;
   end;
+
   LogEvent(leaFinish, 'Import inventories from JSON');
 
   if stopProcess then
   begin
-    AppendLog(rsImportCanceledByUser);
+    if stopWithError then
+    begin
+      lblProgressInstruction.Caption := rsErrorImportFinished;
+      sbCancel.Caption := rsCaptionClose;
+      sbRetry.Visible := True;
+      sbSaveLog.Visible := True;
+    end else
+    begin
+      AppendLog(rsImportCanceledByUser);
+      LogInfo('Import canceled by user, transaction was rolled back');
+      lblTitleProgress.Caption := rsImportCanceled;
+      lblProgressInstruction.Caption := rsImportCanceledByUser;
+    end;
     DMM.sqlTrans.RollbackRetaining;
-    LogInfo('Import canceled by user, transaction was rolled back');
-    lblTitleProgress.Caption := rsImportCanceled;
-    lblProgressInstruction.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
   end
   else
@@ -1024,6 +1013,7 @@ var
   aNest, aOldNest: TNest;
   Repo: TNestRepository;
   Nest: TMobileNest;
+  stopWithError: Boolean;
 
   procedure ImportHelperOwners(const ANestId: Integer; const AHelpers: String);
   var
@@ -1055,6 +1045,7 @@ var
   end;
 begin
   nbPages.PageIndex := 2;
+  stopWithError := False;
 
   if stopProcess then
     Exit;
@@ -1069,17 +1060,18 @@ begin
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
   LogEvent(leaStart, 'Import nests from JSON');
-  try
-    Repo := TNestRepository.Create(DMM.sqlCon);
-    aNest := TNest.Create();
-    try
-      // iterate through nests list
-      for Nest in FNestList do
-      begin
-        Inc(p);
-        aNest.Clear;
-        aNestKey := 0;
 
+  Repo := TNestRepository.Create(DMM.sqlCon);
+  aNest := TNest.Create();
+  try
+    // iterate through nests list
+    for Nest in FNestList do
+    begin
+      Inc(p);
+      aNest.Clear;
+      aNestKey := 0;
+
+      try
         if Nest.FImport then
         begin
           if Nest.FNestKey > 0 then
@@ -1090,9 +1082,29 @@ begin
             try
               Repo.GetById(aNestKey, aNest);
               Nest.ToNest(aNest);
-              Repo.Update(aNest);
-              // write record history
-              WriteDiff(tbNests, aOldNest, aNest, rsEditedByImport);
+              if (aNest.TaxonId = 0) then
+                case FImportSettings.UnknownTaxonPolicy of
+                  utpAsk: ;
+                  utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Nest.FSpeciesName]);
+                  utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Nest.FSpeciesName]));
+                end;
+              case FImportSettings.ExistingRecordPolicy of
+                erpIgnoreExisting: ;
+                erpUpdateExisting:
+                begin
+                  Repo.Update(aNest);
+                  // write record history
+                  WriteDiff(tbNests, aOldNest, aNest, rsEditedByImport);
+                end;
+                erpAllowDuplicates:
+                begin
+                  Repo.Insert(aNest);
+                  aNestKey := aNest.Id;
+                  Nest.FNestKey := aNestKey;
+                  // write record history
+                  WriteRecHistory(tbNests, haCreated, 0, '', '', '', rsInsertedByImport);
+                end;
+              end;
             finally
               FreeAndNil(aOldNest);
             end;
@@ -1115,6 +1127,12 @@ begin
           begin
             // create new nest, if not exists
             Nest.ToNest(aNest);
+            if (aNest.TaxonId = 0) then
+              case FImportSettings.UnknownTaxonPolicy of
+                utpAsk: ;
+                utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Nest.FSpeciesName]);
+                utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Nest.FSpeciesName]));
+              end;
             Repo.Insert(aNest);
             aNestKey := aNest.Id;
             Nest.FNestKey := aNestKey;
@@ -1138,40 +1156,49 @@ begin
               [aNestKey, GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, aNestKey)]));
           end;
         end;
-
-        PBar.Position := p;
-        Application.ProcessMessages;
-
-        if stopProcess then
-          Break;
+      except
+        on E: Exception do
+        begin
+          AppendLog(Format(rsErrorImporting, [E.Message]));
+          if FImportSettings.ErrorHandling = iehAbort then
+          begin
+            stopWithError := True;
+            stopProcess := True;
+            Break;
+          end;
+        end;
       end;
 
-    finally
-      FreeAndNil(aNest);
-      Repo.Free;
+      PBar.Position := p;
+      Application.ProcessMessages;
+
+      if stopProcess then
+        Break;
     end;
 
-  except
-    on E: Exception do
-    begin
-      AppendLog(Format(rsErrorImporting, [E.Message]));
-      DMM.sqlTrans.RollbackRetaining;
-      lblProgressInstruction.Caption := rsErrorImportFinished;
-      icoImportFinished.ImageIndex := 1;
-      sbCancel.Caption := rsCaptionClose;
-      sbRetry.Visible := True;
-      sbSaveLog.Visible := True;
-    end;
+  finally
+    FreeAndNil(aNest);
+    Repo.Free;
   end;
+
   LogEvent(leaFinish, 'Import nests from JSON');
 
   if stopProcess then
   begin
-    AppendLog(rsImportCanceledByUser);
+    if stopWithError then
+    begin
+      lblProgressInstruction.Caption := rsErrorImportFinished;
+      sbCancel.Caption := rsCaptionClose;
+      sbRetry.Visible := True;
+      sbSaveLog.Visible := True;
+    end else
+    begin
+      AppendLog(rsImportCanceledByUser);
+      LogInfo('Import canceled by user, transaction was rolled back');
+      lblTitleProgress.Caption := rsImportCanceled;
+      lblProgressInstruction.Caption := rsImportCanceledByUser;
+    end;
     DMM.sqlTrans.RollbackRetaining;
-    LogInfo('Import canceled by user, transaction was rolled back');
-    lblTitleProgress.Caption := rsImportCanceled;
-    lblProgressInstruction.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
   end
   else
@@ -1229,9 +1256,21 @@ begin
               aPoi.SampleDate := Inventory.FStartTime;
             if aPoi.SampleTime = NullTime then
               aPoi.SampleTime := Inventory.FStartTime;
-            aRepo.Update(aPoi);
-            // write record history
-            WriteDiff(tbPoiLibrary, aOldPoi, aPoi, rsEditedByImport);
+            case FImportSettings.ExistingRecordPolicy of
+              erpIgnoreExisting: ;
+              erpUpdateExisting:
+              begin
+                aRepo.Update(aPoi);
+                // write record history
+                WriteDiff(tbPoiLibrary, aOldPoi, aPoi, rsEditedByImport);
+              end;
+              erpAllowDuplicates:
+              begin
+                aRepo.Insert(aPoi);
+                // write record history
+                WriteRecHistory(tbPoiLibrary, haCreated, 0, '', '', '', rsInsertedByImport);
+              end;
+            end;
           finally
             FreeAndNil(aOldPoi);
           end;
@@ -1290,9 +1329,23 @@ begin
           aOldRevision := TNestRevision.Create(aRevision.Id);
           try
             Revision.ToNestRevision(aRevision);
-            Repo.Update(aRevision);
-            // write record history
-            WriteDiff(tbNestRevisions, aOldRevision, aRevision, rsEditedByImport);
+            case FImportSettings.ExistingRecordPolicy of
+              erpIgnoreExisting: ;
+              erpUpdateExisting:
+              begin
+                Repo.Update(aRevision);
+                // write record history
+                WriteDiff(tbNestRevisions, aOldRevision, aRevision, rsEditedByImport);
+              end;
+              erpAllowDuplicates:
+              begin
+                aRevision.NestId := Nest.FNestKey;
+                aRevision.Observer1Id := aObserverId;
+                Repo.Insert(aRevision);
+                // write record history
+                WriteRecHistory(tbNestRevisions, haCreated, 0, '', '', '', rsInsertedByImport);
+              end;
+            end;
           finally
             FreeAndNil(aOldRevision);
           end;
@@ -1333,6 +1386,12 @@ begin
       begin
         aSighting.Clear;
         aTaxonId := GetValidTaxon(Species.FSpeciesName);
+        if aTaxonId = 0 then
+          case FImportSettings.UnknownTaxonPolicy of
+            utpAsk: ;
+            utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Species.FSpeciesName]);
+            utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Species.FSpeciesName]));
+          end;
         aObserverId := GetPersonKey(Inventory.FObserver);
         aLocalityId := GetSiteKey(Inventory.FLocalityName);
 
@@ -1351,9 +1410,23 @@ begin
               aSighting.SightingDate := Inventory.FStartTime;
             if not aSighting.Validate(Msg) then
               raise Exception.Create(Msg);
-            aRepo.Update(aSighting);
-            // write record history
-            WriteDiff(tbSightings, aOldSighting, aSighting, rsEditedByImport);
+            case FImportSettings.ExistingRecordPolicy of
+              erpIgnoreExisting: ;
+              erpUpdateExisting:
+              begin
+                aRepo.Update(aSighting);
+                // write record history
+                WriteDiff(tbSightings, aOldSighting, aSighting, rsEditedByImport);
+              end;
+              erpAllowDuplicates:
+              begin
+                aSighting.SurveyId := Inventory.FSurveyKey;
+                aRepo.Insert(aSighting);
+                Species.FSightingKey := aSighting.Id;
+                // write record history
+                WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByImport);
+              end;
+            end;
           finally
             FreeAndNil(aOldSighting);
           end;
@@ -1391,8 +1464,10 @@ var
   Repo: TSpecimenRepository;
   aSpecimen, aOldSpecimen: TSpecimen;
   Specimen: TMobileSpecimen;
+  stopWithError: Boolean;
 begin
   nbPages.PageIndex := 2;
+  stopWithError := False;
 
   if stopProcess then
     Exit;
@@ -1407,17 +1482,18 @@ begin
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
   LogEvent(leaStart, 'Import specimens from JSON');
-  try
-    Repo := TSpecimenRepository.Create(DMM.sqlCon);
-    aSpecimen := TSpecimen.Create();
-    try
-      // iterate through specimens list
-      for Specimen in FSpecimenList do
-      begin
-        Inc(p);
-        aSpecimen.Clear;
-        aSpecimenKey := 0;
 
+  Repo := TSpecimenRepository.Create(DMM.sqlCon);
+  aSpecimen := TSpecimen.Create();
+  try
+    // iterate through specimens list
+    for Specimen in FSpecimenList do
+    begin
+      Inc(p);
+      aSpecimen.Clear;
+      aSpecimenKey := 0;
+
+      try
         if Specimen.FImport then
         begin
           if Specimen.FSpecimenKey > 0 then
@@ -1428,9 +1504,28 @@ begin
             Repo.GetById(aSpecimenKey, aSpecimen);
             try
               Specimen.ToSpecimen(aSpecimen);
-              Repo.Update(aSpecimen);
-              // write record history
-              WriteDiff(tbSpecimens, aOldSpecimen, aSpecimen, rsEditedByImport);
+              if (aSpecimen.TaxonId = 0) then
+              case FImportSettings.UnknownTaxonPolicy of
+                utpAsk: ;
+                utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Specimen.FSpeciesName]);
+                utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Specimen.FSpeciesName]));
+              end;
+              case FImportSettings.ExistingRecordPolicy of
+                erpIgnoreExisting: ;
+                erpUpdateExisting:
+                begin
+                  Repo.Update(aSpecimen);
+                  // write record history
+                  WriteDiff(tbSpecimens, aOldSpecimen, aSpecimen, rsEditedByImport);
+                end;
+                erpAllowDuplicates:
+                begin
+                  Repo.Insert(aSpecimen);
+                  aSpecimenKey := aSpecimen.Id;
+                  // write record history
+                  WriteRecHistory(tbSpecimens, haCreated, 0, '', '', '', rsInsertedByImport);
+                end;
+              end;
             finally
               FreeAndNil(aOldSpecimen);
             end;
@@ -1442,6 +1537,12 @@ begin
           begin
             // create new specimen, if not exists
             Specimen.ToSpecimen(aSpecimen);
+            if (aSpecimen.TaxonId = 0) then
+            case FImportSettings.UnknownTaxonPolicy of
+              utpAsk: ;
+              utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Specimen.FSpeciesName]);
+              utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Specimen.FSpeciesName]));
+            end;
             Repo.Insert(aSpecimen);
             aSpecimenKey := aSpecimen.Id;
             // write record history
@@ -1451,40 +1552,49 @@ begin
               [aSpecimenKey, GetName(TBL_SPECIMENS, COL_FULL_NAME, COL_SPECIMEN_ID, aSpecimenKey)]));
           end;
         end;
-
-        PBar.Position := p;
-        Application.ProcessMessages;
-
-        if stopProcess then
-          Break;
+      except
+        on E: Exception do
+        begin
+          AppendLog(Format(rsErrorImporting, [E.Message]));
+          if FImportSettings.ErrorHandling = iehAbort then
+          begin
+            stopWithError := True;
+            stopProcess := True;
+            Break;
+          end;
+        end;
       end;
 
-    finally
-      FreeAndNil(aSpecimen);
-      Repo.Free;
+      PBar.Position := p;
+      Application.ProcessMessages;
+
+      if stopProcess then
+        Break;
     end;
 
-  except
-    on E: Exception do
-    begin
-      AppendLog(Format(rsErrorImporting, [E.Message]));
-      DMM.sqlTrans.RollbackRetaining;
-      lblProgressInstruction.Caption := rsErrorImportFinished;
-      icoImportFinished.ImageIndex := 1;
-      sbCancel.Caption := rsCaptionClose;
-      sbRetry.Visible := True;
-      sbSaveLog.Visible := True;
-    end;
+  finally
+    FreeAndNil(aSpecimen);
+    Repo.Free;
   end;
+
   LogEvent(leaFinish, 'Import specimens from JSON');
 
   if stopProcess then
   begin
-    AppendLog(rsImportCanceledByUser);
+    if stopWithError then
+    begin
+      lblProgressInstruction.Caption := rsErrorImportFinished;
+      sbCancel.Caption := rsCaptionClose;
+      sbRetry.Visible := True;
+      sbSaveLog.Visible := True;
+    end else
+    begin
+      AppendLog(rsImportCanceledByUser);
+      LogInfo('Import canceled by user, transaction was rolled back');
+      lblTitleProgress.Caption := rsImportCanceled;
+      lblProgressInstruction.Caption := rsImportCanceledByUser;
+    end;
     DMM.sqlTrans.RollbackRetaining;
-    LogInfo('Import canceled by user, transaction was rolled back');
-    lblTitleProgress.Caption := rsImportCanceled;
-    lblProgressInstruction.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
   end
   else
@@ -1561,9 +1671,23 @@ begin
           aOldVegetation := TVegetation.Create(aVegetation.Id);
           try
             Vegetation.ToVegetation(aVegetation);
-            Repo.Update(aVegetation);
-            // write record history
-            WriteDiff(tbVegetation, aOldVegetation, aVegetation, rsEditedByImport);
+            case FImportSettings.ExistingRecordPolicy of
+              erpIgnoreExisting: ;
+              erpUpdateExisting:
+              begin
+                Repo.Update(aVegetation);
+                // write record history
+                WriteDiff(tbVegetation, aOldVegetation, aVegetation, rsEditedByImport);
+              end;
+              erpAllowDuplicates:
+              begin
+                aVegetation.SurveyId := Inventory.FSurveyKey;
+                aVegetation.ObserverId := aObserverId;
+                Repo.Insert(aVegetation);
+                // write record history
+                WriteRecHistory(tbVegetation, haCreated, 0, '', '', '', rsInsertedByImport);
+              end;
+            end;
           finally
             FreeAndNil(aOldVegetation);
           end;
@@ -1615,9 +1739,23 @@ begin
           aOldWeather := TWeatherLog.Create(aWeather.Id);
           try
             Weather.ToWeatherLog(aWeather);
-            Repo.Update(aWeather);
-            // write record history
-            WriteDiff(tbWeatherLogs, aOldWeather, aWeather, rsEditedByImport);
+            case FImportSettings.ExistingRecordPolicy of
+              erpIgnoreExisting: ;
+              erpUpdateExisting:
+              begin
+                Repo.Update(aWeather);
+                // write record history
+                WriteDiff(tbWeatherLogs, aOldWeather, aWeather, rsEditedByImport);
+              end;
+              erpAllowDuplicates:
+              begin
+                aWeather.SurveyId := Inventory.FSurveyKey;
+                aWeather.ObserverId := aObserverId;
+                Repo.Insert(aWeather);
+                // write record history
+                WriteRecHistory(tbWeatherLogs, haCreated, 0, '', '', '', rsInsertedByImport);
+              end;
+            end;
           finally
             FreeAndNil(aOldWeather);
           end;
@@ -2039,6 +2177,7 @@ begin
     begin
       nbPages.PageIndex := 1;
 
+      SetImportSettings;
       LoadMapGrid;
 
       sbPrevious.Visible := True;
@@ -2067,6 +2206,24 @@ begin
   begin
     mProgress.Lines.SaveToFile(SaveDlg.FileName);
     OpenDocument(SaveDlg.FileName);
+  end;
+end;
+
+procedure TdlgImportXMobile.SetImportSettings;
+begin
+  case cbExistingRecordPolicy.ItemIndex of
+    0: FImportSettings.ExistingRecordPolicy := erpIgnoreExisting;
+    1: FImportSettings.ExistingRecordPolicy := erpUpdateExisting;
+    //2: FImportSettings.ExistingRecordPolicy := erpAllowDuplicates;
+  end;
+  case cbUnknownTaxa.ItemIndex of
+    0: FImportSettings.UnknownTaxonPolicy := utpAbort;
+    1: FImportSettings.UnknownTaxonPolicy := utpIgnore;
+    //2: FImportSettings.UnknownTaxonPolicy := utpAsk;
+  end;
+  case cbErrorHandling.ItemIndex of
+    0: FImportSettings.ErrorHandling := iehAbort;
+    1: FImportSettings.ErrorHandling := iehIgnore;
   end;
 end;
 

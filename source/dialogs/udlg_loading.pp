@@ -34,6 +34,7 @@ type
     procedure BackupProgress(Sender: TObject; Remaining, PageCount: integer);
     procedure ZipperProgress(Sender: TObject; const Pct: Double);
   private
+    procedure ApplyDarkMode;
     function GetMin: Integer;
     function GetMax: Integer;
     function GetProgress: Integer;
@@ -54,7 +55,7 @@ var
 implementation
 
 uses
-  utils_system;
+  utils_system, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -65,6 +66,8 @@ begin
   {$IFDEF MSWINDOWS}
   SetRoundedCorners(Self.Handle, rcOn);
   {$ENDIF}
+
+  ApplyDarkMode;
 end;
 
 function TdlgLoading.GetMax: Integer;
@@ -95,6 +98,11 @@ end;
 procedure TdlgLoading.SetProgress(aValue: Integer);
 begin
   ringProgress.Value := aValue;
+end;
+
+procedure TdlgLoading.ApplyDarkMode;
+begin
+  ringProgress.LineColor := ActiveTheme.Interactive.WindowTitle;
 end;
 
 procedure TdlgLoading.BackupProgress(Sender: TObject; Remaining, PageCount: integer);

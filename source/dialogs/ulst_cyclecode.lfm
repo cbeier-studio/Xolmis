@@ -13,7 +13,7 @@ object lstCycleCode: TlstCycleCode
   ClientWidth = 538
   PopupMode = pmAuto
   Position = poOwnerFormCenter
-  LCLVersion = '4.2.0.0'
+  LCLVersion = '4.6.0.0'
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -91,7 +91,7 @@ object lstCycleCode: TlstCycleCode
     Background.Gradient1EndPercent = 35
     Background.Style = bbsColor
     BevelInner = bvNone
-    BevelOuter = bvRaised
+    BevelOuter = bvNone
     BevelWidth = 1
     Border.Style = bboNone
     BorderBCStyle = bpsBorder

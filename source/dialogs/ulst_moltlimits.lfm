@@ -7,7 +7,7 @@ object lstMoltLimits: TlstMoltLimits
   Caption = 'Molt limits'
   ClientHeight = 410
   ClientWidth = 356
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.6.0.0'
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -120,7 +120,7 @@ object lstMoltLimits: TlstMoltLimits
     Background.Gradient1EndPercent = 35
     Background.Style = bbsColor
     BevelInner = bvNone
-    BevelOuter = bvRaised
+    BevelOuter = bvNone
     BevelWidth = 1
     Border.Style = bboNone
     BorderBCStyle = bpsBorder

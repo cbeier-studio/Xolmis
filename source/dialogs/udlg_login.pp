@@ -99,7 +99,7 @@ procedure TdlgLogin.ApplyDarkMode;
 begin
   ePassword.Images := iButtonsDark;
 
-  lblLogin.Font.Color := clVioletFG1Dark;
+  lblLogin.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
 procedure TdlgLogin.ePasswordButtonClick(Sender: TObject);

@@ -140,18 +140,18 @@ begin
 
   icoImportFinished.Images := imgFinishedDark;
 
-  pNestFile.Background.Color := clSolidBGSecondaryDark;
-  pNestFile.Border.Color := clSystemSolidNeutralFGDark;
-  pRevisionFile.Background.Color := clSolidBGSecondaryDark;
-  pRevisionFile.Border.Color := clSystemSolidNeutralFGDark;
-  pEggFile.Background.Color := clSolidBGSecondaryDark;
-  pEggFile.Border.Color := clSystemSolidNeutralFGDark;
+  pNestFile.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pNestFile.Border.Color := ActiveTheme.Border.Default;
+  pRevisionFile.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pRevisionFile.Border.Color := ActiveTheme.Border.Default;
+  pEggFile.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pEggFile.Border.Color := ActiveTheme.Border.Default;
 
-  pGenerateFiles.Background.Color := clSystemCautionBGDark;
-  pGenerateFiles.Border.Color := clSystemCautionFGDark;
+  pGenerateFiles.Background.Color := ActiveTheme.System.CautionBG;
+  pGenerateFiles.Border.Color := ActiveTheme.System.CautionFG;
 
-  lblTitleImportFiles.Font.Color := clVioletFG1Dark;
-  lblTitleImportFinished.Font.Color := clVioletFG1Dark;
+  lblTitleImportFiles.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleImportFinished.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
 procedure TdlgImportNests.btnGenerateFilesClick(Sender: TObject);

@@ -49,11 +49,11 @@ type
     MvPluginManager: TMvPluginManager;
     MvPluginManagerLegalNoticePlugin1: TLegalNoticePlugin;
     MvPluginManagerMapScalePlugin1: TMapScalePlugin;
+    pContent: TBCPanel;
+    pDecimal: TBCPanel;
     PG: TPageControl;
     lineBottom: TShapeLineBGRA;
     pBottom: TPanel;
-    pContent: TBCPanel;
-    pDecimal: TBCPanel;
     pLat: TBCPanel;
     pLong: TBCPanel;
     sbCancel: TButton;
@@ -317,14 +317,16 @@ end;
 
 procedure TdlgGeoAssist.ApplyDarkMode;
 begin
-  pLong.Background.Color := clCardBGDefaultDark;
-  pLong.Border.Color := clSystemSolidNeutralFGDark;
-  pLat.Background.Color := clCardBGDefaultDark;
-  pLat.Border.Color := clSystemSolidNeutralFGDark;
-  pDecimal.Background.Color := clCardBGDefaultDark;
-  pDecimal.Border.Color := clSystemSolidNeutralFGDark;
+  pLong.Background.Color := ActiveTheme.Background.CardDefault;
+  pLong.Border.Color := ActiveTheme.Border.Default;
+  pLat.Background.Color := ActiveTheme.Background.CardDefault;
+  pLat.Border.Color := ActiveTheme.Border.Default;
+  pDecimal.Background.Color := ActiveTheme.Background.CardDefault;
+  pDecimal.Border.Color := ActiveTheme.Border.Default;
 
-  pDecimal.FontEx.Color := clVioletFG1Dark;
+  pDecimal.FontEx.Color := ActiveTheme.Interactive.WindowTitle;
+
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TdlgGeoAssist.btnHelpClick(Sender: TObject);

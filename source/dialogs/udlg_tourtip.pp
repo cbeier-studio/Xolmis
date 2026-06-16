@@ -102,8 +102,8 @@ end;
 
 procedure TdlgTourTip.ApplyDarkMode;
 begin
-  lineLeft.Brush.Color := clVioletFG1Dark;
-  Color := clVioletBG1Dark;
+  lineLeft.Brush.Color := ActiveTheme.Interactive.WindowTitle;
+  Color := ActiveTheme.Interactive.SelectionBackground;
 end;
 
 procedure TdlgTourTip.btnCloseClick(Sender: TObject);
@@ -127,7 +127,7 @@ begin
   SetRoundedCorners(Self.Handle, rcOn);
   {$ENDIF}
 
-  Color := clVioletFGLight;
+  Color := ActiveTheme.Interactive.WindowTitle;
 
   if IsDarkModeEnabled then
     ApplyDarkMode;

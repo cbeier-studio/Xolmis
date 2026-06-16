@@ -148,42 +148,42 @@ uses
 
 procedure TdlgExport.ApplyDarkMode;
 begin
-  pEncoding.Background.Color := clSolidBGSecondaryDark;
-  pEncoding.Border.Color := clSystemSolidNeutralFGDark;
-  pTranslateFieldNames.Background.Color := clSolidBGSecondaryDark;
-  pTranslateFieldNames.Border.Color := clSystemSolidNeutralFGDark;
-  pTrimValues.Background.Color := clSolidBGSecondaryDark;
-  pTrimValues.Border.Color := clSystemSolidNeutralFGDark;
-  pForceNDJSON.Background.Color := clSolidBGSecondaryDark;
-  pForceNDJSON.Border.Color := clSystemSolidNeutralFGDark;
-  pIgnoreNulls.Background.Color := clSolidBGSecondaryDark;
-  pIgnoreNulls.Border.Color := clSystemSolidNeutralFGDark;
-  pIncludeChildRecords.Background.Color := clSolidBGSecondaryDark;
-  pIncludeChildRecords.Border.Color := clSystemSolidNeutralFGDark;
-  pIndentation.Background.Color := clSolidBGSecondaryDark;
-  pIndentation.Border.Color := clSystemSolidNeutralFGDark;
-  pHaveHeader.Background.Color := clSolidBGSecondaryDark;
-  pHaveHeader.Border.Color := clSystemSolidNeutralFGDark;
-  pDelimiter.Background.Color := clSolidBGSecondaryDark;
-  pDelimiter.Border.Color := clSystemSolidNeutralFGDark;
-  pSheet.Background.Color := clSolidBGSecondaryDark;
-  pSheet.Border.Color := clSystemSolidNeutralFGDark;
-  pQuoteChar.Background.Color := clSolidBGSecondaryDark;
-  pQuoteChar.Border.Color := clSystemSolidNeutralFGDark;
-  pDecimalSeparator.Background.Color := clSolidBGSecondaryDark;
-  pDecimalSeparator.Border.Color := clSystemSolidNeutralFGDark;
-  pRootKey.Background.Color := clSolidBGSecondaryDark;
-  pRootKey.Border.Color := clSystemSolidNeutralFGDark;
-  pKeyPath.Background.Color := clSolidBGSecondaryDark;
-  pKeyPath.Border.Color := clSystemSolidNeutralFGDark;
-  pDateFormat.Background.Color := clSolidBGSecondaryDark;
-  pDateFormat.Border.Color := clSystemSolidNeutralFGDark;
-  pTimeFormat.Background.Color := clSolidBGSecondaryDark;
-  pTimeFormat.Border.Color := clSystemSolidNeutralFGDark;
-  pNumberFormat.Background.Color := clSolidBGSecondaryDark;
-  pNumberFormat.Border.Color := clSystemSolidNeutralFGDark;
-  pCoordinatesFormat.Background.Color := clSolidBGSecondaryDark;
-  pCoordinatesFormat.Border.Color := clSystemSolidNeutralFGDark;
+  pEncoding.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pEncoding.Border.Color := ActiveTheme.Border.Default;
+  pTranslateFieldNames.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pTranslateFieldNames.Border.Color := ActiveTheme.Border.Default;
+  pTrimValues.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pTrimValues.Border.Color := ActiveTheme.Border.Default;
+  pForceNDJSON.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pForceNDJSON.Border.Color := ActiveTheme.Border.Default;
+  pIgnoreNulls.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pIgnoreNulls.Border.Color := ActiveTheme.Border.Default;
+  pIncludeChildRecords.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pIncludeChildRecords.Border.Color := ActiveTheme.Border.Default;
+  pIndentation.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pIndentation.Border.Color := ActiveTheme.Border.Default;
+  pHaveHeader.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pHaveHeader.Border.Color := ActiveTheme.Border.Default;
+  pDelimiter.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pDelimiter.Border.Color := ActiveTheme.Border.Default;
+  pSheet.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pSheet.Border.Color := ActiveTheme.Border.Default;
+  pQuoteChar.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pQuoteChar.Border.Color := ActiveTheme.Border.Default;
+  pDecimalSeparator.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pDecimalSeparator.Border.Color := ActiveTheme.Border.Default;
+  pRootKey.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pRootKey.Border.Color := ActiveTheme.Border.Default;
+  pKeyPath.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pKeyPath.Border.Color := ActiveTheme.Border.Default;
+  pDateFormat.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pDateFormat.Border.Color := ActiveTheme.Border.Default;
+  pTimeFormat.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pTimeFormat.Border.Color := ActiveTheme.Border.Default;
+  pNumberFormat.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pNumberFormat.Border.Color := ActiveTheme.Border.Default;
+  pCoordinatesFormat.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pCoordinatesFormat.Border.Color := ActiveTheme.Border.Default;
 
   tsTrimValues.Color := pTrimValues.Background.Color;
   tsForceNDJSON.Color := pForceNDJSON.Background.Color;
@@ -194,8 +194,7 @@ begin
 
   pmMark.Images := iButtonsDark;
   cbFiletype.Images := iIconsDark;
-
-  pBottom.Color := clSolidBGBaseDark;
+  btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TdlgExport.btnHelpClick(Sender: TObject);

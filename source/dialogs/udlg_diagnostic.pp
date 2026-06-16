@@ -65,9 +65,9 @@ uses
 
 procedure TdlgDiagnostic.ApplyDarkMode;
 begin
-  pTitle.Color := clSolidBGBaseDark;
+  pTitle.Color := ActiveTheme.Background.SolidBase;
 
-  lblAppName.Font.Color := clVioletFG1Dark;
+  lblAppName.Font.Color := ActiveTheme.Interactive.WindowTitle;
 
   sbCopy.Images := iButtonsDark;
 end;

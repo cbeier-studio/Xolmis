@@ -558,7 +558,7 @@ object dlgImport: TdlgImport
         object pHaveHeader: TBCPanel
           Left = 16
           Height = 47
-          Top = 165
+          Top = 166
           Width = 871
           Align = alTop
           BorderSpacing.Left = 16
@@ -636,7 +636,7 @@ object dlgImport: TdlgImport
         object pDelimiter: TBCPanel
           Left = 16
           Height = 47
-          Top = 212
+          Top = 213
           Width = 871
           Align = alTop
           AutoSize = True
@@ -734,7 +734,7 @@ object dlgImport: TdlgImport
         object pDecimalSeparator: TBCPanel
           Left = 16
           Height = 47
-          Top = 322
+          Top = 323
           Width = 871
           Align = alTop
           AutoSize = True
@@ -817,7 +817,7 @@ object dlgImport: TdlgImport
         object pEncoding: TBCPanel
           Left = 16
           Height = 47
-          Top = 110
+          Top = 111
           Width = 871
           Align = alTop
           AutoSize = True
@@ -900,7 +900,7 @@ object dlgImport: TdlgImport
         object pKeyPath: TBCPanel
           Left = 16
           Height = 47
-          Top = 432
+          Top = 433
           Width = 871
           Align = alTop
           AutoSize = True
@@ -974,7 +974,7 @@ object dlgImport: TdlgImport
         object pSheet: TBCPanel
           Left = 16
           Height = 47
-          Top = 267
+          Top = 268
           Width = 871
           Align = alTop
           AutoSize = True
@@ -1049,7 +1049,7 @@ object dlgImport: TdlgImport
         object pRecordXPath: TBCPanel
           Left = 16
           Height = 47
-          Top = 487
+          Top = 488
           Width = 871
           Align = alTop
           AutoSize = True
@@ -1122,7 +1122,7 @@ object dlgImport: TdlgImport
         end
         object pExistingRecordPolicy: TBCPanel
           Left = 16
-          Height = 47
+          Height = 48
           Top = 8
           Width = 871
           Align = alTop
@@ -1174,7 +1174,7 @@ object dlgImport: TdlgImport
             AnchorSideTop.Side = asrCenter
             Left = 16
             Height = 15
-            Top = 16
+            Top = 17
             Width = 117
             Caption = 'Existing records policy'
             Layout = tlCenter
@@ -1187,26 +1187,25 @@ object dlgImport: TdlgImport
             AnchorSideRight.Side = asrBottom
             Left = 682
             Height = 23
-            Top = 12
+            Top = 13
             Width = 173
             Anchors = [akTop, akRight]
             Color = clWhite
             ItemHeight = 15
-            ItemIndex = 2
+            ItemIndex = 1
             Items.Strings = (
-              'Insert only'
+              'Ignore existing'
               'Replace existing'
-              'Update existing'
             )
             Style = csDropDownList
             TabOrder = 0
-            Text = 'Update existing'
+            Text = 'Replace existing'
           end
         end
         object pErrorHandling: TBCPanel
           Left = 16
           Height = 47
-          Top = 55
+          Top = 56
           Width = 871
           Align = alTop
           AutoSize = True
@@ -1288,7 +1287,7 @@ object dlgImport: TdlgImport
         object pDateFormat: TBCPanel
           Left = 16
           Height = 47
-          Top = 377
+          Top = 378
           Width = 871
           Align = alTop
           AutoSize = True
@@ -1524,8 +1523,8 @@ object dlgImport: TdlgImport
           Anchors = [akTop, akRight, akBottom]
           ChildSizing.LeftRightSpacing = 8
           ChildSizing.TopBottomSpacing = 8
-          ClientHeight = 327
-          ClientWidth = 307
+          ClientHeight = 331
+          ClientWidth = 328
           TabOrder = 2
           object pLookupTable: TBCPanel
             Left = 8
