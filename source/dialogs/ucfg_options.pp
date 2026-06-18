@@ -879,6 +879,8 @@ end;
 procedure TcfgOptions.sliderRowHeightChangeValue(Sender: TObject);
 begin
   xSettings.DefaultRowHeight := MIN_ROW_HEIGHT + (sliderRowHeight.Value * 2);
+  // Notify modules to update row height
+  EventBus.Publish(evDefaultRowHeightChanged);
 end;
 
 procedure TcfgOptions.tsAllowUsageDataChange(Sender: TObject);
@@ -894,6 +896,8 @@ end;
 procedure TcfgOptions.tsAutoSizeColumnsChange(Sender: TObject);
 begin
   xSettings.AutoAdjustColumns := tsAutoSizeColumns.Checked;
+  // Notify modules to auto adjust columns or not
+  EventBus.Publish(evAutoAdjustColumnsChanged);
 end;
 
 procedure TcfgOptions.tsConfirmCancelChange(Sender: TObject);

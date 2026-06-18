@@ -9474,7 +9474,6 @@ object frmCustomGrid: TfrmCustomGrid
         AutoSize = True
         BorderSpacing.Right = 8
         DisabledImageIndex = 29
-        Enabled = False
         Flat = True
         Images = iButtons
         ImageIndex = 28

@@ -1278,6 +1278,12 @@ type
     procedure LoadRecordColumns;
     procedure LoadRecordRow;
 
+    procedure OnAutoAdjustColumnsChanged;
+    procedure OnDatesFilterChanged;
+    procedure OnDefaultRowHeightChanged;
+    procedure OnGazetteerFilterChanged;
+    procedure OnMethodCategoryFilterChanged;
+
     procedure OpenAsync;
     procedure OpenExpeditionChilds;
     procedure OpenIndividualChilds;
@@ -4667,6 +4673,12 @@ procedure TfrmCustomGrid.FormDestroy(Sender: TObject);
 var
   PanelTab: TCustomPanelTab;
 begin
+  // Unsubscribe events
+  EventBus.Unsubscribe(evGazetteerChanged, @OnGazetteerFilterChanged);
+  EventBus.Unsubscribe(evMethodCategoryChanged, @OnMethodCategoryFilterChanged);
+  EventBus.Unsubscribe(evAutoAdjustColumnsChanged, @OnAutoAdjustColumnsChanged);
+  EventBus.Unsubscribe(evDefaultRowHeightChanged, @OnDefaultRowHeightChanged);
+
   //if Assigned(DMI) then
   //  FreeAndNil(DMI);
   //if Assigned(DMB) then
@@ -5037,7 +5049,15 @@ begin
 
   // Use a timer to load the rest to speed up opening
   TimerOpen.Enabled := True;
-  TimerUpdate.Enabled := True;
+  //TimerUpdate.Enabled := True;
+
+  // Subscribe events
+  EventBus.Subscribe(evAutoAdjustColumnsChanged, @OnAutoAdjustColumnsChanged);
+  EventBus.Subscribe(evDefaultRowHeightChanged, @OnDefaultRowHeightChanged);
+  if (fufSites in FModule.FilterUiFlags) then
+    EventBus.Subscribe(evGazetteerChanged, @OnGazetteerFilterChanged);
+  if (fufCategory in FModule.FilterUiFlags) then
+    EventBus.Subscribe(evMethodCategoryChanged, @OnMethodCategoryFilterChanged);
 end;
 
 function TfrmCustomGrid.GetChildDataSet: TDataSet;
@@ -5465,6 +5485,48 @@ begin
   ADrawer.BrushColor := clWhite;
   ADrawer.BrushStyle := bsClear;
   ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
+end;
+
+procedure TfrmCustomGrid.OnAutoAdjustColumnsChanged;
+begin
+  UpdateAutoSizeColumns;
+end;
+
+procedure TfrmCustomGrid.OnDatesFilterChanged;
+begin
+  if (fufDates in FModule.FilterUiFlags) then
+    LoadDateTreeData(FTableType, tvDateFilter);
+end;
+
+procedure TfrmCustomGrid.OnDefaultRowHeightChanged;
+begin
+  UpdateRowHeights;
+end;
+
+procedure TfrmCustomGrid.OnGazetteerFilterChanged;
+begin
+  if (fufSites in FModule.FilterUiFlags) then
+    LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+end;
+
+procedure TfrmCustomGrid.OnMethodCategoryFilterChanged;
+var
+  S: String;
+begin
+  S := EmptyStr;
+
+  if (fufCategory in FModule.FilterUiFlags) then
+  begin
+    if cbCategoryFilter.ItemIndex > 0 then
+      S := cbCategoryFilter.Text;
+    cbCategoryFilter.Items.Clear;
+    cbCategoryFilter.Items.Add(rsCaptionAll);
+    LoadMethodCategories(cbCategoryFilter.Items);
+    if S <> EmptyStr then
+      cbCategoryFilter.ItemIndex := cbCategoryFilter.Items.IndexOf(S)
+    else
+      cbCategoryFilter.ItemIndex := 0;
+  end;
 end;
 
 procedure TfrmCustomGrid.OpenAsync;
@@ -6147,7 +6209,10 @@ begin
   try
     AutofillType := gatCountries;
     if ShowModal = mrOK then
+    begin
       sbRefreshRecordsClick(nil);
+      EventBus.Publish(evGazetteerChanged);
+    end;
   finally
     FreeAndNil(dlgGazetteerAutofill);
   end;
@@ -6168,7 +6233,10 @@ begin
     CountryName := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, dsLink.DataSet.FieldByName('country_id').AsInteger);
     StateName := dsLink.DataSet.FieldByName('site_name').AsString;
     if ShowModal = mrOK then
+    begin
       sbRefreshRecordsClick(nil);
+      EventBus.Publish(evGazetteerChanged);
+    end;
   finally
     FreeAndNil(dlgGazetteerAutofill);
   end;
@@ -7641,6 +7709,9 @@ begin
     DeleteRecord(FTableType, dsLink.DataSet);
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
+    // Notify modules to update site filters
+    if (FTableType = tbGazetteer) then
+      EventBus.Publish(evGazetteerChanged);
 
     // Inactivate the child records
     if FModule.Submodules.Count > 0 then
@@ -7738,7 +7809,8 @@ begin
     if needsRefresh then
     begin
       UpdateButtons(dsLink.DataSet);
-      UpdateFilterPanels;
+      //UpdateFilterPanels;
+      OnDatesFilterChanged;
       UpdateChildRightPanel;
     end;
   finally
@@ -7836,7 +7908,8 @@ begin
     if needsRefresh then
     begin
       UpdateButtons(dsLink.DataSet);
-      UpdateFilterPanels;
+      //UpdateFilterPanels;
+      OnDatesFilterChanged;
       UpdateChildRightPanel;
     end;
   finally
@@ -7879,7 +7952,8 @@ begin
     if needsRefresh then
     begin
       UpdateButtons(dsLink.DataSet);
-      UpdateFilterPanels;
+      //UpdateFilterPanels;
+      OnDatesFilterChanged;
       UpdateChildRightPanel;
       pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
     end;
@@ -8106,6 +8180,7 @@ begin
     frmQuickEntry.TableType := FTableType;
     ShowModal;
     sbRefreshRecordsClick(nil);
+    OnDatesFilterChanged;
   finally
     FreeAndNil(frmQuickEntry);
   end;

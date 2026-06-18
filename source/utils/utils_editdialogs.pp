@@ -142,6 +142,8 @@ begin
         aDataSet.EnableControls;
       end;
 
+      // Notify modules to update category filter controls
+      EventBus.Publish(evMethodCategoryChanged);
     end;
   finally
     if Assigned(FOldRecord) then
@@ -212,6 +214,8 @@ begin
         aDataSet.EnableControls;
       end;
 
+      // Notify modules to update site filter controls
+      EventBus.Publish(evGazetteerChanged);
     end;
   finally
     if Assigned(FOldRecord) then

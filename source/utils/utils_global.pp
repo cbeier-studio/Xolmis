@@ -192,11 +192,33 @@ type
   THistoryAction = (haCreated, haEdited, haDeleted, haRestored);
   TLogEventAction = (leaStarting, leaEnd, leaStart, leaFinish, leaOpen, leaClose, leaActiveTab,
     leaExecute, leaCommit, leaRollback);
+  TAppEvent = (evGazetteerChanged, evMethodCategoryChanged, evAutoAdjustColumnsChanged, evDefaultRowHeightChanged);
+
 
 const
   HISTORY_ACTIONS: array [THistoryAction] of String = ('I', 'U', 'D', 'R');
   LOG_EVENT_ACTIONS: array[TLogEventAction] of String = ('STARTING', 'END', 'START', 'FINISH', 'OPEN', 'CLOSE',
     'ACTIVE TAB', 'EXECUTE', 'COMMIT', 'ROLLBACK');
+
+type
+  TMethodArray = array of TMethod;
+  TEventHandler = procedure of object;
+
+  { TEventBus }
+
+  TEventBus = class
+  private
+    FSubscribers: array[TAppEvent] of TMethodArray;
+    class function MethodsEqual(const ALeft, ARight: TMethod): Boolean; static;
+    function IndexOfSubscriber(E: TAppEvent; const AMethod: TMethod): Integer;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Subscribe(E: TAppEvent; Handler: TEventHandler);
+    procedure Publish(E: TAppEvent);
+    procedure Unsubscribe(E: TAppEvent; Handler: TEventHandler);
+  end;
 
 type
 
@@ -362,6 +384,7 @@ var
   xProvider: ISQLProvider;
   xSettings: TXolmisSettings;
   xNotifications: TNotificationList;
+  EventBus: TEventBus;
 
 var
   isOpening, isWorking, isClosing: Boolean;
@@ -1037,6 +1060,97 @@ begin
     Result := fcOther;
 end;
 
+{ TEventBus }
+
+class function TEventBus.MethodsEqual(const ALeft, ARight: TMethod): Boolean;
+begin
+  Result := (ALeft.Code = ARight.Code) and (ALeft.Data = ARight.Data);
+end;
+
+function TEventBus.IndexOfSubscriber(E: TAppEvent; const AMethod: TMethod): Integer;
+var
+  I: Integer;
+begin
+  for I := 0 to High(FSubscribers[E]) do
+    if MethodsEqual(FSubscribers[E][I], AMethod) then
+      Exit(I);
+
+  Result := -1;
+end;
+
+constructor TEventBus.Create;
+var
+  E: TAppEvent;
+begin
+  for E := Low(TAppEvent) to High(TAppEvent) do
+    SetLength(FSubscribers[E], 0);
+end;
+
+destructor TEventBus.Destroy;
+var
+  E: TAppEvent;
+begin
+  for E := Low(TAppEvent) to High(TAppEvent) do
+    SetLength(FSubscribers[E], 0);
+  inherited Destroy;
+end;
+
+procedure TEventBus.Publish(E: TAppEvent);
+var
+  I: Integer;
+  M: TMethod;
+  Handler: TEventHandler;
+  Subscribers: TMethodArray;
+begin
+  Subscribers := Copy(FSubscribers[E]);
+  for I := 0 to High(Subscribers) do
+  begin
+    M := Subscribers[I];
+    TMethod(Handler) := M;
+    if Assigned(Handler) then
+      Handler;
+  end;
+end;
+
+procedure TEventBus.Subscribe(E: TAppEvent; Handler: TEventHandler);
+var
+  M: TMethod;
+  SubscriberCount: Integer;
+begin
+  M := TMethod(Handler);
+  if not Assigned(Handler) then
+    Exit;
+
+  if IndexOfSubscriber(E, M) >= 0 then
+    Exit;
+
+  SubscriberCount := Length(FSubscribers[E]);
+  SetLength(FSubscribers[E], SubscriberCount + 1);
+  FSubscribers[E][SubscriberCount] := M;
+end;
+
+procedure TEventBus.Unsubscribe(E: TAppEvent; Handler: TEventHandler);
+var
+  I: Integer;
+  M: TMethod;
+begin
+  M := TMethod(Handler);
+  if not Assigned(Handler) then
+    Exit;
+
+  I := IndexOfSubscriber(E, M);
+  if I < 0 then
+    Exit;
+
+  while I < High(FSubscribers[E]) do
+  begin
+    FSubscribers[E][I] := FSubscribers[E][I + 1];
+    Inc(I);
+  end;
+
+  SetLength(FSubscribers[E], Length(FSubscribers[E]) - 1);
+end;
+
 { TXolmisSettings }
 
 procedure TXolmisSettings.SetFileName(aValue: String);
@@ -1307,5 +1421,11 @@ procedure TNotification.MarkAsRead;
 begin
   FIsRead := True;
 end;
+
+initialization
+  EventBus := TEventBus.Create;
+
+finalization
+  FreeAndNil(EventBus);
 
 end.
