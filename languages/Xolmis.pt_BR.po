@@ -5383,6 +5383,11 @@ msgctxt "tdlgimportxmobile.btnhelp.caption"
 msgid "&Help"
 msgstr "A&juda"
 
+#: tdlgimportxmobile.btnnew.caption
+msgctxt "tdlgimportxmobile.btnnew.caption"
+msgid "New"
+msgstr "Novo"
+
 #: tdlgimportxmobile.caption
 msgctxt "tdlgimportxmobile.caption"
 msgid "Import from Xolmis Mobile"
@@ -5490,6 +5495,16 @@ msgstr "Táxon desconhecido encontrado"
 msgctxt "tdlgimportxmobile.opendlg.title"
 msgid "Select source file"
 msgstr "Selecionar arquivo de origem"
+
+#: tdlgimportxmobile.pmnnewlocality.caption
+msgctxt "tdlgimportxmobile.pmnnewlocality.caption"
+msgid "New locality"
+msgstr "Nova localidade"
+
+#: tdlgimportxmobile.pmnnewperson.caption
+msgctxt "tdlgimportxmobile.pmnnewperson.caption"
+msgid "New observer"
+msgstr "Novo observador"
 
 #: tdlgimportxmobile.savedlg.title
 msgctxt "tdlgimportxmobile.savedlg.title"

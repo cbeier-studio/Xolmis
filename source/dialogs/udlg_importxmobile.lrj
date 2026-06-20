@@ -4,6 +4,7 @@
 {"hash":2837748,"name":"tdlgimportxmobile.sbnext.caption","sourcebytes":[38,78,101,120,116],"value":"&Next"},
 {"hash":2812976,"name":"tdlgimportxmobile.btnhelp.caption","sourcebytes":[38,72,101,108,112],"value":"&Help"},
 {"hash":147647923,"name":"tdlgimportxmobile.sbprevious.caption","sourcebytes":[38,80,114,101,118,105,111,117,115],"value":"&Previous"},
+{"hash":21703,"name":"tdlgimportxmobile.btnnew.caption","sourcebytes":[78,101,119],"value":"New"},
 {"hash":94816405,"name":"tdlgimportxmobile.lbltitlesource.caption","sourcebytes":[83,111,117,114,99,101],"value":"Source"},
 {"hash":172629738,"name":"tdlgimportxmobile.lblsourcefile.caption","sourcebytes":[83,111,117,114,99,101,32,102,105,108,101,58,32,42],"value":"Source file: *"},
 {"hash":171904661,"name":"tdlgimportxmobile.esourcefile.buttonhint","sourcebytes":[83,101,108,101,99,116,32,102,105,108,101],"value":"Select file"},
@@ -32,5 +33,7 @@
 {"hash":191335534,"name":"tdlgimportxmobile.sbretry.caption","sourcebytes":[84,114,121,32,97,103,97,105,110],"value":"Try again"},
 {"hash":147290311,"name":"tdlgimportxmobile.sbsavelog.caption","sourcebytes":[83,97,118,101,32,108,111,103],"value":"Save log"},
 {"hash":177244421,"name":"tdlgimportxmobile.opendlg.title","sourcebytes":[83,101,108,101,99,116,32,115,111,117,114,99,101,32,102,105,108,101],"value":"Select source file"},
-{"hash":126622451,"name":"tdlgimportxmobile.savedlg.title","sourcebytes":[83,97,118,101,32,108,111,103,32,97,115],"value":"Save log as"}
+{"hash":126622451,"name":"tdlgimportxmobile.savedlg.title","sourcebytes":[83,97,118,101,32,108,111,103,32,97,115],"value":"Save log as"},
+{"hash":214961042,"name":"tdlgimportxmobile.pmnnewperson.caption","sourcebytes":[78,101,119,32,111,98,115,101,114,118,101,114],"value":"New observer"},
+{"hash":14469001,"name":"tdlgimportxmobile.pmnnewlocality.caption","sourcebytes":[78,101,119,32,108,111,99,97,108,105,116,121],"value":"New locality"}
 ]}

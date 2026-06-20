@@ -9437,6 +9437,15 @@ begin
     gridChild5.Options := gridChild5.Options + [dgAutoSizeColumns];
     gridChild6.Options := gridChild6.Options + [dgAutoSizeColumns];
     gridChild7.Options := gridChild7.Options + [dgAutoSizeColumns];
+
+    DBG.AutoAdjustColumns;
+    gridChild1.AutoAdjustColumns;
+    gridChild2.AutoAdjustColumns;
+    gridChild3.AutoAdjustColumns;
+    gridChild4.AutoAdjustColumns;
+    gridChild5.AutoAdjustColumns;
+    gridChild6.AutoAdjustColumns;
+    gridChild7.AutoAdjustColumns;
   end
   else
   begin

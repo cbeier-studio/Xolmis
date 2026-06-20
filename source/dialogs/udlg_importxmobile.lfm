@@ -105,6 +105,23 @@ object dlgImportXMobile: TdlgImportXMobile
       Visible = False
       OnClick = sbPreviousClick
     end
+    object btnNew: TBitBtn
+      AnchorSideLeft.Control = btnHelp
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = pBottom
+      Left = 103
+      Height = 26
+      Top = 8
+      Width = 70
+      AutoSize = True
+      BorderSpacing.Left = 16
+      Caption = 'New'
+      Images = DMM.iEdits
+      ImageIndex = 8
+      TabOrder = 4
+      Visible = False
+      OnClick = btnNewClick
+    end
   end
   object nbPages: TNotebook
     Left = 0
@@ -1843,5 +1860,17 @@ object dlgImportXMobile: TdlgImportXMobile
     Options = [ofOverwritePrompt, ofEnableSizing, ofViewDetail]
     Left = 520
     Top = 8
+  end
+  object pmNew: TPopupMenu
+    Left = 104
+    Top = 376
+    object pmnNewPerson: TMenuItem
+      Caption = 'New observer'
+      OnClick = pmnNewPersonClick
+    end
+    object pmnNewLocality: TMenuItem
+      Caption = 'New locality'
+      OnClick = pmnNewLocalityClick
+    end
   end
 end

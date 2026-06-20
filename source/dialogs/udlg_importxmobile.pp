@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, DBCtrls, Buttons, DateUtils,
-  StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf, Grids, StrUtils,
+  StdCtrls, EditBtn, atshapelinebgra, BCPanel, DB, SQLDB, fpjson, jsonparser, LCLIntf, Grids, Menus, StrUtils,
   Character,
   io_core, models_sampling, models_breeding, models_xmobile, models_record_types;
 
@@ -32,6 +32,7 @@ type
 
   TdlgImportXMobile = class(TForm)
     btnHelp: TBitBtn;
+    btnNew: TBitBtn;
     cbErrorHandling: TComboBox;
     cbUnknownTaxa: TComboBox;
     cbExistingRecordPolicy: TComboBox;
@@ -56,6 +57,9 @@ type
     pContentMap: TPanel;
     pExpedition: TBCPanel;
     pErrorHandling: TBCPanel;
+    pmNew: TPopupMenu;
+    pmnNewLocality: TMenuItem;
+    pmnNewPerson: TMenuItem;
     pUnknownTaxa: TBCPanel;
     pExistingRecordPolicy: TBCPanel;
     pgMap: TPage;
@@ -82,6 +86,7 @@ type
     sbRetry: TBitBtn;
     sbSaveLog: TBitBtn;
     procedure btnHelpClick(Sender: TObject);
+    procedure btnNewClick(Sender: TObject);
     procedure eExpeditionButtonClick(Sender: TObject);
     procedure eExpeditionKeyPress(Sender: TObject; var Key: char);
     procedure eSourceFileButtonClick(Sender: TObject);
@@ -94,6 +99,8 @@ type
     procedure gridMapKeyPress(Sender: TObject; var Key: char);
     procedure gridMapPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
     procedure gridMapSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
+    procedure pmnNewLocalityClick(Sender: TObject);
+    procedure pmnNewPersonClick(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
     procedure sbPreviousClick(Sender: TObject);
@@ -156,7 +163,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_editdialogs,
   data_types, data_management, data_getvalue, data_consts,
   models_geo, models_sightings, models_specimens,
   udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading, uDarkStyleParams;
@@ -232,6 +239,12 @@ end;
 procedure TdlgImportXMobile.btnHelpClick(Sender: TObject);
 begin
   OpenHelp(HELP_IMPORTING_DATA, 'xolmis-mobile');
+end;
+
+procedure TdlgImportXMobile.btnNewClick(Sender: TObject);
+begin
+  with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
+    pmNew.Popup(X, Y);
 end;
 
 function TdlgImportXMobile.CountErrorsOnGrid: Integer;
@@ -2126,6 +2139,16 @@ begin
   end;
 end;
 
+procedure TdlgImportXMobile.pmnNewLocalityClick(Sender: TObject);
+begin
+  EditSite(DMG.qGazetteer, True);
+end;
+
+procedure TdlgImportXMobile.pmnNewPersonClick(Sender: TObject);
+begin
+  EditPerson(DMG.qPeople, True);
+end;
+
 procedure TdlgImportXMobile.sbCancelClick(Sender: TObject);
 begin
   if sbCancel.Caption = rsCaptionCancel then
@@ -2158,6 +2181,7 @@ begin
 
     nbPages.PageIndex := 2;
 
+    btnNew.Visible := False;
     sbPrevious.Visible := False;
     sbNext.Visible := False;
     mProgress.Text := Format(rsImportingFile, [FSourceFile]);
@@ -2180,6 +2204,7 @@ begin
       SetImportSettings;
       LoadMapGrid;
 
+      btnNew.Visible := True;
       sbPrevious.Visible := True;
     end;
   end;
@@ -2188,6 +2213,7 @@ end;
 procedure TdlgImportXMobile.sbPreviousClick(Sender: TObject);
 begin
   nbPages.PageIndex := 0;
+  btnNew.Visible := False;
   sbNext.Visible := True;
 end;
 

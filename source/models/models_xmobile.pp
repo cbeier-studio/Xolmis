@@ -581,8 +581,11 @@ begin
     FEndTime := DartISO8601ToDate(JSONObj.Get('endTime', '1500-12-30T00:00:00'));
     FStartLongitude := JSONObj.Get('startLongitude', 0.0);
     FStartLatitude := JSONObj.Get('startLatitude', 0.0);
-    FEndLongitude := JSONObj.Get('endLongitude', 0.0);
-    FEndLatitude := JSONObj.Get('endLatitude', 0.0);
+    if not (FType in [invPointCount, invPointDetection, invBanding]) then
+    begin
+      FEndLongitude := JSONObj.Get('endLongitude', 0.0);
+      FEndLatitude := JSONObj.Get('endLatitude', 0.0);
+    end;
     FLocalityName := JSONObj.Get('localityName', '');
     FNotes := JSONObj.Get('notes', '');
     FCurrentInterval := JSONObj.Get('currentInterval', 0);

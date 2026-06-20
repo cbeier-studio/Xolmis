@@ -5403,6 +5403,11 @@ msgctxt "tdlgimportxmobile.btnhelp.caption"
 msgid "&Help"
 msgstr ""
 
+#: tdlgimportxmobile.btnnew.caption
+msgctxt "tdlgimportxmobile.btnnew.caption"
+msgid "New"
+msgstr ""
+
 #: tdlgimportxmobile.caption
 msgctxt "tdlgimportxmobile.caption"
 msgid "Import from Xolmis Mobile"
@@ -5509,6 +5514,16 @@ msgstr ""
 #: tdlgimportxmobile.opendlg.title
 msgctxt "tdlgimportxmobile.opendlg.title"
 msgid "Select source file"
+msgstr ""
+
+#: tdlgimportxmobile.pmnnewlocality.caption
+msgctxt "tdlgimportxmobile.pmnnewlocality.caption"
+msgid "New locality"
+msgstr ""
+
+#: tdlgimportxmobile.pmnnewperson.caption
+msgctxt "tdlgimportxmobile.pmnnewperson.caption"
+msgid "New observer"
 msgstr ""
 
 #: tdlgimportxmobile.savedlg.title
