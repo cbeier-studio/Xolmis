@@ -217,28 +217,45 @@ end;
 procedure NodeToRow(Node: TDOMNode; const Prefix: string; Row: TXRow);
 var
   i: Integer;
-  attr: TDOMNode;
-  key: string;
+  attr, Child: TDOMNode;
+  KeyBase, Key, ChildPrefix: string;
 begin
+  KeyBase := Prefix;
+  if (KeyBase <> '') and (KeyBase[Length(KeyBase)] = '.') then
+    Delete(KeyBase, Length(KeyBase), 1);
+
   // atributos
   if (Node.Attributes <> nil) then
     for i := 0 to Node.Attributes.Length - 1 do
     begin
       attr := Node.Attributes.Item[i];
-      key := Prefix + '@' + attr.NodeName;
-      Row.Add(key);
+      if KeyBase <> '' then
+        key := KeyBase + '.@' + attr.NodeName
+      else
+        key := attr.NodeName;
       Row.Values[key] := attr.NodeValue;
     end;
 
   // texto direto
   if (Node.FirstChild <> nil) and (Node.FirstChild.NodeType = TEXT_NODE) then
   begin
-    Row.Add(Prefix);
-    Row.Values[Prefix] := Node.TextContent
+    if KeyBase <> '' then
+      Row.Values[KeyBase] := Node.TextContent
   end
   else
     for i := 0 to Node.ChildNodes.Count - 1 do
-      NodeToRow(Node.ChildNodes[i], Prefix + Node.ChildNodes[i].NodeName + '.', Row);
+    begin
+      Child := Node.ChildNodes[i];
+      if Child.NodeType <> ELEMENT_NODE then
+        Continue;
+
+      if KeyBase <> '' then
+        ChildPrefix := KeyBase + '.' + Child.NodeName + '.'
+      else
+        ChildPrefix := Child.NodeName + '.';
+
+      NodeToRow(Child, ChildPrefix, Row);
+    end;
 end;
 
 { TXMLImporter }
@@ -353,6 +370,7 @@ procedure TXMLImporter.Import(Stream: TStream; const Options: TImportOptions; Ro
 var
   Doc: TXMLDocument;
   Root, N: TDOMNode;
+  NodeList: TDOMNodeList;
   i: Integer;
   Row: TXRow;
   RecNodeName: string;
@@ -368,10 +386,11 @@ begin
 
     if (RecNodeName <> '') then
     begin
-      for i := 0 to Root.ChildNodes.Count - 1 do
+      NodeList := Doc.GetElementsByTagName(RecNodeName);
+      for i := 0 to NodeList.Count - 1 do
       begin
-        N := Root.ChildNodes[i];
-        if SameText(N.NodeName, RecNodeName) then
+        N := NodeList[i];
+        if N.NodeType = ELEMENT_NODE then
         begin
           Row := TXRow.Create;
           try
@@ -391,9 +410,12 @@ begin
       for i := 0 to Root.ChildNodes.Count - 1 do
       begin
         N := Root.ChildNodes[i];
+        if N.NodeType <> ELEMENT_NODE then
+          Continue;
+
         Row := TXRow.Create;
         try
-          NodeToRow(N, N.NodeName + '.', Row);
+          NodeToRow(N, '', Row);
           if Assigned(RowOut) then RowOut(Row);
         finally
           Row.Free;
@@ -414,31 +436,81 @@ procedure TXMLImporter.PreviewRows(Stream: TStream; const Options: TImportOption
 var
   Doc: TXMLDocument;
   NodeList: TDOMNodeList;
-  Node, Child: TDOMNode;
-  Row: TXRow;
-  i, j, Count: Integer;
+  Root, Node: TDOMNode;
+  Row, Transformed: TXRow;
+  RecNodeName: string;
+  i, Count, MaxNodes: Integer;
 begin
   Stream.Position := 0;
 
   LogEvent(leaStart, 'Preview XML file');
   ReadXMLFile(Doc, Stream);
   try
-    NodeList := Doc.GetElementsByTagName(Options.RecordNodeName);
+    Root := Doc.DocumentElement;
+    RecNodeName := Trim(Options.RecordNodeName);
     Count := 0;
-    for i := 0 to NodeList.Count - 1 do
+
+    if RecNodeName <> '' then
     begin
-      if Count >= MaxRows then Break;
-      Node := NodeList[i];
-      Row := TXRow.Create;
-      for j := 0 to Node.ChildNodes.Count - 1 do
+      NodeList := Doc.GetElementsByTagName(RecNodeName);
+      MaxNodes := NodeList.Count - 1;
+      for i := 0 to MaxNodes do
       begin
-        Child := Node.ChildNodes[j];
-        if (Child.NodeType = ELEMENT_NODE) then
-          Row.Values[Child.NodeName] := Child.TextContent;
+        if Count >= MaxRows then
+          Break;
+
+        Node := NodeList[i];
+        if Node.NodeType <> ELEMENT_NODE then
+          Continue;
+
+        Row := TXRow.Create;
+        try
+          NodeToRow(Node, '', Row);
+
+          Transformed := Row;
+          if Assigned(FMapper) then
+            Transformed := FMapper.Apply(Row);
+
+          if Assigned(RowOut) then
+            RowOut(Transformed);
+        finally
+          if Transformed <> Row then
+            Transformed.Free;
+          Row.Free;
+        end;
+
+        Inc(Count);
       end;
-      RowOut(Row);
-      Row.Free;
-      Inc(Count);
+    end
+    else
+    begin
+      for i := 0 to Root.ChildNodes.Count - 1 do
+      begin
+        if Count >= MaxRows then
+          Break;
+
+        Node := Root.ChildNodes[i];
+        if Node.NodeType <> ELEMENT_NODE then
+          Continue;
+
+        Row := TXRow.Create;
+        try
+          NodeToRow(Node, '', Row);
+
+          Transformed := Row;
+          if Assigned(FMapper) then
+            Transformed := FMapper.Apply(Row);
+
+          if Assigned(RowOut) then
+            RowOut(Transformed);
+        finally
+          if Transformed <> Row then
+            Transformed.Free;
+          Row.Free;
+        end;
+
+        Inc(Count);
+      end;
     end;
   finally
     Doc.Free;

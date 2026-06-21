@@ -935,6 +935,7 @@ end;
 procedure TdlgImport.CollectColumnStats(const Row: TXRow);
 var
   i: Integer;
+  idx: Integer;
   S: string;
   VBool: Boolean;
   VInt: Int64;
@@ -955,45 +956,49 @@ begin
     if S = '' then
       Continue;
 
-    Inc(ColStats[i].Seen);
+    idx := FindColumnStatIndex(ColStats, Row.Names[i]);
+    if idx < 0 then
+      Continue;
+
+    Inc(ColStats[idx].Seen);
 
     // Integer (includes '0' / '1' — kept as integers, not boolean)
     if TryStrToInt64(S, VInt) then
     begin
-      Inc(ColStats[i].IntCount);
+      Inc(ColStats[idx].IntCount);
       Continue;
     end;
 
     // Float
     if TryStrToFloat(S, VFloat) then
     begin
-      Inc(ColStats[i].FloatCount);
+      Inc(ColStats[idx].FloatCount);
       Continue;
     end;
     if TryStrToFloat(S, VFloat, FS) then
     begin
-      Inc(ColStats[i].FloatCount);
+      Inc(ColStats[idx].FloatCount);
       Continue;
     end;
 
     // DateTime — more specific, check before Date and Time
     if TryParseDateTimeFlexible(S, VDateTime) then
     begin
-      Inc(ColStats[i].DateTimeCount);
+      Inc(ColStats[idx].DateTimeCount);
       Continue;
     end;
 
     // Date
     if TryParseDateFlexible(S, VDate) then
     begin
-      Inc(ColStats[i].DateCount);
+      Inc(ColStats[idx].DateCount);
       Continue;
     end;
 
     // Time
     if TryParseTimeFlexible(S, VTime) then
     begin
-      Inc(ColStats[i].TimeCount);
+      Inc(ColStats[idx].TimeCount);
       Continue;
     end;
 
@@ -1001,7 +1006,7 @@ begin
     // silently absorbed by TryStrToInt64 as a non-matching call
     if TryStrToBool(S, VBool)   then
     begin
-      Inc(ColStats[i].BoolCount);
+      Inc(ColStats[idx].BoolCount);
       Continue;
     end;
   end;
@@ -1624,6 +1629,17 @@ begin
     Exit(sdtDateTime);
 
   Result := sdtText;
+end;
+
+function FindColumnStatIndex(const ColStats: specialize TFPGObjectList<TColumnTypeStats>;
+  const Name: string): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := 0 to ColStats.Count - 1 do
+    if SameText(ColStats[i].Name, Name) then
+      Exit(i);
 end;
 
 function TdlgImport.IsRequiredFilledSource: Boolean;

@@ -73,6 +73,9 @@ type
     procedure Export(Stream: TStream; const Options: TExportOptions; RowOut: TXRowConsumer); override;
   end;
 
+  function FindColumnStatIndex(const ColStats: specialize TFPGObjectList<TColumnTypeStats>;
+    const Name: string): Integer;
+
 implementation
 
 uses
@@ -263,8 +266,12 @@ begin
         AddJSONToRow(Format('%s[%d]', [Path, i]), child, Row);
       end;
   else
-    Row.Add(Path);
+  begin
+    if Path = '' then
+      Exit;
+
     Row.Values[Path] := AJSON.AsString;
+  end;
   end;
 end;
 
@@ -286,7 +293,6 @@ begin
           AddJSONToRow('', arr.Items[i], row)
         else
         begin
-          row.Add('value');
           row.Values['value'] := arr.Items[i].AsString;
         end;
         if Assigned(RowOut) then RowOut(row);
@@ -316,36 +322,42 @@ function IsNDJSON(Stream: TStream): Boolean;
 var
   Reader: TStreamReader;
   Line: string;
-  Parser: TJSONParser;
-  i, ValidLines: Integer;
+  SampleCount, ObjectLines: Integer;
 begin
   Result := False;
   Stream.Position := 0;
   Reader := TStreamReader.Create(Stream);
   try
-    i := 0;
-    ValidLines := 0;
-    while not Reader.Eof and (i < 10) do
+    SampleCount := 0;
+    ObjectLines := 0;
+    while not Reader.Eof and (SampleCount < 10) do
     begin
       Line := Trim(Reader.ReadLine);
       if Line = '' then Continue;
-      Inc(i);
-      try
-        Parser := TJSONParser.Create(Line);
-        try
-          Parser.Parse.Free;
-          Inc(ValidLines);
-        finally
-          Parser.Free;
-        end;
-      except
-        // ignore parsing error
-      end;
+      Inc(SampleCount);
+
+      if (Copy(Line, 1, 1) = '[') or (Copy(Line, 1, 1) = ']') or (Copy(Line, 1, 1) = ',') then
+        Exit(False);
+
+      if (Copy(Line, 1, 1) = '{') and (Copy(Line, Length(Line), 1) = '}') then
+        Inc(ObjectLines);
     end;
   finally
     Reader.Free;
   end;
-  Result := (ValidLines >= i * 0.8);
+
+  Result := (SampleCount > 0) and (ObjectLines >= SampleCount * 0.8);
+end;
+
+function FindColumnStatIndex(const ColStats: specialize TFPGObjectList<TColumnTypeStats>;
+  const Name: string): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := 0 to ColStats.Count - 1 do
+    if SameText(ColStats[i].Name, Name) then
+      Exit(i);
 end;
 
 { TJSONImporter }
@@ -366,6 +378,7 @@ var
   Obj: TJSONObject;
   SL: TStringList;
   Line: String;
+  Row: TXRow;
   i: Integer;
 
   function ResolveRecordsPath(Root: TJSONData; const Path: String): TJSONData;
@@ -429,10 +442,14 @@ begin
             try
               if Data.JSONType = jtObject then
               begin
-                Obj := TJSONObject(Data);
-                for i := 0 to Obj.Count - 1 do
-                  if not (Options.IgnoreNulls and (Obj.Items[i].JSONType = jtNull)) then
-                    Result.Add(Obj.Names[i]);
+                Row := TXRow.Create;
+                try
+                  AddJSONToRow('', Data, Row);
+                  for i := 0 to Row.Count - 1 do
+                    Result.Add(Row.Names[i]);
+                finally
+                  Row.Free;
+                end;
               end;
             finally
               Data.Free;
@@ -464,20 +481,28 @@ begin
         Arr := TJSONArray(Node);
         if Arr.Items[0].JSONType = jtObject then
         begin
-          Obj := TJSONObject(Arr.Items[0]);
-          for i := 0 to Obj.Count - 1 do
-            if not (Options.IgnoreNulls and (Obj.Items[i].JSONType = jtNull)) then
-              Result.Add(Obj.Names[i]);
+          Row := TXRow.Create;
+          try
+            AddJSONToRow('', Arr.Items[0], Row);
+            for i := 0 to Row.Count - 1 do
+              Result.Add(Row.Names[i]);
+          finally
+            Row.Free;
+          end;
         end;
       end
 
       // Simple object
       else if Node.JSONType = jtObject then
       begin
-        Obj := TJSONObject(Node);
-        for i := 0 to Obj.Count - 1 do
-          if not (Options.IgnoreNulls and (Obj.Items[i].JSONType = jtNull)) then
-            Result.Add(Obj.Names[i]);
+        Row := TXRow.Create;
+        try
+          AddJSONToRow('', Node, Row);
+          for i := 0 to Row.Count - 1 do
+            Result.Add(Row.Names[i]);
+        finally
+          Row.Free;
+        end;
       end;
 
     finally
@@ -573,45 +598,138 @@ procedure TJSONImporter.PreviewRows(Stream: TStream; const Options: TImportOptio
 var
   Parser: TJSONParser;
   Data: TJSONData;
+  Reader: TStreamReader;
   Arr: TJSONArray;
-  Obj: TJSONObject;
-  Row: TXRow;
-  i, j, Count: Integer;
+  Row, Transformed: TXRow;
+  Line: string;
+  i, Count: Integer;
 begin
   Stream.Position := 0;
 
   LogEvent(leaStart, 'Preview JSON file');
 
-  Parser := TJSONParser.Create(Stream);
-  try
-    Data := Parser.Parse;
+  if IsNDJSON(Stream) then
+  begin
+    Stream.Position := 0;
+    Reader := TStreamReader.Create(Stream);
     try
-      if Data.JSONType = jtArray then
+      Count := 0;
+      while not Reader.Eof do
       begin
-        Arr := TJSONArray(Data);
-        Count := 0;
-        for i := 0 to Arr.Count - 1 do
-        begin
-          if (Arr.Items[i].JSONType = jtObject) and (Count < MaxRows) then
-          begin
-            Obj := TJSONObject(Arr.Items[i]);
+        if Count >= MaxRows then
+          Break;
+
+        Line := Trim(Reader.ReadLine);
+        if Line = '' then
+          Continue;
+
+        Parser := TJSONParser.Create(Line);
+        try
+          Data := Parser.Parse;
+          try
             Row := TXRow.Create;
-            for j := 0 to Obj.Count - 1 do
-              Row.Values[Obj.Names[j]] := Obj.Items[j].AsString;
-            RowOut(Row);
-            Row.Free;
+            try
+              if Data.JSONType = jtObject then
+                AddJSONToRow('', Data, Row)
+              else
+              begin
+                Row.Values['value'] := Data.AsString;
+              end;
+
+              if Assigned(FMapper) then
+                Transformed := FMapper.Apply(Row)
+              else
+                Transformed := Row;
+
+              if Assigned(RowOut) then
+                RowOut(Transformed);
+            finally
+              if Transformed <> Row then
+                Transformed.Free;
+              Row.Free;
+            end;
+          finally
+            Data.Free;
+          end;
+        finally
+          Parser.Free;
+        end;
+
+        Inc(Count);
+      end;
+    finally
+      Reader.Free;
+    end;
+  end
+  else
+  begin
+    Stream.Position := 0;
+    Parser := TJSONParser.Create(Stream);
+    try
+      Data := Parser.Parse;
+      try
+        if Data.JSONType = jtArray then
+        begin
+          Arr := TJSONArray(Data);
+          Count := 0;
+          for i := 0 to Arr.Count - 1 do
+          begin
+            if Count >= MaxRows then
+              Break;
+
+            Row := TXRow.Create;
+            try
+              if Arr.Items[i].JSONType = jtObject then
+                AddJSONToRow('', Arr.Items[i], Row)
+              else
+              begin
+                Row.Values['value'] := Arr.Items[i].AsString;
+              end;
+
+              if Assigned(FMapper) then
+                Transformed := FMapper.Apply(Row)
+              else
+                Transformed := Row;
+
+              if Assigned(RowOut) then
+                RowOut(Transformed);
+            finally
+              if Transformed <> Row then
+                Transformed.Free;
+              Row.Free;
+            end;
 
             Inc(Count);
           end;
+        end
+        else if Data.JSONType = jtObject then
+        begin
+          Row := TXRow.Create;
+          try
+            AddJSONToRow('', Data, Row);
+
+            if Assigned(FMapper) then
+              Transformed := FMapper.Apply(Row)
+            else
+              Transformed := Row;
+
+            if Assigned(RowOut) then
+              RowOut(Transformed);
+          finally
+            if Transformed <> Row then
+              Transformed.Free;
+            Row.Free;
+          end;
         end;
+      finally
+        Data.Free;
       end;
     finally
-      Data.Free;
+      Parser.Free;
     end;
-  finally
-    Parser.Free;
-    LogEvent(leaStart, 'Preview JSON file');
   end;
+
+  LogEvent(leaFinish, 'Preview JSON file');
 end;
 
 class function TJSONImporter.Probe(const FileName: string; Stream: TStream): Integer;

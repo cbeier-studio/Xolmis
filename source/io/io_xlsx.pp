@@ -362,9 +362,9 @@ procedure TXLSXImporter.PreviewRows(Stream: TStream; const Options: TImportOptio
 var
   Workbook: TsWorkbook;
   Worksheet: TsWorksheet;
-  Row, Col, LastRow, LastCol, Count: Integer;
+  Row, Col, LastRow, LastCol, MaxCol, Count: Integer;
   Cell: PCell;
-  XRow: TXRow;
+  XRow, Transformed: TXRow;
   FieldNames: TStringList;
 begin
   Stream.Position := 0;
@@ -387,22 +387,38 @@ begin
     Stream.Position := 0;
     FieldNames := GetFieldNames(Stream, Options);
     try
+      if FieldNames.Count = 0 then
+        Exit;
+
+      MaxCol := Min(LastCol, FieldNames.Count - 1);
       Count := 0;
       for Row := Ord(Options.HasHeader) to LastRow do
       begin
         if Count >= MaxRows then Break;
 
         XRow := TXRow.Create;
-        for Col := 0 to LastCol do
-        begin
-          Cell := Worksheet.FindCell(Row, Col);
-          if Assigned(Cell) then
-            XRow.Values[FieldNames[Col]] := Worksheet.ReadAsText(Cell)
+        try
+          for Col := 0 to MaxCol do
+          begin
+            Cell := Worksheet.FindCell(Row, Col);
+            if Assigned(Cell) then
+              XRow.Values[FieldNames[Col]] := Worksheet.ReadAsText(Cell)
+            else
+              XRow.Values[FieldNames[Col]] := '';
+          end;
+
+          if Assigned(FMapper) then
+            Transformed := FMapper.Apply(XRow)
           else
-            XRow.Values[FieldNames[Col]] := '';
+            Transformed := XRow;
+
+          if Assigned(RowOut) then
+            RowOut(Transformed);
+        finally
+          if Transformed <> XRow then
+            Transformed.Free;
+          XRow.Free;
         end;
-        RowOut(XRow);
-        XRow.Free;
 
         Inc(Count);
       end;

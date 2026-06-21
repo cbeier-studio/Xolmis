@@ -196,7 +196,7 @@ procedure TDBFImporter.PreviewRows(Stream: TStream; const Options: TImportOption
   RowOut: TXRowConsumer);
 var
   DS: TDbf;
-  Row: TXRow;
+  Row, Transformed: TXRow;
   i, Count: Integer;
   TmpFile: String;
 begin
@@ -217,15 +217,28 @@ begin
       DS.FilePath := ExtractFilePath(TmpFile);
       DS.TableName := ExtractFileName(TmpFile);
       DS.Open;
+      DS.First;
 
       Count := 0;
       while (not DS.EOF) and (Count < MaxRows) do
       begin
         Row := TXRow.Create;
-        for i := 0 to DS.Fields.Count - 1 do
-          Row.Values[DS.Fields[i].FieldName] := DS.Fields[i].AsString;
-        RowOut(Row);
-        Row.Free;
+        try
+          for i := 0 to DS.Fields.Count - 1 do
+            Row.Values[DS.Fields[i].FieldName] := DS.Fields[i].AsString;
+
+          if Assigned(FMapper) then
+            Transformed := FMapper.Apply(Row)
+          else
+            Transformed := Row;
+
+          if Assigned(RowOut) then
+            RowOut(Transformed);
+        finally
+          if Transformed <> Row then
+            Transformed.Free;
+          Row.Free;
+        end;
 
         Inc(Count);
         DS.Next;
