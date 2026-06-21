@@ -229,6 +229,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorSavingPDF = 'Error saving PDF.';
     rsErrorSavingMediaPaths = 'Error saving the media paths: %s';
     rsErrorTaxonNotFound = 'Taxon "%s" not found.';
+    rsErrorFieldNotFoundInSchema = 'Field "%s" not found in table "%s" schema.';
 
     { Warning messages }
     rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';

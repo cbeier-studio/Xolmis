@@ -4826,36 +4826,6 @@ msgctxt "tdlgimport.cbcoordinateaxis.text"
 msgid "None"
 msgstr ""
 
-#: tdlgimport.cbdateformat.text
-msgctxt "tdlgimport.cbdateformat.text"
-msgid "DD/MM/YYYY"
-msgstr ""
-
-#: tdlgimport.cbdecimalseparator.text
-msgctxt "tdlgimport.cbdecimalseparator.text"
-msgid "Colon"
-msgstr ""
-
-#: tdlgimport.cbdelimiter.text
-msgctxt "tdlgimport.cbdelimiter.text"
-msgid "Semicolon"
-msgstr ""
-
-#: tdlgimport.cbencoding.text
-msgctxt "tdlgimport.cbencoding.text"
-msgid "System encoding"
-msgstr ""
-
-#: tdlgimport.cberrorhandling.text
-msgctxt "tdlgimport.cberrorhandling.text"
-msgid "Abort on first error"
-msgstr ""
-
-#: tdlgimport.cbexistingrecordpolicy.text
-msgctxt "tdlgimport.cbexistingrecordpolicy.text"
-msgid "Replace existing"
-msgstr ""
-
 #: tdlgimport.cbextractdatepart.text
 msgctxt "tdlgimport.cbextractdatepart.text"
 msgid "Year"
@@ -16018,6 +15988,11 @@ msgstr ""
 #: utils_locale.rserrorexportingebird
 #, object-pascal-format
 msgid "Error exporting eBird data: %s"
+msgstr ""
+
+#: utils_locale.rserrorfieldnotfoundinschema
+#, object-pascal-format
+msgid "Field \"%s\" not found in table \"%s\" schema."
 msgstr ""
 
 #: utils_locale.rserrorfieldsandvaluesdiffer

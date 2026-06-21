@@ -693,6 +693,9 @@ var
 
   function BuildTime: Boolean;
   begin
+    if (HourValue < 0) or (HourValue > 23) or (MinuteValue < 0) or (MinuteValue > 59) then
+      Exit(False);
+
     Result := IsValidTime(HourValue, MinuteValue, 0, 0);
     if Result then
       ATime := EncodeTime(HourValue, MinuteValue, 0, 0);

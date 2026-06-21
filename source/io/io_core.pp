@@ -820,7 +820,10 @@ begin
 
     // 6. Check data type compatibility
     try
-      FSchema := DBSchema.GetTable(FTableType).GetField(Mapping.TargetField);
+      FSchema := DBSchema.GetTable(FTableType).GetFieldByDisplayName(Mapping.TargetField);
+      if FSchema = nil then
+        raise Exception.CreateFmt(rsErrorFieldNotFoundInSchema, [Mapping.TargetField, TABLE_NAMES[FTableType]]);
+
       ConvertedValue := DestValue;
       case FSchema.DataType of
 

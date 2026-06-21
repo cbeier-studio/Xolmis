@@ -21,7 +21,7 @@ unit udlg_import;
 interface
 
 uses
-  BCPanel, Classes, SysUtils, fpjson, jsonparser, LCLIntf, fgl, BGRABitmapTypes,
+  BCPanel, Classes, SysUtils, fpjson, jsonparser, LCLIntf, fgl, BGRABitmapTypes, Math,
   dbf, DB, SQLDB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls, ToggleSwitch,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, Spin, fpsTypes, fpSpreadsheet, xlsbiff8,
   xlsxooxml, atshapelinebgra,
@@ -258,6 +258,7 @@ type
     procedure AddPreviewRow(const XRow: TXRow);
     procedure AppendLog(const aMsg: String);
     procedure ApplyDarkMode;
+    procedure DetectCSVSettings;
     procedure CollectColumnStats(const Row: TXRow);
     function CreateRecordForTable(T: TTableType): TXolmisRecord;
     function CreateRepositoryForTable(T: TTableType): TXolmisRepository;
@@ -293,8 +294,9 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_themes, utils_dialogs, data_columns, data_schema, data_providers,
-  data_getvalue,
+  LConvEncoding,
+  utils_locale, utils_global, utils_themes, utils_dialogs, utils_validations,
+  data_columns, data_schema, data_providers, data_getvalue,
   models_bands, models_birds, models_botany, models_breeding, models_geo, models_institutions, models_methods,
   models_people, models_permits, models_projects, models_sampling, models_sampling_plots, models_sightings,
   models_specimens,
@@ -432,6 +434,154 @@ begin
       c := col.Index;
       gridPreview.Cells[c, r] := XRow.Values[key];
     end;
+  end;
+end;
+
+procedure TdlgImport.DetectCSVSettings;
+const
+  SampleSize    = 8192;
+  MaxSampleLines = 20;
+var
+  Stream: TFileStream;
+  RawBytes: RawByteString;
+  ReadSize: Integer;
+  DetectedEncoding: String;
+  Utf8Text: String;
+  Lines: TStringList;
+  HeaderLine, DataLine, Token: String;
+  SemiCount, CommaCount, TabCount: Integer;
+  DetectedDelim: Char;
+  DotDecimalCount, CommaDecimalCount: Integer;
+  DetectedDecimal: Char;
+  FS: TFormatSettings;
+  V: Double;
+  i, j: Integer;
+begin
+  if not FileExists(FSourceFile) then
+    Exit;
+
+  // --- 1. Read a sample from the file ---
+  Stream := TFileStream.Create(FSourceFile, fmOpenRead or fmShareDenyWrite);
+  try
+    if Stream.Size > SampleSize then
+      ReadSize := SampleSize
+    else
+      ReadSize := Stream.Size;
+    SetLength(RawBytes, ReadSize);
+    if ReadSize > 0 then
+      Stream.ReadBuffer(RawBytes[1], ReadSize);
+  finally
+    Stream.Free;
+  end;
+
+  // --- 2. Encoding detection ---
+  DetectedEncoding := GuessEncoding(RawBytes);
+  Utf8Text := ConvertEncoding(RawBytes, DetectedEncoding, 'utf-8');
+
+  if SameText(DetectedEncoding, 'utf-8') or SameText(DetectedEncoding, 'utf8') or
+     SameText(DetectedEncoding, 'ascii') then
+  begin
+    FImportSettings.Encoding := TEncoding.UTF8.EncodingName;
+    cbEncoding.ItemIndex := 1;  // UTF-8
+  end
+  else
+  begin
+    FImportSettings.Encoding := TEncoding.Default.EncodingName;
+    cbEncoding.ItemIndex := 0;  // System encoding
+  end;
+
+  Lines := TStringList.Create;
+  try
+    Lines.Text := Utf8Text;
+
+    // --- 3. Delimiter detection: count candidates in the header line ---
+    HeaderLine := '';
+    for i := 0 to Lines.Count - 1 do
+      if Trim(Lines[i]) <> '' then
+      begin
+        HeaderLine := Lines[i];
+        Break;
+      end;
+
+    SemiCount  := 0;
+    CommaCount := 0;
+    TabCount   := 0;
+    for i := 1 to Length(HeaderLine) do
+      case HeaderLine[i] of
+        ';': Inc(SemiCount);
+        ',': Inc(CommaCount);
+        #9:  Inc(TabCount);
+      end;
+
+    if FFileFormat = iftTSV then
+      DetectedDelim := #9
+    else if (TabCount > SemiCount) and (TabCount > CommaCount) then
+      DetectedDelim := #9
+    else if SemiCount >= CommaCount then
+      DetectedDelim := ';'
+    else
+      DetectedDelim := ',';
+
+    FImportSettings.Delimiter := DetectedDelim;
+    case DetectedDelim of
+      ';': cbDelimiter.ItemIndex := 0;
+      ',': cbDelimiter.ItemIndex := 1;
+      #9:  cbDelimiter.ItemIndex := 2;
+    else
+      cbDelimiter.ItemIndex := 3;
+      eOther.Text    := DetectedDelim;
+      eOther.Visible := True;
+    end;
+
+    // --- 4. Decimal-separator detection: sample data rows ---
+    FS := DefaultFormatSettings;
+    FS.DecimalSeparator  := '.';
+    FS.ThousandSeparator := #0;
+
+    DotDecimalCount   := 0;
+    CommaDecimalCount := 0;
+
+    for i := 1 to Min(Lines.Count - 1, MaxSampleLines) do
+    begin
+      DataLine := Lines[i];
+      Token := '';
+      for j := 1 to Length(DataLine) + 1 do
+      begin
+        if (j > Length(DataLine)) or (DataLine[j] = DetectedDelim) then
+        begin
+          Token := Trim(Token);
+          // Token with dot only → candidate for dot-decimal (e.g. "3.14")
+          if (Pos('.', Token) > 0) and (Pos(',', Token) = 0) then
+          begin
+            if TryStrToFloat(Token, V, FS) then
+              Inc(DotDecimalCount);
+          end
+          // Token with comma only → candidate for comma-decimal (e.g. "3,14")
+          else if (Pos(',', Token) > 0) and (Pos('.', Token) = 0) then
+          begin
+            if TryStrToFloat(StringReplace(Token, ',', '.', [rfReplaceAll]), V, FS) then
+              Inc(CommaDecimalCount);
+          end;
+          Token := '';
+        end
+        else
+          Token := Token + DataLine[j];
+      end;
+    end;
+
+    if CommaDecimalCount > DotDecimalCount then
+      DetectedDecimal := ','
+    else
+      DetectedDecimal := '.';
+
+    FImportSettings.DecimalSeparator := DetectedDecimal;
+    case DetectedDecimal of
+      ',': cbDecimalSeparator.ItemIndex := 0;
+      '.': cbDecimalSeparator.ItemIndex := 1;
+    end;
+
+  finally
+    Lines.Free;
   end;
 end;
 
@@ -585,6 +735,10 @@ end;
 procedure TdlgImport.cbDelimiterSelect(Sender: TObject);
 begin
   eOther.Visible := cbDelimiter.ItemIndex = 3;
+
+  if cbDelimiter.Text = cbDecimalSeparator.Text then
+    if cbDelimiter.Text = rsDelimiterComma then
+      cbDecimalSeparator.ItemIndex := cbDecimalSeparator.Items.IndexOf(rsDecimalSeparatorPeriod);
 end;
 
 procedure TdlgImport.cbExtractDatePartSelect(Sender: TObject);
@@ -782,12 +936,18 @@ procedure TdlgImport.CollectColumnStats(const Row: TXRow);
 var
   i: Integer;
   S: string;
+  VBool: Boolean;
   VInt: Int64;
   VFloat: Double;
   VDate, VTime, VDateTime: TDateTime;
   FS: TFormatSettings;
 begin
-  FS.DecimalSeparator := FImportSettings.DecimalSeparator;
+  // Initialise from defaults so all locale fields are valid
+  FS := DefaultFormatSettings;
+  FS.DecimalSeparator  := FImportSettings.DecimalSeparator;
+  FS.ThousandSeparator := #0;   // disable thousands grouping while probing
+  TrueBoolStrs := ['true', 'sim', 'yes', 'S', 'Y', 'verdadeiro', 'V', 'T', 'sí', 'on', 'wahr'];
+  FalseBoolStrs := ['false', 'não', 'no', 'N', 'falso', 'F', 'off', 'falsch'];
 
   for i := 0 to Row.Count - 1 do
   begin
@@ -797,7 +957,7 @@ begin
 
     Inc(ColStats[i].Seen);
 
-    // Integer
+    // Integer (includes '0' / '1' — kept as integers, not boolean)
     if TryStrToInt64(S, VInt) then
     begin
       Inc(ColStats[i].IntCount);
@@ -805,38 +965,41 @@ begin
     end;
 
     // Float
+    if TryStrToFloat(S, VFloat) then
+    begin
+      Inc(ColStats[i].FloatCount);
+      Continue;
+    end;
     if TryStrToFloat(S, VFloat, FS) then
     begin
       Inc(ColStats[i].FloatCount);
       Continue;
     end;
 
-    // DateTime (mais específico)
-    if TryStrToDateTime(S, VDateTime) then
+    // DateTime — more specific, check before Date and Time
+    if TryParseDateTimeFlexible(S, VDateTime) then
     begin
       Inc(ColStats[i].DateTimeCount);
       Continue;
     end;
 
     // Date
-    if TryStrToDate(S, VDate) then
+    if TryParseDateFlexible(S, VDate) then
     begin
       Inc(ColStats[i].DateCount);
       Continue;
     end;
 
     // Time
-    if TryStrToTime(S, VTime) then
+    if TryParseTimeFlexible(S, VTime) then
     begin
       Inc(ColStats[i].TimeCount);
       Continue;
     end;
 
-    // Boolean
-    if SameText(S, 'true') or SameText(S, 'false') or
-       SameText(S, 'yes') or SameText(S, 'no') or
-       SameText(S, 'sim') or SameText(S, 'não') or
-       SameText(S, '1') or SameText(S, '0') then
+    // Boolean text — checked before integer so 'true'/'false' are not
+    // silently absorbed by TryStrToInt64 as a non-matching call
+    if TryStrToBool(S, VBool)   then
     begin
       Inc(ColStats[i].BoolCount);
       Continue;
@@ -1011,7 +1174,7 @@ begin
         begin
           FFileFormat := iftTSV;
           FImportSettings.Delimiter := #9;
-        end;
+        end;      
       '.xlsx':
         begin
           FFileFormat := iftExcelOOXML;
@@ -1053,6 +1216,10 @@ begin
           FFileFormat := iftGeoJSON;
         end;
     end;
+
+    // Auto-detect delimiter, decimal separator and encoding for CSV/TSV files
+    if FFileFormat in [iftCSV, iftTSV] then
+      DetectCSVSettings;
 
     if (FFileFormat = iftJSON) and IsXolmisMobileJSON(FSourceFile) then
     begin
@@ -1409,37 +1576,51 @@ begin
 end;
 
 function TdlgImport.InferColumnType(Stats: TColumnTypeStats): TSearchDataType;
+const
+  // At least this fraction of non-empty values must match the candidate type.
+  // 0.90 allows a small number of dirty/mixed rows without falling back to text.
+  Threshold = 0.90;
+var
+  MinMatch: Integer;
 begin
   if Stats.Seen = 0 then
     Exit(sdtText);
 
-  // Boolean
-  if Stats.BoolCount = Stats.Seen then
+  // Require at least ceil(Seen * Threshold) matching values
+  MinMatch := Max(1, Ceil(Stats.Seen * Threshold));
+
+  // Boolean text (true/false/yes/no — 0/1 integers are not counted here)
+  if Stats.BoolCount >= MinMatch then
     Exit(sdtBoolean);
 
   // Integer
-  if Stats.IntCount = Stats.Seen then
+  if (Stats.IntCount >= MinMatch) then
     Exit(sdtInteger);
 
-  // Float
-  if (Stats.IntCount + Stats.FloatCount = Stats.Seen) and
-     (Stats.FloatCount > 0) then
+  // Float: mix of integer-formatted and decimal-formatted values
+  if (Stats.IntCount + Stats.FloatCount >= MinMatch) and (Stats.FloatCount > 0) then
     Exit(sdtFloat);
 
-  // DateTime
-  if Stats.DateTimeCount = Stats.Seen then
+  // Pure DateTime
+  if Stats.DateTimeCount >= MinMatch then
     Exit(sdtDateTime);
 
-  // Date
-  if Stats.DateCount = Stats.Seen then
+  // Mixed Date + DateTime (some rows have a time component, others do not)
+  if (Stats.DateCount + Stats.DateTimeCount >= MinMatch) and
+     (Stats.DateCount > 0) and (Stats.DateTimeCount > 0) then
+    Exit(sdtDateTime);
+
+  // Pure Date
+  if Stats.DateCount >= MinMatch then
     Exit(sdtDate);
 
-  // Time
-  if Stats.TimeCount = Stats.Seen then
+  // Pure Time
+  if Stats.TimeCount >= MinMatch then
     Exit(sdtTime);
 
-  // Mistura de Date + Time → DateTime
-  if (Stats.DateCount > 0) and (Stats.TimeCount > 0) then
+  // Mixed Date + Time → DateTime (column stored inconsistently)
+  if (Stats.DateCount + Stats.TimeCount >= MinMatch) and
+     (Stats.DateCount > 0) and (Stats.TimeCount > 0) then
     Exit(sdtDateTime);
 
   Result := sdtText;

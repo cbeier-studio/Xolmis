@@ -111,7 +111,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 920
-    PageIndex = 0
+    PageIndex = 1
     Align = alTop
     Constraints.MinHeight = 430
     Constraints.MinWidth = 560
@@ -806,12 +806,12 @@ object dlgImport: TdlgImport
             ItemHeight = 15
             ItemIndex = 0
             Items.Strings = (
-              'Colon'
+              'Comma'
               'Period'
             )
             Style = csDropDownList
             TabOrder = 0
-            Text = 'Colon'
+            Text = 'Comma'
           end
         end
         object pEncoding: TBCPanel
