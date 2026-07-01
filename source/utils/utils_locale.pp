@@ -378,6 +378,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsImportingXLSX = 'Importing XLSX';
     rsImportingXML = 'Importing XML';
     rsImportingDBF = 'Importing DBF';
+    rsImportingToTable = 'Importing to %s';
     rsPleaseWaitWhileImporting = 'Please wait while importing the selected files.';
     rsRecordUpdated = 'Updated existing record: %d';
     rsNewRecordOmitted = 'New record omitted: %s';
@@ -389,6 +390,8 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsLoadingForm = 'Loading %s...';
     rsLoadingCSVFile = 'Loading CSV file...';
     rsLoadingJSONFile = 'Loading JSON file...';
+    rsLoadingImportSettings = 'Loading import settings...';
+    rsLoadingImportPreview = 'Loading import preview...';
     rsLoadingRecordsToImport = 'Loading records to import...';
     rsLoadingListOfCountries = 'Loading list of countries...';
     rsLoadingListOfCities = 'Loading list of cities...';

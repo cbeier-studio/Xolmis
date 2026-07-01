@@ -71,6 +71,7 @@ type
     lblDataType: TLabel;
     lblArrayHandling: TLabel;
     lblDateFormat: TLabel;
+    lblFieldsTargetTable: TLabel;
     lblRemoveAccents: TLabel;
     lblNormalizeWhitespace: TLabel;
     lblReplaceChars: TLabel;
@@ -894,6 +895,7 @@ begin
   begin
     FTableType := TablesDict[cbTarget.Text];
     FFieldMap.TableType := FTableType;
+    lblFieldsTargetTable.Caption := Format(rsImportingToTable, [cbTarget.Text]);
   end;
 end;
 
@@ -2247,8 +2249,14 @@ begin
   // Confirmation
   if nbPages.PageIndex = 3 then
   begin
-    SetMappings;
-    PreviewRows;
+    dlgLoading.Show;
+    try
+      dlgLoading.UpdateProgress(rsLoadingImportPreview, -1);
+      SetMappings;
+      PreviewRows;
+    finally
+      dlgLoading.Hide;
+    end;
   end;
 
   // Fields

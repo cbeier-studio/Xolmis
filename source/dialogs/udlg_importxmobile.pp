@@ -85,6 +85,7 @@ type
     sbNext: TButton;
     sbRetry: TBitBtn;
     sbSaveLog: TBitBtn;
+    sbAddExpedition: TSpeedButton;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure eExpeditionButtonClick(Sender: TObject);
@@ -101,6 +102,7 @@ type
     procedure gridMapSetEditText(Sender: TObject; ACol, ARow: Integer; const Value: string);
     procedure pmnNewLocalityClick(Sender: TObject);
     procedure pmnNewPersonClick(Sender: TObject);
+    procedure sbAddExpeditionClick(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
     procedure sbPreviousClick(Sender: TObject);
@@ -2147,6 +2149,11 @@ end;
 procedure TdlgImportXMobile.pmnNewPersonClick(Sender: TObject);
 begin
   EditPerson(DMG.qPeople, True);
+end;
+
+procedure TdlgImportXMobile.sbAddExpeditionClick(Sender: TObject);
+begin
+  EditExpedition(DMG.qExpeditions, True);
 end;
 
 procedure TdlgImportXMobile.sbCancelClick(Sender: TObject);

@@ -111,7 +111,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 920
-    PageIndex = 1
+    PageIndex = 0
     Align = alTop
     Constraints.MinHeight = 430
     Constraints.MinWidth = 560
@@ -169,7 +169,7 @@ object dlgImport: TdlgImport
           Top = 52
           Width = 248
           BorderSpacing.Bottom = 16
-          Caption = 'Select a target table and a source file to import.'
+          Caption = 'Select a source file to import and a target table.'
         end
         object pSourceOptions: TPanel
           AnchorSideLeft.Control = pContentSource
@@ -1469,7 +1469,7 @@ object dlgImport: TdlgImport
             item
               ReadOnly = True
               Title.Caption = 'Source field'
-              Width = 216
+              Width = 214
             end          
             item
               Alignment = taCenter
@@ -1481,7 +1481,7 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 216
+              Width = 214
             end>
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
           RowCount = 2
@@ -1492,9 +1492,9 @@ object dlgImport: TdlgImport
           OnSelectCell = gridFieldsSelectCell
           ColWidths = (
             64
-            216
+            214
             60
-            216
+            214
           )
           Cells = (
             2
@@ -1523,8 +1523,8 @@ object dlgImport: TdlgImport
           Anchors = [akTop, akRight, akBottom]
           ChildSizing.LeftRightSpacing = 8
           ChildSizing.TopBottomSpacing = 8
-          ClientHeight = 331
-          ClientWidth = 328
+          ClientHeight = 327
+          ClientWidth = 307
           TabOrder = 2
           object pLookupTable: TBCPanel
             Left = 8
@@ -2995,6 +2995,23 @@ object dlgImport: TdlgImport
             end
           end
         end
+        object lblFieldsTargetTable: TLabel
+          AnchorSideLeft.Control = pContentFields
+          AnchorSideTop.Control = pTitleFields
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentFields
+          AnchorSideRight.Side = asrBottom
+          Left = 766
+          Height = 15
+          Top = 52
+          Width = 138
+          Anchors = [akTop, akRight]
+          BorderSpacing.Left = 16
+          BorderSpacing.Right = 16
+          BorderSpacing.Bottom = 16
+          Caption = 'Importing to [target table]'
+          WordWrap = True
+        end
       end
     end
     object pgConfirm: TPage
@@ -3871,7 +3888,7 @@ object dlgImport: TdlgImport
   object OpenDlg: TOpenDialog
     Title = 'Select source file'
     DefaultExt = '.csv'
-    Filter = 'Supported files|*.csv;*.tsv;*xlsx;*.xls;*.ods;*.json;*.ndjson;*.jsonl;*.xml;*.dbf|Comma Separated Values|*.csv;*.tsv|Microsoft Excel|*.xlsx;*.xls|Open Document Spreadsheet|*.ods|JSON|*.json;*.ndjson;*.jsonl|XML|*.xml|DBF|*.dbf|KML|*.kml;*kmz|GPX|*.gpx|GeoJSON|*.geojson|All files|*.*'
+    Filter = 'Supported files|*.csv;*.tsv;*xlsx;*.xls;*.ods;*.json;*.ndjson;*.jsonl;*.xml;*.dbf|Comma Separated Values|*.csv;*.tsv|Microsoft Excel|*.xlsx;*.xls|Open Document Spreadsheet|*.ods|JSON|*.json;*.ndjson;*.jsonl|XML|*.xml|DBF|*.dbf|All files|*.*'
     Options = [ofFileMustExist, ofEnableSizing, ofViewDetail]
     Left = 176
     Top = 224

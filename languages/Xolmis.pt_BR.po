@@ -5017,8 +5017,8 @@ msgid "Source file: *"
 msgstr "Arquivo de origem: *"
 
 #: tdlgimport.lblsourceinstruction.caption
-msgid "Select a target table and a source file to import."
-msgstr "Selecione uma tabela destino e um arquivo de origem para importar."
+msgid "Select a source file to import and a target table."
+msgstr "Selecione um arquivo de origem para importar e uma tabela de destino."
 
 #: tdlgimport.lbltarget.caption
 msgid "Target table: *"
@@ -5480,6 +5480,11 @@ msgstr "Novo observador"
 msgctxt "tdlgimportxmobile.savedlg.title"
 msgid "Save log as"
 msgstr "Salvar log como"
+
+#: tdlgimportxmobile.sbaddexpedition.hint
+msgctxt "tdlgimportxmobile.sbaddexpedition.hint"
+msgid "New expedition"
+msgstr "Nova expedição"
 
 #: tdlgimportxmobile.sbcancel.caption
 msgctxt "tdlgimportxmobile.sbcancel.caption"
@@ -16902,6 +16907,11 @@ msgstr "Importando NDJSON"
 msgid "Importing ODS"
 msgstr "Importando ODS"
 
+#: utils_locale.rsimportingtotable
+#, object-pascal-format
+msgid "Importing to %s"
+msgstr "Importando para %s"
+
 #: utils_locale.rsimportingxlsx
 msgid "Importing XLSX"
 msgstr "Importando XLSX"
@@ -17194,6 +17204,14 @@ msgstr "Carregando módulo de dados de conjuntos de dados..."
 msgctxt "utils_locale.rsloadingform"
 msgid "Loading %s..."
 msgstr "Carregando %s..."
+
+#: utils_locale.rsloadingimportpreview
+msgid "Loading import preview..."
+msgstr "Carregando visualização da importação..."
+
+#: utils_locale.rsloadingimportsettings
+msgid "Loading import settings..."
+msgstr "Carregando configurações da importação..."
 
 #: utils_locale.rsloadingjsonfile
 msgctxt "utils_locale.rsloadingjsonfile"

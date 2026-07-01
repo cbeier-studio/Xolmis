@@ -5037,7 +5037,7 @@ msgid "Source file: *"
 msgstr ""
 
 #: tdlgimport.lblsourceinstruction.caption
-msgid "Select a target table and a source file to import."
+msgid "Select a source file to import and a target table."
 msgstr ""
 
 #: tdlgimport.lbltarget.caption
@@ -5499,6 +5499,11 @@ msgstr ""
 #: tdlgimportxmobile.savedlg.title
 msgctxt "tdlgimportxmobile.savedlg.title"
 msgid "Save log as"
+msgstr ""
+
+#: tdlgimportxmobile.sbaddexpedition.hint
+msgctxt "tdlgimportxmobile.sbaddexpedition.hint"
+msgid "New expedition"
 msgstr ""
 
 #: tdlgimportxmobile.sbcancel.caption
@@ -16910,6 +16915,11 @@ msgstr ""
 msgid "Importing ODS"
 msgstr ""
 
+#: utils_locale.rsimportingtotable
+#, object-pascal-format
+msgid "Importing to %s"
+msgstr ""
+
 #: utils_locale.rsimportingxlsx
 msgid "Importing XLSX"
 msgstr ""
@@ -17201,6 +17211,14 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rsloadingform"
 msgid "Loading %s..."
+msgstr ""
+
+#: utils_locale.rsloadingimportpreview
+msgid "Loading import preview..."
+msgstr ""
+
+#: utils_locale.rsloadingimportsettings
+msgid "Loading import settings..."
 msgstr ""
 
 #: utils_locale.rsloadingjsonfile

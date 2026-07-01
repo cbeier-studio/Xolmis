@@ -24,7 +24,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="127">
+      <ExcludedIdentifiers Count="128">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -152,6 +152,7 @@
         <Item125 Value="tdlgImport.cbExistingRecordPolicy.Text"/>
         <Item126 Value="tdlgImport.cbErrorHandling.Text"/>
         <Item127 Value="tdlgImport.cbDateFormat.Text"/>
+        <Item128 Value="tdlgImport.lblFieldsTargetTable.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
