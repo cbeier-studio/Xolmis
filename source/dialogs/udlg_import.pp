@@ -2246,14 +2246,19 @@ begin
     ImportData;
   end;
 
-  // Confirmation
+  // Preview
   if nbPages.PageIndex = 3 then
   begin
     dlgLoading.Show;
     try
       dlgLoading.UpdateProgress(rsLoadingImportPreview, -1);
-      SetMappings;
-      PreviewRows;
+      try
+        SetMappings;
+        PreviewRows;
+      except
+        sbPriorClick(Sender);
+        raise;
+      end;
     finally
       dlgLoading.Hide;
     end;

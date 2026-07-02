@@ -673,7 +673,7 @@ begin
     end;
 
     // 4. Lookup (if it is set)
-    if (Mapping.LookupTable <> tbNone) then
+    if (Mapping.LookupTable <> tbNone) and (DestValue <> EmptyStr) then
     begin
       if (Mapping.LookupTable = tbZooTaxa) and (Mapping.LookupField = COL_SCIENTIFIC_NAME) then
         // Get valid taxon ID
@@ -703,14 +703,12 @@ begin
         // Get record ID from other tables
         DestValue := IntToStr(GetKey(TABLE_NAMES[Mapping.LookupTable], PRIMARY_KEY_FIELDS[Mapping.LookupTable],
           Mapping.LookupField, DestValue));
+
       if DestValue = '0' then
       begin
-        case Mapping.NullHandling of
-          nhIgnore: ;
-          nhDefaultValue: DestValue := VarToStr(Mapping.DefaultValue);
-          nhUseMean: ;
-          nhUseMedian: ;
-          nhUseMode: ;
+        case FOptions.ErrorHandling of
+          iehAbort: raise Exception.CreateFmt(rsErrorLookupValueNotFoundForField, [SourceValue, Mapping.LookupTable]);
+          iehIgnore: ;
         end;
       end;
     end;
