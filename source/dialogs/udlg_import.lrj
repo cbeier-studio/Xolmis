@@ -32,7 +32,7 @@
 {"hash":266169959,"name":"tdlgimport.lblerrorhandling.caption","sourcebytes":[69,114,114,111,114,32,104,97,110,100,108,105,110,103],"value":"Error handling"},
 {"hash":258667506,"name":"tdlgimport.cberrorhandling.text","sourcebytes":[65,98,111,114,116,32,111,110,32,102,105,114,115,116,32,101,114,114,111,114],"value":"Abort on first error"},
 {"hash":110893556,"name":"tdlgimport.lbldateformat.caption","sourcebytes":[68,97,116,101,32,102,111,114,109,97,116],"value":"Date format"},
-{"hash":33581481,"name":"tdlgimport.cbdateformat.text","sourcebytes":[68,68,47,77,77,47,89,89,89,89],"value":"DD/MM/YYYY"},
+{"hash":298159,"name":"tdlgimport.cbdateformat.text","sourcebytes":[65,117,116,111],"value":"Auto"},
 {"hash":80724659,"name":"tdlgimport.lbltitlefields.caption","sourcebytes":[70,105,101,108,100,115],"value":"Fields"},
 {"hash":148639950,"name":"tdlgimport.lblfieldsinstruction.caption","sourcebytes":[67,111,110,102,105,103,117,114,101,32,116,104,101,32,102,105,101,108,100,32,109,97,112,112,105,110,103,115,32,102,114,111,109,32,116,104,101,32,115,111,117,114,99,101,32,102,105,108,101,32,116,111,32,116,104,101,32,116,97,114,103,101,116,32,116,97,98,108,101,46],"value":"Configure the field mappings from the source file to the target table."},
 {"hash":46806196,"name":"tdlgimport.gridfields.columns[0].title.caption","sourcebytes":[83,111,117,114,99,101,32,102,105,101,108,100],"value":"Source field"},

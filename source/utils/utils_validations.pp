@@ -673,6 +673,7 @@ begin
     Exit(True);
 
   // Normalize separators to reduce combinations
+  S := StringReplace(S, ' ', '/', [rfReplaceAll]);
   S := StringReplace(S, '.', '/', [rfReplaceAll]);
   S := StringReplace(S, '-', '/', [rfReplaceAll]);
 
@@ -681,7 +682,15 @@ begin
     TryWithFormat('dd/mm/yyyy') or
     TryWithFormat('d/m/yyyy') or
     TryWithFormat('dd/m/yyyy') or
-    TryWithFormat('d/mm/yyyy');
+    TryWithFormat('d/mm/yyyy') or
+    TryWithFormat('d/mmm/yyyy') or
+    TryWithFormat('dd/mmm/yyyy') or
+    TryWithFormat('d/mmmm/yyyy') or
+    TryWithFormat('dd/mmmm/yyyy') or
+    TryWithFormat('mmm/d/yyyy') or
+    TryWithFormat('mmm/dd/yyyy') or
+    TryWithFormat('mmmm/d/yyyy') or
+    TryWithFormat('mmmm/dd/yyyy');
 end;
 
 function TryParseTimeFlexible(const AValue: String; out ATime: TDateTime): Boolean;

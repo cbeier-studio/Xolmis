@@ -21,7 +21,7 @@ unit data_getvalue;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StdCtrls, DateUtils, StrUtils,
+  Classes, SysUtils, DB, SQLDB, StdCtrls, DateUtils, StrUtils, Variants,
   models_record_types, models_taxonomy, utils_gis, models_sampling;
 
 type

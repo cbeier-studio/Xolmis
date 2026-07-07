@@ -111,7 +111,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 920
-    PageIndex = 0
+    PageIndex = 1
     Align = alTop
     Constraints.MinHeight = 430
     Constraints.MinWidth = 560
@@ -553,7 +553,7 @@ object dlgImport: TdlgImport
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
         ClientHeight = 347
-        ClientWidth = 920
+        ClientWidth = 903
         TabOrder = 1
         object pHaveHeader: TBCPanel
           Left = 16
@@ -1359,31 +1359,12 @@ object dlgImport: TdlgImport
             ItemHeight = 15
             ItemIndex = 0
             Items.Strings = (
-              'DD/MM/YYYY'
-              'DD-MM-YYYY'
-              'DD.MM.YYYY'
+              'Auto'
               'MM/DD/YYYY'
-              'MM-DD-YYYY'
-              'MM.DD.YYYY'
-              'YYYY-MM-DD'
-              'YYYY/MM/DD'
-              'YYYY.MM.DD'
-              'DD/MMM/YYYY'
-              'DD-MMM-YYYY'
-              'MMM-DD-YYYY'
-              'YYYY-MMM-DD'
-              'DD de MMMM de YYYY'
-              'DD MMMM YYYY'
-              'MMMM DD, YYYY'
-              'YYYY MMMM DD'
-              'DD-MMM-YY'
-              'YY-MM-DD'
-              'DD/MM/YY'
-              'MM/DD/YY'
             )
             Style = csDropDownList
             TabOrder = 0
-            Text = 'DD/MM/YYYY'
+            Text = 'Auto'
           end
         end
       end

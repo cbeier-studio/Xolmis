@@ -3106,7 +3106,7 @@ function EditPoi(aDataSet: TDataSet; aSurvey: Integer; aSighting: Integer; aIndi
 var
   FRecord, FOldRecord: TPoi;
   FRepo: TPoiRepository;
-  aTime: Variant;
+  aTime, aTaxonId, aObserverId: Variant;
 begin
   LogEvent(leaOpen, 'Occurrence point edit dialog');
   Application.CreateForm(TedtPoi, edtPoi);
@@ -3125,17 +3125,21 @@ begin
       begin
         FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_CAPTURES, COL_CAPTURE_DATE, COL_CAPTURE_ID, aSurvey));
         aTime := GetFieldValue(TBL_CAPTURES, COL_CAPTURE_TIME, COL_CAPTURE_ID, aSurvey);
-        if aTime <> Null then
+        if not VarIsNull(aTime) then
           FRecord.SampleTime := VarToDateTime(aTime);
       end;
       if aSighting > 0 then
       begin
-        FRecord.TaxonId := GetFieldValue(TBL_SIGHTINGS, COL_TAXON_ID, COL_SIGHTING_ID, aSighting);
+        aTaxonId := GetFieldValue(TBL_SIGHTINGS, COL_TAXON_ID, COL_SIGHTING_ID, aSighting);
+        if not VarIsNull(aTaxonId) then
+          FRecord.TaxonId := aTaxonId;
         FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_SIGHTINGS, COL_SIGHTING_DATE, COL_SIGHTING_ID, aSighting));
         aTime := GetFieldValue(TBL_SIGHTINGS, COL_SIGHTING_TIME, COL_SIGHTING_ID, aSighting);
-        if aTime <> Null then
+        if not VarIsNull(aTime) then
           FRecord.SampleTime := VarToDateTime(aTime);
-        FRecord.ObserverId := GetFieldValue(TBL_SIGHTINGS, COL_OBSERVER_ID, COL_SIGHTING_ID, aSighting);
+        aObserverId := GetFieldValue(TBL_SIGHTINGS, COL_OBSERVER_ID, COL_SIGHTING_ID, aSighting);
+        if not VarIsNull(aObserverId) then
+          FRecord.ObserverId := aObserverId;
       end;
       EditSourceStr := rsInsertedByForm;
     end else
