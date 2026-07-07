@@ -2561,10 +2561,9 @@ var
   i: Integer;
 begin
   ProfileName := FSavedSettings;
-  if not InputQuery(rsSaveImportProfile, rsLabelProfileName, ProfileName) then
+  if not QueryDlg(rsSaveImportProfile, rsLabelProfileName, ProfileName, ProfileName) then
     Exit;
 
-  ProfileName := Trim(ProfileName);
   if ProfileName = EmptyStr then
     raise EImportError.Create(rsErrorImportProfileNameCannotBeEmpty);
 

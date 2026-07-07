@@ -262,10 +262,13 @@ procedure TNestsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject)
 begin
   if (Column.FieldName = COL_TAXON_NAME) then
   begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
     begin
       TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end
+    else
+    begin
+      TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     end;
   end
   else
@@ -486,10 +489,13 @@ procedure TNestsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObje
 begin
   if (Column.FieldName = COL_TAXON_NAME) then
   begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
     begin
       TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end
+    else
+    begin
+      TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     end;
   end
   else
@@ -955,10 +961,13 @@ begin
   else
   if Column.FieldName = COL_TAXON_NAME then
   begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
     begin
       TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end
+    else
+    begin
+      TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     end;
   end;
 end;
@@ -1124,10 +1133,13 @@ begin
   else
   if Column.FieldName = COL_TAXON_NAME then
   begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
     begin
       TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end
+    else
+    begin
+      TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     end;
   end;
 end;

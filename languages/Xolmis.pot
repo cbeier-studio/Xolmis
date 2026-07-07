@@ -19977,6 +19977,10 @@ msgctxt "utils_locale.rstitleinformation"
 msgid "Information"
 msgstr ""
 
+#: utils_locale.rstitleinputtext
+msgid "Input required"
+msgstr ""
+
 #: utils_locale.rstitleinstitutions
 msgctxt "utils_locale.rstitleinstitutions"
 msgid "Institutions"

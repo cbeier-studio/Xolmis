@@ -20143,6 +20143,10 @@ msgctxt "utils_locale.rstitleinformation"
 msgid "Information"
 msgstr "Informação"
 
+#: utils_locale.rstitleinputtext
+msgid "Input required"
+msgstr "Entrada de texto necessária"
+
 #: utils_locale.rstitleinstitutions
 msgctxt "utils_locale.rstitleinstitutions"
 msgid "Institutions"

@@ -182,7 +182,6 @@ begin
   else
   if Column.FieldName = COL_TAXON_NAME then
   begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_OUT_OF_SAMPLE).Field.AsBoolean = True) then
     begin
       TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
@@ -191,6 +190,10 @@ begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
     begin
       TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end
+    else
+    begin
+      TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     end;
   end;
 end;
@@ -373,7 +376,6 @@ begin
   else
   if Column.FieldName = COL_TAXON_NAME then
   begin
-    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_OUT_OF_SAMPLE).Field.AsBoolean = True) then
     begin
       TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
@@ -382,6 +384,10 @@ begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
     begin
       TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end
+    else
+    begin
+      TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     end;
   end;
 end;

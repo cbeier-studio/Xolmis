@@ -817,11 +817,18 @@ procedure TedtNest.sbAddCustomTaxonClick(Sender: TObject);
 var
   strInput: String;
 begin
+  if FCustomTaxonName <> EmptyStr then
+    strInput := FCustomTaxonName
+  else
+    strInput := ' ';
+
   if (FTaxonId > 0) then
     if MsgDlg(rsTemporaryTaxonName, rsReplaceTaxonWithCustomTaxonPrompt, mtConfirmation) = False then
       Exit;
 
-  strInput := Trim(InputBox(rsTemporaryTaxonName, rsInformTemporaryTaxonName, FCustomTaxonName));
+  if not QueryDlg(rsTemporaryTaxonName, rsInformTemporaryTaxonName, strInput, strInput) then
+    Exit;
+
   if strInput <> EmptyStr then
   begin
     FTaxonId := 0;

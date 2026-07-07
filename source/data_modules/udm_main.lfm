@@ -16986,4 +16986,14 @@ object DMM: TDMM
       09B278A46A3F7E03BC7F9FAE
     }
   end
+  object QTaskDlg: TTaskDialog
+    Buttons = <>
+    DefaultButton = tcbCancel
+    Flags = [tfAllowDialogCancellation, tfSimpleQuery, tfQueryFocused]
+    MainIcon = tdiNone
+    RadioButtons = <>
+    QueryItemIndex = 0
+    Left = 472
+    Top = 48
+  end
 end

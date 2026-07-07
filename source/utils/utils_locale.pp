@@ -110,6 +110,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsTitleConfirmation = 'Confirmation';
     rsTitleInformation = 'Information';
     rsTitleCaution = 'Caution!';
+    rsTitleInputText = 'Input required';
     rsTitleImportFile = 'Import file';
     rsTitleCreateDatabase = 'Create database';
     rsTitleSelectDatabaseFile = 'Select database';

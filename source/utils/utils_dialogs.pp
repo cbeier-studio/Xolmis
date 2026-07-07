@@ -30,6 +30,7 @@ type
     obtDarkMode, obtCaptureOutliers, obtAutomaticBackup, obtClearDeletedRecords, obtSearch, obtFeedback, obtNewDatabase);
 
   function MsgDlg(aTitle, aText: String; aType: TMsgDlgType): Boolean;
+  function QueryDlg(aTitle, aText, aInitialQuery: String; var aResultQuery: String): Boolean;
   procedure ProgressDlg(aTitle, aText: String; aMin: Integer = 0; aMax: Integer = 100);
   procedure ValidateDlg(aList: TStrings; aHeader: String = '');
 
@@ -126,7 +127,35 @@ begin
   end;
 end;
 
-procedure ProgressDlg(aTitle, aText: String; aMin, aMax: Integer);
+function QueryDlg(aTitle, aText, aInitialQuery: String; var aResultQuery: String): Boolean;
+begin
+  Result := False;
+  aResultQuery := EmptyStr;
+
+  with DMM.QTaskDlg do
+  begin
+    Title := aTitle;
+    Text := aText;
+    SimpleQuery := aInitialQuery;
+    Caption := rsTitleInputText;
+    if Execute then
+    begin
+      case ModalResult of
+        mrOK:     Result := True;
+        mrCancel: Result := False;
+      end;
+    end
+    else
+      Result := False;
+
+    if Result then
+      aResultQuery := Trim(QueryResult)
+    else
+      aResultQuery := EmptyStr;
+  end;
+end;
+
+procedure ProgressDlg(aTitle, aText: String; aMin: Integer; aMax: Integer);
 var
   M: TTaskDialog;
 begin

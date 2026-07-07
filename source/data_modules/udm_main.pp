@@ -84,6 +84,7 @@ type
     tabGeoBankcoordinate_name: TStringField;
     tabGeoBanklatitude: TFloatField;
     tabGeoBanklongitude: TFloatField;
+    QTaskDlg: TTaskDialog;
     vIcons: TImageList;
     vIconsDark: TImageList;
     XMLExport: TSimpleXMLExporter;
