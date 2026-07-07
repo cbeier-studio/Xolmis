@@ -21,7 +21,7 @@ unit data_columns;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StrUtils, fpjson, jsonparser, data_types;
+  Classes, SysUtils, DB, SQLDB, DBGrids, StrUtils, fgl, fpjson, jsonparser, data_types;
 
 resourcestring
   rscId = 'ID';
@@ -531,6 +531,42 @@ resourcestring
   rscStdDev = 'Std. dev.';
   rscStdErr = 'Std. error';
   rscDeletedBy = 'Deleted by';
+
+type
+  TGridColumnConfig = class
+  public
+    FieldName: String;
+    Title: String;
+    Visible: Boolean;
+    Index: Integer;
+    Width: Integer;
+    AutoWidth: Boolean;
+    procedure FromJSON(AObj: TJSONObject);
+    function ToJSON: TJSONObject;
+  end;
+
+  TGridColumnList = specialize TFPGObjectList<TGridColumnConfig>;
+
+  TGridConfig = class
+  private
+    FGrid: TDBGrid;
+    FColumns: TGridColumnList;
+    FSortFields: TSortedFields;
+  public
+    constructor Create(AGrid: TDBGrid = nil);
+    destructor Destroy; override;
+
+    procedure FromDataSet(ADataSet: TDataSet; APersisted: TJSONObject = nil);
+    procedure UpdateLinkedGridColumns;
+    procedure FromJSON(AObj: TJSONObject);
+    function ToJSON: TJSONObject;
+
+    function FindColumn(const AName: string): TGridColumnConfig;
+
+    property Grid: TDBGrid read FGrid write FGrid;
+    property Columns: TGridColumnList read FColumns;
+    property SortFields: TSortedFields read FSortFields;
+  end;
 
   procedure AddPercentSelect(aDataSet: TSQLQuery);
   procedure AddTotalJoin(aDataSet: TSQLQuery; const aWhereText: String; const AFilterWhere: String = '');
@@ -5889,6 +5925,282 @@ begin
 
     if SQL.Count > 0 then
       Open;
+  end;
+end;
+
+{ TGridColumnConfig }
+
+procedure TGridColumnConfig.FromJSON(AObj: TJSONObject);
+begin
+  if not Assigned(AObj) then
+    Exit;
+
+  FieldName := AObj.Get('field_name', EmptyStr);
+  Title := AObj.Get('title', EmptyStr);
+  Visible := AObj.Get('visible', True);
+  Index := AObj.Get('index', 0);
+  Width := AObj.Get('width', 0);
+  AutoWidth := AObj.Get('auto_width', False);
+end;
+
+function TGridColumnConfig.ToJSON: TJSONObject;
+begin
+  Result := TJSONObject.Create;
+  Result.Strings['field_name'] := FieldName;
+  Result.Strings['title'] := Title;
+  Result.Booleans['visible'] := Visible;
+  Result.Integers['index'] := Index;
+  Result.Integers['width'] := Width;
+  Result.Booleans['auto_width'] := AutoWidth;
+end;
+
+{ TGridConfig }
+
+constructor TGridConfig.Create(AGrid: TDBGrid = nil);
+begin
+  inherited Create;
+  FGrid := AGrid;
+  FColumns := TGridColumnList.Create(True);
+  FSortFields := TSortedFields.Create(True);
+end;
+
+destructor TGridConfig.Destroy;
+begin
+  FreeAndNil(FSortFields);
+  FreeAndNil(FColumns);
+  inherited Destroy;
+end;
+
+procedure TGridConfig.FromDataSet(ADataSet: TDataSet; APersisted: TJSONObject = nil);
+var
+  Persisted: TGridConfig;
+  ColCfg: TGridColumnConfig;
+  PersistedCol: TGridColumnConfig;
+  SortField: TSortedField;
+  PersistedSort: TSortedField;
+  Field: TField;
+  I: Integer;
+begin
+  FColumns.Clear;
+  FSortFields.Clear;
+
+  if not Assigned(ADataSet) then
+    Exit;
+
+  Persisted := TGridConfig.Create;
+  try
+    if Assigned(APersisted) then
+      Persisted.FromJSON(APersisted);
+
+    for I := 0 to ADataSet.FieldCount - 1 do
+    begin
+      Field := ADataSet.Fields[I];
+
+      ColCfg := TGridColumnConfig.Create;
+      ColCfg.FieldName := Field.FieldName;
+      ColCfg.Title := Field.DisplayLabel;
+      ColCfg.Visible := Field.Visible;
+      ColCfg.Index := I;
+      ColCfg.Width := 0;
+      ColCfg.AutoWidth := False;
+
+      PersistedCol := Persisted.FindColumn(Field.FieldName);
+      if Assigned(PersistedCol) then
+      begin
+        if PersistedCol.Title <> EmptyStr then
+          ColCfg.Title := PersistedCol.Title;
+        ColCfg.Visible := PersistedCol.Visible;
+        ColCfg.Index := PersistedCol.Index;
+        ColCfg.Width := PersistedCol.Width;
+        ColCfg.AutoWidth := PersistedCol.AutoWidth;
+      end;
+
+      FColumns.Add(ColCfg);
+    end;
+
+    for I := 0 to Persisted.SortFields.Count - 1 do
+    begin
+      PersistedSort := Persisted.SortFields[I];
+      if not Assigned(FindColumn(PersistedSort.FieldName)) then
+        Continue;
+
+      SortField := TSortedField.Create;
+      SortField.FieldName := PersistedSort.FieldName;
+      SortField.SortType := PersistedSort.SortType;
+      SortField.Direction := PersistedSort.Direction;
+      SortField.Collation := PersistedSort.Collation;
+      SortField.UseTablePrefix := PersistedSort.UseTablePrefix;
+      FSortFields.Add(SortField);
+    end;
+  finally
+    Persisted.Free;
+  end;
+end;
+
+procedure TGridConfig.UpdateLinkedGridColumns;
+var
+  DataSet: TDataSet;
+  ColCfg: TGridColumnConfig;
+  GridCol: TColumn;
+  I: Integer;
+
+  function FindGridColumn(const AFieldName: String): TColumn;
+  var
+    J: Integer;
+  begin
+    Result := nil;
+    for J := 0 to FGrid.Columns.Count - 1 do
+    begin
+      if SameText(FGrid.Columns[J].FieldName, AFieldName) then
+      begin
+        Result := FGrid.Columns[J];
+        Exit;
+      end;
+    end;
+  end;
+
+begin
+  if not Assigned(FGrid) then
+    Exit;
+
+  if not Assigned(FGrid.DataSource) then
+    Exit;
+
+  DataSet := FGrid.DataSource.DataSet;
+  if not Assigned(DataSet) then
+    Exit;
+
+  // Remove columns no longer represented in the current config.
+  for I := FGrid.Columns.Count - 1 downto 0 do
+  begin
+    if (FGrid.Columns[I].FieldName <> EmptyStr) and
+      (not Assigned(FindColumn(FGrid.Columns[I].FieldName))) then
+      FGrid.Columns.Delete(I);
+  end;
+
+  for I := 0 to FColumns.Count - 1 do
+  begin
+    ColCfg := FColumns[I];
+    if not Assigned(DataSet.FindField(ColCfg.FieldName)) then
+      Continue;
+
+    GridCol := FindGridColumn(ColCfg.FieldName);
+    if not Assigned(GridCol) then
+    begin
+      GridCol := FGrid.Columns.Add;
+      GridCol.FieldName := ColCfg.FieldName;
+    end;
+
+    if ColCfg.Title <> EmptyStr then
+      GridCol.Title.Caption := ColCfg.Title;
+
+    GridCol.Visible := ColCfg.Visible;
+
+    if (not ColCfg.AutoWidth) and (ColCfg.Width > 0) then
+      GridCol.Width := ColCfg.Width;
+
+    if (ColCfg.Index >= 0) and (ColCfg.Index < FGrid.Columns.Count) then
+      GridCol.Index := ColCfg.Index;
+  end;
+end;
+
+procedure TGridConfig.FromJSON(AObj: TJSONObject);
+var
+  ColumnsData: TJSONData;
+  SortData: TJSONData;
+  ColumnsArray: TJSONArray;
+  SortArray: TJSONArray;
+  ItemObj: TJSONObject;
+  ColumnCfg: TGridColumnConfig;
+  SortField: TSortedField;
+  I: Integer;
+begin
+  FColumns.Clear;
+  FSortFields.Clear;
+
+  if not Assigned(AObj) then
+    Exit;
+
+  ColumnsData := AObj.Find('columns');
+  if Assigned(ColumnsData) and (ColumnsData.JSONType = jtArray) then
+  begin
+    ColumnsArray := TJSONArray(ColumnsData);
+    for I := 0 to ColumnsArray.Count - 1 do
+    begin
+      if ColumnsArray.Items[I].JSONType <> jtObject then
+        Continue;
+
+      ItemObj := TJSONObject(ColumnsArray.Items[I]);
+      ColumnCfg := TGridColumnConfig.Create;
+      ColumnCfg.FromJSON(ItemObj);
+      FColumns.Add(ColumnCfg);
+    end;
+  end;
+
+  SortData := AObj.Find('sort_fields');
+  if not Assigned(SortData) then
+    SortData := AObj.Find('sorted_fields');
+
+  if Assigned(SortData) and (SortData.JSONType = jtArray) then
+  begin
+    SortArray := TJSONArray(SortData);
+    for I := 0 to SortArray.Count - 1 do
+    begin
+      if SortArray.Items[I].JSONType <> jtObject then
+        Continue;
+
+      ItemObj := TJSONObject(SortArray.Items[I]);
+      SortField := TSortedField.Create;
+      SortField.FieldName := ItemObj.Get('field_name', EmptyStr);
+      SortField.SortType := TSortType(ItemObj.Get('sort_type', Ord(stNone)));
+      SortField.Direction := TSortDirection(ItemObj.Get('direction', Ord(sdNone)));
+      SortField.Collation := ItemObj.Get('collation', EmptyStr);
+      SortField.UseTablePrefix := ItemObj.Get('use_table_prefix', False);
+      FSortFields.Add(SortField);
+    end;
+  end;
+end;
+
+function TGridConfig.ToJSON: TJSONObject;
+var
+  ColumnsArray: TJSONArray;
+  SortArray: TJSONArray;
+  SortObj: TJSONObject;
+  I: Integer;
+begin
+  Result := TJSONObject.Create;
+
+  ColumnsArray := TJSONArray.Create;
+  for I := 0 to FColumns.Count - 1 do
+    ColumnsArray.Add(FColumns[I].ToJSON);
+  Result.Add('columns', ColumnsArray);
+
+  SortArray := TJSONArray.Create;
+  for I := 0 to FSortFields.Count - 1 do
+  begin
+    SortObj := TJSONObject.Create;
+    SortObj.Strings['field_name'] := FSortFields[I].FieldName;
+    SortObj.Integers['sort_type'] := Ord(FSortFields[I].SortType);
+    SortObj.Integers['direction'] := Ord(FSortFields[I].Direction);
+    SortObj.Strings['collation'] := FSortFields[I].Collation;
+    SortObj.Booleans['use_table_prefix'] := FSortFields[I].UseTablePrefix;
+    SortArray.Add(SortObj);
+  end;
+  Result.Add('sort_fields', SortArray);
+end;
+
+function TGridConfig.FindColumn(const AName: string): TGridColumnConfig;
+var
+  I: Integer;
+begin
+  Result := nil;
+  for I := 0 to FColumns.Count - 1 do
+  begin
+    if SameText(FColumns[I].FieldName, AName) then
+    begin
+      Result := FColumns[I];
+      Exit;
+    end;
   end;
 end;
 
