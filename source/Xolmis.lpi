@@ -24,7 +24,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="128">
+      <ExcludedIdentifiers Count="129">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -153,6 +153,7 @@
         <Item126 Value="tdlgImport.cbErrorHandling.Text"/>
         <Item127 Value="tdlgImport.cbDateFormat.Text"/>
         <Item128 Value="tdlgImport.lblFieldsTargetTable.Caption"/>
+        <Item129 Value="tdlgTaxonNotFound.txtTaxonName.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
@@ -1690,6 +1691,13 @@
         <Filename Value="edit_dialogs\uedt_poi.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtPoi"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_taxonnotfound.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgTaxonNotFound"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>

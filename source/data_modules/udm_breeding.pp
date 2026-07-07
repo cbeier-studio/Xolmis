@@ -17,6 +17,7 @@ type
     dsNestRevisions: TDataSource;
     qEggs: TSQLQuery;
     qEggsactive_status: TBooleanField;
+    qEggscustom_taxon_name: TStringField;
     qEggsdescription: TMemoField;
     qEggseggshell_color: TStringField;
     qEggseggshell_pattern: TStringField;

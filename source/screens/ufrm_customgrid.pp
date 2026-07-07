@@ -2128,12 +2128,13 @@ begin
 
     for i := 0 to (aGrid.DataSource.DataSet.FieldCount-1) do
       // Add only fields set as visible
-      if aGrid.DataSource.DataSet.Fields[i].Visible then
+      //if aGrid.DataSource.DataSet.Fields[i].Visible then
       begin
         C := aGrid.Columns.Add;
         C.FieldName := aGrid.DataSource.DataSet.Fields[i].FieldName;
         // Set all fields as read only, except marked_status
         C.ReadOnly := not (C.FieldName = COL_MARKED_STATUS);
+        C.Visible := aGrid.DataSource.DataSet.Fields[i].Visible;
         //C := nil;
       end;
 
@@ -5402,7 +5403,7 @@ end;
 
 procedure TfrmCustomGrid.LoadRecordColumns;
 var
-  i: Integer;
+  i, RowIndex: Integer;
 begin
   gridRecord.ClearRows;
 //  gRecord.AddRow(DBG.Columns.VisibleCount);
@@ -5410,18 +5411,21 @@ begin
 
   gridRecord.BeginUpdate;
   try
+    RowIndex := 0;
     for i := 0 to (DBG.Columns.Count - 1) do
     begin
       if DBG.Columns.Items[i].Visible then
       begin
-        gridRecord.RowCount := gridRecord.RowCount + 1;
-        gridRecord.Cells[0, DBG.Columns.VisibleIndex(i)] := DBG.Columns.Items[i].Title.Caption;
+        Inc(RowIndex);
+        if gridRecord.RowCount <= RowIndex then
+          gridRecord.RowCount := RowIndex + 1;
+        gridRecord.Cells[0, RowIndex] := DBG.Columns.Items[i].Title.Caption;
         //gridRecord.BestFitRow(DBG.Columns.Item[i].VisibleIndex, 0);
 
         if (DBG.Columns.Items[i].Field.DataType = ftMemo) or
           (DBG.Columns.Items[i].Field.DataType = ftBlob) then
         begin
-          gridRecord.RowHeights[i] := gridRecord.DefaultRowHeight * 4;
+          gridRecord.RowHeights[RowIndex] := gridRecord.DefaultRowHeight * 4;
         end;
 
       end;
@@ -5433,21 +5437,25 @@ end;
 
 procedure TfrmCustomGrid.LoadRecordRow;
 var
-  i: Integer;
+  i, RowIndex: Integer;
 begin
   //if isWorking then
   //  Exit;
 
   gridRecord.BeginUpdate;
   try
+    RowIndex := 0;
     for i := 0 to (DBG.Columns.Count - 1) do
     begin
-      if DBG.Columns[i].Visible then
+      if DBG.Columns.Items[i].Visible then
       begin
-        if (dsLink.DataSet.RecordCount > 0) and (DBG.Columns[i].Field.DataType = ftMemo) then
-          gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] := DBG.Columns[i].Field.AsString
+        Inc(RowIndex);
+        if gridRecord.RowCount <= RowIndex then
+          gridRecord.RowCount := RowIndex + 1;
+        if not (dsLink.DataSet.IsEmpty) and (DBG.Columns.Items[i].Field.DataType = ftMemo) then
+          gridRecord.Cells[1, RowIndex] := DBG.Columns.Items[i].Field.AsString
         else
-          gridRecord.Cells[1, DBG.Columns.VisibleIndex(i)] := DBG.Columns[i].Field.DisplayText;
+          gridRecord.Cells[1, RowIndex] := DBG.Columns.Items[i].Field.DisplayText;
       end;
     end;
   finally

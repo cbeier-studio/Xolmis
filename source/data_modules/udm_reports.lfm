@@ -6065,7 +6065,11 @@ object DMR: TDMR
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT s.*,'
-      '  z.scientific_name AS taxon_name,'
+      '  CASE'
+      '    WHEN s.custom_taxon_name IS NOT NULL AND s.custom_taxon_name <> '''''
+      '      THEN s.custom_taxon_name'
+      '    ELSE z.scientific_name'
+      '  END AS taxon_name,'
       '  z.formatted_name AS taxon_formatted_name,'
       '  z.order_id AS order_id,'
       '  z.family_id AS family_id,'
@@ -8455,7 +8459,11 @@ object DMR: TDMR
     Transaction = DMM.sqlTrans
     SQL.Strings = (
       'SELECT sp.*,'
-      '  z.scientific_name AS taxon_name,'
+      '  CASE'
+      '    WHEN sp.custom_taxon_name IS NOT NULL AND sp.custom_taxon_name <> '''''
+      '      THEN sp.custom_taxon_name'
+      '    ELSE z.scientific_name'
+      '  END AS taxon_name,'
       '  z.order_id AS order_id,'
       '  z.family_id AS family_id,'
       '  z.genus_id AS genus_id,'

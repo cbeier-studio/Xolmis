@@ -304,6 +304,7 @@ type
     qChildTaxaformatted_name: TStringField;
     qChildTaxascientific_name: TStringField;
     qEggsactive_status: TBooleanField;
+    qEggscustom_taxon_name: TStringField;
     qEggsdescription: TMemoField;
     qEggseggshell_color: TStringField;
     qEggseggshell_pattern: TStringField;
@@ -678,6 +679,7 @@ type
     qMethods: TSQLQuery;
     qNestsbuilding_days: TFloatField;
     qNestscoordinate_precision: TStringField;
+    qNestscustom_taxon_name: TStringField;
     qNestsexternal_max_diameter: TFloatField;
     qNestsexternal_min_diameter: TFloatField;
     qNestsfamily_id: TLongintField;
@@ -857,6 +859,7 @@ type
     qSightingPoisuser_updated1: TLongintField;
     qSightingscoordinate_precision: TStringField;
     qSightingscountry_id: TLongintField;
+    qSightingscustom_taxon_name: TStringField;
     qSightingsfamily_id: TLongintField;
     qSightingsflight_direction: TStringField;
     qSightingsflight_height: TFloatField;
@@ -876,6 +879,7 @@ type
     qSightingstaxon_name: TStringField;
     qSpecimenscoordinate_precision: TStringField;
     qSpecimenscountry_id: TLongintField;
+    qSpecimenscustom_taxon_name: TStringField;
     qSpecimensfamily_id: TLongintField;
     qSpecimensgenus_id: TLongintField;
     qSpecimensinactivated_by: TStringField;

@@ -185,16 +185,12 @@ begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_OUT_OF_SAMPLE).Field.AsBoolean = True) then
     begin
-      if IsDarkModeEnabled then
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-      end
-      else
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-      end;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+    end;
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
+    begin
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
     end;
   end;
 end;
@@ -380,16 +376,12 @@ begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_OUT_OF_SAMPLE).Field.AsBoolean = True) then
     begin
-      if IsDarkModeEnabled then
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-      end
-      else
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-      end;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+    end;
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
+    begin
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
     end;
   end;
 end;

@@ -83,6 +83,7 @@ type
     pmNew: TPopupMenu;
     pStatus4: TPanel;
     pTaxon: TPanel;
+    sbAddCustomTaxon: TSpeedButton;
     sbCancel: TButton;
     sbSave: TButton;
     scrollContent: TScrollBox;
@@ -113,11 +114,13 @@ type
     procedure pmnNewInstitutionClick(Sender: TObject);
     procedure pmnNewLocalityClick(Sender: TObject);
     procedure pmnNewNestClick(Sender: TObject);
+    procedure sbAddCustomTaxonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
     FSpecimen: TSpecimen;
     FLocalityId, FTaxonId, FIndividualId, FNestId, FEggId, FInstitutionId: Integer;
+    FCustomTaxonName: String;
     procedure SetSpecimen(Value: TSpecimen);
     procedure GetRecord;
     procedure SetRecord;
@@ -125,6 +128,7 @@ type
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
+    procedure UpdateTaxonField;
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Specimen: TSpecimen read FSpecimen write SetSpecimen;
@@ -138,7 +142,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_system, utils_dialogs, utils_finddialogs, utils_validations,
-  utils_editdialogs, utils_gis, utils_conversions,
+  utils_editdialogs, utils_gis, utils_conversions, utils_themes,
   data_types, data_consts, data_getvalue, data_columns, models_record_types, models_geo, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -150,6 +154,7 @@ begin
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
   eTaxon.Images := DMM.iEditsDark;
+  sbAddCustomTaxon.Images := DMM.iEditsDark;
   eIndividual.Images := DMM.iEditsDark;
   eNest.Images := DMM.iEditsDark;
   eEgg.Images := DMM.iEditsDark;
@@ -458,7 +463,10 @@ end;
 
 procedure TedtSpecimen.eTaxonButtonClick(Sender: TObject);
 begin
-  FindTaxonDlg([tfAll], eTaxon, True, FTaxonId);
+  if FindTaxonDlg([tfAll], eTaxon, True, FTaxonId) then
+    FCustomTaxonName := EmptyStr;
+
+  UpdateTaxonField;
 end;
 
 procedure TedtSpecimen.eTaxonKeyPress(Sender: TObject; var Key: char);
@@ -468,14 +476,18 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindTaxonDlg([tfAll], eTaxon, True, FTaxonId, Key);
+    if FindTaxonDlg([tfAll], eTaxon, True, FTaxonId, Key) then
+      FCustomTaxonName := EmptyStr;
+    UpdateTaxonField;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
     FTaxonId := 0;
-    eTaxon.Text := EmptyStr;
+    FCustomTaxonName := EmptyStr;
+    eTaxon.Clear;
+    UpdateTaxonField;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -618,7 +630,11 @@ begin
     cbCoordinatePrecision.ItemIndex := -1;
   end;
   FTaxonId := FSpecimen.TaxonId;
-  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  FCustomTaxonName := FSpecimen.CustomTaxonName;
+  if (FCustomTaxonName <> EmptyStr) then
+    eTaxon.Text := FCustomTaxonName
+  else
+    eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FSpecimen.IndividualId;
   eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   FNestId := FSpecimen.NestId;
@@ -643,7 +659,7 @@ begin
     (cbSampleType.ItemIndex >= 0) and
     (eCollectionYear.Text <> EmptyStr) and
     (FLocalityId > 0) and
-    (FTaxonId > 0) then
+    ((FTaxonId > 0) or (FCustomTaxonName <> EmptyStr)) then
     Result := True;
 end;
 
@@ -670,6 +686,25 @@ end;
 procedure TedtSpecimen.pmnNewNestClick(Sender: TObject);
 begin
   EditNest(DMG.qNests, 0, True);
+end;
+
+procedure TedtSpecimen.sbAddCustomTaxonClick(Sender: TObject);
+var
+  strInput: String;
+begin
+  if (FTaxonId > 0) then
+    if MsgDlg(rsTemporaryTaxonName, rsReplaceTaxonWithCustomTaxonPrompt, mtConfirmation) = False then
+      Exit;
+
+  strInput := Trim(InputBox(rsTemporaryTaxonName, rsInformTemporaryTaxonName, FCustomTaxonName));
+  if strInput <> EmptyStr then
+  begin
+    FTaxonId := 0;
+    FCustomTaxonName := strInput;
+    eTaxon.Text := FCustomTaxonName;
+  end;
+
+  UpdateTaxonField;
 end;
 
 procedure TedtSpecimen.sbSaveClick(Sender: TObject);
@@ -706,6 +741,7 @@ begin
     FSpecimen.Latitude := 0;
   FSpecimen.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FSpecimen.TaxonId := FTaxonId;
+  FSpecimen.CustomTaxonName := FCustomTaxonName;
   FSpecimen.IndividualId := FIndividualId;
   FSpecimen.NestId := FNestId;
   FSpecimen.EggId := FEggId;
@@ -719,6 +755,14 @@ procedure TedtSpecimen.SetSpecimen(Value: TSpecimen);
 begin
   if Assigned(Value) then
     FSpecimen := Value;
+end;
+
+procedure TedtSpecimen.UpdateTaxonField;
+begin
+  if (FCustomTaxonName <> EmptyStr) then
+    eTaxon.Font.Color := ActiveTheme.System.CriticalFG
+  else
+    eTaxon.Font.Color := clDefault;
 end;
 
 function TedtSpecimen.ValidateFields: Boolean;
@@ -739,7 +783,7 @@ begin
     Msgs.Add(Format(rsRequiredField, [rscCollectionYear]));
   if (FLocalityId = 0) then
     Msgs.Add(Format(rsRequiredField, [rscLocality]));
-  if (FTaxonId = 0) then
+  if (FTaxonId = 0) and (FCustomTaxonName = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscTaxon]));
   // Conditional required fields
   if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then

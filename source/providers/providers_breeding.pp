@@ -102,6 +102,7 @@ begin
       'latitude              REAL,' +
       'coordinate_precision  VARCHAR (3),' +
       'taxon_id              INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
+      'custom_taxon_name     VARCHAR (120),' +
       'nest_shape            VARCHAR (5),' +
       'support_type          VARCHAR (10),' +
       'support_plant_1_id    INTEGER       REFERENCES botanic_taxa (taxon_id) ON UPDATE CASCADE,' +
@@ -184,6 +185,7 @@ begin
       'latitude, ' +
       'coordinate_precision, ' +
       'taxon_id, ' +
+      'custom_taxon_name, ' +
       'nest_shape, ' +
       'support_type, ' +
       'support_plant_1_id, ' +
@@ -226,6 +228,7 @@ begin
       ':latitude, ' +
       ':coordinate_precision, ' +
       ':taxon_id, ' +
+      ':custom_taxon_name, ' +
       ':nest_shape, ' +
       ':support_type, ' +
       ':support_plant_1_id, ' +
@@ -271,7 +274,11 @@ begin
       'g.country_id AS country_id, ' +
       'g.state_id AS state_id, ' +
       'g.municipality_id AS municipality_id, ' +
-      'z.scientific_name AS taxon_name, ' +
+      'CASE ' +
+        'WHEN n.custom_taxon_name IS NOT NULL AND n.custom_taxon_name <> '''' ' +
+          'THEN n.custom_taxon_name ' +
+        'ELSE z.scientific_name ' +
+      'END AS taxon_name, ' +
       'z.formatted_name AS taxon_formatted_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
@@ -344,6 +351,7 @@ begin
       'latitude, ' +
       'coordinate_precision, ' +
       'taxon_id, ' +
+      'custom_taxon_name, ' +
       'nest_shape, ' +
       'support_type, ' +
       'support_plant_1_id, ' +
@@ -417,6 +425,7 @@ begin
       'latitude = :latitude, ' +
       'coordinate_precision = :coordinate_precision, ' +
       'taxon_id = :taxon_id, ' +
+      'custom_taxon_name = :custom_taxon_name, ' +
       'nest_shape = :nest_shape, ' +
       'support_type = :support_type, ' +
       'support_plant_1_id = :support_plant_1_id, ' +
@@ -840,6 +849,7 @@ begin
       'egg_seq          INTEGER,' +
       'field_number     VARCHAR (20),' +
       'taxon_id         INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
+      'custom_taxon_name VARCHAR (120),' +
       'eggshell_color   VARCHAR (40),' +
       'eggshell_pattern CHAR (5),' +
       'eggshell_texture CHAR (5),' +
@@ -917,6 +927,7 @@ begin
       'individual_id, ' +
       'measure_date, ' +
       'taxon_id, ' +
+      'custom_taxon_name, ' +
       'host_egg, ' +
       'description, ' +
       'notes, ' +
@@ -941,6 +952,7 @@ begin
       ':individual_id, ' +
       'date(:measure_date), ' +
       ':taxon_id, ' +
+      ':custom_taxon_name, ' +
       ':host_egg, ' +
       ':description, ' +
       ':notes, ' +
@@ -955,7 +967,11 @@ begin
     'SELECT e.*, ' +
       'p.abbreviation AS observer_name, ' +
       'i.full_name AS individual_name, ' +
-      'z.scientific_name AS taxon_name, ' +
+      'CASE ' +
+        'WHEN e.custom_taxon_name IS NOT NULL AND e.custom_taxon_name <> '''' ' +
+          'THEN e.custom_taxon_name ' +
+        'ELSE z.scientific_name ' +
+      'END AS taxon_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
       'z.genus_id AS genus_id, ' +
@@ -1012,6 +1028,7 @@ begin
       'egg_seq, ' +
       'field_number, ' +
       'taxon_id, ' +
+      'custom_taxon_name, ' +
       'eggshell_color, ' +
       'eggshell_pattern, ' +
       'eggshell_texture, ' +
@@ -1081,6 +1098,7 @@ begin
       'individual_id = :individual_id, ' +
       'measure_date = date(:measure_date), ' +
       'taxon_id = :taxon_id, ' +
+      'custom_taxon_name = :custom_taxon_name, ' +
       'host_egg = :host_egg, ' +
       'description = :description, ' +
       'notes = :notes, ' +

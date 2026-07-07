@@ -140,6 +140,8 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsOpenDatabase = 'Open database';
     rsOpenImportProfile = 'Open import profile';
     rsSaveImportProfile = 'Save import profile';
+    rsInformTemporaryTaxonName = 'Inform a temporary taxon name:';
+    rsReplaceTaxonWithCustomTaxonPrompt = 'The sighting already have a valid taxon name. Do you want to replace it with a temporary taxon name?';
 
     { Error messages }
     rsErrorFound = '<p><b>%d error</b> found! Please fix it before proceeding.</p>';
@@ -229,6 +231,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorSavingPDF = 'Error saving PDF.';
     rsErrorSavingMediaPaths = 'Error saving the media paths: %s';
     rsErrorTaxonNotFound = 'Taxon "%s" not found.';
+    rsErrorTaxonMustBeSelected = 'A valid taxon must be selected.';
     rsErrorFieldNotFoundInSchema = 'Field "%s" not found in table "%s" schema.';
 
     { Warning messages }
@@ -385,6 +388,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsExistingRecordOmitted = 'Existing record omitted: %s';
     rsModuleDoesNotSupportAttachments = 'This module does not support file attachments.';
     rsModuleDoesNotSupportSomeFilesBeingAttached = 'This module does not support some files being attached.';
+    rsImportAbortedByUser = 'Import aborted by the user.';
 
     { Loading messages }
     rsLoadingForm = 'Loading %s...';
@@ -1033,6 +1037,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsHeard = 'Heard';
     rsPhotographed = 'Photographed';
     rsAudioRecorded = 'Audio recorded';
+    rsTemporaryTaxonName = 'Temporary taxon name';
 
     { Feathers }
     rsFeatherUnknown = 'Unknown';
@@ -1469,8 +1474,9 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsImportAllowDuplicates = 'Allow duplicates';
     rsAbortOnError = 'Abort on first error';
     rsIgnoreErrors = 'Ignore and log errors';
+    rsImportAddTemporaryTaxon = 'Add as temporary taxon name';
+    rsImportAskUnknownTaxon = 'Ask what to do';
     rsImportAbortUnknownTaxon = 'Abort importing';
-    rsImportIgnoreUnknownTaxon = 'Ignore and keep importing';
     rsSystemEncoding = 'System encoding';
     rsNullIgnore = 'Ignore';
     rsNullDefaultValue = 'Default value';

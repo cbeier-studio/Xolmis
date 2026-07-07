@@ -146,6 +146,7 @@ resourcestring
   rscTaxonID = 'Taxon ID';
   rscTaxon = 'Taxon';
   rscTaxonFormatted = 'Taxon (formatted)';
+  rscCustomTaxonName = 'Temporary taxon name';
   rscMackinnonList = 'Mackinnon list';
   rscObserverID = 'Observer ID';
   rscObserver = 'Observer';
@@ -1860,6 +1861,7 @@ begin
         'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
         'taxon_name':             Fields[i].DisplayLabel := rscTaxon;
         'taxon_formatted_name':   Fields[i].DisplayLabel := rscTaxonFormatted;
+        'custom_taxon_name':      Fields[i].DisplayLabel := rscCustomTaxonName;
         'mackinnon_list_num':     Fields[i].DisplayLabel := rscMackinnonList;
         'observer_id':            Fields[i].DisplayLabel := rscObserverID;
         'observer_name':          Fields[i].DisplayLabel := rscObserver;
@@ -2258,6 +2260,7 @@ begin
         'loss_cause':             Fields[i].DisplayLabel := rscLossCause;
         'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
         'taxon_name':             Fields[i].DisplayLabel := rscTaxon;
+        'custom_taxon_name':      Fields[i].DisplayLabel := rscCustomTaxonName;
         'locality_id':            Fields[i].DisplayLabel := rscLocalityID;
         'locality_name':          Fields[i].DisplayLabel := rscLocality;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
@@ -2404,6 +2407,7 @@ begin
         'egg_seq':                Fields[i].DisplayLabel := rscEggNumber;
         'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
         'taxon_name':             Fields[i].DisplayLabel := rscTaxon;
+        'custom_taxon_name':      Fields[i].DisplayLabel := rscCustomTaxonName;
         'egg_shape':              Fields[i].DisplayLabel := rscEggShape;
         'eggshell_color':         Fields[i].DisplayLabel := rscEggshellColor;
         'eggshell_pattern':       Fields[i].DisplayLabel := rscEggshellPattern;
@@ -2449,6 +2453,7 @@ begin
         'field_number':           Fields[i].DisplayLabel := rscFieldNumber;
         'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
         'taxon_name':             Fields[i].DisplayLabel := rscTaxon;
+        'custom_taxon_name':      Fields[i].DisplayLabel := rscCustomTaxonName;
         'sample_type':            Fields[i].DisplayLabel := rscType;
         'collection_date':        Fields[i].DisplayLabel := rscCollectionDate;
         'collection_day':         Fields[i].DisplayLabel := rscCollectionDay;

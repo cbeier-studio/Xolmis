@@ -54,6 +54,7 @@ type
     pmnNewIndividual: TMenuItem;
     pNest: TBCPanel;
     pmNew: TPopupMenu;
+    sbAddCustomTaxon: TSpeedButton;
     txtVolume: TLabel;
     lblFieldNumber1: TLabel;
     lblLength: TLabel;
@@ -114,11 +115,13 @@ type
     procedure pmnNewIndividualClick(Sender: TObject);
     procedure pmnNewNestClick(Sender: TObject);
     procedure pmnNewPersonClick(Sender: TObject);
+    procedure sbAddCustomTaxonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
     FEgg: TEgg;
     FNestId, FObserverId, FTaxonId, FIndividualId: Integer;
+    FCustomTaxonName: String;
     procedure SetEgg(Value: TEgg);
     procedure GetRecord;
     procedure SetRecord;
@@ -126,6 +129,7 @@ type
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
+    procedure UpdateTaxonField;
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Egg: TEgg read FEgg write SetEgg;
@@ -156,6 +160,7 @@ begin
   eNest.Images := DMM.iEditsDark;
   eMeasureDate.Images := DMM.iEditsDark;
   eTaxon.Images := DMM.iEditsDark;
+  sbAddCustomTaxon.Images := DMM.iEditsDark;
   eObserver.Images := DMM.iEditsDark;
   eIndividual.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
@@ -313,7 +318,10 @@ end;
 
 procedure TedtEgg.eTaxonButtonClick(Sender: TObject);
 begin
-  FindTaxonDlg([tfAll], eTaxon, True, FTaxonId);
+  if FindTaxonDlg([tfAll], eTaxon, True, FTaxonId) then
+    FCustomTaxonName := EmptyStr;
+
+  UpdateTaxonField;
 end;
 
 procedure TedtEgg.eTaxonKeyPress(Sender: TObject; var Key: char);
@@ -323,14 +331,18 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindTaxonDlg([tfAll], eTaxon, True, FTaxonId, Key);
+    if FindTaxonDlg([tfAll], eTaxon, True, FTaxonId, Key) then
+      FCustomTaxonName := EmptyStr;
+    UpdateTaxonField;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
     FTaxonId := 0;
+    FCustomTaxonName := EmptyStr;
     eTaxon.Clear;
+    UpdateTaxonField;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -454,7 +466,11 @@ begin
   if not DateIsNull(FEgg.MeasureDate) then
     eMeasureDate.Text := DateToStr(FEgg.MeasureDate);
   FTaxonId := FEgg.TaxonId;
-  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  FCustomTaxonName := FEgg.CustomTaxonName;
+  if (FCustomTaxonName <> EmptyStr) then
+    eTaxon.Text := FCustomTaxonName
+  else
+    eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FObserverId := FEgg.ObserverId;
   eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
   case FEgg.EggShape of
@@ -514,7 +530,7 @@ begin
   Result := False;
 
   if (eEggSeq.Value > 0) and
-    (FTaxonId > 0) and
+    ((FTaxonId > 0) or (FCustomTaxonName <> EmptyStr)) and
     (FObserverId > 0) then
     Result := True;
 end;
@@ -532,6 +548,25 @@ end;
 procedure TedtEgg.pmnNewPersonClick(Sender: TObject);
 begin
   EditPerson(DMG.qPeople, True);
+end;
+
+procedure TedtEgg.sbAddCustomTaxonClick(Sender: TObject);
+var
+  strInput: String;
+begin
+  if (FTaxonId > 0) then
+    if MsgDlg(rsTemporaryTaxonName, rsReplaceTaxonWithCustomTaxonPrompt, mtConfirmation) = False then
+      Exit;
+
+  strInput := Trim(InputBox(rsTemporaryTaxonName, rsInformTemporaryTaxonName, FCustomTaxonName));
+  if strInput <> EmptyStr then
+  begin
+    FTaxonId := 0;
+    FCustomTaxonName := strInput;
+    eTaxon.Text := FCustomTaxonName;
+  end;
+
+  UpdateTaxonField;
 end;
 
 procedure TedtEgg.sbSaveClick(Sender: TObject);
@@ -557,6 +592,7 @@ begin
   FEgg.EggSeq         := eEggSeq.Value;
   FEgg.MeasureDate    := StrToDate(eMeasureDate.Text);
   FEgg.TaxonId        := FTaxonId;
+  FEgg.CustomTaxonName := FCustomTaxonName;
   FEgg.ObserverId   := FObserverId;
   FEgg.EggShape       := StrToEggShape(cbShape.Text);
   FEgg.EggStage       := eStage.Text;
@@ -571,6 +607,14 @@ begin
   FEgg.Notes        := mNotes.Text;
 end;
 
+procedure TedtEgg.UpdateTaxonField;
+begin
+  if (FCustomTaxonName <> EmptyStr) then
+    eTaxon.Font.Color := ActiveTheme.System.CriticalFG
+  else
+    eTaxon.Font.Color := clDefault;
+end;
+
 function TedtEgg.ValidateFields: Boolean;
 var
   Msgs: TStrings;
@@ -583,7 +627,7 @@ begin
   // Required fields
   if (eEggSeq.Value = 0) then
     Msgs.Add(Format(rsRequiredField, [rscEggNumber]));
-  if (FTaxonId = 0) then
+  if (FTaxonId = 0) and (FCustomTaxonName = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscTaxon]));
   if (FObserverId = 0) then
     Msgs.Add(Format(rsRequiredField, [rscObserver]));

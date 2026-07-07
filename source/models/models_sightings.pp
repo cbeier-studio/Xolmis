@@ -38,6 +38,7 @@ type
     FCoordinatePrecision: TCoordinatePrecision;
     FObserverId: Integer;
     FTaxonId: Integer;
+    FCustomTaxonName: String;
     FIndividualId: Integer;
     FSubjectTally: Integer;
     FSubjectDistance: Double;
@@ -63,6 +64,7 @@ type
     FBreedingStatus: String;
     FOutOfSample: Boolean;
     FIsOnEbird: Boolean;
+    FFullName: String;
     FNotes: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
@@ -85,6 +87,7 @@ type
     property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property ObserverId: Integer read FObserverId write FObserverId;
     property TaxonId: Integer read FTaxonId write FTaxonId;
+    property CustomTaxonName: String read FCustomTaxonName write FCustomTaxonName;
     property IndividualId: Integer read FIndividualId write FIndividualId;
     property SubjectTally: Integer read FSubjectTally write FSubjectTally;
     property SubjectDistance: Double read FSubjectDistance write FSubjectDistance;
@@ -110,6 +113,7 @@ type
     property BreedingStatus: String read FBreedingStatus write FBreedingStatus;
     property OutOfSample: Boolean read FOutOfSample write FOutOfSample;
     property IsOnEbird: Boolean read FIsOnEbird write FIsOnEbird;
+    property FullName: String read FFullName write FFullName;
     property Notes: String read FNotes write FNotes;
   end;
 
@@ -121,7 +125,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
-    procedure FindByCombo(const aSurvey, aTaxon, aObserver: Integer; E: TSighting);
+    procedure FindByCombo(const aSurvey, aTaxon, aObserver: Integer; aCustomTaxon: String; E: TSighting);
     procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
@@ -134,7 +138,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_system, utils_global, utils_validations, utils_conversions,
+  utils_locale, utils_system, utils_global, utils_validations, utils_conversions, utils_fullnames,
   data_types, data_consts, data_columns, data_setparam, data_getvalue, data_providers,
   models_users,
   udm_main;
@@ -162,6 +166,7 @@ begin
     FCoordinatePrecision := TSighting(Source).CoordinatePrecision;
     FObserverId := TSighting(Source).ObserverId;
     FTaxonId := TSighting(Source).TaxonId;
+    FCustomTaxonName := TSighting(Source).CustomTaxonName;
     FIndividualId := TSighting(Source).IndividualId;
     FSubjectTally := TSighting(Source).SubjectTally;
     FSubjectDistance := TSighting(Source).SubjectDistance;
@@ -187,6 +192,7 @@ begin
     FBreedingStatus := TSighting(Source).BreedingStatus;
     FOutOfSample := TSighting(Source).OutOfSample;
     FIsOnEbird := TSighting(Source).IsOnEbird;
+    FFullName := TSighting(Source).FullName;
     FNotes := TSighting(Source).Notes;
   end;
 end;
@@ -203,6 +209,7 @@ begin
   FCoordinatePrecision := cpEmpty;
   FObserverId := 0;
   FTaxonId := 0;
+  FCustomTaxonName := EmptyStr;
   FIndividualId := 0;
   FSubjectTally := 0;
   FSubjectDistance := 0.0;
@@ -228,6 +235,7 @@ begin
   FBreedingStatus := EmptyStr;
   FOutOfSample := False;
   FIsOnEbird := False;
+  FFullName := EmptyStr;
   FNotes := EmptyStr;
 end;
 
@@ -274,6 +282,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscCustomTaxonName, aOld.CustomTaxonName, FCustomTaxonName, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscIndividuals, aOld.SubjectTally, FSubjectTally, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscDistanceM, aOld.SubjectDistance, FSubjectDistance, R) then
@@ -318,6 +328,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscIsInEBird, aOld.IsOnEbird, FIsOnEbird, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     Changes.Add(R);
 
@@ -341,9 +353,10 @@ begin
     FLocalityId           := Obj.Get('locality_id', 0);
     FLongitude            := Obj.Get('longitude', 0.0);
     FLatitude             := Obj.Get('latitude', 0.0);
-    FCoordinatePrecision := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
+    FCoordinatePrecision  := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FObserverId           := Obj.Get('observer_id', 0);
     FTaxonId              := Obj.Get('taxon_id', 0);
+    FCustomTaxonName      := Obj.Get('custom_taxon_name', '');
     FIndividualId         := Obj.Get('individual_id', 0);
     FSubjectTally         := Obj.Get('subject_tally', 0);
     FSubjectDistance      := Obj.Get('subject_distance', 0.0);
@@ -367,8 +380,9 @@ begin
     FUnbandedTally        := Obj.Get('unbanded_tally', 0);
     FDetectionType        := Obj.Get('detection_type', '');
     FBreedingStatus       := Obj.Get('breeding_status', '');
-    FOutOfSample         := Obj.Get('out_of_sample', False);
+    FOutOfSample          := Obj.Get('out_of_sample', False);
     FIsOnEbird            := Obj.Get('is_on_ebird', False);
+    FFullName             := Obj.Get('full_name', '');
     FNotes                := Obj.Get('notes', '');
   finally
     Obj.Free;
@@ -390,6 +404,7 @@ begin
     JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('observer_id', FObserverId);
     JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('custom_taxon_name', FCustomTaxonName);
     JSONObject.Add('individual_id', FIndividualId);
     JSONObject.Add('subject_tally', FSubjectTally);
     JSONObject.Add('subject_distance', FSubjectDistance);
@@ -415,6 +430,7 @@ begin
     JSONObject.Add('breeding_status', FBreedingStatus);
     JSONObject.Add('out_of_sample', FOutOfSample);
     JSONObject.Add('is_on_ebird', FIsOnEbird);
+    JSONObject.Add('full_name', FFullName);
     JSONObject.Add('notes', FNotes);
 
     Result := JSONObject.AsJSON;
@@ -426,30 +442,30 @@ end;
 function TSighting.ToString: String;
 begin
   Result := Format('Sighting(Id=%d, SurveyId=%d, SightingDate=%s, SightingTime=%s, LocalityId=%d, ' +
-    'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, ObserverId=%d, TaxonId=%d, IndividualId=%d, SubjectTally=%d, SubjectDistance=%f, ' +
-    'FlightHeight=%f, FlightDirection=%s, ' +
+    'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, ObserverId=%d, TaxonId=%d, CustomTaxonName=%s, ' +
+    'IndividualId=%d, SubjectTally=%d, SubjectDistance=%f, FlightHeight=%f, FlightDirection=%s, ' +
     'MethodId=%d, MackinnonListNumber=%d, Captured=%s, Seen=%s, Heard=%s, Photographed=%s, Recorded=%s, ' +
     'MalesTally=%s, FemalesTally=%s, NotSexedTally=%s, AdultsTally=%s, ImmaturesTally=%s, NotAgedTally=%s, ' +
     'NewCapturesTally=%d, RecapturesTally=%d, UnbandedTally=%d, DetectionType=%s, BreedingStatus=%s, ' +
-    'OutOfSample=%s, IsOnEbird=%s, Notes=%s, ' +
+    'OutOfSample=%s, IsOnEbird=%s, FullName=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FSurveyId, DateToStr(FSightingDate), TimeToStr(FSightingTime), FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision],
-    FObserverId, FTaxonId, FIndividualId, FSubjectTally, FSubjectDistance,
+    FObserverId, FTaxonId, FCustomTaxonName, FIndividualId, FSubjectTally, FSubjectDistance,
     FFlightHeight, FFlightDirection, FMethodId, FMackinnonListNumber,
     BoolToStr(FSubjectCaptured, 'True', 'False'), BoolToStr(FSubjectSeen, 'True', 'False'),
     BoolToStr(FSubjectHeard, 'True', 'False'), BoolToStr(FSubjectPhotographed, 'True', 'False'),
     BoolToStr(FSubjectRecorded, 'True', 'False'), FMalesTally, FFemalesTally, FNotSexedTally, FAdultsTally,
     FImmatureTally, FNotAgedTally, FNewCapturesTally, FRecapturesTally, FUnbandedTally, FDetectionType,
-    FBreedingStatus, BoolToStr(FOutOfSample, 'True', 'False'), BoolToStr(FIsOnEbird, 'True', 'False'), FNotes,
+    FBreedingStatus, BoolToStr(FOutOfSample, 'True', 'False'), BoolToStr(FIsOnEbird, 'True', 'False'), FFullName, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
 
 function TSighting.Validate(out Msg: string): Boolean;
 begin
-  if FTaxonId <= 0 then
+  if (FTaxonId <= 0) and (FCustomTaxonName = EmptyStr) then
   begin
-    Msg := 'TaxonId required.';
+    Msg := 'TaxonId or CustomTaxonName required.';
     Exit(False);
   end;
 
@@ -520,7 +536,7 @@ end;
 
 procedure TSightingRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
 const
-  ALLOWED: array[0..1] of string = (COL_SIGHTING_ID, COL_FULL_NAME); // whitelist
+  ALLOWED: array[0..2] of string = (COL_SIGHTING_ID, COL_FULL_NAME, COL_CUSTOM_TAXON_NAME); // whitelist
 var
   Qry: TSQLQuery;
   I: Integer;
@@ -562,7 +578,8 @@ begin
   end;
 end;
 
-procedure TSightingRepository.FindByCombo(const aSurvey, aTaxon, aObserver: Integer; E: TSighting);
+procedure TSightingRepository.FindByCombo(const aSurvey, aTaxon, aObserver: Integer; aCustomTaxon: String; E: TSighting
+  );
 var
   Qry: TSQLQuery;
 begin
@@ -572,12 +589,18 @@ begin
     Clear;
     Add(xProvider.Sightings.SelectTable(swcNone, tbNone));
     Add('WHERE (survey_id = :asurvey)');
-    Add('AND (taxon_id = :ataxon)');
+    if (aTaxon <= 0) and (aCustomTaxon <> EmptyStr) then
+      Add('AND (custom_taxon_name = :acustomtaxon)')
+    else
+      Add('AND (taxon_id = :ataxon)');
     if aObserver > 0 then
       Add('AND (observer_id = :aobserver)');
 
     ParamByName('ASURVEY').AsInteger := aSurvey;
-    ParamByName('ATAXON').AsInteger := aTaxon;
+    if (aTaxon <= 0) and (aCustomTaxon <> EmptyStr) then
+      ParamByName('ACUSTOMTAXON').AsString := aCustomTaxon
+    else
+      ParamByName('ATAXON').AsInteger := aTaxon;
     if aObserver > 0 then
       ParamByName('AOBSERVER').AsInteger := aObserver;
     Open;
@@ -606,12 +629,14 @@ begin
     Add('WHERE (survey_id = :asurvey)');
     Add('AND (locality_id = :alocality)');
     Add('AND (taxon_id = :ataxon)');
+    Add('AND (custom_taxon_name = :custom_taxon_name)');
     Add('AND (individual_id = :aindividual)');
     Add('AND (observer_id = :aobserver)');
     Add('AND (date(sighting_date) = date(:adate))');
     Add('AND (time(sighting_time) = time(:atime))');
 
     ParamByName('ataxon').AsInteger := StrToIntDef(ARow.Values['taxon_id'], 0);
+    ParamByName('custom_taxon_name').AsString := ARow.Values['custom_taxon_name'];
     ParamByName('alocality').AsInteger := StrToIntDef(ARow.Values['locality_id'], 0);
     ParamByName('asurvey').AsInteger := StrToIntDef(ARow.Values['survey_id'], 0);
     ParamByName('aindividual').AsInteger := StrToIntDef(ARow.Values['individual_id'], 0);
@@ -676,6 +701,7 @@ begin
     R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.ObserverId := FieldByName('observer_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
+    R.CustomTaxonName := FieldByName('custom_taxon_name').AsString;
     R.IndividualId := FieldByName('individual_id').AsInteger;
     R.SubjectTally := FieldByName('subjects_tally').AsInteger;
     R.SubjectDistance := FieldByName('subject_distance').AsFloat;
@@ -701,6 +727,7 @@ begin
     R.BreedingStatus := FieldByName('breeding_status').AsString;
     R.OutOfSample := FieldByName('out_of_sample').AsBoolean;
     R.IsOnEbird := FieldByName('ebird_available').AsBoolean;
+    R.FullName := FieldByName('full_name').AsString;
     R.Notes := FieldByName('notes').AsString;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
     // so it checks in which format it is stored before load the value
@@ -743,6 +770,8 @@ begin
     R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('custom_taxon_name') >= 0 then
+    R.CustomTaxonName := ARow.Values['custom_taxon_name'];
   if ARow.IndexOfName('individual_id') >= 0 then
     R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
   if ARow.IndexOfName('subjects_tally') >= 0 then
@@ -793,6 +822,8 @@ begin
     R.OutOfSample := StrToBoolDef(ARow.Values['out_of_sample'], False);
   if ARow.IndexOfName('ebird_available') >= 0 then
     R.IsOnEbird := StrToBoolDef(ARow.Values['ebird_available'], False);
+  if ARow.IndexOfName('full_name') >= 0 then
+    R.FullName := ARow.Values['full_name'];
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;
@@ -815,6 +846,7 @@ begin
     SetForeignParam(ParamByName('survey_id'), R.SurveyId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetStrParam(ParamByName('custom_taxon_name'), R.CustomTaxonName);
     SetDateParam(ParamByName('sighting_date'), R.SightingDate);
     SetTimeParam(ParamByName('sighting_time'), R.SightingTime);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
@@ -845,6 +877,8 @@ begin
     SetStrParam(ParamByName('breeding_status'), R.BreedingStatus);
     ParamByName('out_of_sample').AsBoolean := R.OutOfSample;
     ParamByName('ebird_available').AsBoolean := R.IsOnEbird;
+    ParamByName('full_name').AsString := GetSightingFullName(R.TaxonId, R.CustomTaxonName, R.SightingDate,
+      R.SightingTime, R.LocalityId, R.ObserverId);
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
@@ -887,6 +921,7 @@ begin
     SetForeignParam(ParamByName('survey_id'), R.SurveyId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetStrParam(ParamByName('custom_taxon_name'), R.CustomTaxonName);
     SetDateParam(ParamByName('sighting_date'), R.SightingDate);
     SetTimeParam(ParamByName('sighting_time'), R.SightingTime);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
@@ -917,6 +952,8 @@ begin
     SetStrParam(ParamByName('breeding_status'), R.BreedingStatus);
     ParamByName('out_of_sample').AsBoolean := R.OutOfSample;
     ParamByName('ebird_available').AsBoolean := R.IsOnEbird;
+    ParamByName('full_name').AsString := GetSightingFullName(R.TaxonId, R.CustomTaxonName, R.SightingDate,
+      R.SightingTime, R.LocalityId, R.ObserverId);
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('marked_status').AsBoolean := R.Marked;
     ParamByName('active_status').AsBoolean := R.Active;

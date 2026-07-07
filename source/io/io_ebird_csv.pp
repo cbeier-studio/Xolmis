@@ -76,7 +76,7 @@ implementation
 
 uses
   {$IFDEF DARWIN}iosxlocale,{$ENDIF}
-  utils_locale, utils_global, utils_dialogs, utils_system,
+  utils_locale, utils_global, utils_dialogs, utils_system, utils_validations,
   data_types, data_getvalue, data_consts, io_csv,
   models_users, models_taxonomy, models_geo, models_sightings,
   udm_main, udlg_progress;
@@ -182,7 +182,7 @@ begin
           end;
 
           { Check if the record already exists }
-          SightRepo.FindByCombo(Survey.Id, Taxon.Id, 0, Sight);
+          SightRepo.FindByCombo(Survey.Id, Taxon.Id, 0, '', Sight);
           if Sight.IsNew then
           begin
             { Insert record if it does not exist }
@@ -494,6 +494,7 @@ begin
 
   FieldValue := CSV.FieldByName('Time').AsString;
   if (FieldValue <> '') then
+    //TryParseTimeFlexible(FieldValue, RecordTime);
     RecordTime := StrToTime(FieldValue, EnglishFS);
 
   Protocol := CSV.FieldByName('Protocol').AsString;

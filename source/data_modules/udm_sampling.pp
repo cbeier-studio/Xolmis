@@ -257,6 +257,7 @@ type
     qSightingsbreeding_status: TStringField;
     qSightingscoordinate_precision: TStringField;
     qSightingscountry_id: TLongintField;
+    qSightingscustom_taxon_name: TStringField;
     qSightingsdetection_type: TStringField;
     qSightingsebird_available: TBooleanField;
     qSightingsexported_status: TBooleanField;

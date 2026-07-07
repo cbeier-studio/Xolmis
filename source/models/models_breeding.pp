@@ -37,6 +37,7 @@ type
     FLongitude: Extended;
     FCoordinatePrecision: TCoordinatePrecision;
     FTaxonId: Integer;
+    FCustomTaxonName: String;
     FNestShape: String;
     FSupportType: String;
     FSupportPlant1Id: Integer;
@@ -89,6 +90,7 @@ type
     property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property ProjectId: Integer read FProjectId write FProjectId;
     property TaxonId: Integer read FTaxonId write FTaxonId;
+    property CustomTaxonName: String read FCustomTaxonName write FCustomTaxonName;
     property NestShape: String read FNestShape write FNestShape;
     property SupportType: String read FSupportType write FSupportType;
     property SupportPlant1Id: Integer read FSupportPlant1Id write FSupportPlant1Id;
@@ -129,7 +131,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
-    procedure FindByFieldNumber(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate; E: TNest);
+    procedure FindByFieldNumber(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate; aCustomTaxon: String; E: TNest);
     procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
@@ -207,6 +209,7 @@ type
     FObserverId: Integer;
     FMeasureDate: TDate;
     FTaxonId: Integer;
+    FCustomTaxonName: String;
     FHostEgg: Boolean;
     FDescription: String;
     FNotes: String;
@@ -240,6 +243,7 @@ type
     property ObserverId: Integer read FObserverId write FObserverId;
     property MeasureDate: TDate read FMeasureDate write FMeasureDate;
     property TaxonId: Integer read FTaxonId write FTaxonId;
+    property CustomTaxonName: String read FCustomTaxonName write FCustomTaxonName;
     property HostEgg: Boolean read FHostEgg write FHostEgg;
     property Description: String read FDescription write FDescription;
     property Notes: String read FNotes write FNotes;
@@ -934,6 +938,7 @@ begin
     FObserverId := TEgg(Source).ObserverId;
     FMeasureDate := TEgg(Source).MeasureDate;
     FTaxonId := TEgg(Source).TaxonId;
+    FCustomTaxonName := TEgg(Source).CustomTaxonName;
     FHostEgg := TEgg(Source).HostEgg;
     FDescription := TEgg(Source).Description;
     FNotes := TEgg(Source).Notes;
@@ -961,6 +966,7 @@ begin
   FObserverId := 0;
   FMeasureDate := NullDate;
   FTaxonId := 0;
+  FCustomTaxonName := EmptyStr;
   FHostEgg := True;
   FDescription := EmptyStr;
   FNotes := EmptyStr;
@@ -1025,6 +1031,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscCustomTaxonName, aOld.CustomTaxonName, FCustomTaxonName, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscHostEgg, aOld.HostEgg, FHostEgg, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscDescription, aOld.Description, FDescription, R) then
@@ -1057,12 +1065,13 @@ begin
     FVolume           := Obj.Get('volume', 0.0);
     FEggStage         := Obj.Get('stage', '');
     FTaxonId          := Obj.Get('taxon_id', 0);
+    FCustomTaxonName  := Obj.Get('custom_taxon_name', '');
     FEggshellColor    := Obj.Get('color', '');
     FEggshellPattern  := StrToEggPattern(Obj.Get('pattern', ''));
     FEggshellTexture  := StrToEggTexture(Obj.Get('texture', ''));
     FEggHatched       := Obj.Get('hatched', False);
     FIndividualId     := Obj.Get('individual_id', 0);
-    FObserverId     := Obj.Get('observer_id', 0);
+    FObserverId       := Obj.Get('observer_id', 0);
     FMeasureDate      := Obj.Get('measure_date', NullDate);
     FHostEgg          := Obj.Get('host_egg', True);
     FDescription      := Obj.Get('description', '');
@@ -1089,6 +1098,7 @@ begin
     JSONObject.Add('volume', FVolume);
     JSONObject.Add('stage', FEggStage);
     JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('custom_taxon_name', FCustomTaxonName);
     JSONObject.Add('color', FEggshellColor);
     JSONObject.Add('pattern', EGGSHELL_PATTERNS[FEggshellPattern]);
     JSONObject.Add('texture', EGGSHELL_TEXTURES[FEggshellTexture]);
@@ -1109,11 +1119,11 @@ end;
 function TEgg.ToString: String;
 begin
   Result := Format('Egg(Id=%d, FullName=%s, FieldNumber=%s, EggSeq=%d, NestId=%d, EggShape=%s, Width=%f, Length=%f, ' +
-    'Mass=%f, Volume=%f, EggStage=%s, TaxonId=%d, EggshellColor=%s, EggshellPattern=%s, EggshellTexture=%s, ' +
+    'Mass=%f, Volume=%f, EggStage=%s, TaxonId=%d, CustomTaxonName=%s, EggshellColor=%s, EggshellPattern=%s, EggshellTexture=%s, ' +
     'EggHatched=%s, IndividualId=%d, ObserverId=%d, MeasureDate=%s, HostEgg=%s, Description=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FFullName, FFieldNumber, FEggSeq, FNestId, EGG_SHAPES[FEggShape], FWidth, FLength, FMass, FVolume,
-    FEggStage, FTaxonId, FEggshellColor, EGGSHELL_PATTERNS[FEggshellPattern], EGGSHELL_TEXTURES[FEggshellTexture],
+    FEggStage, FTaxonId, FCustomTaxonName, FEggshellColor, EGGSHELL_PATTERNS[FEggshellPattern], EGGSHELL_TEXTURES[FEggshellTexture],
     BoolToStr(FEggHatched, 'True', 'False'), FIndividualId, FObserverId, DateToStr(FMeasureDate),
     BoolToStr(FHostEgg, 'True', 'False'), FDescription, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
@@ -1355,6 +1365,7 @@ begin
     R.ObserverId := FieldByName('observer_id').AsInteger;
     R.MeasureDate := FieldByName('measure_date').AsDateTime;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
+    R.CustomTaxonName := FieldByName('custom_taxon_name').AsString;
     R.HostEgg := FieldByName('host_egg').AsBoolean;
     R.Description := FieldByName('description').AsString;
     R.Notes := FieldByName('notes').AsString;
@@ -1415,6 +1426,8 @@ begin
     R.MeasureDate := StrToDateDef(ARow.Values['measure_date'], NullDate);
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('custom_taxon_name') >= 0 then
+    R.CustomTaxonName := ARow.Values['custom_taxon_name'];
   if ARow.IndexOfName('host_egg') >= 0 then
     R.HostEgg := StrToBoolDef(ARow.Values['host_egg'], True);
   if ARow.IndexOfName('description') >= 0 then
@@ -1455,6 +1468,7 @@ begin
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetDateParam(ParamByName('measure_date'), R.MeasureDate);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetStrParam(ParamByName('custom_taxon_name'), R.CustomTaxonName);
     ParamByName('host_egg').AsBoolean := R.HostEgg;
     SetStrParam(ParamByName('description'), R.Description);
     SetStrParam(ParamByName('notes'), R.Notes);
@@ -1514,6 +1528,7 @@ begin
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetDateParam(ParamByName('measure_date'), R.MeasureDate);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetStrParam(ParamByName('custom_taxon_name'), R.CustomTaxonName);
     ParamByName('host_egg').AsBoolean := R.HostEgg;
     SetStrParam(ParamByName('description'), R.Description);
     SetStrParam(ParamByName('notes'), R.Notes);
@@ -1549,6 +1564,7 @@ begin
     FLongitude := TNest(Source).Longitude;
     FCoordinatePrecision := TNest(Source).CoordinatePrecision;
     FTaxonId := TNest(Source).TaxonId;
+    FCustomTaxonName := TNest(Source).CustomTaxonName;
     FNestShape := TNest(Source).NestShape;
     FSupportType := TNest(Source).SupportType;
     FSupportPlant1Id := TNest(Source).SupportPlant1Id;
@@ -1593,6 +1609,7 @@ begin
   FLongitude := 0.0;
   FCoordinatePrecision := cpEmpty;
   FTaxonId := 0;
+  FCustomTaxonName := EmptyStr;
   FNestShape := EmptyStr;
   FSupportType := EmptyStr;
   FSupportPlant1Id := 0;
@@ -1664,6 +1681,8 @@ begin
   if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCustomTaxonName, aOld.CustomTaxonName, FCustomTaxonName, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscShape, aOld.NestShape, FNestShape, R) then
     Changes.Add(R);
@@ -1751,6 +1770,7 @@ begin
     FLatitude             := Obj.Get('latitude', 0.0);
     FCoordinatePrecision  := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
     FTaxonId              := Obj.Get('taxon_id', 0);
+    FCustomTaxonName      := Obj.Get('custom_taxon_name', '');
     FNestShape            := Obj.Get('nest_shape', '');
     FSupportType          := Obj.Get('support_type', '');
     FSupportPlant1Id      := Obj.Get('support_plant_1_id', 0);
@@ -1770,7 +1790,7 @@ begin
     FPlantMinDiameter     := Obj.Get('min_plant_diameter', 0.0);
     FPlantHeight          := Obj.Get('plant_height', 0.0);
     FPlantDbh             := Obj.Get('plant_dbh', 0.0);
-    FBuildingDays     := Obj.Get('building_days', 0.0);
+    FBuildingDays         := Obj.Get('building_days', 0.0);
     FIncubationDays       := Obj.Get('incubation_days', 0.0);
     FNestlingDays         := Obj.Get('nestling_days', 0.0);
     FActiveDays           := Obj.Get('active_days', 0.0);
@@ -1801,6 +1821,7 @@ begin
     JSONObject.Add('latitude', FLatitude);
     JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
     JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('custom_taxon_name', FCustomTaxonName);
     JSONObject.Add('nest_shape', FNestShape);
     JSONObject.Add('support_type', FSupportType);
     JSONObject.Add('support_plant_1_id', FSupportPlant1Id);
@@ -1841,14 +1862,15 @@ end;
 function TNest.ToString: String;
 begin
   Result := Format('Nest(Id=%d, FullName=%s, FieldNumber=%s, ObserverId=%d, ProjectId=%d, LocalityId=%d, ' +
-    'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, TaxonId=%d, NestShape=%s, SupportType=%s, SupportPlant1Id=%d, SupportPlant2Id=%d, ' +
+    'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, TaxonId=%d, CustomTaxonName=%s, NestShape=%s, SupportType=%s, SupportPlant1Id=%d, SupportPlant2Id=%d, ' +
     'OtherSupport=%s, HeightAboveGround=%f, InternalMaxDiameter=%f, InternalMinDiameter=%f, ExternalMaxDiameter=%f, ' +
     'ExternalMinDiameter=%f, InternalHeight=%f, ExternalHeight=%f, EdgeDistance=%f, CenterDistance=%f, ' +
     'NestCover=%d, PlantMaxDiameter=%f, PlantMinDiameter=%f, PlantHeight=%f, PlantDbh=%f, BuildingDays=%f, ' +
     'IncubationDays=%f, NestlingDays=%f, ActiveDays=%f, NestFate=%s, LossCause=%s, NestProductivity=%d, FoundDate=%s, ' +
     'LastDate=%s, Description=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, FFieldNumber, FObserverId, FProjectId, FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FTaxonId,
+    [FId, FFullName, FFieldNumber, FObserverId, FProjectId, FLocalityId, FLongitude, FLatitude,
+    COORDINATE_PRECISIONS[FCoordinatePrecision], FTaxonId, FCustomTaxonName,
     FNestShape, FSupportType, FSupportPlant1Id, FSupportPlant2Id, FOtherSupport, FHeightAboveGround,
     FInternalMaxDiameter, FInternalMinDiameter, FExternalMaxDiameter, FExternalMinDiameter,
     FInternalHeight, FExternalHeight, FEdgeDistance, FCenterDistance, FNestCover, FPlantMaxDiameter,
@@ -1976,7 +1998,8 @@ begin
   end;
 end;
 
-procedure TNestRepository.FindByFieldNumber(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate; E: TNest);
+procedure TNestRepository.FindByFieldNumber(aFieldNumber: String; aTaxon, aSite: Integer; aDate: TDate;
+  aCustomTaxon: String; E: TNest);
 var
   Qry: TSQLQuery;
 begin
@@ -1986,12 +2009,18 @@ begin
     Clear;
     Add(xProvider.Nests.SelectTable(swcNone));
     Add('WHERE (field_number = :afieldnumber)');
-    Add('AND (taxon_id = :ataxon)');
+    if (aTaxon <= 0) and (aCustomTaxon <> EmptyStr) then
+      Add('AND (custom_taxon_name = :acustomtaxon)')
+    else
+      Add('AND (taxon_id = :ataxon)');
     Add('AND (locality_id = :asite)');
     Add('AND (found_date = :adate)');
 
     ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
-    ParamByName('ATAXON').AsInteger := aTaxon;
+    if (aTaxon <= 0) and (aCustomTaxon <> EmptyStr) then
+      ParamByName('ACUSTOMTAXON').AsString := aCustomTaxon
+    else
+      ParamByName('ATAXON').AsInteger := aTaxon;
     ParamByName('ASITE').AsInteger := aSite;
     ParamByName('ADATE').AsDateTime := aDate;
     Open;
@@ -2017,12 +2046,18 @@ begin
   try
     Clear;
     Add(xProvider.Nests.SelectTable(swcNone));
-    Add('WHERE (taxon_id = :ataxon)');
+    if (ARow.Values['custom_taxon_name'] <> EmptyStr) then
+      Add('WHERE (custom_taxon_name = :acustomtaxon)')
+    else
+      Add('WHERE (taxon_id = :ataxon)');
     Add('AND (locality_id = :alocality)');
     Add('AND (field_number = :afieldnumber)');
     Add('AND (date(found_date) = date(:adate))');
 
-    ParamByName('ataxon').AsInteger := StrToIntDef(ARow.Values['taxon_id'], 0);
+    if (ARow.Values['custom_taxon_name'] <> EmptyStr) then
+      ParamByName('acustomtaxon').AsString := ARow.Values['custom_taxon_name']
+    else
+      ParamByName('ataxon').AsInteger := StrToIntDef(ARow.Values['taxon_id'], 0);
     ParamByName('alocality').AsInteger := StrToIntDef(ARow.Values['locality_id'], 0);
     ParamByName('afieldnumber').AsString := ARow.Values['field_number'];
     ParamByName('adate').AsDate := StrToDateDef(ARow.Values['found_date'], NullDate);
@@ -2083,6 +2118,7 @@ begin
     R.Longitude := FieldByName('longitude').AsFloat;
     R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
     R.TaxonId := FieldByName('taxon_id').AsInteger;
+    R.CustomTaxonName := FieldByName('custom_taxon_name').AsString;
     R.NestShape := FieldByName('nest_shape').AsString;
     R.SupportType := FieldByName('support_type').AsString;
     R.SupportPlant1Id := FieldByName('support_plant_1_id').AsInteger;
@@ -2153,6 +2189,8 @@ begin
     R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('custom_taxon_name') >= 0 then
+    R.CustomTaxonName := ARow.Values['custom_taxon_name'];
   if ARow.IndexOfName('nest_shape') >= 0 then
     R.NestShape := ARow.Values['nest_shape'];
   if ARow.IndexOfName('support_type') >= 0 then
@@ -2239,6 +2277,7 @@ begin
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetStrParam(ParamByName('custom_taxon_name'), R.CustomTaxonName);
     SetStrParam(ParamByName('nest_shape'), R.NestShape);
     SetStrParam(ParamByName('support_type'), R.SupportType);
     SetForeignParam(ParamByName('support_plant_1_id'), R.SupportPlant1Id);
@@ -2319,6 +2358,7 @@ begin
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetStrParam(ParamByName('custom_taxon_name'), R.CustomTaxonName);
     SetStrParam(ParamByName('nest_shape'), R.NestShape);
     SetStrParam(ParamByName('support_type'), R.SupportType);
     SetForeignParam(ParamByName('support_plant_1_id'), R.SupportPlant1Id);

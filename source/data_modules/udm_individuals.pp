@@ -313,6 +313,7 @@ type
     qNestscenter_distance: TFloatField;
     qNestscoordinate_precision: TStringField;
     qNestscountry_id: TLongintField;
+    qNestscustom_taxon_name: TStringField;
     qNestsdescription: TMemoField;
     qNestsedge_distance: TFloatField;
     qNestsexported_status: TBooleanField;
@@ -403,6 +404,7 @@ type
     qSightingsbreeding_status: TStringField;
     qSightingscoordinate_precision: TStringField;
     qSightingscountry_id: TLongintField;
+    qSightingscustom_taxon_name: TStringField;
     qSightingsdetection_type: TStringField;
     qSightingsebird_available: TBooleanField;
     qSightingsexported_status: TBooleanField;
@@ -470,6 +472,7 @@ type
     qSpecimenscollector_8: TLongintField;
     qSpecimenscoordinate_precision: TStringField;
     qSpecimenscountry_id: TLongintField;
+    qSpecimenscustom_taxon_name: TStringField;
     qSpecimensegg_id: TLongintField;
     qSpecimensegg_name: TStringField;
     qSpecimensexported_status: TBooleanField;

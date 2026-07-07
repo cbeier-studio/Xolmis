@@ -57,7 +57,7 @@ object edtSighting: TedtSighting
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
@@ -74,7 +74,7 @@ object edtSighting: TedtSighting
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
-      TabOrder = 1
+      TabOrder = 2
     end
     object btnHelp: TSpeedButton
       AnchorSideLeft.Control = pBottom
@@ -102,7 +102,7 @@ object edtSighting: TedtSighting
       Caption = 'New'
       Images = DMM.iEdits
       ImageIndex = 8
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnNewClick
     end
   end
@@ -764,31 +764,36 @@ object edtSighting: TedtSighting
         BorderSpacing.Top = 13
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.EnlargeHorizontal = crsSameSize
         ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
         TabOrder = 7
         object lblTaxon: TLabel
+          AnchorSideLeft.Control = pTaxon
+          AnchorSideTop.Control = pTaxon
           Left = 16
           Height = 15
           Top = 3
-          Width = 404
+          Width = 42
           BorderSpacing.Top = 3
           Caption = 'Taxon: *'
           ParentColor = False
           ParentFont = False
         end
         object eTaxon: TEditButton
+          AnchorSideLeft.Control = pTaxon
+          AnchorSideTop.Control = lblTaxon
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = sbAddCustomTaxon
           Left = 16
           Height = 23
           Top = 22
-          Width = 404
+          Width = 380
+          Anchors = [akTop, akLeft, akRight]
           ButtonHint = 'Find taxon'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -804,6 +809,21 @@ object edtSighting: TedtSighting
           OnEditingDone = eMethodEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
+        end
+        object sbAddCustomTaxon: TSpeedButton
+          AnchorSideTop.Control = eTaxon
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = pTaxon
+          AnchorSideRight.Side = asrBottom
+          Left = 396
+          Height = 23
+          Hint = 'Add or edit temporary taxon name'
+          Top = 22
+          Width = 24
+          Anchors = [akTop, akRight]
+          Images = DMM.iEdits
+          ImageIndex = 8
+          OnClick = sbAddCustomTaxonClick
         end
       end
       object pIndividual: TPanel

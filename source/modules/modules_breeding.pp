@@ -260,8 +260,16 @@ end;
 
 procedure TNestsModuleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
-  if (Column.FieldName = COL_TAXON_NAME) or
-    (Column.FieldName = COL_SUPPORT_PLANT_1_NAME) or
+  if (Column.FieldName = COL_TAXON_NAME) then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
+    begin
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end;
+  end
+  else
+  if (Column.FieldName = COL_SUPPORT_PLANT_1_NAME) or
     (Column.FieldName = COL_SUPPORT_PLANT_2_NAME) then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
@@ -274,42 +282,18 @@ begin
     case Column.Field.AsString of
       'U':       // Unknown
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
       end;
       'L':       // Lost
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
       end;
       'S':       // Success
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SuccessBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
       end;
     end;
   end;
@@ -500,8 +484,16 @@ end;
 
 procedure TNestsSubmoduleController.PrepareCanvas(Column: TColumn; Sender: TObject);
 begin
-  if (Column.FieldName = COL_TAXON_NAME) or
-    (Column.FieldName = COL_SUPPORT_PLANT_1_NAME) or
+  if (Column.FieldName = COL_TAXON_NAME) then
+  begin
+    TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
+    begin
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end;
+  end
+  else
+  if (Column.FieldName = COL_SUPPORT_PLANT_1_NAME) or
     (Column.FieldName = COL_SUPPORT_PLANT_2_NAME) then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
@@ -514,42 +506,18 @@ begin
     case Column.Field.AsString of
       'U':       // Unknown
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
       end;
       'L':       // Lost
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
       end;
       'S':       // Success
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SuccessBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
       end;
     end;
   end;
@@ -662,42 +630,18 @@ begin
     case Column.Field.AsString of
       'U':       // Unknown
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
       end;
       'I':       // Inactive
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
       end;
       'A':       // Active
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SuccessBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
       end;
     end;
   end;
@@ -852,42 +796,18 @@ begin
     case Column.Field.AsString of
       'U':       // Unknown
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
       end;
       'I':       // Inactive
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
       end;
       'A':       // Active
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SuccessBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
       end;
     end;
   end;
@@ -1036,6 +956,10 @@ begin
   if Column.FieldName = COL_TAXON_NAME then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
+    begin
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end;
   end;
 end;
 
@@ -1201,6 +1125,10 @@ begin
   if Column.FieldName = COL_TAXON_NAME then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
+    begin
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end;
   end;
 end;
 

@@ -79,6 +79,7 @@ begin
       'full_name        VARCHAR (100),' +
       'sample_type      CHAR (5),' +
       'taxon_id         INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
+      'custom_taxon_name VARCHAR (120),' +
       'individual_id    INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
       'nest_id          INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
       'egg_id           INTEGER       REFERENCES eggs (egg_id) ON UPDATE CASCADE,' +
@@ -139,6 +140,7 @@ begin
       'full_name, ' +
       'sample_type, ' +
       'taxon_id, ' +
+      'custom_taxon_name, ' +
       'individual_id, ' +
       'nest_id, ' +
       'egg_id, ' +
@@ -158,6 +160,7 @@ begin
       ':full_name, ' +
       ':sample_type, ' +
       ':taxon_id, ' +
+      ':custom_taxon_name, ' +
       ':individual_id, ' +
       ':nest_id, ' +
       ':egg_id, ' +
@@ -178,7 +181,11 @@ function TSpecimensSQL.SelectAll(aWhere: TSQLWhereClause): String;
 begin
   Result :=
     'SELECT sp.*, ' +
-      'z.scientific_name AS taxon_name, ' +
+      'CASE ' +
+        'WHEN sp.custom_taxon_name IS NOT NULL AND sp.custom_taxon_name <> '''' ' +
+          'THEN sp.custom_taxon_name ' +
+        'ELSE z.scientific_name ' +
+      'END AS taxon_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
       'z.genus_id AS genus_id, ' +
@@ -245,6 +252,7 @@ begin
       'full_name, ' +
       'sample_type, ' +
       'taxon_id, ' +
+      'custom_taxon_name, ' +
       'individual_id, ' +
       'nest_id, ' +
       'egg_id, ' +
@@ -296,6 +304,7 @@ begin
       'full_name = :full_name, ' +
       'sample_type = :sample_type, ' +
       'taxon_id = :taxon_id, ' +
+      'custom_taxon_name = :custom_taxon_name, ' +
       'individual_id = :individual_id, ' +
       'nest_id = :nest_id, ' +
       'egg_id = :egg_id, ' +

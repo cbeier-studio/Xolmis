@@ -183,8 +183,9 @@ To import JSON files from Xolmis Mobile:
       - Ignore existing records.
       - Update existing records.
 4. Define what to do when a species was not found in the database.
+      - Apply temporary name.
+      - Ask what to do.
       - Abort import. No data will be saved.
-      - Ignore and keep importing.
 5. Define what to do if an error occurr during import.
       - Abort import. No data will be saved.
       - Ignore and keep importing.

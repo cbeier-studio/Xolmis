@@ -168,7 +168,7 @@ uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_editdialogs,
   data_types, data_management, data_getvalue, data_consts,
   models_geo, models_sightings, models_specimens,
-  udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading, uDarkStyleParams;
+  udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading, udlg_taxonnotfound, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -366,7 +366,7 @@ end;
 procedure TdlgImportXMobile.FormCreate(Sender: TObject);
 begin
   FImportSettings.ExistingRecordPolicy := erpUpdateExisting;
-  FImportSettings.UnknownTaxonPolicy := utpAbort;
+  FImportSettings.UnknownTaxonPolicy := utpAsk;
   FImportSettings.ErrorHandling := iehAbort;
 end;
 
@@ -447,8 +447,9 @@ begin
   with cbUnknownTaxa.Items do
   begin
     Clear;
+    Add(rsImportAddTemporaryTaxon);
+    Add(rsImportAskUnknownTaxon);
     Add(rsImportAbortUnknownTaxon);
-    Add(rsImportIgnoreUnknownTaxon);
   end;
   with cbErrorHandling.Items do
   begin
@@ -510,9 +511,9 @@ begin
     //erpAllowDuplicates: cbExistingRecordPolicy.ItemIndex := 2;
   end;
   case FImportSettings.UnknownTaxonPolicy of
-    //utpAsk:     cbUnknownTaxa.ItemIndex := 0;
-    utpAbort:   cbUnknownTaxa.ItemIndex := 0;
-    utpIgnore:  cbUnknownTaxa.ItemIndex := 1;
+    utpAddCustomTaxon: cbUnknownTaxa.ItemIndex := cbUnknownTaxa.Items.IndexOf(rsImportAddTemporaryTaxon);
+    utpAsk:     cbUnknownTaxa.ItemIndex := cbUnknownTaxa.Items.IndexOf(rsImportAskUnknownTaxon);
+    utpAbort:   cbUnknownTaxa.ItemIndex := cbUnknownTaxa.Items.IndexOf(rsImportAbortUnknownTaxon);
   end;
   case FImportSettings.ErrorHandling of
     iehAbort:   cbErrorHandling.ItemIndex := 0;
@@ -552,7 +553,10 @@ begin
     aLocality := GetSiteKey(aNest.FLocalityName);
     aTaxon := GetValidTaxon(aNest.FSpeciesName);
 
-    Repo.FindByFieldNumber(aNest.FFieldNumber, aTaxon, aLocality, aNest.FFoundTime, Nest);
+    if (aTaxon <= 0) then
+      Repo.FindByFieldNumber(aNest.FFieldNumber, aTaxon, aLocality, aNest.FFoundTime, aNest.FSpeciesName, Nest)
+    else
+      Repo.FindByFieldNumber(aNest.FFieldNumber, aTaxon, aLocality, aNest.FFoundTime, '', Nest);
     if (Nest.Id > 0) then
       Result := Nest.Id;
   finally
@@ -577,7 +581,10 @@ begin
     aTaxon := GetValidTaxon(aSpecimen.FSpeciesName);
     DecodeDate(aSpecimen.FSampleTime, y, m, d);
 
-    Repo.FindByFieldNumber(aSpecimen.FFieldNumber, y, m, d, aTaxon, aLocality, Specimen);
+    if (aTaxon <= 0) then
+      Repo.FindByFieldNumber(aSpecimen.FFieldNumber, y, m, d, aTaxon, aLocality, aSpecimen.FSpeciesName, Specimen)
+    else
+      Repo.FindByFieldNumber(aSpecimen.FFieldNumber, y, m, d, aTaxon, aLocality, '', Specimen);
     if (Specimen.Id > 0) then
       Result := Specimen.Id;
   finally
@@ -803,11 +810,31 @@ begin
           try
             Egg.ToEgg(aEgg);
             if (aEgg.TaxonId = 0) then
+            begin
               case FImportSettings.UnknownTaxonPolicy of
-                utpAsk: ;
+                utpAddCustomTaxon: aEgg.CustomTaxonName := Egg.FSpeciesName;
+                utpAsk:
+                begin
+                  dlgTaxonNotFound := TdlgTaxonNotFound.Create(nil);
+                  with dlgTaxonNotFound do
+                  try
+                    TaxonName := Egg.FSpeciesName;
+                    if ShowModal = mrOK then
+                    begin
+                      case SelectedOption of
+                        0: aEgg.CustomTaxonName := Egg.FSpeciesName;
+                        1: aEgg.TaxonId := TaxonId;
+                        2: raise Exception.Create(rsImportAbortedByUser);
+                      end;
+                    end;
+                  finally
+                    FreeAndNil(dlgTaxonNotFound);
+                  end;
+                end;
                 utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Egg.FSpeciesName]);
-                utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Egg.FSpeciesName]));
+                //utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Egg.FSpeciesName]));
               end;
+            end;
             case FImportSettings.ExistingRecordPolicy of
               erpIgnoreExisting: ;
               erpUpdateExisting:
@@ -835,11 +862,31 @@ begin
           // if egg does not exist, insert it
           Egg.ToEgg(aEgg);
           if (aEgg.TaxonId = 0) then
+          begin
             case FImportSettings.UnknownTaxonPolicy of
-              utpAsk: ;
+              utpAddCustomTaxon: aEgg.CustomTaxonName := Egg.FSpeciesName;
+              utpAsk:
+              begin
+                dlgTaxonNotFound := TdlgTaxonNotFound.Create(nil);
+                with dlgTaxonNotFound do
+                try
+                  TaxonName := Egg.FSpeciesName;
+                  if ShowModal = mrOK then
+                  begin
+                    case SelectedOption of
+                      0: aEgg.CustomTaxonName := Egg.FSpeciesName;
+                      1: aEgg.TaxonId := TaxonId;
+                      2: raise Exception.Create(rsImportAbortedByUser);
+                    end;
+                  end;
+                finally
+                  FreeAndNil(dlgTaxonNotFound);
+                end;
+              end;
               utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Egg.FSpeciesName]);
-              utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Egg.FSpeciesName]));
+              //utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Egg.FSpeciesName]));
             end;
+          end;
           aEgg.NestId := Nest.FNestKey;
           aEgg.ObserverId := aObserverId;
           aEgg.EggSeq := StrToInt(ExtractDelimited(2, Egg.FFieldNumber, ['-']));
@@ -1098,11 +1145,31 @@ begin
               Repo.GetById(aNestKey, aNest);
               Nest.ToNest(aNest);
               if (aNest.TaxonId = 0) then
+              begin
                 case FImportSettings.UnknownTaxonPolicy of
-                  utpAsk: ;
+                  utpAddCustomTaxon: aNest.CustomTaxonName := Nest.FSpeciesName;
+                  utpAsk:
+                  begin
+                    dlgTaxonNotFound := TdlgTaxonNotFound.Create(nil);
+                    with dlgTaxonNotFound do
+                    try
+                      TaxonName := Nest.FSpeciesName;
+                      if ShowModal = mrOK then
+                      begin
+                        case SelectedOption of
+                          0: aNest.CustomTaxonName := Nest.FSpeciesName;
+                          1: aNest.TaxonId := TaxonId;
+                          2: raise Exception.Create(rsImportAbortedByUser);
+                        end;
+                      end;
+                    finally
+                      FreeAndNil(dlgTaxonNotFound);
+                    end;
+                  end;
                   utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Nest.FSpeciesName]);
-                  utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Nest.FSpeciesName]));
+                  //utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Nest.FSpeciesName]));
                 end;
+              end;
               case FImportSettings.ExistingRecordPolicy of
                 erpIgnoreExisting: ;
                 erpUpdateExisting:
@@ -1143,11 +1210,31 @@ begin
             // create new nest, if not exists
             Nest.ToNest(aNest);
             if (aNest.TaxonId = 0) then
+            begin
               case FImportSettings.UnknownTaxonPolicy of
-                utpAsk: ;
+                utpAddCustomTaxon: aNest.CustomTaxonName := Nest.FSpeciesName;
+                utpAsk:
+                begin
+                  dlgTaxonNotFound := TdlgTaxonNotFound.Create(nil);
+                  with dlgTaxonNotFound do
+                  try
+                    TaxonName := Nest.FSpeciesName;
+                    if ShowModal = mrOK then
+                    begin
+                      case SelectedOption of
+                        0: aNest.CustomTaxonName := Nest.FSpeciesName;
+                        1: aNest.TaxonId := TaxonId;
+                        2: raise Exception.Create(rsImportAbortedByUser);
+                      end;
+                    end;
+                  finally
+                    FreeAndNil(dlgTaxonNotFound);
+                  end;
+                end;
                 utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Nest.FSpeciesName]);
-                utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Nest.FSpeciesName]));
+                //utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Nest.FSpeciesName]));
               end;
+            end;
             Repo.Insert(aNest);
             aNestKey := aNest.Id;
             Nest.FNestKey := aNestKey;
@@ -1401,16 +1488,10 @@ begin
       begin
         aSighting.Clear;
         aTaxonId := GetValidTaxon(Species.FSpeciesName);
-        if aTaxonId = 0 then
-          case FImportSettings.UnknownTaxonPolicy of
-            utpAsk: ;
-            utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Species.FSpeciesName]);
-            utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Species.FSpeciesName]));
-          end;
         aObserverId := GetPersonKey(Inventory.FObserver);
         aLocalityId := GetSiteKey(Inventory.FLocalityName);
 
-        aRepo.FindByCombo(Inventory.FSurveyKey, aTaxonId, aObserverId, aSighting);
+        aRepo.FindByCombo(Inventory.FSurveyKey, aTaxonId, aObserverId, Species.FSpeciesName, aSighting);
         if not aSighting.IsNew then
         begin
           // if sighting exists, update it
@@ -1450,6 +1531,32 @@ begin
         begin
           // if sighting does not exist, insert it
           Species.ToSighting(aSighting);
+          if aTaxonId = 0 then
+          begin
+            case FImportSettings.UnknownTaxonPolicy of
+              utpAddCustomTaxon: aSighting.CustomTaxonName := Species.FSpeciesName;
+              utpAsk:
+              begin
+                dlgTaxonNotFound := TdlgTaxonNotFound.Create(nil);
+                with dlgTaxonNotFound do
+                try
+                  TaxonName := Species.FSpeciesName;
+                  if ShowModal = mrOK then
+                  begin
+                    case SelectedOption of
+                      0: aSighting.CustomTaxonName := Species.FSpeciesName;
+                      1: aSighting.TaxonId := TaxonId;
+                      2: raise Exception.Create(rsImportAbortedByUser);
+                    end;
+                  end;
+                finally
+                  FreeAndNil(dlgTaxonNotFound);
+                end;
+              end;
+              utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Species.FSpeciesName]);
+              //utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Species.FSpeciesName]));
+            end;
+          end;
           aSighting.SurveyId := Inventory.FSurveyKey;
           aSighting.LocalityId := aLocalityId;
           aSighting.ObserverId := aObserverId;
@@ -1520,10 +1627,30 @@ begin
             try
               Specimen.ToSpecimen(aSpecimen);
               if (aSpecimen.TaxonId = 0) then
-              case FImportSettings.UnknownTaxonPolicy of
-                utpAsk: ;
-                utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Specimen.FSpeciesName]);
-                utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Specimen.FSpeciesName]));
+              begin
+                case FImportSettings.UnknownTaxonPolicy of
+                  utpAddCustomTaxon: aSpecimen.CustomTaxonName := Specimen.FSpeciesName;
+                  utpAsk:
+                  begin
+                    dlgTaxonNotFound := TdlgTaxonNotFound.Create(nil);
+                    with dlgTaxonNotFound do
+                    try
+                      TaxonName := Specimen.FSpeciesName;
+                      if ShowModal = mrOK then
+                      begin
+                        case SelectedOption of
+                          0: aSpecimen.CustomTaxonName := Specimen.FSpeciesName;
+                          1: aSpecimen.TaxonId := TaxonId;
+                          2: raise Exception.Create(rsImportAbortedByUser);
+                        end;
+                      end;
+                    finally
+                      FreeAndNil(dlgTaxonNotFound);
+                    end;
+                  end;
+                  utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Specimen.FSpeciesName]);
+                  //utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Specimen.FSpeciesName]));
+                end;
               end;
               case FImportSettings.ExistingRecordPolicy of
                 erpIgnoreExisting: ;
@@ -1553,10 +1680,30 @@ begin
             // create new specimen, if not exists
             Specimen.ToSpecimen(aSpecimen);
             if (aSpecimen.TaxonId = 0) then
-            case FImportSettings.UnknownTaxonPolicy of
-              utpAsk: ;
-              utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Specimen.FSpeciesName]);
-              utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Specimen.FSpeciesName]));
+            begin
+              case FImportSettings.UnknownTaxonPolicy of
+                utpAddCustomTaxon: aSpecimen.CustomTaxonName := Specimen.FSpeciesName;
+                utpAsk:
+                begin
+                  dlgTaxonNotFound := TdlgTaxonNotFound.Create(nil);
+                  with dlgTaxonNotFound do
+                  try
+                    TaxonName := Specimen.FSpeciesName;
+                    if ShowModal = mrOK then
+                    begin
+                      case SelectedOption of
+                        0: aSpecimen.CustomTaxonName := Specimen.FSpeciesName;
+                        1: aSpecimen.TaxonId := TaxonId;
+                        2: raise Exception.Create(rsImportAbortedByUser);
+                      end;
+                    end;
+                  finally
+                    FreeAndNil(dlgTaxonNotFound);
+                  end;
+                end;
+                utpAbort: raise Exception.CreateFmt(rsErrorTaxonNotFound, [Specimen.FSpeciesName]);
+                //utpIgnore: AppendLog(Format(rsErrorTaxonNotFound, [Specimen.FSpeciesName]));
+              end;
             end;
             Repo.Insert(aSpecimen);
             aSpecimenKey := aSpecimen.Id;
@@ -2250,9 +2397,10 @@ begin
     //2: FImportSettings.ExistingRecordPolicy := erpAllowDuplicates;
   end;
   case cbUnknownTaxa.ItemIndex of
-    0: FImportSettings.UnknownTaxonPolicy := utpAbort;
-    1: FImportSettings.UnknownTaxonPolicy := utpIgnore;
-    //2: FImportSettings.UnknownTaxonPolicy := utpAsk;
+    0: FImportSettings.UnknownTaxonPolicy := utpAddCustomTaxon;
+    1: FImportSettings.UnknownTaxonPolicy := utpAsk;
+    2: FImportSettings.UnknownTaxonPolicy := utpAbort;
+    //3: FImportSettings.UnknownTaxonPolicy := utpIgnore;
   end;
   case cbErrorHandling.ItemIndex of
     0: FImportSettings.ErrorHandling := iehAbort;

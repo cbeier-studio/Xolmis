@@ -54,6 +54,7 @@ begin
       'mackinnon_list_num   INTEGER,' +
       'observer_id          INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'taxon_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
+      'custom_taxon_name    VARCHAR (120),' +
       'subjects_tally       INTEGER,' +
       'subject_distance     REAL,' +
       'flight_height        REAL,' +
@@ -133,6 +134,7 @@ begin
       'mackinnon_list_num, ' +
       'observer_id, ' +
       'taxon_id, ' +
+      'custom_taxon_name, ' +
       'subjects_tally, ' +
       'subject_distance, ' +
       'flight_height, ' +
@@ -173,6 +175,7 @@ begin
       ':mackinnon_list_num, ' +
       ':observer_id, ' +
       ':taxon_id, ' +
+      ':custom_taxon_name, ' +
       ':subjects_tally, ' +
       ':subject_distance, ' +
       ':flight_height, ' +
@@ -205,7 +208,11 @@ function TSightingsSQL.SelectAll(aWhere: TSQLWhereClause; aParent: TTableType): 
 begin
   Result :=
     'SELECT s.*, ' +
-      'z.scientific_name AS taxon_name, ' +
+      'CASE ' +
+        'WHEN s.custom_taxon_name IS NOT NULL AND s.custom_taxon_name <> '''' ' +
+          'THEN s.custom_taxon_name ' +
+        'ELSE z.scientific_name ' +
+      'END AS taxon_name, ' +
       'z.formatted_name AS taxon_formatted_name, ' +
       'z.order_id AS order_id, ' +
       'z.family_id AS family_id, ' +
@@ -288,6 +295,7 @@ begin
       'mackinnon_list_num, ' +
       'observer_id, ' +
       'taxon_id, ' +
+      'custom_taxon_name, ' +
       'subjects_tally, ' +
       'subject_distance, ' +
       'flight_height, ' +
@@ -366,6 +374,7 @@ begin
       'mackinnon_list_num = :mackinnon_list_num, ' +
       'observer_id = :observer_id, ' +
       'taxon_id = :taxon_id, ' +
+      'custom_taxon_name = :custom_taxon_name, ' +
       'subjects_tally = :subjects_tally, ' +
       'subject_distance = :subject_distance, ' +
       'flight_height = :flight_height, ' +

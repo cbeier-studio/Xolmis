@@ -33,6 +33,7 @@ type
     FSampleType: TSpecimenType;
     FFullName: String;
     FTaxonId: Integer;
+    FCustomTaxonName: String;
     FIndividualId: Integer;
     FNestId: Integer;
     FEggId: Integer;
@@ -62,6 +63,7 @@ type
     property SampleType: TSpecimenType read FSampleType write FSampleType;
     property FullName: String read FFullName write FFullName;
     property TaxonId: Integer read FTaxonId write FTaxonId;
+    property CustomTaxonName: String read FCustomTaxonName write FCustomTaxonName;
     property IndividualId: Integer read FIndividualId write FIndividualId;
     property NestId: Integer read FNestId write FNestId;
     property EggId: Integer read FEggId write FEggId;
@@ -85,7 +87,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
-    procedure FindByFieldNumber(aFieldNumber: String; aYear, aMonth, aDay: Integer; aTaxon, aLocality: Integer; E: TSpecimen);
+    procedure FindByFieldNumber(aFieldNumber: String; aYear, aMonth, aDay: Integer; aTaxon, aLocality: Integer; aCustomTaxon: String; E: TSpecimen);
     procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
@@ -734,6 +736,7 @@ begin
     FSampleType := TSpecimen(Source).SampleType;
     FFullName := TSpecimen(Source).FullName;
     FTaxonId := TSpecimen(Source).TaxonId;
+    FCustomTaxonName := TSpecimen(Source).CustomTaxonName;
     FIndividualId := TSpecimen(Source).IndividualId;
     FNestId := TSpecimen(Source).NestId;
     FEggId := TSpecimen(Source).EggId;
@@ -756,6 +759,7 @@ begin
   FSampleType := sptEmpty;
   FFullName := EmptyStr;
   FTaxonId := 0;
+  FCustomTaxonName := EmptyStr;
   FIndividualId := 0;
   FNestId := 0;
   FEggId := 0;
@@ -802,6 +806,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscCustomTaxonName, aOld.CustomTaxonName, FCustomTaxonName, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
@@ -845,6 +851,7 @@ begin
     FSampleType       := StrToSpecimenType(Obj.Get('sample_type', ''));
     FFullName         := Obj.Get('full_name', '');
     FTaxonId          := Obj.Get('taxon_id', 0);
+    FCustomTaxonName  := Obj.Get('custom_taxon_name', '');
     FIndividualId     := Obj.Get('individual_id', 0);
     FNestId           := Obj.Get('nest_id', 0);
     FEggId            := Obj.Get('egg_id', 0);
@@ -872,6 +879,7 @@ begin
     JSONObject.Add('sample_type', SPECIMEN_TYPES[Ord(FSampleType)]);
     JSONObject.Add('full_name', FFullName);
     JSONObject.Add('taxon_id', FTaxonId);
+    JSONObject.Add('custom_taxon_name', FCustomTaxonName);
     JSONObject.Add('individual_id', FIndividualId);
     JSONObject.Add('nest_id', FNestId);
     JSONObject.Add('egg_id', FEggId);
@@ -893,11 +901,11 @@ end;
 
 function TSpecimen.ToString: String;
 begin
-  Result := Format('Specimen(Id=%d, FieldNumber=%s, SampleType=%s, FullName=%s, TaxonId=%d, IndividualId=%d, ' +
+  Result := Format('Specimen(Id=%d, FieldNumber=%s, SampleType=%s, FullName=%s, TaxonId=%d, CustomTaxonName=%s, IndividualId=%d, ' +
     'NestId=%d, EggId=%d, CollectionDay=%d, CollectionMonth=%d, CollectionYear=%d, LocalityId=%d, Longitude=%f, ' +
     'Latitude=%f, CoordinatePrecision=%s, InstitutionId=%d, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFieldNumber, SPECIMEN_TYPES[Ord(FSampleType)], FFullName, FTaxonId, FIndividualId, FNestId, FEggId,
+    [FId, FFieldNumber, SPECIMEN_TYPES[Ord(FSampleType)], FFullName, FTaxonId, FCustomTaxonName, FIndividualId, FNestId, FEggId,
     FCollectionDay, FCollectionMonth, FCollectionYear, FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision],
     FInstitutionId, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
@@ -1027,7 +1035,7 @@ begin
 end;
 
 procedure TSpecimenRepository.FindByFieldNumber(aFieldNumber: String; aYear, aMonth, aDay: Integer; aTaxon,
-  aLocality: Integer; E: TSpecimen);
+  aLocality: Integer; aCustomTaxon: String; E: TSpecimen);
 var
   Qry: TSQLQuery;
 begin
@@ -1040,7 +1048,10 @@ begin
     Add('AND (collection_year = :ayear)');
     Add('AND (collection_month = :amonth)');
     Add('AND (collection_day = :aday)');
-    Add('AND (taxon_id = :ataxon)');
+    if (aTaxon <= 0) and (aCustomTaxon <> EmptyStr) then
+      Add('AND (custom_taxon_name = :acustomtaxon)')
+    else
+      Add('AND (taxon_id = :ataxon)');
     Add('AND (locality_id = :alocality)');
 
     ParamByName('AFIELDNUMBER').AsString := aFieldNumber;
@@ -1048,7 +1059,10 @@ begin
     ParamByName('AYEAR').AsInteger := aYear;
     ParamByName('AMONTH').AsInteger := aMonth;
     ParamByName('ADAY').AsInteger := aDay;
-    ParamByName('ALATITUDE').AsInteger := aTaxon;
+    if (aTaxon <= 0) and (aCustomTaxon <> EmptyStr) then
+      ParamByName('ACUSTOMTAXON').AsString := aCustomTaxon
+    else
+      ParamByName('ATAXON').AsInteger := aTaxon;
     Open;
     if not EOF then
     begin
@@ -1072,14 +1086,20 @@ begin
   try
     Clear;
     Add(xProvider.Specimens.SelectTable(swcNone));
-    Add('WHERE (taxon_id = :ataxon)');
+    if (ARow.Values['custom_taxon_name'] <> EmptyStr) then
+      Add('WHERE (custom_taxon_name = :acustomtaxon)')
+    else
+      Add('WHERE (taxon_id = :ataxon)');
     Add('AND (locality_id = :alocality)');
     Add('AND (field_number = :afieldnumber)');
     Add('AND (collection_year = :ayear)');
     Add('AND (collection_month = :amonth)');
     Add('AND (collection_day = :aday)');
 
-    ParamByName('ataxon').AsInteger := StrToIntDef(ARow.Values['taxon_id'], 0);
+    if (ARow.Values['custom_taxon_name'] <> EmptyStr) then
+      ParamByName('acustomtaxon').AsString := ARow.Values['custom_taxon_name']
+    else
+      ParamByName('ataxon').AsInteger := StrToIntDef(ARow.Values['taxon_id'], 0);
     ParamByName('alocality').AsInteger := StrToIntDef(ARow.Values['locality_id'], 0);
     ParamByName('afieldnumber').AsString := ARow.Values['field_number'];
     ParamByName('ayear').AsInteger := StrToIntDef(ARow.Values['collection_year'], 0);
@@ -1138,6 +1158,7 @@ begin
     R.SampleType := StrToSpecimenType(FieldByName('sample_type').AsString);
     R.FullName := FieldByName('full_name').AsString;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
+    R.CustomTaxonName := FieldByName('custom_taxon_name').AsString;
     R.IndividualId := FieldByName('individual_id').AsInteger;
     R.NestId := FieldByName('nest_id').AsInteger;
     R.EggId := FieldByName('egg_id').AsInteger;
@@ -1181,6 +1202,8 @@ begin
     R.FullName := ARow.Values['full_name'];
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
+  if ARow.IndexOfName('custom_taxon_name') >= 0 then
+    R.CustomTaxonName := ARow.Values['custom_taxon_name'];
   if ARow.IndexOfName('individual_id') >= 0 then
     R.IndividualId := StrToIntDef(ARow.Values['individual_id'], 0);
   if ARow.IndexOfName('nest_id') >= 0 then
@@ -1244,6 +1267,7 @@ begin
     SetForeignParam(ParamByName('nest_id'), R.NestId);
     SetForeignParam(ParamByName('egg_id'), R.EggId);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetStrParam(ParamByName('custom_taxon_name'), R.CustomTaxonName);
     SetForeignParam(ParamByName('institution_id'), R.InstitutionId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
@@ -1311,6 +1335,7 @@ begin
     SetForeignParam(ParamByName('nest_id'), R.NestId);
     SetForeignParam(ParamByName('egg_id'), R.EggId);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
+    SetStrParam(ParamByName('custom_taxon_name'), R.CustomTaxonName);
     SetForeignParam(ParamByName('institution_id'), R.InstitutionId);
     SetCoordinateParam(ParamByName('longitude'), ParamByName('latitude'), R.Longitude, R.Latitude);
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);

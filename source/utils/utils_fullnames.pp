@@ -40,10 +40,11 @@ uses
   function GetNestFullName(aDate: TDate; aTaxon: Integer; aSite: Integer; aFieldNumber: String = ''): String;
   function GetNestRevisionFullName(aDate: TDate; aNest: Integer; aStage: String; aStatus: String): String;
   function GetSpecimenFullName(aFieldNumber: String; aSampleType: TSpecimenType; aTaxonId, aSiteId: Integer): String;
+  function GetSightingFullName(aTaxon: Integer; aCustomTaxon: String; aDate: TDate; aTime: TTime; aLocality, aObserver: Integer): String;
 
 implementation
 
-uses utils_locale, data_getvalue, data_consts, udm_main;
+uses utils_locale, utils_global, data_getvalue, data_consts, udm_main;
 
 // ---------------------------------------------------------
 // String and list treatment
@@ -283,6 +284,31 @@ begin
 
   Result := Trim(Format('%s %4.4d-%2.2d-%2.2d %s%d%s %s', [TaxonName, aYear, aMonth, aDay, aFeatherTrait,
     aFeatherNumber, aBodySide, aFeatherAge]));
+end;
+
+function GetSightingFullName(aTaxon: Integer; aCustomTaxon: String; aDate: TDate; aTime: TTime; aLocality,
+  aObserver: Integer): String;
+var
+  TaxonName, LocalityName, ObserverAbbrev: String;
+  //aYear, aMonth, aDay: Word;
+begin
+  Result := EmptyStr;
+
+  if (aCustomTaxon <> EmptyStr) then
+    TaxonName := aCustomTaxon
+  else
+    TaxonName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aTaxon);
+  LocalityName := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, aLocality);
+  ObserverAbbrev := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, aObserver);
+
+  //DecodeDate(aDate, aYear, aMonth, aDay);
+  if (aTime <> NullTime) then
+  begin
+    Result := Trim(Format('%s %s %s %s %s', [TaxonName, FormatDateTime('yyyy-mm-dd', aDate), FormatDateTime('hh:nn:ss', aTime),
+      LocalityName, ObserverAbbrev]));
+  end
+  else
+    Result := Trim(Format('%s %s %s %s', [TaxonName, FormatDateTime('yyyy-mm-dd', aDate), LocalityName, ObserverAbbrev]));
 end;
 
 end.

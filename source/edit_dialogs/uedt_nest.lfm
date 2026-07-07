@@ -258,34 +258,38 @@ object edtNest: TedtNest
         AutoSize = True
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
         ChildSizing.VerticalSpacing = 4
         ChildSizing.EnlargeHorizontal = crsSameSize
         ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
         TabOrder = 0
-        object lblBandStatus1: TLabel
+        object lblTaxon: TLabel
+          AnchorSideLeft.Control = pTaxon
+          AnchorSideTop.Control = pTaxon
           Left = 16
           Height = 15
           Top = 3
-          Width = 367
+          Width = 42
           BorderSpacing.Top = 3
           Caption = 'Taxon: *'
           ParentColor = False
           ParentFont = False
         end
         object eTaxon: TEditButton
+          AnchorSideLeft.Control = pTaxon
+          AnchorSideTop.Control = lblTaxon
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = sbAddCustomTaxon
           Left = 16
           Height = 23
           Top = 22
-          Width = 367
+          Width = 343
+          Anchors = [akTop, akLeft, akRight]
           ButtonHint = 'Find taxon'
           ButtonWidth = 23
-          Constraints.MinWidth = 365
           Images = DMM.iEdits
           ImageIndex = 0
           MaxLength = 0
@@ -297,6 +301,21 @@ object edtNest: TedtNest
           OnEditingDone = eTaxonEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
+        end
+        object sbAddCustomTaxon: TSpeedButton
+          AnchorSideTop.Control = eTaxon
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = pTaxon
+          AnchorSideRight.Side = asrBottom
+          Left = 359
+          Height = 23
+          Hint = 'Add or edit temporary taxon name'
+          Top = 22
+          Width = 24
+          Anchors = [akTop, akRight]
+          Images = DMM.iEdits
+          ImageIndex = 8
+          OnClick = sbAddCustomTaxonClick
         end
       end
       object pNotes: TPanel
@@ -375,6 +394,7 @@ object edtNest: TedtNest
           Width = 367
           ButtonHint = 'Find project'
           ButtonWidth = 23
+          Constraints.MinWidth = 365
           Images = DMM.iEdits
           ImageIndex = 0
           MaxLength = 0

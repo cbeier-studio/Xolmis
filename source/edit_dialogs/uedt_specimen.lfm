@@ -414,27 +414,33 @@ object edtSpecimen: TedtSpecimen
         ChildSizing.VerticalSpacing = 4
         ChildSizing.EnlargeHorizontal = crsSameSize
         ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
         TabOrder = 5
         object lblTaxon: TLabel
+          AnchorSideLeft.Control = pTaxon
+          AnchorSideTop.Control = pTaxon
           Left = 16
           Height = 15
           Top = 3
-          Width = 384
+          Width = 42
           BorderSpacing.Top = 3
           Caption = 'Taxon: *'
           ParentColor = False
           ParentFont = False
         end
         object eTaxon: TEditButton
+          AnchorSideLeft.Control = pTaxon
+          AnchorSideTop.Control = lblTaxon
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = sbAddCustomTaxon
           Left = 16
           Height = 23
           Top = 22
-          Width = 384
+          Width = 360
+          Anchors = [akTop, akLeft, akRight]
           ButtonHint = 'Find taxon'
           ButtonWidth = 23
           Images = DMM.iEdits
@@ -450,6 +456,21 @@ object edtSpecimen: TedtSpecimen
           OnEditingDone = eFieldNumberEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
+        end
+        object sbAddCustomTaxon: TSpeedButton
+          AnchorSideTop.Control = eTaxon
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = pTaxon
+          AnchorSideRight.Side = asrBottom
+          Left = 376
+          Height = 23
+          Hint = 'Add or edit temporary taxon name'
+          Top = 22
+          Width = 24
+          Anchors = [akTop, akRight]
+          Images = DMM.iEdits
+          ImageIndex = 8
+          OnClick = sbAddCustomTaxonClick
         end
       end
       object pNest: TPanel

@@ -14,6 +14,7 @@
 {"hash":1156,"name":"tedtspecimen.ecollectionday.texthint","sourcebytes":[68,68],"value":"DD"},
 {"hash":150346122,"name":"tedtspecimen.lbltaxon.caption","sourcebytes":[84,97,120,111,110,58,32,42],"value":"Taxon: *"},
 {"hash":108945182,"name":"tedtspecimen.etaxon.buttonhint","sourcebytes":[70,105,110,100,32,116,97,120,111,110],"value":"Find taxon"},
+{"hash":136610261,"name":"tedtspecimen.sbaddcustomtaxon.hint","sourcebytes":[65,100,100,32,111,114,32,101,100,105,116,32,116,101,109,112,111,114,97,114,121,32,116,97,120,111,110,32,110,97,109,101],"value":"Add or edit temporary taxon name"},
 {"hash":5556858,"name":"tedtspecimen.lblnest.caption","sourcebytes":[78,101,115,116,58],"value":"Nest:"},
 {"hash":73859492,"name":"tedtspecimen.enest.buttonhint","sourcebytes":[70,105,110,100,32,110,101,115,116],"value":"Find nest"},
 {"hash":310698,"name":"tedtspecimen.lblegg.caption","sourcebytes":[69,103,103,58],"value":"Egg:"},

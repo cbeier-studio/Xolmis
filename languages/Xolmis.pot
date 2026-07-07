@@ -453,6 +453,11 @@ msgctxt "data_columns.rsccpf"
 msgid "CPF"
 msgstr ""
 
+#: data_columns.rsccustomtaxonname
+msgctxt "data_columns.rsccustomtaxonname"
+msgid "Temporary taxon name"
+msgstr ""
+
 #: data_columns.rscdatabasename
 msgctxt "data_columns.rscdatabasename"
 msgid "Database file"
@@ -5428,7 +5433,7 @@ msgid "Record"
 msgstr ""
 
 #: tdlgimportxmobile.lblerrorhandling.caption
-msgid "If an error occurr during import"
+msgid "If an error occurs during import"
 msgstr ""
 
 #: tdlgimportxmobile.lblexistingrecordpolicy.caption
@@ -6040,6 +6045,44 @@ msgstr ""
 
 #: tdlgsplash.caption
 msgid "Starting Xolmis"
+msgstr ""
+
+#: tdlgtaxonnotfound.caption
+msgid "Taxon not found"
+msgstr ""
+
+#: tdlgtaxonnotfound.etaxon.buttonhint
+msgctxt "tdlgtaxonnotfound.etaxon.buttonhint"
+msgid "Find taxon"
+msgstr ""
+
+#: tdlgtaxonnotfound.etaxon.texthint
+msgid "Select a taxon"
+msgstr ""
+
+#: tdlgtaxonnotfound.lblchoose.caption
+msgid "Choose how to proceed:"
+msgstr ""
+
+#: tdlgtaxonnotfound.lblmessage.caption
+msgid "The following taxon name was not found:"
+msgstr ""
+
+#: tdlgtaxonnotfound.rbabort.caption
+msgid "Abort the import"
+msgstr ""
+
+#: tdlgtaxonnotfound.rbtemporarytaxon.caption
+msgid "Use as temporary taxon name"
+msgstr ""
+
+#: tdlgtaxonnotfound.rbvalidtaxon.caption
+msgid "Select a valid taxon name"
+msgstr ""
+
+#: tdlgtaxonnotfound.sbok.caption
+msgctxt "tdlgtaxonnotfound.sbok.caption"
+msgid "Apply"
 msgstr ""
 
 #: tdlgtourtip.btnclose.caption
@@ -7171,6 +7214,11 @@ msgctxt "tedtegg.pmnnewperson.caption"
 msgid "New observer"
 msgstr ""
 
+#: tedtegg.sbaddcustomtaxon.hint
+msgctxt "tedtegg.sbaddcustomtaxon.hint"
+msgid "Add or edit temporary taxon name"
+msgstr ""
+
 #: tedtegg.sbcancel.caption
 msgctxt "tedtegg.sbcancel.caption"
 msgid "Cancel"
@@ -7978,11 +8026,6 @@ msgctxt "tedtnest.lblactivedays.caption"
 msgid "Total active-days:"
 msgstr ""
 
-#: tedtnest.lblbandstatus1.caption
-msgctxt "tedtnest.lblbandstatus1.caption"
-msgid "Taxon: *"
-msgstr ""
-
 #: tedtnest.lblbandstatus3.caption
 msgid "Nest encounter date:"
 msgstr ""
@@ -8155,6 +8198,11 @@ msgctxt "tedtnest.lblsupporttype.caption"
 msgid "Support type:"
 msgstr ""
 
+#: tedtnest.lbltaxon.caption
+msgctxt "tedtnest.lbltaxon.caption"
+msgid "Taxon: *"
+msgstr ""
+
 #: tedtnest.pmnnewbotanictaxon.caption
 msgid "New plant taxon"
 msgstr ""
@@ -8172,6 +8220,11 @@ msgstr ""
 #: tedtnest.pmnnewproject.caption
 msgctxt "tedtnest.pmnnewproject.caption"
 msgid "New project"
+msgstr ""
+
+#: tedtnest.sbaddcustomtaxon.hint
+msgctxt "tedtnest.sbaddcustomtaxon.hint"
+msgid "Add or edit temporary taxon name"
 msgstr ""
 
 #: tedtnest.sbcancel.caption
@@ -9827,6 +9880,11 @@ msgctxt "tedtsighting.pmnnewsurvey.caption"
 msgid "New survey"
 msgstr ""
 
+#: tedtsighting.sbaddcustomtaxon.hint
+msgctxt "tedtsighting.sbaddcustomtaxon.hint"
+msgid "Add or edit temporary taxon name"
+msgstr ""
+
 #: tedtsighting.sbcancel.caption
 msgctxt "tedtsighting.sbcancel.caption"
 msgid "Cancel"
@@ -10054,6 +10112,11 @@ msgstr ""
 #: tedtspecimen.pmnnewnest.caption
 msgctxt "tedtspecimen.pmnnewnest.caption"
 msgid "New nest"
+msgstr ""
+
+#: tedtspecimen.sbaddcustomtaxon.hint
+msgctxt "tedtspecimen.sbaddcustomtaxon.hint"
+msgid "Add or edit temporary taxon name"
 msgstr ""
 
 #: tedtspecimen.sbcancel.caption
@@ -16266,6 +16329,10 @@ msgstr ""
 msgid "Table not supported in documents and links."
 msgstr ""
 
+#: utils_locale.rserrortaxonmustbeselected
+msgid "A valid taxon must be selected."
+msgstr ""
+
 #: utils_locale.rserrortaxonnotfound
 #, object-pascal-format
 msgid "Taxon \"%s\" not found."
@@ -16823,14 +16890,27 @@ msgstr ""
 msgid "No image file path"
 msgstr ""
 
+#: utils_locale.rsimportabortedbyuser
+msgid "Import aborted by the user."
+msgstr ""
+
 #: utils_locale.rsimportabortunknowntaxon
 msgctxt "utils_locale.rsimportabortunknowntaxon"
 msgid "Abort importing"
 msgstr ""
 
+#: utils_locale.rsimportaddtemporarytaxon
+msgid "Add as temporary taxon name"
+msgstr ""
+
 #: utils_locale.rsimportallowduplicates
 msgctxt "utils_locale.rsimportallowduplicates"
 msgid "Allow duplicates"
+msgstr ""
+
+#: utils_locale.rsimportaskunknowntaxon
+msgctxt "utils_locale.rsimportaskunknowntaxon"
+msgid "Ask what to do"
 msgstr ""
 
 #: utils_locale.rsimportaudiostitle
@@ -16868,10 +16948,6 @@ msgstr ""
 #: utils_locale.rsimportignoreexisting
 msgctxt "utils_locale.rsimportignoreexisting"
 msgid "Ignore existing"
-msgstr ""
-
-#: utils_locale.rsimportignoreunknowntaxon
-msgid "Ignore and keep importing"
 msgstr ""
 
 #: utils_locale.rsimportimagestitle
@@ -16959,6 +17035,10 @@ msgstr ""
 #: utils_locale.rsincorrectpassword
 msgctxt "utils_locale.rsincorrectpassword"
 msgid "Incorrect password."
+msgstr ""
+
+#: utils_locale.rsinformtemporarytaxonname
+msgid "Inform a temporary taxon name:"
 msgstr ""
 
 #: utils_locale.rsinformutmzone
@@ -18968,6 +19048,10 @@ msgctxt "utils_locale.rsreplacedsynonym"
 msgid "replaced synonym"
 msgstr ""
 
+#: utils_locale.rsreplacetaxonwithcustomtaxonprompt
+msgid "The sighting already have a valid taxon name. Do you want to replace it with a temporary taxon name?"
+msgstr ""
+
 #: utils_locale.rsrepositoryconnectioncannotbenil
 msgid "Repository Connection cannot be nil."
 msgstr ""
@@ -19681,6 +19765,11 @@ msgstr ""
 #: utils_locale.rsteam
 msgctxt "utils_locale.rsteam"
 msgid "Team"
+msgstr ""
+
+#: utils_locale.rstemporarytaxonname
+msgctxt "utils_locale.rstemporarytaxonname"
+msgid "Temporary taxon name"
 msgstr ""
 
 #: utils_locale.rstextcaselower

@@ -329,10 +329,10 @@ object dlgImportXMobile: TdlgImportXMobile
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = pExistingRecordPolicy
             AnchorSideRight.Side = asrBottom
-            Left = 472
+            Left = 416
             Height = 23
             Top = 13
-            Width = 173
+            Width = 229
             Anchors = [akTop, akRight]
             Color = clWhite
             ItemHeight = 15
@@ -415,10 +415,10 @@ object dlgImportXMobile: TdlgImportXMobile
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = pErrorHandling
             AnchorSideRight.Side = asrBottom
-            Left = 472
+            Left = 416
             Height = 23
             Top = 12
-            Width = 173
+            Width = 229
             Anchors = [akTop, akRight]
             Color = clWhite
             ItemHeight = 15
@@ -500,21 +500,22 @@ object dlgImportXMobile: TdlgImportXMobile
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = pUnknownTaxa
             AnchorSideRight.Side = asrBottom
-            Left = 472
+            Left = 416
             Height = 23
             Top = 12
-            Width = 173
+            Width = 229
             Anchors = [akTop, akRight]
             Color = clWhite
             ItemHeight = 15
-            ItemIndex = 0
+            ItemIndex = 1
             Items.Strings = (
+              'Add temporary taxon name'
+              'Ask what to do'
               'Abort importing'
-              'Ignore and keep importing'
             )
             Style = csDropDownList
             TabOrder = 0
-            Text = 'Abort importing'
+            Text = 'Ask what to do'
           end
         end
         object lblTitleImportSettings: TLabel

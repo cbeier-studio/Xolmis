@@ -129,9 +129,10 @@ type
     urpOverwrite       // Overwrite the existing record
   );
   TUnknownTaxonPolicy = (
-    utpAsk,           // Always ask what to do
-    utpAbort,         // Abort import process
-    utpIgnore         // Ignore record entirely
+    utpAddCustomTaxon, // Add as temporary taxon name
+    utpAsk,            // Always ask what to do
+    utpAbort,          // Abort import process
+    utpIgnore          // Ignore record entirely
   );
 
   // Import options

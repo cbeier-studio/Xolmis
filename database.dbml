@@ -311,6 +311,7 @@ Table eggs {
     egg_seq integer
     field_number varchar(20)
     taxon_id integer
+    custom_taxon_name varchar(120)
     eggshell_color varchar(40)
     eggshell_pattern char(5)
     eggshell_texture char(5)
@@ -614,6 +615,7 @@ Table nests {
     latitude real // [check: `latitude BETWEEN -90 AND 90`]
     coordinate_precision varchar(3) // [check: `coordinate_precision IN ('E', 'A', 'R')`]
     taxon_id integer
+    custom_taxon_name varchar(120)
     nest_shape varchar(5)
     support_type varchar(10)
     support_plant_1_id integer
@@ -1043,6 +1045,7 @@ Table sightings {
     mackinnon_list_num integer
     observer_id integer
     taxon_id integer
+    custom_taxon_name varchar(120)
     subjects_tally integer
     subject_distance real
     flight_height real
@@ -1104,6 +1107,7 @@ Table specimens {
     full_name varchar(100)
     sample_type char(5)
     taxon_id integer
+    custom_taxon_name varchar(120)
     individual_id integer
     nest_id integer
     egg_id integer

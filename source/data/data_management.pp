@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 10;
+  SCHEMA_VERSION: Integer = 11;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -1111,7 +1111,6 @@ begin
         end;
 
         Result := True;
-
       end;
 
       if OldVersion < 10 then
@@ -1131,6 +1130,18 @@ begin
           'WHERE role_id IS NULL;');
         DMM.sqlCon.ExecuteDirect('UPDATE users SET user_rank = (SELECT role_name FROM roles WHERE roles.role_id = users.role_id) ' +
           'WHERE role_id IS NOT NULL;');
+
+        Result := True;
+      end;
+
+      if OldVersion < 11 then
+      begin
+        LogDebug('Upgrading database schema to version 11');
+
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings ADD COLUMN custom_taxon_name VARCHAR(120);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE nests ADD COLUMN custom_taxon_name VARCHAR(120);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE eggs ADD COLUMN custom_taxon_name VARCHAR(120);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE specimens ADD COLUMN custom_taxon_name VARCHAR(120);');
 
         Result := True;
       end;

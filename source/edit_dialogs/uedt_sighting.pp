@@ -130,6 +130,7 @@ type
     eRecapturesTally: TSpinEdit;
     eUnbandedTally: TSpinEdit;
     eQuantity: TSpinEdit;
+    sbAddCustomTaxon: TSpeedButton;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure eDateKeyPress(Sender: TObject; var Key: char);
@@ -163,15 +164,18 @@ type
     procedure pmnNewMethodClick(Sender: TObject);
     procedure pmnNewPersonClick(Sender: TObject);
     procedure pmnNewSurveyClick(Sender: TObject);
+    procedure sbAddCustomTaxonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
     FSighting: TSighting;
     FSurveyId, FObserverId, FMethodId, FLocalityId, FTaxonId, FIndividualId: Integer;
+    FCustomTaxonName: String;
     procedure SetSighting(Value: TSighting);
     procedure GetRecord;
     procedure SetRecord;
     function IsRequiredFilled: Boolean;
+    procedure UpdateTaxonField;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
   public
@@ -209,6 +213,7 @@ begin
   eLatitude.Images := DMM.iEditsDark;
   eDate.Images := DMM.iEditsDark;
   eTaxon.Images := DMM.iEditsDark;
+  sbAddCustomTaxon.Images := DMM.iEditsDark;
   eIndividual.Images := DMM.iEditsDark;
   eDetectionType.Images := DMM.iEditsDark;
   eBreedingStatus.Images := DMM.iEditsDark;
@@ -607,7 +612,10 @@ end;
 
 procedure TedtSighting.eTaxonButtonClick(Sender: TObject);
 begin
-  FindTaxonDlg([tfAll], eTaxon, True, FTaxonId);
+  if FindTaxonDlg([tfAll], eTaxon, True, FTaxonId) then
+    FCustomTaxonName := EmptyStr;
+
+  UpdateTaxonField;
 end;
 
 procedure TedtSighting.eTaxonKeyPress(Sender: TObject; var Key: char);
@@ -617,14 +625,18 @@ begin
   { Alphabetic search in numeric field }
   if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
   begin
-    FindTaxonDlg([tfAll], eTaxon, True, FTaxonId, Key);
+    if FindTaxonDlg([tfAll], eTaxon, True, FTaxonId, Key) then
+      FCustomTaxonName := EmptyStr;
+    UpdateTaxonField;
     Key := #0;
   end;
   { CLEAR FIELD = Backspace }
   if (Key = #8) then
   begin
     FTaxonId := 0;
+    FCustomTaxonName := EmptyStr;
     eTaxon.Clear;
+    UpdateTaxonField;
     Key := #0;
   end;
   { <ENTER/RETURN> Key }
@@ -755,7 +767,11 @@ begin
   if (FSighting.SightingTime <> NullTime) then
     eTime.Text := FormatDateTime('hh:nn', FSighting.SightingTime);
   FTaxonId := FSighting.TaxonId;
-  eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+  FCustomTaxonName := FSighting.CustomTaxonName;
+  if (FCustomTaxonName <> EmptyStr) then
+    eTaxon.Text := FCustomTaxonName
+  else
+    eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   FIndividualId := FSighting.IndividualId;
   eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
   eQuantity.Value := FSighting.SubjectTally;
@@ -791,7 +807,7 @@ begin
 
   if (FLocalityId > 0) and
     (FMethodId > 0) and
-    (FTaxonId > 0) and
+    ((FTaxonId > 0) or (FCustomTaxonName <> EmptyStr)) and
     (eDate.Text <> EmptyStr) then
     Result := True;
 end;
@@ -821,6 +837,25 @@ begin
   EditSurvey(DMG.qSurveys, 0, True);
 end;
 
+procedure TedtSighting.sbAddCustomTaxonClick(Sender: TObject);
+var
+  strInput: String;
+begin
+  if (FTaxonId > 0) then
+    if MsgDlg(rsTemporaryTaxonName, rsReplaceTaxonWithCustomTaxonPrompt, mtConfirmation) = False then
+      Exit;
+
+  strInput := Trim(InputBox(rsTemporaryTaxonName, rsInformTemporaryTaxonName, FCustomTaxonName));
+  if strInput <> EmptyStr then
+  begin
+    FTaxonId := 0;
+    FCustomTaxonName := strInput;
+    eTaxon.Text := FCustomTaxonName;
+  end;
+
+  UpdateTaxonField;
+end;
+
 procedure TedtSighting.sbSaveClick(Sender: TObject);
 begin
   // Validate data
@@ -844,6 +879,7 @@ begin
   FSighting.SightingDate        := StrToDateDef(eDate.Text, NullDate);
   FSighting.SightingTime        := StrToTimeDef(eTime.Text, NullTime);
   FSighting.TaxonId             := FTaxonId;
+  FSighting.CustomTaxonName     := FCustomTaxonName;
   FSighting.IndividualId        := FIndividualId;
   FSighting.SubjectTally        := eQuantity.Value;
   FSighting.SubjectDistance     := eDistance.Value;
@@ -877,6 +913,14 @@ begin
     FSighting := Value;
 end;
 
+procedure TedtSighting.UpdateTaxonField;
+begin
+  if (FCustomTaxonName <> EmptyStr) then
+    eTaxon.Font.Color := ActiveTheme.System.CriticalFG
+  else
+    eTaxon.Font.Color := clDefault;
+end;
+
 function TedtSighting.ValidateFields: Boolean;
 var
   Msgs: TStrings;
@@ -887,7 +931,7 @@ begin
   Msgs := TStringList.Create;
 
   // Required fields
-  if (FTaxonId = 0) then
+  if (FTaxonId = 0) and (FCustomTaxonName = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscTaxon]));
   if (FMethodId = 0) then
     Msgs.Add(Format(rsRequiredField, [rscMethod]));

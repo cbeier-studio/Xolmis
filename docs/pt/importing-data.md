@@ -183,8 +183,9 @@ Para importar arquivos JSON do Xolmis Mobile:
       - Ignorar registros existentes.
       - Atualizar registros existentes.
 4. Defina o que fazer quando uma espécie não for encontrada no banco de dados.
+      - Aplicar nome temporário.
+      - Perguntar o que fazer.
       - Abortar a importação. Nenhum dado será salvo.
-      - Ignorar e continuar a importação.
 5. Defina o que fazer se ocorrer um erro durante a importação.
       - Abortar a importação. Nenhum dado será salvo.
       - Ignorar e continuar a importação.

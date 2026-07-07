@@ -102,6 +102,8 @@ type
 const
   TAXON_ALIASES: String = 'taxon,táxon,species,espécie,sp,scientific name,sci_name,nome científico';
   SCIENTIFIC_NAME_ALIASES: String = 'scientific name,sci_name,nome científico,taxon,táxon';
+  CUSTOM_TAXON_ALIASES: String = 'custom taxon,custom taxon name,temporary taxon,temporary taxon name,morphospecies,' +
+    'táxon personalizado,nome de táxon personalizado,táxon temporário,nome de táxon temporário,morfoespécie';
   DESCRIPTION_ALIASES: String = 'desc,description,descrição';
   STATUS_ALIASES: String = 'status,estado,situação';
   NOTES_ALIASES: String = 'notes,notas,anotações,observações';
@@ -1664,7 +1666,7 @@ begin
   T.TableName := TBL_EGGS;
   T.DisplayName := LocaleTablesDict[tbEggs];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 2;
+  T.QuickEntrySchemaVersion := 3;
 
   // ID
   AddField(T, 'egg_id', rscId, sdtInteger, True, 0, True);
@@ -1734,6 +1736,15 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  // Custom taxon name
+  // added in v3
+  AddField(T, 'custom_taxon_name', rscCustomTaxonName, sdtText, False, 120);
+  T.Fields.Last.Aliases.CommaText := CUSTOM_TAXON_ALIASES;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_CUSTOM_TAXON_NAME;
   // Host egg
   AddField(T, 'host_egg', rscHostEgg, sdtBoolean);
   T.Fields.Last.DefaultValue := 1;
@@ -3590,7 +3601,7 @@ begin
   T.TableName := TBL_NESTS;
   T.DisplayName := LocaleTablesDict[tbNests];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 3;
+  T.QuickEntrySchemaVersion := 4;
 
   // ID
   AddField(T, 'nest_id', rscId, sdtInteger, True, 0, True);
@@ -3619,6 +3630,15 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  // Custom taxon name
+  // added in v4
+  AddField(T, 'custom_taxon_name', rscCustomTaxonName, sdtText, False, 120);
+  T.Fields.Last.Aliases.CommaText := CUSTOM_TAXON_ALIASES;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_CUSTOM_TAXON_NAME;
   // Field number
   AddField(T, 'field_number', rscFieldNumber, sdtText, True, 20);
   T.Fields.Last.Rules.UniqueField := True;
@@ -5998,7 +6018,7 @@ begin
   T.TableName := TBL_SIGHTINGS;
   T.DisplayName := LocaleTablesDict[tbSightings];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 3;
+  T.QuickEntrySchemaVersion := 4;
 
   // ID
   AddField(T, 'sighting_id', rscId, sdtInteger, True, 0, True);
@@ -6167,6 +6187,15 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  // Custom taxon name
+  // added in v4
+  AddField(T, 'custom_taxon_name', rscCustomTaxonName, sdtText, False, 120);
+  T.Fields.Last.Aliases.CommaText := CUSTOM_TAXON_ALIASES;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_CUSTOM_TAXON_NAME;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
@@ -6496,7 +6525,7 @@ begin
   T.TableName := TBL_SPECIMENS;
   T.DisplayName := LocaleTablesDict[tbSpecimens];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 3;
+  T.QuickEntrySchemaVersion := 4;
 
   // ID
   AddField(T, 'specimen_id', rscId, sdtInteger, True, 0, True);
@@ -6635,6 +6664,15 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  // Custom taxon name
+  // added in v4
+  AddField(T, 'custom_taxon_name', rscCustomTaxonName, sdtText, False, 120);
+  T.Fields.Last.Aliases.CommaText := CUSTOM_TAXON_ALIASES;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_CUSTOM_TAXON_NAME;
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;

@@ -696,6 +696,7 @@ begin
         Obj.EggSeq := StrToIntDef(CellValue(COL_EGG_SEQUENCE, r), 0);
         Obj.MeasureDate := StrToDateDef(CellValue(COL_MEASURE_DATE, r), NullDate);
         Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
+        Obj.CustomTaxonName := CellValue(COL_CUSTOM_TAXON_NAME, r);
         Obj.HostEgg := CellValue(COL_HOST_EGG, r) = '1';
         Obj.ObserverId := GetPersonKey(CellValue(COL_RESEARCHER_NAME, r));
         Obj.EggShape := StrToEggShape(CellValue(COL_EGG_SHAPE, r));
@@ -1123,6 +1124,7 @@ begin
       begin
         Obj.Clear;
         Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
+        Obj.CustomTaxonName := CellValue(COL_CUSTOM_TAXON_NAME, r);
         Obj.FieldNumber := CellValue(COL_FIELD_NUMBER, r);
         Obj.NestFate := StrToNestFate(CellValue(COL_NEST_FATE, r));
         Obj.LossCause := StrToLossCause(CellValue(COL_LOSS_CAUSE, r));
@@ -1748,6 +1750,7 @@ begin
         Obj.SightingDate := StrToDateDef(CellValue(COL_SIGHTING_DATE, r), NullDate);
         Obj.SightingTime := StrToTimeDef(CellValue(COL_SIGHTING_TIME, r), NullTime);
         Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
+        Obj.CustomTaxonName := CellValue(COL_CUSTOM_TAXON_NAME, r);
         Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_INDIVIDUAL_NAME, r));
         Obj.SubjectTally := StrToIntDef(CellValue(COL_SUBJECTS_TALLY, r), 0);
         Obj.SubjectDistance := StrToFloatDef(CellValue(COL_SUBJECT_DISTANCE, r), 0.0);
@@ -1848,6 +1851,7 @@ begin
         Obj.Latitude := StrToFloatDef(CellValue(COL_LATITUDE, r), 0.0);
         Obj.CoordinatePrecision := StrToCoordinatePrecision(CellValue(COL_COORDINATE_PRECISION, r));
         Obj.TaxonId := GetValidTaxon(CellValue(COL_TAXON_NAME, r));
+        Obj.CustomTaxonName := CellValue(COL_CUSTOM_TAXON_NAME, r);
         Obj.IndividualId := GetKey(TBL_INDIVIDUALS, COL_INDIVIDUAL_ID, COL_FULL_NAME, CellValue(COL_INDIVIDUAL_NAME, r));
         Obj.NestId := GetKey(TBL_NESTS, COL_NEST_ID, COL_FULL_NAME, CellValue(COL_NEST_NAME, r));
         Obj.EggId := GetKey(TBL_EGGS, COL_EGG_ID, COL_FULL_NAME, CellValue(COL_EGG_NAME, r));

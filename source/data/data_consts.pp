@@ -381,6 +381,7 @@ const
   COL_SIGHTING_NAME = 'sighting_name';
   COL_SIGHTING_DATE = 'sighting_date';
   COL_SIGHTING_TIME = 'sighting_time';
+  COL_CUSTOM_TAXON_NAME = 'custom_taxon_name';
   COL_MACKINNON_LIST_NUMBER = 'mackinnon_list_num';
   COL_SUBJECTS_TALLY = 'subjects_tally';
   COL_SUBJECT_DISTANCE = 'subject_distance';

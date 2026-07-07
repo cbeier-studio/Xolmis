@@ -146,7 +146,7 @@ begin
 
           // Check if the nest exists
           NestRepo.FindByFieldNumber(CSV.FieldByName('field_number').AsString, Taxon.Id, Toponimo.Id,
-                    StrToDate(CSV.FieldByName('found_day').AsString), Nest);
+                    StrToDate(CSV.FieldByName('found_day').AsString), '', Nest);
           if (Nest.IsNew) then
           begin
             // if not, create a new nest

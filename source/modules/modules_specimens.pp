@@ -220,6 +220,10 @@ begin
   if Column.FieldName = COL_TAXON_NAME then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
+    begin
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end;
   end;
 end;
 
@@ -391,6 +395,10 @@ begin
   if Column.FieldName = COL_TAXON_NAME then
   begin
     TDBGrid(Sender).Canvas.Font.Style := TDBGrid(Sender).Canvas.Font.Style + [fsItalic];
+    if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
+    begin
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    end;
   end;
 end;
 
