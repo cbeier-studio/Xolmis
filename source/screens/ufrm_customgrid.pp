@@ -5406,7 +5406,6 @@ var
   i, RowIndex: Integer;
 begin
   gridRecord.ClearRows;
-//  gRecord.AddRow(DBG.Columns.VisibleCount);
   gridRecord.ColWidths[0] := Round(gridRecord.Width * 0.3);
 
   gridRecord.BeginUpdate;
@@ -5420,7 +5419,6 @@ begin
         if gridRecord.RowCount <= RowIndex then
           gridRecord.RowCount := RowIndex + 1;
         gridRecord.Cells[0, RowIndex] := DBG.Columns.Items[i].Title.Caption;
-        //gridRecord.BestFitRow(DBG.Columns.Item[i].VisibleIndex, 0);
 
         if (DBG.Columns.Items[i].Field.DataType = ftMemo) or
           (DBG.Columns.Items[i].Field.DataType = ftBlob) then

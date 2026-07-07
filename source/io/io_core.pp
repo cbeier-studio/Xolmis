@@ -575,7 +575,10 @@ begin
   Result := TXRow.Create;
 
   FS := DefaultFormatSettings;
-  FS.ShortDateFormat := FOptions.DateFormat;
+  if FOptions.DateFormat = 'auto' then
+    FS.ShortDateFormat := 'dd/mm/yyyy'
+  else
+    FS.ShortDateFormat := FOptions.DateFormat;
   FS.DecimalSeparator := FOptions.DecimalSeparator;
   if FOptions.DecimalSeparator = ',' then
     FS.ThousandSeparator := '.'

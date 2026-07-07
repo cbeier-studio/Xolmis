@@ -2684,7 +2684,7 @@ begin
   end;
 
   { Date format }
-  FImportSettings.DateFormat := cbDateFormat.Text;
+  FImportSettings.DateFormat := AnsiLowerCase(cbDateFormat.Text);
 
   { Records path }
   FImportSettings.RecordsPath := eKeyPath.Text;
