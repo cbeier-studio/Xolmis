@@ -3907,6 +3907,9 @@ begin
   if isOpening or isClosing then
     Exit;
 
+  if not Assigned(Column) or not Assigned(Column.Field) then
+    Exit;
+
   case Column.Field.DataType of
     ftMemo:
       begin

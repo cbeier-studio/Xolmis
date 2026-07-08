@@ -2804,6 +2804,7 @@ begin
     tbProjectChronograms: Result := COL_CHRONOGRAM_ID;
     tbProjectBudgets:     Result := COL_BUDGET_ID;
     tbProjectExpenses:    Result := COL_EXPENSE_ID;
+    tbPoiLibrary:         Result := COL_POI_ID;
   end;
 end;
 
@@ -3376,6 +3377,7 @@ begin
       MacroByName('table_name').Value := TABLE_NAMES[ChildTable];
       MacroByName('parent_key').Value := ParentField;
       ParamByName('parent_id').AsInteger := ParentId;
+      //LogSQL(SQL);
       Open;
       if RecordCount > 0 then
       begin
@@ -3401,13 +3403,12 @@ begin
       MacroByName('parent_key').Value := ParentField;
       ParamByName('auser').AsInteger := ActiveUser.Id;
       ParamByName('parent_id').AsInteger := ParentId;
-      //{$IFDEF DEBUG}
       //LogSQL(SQL);
-      //{$ENDIF}
       ExecSQL;
 
       DMM.sqlTrans.CommitRetaining;
     except
+      LogError(Format('Error restoring child records of %d in %s', [ParentId, TABLE_NAMES[ChildTable]]));
       DMM.sqlTrans.RollbackRetaining;
       raise;
     end;
