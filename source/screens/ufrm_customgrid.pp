@@ -1244,7 +1244,6 @@ type
     FSidePanelFactor: Double;
     FChildPanelFactor: Double;
     FDragging: Boolean;
-    FPopupTotalHeight: Integer;
     cellMemo: TMemo;
 
     panelTabs: specialize TFPGList<TCustomPanelTab>;
