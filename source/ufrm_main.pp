@@ -21,10 +21,10 @@ unit ufrm_main;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, Buttons,
-  ActnList, ExtCtrls, StdCtrls, atTabs, BCPanel, BCTypes, ColorSpeedButton, DateUtils,
+  Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, SQLDB, Buttons,
+  ActnList, ExtCtrls, StdCtrls, atTabs, BCPanel, BCTypes, ColorSpeedButton, DateUtils, Types, ImgList,
   DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory,
-  data_types, Types, ImgList;
+  data_types, utils_global;
 
 type
 
@@ -335,7 +335,13 @@ type
     //ActiveQuery: TSQLQuery;
     ActiveGrid: TfrmCustomGrid;
     FBandStockCheckDone: Boolean;
-    FBandStockCheckTimer: TTimer;
+    FPermitExpiringCheckDone: Boolean;
+    FProjectEndingCheckDone: Boolean;
+    FActivityEndingCheckDone: Boolean;
+    FUpcomingFieldworkCheckDone: Boolean;
+    FNestNeedingRevisionCheckDone: Boolean;
+    FNotificationCheckTimer: TTimer;
+    FScheduledNotificationChecks: array of TScheduledNotificationCheck;
     procedure OpenTab(Sender: TObject; aForm: TForm; aFormClass: TComponentClass; aCaption: String;
       Pinned: Boolean);
     procedure OpenForm(Sender: TObject; var aForm: TfrmCustomGrid; aTableType: TTableType;
@@ -344,10 +350,22 @@ type
     //  aCaption: String; aIcon: Integer = -1); overload;
     procedure CloseAllTabs(ClosePinned: Boolean = False; ExceptIndex: Integer = -1);
     procedure ApplyDarkMode;
+    function FindScheduledNotificationCheck(const CheckName: String): Integer;
+    procedure RemoveScheduledNotificationCheck(Index: Integer);
+    procedure ScheduleNotificationCheck(const CheckName: String;
+      CheckProc: TScheduledNotificationCheckProc; DelayMs: Integer = 3000);
+    procedure ScheduleInitialNotificationChecks(DelayMs: Integer = 3000);
+    procedure NotificationCheckTimer(Sender: TObject);
+    procedure ProcessScheduledNotificationChecks;
+    function CanExecuteScheduledNotificationCheck(const CheckName: String;
+      CheckProc: TScheduledNotificationCheckProc): Boolean;
     procedure UpdateNotificationsButtonIcon;
-    procedure ScheduleBandStockCheck(DelayMs: Integer = 3000);
-    procedure BandStockCheckTimer(Sender: TObject);
     procedure CheckBandStockNotifications;
+    procedure CheckPermitExpiringNotifications;
+    procedure CheckProjectsEndingNotifications;
+    procedure CheckProjectActivitiesEndingNotifications;
+    procedure CheckUpcomingFieldworkNotifications;
+    procedure CheckNestsNeedingRevisionNotifications;
   public
     procedure ApplyFormSettings;
     procedure RefreshNotifications;
@@ -382,12 +400,11 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_system, utils_autoupdate, utils_permissions, utils_backup,
+  utils_locale, utils_dialogs, utils_system, utils_autoupdate, utils_permissions, utils_backup,
   utils_editdialogs, utils_themes, utils_gis,
-  models_access_control,
-  models_users, models_geo, models_taxonomy, models_record_types,
-  data_management, data_schema, io_core, io_ebird_csv,
-  SQLDB,
+  models_access_control, models_users, models_geo, models_taxonomy, models_record_types,
+  data_management, data_schema,
+  io_core, io_ebird_csv,
   uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding, udm_reports,
   ucfg_database, ucfg_users, ucfg_options,
@@ -436,13 +453,14 @@ begin
   if ConnectDatabase then
   begin
     FBandStockCheckDone := False;
+    FPermitExpiringCheckDone := False;
     LogDebug('Database connection changed');
     CloseAllTabs;
     sbHomeClick(nil);
 
     UpdateMenu(PGW.ActivePageComponent);
     UpdateStatusBar;
-    ScheduleBandStockCheck;
+    ScheduleInitialNotificationChecks;
   end;
 end;
 
@@ -453,12 +471,13 @@ begin
     if ConnectDatabase then
     begin
       FBandStockCheckDone := False;
+      FPermitExpiringCheckDone := False;
       CloseAllTabs;
       sbHomeClick(nil);
 
       UpdateMenu(PGW.ActivePageComponent);
       UpdateStatusBar;
-      ScheduleBandStockCheck;
+      ScheduleInitialNotificationChecks;
 
       ShowOnboardingBig(obtNewDatabase);
     end;
@@ -1014,8 +1033,8 @@ procedure TfrmMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   isClosing := True;
   TimerScreen.Enabled := False;
-  if Assigned(FBandStockCheckTimer) then
-    FBandStockCheckTimer.Enabled := False;
+  if Assigned(FNotificationCheckTimer) then
+    FNotificationCheckTimer.Enabled := False;
 
   lblLoading.Caption := rsClosing;
   pSplash.Top := 0;
@@ -1106,7 +1125,9 @@ begin
   isOpening := False;
   isWorking := False;
   FBandStockCheckDone := False;
-  FBandStockCheckTimer := nil;
+  FPermitExpiringCheckDone := False;
+  FNotificationCheckTimer := nil;
+  SetLength(FScheduledNotificationChecks, 0);
 
   {$IFDEF DEBUG}
   LogDebug('Opening the main form');
@@ -1137,8 +1158,10 @@ end;
 
 procedure TfrmMain.FormDestroy(Sender: TObject);
 begin
-  if Assigned(FBandStockCheckTimer) then
-    FreeAndNil(FBandStockCheckTimer);
+  if Assigned(FNotificationCheckTimer) then
+    FreeAndNil(FNotificationCheckTimer);
+
+  SetLength(FScheduledNotificationChecks, 0);
 
   if Assigned(DMB) then
     FreeAndNil(DMB);
@@ -1310,7 +1333,7 @@ begin
     xSettings.SaveToFile;
 
     pSplash.Visible := False;
-    ScheduleBandStockCheck;
+    ScheduleInitialNotificationChecks;
 
     { Show onboarding tour }
     //with dlgTourTip do
@@ -1994,60 +2017,152 @@ begin
   end;
 end;
 
-procedure TfrmMain.ScheduleBandStockCheck(DelayMs: Integer);
+function TfrmMain.FindScheduledNotificationCheck(const CheckName: String): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  for i := 0 to Length(FScheduledNotificationChecks) - 1 do
+    if FScheduledNotificationChecks[i].CheckName = CheckName then
+      Exit(i);
+end;
+
+procedure TfrmMain.RemoveScheduledNotificationCheck(Index: Integer);
+var
+  i, LastIdx: Integer;
+begin
+  LastIdx := Length(FScheduledNotificationChecks) - 1;
+  if (Index < 0) or (Index > LastIdx) then
+    Exit;
+
+  for i := Index to LastIdx - 1 do
+    FScheduledNotificationChecks[i] := FScheduledNotificationChecks[i + 1];
+
+  SetLength(FScheduledNotificationChecks, LastIdx);
+end;
+
+procedure TfrmMain.ScheduleNotificationCheck(const CheckName: String;
+  CheckProc: TScheduledNotificationCheckProc; DelayMs: Integer);
+var
+  Idx: Integer;
 begin
   if DelayMs < 1000 then
     DelayMs := 1000;
 
-  if not Assigned(FBandStockCheckTimer) then
+  if not Assigned(FNotificationCheckTimer) then
   begin
-    FBandStockCheckTimer := TTimer.Create(Self);
-    FBandStockCheckTimer.Enabled := False;
-    FBandStockCheckTimer.OnTimer := @BandStockCheckTimer;
+    FNotificationCheckTimer := TTimer.Create(Self);
+    FNotificationCheckTimer.Enabled := False;
+    FNotificationCheckTimer.Interval := 500;
+    FNotificationCheckTimer.OnTimer := @NotificationCheckTimer;
   end;
 
-  FBandStockCheckTimer.Interval := DelayMs;
-  FBandStockCheckTimer.Enabled := True;
+  Idx := FindScheduledNotificationCheck(CheckName);
+  if Idx < 0 then
+  begin
+    SetLength(FScheduledNotificationChecks, Length(FScheduledNotificationChecks) + 1);
+    Idx := Length(FScheduledNotificationChecks) - 1;
+    FScheduledNotificationChecks[Idx].CheckName := CheckName;
+  end;
+
+  FScheduledNotificationChecks[Idx].ExecuteAtTick := GetTickCount64 + QWord(DelayMs);
+  FScheduledNotificationChecks[Idx].CheckProc := CheckProc;
+  FNotificationCheckTimer.Enabled := True;
 end;
 
-procedure TfrmMain.BandStockCheckTimer(Sender: TObject);
+procedure TfrmMain.ScheduleInitialNotificationChecks(DelayMs: Integer);
 begin
-  if Assigned(FBandStockCheckTimer) then
-    FBandStockCheckTimer.Enabled := False;
+  ScheduleNotificationCheck('bands_stock', @CheckBandStockNotifications, DelayMs);
+  ScheduleNotificationCheck('permits_expiring', @CheckPermitExpiringNotifications, DelayMs);
+  ScheduleNotificationCheck('projects_ending', @CheckProjectsEndingNotifications, DelayMs);
+  ScheduleNotificationCheck('activities_ending', @CheckProjectActivitiesEndingNotifications, DelayMs);
+  ScheduleNotificationCheck('upcoming_fieldwork', @CheckUpcomingFieldworkNotifications, DelayMs);
+  ScheduleNotificationCheck('nests_check', @CheckNestsNeedingRevisionNotifications, DelayMs);
+end;
 
-  CheckBandStockNotifications;
+procedure TfrmMain.NotificationCheckTimer(Sender: TObject);
+begin
+  ProcessScheduledNotificationChecks;
+end;
+
+procedure TfrmMain.ProcessScheduledNotificationChecks;
+var
+  i: Integer;
+  ScheduledProc: TScheduledNotificationCheckProc;
+  NowTick: QWord;
+begin
+  if isClosing then
+    Exit;
+
+  if not Assigned(FNotificationCheckTimer) then
+    Exit;
+
+  FNotificationCheckTimer.Enabled := False;
+  NowTick := GetTickCount64;
+
+  i := 0;
+  while i < Length(FScheduledNotificationChecks) do
+  begin
+    if FScheduledNotificationChecks[i].ExecuteAtTick <= NowTick then
+    begin
+      ScheduledProc := FScheduledNotificationChecks[i].CheckProc;
+      RemoveScheduledNotificationCheck(i);
+
+      if Assigned(ScheduledProc) then
+        ScheduledProc;
+
+      NowTick := GetTickCount64;
+      Continue;
+    end;
+
+    Inc(i);
+  end;
+
+  FNotificationCheckTimer.Enabled := Length(FScheduledNotificationChecks) > 0;
+end;
+
+function TfrmMain.CanExecuteScheduledNotificationCheck(const CheckName: String;
+  CheckProc: TScheduledNotificationCheckProc): Boolean;
+begin
+  Result := False;
+
+  if isClosing then
+    Exit;
+
+  if (not Assigned(DMM)) or (not Assigned(DMM.sqlCon)) or (not Assigned(DMM.sqlTrans)) then
+  begin
+    // Database components may still be initializing; retry shortly.
+    ScheduleNotificationCheck(CheckName, CheckProc, 2000);
+    Exit;
+  end;
+
+  if (not DMM.sqlCon.Connected) or (not Assigned(xNotifications)) then
+  begin
+    ScheduleNotificationCheck(CheckName, CheckProc, 2000);
+    Exit;
+  end;
+
+  Result := True;
 end;
 
 procedure TfrmMain.CheckBandStockNotifications;
 var
   Qry: TSQLQuery;
   TotalRunningOut, TotalOutOfStock, TotalLowStock: Integer;
-  TotalExpiredPermits, TotalExpiringPermits: Integer;
   OutOfStockSizes, LowStockSizes, MsgText, SizeName: String;
-  ExpiredPermits, ExpiringPermits, PermitName: String;
-  DaysRemaining: Integer;
 begin
   if FBandStockCheckDone or isClosing then
     Exit;
 
-  if (not Assigned(DMM)) or (not Assigned(DMM.sqlCon)) or (not Assigned(DMM.sqlTrans)) then
-  begin
-    // Database components may still be initializing; retry shortly.
-    ScheduleBandStockCheck(2000);
+  if not CanExecuteScheduledNotificationCheck('bands_stock', @CheckBandStockNotifications) then
     Exit;
-  end;
-
-  if (not DMM.sqlCon.Connected) or (not Assigned(xNotifications)) then
-  begin
-    ScheduleBandStockCheck(2000);
-    Exit;
-  end;
 
   Qry := TSQLQuery.Create(nil);
   try
     Qry.Database := DMM.sqlCon;
     Qry.Transaction := DMM.sqlTrans;
 
+    // Stock of bands
     Qry.SQL.Text :=
       'SELECT ' +
       '  COUNT(*) AS total_running_out, ' +
@@ -2065,7 +2180,7 @@ begin
       Qry.SQL.Text :=
         'SELECT band_size, saldo ' +
         'FROM get_bands_running_out ' +
-        'ORDER BY saldo ASC, band_size';
+        'ORDER BY saldo ASC, band_size ASC';
       Qry.Open;
 
       OutOfStockSizes := EmptyStr;
@@ -2108,10 +2223,50 @@ begin
       end;
     end;
 
+    UpdateNotificationsButtonIcon;
+
+    if pNotifications.Visible then
+    begin
+      RefreshNotifications;
+      FNotificationsNeedUpdate := False;
+    end;
+
+    FBandStockCheckDone := True;
+  except
+    on E: Exception do
+    begin
+      LogWarning('Unable to check band stock notifications: ' + E.Message);
+      ScheduleNotificationCheck('bands_stock', @CheckBandStockNotifications, 3000);
+    end;
+  end;
+
+  FreeAndNil(Qry);
+end;
+
+procedure TfrmMain.CheckPermitExpiringNotifications;
+var
+  Qry: TSQLQuery;
+  TotalExpiredPermits, TotalExpiringPermits: Integer;
+  MsgText, PermitName: String;
+  ExpiredPermits, ExpiringPermits: String;
+  DaysRemaining: Integer;
+begin
+  if FPermitExpiringCheckDone or isClosing then
+    Exit;
+
+  if not CanExecuteScheduledNotificationCheck('permits_expiring', @CheckPermitExpiringNotifications) then
+    Exit;
+
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.Database := DMM.sqlCon;
+    Qry.Transaction := DMM.sqlTrans;
+
+    // Expiring permits
     Qry.SQL.Text :=
       'SELECT permit_name, days_remaining ' +
       'FROM get_expired_permits ' +
-      'ORDER BY days_remaining ASC, permit_name';
+      'ORDER BY days_remaining ASC, permit_name ASC';
     Qry.Open;
 
     TotalExpiredPermits := 0;
@@ -2166,12 +2321,329 @@ begin
       FNotificationsNeedUpdate := False;
     end;
 
-    FBandStockCheckDone := True;
+    FPermitExpiringCheckDone := True;
   except
     on E: Exception do
     begin
-      LogWarning('Unable to check band stock notifications: ' + E.Message);
-      ScheduleBandStockCheck(3000);
+      LogWarning('Unable to check permit notifications: ' + E.Message);
+      ScheduleNotificationCheck('permits_expiring', @CheckPermitExpiringNotifications, 3000);
+    end;
+  end;
+
+  FreeAndNil(Qry);
+end;
+
+procedure TfrmMain.CheckProjectsEndingNotifications;
+var
+  Qry: TSQLQuery;
+  TotalEndingProjects, TotalEndedProjects: Integer;
+  MsgText, ProjectName: String;
+  EndedProjects, EndingProjects: String;
+  DaysRemaining: Integer;
+begin
+  if FProjectEndingCheckDone or isClosing then
+    Exit;
+
+  if not CanExecuteScheduledNotificationCheck('projects_ending', @CheckProjectsEndingNotifications) then
+    Exit;
+
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.Database := DMM.sqlCon;
+    Qry.Transaction := DMM.sqlTrans;
+
+    // Finishing projects
+    Qry.SQL.Text :=
+      'SELECT short_title, days_remaining ' +
+      'FROM get_ending_projects ' +
+      'ORDER BY days_remaining ASC, short_title ASC';
+    Qry.Open;
+
+    TotalEndedProjects := 0;
+    TotalEndingProjects := 0;
+    EndedProjects := EmptyStr;
+    EndingProjects := EmptyStr;
+    while not Qry.EOF do
+    begin
+      ProjectName := Qry.FieldByName('short_title').AsString;
+      DaysRemaining := Qry.FieldByName('days_remaining').AsInteger;
+
+      if DaysRemaining < 0 then
+      begin
+        if EndedProjects = EmptyStr then
+          EndedProjects := ProjectName
+        else
+          EndedProjects := EndedProjects + ', ' + ProjectName;
+        Inc(TotalEndedProjects);
+      end
+      else
+      begin
+        if EndingProjects = EmptyStr then
+          EndingProjects := ProjectName
+        else
+          EndingProjects := EndingProjects + ', ' + ProjectName;
+        Inc(TotalEndingProjects);
+      end;
+
+      Qry.Next;
+    end;
+    Qry.Close;
+
+    if TotalEndedProjects > 0 then
+    begin
+      MsgText := Format(rsProjectsFinishedMessage, [TotalEndedProjects, EndedProjects]);
+      NewAlert(rsProjectsFinishedNotification, MsgText, npImportant);
+      LogWarning('Project notification created: ' + MsgText);
+    end;
+
+    if TotalEndingProjects > 0 then
+    begin
+      MsgText := Format(rsProjectsFinishingSoonMessage, [TotalEndingProjects, EndingProjects]);
+      NewAlert(rsProjectsFinishingSoonNotification, MsgText, npImportant);
+      LogWarning('Project notification created: ' + MsgText);
+    end;
+
+    UpdateNotificationsButtonIcon;
+
+    if pNotifications.Visible then
+    begin
+      RefreshNotifications;
+      FNotificationsNeedUpdate := False;
+    end;
+
+    FProjectEndingCheckDone := True;
+  except
+    on E: Exception do
+    begin
+      LogWarning('Unable to check project notifications: ' + E.Message);
+      ScheduleNotificationCheck('projects_ending', @CheckProjectsEndingNotifications, 3000);
+    end;
+  end;
+
+  FreeAndNil(Qry);
+end;
+
+procedure TfrmMain.CheckProjectActivitiesEndingNotifications;
+var
+  Qry: TSQLQuery;
+  TotalEndingActivities, TotalEndedActivities: Integer;
+  MsgText, ActivityName: String;
+  EndedActivities, EndingActivities: String;
+  DaysRemaining: Integer;
+begin
+  if FActivityEndingCheckDone or isClosing then
+    Exit;
+
+  if not CanExecuteScheduledNotificationCheck('activities_ending', @CheckProjectActivitiesEndingNotifications) then
+    Exit;
+
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.Database := DMM.sqlCon;
+    Qry.Transaction := DMM.sqlTrans;
+
+    // Finishing project activities
+    Qry.SQL.Text :=
+      'SELECT description, days_remaining ' +
+      'FROM get_expiring_activities ' +
+      'ORDER BY days_remaining ASC, description ASC';
+    Qry.Open;
+
+    TotalEndedActivities := 0;
+    TotalEndingActivities := 0;
+    EndedActivities := EmptyStr;
+    EndingActivities := EmptyStr;
+    while not Qry.EOF do
+    begin
+      ActivityName := Qry.FieldByName('description').AsString;
+      DaysRemaining := Qry.FieldByName('days_remaining').AsInteger;
+
+      if DaysRemaining < 0 then
+      begin
+        if EndedActivities = EmptyStr then
+          EndedActivities := ActivityName
+        else
+          EndedActivities := EndedActivities + ', ' + ActivityName;
+        Inc(TotalEndedActivities);
+      end
+      else
+      begin
+        if EndingActivities = EmptyStr then
+          EndingActivities := ActivityName
+        else
+          EndingActivities := EndingActivities + ', ' + ActivityName;
+        Inc(TotalEndingActivities);
+      end;
+
+      Qry.Next;
+    end;
+    Qry.Close;
+
+    if TotalEndedActivities > 0 then
+    begin
+      MsgText := Format(rsActivitiesFinishedMessage, [TotalEndedActivities, EndedActivities]);
+      NewAlert(rsActivitiesFinishedNotification, MsgText, npImportant);
+      LogWarning('Project activity notification created: ' + MsgText);
+    end;
+
+    if TotalEndingActivities > 0 then
+    begin
+      MsgText := Format(rsActivitiesFinishingSoonMessage, [TotalEndingActivities, EndingActivities]);
+      NewAlert(rsActivitiesFinishingSoonNotification, MsgText, npImportant);
+      LogWarning('Project activity notification created: ' + MsgText);
+    end;
+
+    UpdateNotificationsButtonIcon;
+
+    if pNotifications.Visible then
+    begin
+      RefreshNotifications;
+      FNotificationsNeedUpdate := False;
+    end;
+
+    FActivityEndingCheckDone := True;
+  except
+    on E: Exception do
+    begin
+      LogWarning('Unable to check activity notifications: ' + E.Message);
+      ScheduleNotificationCheck('activities_ending', @CheckProjectActivitiesEndingNotifications, 3000);
+    end;
+  end;
+
+  FreeAndNil(Qry);
+end;
+
+procedure TfrmMain.CheckUpcomingFieldworkNotifications;
+var
+  Qry: TSQLQuery;
+  TotalExpeditions, TotalSurveys: Integer;
+  MsgText, ActivityType: String;
+begin
+  if FUpcomingFieldworkCheckDone or isClosing then
+    Exit;
+
+  if not CanExecuteScheduledNotificationCheck('upcoming_fieldwork', @CheckUpcomingFieldworkNotifications) then
+    Exit;
+
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.Database := DMM.sqlCon;
+    Qry.Transaction := DMM.sqlTrans;
+
+    // Upcoming expeditions and surveys
+    Qry.SQL.Text :=
+      'SELECT record_type, activity_name, days_remaining ' +
+      'FROM get_upcoming_fieldwork ' +
+      'ORDER BY days_remaining ASC, activity_name ASC';
+    Qry.Open;
+
+    TotalExpeditions := 0;
+    TotalSurveys := 0;
+    while not Qry.EOF do
+    begin
+      ActivityType := Qry.FieldByName('record_type').AsString;
+
+      if ActivityType = 'E' then
+      begin
+        Inc(TotalExpeditions);
+      end
+      else
+      begin
+        Inc(TotalSurveys);
+      end;
+
+      Qry.Next;
+    end;
+    Qry.Close;
+
+    if TotalExpeditions > 0 then
+    begin
+      MsgText := Format(rsUpcomingExpeditionsMessage, [TotalExpeditions]);
+      NewAlert(rsUpcomingFieldworkNotification, MsgText, npImportant);
+      LogWarning('Upcoming fieldwork notification created: ' + MsgText);
+    end;
+
+    if TotalSurveys > 0 then
+    begin
+      MsgText := Format(rsUpcomingSurveysMessage, [TotalSurveys]);
+      NewAlert(rsUpcomingFieldworkNotification, MsgText, npImportant);
+      LogWarning('Upcoming fieldwork notification created: ' + MsgText);
+    end;
+
+    UpdateNotificationsButtonIcon;
+
+    if pNotifications.Visible then
+    begin
+      RefreshNotifications;
+      FNotificationsNeedUpdate := False;
+    end;
+
+    FUpcomingFieldworkCheckDone := True;
+  except
+    on E: Exception do
+    begin
+      LogWarning('Unable to check upcoming fieldwork notifications: ' + E.Message);
+      ScheduleNotificationCheck('upcoming_fieldwork', @CheckUpcomingFieldworkNotifications, 3000);
+    end;
+  end;
+
+  FreeAndNil(Qry);
+end;
+
+procedure TfrmMain.CheckNestsNeedingRevisionNotifications;
+var
+  Qry: TSQLQuery;
+  TotalNests: Integer;
+  MsgText: String;
+begin
+  if FNestNeedingRevisionCheckDone or isClosing then
+    Exit;
+
+  if not CanExecuteScheduledNotificationCheck('nests_check', @CheckNestsNeedingRevisionNotifications) then
+    Exit;
+
+  Qry := TSQLQuery.Create(nil);
+  try
+    Qry.Database := DMM.sqlCon;
+    Qry.Transaction := DMM.sqlTrans;
+
+    // Nests needing revision
+    Qry.SQL.Text :=
+      'SELECT nest_name, last_revision_date, days_since_revision ' +
+      'FROM get_nests_review_due ' +
+      'ORDER BY days_since_revision ASC, nest_name ASC';
+    Qry.Open;
+
+    TotalNests := 0;
+    while not Qry.EOF do
+    begin
+      Inc(TotalNests);
+
+      Qry.Next;
+    end;
+    Qry.Close;
+
+    if TotalNests > 0 then
+    begin
+      MsgText := Format(rsNestsNeedingRevisionMessage, [TotalNests]);
+      NewAlert(rsNestsNeedingRevisionNotification, MsgText, npImportant);
+      LogWarning('Nests revision notification created: ' + MsgText);
+    end;
+
+    UpdateNotificationsButtonIcon;
+
+    if pNotifications.Visible then
+    begin
+      RefreshNotifications;
+      FNotificationsNeedUpdate := False;
+    end;
+
+    FNestNeedingRevisionCheckDone := True;
+  except
+    on E: Exception do
+    begin
+      LogWarning('Unable to check nests notifications: ' + E.Message);
+      ScheduleNotificationCheck('nests_check', @CheckNestsNeedingRevisionNotifications, 3000);
     end;
   end;
 

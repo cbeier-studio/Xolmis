@@ -103,6 +103,9 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsTitleBandsBalance = 'Bands balance';
     rsTitleBandsRunningOut = 'Bands running out';
     rsTitleAvgExpeditionDuration = 'Average expedition duration';
+    rsTitleEndingProjects = 'Ending projects';
+    rsTitleExpiringActivities = 'Ending activities';
+    rsTitleUpcomingFieldwork = 'Upcoming fieldwork';
     rsTitleImportCoordinates = 'Import coordinates';
     rsTitleNew = 'New %s';
     rsTitleEditing = 'Editing %s';
@@ -444,6 +447,19 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsPermitsExpiredMessage = 'There are %d expired permit(s).' + LineEnding + 'Affected permits: %s.';
     rsPermitsExpiringSoonNotification = 'Permits expiring soon';
     rsPermitsExpiringSoonMessage = 'There are %d permit(s) expiring soon.' + LineEnding + 'Affected permits: %s.';
+    rsProjectsFinishedNotification = 'Finished projects';
+    rsProjectsFinishedMessage = 'There are %d finished projects.' + LineEnding + 'Affected projects: %s.';
+    rsProjectsFinishingSoonNotification = 'Projects finishing soon';
+    rsProjectsFinishingSoonMessage = 'There are %d projects finishing soon.' + LineEnding + 'Affected projects: %s.';
+    rsActivitiesFinishedNotification = 'Finished project activities';
+    rsActivitiesFinishedMessage = 'There are %d finished project activities.' + LineEnding + 'Affected activities: %s.';
+    rsActivitiesFinishingSoonNotification = 'Project activities finishing soon';
+    rsActivitiesFinishingSoonMessage = 'There are %d project activities finishing soon.' + LineEnding + 'Affected activities: %s.';
+    rsUpcomingFieldworkNotification = 'Upcoming fieldwork';
+    rsUpcomingExpeditionsMessage = 'There are %d upcoming expeditions.';
+    rsUpcomingSurveysMessage = 'There are %d upcoming surveys.';
+    rsNestsNeedingRevisionNotification = 'Nests needing revision';
+    rsNestsNeedingRevisionMessage = 'There are %d nests that need to be checked.';
 
     { Cancel messages }
     rsPostBeforeClosePrompt = 'There are unsaved changes. Do you want to save it?';

@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 11;
+  SCHEMA_VERSION: Integer = 12;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -103,6 +103,10 @@ const
   procedure CreateBandsLeftoverView(Connection: TSQLConnector);
   procedure CreateBandsRunningOutView(Connection: TSQLConnector);
   procedure CreateAvgExpeditionDurationView(Connection: TSQLConnector);
+  procedure CreateEndingProjectsView(Connection: TSQLConnector);
+  procedure CreateExpiringActivitiesView(Connection: TSQLConnector);
+  procedure CreateUpcomingFieldworkView(Connection: TSQLConnector);
+  procedure CreateNestsReviewDueView(Connection: TSQLConnector);
 
   procedure SeedAccessControlTables(Connection: TSQLConnector);
   procedure CreateAdminUser(Connection: TSQLConnector);
@@ -309,7 +313,7 @@ begin
   try
     dlgProgress.Title := rsTitleCreateDatabase;
     dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := 55; // Number of tables and views to create
+    dlgProgress.Max := 59; // Number of tables and views to create
     dlgProgress.Position := 0;
     dlgProgress.Show;
     Application.ProcessMessages;
@@ -674,6 +678,30 @@ begin
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleAvgExpeditionDuration, dlgProgress.Position + 1, dlgProgress.Max]);
         Application.ProcessMessages;
         CreateAvgExpeditionDurationView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Ending projects
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleEndingProjects, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateEndingProjectsView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Expiring activities
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleExpiringActivities, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateExpiringActivitiesView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Upcoming fieldwork (expeditions and surveys outside expeditions)
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleUpcomingFieldwork, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateUpcomingFieldworkView(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Nests due for review
+        dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleNestRevisions, dlgProgress.Position + 1, dlgProgress.Max]);
+        Application.ProcessMessages;
+        CreateNestsReviewDueView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         Trans.CommitRetaining;
@@ -1142,6 +1170,18 @@ begin
         DMM.sqlCon.ExecuteDirect('ALTER TABLE nests ADD COLUMN custom_taxon_name VARCHAR(120);');
         DMM.sqlCon.ExecuteDirect('ALTER TABLE eggs ADD COLUMN custom_taxon_name VARCHAR(120);');
         DMM.sqlCon.ExecuteDirect('ALTER TABLE specimens ADD COLUMN custom_taxon_name VARCHAR(120);');
+
+        Result := True;
+      end;
+
+      if OldVersion < 12 then
+      begin
+        LogDebug('Upgrading database schema to version 12');
+
+        CreateEndingProjectsView(DMM.sqlCon);
+        CreateExpiringActivitiesView(DMM.sqlCon);
+        CreateUpcomingFieldworkView(DMM.sqlCon);
+        CreateNestsReviewDueView(DMM.sqlCon);
 
         Result := True;
       end;
@@ -2230,6 +2270,102 @@ begin
     ') ' +
     'SELECT avg(consecutive_dates) AS media_dias_expedicao ' +
     'FROM consecutivo;');
+end;
+
+procedure CreateEndingProjectsView(Connection: TSQLConnector);
+begin
+  LogDebug('Creating get_ending_projects view');
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_ending_projects AS ' +
+    'SELECT short_title, ' +
+      'end_date, ' +
+      'strftime(''%j'', end_date) - strftime(''%j'', ''now'') AS days_remaining ' +
+    'FROM projects ' +
+    'WHERE (days_remaining <= 30) AND ' +
+      '(project_status IN (''P'', ''A'', ''D'') ) AND ' +
+      '(active_status = 1) ' +
+    'ORDER BY days_remaining ASC;');
+end;
+
+procedure CreateExpiringActivitiesView(Connection: TSQLConnector);
+begin
+  LogDebug('Creating get_expiring_activities view');
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_expiring_activities AS ' +
+    'SELECT description, ' +
+      'target_date, ' +
+      'strftime(''%j'', target_date) - strftime(''%j'', ''now'') AS days_remaining ' +
+    'FROM project_chronograms ' +
+    'WHERE (days_remaining <= 30) AND ' +
+      '(progress_status IN (''T'', ''P'', ''R'', ''D'', ''B'') ) AND ' +
+      '(active_status = 1) ' +
+    'ORDER BY days_remaining ASC;');
+end;
+
+procedure CreateUpcomingFieldworkView(Connection: TSQLConnector);
+begin
+  LogDebug('Creating get_upcoming_fieldwork view');
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_upcoming_fieldwork AS ' +
+    'SELECT ''E'' AS record_type, ' +
+      'x.expedition_id, ' +
+      'NULL AS survey_id, ' +
+      'x.expedition_name AS activity_name, ' +
+      'x.start_date, ' +
+      'CAST(julianday(date(x.start_date)) - julianday(date(''now'')) AS INTEGER) AS days_remaining, ' +
+      'x.project_id, ' +
+      'NULL AS method_name, ' +
+      'NULL AS locality_name ' +
+    'FROM expeditions AS x ' +
+    'WHERE (x.active_status = 1) AND ' +
+      '(x.start_date IS NOT NULL) AND ' +
+      '((julianday(date(x.start_date)) - julianday(date(''now''))) BETWEEN 0 AND 30) ' +
+    'UNION ALL ' +
+    'SELECT ''S'' AS record_type, ' +
+      'NULL AS expedition_id, ' +
+      'sv.survey_id, ' +
+      'sv.full_name AS activity_name, ' +
+      'sv.survey_date AS start_date, ' +
+      'CAST(julianday(date(sv.survey_date)) - julianday(date(''now'')) AS INTEGER) AS days_remaining, ' +
+      'sv.project_id, ' +
+      'm.method_name, ' +
+      'g.full_name AS locality_name ' +
+    'FROM surveys AS sv ' +
+    'LEFT JOIN methods AS m ON sv.method_id = m.method_id ' +
+    'LEFT JOIN gazetteer AS g ON sv.locality_id = g.site_id ' +
+    'WHERE (sv.active_status = 1) AND ' +
+      '(sv.survey_date IS NOT NULL) AND ' +
+      '((sv.expedition_id IS NULL) OR (sv.expedition_id <= 0)) AND ' +
+      '((julianday(date(sv.survey_date)) - julianday(date(''now''))) BETWEEN 0 AND 30) ' +
+    'ORDER BY days_remaining ASC, start_date ASC;');
+end;
+
+procedure CreateNestsReviewDueView(Connection: TSQLConnector);
+begin
+  LogDebug('Creating get_nests_review_due view');
+  Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_nests_review_due AS ' +
+    'WITH last_revision AS ( ' +
+      'SELECT nr.nest_id, ' +
+        'nr.nest_revision_id, ' +
+        'nr.revision_date, ' +
+        'nr.nest_status, ' +
+        'ROW_NUMBER() OVER (PARTITION BY nr.nest_id ORDER BY nr.revision_date DESC, nr.nest_revision_id DESC) AS rn ' +
+      'FROM nest_revisions AS nr ' +
+      'WHERE (nr.active_status = 1) AND (nr.revision_date IS NOT NULL) ' +
+    ') ' +
+    'SELECT n.nest_id, ' +
+      'n.full_name AS nest_name, ' +
+      'lr.nest_revision_id, ' +
+      'lr.revision_date AS last_revision_date, ' +
+      'CAST(julianday(date(''now'')) - julianday(date(lr.revision_date)) AS INTEGER) AS days_since_revision, ' +
+      'lr.nest_status, ' +
+      'n.project_id, ' +
+      'n.locality_id ' +
+    'FROM nests AS n ' +
+    'JOIN last_revision AS lr ON n.nest_id = lr.nest_id ' +
+    'WHERE (n.active_status = 1) AND ' +
+      '(lr.rn = 1) AND ' +
+      '(lr.nest_status = ''A'') AND ' +
+      '((julianday(date(''now'')) - julianday(date(lr.revision_date))) >= 2) AND ' +
+      '((julianday(date(''now'')) - julianday(date(lr.revision_date))) <= 10) ' +
+    'ORDER BY days_since_revision DESC, last_revision_date ASC;');
 end;
 
 procedure SeedAccessControlTables(Connection: TSQLConnector);

@@ -378,6 +378,14 @@ type
 
   TNotificationList = specialize TFPGObjectList<TNotification>;
 
+  TScheduledNotificationCheckProc = procedure of object;
+
+  TScheduledNotificationCheck = record
+    CheckName: String;
+    ExecuteAtTick: QWord;
+    CheckProc: TScheduledNotificationCheckProc;
+  end;
+
 var
   wasSafelyTerminated: Boolean;
   databaseConnection: TDBParams;

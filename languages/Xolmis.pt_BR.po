@@ -14103,6 +14103,32 @@ msgctxt "utils_locale.rsactiverecordduplicated"
 msgid "A record with the same %s value already exists (%s)."
 msgstr "Um registro com o mesmo valor de %s já existe (%s)."
 
+#: utils_locale.rsactivitiesfinishedmessage
+#, object-pascal-format
+msgid ""
+"There are %d finished project activities.\n"
+"Affected activities: %s."
+msgstr ""
+"Há %d atividades de projeto finalizadas.\n"
+"Atividades afetadas: %s."
+
+#: utils_locale.rsactivitiesfinishednotification
+msgid "Finished project activities"
+msgstr "Atividades de projeto finalizadas"
+
+#: utils_locale.rsactivitiesfinishingsoonmessage
+#, object-pascal-format
+msgid ""
+"There are %d project activities finishing soon.\n"
+"Affected activities: %s."
+msgstr ""
+"Há %d atividades de projeto finalizando em breve.\n"
+"Atividades afetadas: %s."
+
+#: utils_locale.rsactivitiesfinishingsoonnotification
+msgid "Project activities finishing soon"
+msgstr "Atividades finalizando em breve"
+
 #: utils_locale.rsactivityblocked
 msgctxt "utils_locale.rsactivityblocked"
 msgid "Blocked"
@@ -17847,6 +17873,15 @@ msgctxt "utils_locale.rsnestshapesphere"
 msgid "Sphere"
 msgstr "Esfera"
 
+#: utils_locale.rsnestsneedingrevisionmessage
+#, object-pascal-format
+msgid "There are %d nests that need to be checked."
+msgstr "Há %d ninhos que precisam ser revisados."
+
+#: utils_locale.rsnestsneedingrevisionnotification
+msgid "Nests needing revision"
+msgstr "Ninhos precisando revisão"
+
 #: utils_locale.rsneststocheckmessage
 msgctxt "utils_locale.rsneststocheckmessage"
 msgid "Some nests were not checked recently."
@@ -19053,6 +19088,32 @@ msgstr "Em pausa"
 msgid "Planned"
 msgstr "Previsto"
 
+#: utils_locale.rsprojectsfinishedmessage
+#, object-pascal-format
+msgid ""
+"There are %d finished projects.\n"
+"Affected projects: %s."
+msgstr ""
+"Há %d projetos finalizados.\n"
+"Projetos afetados: %s."
+
+#: utils_locale.rsprojectsfinishednotification
+msgid "Finished projects"
+msgstr "Projetos finalizados"
+
+#: utils_locale.rsprojectsfinishingsoonmessage
+#, object-pascal-format
+msgid ""
+"There are %d projects finishing soon.\n"
+"Affected projects: %s."
+msgstr ""
+"Há %d projetos finalizando em breve.\n"
+"Projetos afetados: %s."
+
+#: utils_locale.rsprojectsfinishingsoonnotification
+msgid "Projects finishing soon"
+msgstr "Projetos finalizando em breve"
+
 #: utils_locale.rspromptbackupnow
 msgctxt "utils_locale.rspromptbackupnow"
 msgid "The automatic backup will start now and may take several minutes. Do you want to proceed with the backup?"
@@ -20079,6 +20140,10 @@ msgctxt "utils_locale.rstitleeggs"
 msgid "Eggs"
 msgstr "Ovos"
 
+#: utils_locale.rstitleendingprojects
+msgid "Ending projects"
+msgstr "Projetos finalizando"
+
 #: utils_locale.rstitleerror
 msgctxt "utils_locale.rstitleerror"
 msgid "Error"
@@ -20093,6 +20158,10 @@ msgstr "Gastos"
 msgctxt "utils_locale.rstitleexpiredpermits"
 msgid "Expired permits"
 msgstr "Licenças vencidas"
+
+#: utils_locale.rstitleexpiringactivities
+msgid "Ending activities"
+msgstr "Atividades finalizando"
 
 #: utils_locale.rstitlefeathersandmolt
 msgctxt "utils_locale.rstitlefeathersandmolt"
@@ -20361,6 +20430,11 @@ msgctxt "utils_locale.rstitletransferbands"
 msgid "Transfer bands"
 msgstr "Transferir anilhas"
 
+#: utils_locale.rstitleupcomingfieldwork
+msgctxt "utils_locale.rstitleupcomingfieldwork"
+msgid "Upcoming fieldwork"
+msgstr "Próximos trabalhos de campo"
+
 #: utils_locale.rstitleupgradedatabase
 msgctxt "utils_locale.rstitleupgradedatabase"
 msgid "Upgrade database"
@@ -20517,6 +20591,21 @@ msgstr "dia(s)"
 msgctxt "utils_locale.rsunresolved"
 msgid "Unresolved"
 msgstr "Não resolvido"
+
+#: utils_locale.rsupcomingexpeditionsmessage
+#, object-pascal-format
+msgid "There are %d upcoming expeditions."
+msgstr "Há %d expedições iniciando em breve."
+
+#: utils_locale.rsupcomingfieldworknotification
+msgctxt "utils_locale.rsupcomingfieldworknotification"
+msgid "Upcoming fieldwork"
+msgstr "Próximos trabalhos de campo"
+
+#: utils_locale.rsupcomingsurveysmessage
+#, object-pascal-format
+msgid "There are %d upcoming surveys."
+msgstr "Há %d amostragens iniciando em breve."
 
 #: utils_locale.rsupdatednewversion
 #, object-pascal-format
