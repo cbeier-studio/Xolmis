@@ -74,7 +74,7 @@ uses
   models_record_types, models_geo, models_sampling, models_botany, models_breeding, models_birds, models_projects,
   models_media, models_bands, models_sightings, models_institutions, models_people, models_permits,
   models_specimens, models_sampling_plots, models_methods,
-  udm_main, udm_grid,
+  udm_main, udm_grid, ufrm_main,
   udlg_changepassword, uedt_user, uedt_site, uedt_bands, uedt_expedition, uedt_capture,
   uedt_survey, uedt_samplingplot, uedt_institution, uedt_person, uedt_botanictaxon, uedt_individual,
   uedt_nest, uedt_egg, uedt_nestrevision, uedt_neteffort, uedt_permanentnet, uedt_sighting,
@@ -565,6 +565,9 @@ begin
       finally
         aDataSet.EnableControls;
       end;
+
+      // Schedule projects ending check
+      frmMain.ScheduleNotificationCheck('projects_ending', @frmMain.CheckProjectsEndingNotifications);
     end;
   finally
     if Assigned(FOldRecord) then
@@ -780,6 +783,8 @@ begin
         aDataSet.EnableControls;
       end;
 
+      // Schedule activity ending check
+      frmMain.ScheduleNotificationCheck('activities_ending', @frmMain.CheckProjectActivitiesEndingNotifications);
     end;
   finally
     if Assigned(FOldRecord) then
@@ -994,6 +999,9 @@ begin
       finally
         aDataSet.EnableControls;
       end;
+
+      // Schedule expiring permits check
+      frmMain.ScheduleNotificationCheck('permits_expiring', @frmMain.CheckPermitExpiringNotifications);
     end;
   finally
     if Assigned(FOldRecord) then
@@ -1132,6 +1140,9 @@ begin
       finally
         aDataSet.EnableControls;
       end;
+
+      // Schedule band stock check
+      frmMain.ScheduleNotificationCheck('bands_stock', @frmMain.CheckBandStockNotifications);
     end;
   finally
     if Assigned(FOldRecord) then
@@ -1225,6 +1236,9 @@ begin
       finally
         aDataSet.EnableControls;
       end;
+
+      // Schedule band stock check
+      frmMain.ScheduleNotificationCheck('bands_stock', @frmMain.CheckBandStockNotifications);
     end;
   finally
     if Assigned(FOldRecord) then
@@ -1372,6 +1386,9 @@ begin
       finally
         aDataSet.EnableControls;
       end;
+
+      // Schedule band stock check
+      frmMain.ScheduleNotificationCheck('bands_stock', @frmMain.CheckBandStockNotifications);
     end;
   finally
     if Assigned(FOldRecord) then
@@ -1609,6 +1626,9 @@ begin
       finally
         aDataSet.EnableControls;
       end;
+
+      // Schedule nests needing revision check
+      frmMain.ScheduleNotificationCheck('nests_check', @frmMain.CheckNestsNeedingRevisionNotifications);
     end;
   finally
     if Assigned(FOldRecord) then
@@ -1754,6 +1774,9 @@ begin
       finally
         aDataSet.EnableControls;
       end;
+
+      // Schedule upcoming fieldwork check
+      frmMain.ScheduleNotificationCheck('upcoming_fieldwork', @frmMain.CheckUpcomingFieldworkNotifications);
     end;
   finally
     if Assigned(FOldRecord) then
@@ -1826,6 +1849,9 @@ begin
       finally
         aDataSet.EnableControls;
       end;
+
+      // Schedule upcoming fieldwork check
+      frmMain.ScheduleNotificationCheck('upcoming_fieldwork', @frmMain.CheckUpcomingFieldworkNotifications);
     end;
   finally
     if Assigned(FOldRecord) then

@@ -352,25 +352,30 @@ type
     procedure ApplyDarkMode;
     function FindScheduledNotificationCheck(const CheckName: String): Integer;
     procedure RemoveScheduledNotificationCheck(Index: Integer);
-    procedure ScheduleNotificationCheck(const CheckName: String;
-      CheckProc: TScheduledNotificationCheckProc; DelayMs: Integer = 3000);
+
     procedure ScheduleInitialNotificationChecks(DelayMs: Integer = 3000);
     procedure NotificationCheckTimer(Sender: TObject);
     procedure ProcessScheduledNotificationChecks;
     function CanExecuteScheduledNotificationCheck(const CheckName: String;
       CheckProc: TScheduledNotificationCheckProc): Boolean;
+    procedure ResetNotificationCheckDoneFlag(const CheckName: String;
+      CheckProc: TScheduledNotificationCheckProc);
     procedure UpdateNotificationsButtonIcon;
+
+  public
+    procedure ApplyFormSettings;
+    procedure RefreshNotifications;
+    procedure UpdateStatusBar;
+    procedure UpdateMenu(aTab: TPage = nil);
+
+    procedure ScheduleNotificationCheck(const CheckName: String;
+      CheckProc: TScheduledNotificationCheckProc; DelayMs: Integer = 3000);
     procedure CheckBandStockNotifications;
     procedure CheckPermitExpiringNotifications;
     procedure CheckProjectsEndingNotifications;
     procedure CheckProjectActivitiesEndingNotifications;
     procedure CheckUpcomingFieldworkNotifications;
     procedure CheckNestsNeedingRevisionNotifications;
-  public
-    procedure ApplyFormSettings;
-    procedure RefreshNotifications;
-    procedure UpdateStatusBar;
-    procedure UpdateMenu(aTab: TPage = nil);
   end;
 
 var
@@ -2046,6 +2051,8 @@ procedure TfrmMain.ScheduleNotificationCheck(const CheckName: String;
 var
   Idx: Integer;
 begin
+  ResetNotificationCheckDoneFlag(CheckName, CheckProc);
+
   if DelayMs < 1000 then
     DelayMs := 1000;
 
@@ -2068,6 +2075,55 @@ begin
   FScheduledNotificationChecks[Idx].ExecuteAtTick := GetTickCount64 + QWord(DelayMs);
   FScheduledNotificationChecks[Idx].CheckProc := CheckProc;
   FNotificationCheckTimer.Enabled := True;
+end;
+
+procedure TfrmMain.ResetNotificationCheckDoneFlag(const CheckName: String;
+  CheckProc: TScheduledNotificationCheckProc);
+var
+  ProcMethod: TMethod;
+begin
+  ProcMethod := TMethod(CheckProc);
+
+  if (CheckName = 'bands_stock') or (CheckName = 'band_stock') or
+     (ProcMethod.Code = TMethod(@CheckBandStockNotifications).Code) then
+  begin
+    FBandStockCheckDone := False;
+    Exit;
+  end;
+
+  if (CheckName = 'permits_expiring') or
+     (ProcMethod.Code = TMethod(@CheckPermitExpiringNotifications).Code) then
+  begin
+    FPermitExpiringCheckDone := False;
+    Exit;
+  end;
+
+  if (CheckName = 'projects_ending') or
+     (ProcMethod.Code = TMethod(@CheckProjectsEndingNotifications).Code) then
+  begin
+    FProjectEndingCheckDone := False;
+    Exit;
+  end;
+
+  if (CheckName = 'activities_ending') or
+     (ProcMethod.Code = TMethod(@CheckProjectActivitiesEndingNotifications).Code) then
+  begin
+    FActivityEndingCheckDone := False;
+    Exit;
+  end;
+
+  if (CheckName = 'upcoming_fieldwork') or
+     (ProcMethod.Code = TMethod(@CheckUpcomingFieldworkNotifications).Code) then
+  begin
+    FUpcomingFieldworkCheckDone := False;
+    Exit;
+  end;
+
+  if (CheckName = 'nests_check') or
+     (ProcMethod.Code = TMethod(@CheckNestsNeedingRevisionNotifications).Code) then
+  begin
+    FNestNeedingRevisionCheckDone := False;
+  end;
 end;
 
 procedure TfrmMain.ScheduleInitialNotificationChecks(DelayMs: Integer);
