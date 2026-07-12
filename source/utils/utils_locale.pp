@@ -237,6 +237,9 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorTaxonNotFound = 'Taxon "%s" not found.';
     rsErrorTaxonMustBeSelected = 'A valid taxon must be selected.';
     rsErrorFieldNotFoundInSchema = 'Field "%s" not found in table "%s" schema.';
+    rsErrorObserverNotFound = 'Observer "%s" not found.';
+    rsErrorToponymNotFound = 'Toponym "%s" not found.';
+    rsErrorNestNotFound = 'Nest "%s" not found.';
 
     { Warning messages }
     rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';

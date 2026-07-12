@@ -5288,6 +5288,16 @@ msgctxt "tdlgimportnests.lbleggfile.caption"
 msgid "Eggs"
 msgstr "Ovos"
 
+#: tdlgimportnests.lblerrorhandling.caption
+msgctxt "tdlgimportnests.lblerrorhandling.caption"
+msgid "If an error occurs during import"
+msgstr "Se um erro ocorrer durante a importação"
+
+#: tdlgimportnests.lblexistingrecordpolicy.caption
+msgctxt "tdlgimportnests.lblexistingrecordpolicy.caption"
+msgid "Existing records policy"
+msgstr "Política de registros existentes"
+
 #: tdlgimportnests.lblgeneratefiles.caption
 msgctxt "tdlgimportnests.lblgeneratefiles.caption"
 msgid "Generate empty files to fill the data"
@@ -5312,6 +5322,16 @@ msgstr "Selecione ao menos um arquivo para iniciar a importação."
 msgctxt "tdlgimportnests.lbltitleimportfiles.caption"
 msgid "Files to import"
 msgstr "Arquivos a importar"
+
+#: tdlgimportnests.lbltitleimportsettings.caption
+msgctxt "tdlgimportnests.lbltitleimportsettings.caption"
+msgid "Import settings"
+msgstr "Configurações de importação"
+
+#: tdlgimportnests.lblunknowntaxa.caption
+msgctxt "tdlgimportnests.lblunknowntaxa.caption"
+msgid "Unknown taxon found"
+msgstr "Táxon desconhecido encontrado"
 
 #: tdlgimportnests.savedlg.title
 msgctxt "tdlgimportnests.savedlg.title"
@@ -5413,6 +5433,7 @@ msgid "Record"
 msgstr "Registro"
 
 #: tdlgimportxmobile.lblerrorhandling.caption
+msgctxt "tdlgimportxmobile.lblerrorhandling.caption"
 msgid "If an error occurs during import"
 msgstr "Se um erro ocorrer durante a importação"
 
@@ -5463,6 +5484,7 @@ msgid "Source"
 msgstr "Origem"
 
 #: tdlgimportxmobile.lblunknowntaxa.caption
+msgctxt "tdlgimportxmobile.lblunknowntaxa.caption"
 msgid "Unknown taxon found"
 msgstr "Táxon desconhecido encontrado"
 
@@ -16271,6 +16293,11 @@ msgctxt "utils_locale.rserrormontadata"
 msgid "Invalid year digits (%d). Please report this issue to support."
 msgstr "Dígitos do ano inválidos (%d). Por favor, comunique o problema ao suporte."
 
+#: utils_locale.rserrornestnotfound
+#, object-pascal-format
+msgid "Nest \"%s\" not found."
+msgstr "Ninho \"%s\" não encontrado."
+
 #: utils_locale.rserrornoimporterregisteredforextension
 #, object-pascal-format
 msgid "No importer registered for %s"
@@ -16284,6 +16311,11 @@ msgstr "Não há conexão disponível com a internet. Verifique suas configuraç
 #, object-pascal-format
 msgid "Value \"%s\" was not found in the lookup table \"%s\"."
 msgstr "O valor \"%s\" não foi encontrado na tabela de consulta \"%s\"."
+
+#: utils_locale.rserrorobservernotfound
+#, object-pascal-format
+msgid "Observer \"%s\" not found."
+msgstr "Observador \"%s\" não encontrado."
 
 #: utils_locale.rserroroptimizingdatabase
 #, object-pascal-format
@@ -16362,6 +16394,11 @@ msgstr "Táxon \"%s\" não encontrado."
 msgctxt "utils_locale.rserrortitlehelpnotfound"
 msgid "Help files not found!"
 msgstr "Arquivos de ajuda não encontrados!"
+
+#: utils_locale.rserrortoponymnotfound
+#, object-pascal-format
+msgid "Toponym \"%s\" not found."
+msgstr "Topônimo \"%s\" não encontrado."
 
 #: utils_locale.rserrorunsupporteddatatypeforfield
 #, object-pascal-format
@@ -16928,6 +16965,7 @@ msgid "Allow duplicates"
 msgstr "Permitir duplicações"
 
 #: utils_locale.rsimportaskunknowntaxon
+msgctxt "utils_locale.rsimportaskunknowntaxon"
 msgid "Ask what to do"
 msgstr "Pergunte o que fazer"
 

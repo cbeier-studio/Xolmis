@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, LCLIntf, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn, ComCtrls, StdCtrls,
-  Buttons, StrUtils, atshapelinebgra, BCPanel;
+  Buttons, StrUtils, atshapelinebgra, BCPanel, io_core;
 
 type
 
@@ -32,16 +32,25 @@ type
     barProgress: TProgressBar;
     btnGenerateFiles: TButton;
     btnHelp: TBitBtn;
+    cbErrorHandling: TComboBox;
+    cbExistingRecordPolicy: TComboBox;
+    cbUnknownTaxa: TComboBox;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     icoImportFinished: TImage;
     iIcons: TImageList;
     iIconsDark: TImageList;
     imgFinishedDark: TImageList;
+    lblErrorHandling: TLabel;
+    lblExistingRecordPolicy: TLabel;
     lblGenerateFiles: TLabel;
     lblSubtitleImportFinished: TLabel;
     lblTitleImportFinished: TLabel;
+    lblTitleImportSettings: TLabel;
+    lblUnknownTaxa: TLabel;
     mProgress: TMemo;
+    pErrorHandling: TBCPanel;
+    pExistingRecordPolicy: TBCPanel;
     pGenerateFiles: TBCPanel;
     imgFinished: TImageList;
     eEggFile: TFileNameEdit;
@@ -64,6 +73,7 @@ type
     pContentFiles: TPanel;
     pRevisionFile: TBCPanel;
     pNestFile: TBCPanel;
+    pUnknownTaxa: TBCPanel;
     SaveDlg: TSaveDialog;
     sbCancel: TButton;
     sbClearRevisionFile: TSpeedButton;
@@ -78,14 +88,19 @@ type
     procedure eRevisionFileChange(Sender: TObject);
     procedure eNestFileButtonClick(Sender: TObject);
     procedure eNestFileChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbClearNestFileClick(Sender: TObject);
     procedure sbRetryClick(Sender: TObject);
     procedure sbRunClick(Sender: TObject);
   private
+    FImportSettings: TImportOptions;
     procedure AppendLog(const aMsg: String);
     procedure ApplyDarkMode;
+    procedure GetImportSettings;
+    procedure SetImportSettings;
     procedure UpdateButtons;
     function ValidateFields: Boolean;
   public
@@ -99,7 +114,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_themes,
-  io_core, io_nesting_csv,
+  io_nesting_csv,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}
@@ -146,6 +161,12 @@ begin
   pRevisionFile.Border.Color := ActiveTheme.Border.Default;
   pEggFile.Background.Color := ActiveTheme.Background.SolidSecondary;
   pEggFile.Border.Color := ActiveTheme.Border.Default;
+  pExistingRecordPolicy.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pExistingRecordPolicy.Border.Color := ActiveTheme.Border.Default;
+  pUnknownTaxa.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pUnknownTaxa.Border.Color := ActiveTheme.Border.Default;
+  pErrorHandling.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pErrorHandling.Border.Color := ActiveTheme.Border.Default;
 
   pGenerateFiles.Background.Color := ActiveTheme.System.CautionBG;
   pGenerateFiles.Border.Color := ActiveTheme.System.CautionFG;
@@ -206,6 +227,32 @@ begin
   UpdateButtons;
 end;
 
+procedure TdlgImportNests.FormCreate(Sender: TObject);
+begin
+  FImportSettings.ExistingRecordPolicy := erpUpdateExisting;
+  FImportSettings.UnknownTaxonPolicy := utpAsk;
+  FImportSettings.ErrorHandling := iehAbort;
+end;
+
+procedure TdlgImportNests.FormKeyPress(Sender: TObject; var Key: char);
+begin
+  { <ESC> key }
+  if (Key = #27) then
+  begin
+    Key := #0;
+
+    if sbCancel.Caption = rsCaptionCancel then
+    begin
+      if nbContent.ActivePageComponent = pgImportProgress then
+        stopProcess := True
+      else
+        ModalResult := mrCancel;
+    end
+    else
+      ModalResult := mrClose;
+  end;
+end;
+
 procedure TdlgImportNests.eNestFileButtonClick(Sender: TObject);
 begin
   if Sender is TFileNameEdit then
@@ -224,6 +271,45 @@ begin
 
   eNestFile.Width := eRevisionFile.Width;
   eEggFile.Width := eRevisionFile.Width;
+
+  with cbExistingRecordPolicy.Items do
+  begin
+    Clear;
+    Add(rsImportIgnoreExisting);
+    Add(rsImportReplaceExisting);
+  end;
+  with cbUnknownTaxa.Items do
+  begin
+    Clear;
+    Add(rsImportAddTemporaryTaxon);
+    Add(rsImportAskUnknownTaxon);
+    Add(rsImportAbortUnknownTaxon);
+  end;
+  with cbErrorHandling.Items do
+  begin
+    Clear;
+    Add(rsAbortOnError);
+    Add(rsIgnoreErrors);
+  end;
+  GetImportSettings;
+end;
+
+procedure TdlgImportNests.GetImportSettings;
+begin
+  case FImportSettings.ExistingRecordPolicy of
+    erpIgnoreExisting:  cbExistingRecordPolicy.ItemIndex := 0;
+    erpUpdateExisting:  cbExistingRecordPolicy.ItemIndex := 1;
+    //erpAllowDuplicates: cbExistingRecordPolicy.ItemIndex := 2;
+  end;
+  case FImportSettings.UnknownTaxonPolicy of
+    utpAddCustomTaxon: cbUnknownTaxa.ItemIndex := cbUnknownTaxa.Items.IndexOf(rsImportAddTemporaryTaxon);
+    utpAsk:     cbUnknownTaxa.ItemIndex := cbUnknownTaxa.Items.IndexOf(rsImportAskUnknownTaxon);
+    utpAbort:   cbUnknownTaxa.ItemIndex := cbUnknownTaxa.Items.IndexOf(rsImportAbortUnknownTaxon);
+  end;
+  case FImportSettings.ErrorHandling of
+    iehAbort:   cbErrorHandling.ItemIndex := 0;
+    iehIgnore:  cbErrorHandling.ItemIndex := 1;
+  end;
 end;
 
 procedure TdlgImportNests.sbCancelClick(Sender: TObject);
@@ -258,9 +344,13 @@ begin
 end;
 
 procedure TdlgImportNests.sbRunClick(Sender: TObject);
+var
+  HadError: Boolean;
 begin
   if not ValidateFields then
     Exit;
+
+  HadError := False;
 
   sbRetry.Visible := False;
   barProgress.Visible := True;
@@ -281,32 +371,40 @@ begin
     if (not stopProcess) and HasImportFileSelected(eNestFile.FileName) then
     begin
       AppendLog(rsProgressImportBandingJournal);
-      ImportNestDataV1(eNestFile.FileName, barProgress);
+      ImportNestDataV1(eNestFile.FileName, FImportSettings, barProgress);
     end;
 
     if (not stopProcess) and HasImportFileSelected(eRevisionFile.FileName) then
     begin
       AppendLog(rsProgressImportBandingEffort);
-      ImportNestRevisionsV1(eRevisionFile.FileName, barProgress);
+      ImportNestRevisionsV1(eRevisionFile.FileName, FImportSettings, barProgress);
     end;
 
     if (not stopProcess) and HasImportFileSelected(eEggFile.FileName) then
     begin
       AppendLog(rsProgressImportCaptures);
-      ImportEggDataV1(eEggFile.FileName, barProgress);
+      ImportEggDataV1(eEggFile.FileName, FImportSettings, barProgress);
     end;
   except
     on E: Exception do
     begin
+      HadError := True;
       AppendLog(Format(rsErrorImporting, [E.Message]));
       lblTitleImportFinished.Caption := rsImportCanceled;
       lblSubtitleImportFinished.Caption := rsImportCanceledByError;
       icoImportFinished.ImageIndex := 1;
       sbRetry.Visible := True;
+      sbCancel.Visible := False;
+      sbClose.Visible := True;
       barProgress.Visible := False;
     end;
   end;
 
+  if HadError then
+  begin
+    // UI state already configured in exception handler.
+  end
+  else
   if stopProcess then
   begin
     AppendLog(rsImportCanceledByUser);
@@ -327,6 +425,30 @@ begin
     barProgress.Visible := False;
   end;
 
+  sbCancel.Visible := False;
+  sbClose.Visible := True;
+  //sbRun.Visible := True;
+  UpdateButtons;
+
+end;
+
+procedure TdlgImportNests.SetImportSettings;
+begin
+  case cbExistingRecordPolicy.ItemIndex of
+    0: FImportSettings.ExistingRecordPolicy := erpIgnoreExisting;
+    1: FImportSettings.ExistingRecordPolicy := erpUpdateExisting;
+    //2: FImportSettings.ExistingRecordPolicy := erpAllowDuplicates;
+  end;
+  case cbUnknownTaxa.ItemIndex of
+    0: FImportSettings.UnknownTaxonPolicy := utpAddCustomTaxon;
+    1: FImportSettings.UnknownTaxonPolicy := utpAsk;
+    2: FImportSettings.UnknownTaxonPolicy := utpAbort;
+    //3: FImportSettings.UnknownTaxonPolicy := utpIgnore;
+  end;
+  case cbErrorHandling.ItemIndex of
+    0: FImportSettings.ErrorHandling := iehAbort;
+    1: FImportSettings.ErrorHandling := iehIgnore;
+  end;
 end;
 
 procedure TdlgImportNests.UpdateButtons;

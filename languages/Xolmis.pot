@@ -5308,6 +5308,16 @@ msgctxt "tdlgimportnests.lbleggfile.caption"
 msgid "Eggs"
 msgstr ""
 
+#: tdlgimportnests.lblerrorhandling.caption
+msgctxt "tdlgimportnests.lblerrorhandling.caption"
+msgid "If an error occurs during import"
+msgstr ""
+
+#: tdlgimportnests.lblexistingrecordpolicy.caption
+msgctxt "tdlgimportnests.lblexistingrecordpolicy.caption"
+msgid "Existing records policy"
+msgstr ""
+
 #: tdlgimportnests.lblgeneratefiles.caption
 msgctxt "tdlgimportnests.lblgeneratefiles.caption"
 msgid "Generate empty files to fill the data"
@@ -5331,6 +5341,16 @@ msgstr ""
 #: tdlgimportnests.lbltitleimportfiles.caption
 msgctxt "tdlgimportnests.lbltitleimportfiles.caption"
 msgid "Files to import"
+msgstr ""
+
+#: tdlgimportnests.lbltitleimportsettings.caption
+msgctxt "tdlgimportnests.lbltitleimportsettings.caption"
+msgid "Import settings"
+msgstr ""
+
+#: tdlgimportnests.lblunknowntaxa.caption
+msgctxt "tdlgimportnests.lblunknowntaxa.caption"
+msgid "Unknown taxon found"
 msgstr ""
 
 #: tdlgimportnests.savedlg.title
@@ -5433,6 +5453,7 @@ msgid "Record"
 msgstr ""
 
 #: tdlgimportxmobile.lblerrorhandling.caption
+msgctxt "tdlgimportxmobile.lblerrorhandling.caption"
 msgid "If an error occurs during import"
 msgstr ""
 
@@ -5483,6 +5504,7 @@ msgid "Source"
 msgstr ""
 
 #: tdlgimportxmobile.lblunknowntaxa.caption
+msgctxt "tdlgimportxmobile.lblunknowntaxa.caption"
 msgid "Unknown taxon found"
 msgstr ""
 
@@ -16273,6 +16295,11 @@ msgctxt "utils_locale.rserrormontadata"
 msgid "Invalid year digits (%d). Please report this issue to support."
 msgstr ""
 
+#: utils_locale.rserrornestnotfound
+#, object-pascal-format
+msgid "Nest \"%s\" not found."
+msgstr ""
+
 #: utils_locale.rserrornoimporterregisteredforextension
 #, object-pascal-format
 msgid "No importer registered for %s"
@@ -16285,6 +16312,11 @@ msgstr ""
 #: utils_locale.rserrornotfoundlookupvalue
 #, object-pascal-format
 msgid "Value \"%s\" was not found in the lookup table \"%s\"."
+msgstr ""
+
+#: utils_locale.rserrorobservernotfound
+#, object-pascal-format
+msgid "Observer \"%s\" not found."
 msgstr ""
 
 #: utils_locale.rserroroptimizingdatabase
@@ -16363,6 +16395,11 @@ msgstr ""
 #: utils_locale.rserrortitlehelpnotfound
 msgctxt "utils_locale.rserrortitlehelpnotfound"
 msgid "Help files not found!"
+msgstr ""
+
+#: utils_locale.rserrortoponymnotfound
+#, object-pascal-format
+msgid "Toponym \"%s\" not found."
 msgstr ""
 
 #: utils_locale.rserrorunsupporteddatatypeforfield

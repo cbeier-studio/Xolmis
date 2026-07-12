@@ -646,7 +646,11 @@ procedure TNestRevisionRepository.FindByDate(aNest: Integer; aDate, aTime: Strin
   E: TNestRevision);
 var
   Qry: TSQLQuery;
+  dummyDT: TDateTime;
+  FS: TFormatSettings;
 begin
+  FS := DefaultFormatSettings;
+
   Qry := NewQuery;
   with Qry, SQL do
   try
@@ -659,8 +663,16 @@ begin
 
     ParamByName('ANEST').AsInteger := aNest;
     ParamByName('AOBSERVER').AsInteger := aObserver;
-    ParamByName('ADATE').AsString := aDate;
-    ParamByName('ATIME').AsString := aTime;
+    if (TryStrToDate(aDate, dummyDT, FS) or
+      TryParseDateFlexible(aDate, dummyDT)) then
+      ParamByName('ADATE').AsDate := dummyDT
+    else
+      raise Exception.CreateFmt('TNestRevisionRepository.FindByDate: The value %s is not a valid date.', [aDate]);
+    if (TryStrToTime(aTime, dummyDT, FS) or
+      TryParseTimeFlexible(aTime, dummyDT)) then
+      ParamByName('ATIME').AsTime := dummyDT
+    else
+      raise Exception.CreateFmt('TNestRevisionRepository.FindByDate: The value %s is not a valid time.', [aTime]);
     Open;
     if not EOF then
     begin
@@ -1458,6 +1470,8 @@ begin
     SetFloatParam(ParamByName('egg_width'), R.Width);
     SetFloatParam(ParamByName('egg_length'), R.Length);
     SetFloatParam(ParamByName('egg_mass'), R.Mass);
+    if (R.Width > 0) and (R.Length > 0) then
+      R.Volume := 0.51 * R.Length * Sqr(R.Width);
     SetFloatParam(ParamByName('egg_volume'), R.Volume);
     SetStrParam(ParamByName('egg_stage'), R.EggStage);
     SetStrParam(ParamByName('eggshell_color'), R.EggshellColor);
@@ -1472,6 +1486,7 @@ begin
     ParamByName('host_egg').AsBoolean := R.HostEgg;
     SetStrParam(ParamByName('description'), R.Description);
     SetStrParam(ParamByName('notes'), R.Notes);
+    R.FullName := GetEggFullName(R.TaxonId, R.CustomTaxonName, R.FieldNumber, R.MeasureDate);
     SetStrParam(ParamByName('full_name'), R.Fullname);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
@@ -1518,6 +1533,8 @@ begin
     SetFloatParam(ParamByName('egg_width'), R.Width);
     SetFloatParam(ParamByName('egg_length'), R.Length);
     SetFloatParam(ParamByName('egg_mass'), R.Mass);
+    if (R.Width > 0) and (R.Length > 0) then
+      R.Volume := 0.51 * R.Length * Sqr(R.Width);
     SetFloatParam(ParamByName('egg_volume'), R.Volume);
     SetStrParam(ParamByName('egg_stage'), R.EggStage);
     SetStrParam(ParamByName('eggshell_color'), R.EggshellColor);
@@ -1532,6 +1549,7 @@ begin
     ParamByName('host_egg').AsBoolean := R.HostEgg;
     SetStrParam(ParamByName('description'), R.Description);
     SetStrParam(ParamByName('notes'), R.Notes);
+    R.FullName := GetEggFullName(R.TaxonId, R.CustomTaxonName, R.FieldNumber, R.MeasureDate);
     SetStrParam(ParamByName('full_name'), R.Fullname);
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('egg_id').AsInteger := R.Id;

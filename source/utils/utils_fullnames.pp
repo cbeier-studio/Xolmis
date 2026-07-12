@@ -41,6 +41,7 @@ uses
   function GetNestRevisionFullName(aDate: TDate; aNest: Integer; aStage: String; aStatus: String): String;
   function GetSpecimenFullName(aFieldNumber: String; aSampleType: TSpecimenType; aTaxonId, aSiteId: Integer): String;
   function GetSightingFullName(aTaxon: Integer; aCustomTaxon: String; aDate: TDate; aTime: TTime; aLocality, aObserver: Integer): String;
+  function GetEggFullName(aTaxon: Integer; aCustomTaxon, aFieldNumber: String; aDate: TDate): String;
 
 implementation
 
@@ -309,6 +310,20 @@ begin
   end
   else
     Result := Trim(Format('%s %s %s %s', [TaxonName, FormatDateTime('yyyy-mm-dd', aDate), LocalityName, ObserverAbbrev]));
+end;
+
+function GetEggFullName(aTaxon: Integer; aCustomTaxon, aFieldNumber: String; aDate: TDate): String;
+var
+  TaxonName: String;
+begin
+  Result := EmptyStr;
+
+  if (aCustomTaxon <> EmptyStr) then
+    TaxonName := aCustomTaxon
+  else
+    TaxonName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aTaxon);
+
+  Result := Trim(Format('%s %s %s', [TaxonName, aFieldNumber, FormatDateTime('yyyy-mm-dd', aDate)]));
 end;
 
 end.

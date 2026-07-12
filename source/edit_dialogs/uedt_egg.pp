@@ -600,7 +600,7 @@ begin
   FEgg.MeasureDate    := StrToDate(eMeasureDate.Text);
   FEgg.TaxonId        := FTaxonId;
   FEgg.CustomTaxonName := FCustomTaxonName;
-  FEgg.ObserverId   := FObserverId;
+  FEgg.ObserverId     := FObserverId;
   FEgg.EggShape       := StrToEggShape(cbShape.Text);
   FEgg.EggStage       := eStage.Text;
   FEgg.EggshellColor  := eShellColor.Text;

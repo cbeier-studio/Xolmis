@@ -1,22 +1,24 @@
 object dlgImportNests: TdlgImportNests
   Left = 382
-  Height = 436
+  Height = 549
   Top = 32
   Width = 759
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Import nesting data'
-  ClientHeight = 436
+  ClientHeight = 549
   ClientWidth = 759
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
   LCLVersion = '4.6.0.0'
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 392
+    Top = 505
     Width = 759
     Align = alBottom
     LineColor = 9276813
@@ -26,7 +28,7 @@ object dlgImportNests: TdlgImportNests
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 394
+    Top = 507
     Width = 759
     Align = alBottom
     AutoSize = True
@@ -104,7 +106,7 @@ object dlgImportNests: TdlgImportNests
   end
   object nbContent: TNotebook
     Left = 0
-    Height = 392
+    Height = 505
     Top = 0
     Width = 759
     PageIndex = 0
@@ -113,14 +115,14 @@ object dlgImportNests: TdlgImportNests
     object pgImportFiles: TPage
       object pContentFiles: TPanel
         Left = 0
-        Height = 340
+        Height = 505
         Top = 0
         Width = 759
         Align = alClient
         BevelOuter = bvNone
         ChildSizing.LeftRightSpacing = 16
         ChildSizing.TopBottomSpacing = 16
-        ClientHeight = 340
+        ClientHeight = 505
         ClientWidth = 759
         ParentBackground = False
         TabOrder = 0
@@ -585,6 +587,280 @@ object dlgImportNests: TdlgImportNests
             Caption = 'Generate files'
             TabOrder = 0
             OnClick = btnGenerateFilesClick
+          end
+        end
+        object lblTitleImportSettings: TLabel
+          AnchorSideLeft.Control = pContentFiles
+          AnchorSideTop.Control = pGenerateFiles
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Side = asrBottom
+          Left = 16
+          Height = 21
+          Top = 314
+          Width = 105
+          BorderSpacing.Top = 8
+          BorderSpacing.Bottom = 4
+          Caption = 'Import settings'
+          Font.Color = 13066075
+          Font.Height = -16
+          Layout = tlCenter
+          ParentColor = False
+          ParentFont = False
+        end
+        object pExistingRecordPolicy: TBCPanel
+          AnchorSideLeft.Control = pContentFiles
+          AnchorSideTop.Control = lblTitleImportSettings
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentFiles
+          AnchorSideRight.Side = asrBottom
+          Left = 16
+          Height = 48
+          Top = 343
+          Width = 727
+          Anchors = [akTop, akLeft, akRight]
+          AutoSize = True
+          BorderSpacing.Top = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+          TabOrder = 4
+          object lblExistingRecordPolicy: TLabel
+            AnchorSideLeft.Control = pExistingRecordPolicy
+            AnchorSideTop.Control = pExistingRecordPolicy
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 17
+            Width = 117
+            Caption = 'Existing records policy'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbExistingRecordPolicy: TComboBox
+            AnchorSideTop.Control = pExistingRecordPolicy
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pExistingRecordPolicy
+            AnchorSideRight.Side = asrBottom
+            Left = 482
+            Height = 23
+            Top = 13
+            Width = 229
+            Anchors = [akTop, akRight]
+            Color = clWhite
+            ItemHeight = 15
+            ItemIndex = 1
+            Items.Strings = (
+              'Ignore existing'
+              'Replace existing'
+            )
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'Replace existing'
+          end
+        end
+        object pUnknownTaxa: TBCPanel
+          AnchorSideLeft.Control = pContentFiles
+          AnchorSideTop.Control = pExistingRecordPolicy
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentFiles
+          AnchorSideRight.Side = asrBottom
+          Left = 16
+          Height = 47
+          Top = 391
+          Width = 727
+          Anchors = [akTop, akLeft, akRight]
+          AutoSize = True
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+          TabOrder = 5
+          object lblUnknownTaxa: TLabel
+            AnchorSideLeft.Control = pUnknownTaxa
+            AnchorSideTop.Control = pUnknownTaxa
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 118
+            Caption = 'Unknown taxon found'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbUnknownTaxa: TComboBox
+            AnchorSideTop.Control = pUnknownTaxa
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pUnknownTaxa
+            AnchorSideRight.Side = asrBottom
+            Left = 482
+            Height = 23
+            Top = 12
+            Width = 229
+            Anchors = [akTop, akRight]
+            Color = clWhite
+            ItemHeight = 15
+            ItemIndex = 1
+            Items.Strings = (
+              'Add temporary taxon name'
+              'Ask what to do'
+              'Abort importing'
+            )
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'Ask what to do'
+          end
+        end
+        object pErrorHandling: TBCPanel
+          AnchorSideLeft.Control = pContentFiles
+          AnchorSideTop.Control = pUnknownTaxa
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pContentFiles
+          AnchorSideRight.Side = asrBottom
+          Left = 16
+          Height = 47
+          Top = 438
+          Width = 727
+          Anchors = [akTop, akLeft, akRight]
+          AutoSize = True
+          BorderSpacing.Bottom = 8
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 12
+          ChildSizing.HorizontalSpacing = 8
+          Background.Color = 16448250
+          Background.Gradient1.StartColor = clWhite
+          Background.Gradient1.EndColor = clBlack
+          Background.Gradient1.GradientType = gtLinear
+          Background.Gradient1.Point1XPercent = 0
+          Background.Gradient1.Point1YPercent = 0
+          Background.Gradient1.Point2XPercent = 0
+          Background.Gradient1.Point2YPercent = 100
+          Background.Gradient2.StartColor = clWhite
+          Background.Gradient2.EndColor = clBlack
+          Background.Gradient2.GradientType = gtLinear
+          Background.Gradient2.Point1XPercent = 0
+          Background.Gradient2.Point1YPercent = 0
+          Background.Gradient2.Point2XPercent = 0
+          Background.Gradient2.Point2YPercent = 100
+          Background.Gradient1EndPercent = 35
+          Background.Style = bbsColor
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BevelWidth = 1
+          Border.Color = 13750737
+          Border.Style = bboSolid
+          BorderBCStyle = bpsBorder
+          FontEx.Color = clDefault
+          FontEx.FontQuality = fqSystemClearType
+          FontEx.Shadow = False
+          FontEx.ShadowRadius = 5
+          FontEx.ShadowOffsetX = 5
+          FontEx.ShadowOffsetY = 5
+          FontEx.Style = []
+          ParentBackground = True
+          Rounding.RoundX = 8
+          Rounding.RoundY = 8
+          Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+          TabOrder = 6
+          Visible = False
+          object lblErrorHandling: TLabel
+            AnchorSideLeft.Control = pErrorHandling
+            AnchorSideTop.Control = pErrorHandling
+            AnchorSideTop.Side = asrCenter
+            Left = 16
+            Height = 15
+            Top = 16
+            Width = 166
+            Caption = 'If an error occurs during import'
+            Layout = tlCenter
+            ParentColor = False
+          end
+          object cbErrorHandling: TComboBox
+            AnchorSideTop.Control = pErrorHandling
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = pErrorHandling
+            AnchorSideRight.Side = asrBottom
+            Left = 482
+            Height = 23
+            Top = 12
+            Width = 229
+            Anchors = [akTop, akRight]
+            Color = clWhite
+            ItemHeight = 15
+            ItemIndex = 0
+            Items.Strings = (
+              'Abort on first error'
+              'Ignore and log errors'
+            )
+            Style = csDropDownList
+            TabOrder = 0
+            Text = 'Abort on first error'
           end
         end
       end
