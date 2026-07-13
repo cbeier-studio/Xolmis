@@ -32,7 +32,6 @@ type
     barProgress: TProgressBar;
     btnGenerateFiles: TButton;
     btnHelp: TBitBtn;
-    cbErrorHandling: TComboBox;
     cbExistingRecordPolicy: TComboBox;
     cbUnknownTaxa: TComboBox;
     iButtons: TImageList;
@@ -41,7 +40,6 @@ type
     iIcons: TImageList;
     iIconsDark: TImageList;
     imgFinishedDark: TImageList;
-    lblErrorHandling: TLabel;
     lblExistingRecordPolicy: TLabel;
     lblGenerateFiles: TLabel;
     lblSubtitleImportFinished: TLabel;
@@ -49,7 +47,6 @@ type
     lblTitleImportSettings: TLabel;
     lblUnknownTaxa: TLabel;
     mProgress: TMemo;
-    pErrorHandling: TBCPanel;
     pExistingRecordPolicy: TBCPanel;
     pGenerateFiles: TBCPanel;
     imgFinished: TImageList;
@@ -75,11 +72,13 @@ type
     pNestFile: TBCPanel;
     pUnknownTaxa: TBCPanel;
     SaveDlg: TSaveDialog;
+    SaveLogDlg: TSaveDialog;
     sbCancel: TButton;
     sbClearRevisionFile: TSpeedButton;
     sbClearEggFile: TSpeedButton;
     sbClose: TButton;
     sbRetry: TBitBtn;
+    sbSaveLog: TBitBtn;
     sbRun: TButton;
     sbClearNestFile: TSpeedButton;
     procedure btnGenerateFilesClick(Sender: TObject);
@@ -95,6 +94,7 @@ type
     procedure sbClearNestFileClick(Sender: TObject);
     procedure sbRetryClick(Sender: TObject);
     procedure sbRunClick(Sender: TObject);
+    procedure sbSaveLogClick(Sender: TObject);
   private
     FImportSettings: TImportOptions;
     procedure AppendLog(const aMsg: String);
@@ -146,6 +146,7 @@ begin
   sbClearNestFile.Images := iButtonsDark;
   sbClearRevisionFile.Images := iButtonsDark;
   sbClearEggFile.Images := iButtonsDark;
+  sbSaveLog.Images := iButtonsDark;
   sbRetry.Images := iButtonsDark;
   btnHelp.Images := iButtonsDark;
 
@@ -165,8 +166,6 @@ begin
   pExistingRecordPolicy.Border.Color := ActiveTheme.Border.Default;
   pUnknownTaxa.Background.Color := ActiveTheme.Background.SolidSecondary;
   pUnknownTaxa.Border.Color := ActiveTheme.Border.Default;
-  pErrorHandling.Background.Color := ActiveTheme.Background.SolidSecondary;
-  pErrorHandling.Border.Color := ActiveTheme.Border.Default;
 
   pGenerateFiles.Background.Color := ActiveTheme.System.CautionBG;
   pGenerateFiles.Border.Color := ActiveTheme.System.CautionFG;
@@ -189,22 +188,27 @@ begin
 
     Csv := TStringList.Create;
     try
-      Csv.Add(NEST_SCHEMA);
-      Csv.SaveToFile(nestsFilename);
-      if xSettings.OpenFileAfterExport then
-        OpenDocument(nestsFilename);
+      try
+        Csv.Add(NEST_SCHEMA);
+        Csv.SaveToFile(nestsFilename);
+        if xSettings.OpenFileAfterExport then
+          OpenDocument(nestsFilename);
 
-      Csv.Clear;
-      Csv.Add(NEST_REVISION_SCHEMA);
-      Csv.SaveToFile(revisionsFilename);
-      if xSettings.OpenFileAfterExport then
-        OpenDocument(revisionsFilename);
+        Csv.Clear;
+        Csv.Add(NEST_REVISION_SCHEMA);
+        Csv.SaveToFile(revisionsFilename);
+        if xSettings.OpenFileAfterExport then
+          OpenDocument(revisionsFilename);
 
-      Csv.Clear;
-      Csv.Add(EGG_SCHEMA);
-      Csv.SaveToFile(eggsFilename);
-      if xSettings.OpenFileAfterExport then
-        OpenDocument(eggsFilename);
+        Csv.Clear;
+        Csv.Add(EGG_SCHEMA);
+        Csv.SaveToFile(eggsFilename);
+        if xSettings.OpenFileAfterExport then
+          OpenDocument(eggsFilename);
+      except
+        on E: Exception do
+          AppendLog(rsTitleError + ': ' + E.Message);
+      end;
     finally
       FreeAndNil(Csv);
     end;
@@ -218,6 +222,17 @@ begin
 end;
 
 procedure TdlgImportNests.eEggFileChange(Sender: TObject);
+begin
+  UpdateButtons;
+end;
+
+procedure TdlgImportNests.eNestFileButtonClick(Sender: TObject);
+begin
+  if Sender is TFileNameEdit then
+    TFileNameEdit(Sender).InitialDir := xSettings.LastPathUsed;
+end;
+
+procedure TdlgImportNests.eNestFileChange(Sender: TObject);
 begin
   UpdateButtons;
 end;
@@ -253,17 +268,6 @@ begin
   end;
 end;
 
-procedure TdlgImportNests.eNestFileButtonClick(Sender: TObject);
-begin
-  if Sender is TFileNameEdit then
-    TFileNameEdit(Sender).InitialDir := xSettings.LastPathUsed;
-end;
-
-procedure TdlgImportNests.eNestFileChange(Sender: TObject);
-begin
-  UpdateButtons;
-end;
-
 procedure TdlgImportNests.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
@@ -285,12 +289,6 @@ begin
     Add(rsImportAskUnknownTaxon);
     Add(rsImportAbortUnknownTaxon);
   end;
-  with cbErrorHandling.Items do
-  begin
-    Clear;
-    Add(rsAbortOnError);
-    Add(rsIgnoreErrors);
-  end;
   GetImportSettings;
 end;
 
@@ -305,10 +303,6 @@ begin
     utpAddCustomTaxon: cbUnknownTaxa.ItemIndex := cbUnknownTaxa.Items.IndexOf(rsImportAddTemporaryTaxon);
     utpAsk:     cbUnknownTaxa.ItemIndex := cbUnknownTaxa.Items.IndexOf(rsImportAskUnknownTaxon);
     utpAbort:   cbUnknownTaxa.ItemIndex := cbUnknownTaxa.Items.IndexOf(rsImportAbortUnknownTaxon);
-  end;
-  case FImportSettings.ErrorHandling of
-    iehAbort:   cbErrorHandling.ItemIndex := 0;
-    iehIgnore:  cbErrorHandling.ItemIndex := 1;
   end;
 end;
 
@@ -352,6 +346,7 @@ begin
 
   HadError := False;
 
+  sbSaveLog.Visible := False;
   sbRetry.Visible := False;
   barProgress.Visible := True;
   icoImportFinished.ImageIndex := 2;
@@ -366,6 +361,8 @@ begin
   sbCancel.Visible := True;
   sbClose.Visible := False;
   sbRun.Visible := False;
+
+  SetImportSettings;
 
   try
     if (not stopProcess) and HasImportFileSelected(eNestFile.FileName) then
@@ -393,6 +390,7 @@ begin
       lblTitleImportFinished.Caption := rsImportCanceled;
       lblSubtitleImportFinished.Caption := rsImportCanceledByError;
       icoImportFinished.ImageIndex := 1;
+      sbSaveLog.Visible := True;
       sbRetry.Visible := True;
       sbCancel.Visible := False;
       sbClose.Visible := True;
@@ -411,6 +409,7 @@ begin
     lblTitleImportFinished.Caption := rsImportCanceled;
     lblSubtitleImportFinished.Caption := rsImportCanceledByUser;
     icoImportFinished.ImageIndex := 1;
+    sbSaveLog.Visible := True;
     sbRetry.Visible := True;
     barProgress.Visible := False;
   end
@@ -421,6 +420,7 @@ begin
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;
+    sbSaveLog.Visible := True;
     sbRetry.Visible := True;
     barProgress.Visible := False;
   end;
@@ -430,6 +430,16 @@ begin
   //sbRun.Visible := True;
   UpdateButtons;
 
+end;
+
+procedure TdlgImportNests.sbSaveLogClick(Sender: TObject);
+begin
+  if SaveLogDlg.Execute then
+  begin
+    mProgress.Lines.SaveToFile(SaveLogDlg.FileName);
+    if xSettings.OpenFileAfterExport then
+      OpenDocument(SaveLogDlg.FileName);
+  end;
 end;
 
 procedure TdlgImportNests.SetImportSettings;
@@ -444,10 +454,6 @@ begin
     1: FImportSettings.UnknownTaxonPolicy := utpAsk;
     2: FImportSettings.UnknownTaxonPolicy := utpAbort;
     //3: FImportSettings.UnknownTaxonPolicy := utpIgnore;
-  end;
-  case cbErrorHandling.ItemIndex of
-    0: FImportSettings.ErrorHandling := iehAbort;
-    1: FImportSettings.ErrorHandling := iehIgnore;
   end;
 end;
 

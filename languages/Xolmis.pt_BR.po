@@ -5288,11 +5288,6 @@ msgctxt "tdlgimportnests.lbleggfile.caption"
 msgid "Eggs"
 msgstr "Ovos"
 
-#: tdlgimportnests.lblerrorhandling.caption
-msgctxt "tdlgimportnests.lblerrorhandling.caption"
-msgid "If an error occurs during import"
-msgstr "Se um erro ocorrer durante a importação"
-
 #: tdlgimportnests.lblexistingrecordpolicy.caption
 msgctxt "tdlgimportnests.lblexistingrecordpolicy.caption"
 msgid "Existing records policy"
@@ -5338,6 +5333,11 @@ msgctxt "tdlgimportnests.savedlg.title"
 msgid "Generate files as"
 msgstr "Gerar arquivos como"
 
+#: tdlgimportnests.savelogdlg.title
+msgctxt "tdlgimportnests.savelogdlg.title"
+msgid "Save log as"
+msgstr "Salvar log como"
+
 #: tdlgimportnests.sbcancel.caption
 msgctxt "tdlgimportnests.sbcancel.caption"
 msgid "Cancel"
@@ -5372,6 +5372,11 @@ msgstr "Tentar novamente"
 msgctxt "tdlgimportnests.sbrun.caption"
 msgid "Import"
 msgstr "Importar"
+
+#: tdlgimportnests.sbsavelog.caption
+msgctxt "tdlgimportnests.sbsavelog.caption"
+msgid "Save log"
+msgstr "Salvar log"
 
 #: tdlgimportxmobile.btnhelp.caption
 msgctxt "tdlgimportxmobile.btnhelp.caption"

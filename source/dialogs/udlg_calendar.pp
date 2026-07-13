@@ -82,14 +82,14 @@ uses
 
 procedure TdlgCalendar.ApplyDarkMode;
 begin
-  pOperations.Background.Color := clCardBGDefaultDark;
-  pOperations.Border.Color := clCardBGSecondaryDark;
-  pYears.Background.Color := clCardBGDefaultDark;
-  pYears.Border.Color := clCardBGSecondaryDark;
-  pMonths.Background.Color := clCardBGDefaultDark;
-  pMonths.Border.Color := clCardBGSecondaryDark;
-  pDays.Background.Color := clCardBGDefaultDark;
-  pDays.Border.Color := clCardBGSecondaryDark;
+  pOperations.Background.Color := ActiveTheme.Background.CardDefault;
+  pOperations.Border.Color := ActiveTheme.Border.Default;
+  pYears.Background.Color := ActiveTheme.Background.CardDefault;
+  pYears.Border.Color := ActiveTheme.Border.Default;
+  pMonths.Background.Color := ActiveTheme.Background.CardDefault;
+  pMonths.Border.Color := ActiveTheme.Border.Default;
+  pDays.Background.Color := ActiveTheme.Background.CardDefault;
+  pDays.Border.Color := ActiveTheme.Border.Default;
 
   rbAdd.Images := iCalendarDark;
   rbSubtract.Images := iCalendarDark;
