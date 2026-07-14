@@ -22,18 +22,14 @@ unit io_banding_csv;
 interface
 
 uses
-  Classes, SysUtils, Forms, Dialogs, StrUtils, ComCtrls, DateUtils,
+  Classes, SysUtils, Forms, Dialogs, StrUtils, ComCtrls, DateUtils, Controls,
   DB, SQLDB, SdfData, fpjson, jsonparser,
-  models_sampling, models_record_types;
+  models_sampling, models_record_types, io_core;
 
 const
-  BANDING_JOURNAL_SCHEMA: String = 'LOCALITY;STATION;DATE;START TIME;END TIME;LONGITUDE;LATITUDE;' +
-    'TEAM;NOTES;WEATHER TIME 1;WEATHER MOMENT 1;CLOUD COVER 1;PRECIPITATION 1;TEMPERATURE 1;WIND SPEED 1;HUMIDITY 1;' +
-    'WEATHER TIME 2;WEATHER MOMENT 2;CLOUD COVER 2;PRECIPITATION 2;TEMPERATURE 2;WIND SPEED 2;HUMIDITY 2;' +
-    'WEATHER TIME 3;WEATHER MOMENT 3;CLOUD COVER 3;PRECIPITATION 3;TEMPERATURE 3;WIND SPEED 3;HUMIDITY 3;' +
-    'WEATHER TIME 4;WEATHER MOMENT 4;CLOUD COVER 4;PRECIPITATION 4;TEMPERATURE 4;WIND SPEED 4;HUMIDITY 4';
+  BANDING_JOURNAL_SCHEMA: String = 'LOCALITY;STATION;DATE;START TIME;END TIME;LONGITUDE;LATITUDE;TOTAL NETS;TEAM;NOTES;NET CHECKING BOUTS';
 
-  WEATHER_LOG_SCHEMA: String = 'TIME;MOMENT;CLOUD COVER;PRECIPITATION;TEMPERATURE;WIND SPEED;HUMIDITY';
+  WEATHER_LOG_SCHEMA: String = 'LOCALITY;STATION;DATE;TIME;MOMENT;OBSERVER;CLOUD COVER;PRECIPITATION;TEMPERATURE;WIND SPEED;HUMIDITY;ATM PRESSURE';
 
   NET_EFFORT_SCHEMA: String = 'LOCALITY;STATION;DATE;NET NUMBER;LONGITUDE;LATITUDE;' +
     'OPEN TIME 1;CLOSE TIME 1;OPEN TIME 2;CLOSE TIME 2;OPEN TIME 3;CLOSE TIME 3;OPEN TIME 4;CLOSE TIME 4;NOTES';
@@ -48,13 +44,25 @@ const
 
 type
   TWeatherSample = record
+    Locality: String;
+    NetStation: String;
+    SamplingDate: TDate;
     SamplingTime: TTime;
     SamplingMoment: TWeatherSampleMoment;
+    Observer: String;
     CloudCover: Integer;
     Precipitation: TPrecipitation;
     Temperature: Double;
     WindSpeed: Integer;
     Humidity: Double;
+    AtmosphericPressure: Double;
+  end;
+
+  { TWeatherSampleHelper }
+
+  TWeatherSampleHelper = record helper for TWeatherSample
+    procedure Clear;
+    procedure FromCSV(CSV: TSdfDataSet);
   end;
 
   TNetBout = record
@@ -72,12 +80,10 @@ type
     EndTime: TTime;
     Longitude: Extended;
     Latitude: Extended;
+    TotalNets: Integer;
     Team: String;
-    Weather1: TWeatherSample;
-    Weather2: TWeatherSample;
-    Weather3: TWeatherSample;
-    Weather4: TWeatherSample;
     Notes: String;
+    NetCheckingBouts: String;
   end;
 
   { TBandingJournalHelper }
@@ -93,7 +99,7 @@ type
     Locality: String;
     NetStation: String;
     SamplingDate: TDate;
-    NetNumber: Integer;
+    NetNumber: String;
     Longitude: Extended;
     Latitude: Extended;
     NetBout1: TNetBout;
@@ -181,9 +187,10 @@ type
   end;
 
   procedure LoadBandingFile(const aCSVFile: String; CSV: TSdfDataSet);
-  procedure ImportBandingDataV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
-  procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
-  procedure ImportBandingEffortV1(aCSVFile: String; aProgressBar: TProgressBar = nil);
+  procedure ImportBandingDataV1(aCSVFile: String; Options: TImportOptions; aProgressBar: TProgressBar = nil);
+  procedure ImportBandingJournalV1(aCSVFile: String; Options: TImportOptions; aProgressBar: TProgressBar = nil);
+  procedure ImportBandingEffortV1(aCSVFile: String; Options: TImportOptions; aProgressBar: TProgressBar = nil);
+  procedure ImportBandingWeatherLogV1(aCSVFile: String; Options: TImportOptions; aProgressBar: TProgressBar = nil);
 
 implementation
 
@@ -192,7 +199,7 @@ uses
   data_types, data_getvalue, data_consts, data_services,
   models_users, models_taxonomy, models_birds, models_geo, models_bands,
   models_sampling_plots, io_csv,
-  udm_main, udlg_progress;
+  udm_main, udlg_progress, udlg_taxonnotfound;
 
 procedure LoadBandingFile(const aCSVFile: String; CSV: TSdfDataSet);
 begin
@@ -207,12 +214,10 @@ begin
   end;
 end;
 
-procedure ImportBandingDataV1(aCSVFile: String; aProgressBar: TProgressBar);
+procedure ImportBandingDataV1(aCSVFile: String; Options: TImportOptions; aProgressBar: TProgressBar);
 var
   CSV: TSdfDataSet;
   Reg: TBandingData;
-  TaxonRepo: TTaxonRepository;
-  Taxon: TTaxon;
   SiteRepo: TSiteRepository;
   Toponimo: TSite;
   SurveyRepo: TSurveyRepository;
@@ -227,8 +232,8 @@ var
   SPlotRepo: TSamplingPlotRepository;
   NetRepo: TNetEffortRepository;
   NetSite: TNetEffort;
-  strDate, strTime: String;
-  CodAnilha, RemAnilha, aMethod: Integer;
+  strDate, strTime, FSpeciesName: String;
+  FBandId, FRemovedBandId, FMethodId, FTaxonId, FSiteId, FStationId: Integer;
   NetLat, NetLong: Extended;
   MoveBand: TBandMovementService;
   UpdInd: TIndividualUpdateService;
@@ -279,21 +284,26 @@ begin
           dlgProgress.Text := Format(rsProgressRecords, [CSV.RecNo, CSV.RecordCount]);
         // Reset variables
         Reg.Clear;
-        CodAnilha := 0;
-        RemAnilha := 0;
-        NetLat := 500.0;
-        NetLong := 500.0;
+        FBandId := 0;
+        FRemovedBandId := 0;
+        NetLat := 0.0;
+        NetLong := 0.0;
         strDate := '';
 
         // Load the record data
         Reg.FromCSV(CSV);
 
+        FSpeciesName := EmptyStr;
+        if (Reg.SpeciesName <> EmptyStr) then
+          FSpeciesName := Reg.SpeciesName
+        else
+          FSpeciesName := Reg.SpeciesCode;
+
         // If it is a capture record (including recapture and band change)
-        if (Trim(Reg.SpeciesName) <> EmptyStr) then
+        if (Reg.CaptureType[1] in ['N','R','S','C']) then
         begin
           strDate := FormatDateTime(MASK_ISO_DATE, Reg.CaptureDate);
           strTime := FormatDateTime(MASK_DISPLAY_TIME, Reg.CaptureTime);
-          TaxonRepo := TTaxonRepository.Create(DMM.sqlCon);
           IndividualRepo := TIndividualRepository.Create(DMM.sqlCon);
           CaptureRepo := TCaptureRepository.Create(DMM.sqlCon);
           BandRepo := TBandRepository.Create(DMM.sqlCon);
@@ -305,8 +315,6 @@ begin
           UpdInd := TIndividualUpdateService.Create(IndividualRepo);
 
           try
-            Taxon := TTaxon.Create();
-            TaxonRepo.GetById(GetValidTaxon(Reg.SpeciesName), Taxon);
             NetStation := TSamplingPlot.Create;
             Toponimo := TSite.Create;
             NetSite := TNetEffort.Create;
@@ -316,23 +324,74 @@ begin
             Individuo := TIndividual.Create;
             Captura := TCapture.Create;
             OldCaptura := TCapture.Create;
-            aMethod := GetMethodKey(rsMobileBanding);
+            FMethodId := GetMethodKey(rsMobileBanding);
 
             // Get valid taxon
-            TaxonRepo.GetById(GetValidTaxon(Reg.SpeciesName), Taxon);
+            if (FSpeciesName <> EmptyStr) then
+            begin
+              FTaxonId := GetValidTaxon(FSpeciesName);
+              if (FTaxonId <= 0) then
+              begin
+                case Options.UnknownTaxonPolicy of
+                  //utpAddCustomTaxon: ;
+                  utpAsk:
+                  begin
+                    dlgTaxonNotFound := TdlgTaxonNotFound.Create(nil);
+                    with dlgTaxonNotFound do
+                    try
+                      ShowCustomTaxonOption := False;
+                      TaxonName := FSpeciesName;
+                      if ShowModal = mrOK then
+                      begin
+                        case SelectedOption of
+                          0: ; // FCustomTaxon
+                          1: FTaxonId := TaxonId;
+                          2: raise Exception.Create(rsImportAbortedByUser);
+                        end;
+                      end;
+                    finally
+                      FreeAndNil(dlgTaxonNotFound);
+                    end;
+                  end;
+                  utpAbort:
+                    raise Exception.CreateFmt(rsErrorTaxonNotFound, [FSpeciesName]);
+                  //utpIgnore: ;
+                end;
+              end;
+            end
+            else
+              raise Exception.CreateFmt(rsErrorRequiredField, ['TBandingData.SpeciesName/SpeciesCode']);
+
+            // Get net station
+            if (Reg.NetStation <> EmptyStr) then
+            begin
+              FStationId := GetSamplingPlotKey(Reg.NetStation);
+              if (FStationId > 0) then
+                SPlotRepo.GetById(FStationId, NetStation)
+              else
+                raise Exception.CreateFmt(rsErrorSamplingPlotNotFound, [Reg.NetStation]);
+            end
+            else
+              raise Exception.CreateFmt(rsErrorRequiredField, ['TBandingData.NetStation']);
 
             // Get toponym
-            SiteRepo.GetById(GetSiteKey(Reg.Locality), Toponimo);
-
-            // Get net station and locality
-            SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
-            if not (NetStation.IsNew) and (Toponimo.IsNew) then
+            if (Reg.Locality <> EmptyStr) then
             begin
-              SiteRepo.GetById(NetStation.LocalityId, Toponimo);
-            end;
+              FSiteId := GetSiteKey(Reg.Locality);
+              if (FSiteId > 0) then
+                SiteRepo.GetById(FSiteId, Toponimo)
+              else
+                raise Exception.CreateFmt(rsErrorToponymNotFound, [Reg.Locality]);
+            end
+            else
+              raise Exception.CreateFmt(rsErrorRequiredField, ['TBandingData.Locality']);
 
             // Get survey
-            SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.CaptureDate, '', NetStation.Id, Survey);
+            SurveyRepo.FindBySiteAndDate(Toponimo.Id, FMethodId, Reg.CaptureDate, '', NetStation.Id, Survey);
+            if Survey.IsNew then
+              raise Exception.CreateFmt(rsErrorSurveyNotFound,
+                [Format('SiteId=%d; MethodId=%d; SamplingDate=%s; NetStationId=%d',
+                  [Toponimo.Id, FMethodId, DateToStr(Reg.CaptureDate), NetStation.Id])]);
 
             // Get net and coordinates
             if (Reg.NetSiteName <> EmptyStr) then
@@ -370,9 +429,9 @@ begin
             if (Trim(Reg.RemovedBand) <> EmptyStr) then
             begin
               Reg.RemovedBand := NormalizeWhitespace(Reg.RemovedBand, True);
-              RemAnilha := GetBandKey(Reg.RemovedBand);
-              if RemAnilha > 0 then
-                BandRepo.GetById(RemAnilha, RemovedBand);
+              FRemovedBandId := GetBandKey(Reg.RemovedBand);
+              if FRemovedBandId > 0 then
+                BandRepo.GetById(FRemovedBandId, RemovedBand);
               if (RemovedBand.IsNew) then
               begin
                 // If does not exist, insert the removed band
@@ -401,16 +460,16 @@ begin
 
             // Get individual
             if (Reg.CaptureType = 'C') then
-              CodAnilha := RemovedBand.Id
+              FBandId := RemovedBand.Id
             else
-              CodAnilha := Band.Id;
+              FBandId := Band.Id;
 
-            IndividualRepo.FindByBand(Taxon.Id, CodAnilha, Reg.RightTarsus, Reg.LeftTarsus, Individuo);
+            IndividualRepo.FindByBand(FTaxonId, FBandId, Reg.RightTarsus, Reg.LeftTarsus, Individuo);
             if (Individuo.IsNew) then
             begin
               // If does not exist, insert the individual
-              Individuo.TaxonId := Taxon.Id;
-              Individuo.BandId := CodAnilha;
+              Individuo.TaxonId := FTaxonId;
+              Individuo.BandId := FBandId;
               if (Reg.CaptureType = 'C') then
                 Individuo.BandName := Reg.RemovedBand
               else
@@ -426,12 +485,12 @@ begin
             end;
 
             // Check if the capture record exists
-            CaptureRepo.FindByBand(Taxon.Id, CodAnilha, Reg.CaptureType, strDate, strTime, Captura);
+            CaptureRepo.FindByBand(FTaxonId, FBandId, Reg.CaptureType, strDate, strTime, Captura);
             if (Captura.IsNew) then
             begin
               // If does not exist, insert the record
               Captura.SurveyId := Survey.Id;
-              Captura.TaxonId := Taxon.Id;
+              Captura.TaxonId := FTaxonId;
               Captura.IndividualId := Individuo.Id;
               Captura.CaptureDate := Reg.CaptureDate;
               Captura.CaptureTime := Reg.CaptureTime;
@@ -525,7 +584,6 @@ begin
               Captura.LeftTarsus := Reg.LeftTarsus;
               Captura.Escaped := Reg.Escaped;
               Captura.Notes := Reg.Notes;
-              Captura.UserInserted := ActiveUser.Id;
 
               CaptureRepo.Insert(Captura);
               // Insert record history
@@ -535,7 +593,7 @@ begin
             else
             begin
               // If exists, update the record
-              CaptureRepo.GetById(Captura.Id, OldCaptura);
+              OldCaptura.Assign(Captura);
 
               Captura.SurveyId := Survey.Id;
               Captura.LocalityId := Toponimo.Id;
@@ -547,6 +605,13 @@ begin
                 begin
                   Captura.Latitude := NetStation.Latitude;
                   Captura.Longitude := NetStation.Longitude;
+                  Captura.CoordinatePrecision := cpApproximated;
+                end
+                else
+                if ((Survey.StartLongitude <> 0) and (Survey.StartLatitude <> 0)) then
+                begin
+                  Captura.Latitude := Survey.StartLatitude;
+                  Captura.Longitude := Survey.StartLongitude;
                   Captura.CoordinatePrecision := cpApproximated;
                 end
                 else
@@ -564,9 +629,62 @@ begin
                 Captura.Longitude := NetLong;
                 Captura.CoordinatePrecision := cpExact;
               end;
+              Captura.BanderId := GetPersonKey(Reg.Bander);
+              Captura.AnnotatorId := GetPersonKey(Reg.Recorder);
+              Captura.SubjectStatus := StrToSubjectStatus(Reg.SubjectStatus);
+              Captura.CaptureType := StrToCaptureType(Reg.CaptureType);
+              Captura.SubjectSex := StrToSex(Reg.Sex);
+              Captura.HowSexed := Reg.HowSexed;
+              Captura.BandId := Band.Id;
+              Captura.Weight := Reg.Weight;
+              Captura.TarsusLength := Reg.TarsusLength;
+              Captura.TarsusDiameter := Reg.RightTarsusDiameter;
+              Captura.ExposedCulmen := Reg.ExposedCulmen;
+              Captura.BillWidth := Reg.BillWidth;
+              Captura.BillHeight := Reg.BillHeight;
+              Captura.NostrilBillTip := Reg.NostrilBillTip;
+              Captura.SkullLength := Reg.SkullLength;
+              Captura.RightWingChord := Reg.RightWingChord;
+              Captura.FirstSecondaryChord := Reg.FirstSecondaryChord;
+              Captura.TailLength := Reg.TailLength;
+              Captura.Fat := Reg.Fat;
+              Captura.BroodPatch := Reg.BroodPatch;
+              Captura.CloacalProtuberance := Reg.CloacalProtuberance;
+              Captura.BodyMolt := Reg.BodyMolt;
+              Captura.FlightFeathersMolt := Reg.FlightFeathersMolt;
+              Captura.FlightFeathersWear := Reg.FlightFeathersWear;
+              Captura.MoltLimits := Reg.MoltLimits;
               Captura.CycleCode := Reg.CycleCode;
+              Captura.HowAged := Reg.HowAged;
+              Captura.SkullOssification := Reg.SkullOssification;
+              Captura.KippsDistance := Reg.KippsIndex;
+              Captura.Glucose := Reg.Glucose;
+              Captura.Hemoglobin := Reg.Hemoglobin;
+              Captura.Hematocrit := Reg.Hematocrit;
+              Captura.BloodSample := Reg.BloodSample;
+              Captura.FeatherSample := Reg.FeatherSample;
+              if (Trim(Reg.Photographer1) <> EmptyStr) then
+              begin
+                Captura.SubjectPhotographed := True;
+                Captura.Photographer1Id :=
+                  GetPersonKey(Reg.Photographer1);
+                if (Trim(Reg.Photographer2) <> EmptyStr) then
+                  Captura.Photographer2Id :=
+                    GetPersonKey(Reg.Photographer2);
+              end else
+              begin
+                Captura.SubjectPhotographed := False;
+                Captura.Photographer1Id := 0;
+                Captura.Photographer2Id := 0;
+              end;
+              Captura.InitialPhotoNumber := IntToStr(Reg.InitialPhotoNumber);
+              Captura.FinalPhotoNumber := IntToStr(Reg.FinalPhotoNumber);
+              Captura.CameraName := Reg.CameraName;
+              Captura.RemovedBandId := RemovedBand.Id;
+              Captura.RightTarsus := Reg.RightTarsus;
+              Captura.LeftTarsus := Reg.LeftTarsus;
+              Captura.Escaped := Reg.Escaped;
               Captura.Notes := Reg.Notes;
-              Captura.UserUpdated := ActiveUser.Id;
 
               CaptureRepo.Update(Captura);
 
@@ -576,7 +694,7 @@ begin
             end;
 
             // Update band status
-            if (Trim(Reg.RemovedBand) <> '') then
+            if (Trim(Reg.RemovedBand) <> EmptyStr) then
             begin
               MoveBand.RemoveFromIndividual(RemovedBand, Individuo.Id, Reg.CaptureDate);
               LogInfo(Format('Band ID=%d status updated to removed', [RemovedBand.Id]));
@@ -598,7 +716,6 @@ begin
                 [Individuo.Id, Band.Id, RemovedBand.Id]));
             end;
           finally
-            FreeAndNil(Taxon);
             FreeAndNil(NetStation);
             FreeAndNil(Toponimo);
             FreeAndNil(NetSite);
@@ -615,7 +732,6 @@ begin
             SPlotRepo.Free;
             CaptureRepo.Free;
             IndividualRepo.Free;
-            TaxonRepo.Free;
             NetRepo.Free;
             SurveyRepo.Free;
           end;
@@ -656,10 +772,10 @@ begin
               LogInfo(Format('Band ID=%d status updated to lost', [Band.Id]));
             end
             else
-            if (Reg.CaptureType = 'Q') then    // Broken band
+            if (Reg.CaptureType = 'B') then    // Broken band
             begin
               MoveBand.MarkAsBroken(Band, Reg.CaptureDate);
-              //UpdateBand(Band.Id, 0, 'Q', Reg.CaptureDate);
+              //UpdateBand(Band.Id, 0, 'B', Reg.CaptureDate);
               LogInfo(Format('Band ID=%d status updated to broken', [Band.Id]));
             end;
           finally
@@ -713,7 +829,7 @@ begin
   end;
 end;
 
-procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar);
+procedure ImportBandingJournalV1(aCSVFile: String; Options: TImportOptions; aProgressBar: TProgressBar);
 
   procedure UpdateProgress(Current, Total: Integer);
   begin
@@ -730,60 +846,60 @@ procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar);
     end;
   end;
 
-  procedure InsertWeatherLog(const RegWeather: TWeatherSample; SurveyId: Integer; aSampleDate: TDateTime);
-  var
-    W: TWeatherLog;
-    WeatherRepo: TWeatherLogRepository;
-  begin
-    if (RegWeather.Precipitation <> wpEmpty) or (RegWeather.CloudCover >= 0) then
-    begin
-      WeatherRepo := TWeatherLogRepository.Create(DMM.sqlCon);
-      W := TWeatherLog.Create;
-      try
-        W.SurveyId := SurveyId;
-        W.SampleDate := aSampleDate;
-        W.SampleTime := RegWeather.SamplingTime;
-        W.SampleMoment := RegWeather.SamplingMoment;
-        W.Temperature := RegWeather.Temperature;
-        W.Precipitation := RegWeather.Precipitation;
-        W.CloudCover := RegWeather.CloudCover;
-        W.WindSpeedBft := RegWeather.WindSpeed;
-        W.RelativeHumidity := RegWeather.Humidity;
-
-        WeatherRepo.Insert(W);
-        LogInfo(Format('Weather record inserted with ID=%d', [W.Id]));
-
-        WriteRecHistory(tbWeatherLogs, haCreated, W.Id, '', '', '', rsInsertedByImport);
-      finally
-        W.Free;
-        WeatherRepo.Free;
-      end;
-    end;
-  end;
-
   procedure InsertSurveyTeam(const TeamStr: String; SurveyId: Integer);
   var
-    Member: TSurveyMember;
-    i: Integer;
+    Member, OldMember: TSurveyMember;
+    i, FPersonId: Integer;
     MemberRepo: TSurveyMemberRepository;
+    FPersonName: String;
   begin
     if TeamStr = '' then
       Exit;
 
     MemberRepo := TSurveyMemberRepository.Create(DMM.sqlCon);
     Member := TSurveyMember.Create;
+    OldMember := TSurveyMember.Create;
     try
       for i := 1 to WordCount(TeamStr, [',',';']) do
       begin
-        Member.SurveyId := SurveyId;
-        Member.PersonId := GetPersonKey(ExtractWord(i, TeamStr, [',',';']));
-        MemberRepo.Insert(Member);
-        LogInfo(Format('Survey member record inserted with ID=%d', [Member.Id]));
+        FPersonName := ExtractWord(i, TeamStr, [',',';']);
+        FPersonId := GetPersonKey(FPersonName);
+        if (FPersonId <= 0) then
+          raise Exception.CreateFmt('InsertSurveyTeam: ' + rsErrorObserverNotFound, [FPersonName]);
 
-        WriteRecHistory(tbSurveyTeams, haCreated, Member.Id, '', '', '', rsInsertedByImport);
+        MemberRepo.FindBySurvey(SurveyId, FPersonId, Member);
+        if not Member.IsNew then
+        begin
+          OldMember.Assign(Member);
+
+          case Options.ExistingRecordPolicy of
+            erpIgnoreExisting: ;
+            erpUpdateExisting:
+            begin
+              Member.SurveyId := SurveyId;
+              Member.PersonId := FPersonId;
+
+              MemberRepo.Update(Member);
+              LogInfo(Format('Survey member record with ID=%d updated', [Member.Id]));
+
+              WriteDiff(tbSurveyTeams, OldMember, Member, rsEditedByImport);
+            end;
+          end;
+        end
+        else
+        begin
+          Member.SurveyId := SurveyId;
+          Member.PersonId := FPersonId;
+
+          MemberRepo.Insert(Member);
+          LogInfo(Format('Survey member record inserted with ID=%d', [Member.Id]));
+
+          WriteRecHistory(tbSurveyTeams, haCreated, Member.Id, '', '', '', rsInsertedByImport);
+        end;
       end;
     finally
       Member.Free;
+      OldMember.Free;
       MemberRepo.Free;
     end;
   end;
@@ -791,11 +907,11 @@ procedure ImportBandingJournalV1(aCSVFile: String; aProgressBar: TProgressBar);
 var
   CSV: TSdfDataSet;
   Reg: TBandingJournal;
-  NetStation: TSamplingPlot;
-  Toponimo: TSite;
-  Survey: TSurvey;
-  aMethod: Integer;
+  Survey, OldSurvey: TSurvey;
+  aMethod, FSiteId, FStationId: Integer;
   SurveyRepo: TSurveyRepository;
+  Toponimo: TSite;
+  NetStation: TSamplingPlot;
   SiteRepo: TSiteRepository;
   SPlotRepo: TSamplingPlotRepository;
 begin
@@ -851,13 +967,80 @@ begin
         NetStation := TSamplingPlot.Create;
         Toponimo := TSite.Create;
         Survey := TSurvey.Create;
+        OldSurvey := TSurvey.Create;
         try
-          SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
-          if NetStation.Id > 0 then
-            SiteRepo.GetById(NetStation.LocalityId, Toponimo);
+          if (Reg.NetStation <> EmptyStr) then
+          begin
+            FStationId := GetSamplingPlotKey(Reg.NetStation);
+            if (FStationId > 0) then
+              SPlotRepo.GetById(FStationId, NetStation)
+            else
+              raise Exception.CreateFmt(rsErrorSamplingPlotNotFound, [Reg.NetStation]);
+          end
+          else
+            raise Exception.CreateFmt(rsErrorRequiredField, ['TBandingJournal.NetStation']);
+
+          if (Reg.Locality <> EmptyStr) then
+          begin
+            FSiteId := GetSiteKey(Reg.Locality);
+            if (FSiteId > 0) then
+              SiteRepo.GetById(FSiteId, Toponimo)
+            else
+              raise Exception.CreateFmt(rsErrorToponymNotFound, [Reg.Locality]);
+          end
+          else
+            raise Exception.CreateFmt(rsErrorRequiredField, ['TBandingJournal.Locality']);
 
           SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id, Survey);
-          if Survey.IsNew then
+          if not Survey.IsNew then
+          begin
+            OldSurvey.Assign(Survey);
+
+            case Options.ExistingRecordPolicy of
+              erpIgnoreExisting: ;
+              erpUpdateExisting:
+              begin
+                // fill Survey data
+                Survey.SurveyDate := Reg.SamplingDate;
+                Survey.StartTime := Reg.StartTime;
+                Survey.EndTime := Reg.EndTime;
+                Survey.MethodId := aMethod;
+                Survey.NetStationId := NetStation.Id;
+                Survey.LocalityId := Toponimo.Id;
+                if ((xSettings.AutoFillCoordinates) and (Reg.Longitude = 0) and (Reg.Latitude = 0)) then
+                begin
+                  if ((NetStation.Longitude <> 0) and (NetStation.Latitude <> 0)) then
+                  begin
+                    Survey.StartLatitude := NetStation.Latitude;
+                    Survey.StartLongitude := NetStation.Longitude;
+                    Survey.CoordinatePrecision := cpApproximated;
+                  end
+                  else
+                  if ((Toponimo.Longitude <> 0) and (Toponimo.Latitude <> 0)) then
+                  begin
+                    Survey.StartLatitude := Toponimo.Latitude;
+                    Survey.StartLongitude := Toponimo.Longitude;
+                    Survey.CoordinatePrecision := cpReference;
+                  end;
+                end
+                else
+                if ((Reg.Longitude <> 0) and (Reg.Latitude <> 0)) then
+                begin
+                  Survey.StartLatitude := Reg.Latitude;
+                  Survey.StartLongitude := Reg.Longitude;
+                  Survey.CoordinatePrecision := cpExact;
+                end;
+                Survey.Notes := Reg.Notes;
+
+                SurveyRepo.Update(Survey);
+                LogInfo(Format('Survey record with ID=%d updated', [Survey.Id]));
+
+                WriteDiff(tbSurveys, OldSurvey, Survey, rsEditedByImport);
+                InsertSurveyTeam(Reg.Team, Survey.Id);
+              end;
+            end;
+          end
+          else
           begin
             // fill Survey data
             Survey.SurveyDate := Reg.SamplingDate;
@@ -898,18 +1081,13 @@ begin
             begin
               WriteRecHistory(tbSurveys, haCreated, Survey.Id, '', '', '', rsInsertedByImport);
               InsertSurveyTeam(Reg.Team, Survey.Id);
-
-              // insert weather logs
-              InsertWeatherLog(Reg.Weather1, Survey.Id, Reg.SamplingDate);
-              InsertWeatherLog(Reg.Weather2, Survey.Id, Reg.SamplingDate);
-              InsertWeatherLog(Reg.Weather3, Survey.Id, Reg.SamplingDate);
-              InsertWeatherLog(Reg.Weather4, Survey.Id, Reg.SamplingDate);
             end;
           end;
         finally
           NetStation.Free;
           Toponimo.Free;
           Survey.Free;
+          OldSurvey.Free;
         end;
 
         UpdateProgress(CSV.RecNo, CSV.RecordCount);
@@ -953,19 +1131,15 @@ begin
   end;
 end;
 
-procedure ImportBandingEffortV1(aCSVFile: String; aProgressBar: TProgressBar);
+procedure ImportBandingEffortV1(aCSVFile: String; Options: TImportOptions; aProgressBar: TProgressBar);
 var
   CSV: TSdfDataSet;
   Reg: TBandingEffort;
-  SiteRepo: TSiteRepository;
-  Toponimo: TSite;
-  NetStation: TSamplingPlot;
-  SPlotRepo: TSamplingPlotRepository;
   Survey: TSurvey;
   SurveyRepo: TSurveyRepository;
-  NetSite: TNetEffort;
+  NetSite, OldNet: TNetEffort;
   NetRepo: TNetEffortRepository;
-  aMethod: Integer;
+  aMethod, FSiteId, FStationId: Integer;
 begin
   if not FileExists(aCSVFile) then
   begin
@@ -988,8 +1162,6 @@ begin
   end;
   SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
   NetRepo := TNetEffortRepository.Create(DMM.sqlCon);
-  SiteRepo := TSiteRepository.Create(DMM.sqlCon);
-  SPlotRepo := TSamplingPlotRepository.Create(DMM.sqlCon);
   CSV := TSdfDataSet.Create(nil);
   try
     { Define CSV format settings }
@@ -1030,56 +1202,99 @@ begin
         Reg.FromCSV(CSV);
 
         try
-          NetStation := TSamplingPlot.Create;
-          Toponimo := TSite.Create;
           Survey := TSurvey.Create;
           NetSite := TNetEffort.Create;
+          OldNet := TNetEffort.Create;
 
-          // Get net station and locality
-          SPlotRepo.FindBy(COL_ABBREVIATION, Reg.NetStation, NetStation);
-          if NetStation.Id > 0 then
+          if (Reg.NetStation <> EmptyStr) then
           begin
-            SiteRepo.GetById(NetStation.LocalityId, Toponimo);
-          end;
+            FStationId := GetSamplingPlotKey(Reg.NetStation);
+            if (FStationId <= 0) then
+              raise Exception.CreateFmt(rsErrorSamplingPlotNotFound, [Reg.NetStation]);
+          end
+          else
+            raise Exception.CreateFmt(rsErrorRequiredField, ['TBandingEffort.NetStation']);
 
-          // Check if the survey exists
-          SurveyRepo.FindBySiteAndDate(Toponimo.Id, aMethod, Reg.SamplingDate, '', NetStation.Id, Survey);
-          if not (Survey.IsNew) then
+          if (Reg.Locality <> EmptyStr) then
           begin
-            // Check if the net site exists
-            NetRepo.FindBySurvey(Survey.Id, IntToStr(Reg.NetNumber), NetSite);
-            if (NetSite.IsNew) then
-            begin
-              // Insert the net effort
-              NetSite.SurveyId := Survey.Id;
-              NetSite.NetStationId := NetStation.Id;
-              NetSite.SampleDate := Reg.SamplingDate;
-              NetSite.NetNumber := Reg.NetNumber;
-              NetSite.Longitude := Reg.Longitude;
-              NetSite.Latitude := Reg.Latitude;
-              NetSite.Notes := Reg.Notes;
-              NetSite.NetOpen1 := Reg.NetBout1.OpenTime;
-              NetSite.NetClose1 := Reg.NetBout1.CloseTime;
-              NetSite.NetOpen2 := Reg.NetBout2.OpenTime;
-              NetSite.NetClose2 := Reg.NetBout2.CloseTime;
-              NetSite.NetOpen3 := Reg.NetBout3.OpenTime;
-              NetSite.NetClose3 := Reg.NetBout3.CloseTime;
-              NetSite.NetOpen4 := Reg.NetBout4.OpenTime;
-              NetSite.NetClose4 := Reg.NetBout4.CloseTime;
+            FSiteId := GetSiteKey(Reg.Locality);
+            if (FSiteId <= 0) then
+              raise Exception.CreateFmt(rsErrorToponymNotFound, [Reg.Locality]);
+          end
+          else
+            raise Exception.CreateFmt(rsErrorRequiredField, ['TBandingEffort.Locality']);
 
-              NetRepo.Insert(NetSite);
-              LogInfo(Format('Net effort record inserted with ID=%d', [NetSite.Id]));
+          SurveyRepo.FindBySiteAndDate(FSiteId, aMethod, Reg.SamplingDate, '', FStationId, Survey);
+          if Survey.IsNew then
+            raise Exception.CreateFmt(rsErrorSurveyNotFound,
+              [Format('SiteId=%d; MethodId=%d; SamplingDate=%s; NetStationId=%d',
+                [FSiteId, aMethod, DateToStr(Reg.SamplingDate), FStationId])]);
 
-              // Insert record history
-              WriteRecHistory(tbNetsEffort, haCreated, NetSite.Id, '', '', '', rsInsertedByImport);
+          // Check if the net site exists
+          NetRepo.FindBySurvey(Survey.Id, Reg.NetNumber, NetSite);
+          if not (NetSite.IsNew) then
+          begin
+            OldNet.Assign(NetSite);
 
+            case Options.ExistingRecordPolicy of
+              erpIgnoreExisting: ;
+              erpUpdateExisting:
+              begin
+                // replace existing net effort
+                NetSite.SurveyId := Survey.Id;
+                NetSite.NetStationId := FStationId;
+                NetSite.SampleDate := Reg.SamplingDate;
+                NetSite.NetNumber := StrToInt(Reg.NetNumber);
+                NetSite.Longitude := Reg.Longitude;
+                NetSite.Latitude := Reg.Latitude;
+                NetSite.Notes := Reg.Notes;
+                NetSite.NetOpen1 := Reg.NetBout1.OpenTime;
+                NetSite.NetClose1 := Reg.NetBout1.CloseTime;
+                NetSite.NetOpen2 := Reg.NetBout2.OpenTime;
+                NetSite.NetClose2 := Reg.NetBout2.CloseTime;
+                NetSite.NetOpen3 := Reg.NetBout3.OpenTime;
+                NetSite.NetClose3 := Reg.NetBout3.CloseTime;
+                NetSite.NetOpen4 := Reg.NetBout4.OpenTime;
+                NetSite.NetClose4 := Reg.NetBout4.CloseTime;
+
+                NetRepo.Update(NetSite);
+                LogInfo(Format('Net effort record with ID=%d updated', [NetSite.Id]));
+
+                // Insert record history
+                WriteDiff(tbNetsEffort, OldNet, NetSite, rsEditedByImport);
+              end;
             end;
+          end
+          else
+          begin
+            // Insert new net effort
+            NetSite.SurveyId := Survey.Id;
+            NetSite.NetStationId := FStationId;
+            NetSite.SampleDate := Reg.SamplingDate;
+            NetSite.NetNumber := StrToInt(Reg.NetNumber);
+            NetSite.Longitude := Reg.Longitude;
+            NetSite.Latitude := Reg.Latitude;
+            NetSite.Notes := Reg.Notes;
+            NetSite.NetOpen1 := Reg.NetBout1.OpenTime;
+            NetSite.NetClose1 := Reg.NetBout1.CloseTime;
+            NetSite.NetOpen2 := Reg.NetBout2.OpenTime;
+            NetSite.NetClose2 := Reg.NetBout2.CloseTime;
+            NetSite.NetOpen3 := Reg.NetBout3.OpenTime;
+            NetSite.NetClose3 := Reg.NetBout3.CloseTime;
+            NetSite.NetOpen4 := Reg.NetBout4.OpenTime;
+            NetSite.NetClose4 := Reg.NetBout4.CloseTime;
+
+            NetRepo.Insert(NetSite);
+            LogInfo(Format('Net effort record inserted with ID=%d', [NetSite.Id]));
+
+            // Insert record history
+            WriteRecHistory(tbNetsEffort, haCreated, NetSite.Id, '', '', '', rsInsertedByImport);
+
           end;
 
         finally
           FreeAndNil(NetSite);
-          FreeAndNil(NetStation);
-          FreeAndNil(Toponimo);
+          FreeAndNil(OldNet);
           FreeAndNil(Survey);
         end;
 
@@ -1117,8 +1332,6 @@ begin
   finally
     CSV.Close;
     FreeAndNil(CSV);
-    SiteRepo.Free;
-    SPlotRepo.Free;
     NetRepo.Free;
     SurveyRepo.Free;
     if Assigned(dlgProgress) then
@@ -1130,6 +1343,211 @@ begin
   end;
 end;
 
+procedure ImportBandingWeatherLogV1(aCSVFile: String; Options: TImportOptions; aProgressBar: TProgressBar);
+
+  procedure UpdateProgress(Current, Total: Integer);
+  begin
+    if Assigned(aProgressBar) then
+    begin
+      aProgressBar.Position := Current;
+      aProgressBar.Max := Total;
+    end
+    else if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Position := Current;
+      dlgProgress.Max := Total;
+      dlgProgress.Text := Format(rsProgressRecords, [Current, Total]);
+    end;
+  end;
+
+var
+  CSV: TSdfDataSet;
+  Reg: TWeatherSample;
+  Survey: TSurvey;
+  aMethod, FSiteId, FStationId, FObserverId: Integer;
+  SurveyRepo: TSurveyRepository;
+  W, OldW: TWeatherLog;
+  WeatherRepo: TWeatherLogRepository;
+begin
+  if not FileExists(aCSVFile) then
+  begin
+    LogError(Format('Banding weather log import aborted: file not found (%s)', [aCSVFile]));
+    MsgDlg('', Format(rsErrorFileNotFound, [aCSVFile]), mtError);
+    Exit;
+  end;
+
+  if not ValidateCSVSchema(aCSVFile, WEATHER_LOG_SCHEMA, 'banding weather log') then
+    Exit;
+
+  LogEvent(leaStart, Format('Import banding weather log: %s', [aCSVFile]));
+  stopProcess := False;
+
+  // initialize progress bar or dialog
+  if not Assigned(aProgressBar) then
+  begin
+    dlgProgress := TdlgProgress.Create(nil);
+    dlgProgress.Show;
+    dlgProgress.Title := rsTitleImportFile;
+    dlgProgress.Text := rsLoadingCSVFile;
+  end;
+
+  WeatherRepo := TWeatherLogRepository.Create(DMM.sqlCon);
+  SurveyRepo := TSurveyRepository.Create(DMM.sqlCon);
+  CSV := TSdfDataSet.Create(nil);
+
+  try
+    // CSV settings
+    CSV.Delimiter := ';';
+    CSV.FirstLineAsSchema := True;
+    CSV.CodePage := 'Windows-1252';
+    CSV.Schema.AddDelimitedText(WEATHER_LOG_SCHEMA, ';', True);
+    CSV.FileName := aCSVFile;
+    CSV.Open;
+    LogInfo(Format('CSV file loaded with %d records.', [CSV.RecordCount]));
+
+    UpdateProgress(0, CSV.RecordCount);
+
+    if not DMM.sqlTrans.Active then
+      DMM.sqlTrans.StartTransaction;
+    try
+      aMethod := GetMethodKey(rsMobileBanding);
+      CSV.First;
+      while not (CSV.Eof or stopProcess) do
+      begin
+        Reg.Clear;
+        Reg.FromCSV(CSV);
+
+        Survey := TSurvey.Create;
+        W := TWeatherLog.Create;
+        OldW := TWeatherLog.Create;
+        try
+          if (Reg.NetStation <> EmptyStr) then
+          begin
+            FStationId := GetSamplingPlotKey(Reg.NetStation);
+            if (FStationId <= 0) then
+              raise Exception.CreateFmt(rsErrorSamplingPlotNotFound, [Reg.NetStation]);
+          end
+          else
+            raise Exception.CreateFmt(rsErrorRequiredField, ['TWeatherSample.NetStation']);
+
+          if (Reg.Locality <> EmptyStr) then
+          begin
+            FSiteId := GetSiteKey(Reg.Locality);
+            if (FSiteId <= 0) then
+              raise Exception.CreateFmt(rsErrorToponymNotFound, [Reg.Locality]);
+          end
+          else
+            raise Exception.CreateFmt(rsErrorRequiredField, ['TWeatherSample.Locality']);
+
+          SurveyRepo.FindBySiteAndDate(FSiteId, aMethod, Reg.SamplingDate, '', FStationId, Survey);
+          if Survey.IsNew then
+            raise Exception.CreateFmt(rsErrorSurveyNotFound,
+              [Format('SiteId=%d; MethodId=%d; SamplingDate=%s; NetStationId=%d',
+                [FSiteId, aMethod, DateToStr(Reg.SamplingDate), FStationId])]);
+
+          if (Reg.Observer <> EmptyStr) then
+          begin
+            FObserverId := GetPersonKey(Reg.Observer);
+            if (FObserverId <= 0) then
+              raise Exception.CreateFmt(rsErrorObserverNotFound, [Reg.Observer]);
+          end;
+
+          WeatherRepo.FindBySurvey(Survey.Id, DateToStr(Reg.SamplingDate), TimeToStr(Reg.SamplingTime), FObserverId, W);
+          if not (W.IsNew) then
+          begin
+            OldW.Assign(W);
+
+            case Options.ExistingRecordPolicy of
+              erpIgnoreExisting: ;
+              erpUpdateExisting:
+              begin
+                // replace existing weather log
+                W.SurveyId := Survey.Id;
+                W.SampleDate := Reg.SamplingDate;
+                W.SampleTime := Reg.SamplingTime;
+                W.SampleMoment := Reg.SamplingMoment;
+                W.ObserverId := FObserverId;
+                W.Temperature := Reg.Temperature;
+                W.Precipitation := Reg.Precipitation;
+                W.CloudCover := Reg.CloudCover;
+                W.WindSpeedBft := Reg.WindSpeed;
+                W.RelativeHumidity := Reg.Humidity;
+                W.AtmosphericPressure := Reg.AtmosphericPressure;
+
+                WeatherRepo.Update(W);
+                LogInfo(Format('Weather record with ID=%d updated', [W.Id]));
+
+                WriteDiff(tbWeatherLogs, OldW, W, rsEditedByImport);
+              end;
+            end;
+          end
+          else
+          begin
+            // insert new weather log
+            W.SurveyId := Survey.Id;
+            W.SampleDate := Reg.SamplingDate;
+            W.SampleTime := Reg.SamplingTime;
+            W.SampleMoment := Reg.SamplingMoment;
+            W.ObserverId := FObserverId;
+            W.Temperature := Reg.Temperature;
+            W.Precipitation := Reg.Precipitation;
+            W.CloudCover := Reg.CloudCover;
+            W.WindSpeedBft := Reg.WindSpeed;
+            W.RelativeHumidity := Reg.Humidity;
+            W.AtmosphericPressure := Reg.AtmosphericPressure;
+
+            WeatherRepo.Insert(W);
+            LogInfo(Format('Weather record inserted with ID=%d', [W.Id]));
+
+            if not W.IsNew then
+              WriteRecHistory(tbWeatherLogs, haCreated, W.Id, '', '', '', rsInsertedByImport);
+          end;
+        finally
+          Survey.Free;
+          W.Free;
+          OldW.Free;
+        end;
+
+        UpdateProgress(CSV.RecNo, CSV.RecordCount);
+        Application.ProcessMessages;
+        CSV.Next;
+      end;
+
+      if stopProcess then
+      begin
+        DMM.sqlTrans.Rollback;
+        LogWarning('Banding weather log import canceled by user, transaction rolled back.');
+        if not Assigned(dlgProgress) then
+          MsgDlg(rsTitleImportFile, rsImportCanceledByUser, mtWarning);
+      end
+      else
+      begin
+        if Assigned(dlgProgress) then
+          dlgProgress.Text := rsProgressFinishing;
+        DMM.sqlTrans.CommitRetaining;
+        LogInfo('Banding weather log import finished successfully, transaction committed.');
+        if not Assigned(dlgProgress) then
+          MsgDlg(rsTitleImportFile, rsSuccessfulImportBandingWeatherLog, mtInformation);
+      end;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      LogError('Exception during banding weather log import, transaction rolled back.');
+      raise;
+    end;
+  finally
+    CSV.Close;
+    CSV.Free;
+    SurveyRepo.Free;
+    WeatherRepo.Free;
+    if Assigned(dlgProgress) then
+    begin
+      dlgProgress.Close;
+      dlgProgress.Free;
+    end;
+    LogEvent(leaFinish, 'Import banding weather log');
+  end;
+end;
+
 { TBandingEffortHelper }
 
 procedure TBandingEffortHelper.Clear;
@@ -1137,7 +1555,7 @@ begin
   Locality := EmptyStr;
   NetStation := EmptyStr;
   SamplingDate := NullDate;
-  NetNumber := 0;
+  NetNumber := EmptyStr;
   Longitude := 0.0;
   Latitude := 0.0;
   Notes := EmptyStr;
@@ -1169,7 +1587,7 @@ begin
   else
     SamplingDate := sDate;
   { 3 - NetNumber }
-  NetNumber := CSV.FieldByName('NET NUMBER').AsInteger;
+  NetNumber := CSV.FieldByName('NET NUMBER').AsString;
   { 4 - Longitude }
   if (not CSV.FieldByName('LONGITUDE').IsNull) then
     Longitude := CSV.FieldByName('LONGITUDE').AsFloat;
@@ -1220,6 +1638,65 @@ begin
   Notes := CSV.FieldByName('NOTES').AsString;
 end;
 
+{ TWeatherSampleHelper }
+
+procedure TWeatherSampleHelper.Clear;
+begin
+  Locality := EmptyStr;
+  NetStation := EmptyStr;
+  SamplingDate := NullDate;
+  SamplingTime := NullTime;
+  SamplingMoment := wmNone;
+  Observer := EmptyStr;
+  CloudCover := -1;
+  Precipitation := wpEmpty;
+  Temperature := 0;
+  WindSpeed := 0;
+  Humidity := 0;
+  AtmosphericPressure := 0;
+end;
+
+procedure TWeatherSampleHelper.FromCSV(CSV: TSdfDataSet);
+var
+  sDate: TDateTime;
+begin
+  { 0 - Locality }
+  Locality := CSV.FieldByName('LOCALITY').AsString;
+  { 1 - NetStation }
+  NetStation := CSV.FieldByName('STATION').AsString;
+  { 2 - SamplingDate }
+  if not TryParseDateFlexible(CSV.FieldByName('DATE').AsString, sDate) then
+    raise Exception.CreateFmt(rsErrorInvalidDateForField, [CSV.FieldByName('DATE').AsString, 'TWeatherSample.SamplingDate'])
+  else
+    SamplingDate := sDate;
+  { 3 - SamplingTime }
+  if (not CSV.FieldByName('TIME').IsNull) then
+    SamplingTime := CSV.FieldByName('TIME').AsDateTime;
+  { 4 - Sampling Moment }
+  if (not CSV.FieldByName('MOMENT').IsNull) then
+    SamplingMoment := StrToSampleMoment(CSV.FieldByName('MOMENT').AsString);
+  { 5 - Observer }
+  Observer := CSV.FieldByName('OBSERVER').AsString;
+  { 6 - Cloud Cover }
+  if (not CSV.FieldByName('CLOUD COVER').IsNull) then
+    CloudCover := CSV.FieldByName('CLOUD COVER').AsInteger;
+  { 7 - Precipitation }
+  if (not CSV.FieldByName('PRECIPITATION').IsNull) then
+    Precipitation := StrToPrecipitation(CSV.FieldByName('PRECIPITATION').AsString);
+  { 8 - Temperature }
+  if (not CSV.FieldByName('TEMPERATURE').IsNull) then
+    Temperature := CSV.FieldByName('TEMPERATURE').AsFloat;
+  { 9 - Wind Speed }
+  if (not CSV.FieldByName('WIND SPEED').IsNull) then
+    WindSpeed := CSV.FieldByName('WIND SPEED').AsInteger;
+  { 10 - Humidity }
+  if (not CSV.FieldByName('HUMIDITY').IsNull) then
+    Humidity := CSV.FieldByName('HUMIDITY').AsFloat;
+  { 11 - Atmospheric Pressure }
+  if (not CSV.FieldByName('ATM PRESSURE').IsNull) then
+    AtmosphericPressure := CSV.FieldByName('ATM PRESSURE').AsFloat;
+end;
+
 { TBandingJournalHelper }
 
 procedure TBandingJournalHelper.Clear;
@@ -1231,40 +1708,10 @@ begin
   EndTime := NullTime;
   Longitude := 0.0;
   Latitude := 0.0;
+  TotalNets := 0;
   Team := EmptyStr;
   Notes := EmptyStr;
-
-  Weather1.SamplingTime := NullTime;
-  Weather1.SamplingMoment := wmNone;
-  Weather1.CloudCover := -1;
-  Weather1.Precipitation := wpEmpty;
-  Weather1.Temperature := 0.0;
-  Weather1.WindSpeed := 0;
-  Weather1.Humidity := 0.0;
-
-  Weather2.SamplingTime := NullTime;
-  Weather2.SamplingMoment := wmNone;
-  Weather2.CloudCover := -1;
-  Weather2.Precipitation := wpEmpty;
-  Weather2.Temperature := 0.0;
-  Weather2.WindSpeed := 0;
-  Weather2.Humidity := 0.0;
-
-  Weather3.SamplingTime := NullTime;
-  Weather3.SamplingMoment := wmNone;
-  Weather3.CloudCover := -1;
-  Weather3.Precipitation := wpEmpty;
-  Weather3.Temperature := 0.0;
-  Weather3.WindSpeed := 0;
-  Weather3.Humidity := 0.0;
-
-  Weather4.SamplingTime := NullTime;
-  Weather4.SamplingMoment := wmNone;
-  Weather4.CloudCover := -1;
-  Weather4.Precipitation := wpEmpty;
-  Weather4.Temperature := 0.0;
-  Weather4.WindSpeed := 0;
-  Weather4.Humidity := 0.0;
+  NetCheckingBouts := EmptyStr;
 end;
 
 procedure TBandingJournalHelper.FromCSV(CSV: TSdfDataSet);
@@ -1292,94 +1739,15 @@ begin
   { 6 - Latitude }
   if (not CSV.FieldByName('LATITUDE').IsNull) then
     Latitude := CSV.FieldByName('LATITUDE').AsFloat;
-  { 7 - Team }
+  { 7 - Total Nets }
+  if (not CSV.FieldByName('TOTAL NETS').IsNull) then
+    TotalNets := CSV.FieldByName('TOTAL NETS').AsInteger;
+  { 8 - Team }
   Team := CSV.FieldByName('TEAM').AsString;
-  { 8 - Notes }
+  { 9 - Notes }
   Notes := CSV.FieldByName('NOTES').AsString;
-  { 9 - Weather Time 1 }
-  if (not CSV.FieldByName('WEATHER TIME 1').IsNull) then
-    Weather1.SamplingTime := CSV.FieldByName('WEATHER TIME 1').AsDateTime;
-  { 10 - Weather Moment 1 }
-  if (not CSV.FieldByName('WEATHER MOMENT 1').IsNull) then
-    Weather1.SamplingMoment := StrToSampleMoment(CSV.FieldByName('WEATHER MOMENT 1').AsString);
-  { 11 - Cloud Cover 1 }
-  if (not CSV.FieldByName('CLOUD COVER 1').IsNull) then
-    Weather1.CloudCover := CSV.FieldByName('CLOUD COVER 1').AsInteger;
-  { 12 - Precipitation 1 }
-  if (not CSV.FieldByName('PRECIPITATION 1').IsNull) then
-    Weather1.Precipitation := StrToPrecipitation(CSV.FieldByName('PRECIPITATION 1').AsString);
-  { 13 - Temperature 1 }
-  if (not CSV.FieldByName('TEMPERATURE 1').IsNull) then
-    Weather1.Temperature := CSV.FieldByName('TEMPERATURE 1').AsFloat;
-  { 14 - Wind Speed 1 }
-  if (not CSV.FieldByName('WIND SPEED 1').IsNull) then
-    Weather1.WindSpeed := CSV.FieldByName('WIND SPEED 1').AsInteger;
-  { 15 - Humidity 1 }
-  if (not CSV.FieldByName('HUMIDITY 1').IsNull) then
-    Weather1.Humidity := CSV.FieldByName('HUMIDITY 1').AsFloat;
-  { 16 - Weather Time 2 }
-  if (not CSV.FieldByName('WEATHER TIME 2').IsNull) then
-    Weather2.SamplingTime := CSV.FieldByName('WEATHER TIME 2').AsDateTime;
-  { 17 - Weather Moment 2 }
-  if (not CSV.FieldByName('WEATHER MOMENT 2').IsNull) then
-    Weather2.SamplingMoment := StrToSampleMoment(CSV.FieldByName('WEATHER MOMENT 2').AsString);
-  { 18 - Cloud Cover 2 }
-  if (not CSV.FieldByName('CLOUD COVER 2').IsNull) then
-    Weather2.CloudCover := CSV.FieldByName('CLOUD COVER 2').AsInteger;
-  { 19 - Precipitation 2 }
-  if (not CSV.FieldByName('PRECIPITATION 2').IsNull) then
-    Weather2.Precipitation := StrToPrecipitation(CSV.FieldByName('PRECIPITATION 2').AsString);
-  { 20 -Temperature 2 }
-  if (not CSV.FieldByName('TEMPERATURE 2').IsNull) then
-    Weather2.Temperature := CSV.FieldByName('TEMPERATURE 2').AsFloat;
-  { 21 - Wind Speed 2 }
-  if (not CSV.FieldByName('WIND SPEED 2').IsNull) then
-    Weather2.WindSpeed := CSV.FieldByName('WIND SPEED 2').AsInteger;
-  { 22 - Humidity 2 }
-  if (not CSV.FieldByName('HUMIDITY 2').IsNull) then
-    Weather2.Humidity := CSV.FieldByName('HUMIDITY 2').AsFloat;
-  { 23 - Weather Time 3 }
-  if (not CSV.FieldByName('WEATHER TIME 3').IsNull) then
-    Weather3.SamplingTime := CSV.FieldByName('WEATHER TIME 3').AsDateTime;
-  { 24 - Weather Moment 3 }
-  if (not CSV.FieldByName('WEATHER MOMENT 3').IsNull) then
-    Weather3.SamplingMoment := StrToSampleMoment(CSV.FieldByName('WEATHER MOMENT 3').AsString);
-  { 25 - Cloud Cover 3 }
-  if (not CSV.FieldByName('CLOUD COVER 3').IsNull) then
-    Weather3.CloudCover := CSV.FieldByName('CLOUD COVER 3').AsInteger;
-  { 26 - Precipitation 3 }
-  if (not CSV.FieldByName('PRECIPITATION 3').IsNull) then
-    Weather3.Precipitation := StrToPrecipitation(CSV.FieldByName('PRECIPITATION 3').AsString);
-  { 27 - Temperature 3 }
-  if (not CSV.FieldByName('TEMPERATURE 3').IsNull) then
-    Weather3.Temperature := CSV.FieldByName('TEMPERATURE 3').AsFloat;
-  { 28 - Wind Speed 3 }
-  if (not CSV.FieldByName('WIND SPEED 3').IsNull) then
-    Weather3.WindSpeed := CSV.FieldByName('WIND SPEED 3').AsInteger;
-  { 29 - Humidity 3 }
-  if (not CSV.FieldByName('HUMIDITY 3').IsNull) then
-    Weather3.Humidity := CSV.FieldByName('HUMIDITY 3').AsFloat;
-  { 30 - Weather Time 4 }
-  if (not CSV.FieldByName('WEATHER TIME 4').IsNull) then
-    Weather4.SamplingTime := CSV.FieldByName('WEATHER TIME 4').AsDateTime;
-  { 31 - Weather Moment 4 }
-  if (not CSV.FieldByName('WEATHER MOMENT 4').IsNull) then
-    Weather4.SamplingMoment := StrToSampleMoment(CSV.FieldByName('WEATHER MOMENT 4').AsString);
-  { 32 - Cloud Cover 4 }
-  if (not CSV.FieldByName('CLOUD COVER 4').IsNull) then
-    Weather4.CloudCover := CSV.FieldByName('CLOUD COVER 4').AsInteger;
-  { 33 - Precipitation 4 }
-  if (not CSV.FieldByName('PRECIPITATION 4').IsNull) then
-    Weather4.Precipitation := StrToPrecipitation(CSV.FieldByName('PRECIPITATION 4').AsString);
-  { 34 - Temperature 4 }
-  if (not CSV.FieldByName('TEMPERATURE 4').IsNull) then
-    Weather4.Temperature := CSV.FieldByName('TEMPERATURE 4').AsFloat;
-  { 35 - Wind Speed 4 }
-  if (not CSV.FieldByName('WIND SPEED 4').IsNull) then
-    Weather4.WindSpeed := CSV.FieldByName('WIND SPEED 4').AsInteger;
-  { 36 - Humidity 4 }
-  if (not CSV.FieldByName('HUMIDITY 4').IsNull) then
-    Weather4.Humidity := CSV.FieldByName('HUMIDITY 4').AsFloat;
+  { 10 - Net Checking Bouts }
+  NetCheckingBouts := CSV.FieldByName('NET CHECKING BOUTS').AsString;
 end;
 
 { TBandingDataHelper }

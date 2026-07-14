@@ -171,6 +171,7 @@ begin
   pGenerateFiles.Border.Color := ActiveTheme.System.CautionFG;
 
   lblTitleImportFiles.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblTitleImportSettings.Font.Color := ActiveTheme.Interactive.WindowTitle;
   lblTitleImportFinished.Font.Color := ActiveTheme.Interactive.WindowTitle;
 end;
 
@@ -207,7 +208,7 @@ begin
           OpenDocument(eggsFilename);
       except
         on E: Exception do
-          AppendLog(rsTitleError + ': ' + E.Message);
+          MsgDlg(rsTitleError, Format(rsErrorGeneratingFiles, [E.Message]), mtError);
       end;
     finally
       FreeAndNil(Csv);
@@ -429,7 +430,6 @@ begin
   sbClose.Visible := True;
   //sbRun.Visible := True;
   UpdateButtons;
-
 end;
 
 procedure TdlgImportNests.sbSaveLogClick(Sender: TObject);

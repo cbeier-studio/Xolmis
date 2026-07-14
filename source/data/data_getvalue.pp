@@ -783,7 +783,9 @@ begin
   try
     DataBase := DMM.sqlCon;
     Clear;
-    Add('SELECT taxon_id, valid_id FROM zoo_taxa WHERE scientific_name = :aname');
+    Add('SELECT taxon_id, valid_id FROM zoo_taxa');
+    Add('WHERE (scientific_name = :aname)');
+    Add('OR (quick_code = :aname)');
     ParamByName('aname').AsString := aTaxonName;
     // GravaLogSQL(SQL);
     Open;

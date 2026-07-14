@@ -161,6 +161,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorInvalidDate = 'Invalid date. Check if it was typed correctly.';
     rsErrorConnectingDatabase = 'Unable to connect to database. Check if the connection settings and the database path are correct.';
     rsErrorGeneratingMap = 'Error generating map.';
+    rsErrorGeneratingFiles = 'Error generating files: %s';
     rsErrorFolderNotFound = 'Directory %s not found.';
     rsErrorFileNotFound = 'File %s not found.';
     rsErrorImporting = 'An error occurred while importing: %s';
@@ -240,6 +241,8 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorObserverNotFound = 'Observer "%s" not found.';
     rsErrorToponymNotFound = 'Toponym "%s" not found.';
     rsErrorNestNotFound = 'Nest "%s" not found.';
+    rsErrorSamplingPlotNotFound = 'Sampling plot "%s" not found.';
+    rsErrorSurveyNotFound = 'Survey "%s" not found.';
 
     { Warning messages }
     rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';
@@ -264,6 +267,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsProgressImportingCSVFile = 'Importing CSV file...';
     rsProgressRecords = 'Processing %d of %d records...';
     rsProgressImportBandingJournal = 'Importing banding journals...';
+    rsProgressImportBandingWeatherLog = 'Importing banding weather log...';
     rsProgressImportBandingEffort = 'Importing banding effort...';
     rsProgressImportCaptures = 'Importing captures...';
     rsFinishedImporting = 'Finished importing!';
@@ -287,6 +291,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsSuccessfulImportEbird = 'eBird file imported successfully!';
     rsSuccessfulImportBandingJournal = 'Banding journals imported successfully!';
     rsSuccessfulImportBandingEffort = 'Banding effort imported successfully!';
+    rsSuccessfulImportBandingWeatherLog = 'Banding weather log imported successfully!';
     rsSuccessfulImportCaptures = 'Captures file imported successfully!';
     rsSuccessfulImportNests = 'Nests imported successfully!';
     rsSuccessfulImportNestRevisions = 'Nest revisions imported successfully!';

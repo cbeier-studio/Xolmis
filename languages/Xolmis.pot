@@ -5190,6 +5190,16 @@ msgctxt "tdlgimportcaptures.ejournalfile.texthint"
 msgid "Select a file..."
 msgstr ""
 
+#: tdlgimportcaptures.eweatherfile.hint
+msgctxt "tdlgimportcaptures.eweatherfile.hint"
+msgid "Select file"
+msgstr ""
+
+#: tdlgimportcaptures.eweatherfile.texthint
+msgctxt "tdlgimportcaptures.eweatherfile.texthint"
+msgid "Select a file..."
+msgstr ""
+
 #: tdlgimportcaptures.lblcapturefile.caption
 msgctxt "tdlgimportcaptures.lblcapturefile.caption"
 msgid "Captures"
@@ -5197,6 +5207,11 @@ msgstr ""
 
 #: tdlgimportcaptures.lbleffortfile.caption
 msgid "Field efforts"
+msgstr ""
+
+#: tdlgimportcaptures.lblexistingrecordpolicy.caption
+msgctxt "tdlgimportcaptures.lblexistingrecordpolicy.caption"
+msgid "Existing records policy"
 msgstr ""
 
 #: tdlgimportcaptures.lblgeneratefiles.caption
@@ -5218,9 +5233,28 @@ msgctxt "tdlgimportcaptures.lbltitleimportfiles.caption"
 msgid "Files to import"
 msgstr ""
 
+#: tdlgimportcaptures.lbltitleimportsettings.caption
+msgctxt "tdlgimportcaptures.lbltitleimportsettings.caption"
+msgid "Import settings"
+msgstr ""
+
+#: tdlgimportcaptures.lblunknowntaxa.caption
+msgctxt "tdlgimportcaptures.lblunknowntaxa.caption"
+msgid "Unknown taxon found"
+msgstr ""
+
+#: tdlgimportcaptures.lblweatherfile.caption
+msgid "Weather log"
+msgstr ""
+
 #: tdlgimportcaptures.savedlg.title
 msgctxt "tdlgimportcaptures.savedlg.title"
 msgid "Generate files as"
+msgstr ""
+
+#: tdlgimportcaptures.savelogdlg.title
+msgctxt "tdlgimportcaptures.savelogdlg.title"
+msgid "Save log as"
 msgstr ""
 
 #: tdlgimportcaptures.sbcancel.caption
@@ -5243,6 +5277,11 @@ msgctxt "tdlgimportcaptures.sbclearjournalfile.hint"
 msgid "Clear field"
 msgstr ""
 
+#: tdlgimportcaptures.sbclearweatherfile.hint
+msgctxt "tdlgimportcaptures.sbclearweatherfile.hint"
+msgid "Clear field"
+msgstr ""
+
 #: tdlgimportcaptures.sbclose.caption
 msgctxt "tdlgimportcaptures.sbclose.caption"
 msgid "Close"
@@ -5256,6 +5295,11 @@ msgstr ""
 #: tdlgimportcaptures.sbrun.caption
 msgctxt "tdlgimportcaptures.sbrun.caption"
 msgid "Import"
+msgstr ""
+
+#: tdlgimportcaptures.sbsavelog.caption
+msgctxt "tdlgimportcaptures.sbsavelog.caption"
+msgid "Save log"
 msgstr ""
 
 #: tdlgimportnests.btngeneratefiles.caption
@@ -16140,6 +16184,11 @@ msgctxt "utils_locale.rserrorfound"
 msgid "<p><b>%d error</b> found! Please fix it before proceeding.</p>"
 msgstr ""
 
+#: utils_locale.rserrorgeneratingfiles
+#, object-pascal-format
+msgid "Error generating files: %s"
+msgstr ""
+
 #: utils_locale.rserrorgeneratingmap
 msgctxt "utils_locale.rserrorgeneratingmap"
 msgid "Error generating map."
@@ -16363,6 +16412,11 @@ msgctxt "utils_locale.rserrorrewritinghierarchy"
 msgid "Error rewriting the hierarchy. All rewriting changes were discarded."
 msgstr ""
 
+#: utils_locale.rserrorsamplingplotnotfound
+#, object-pascal-format
+msgid "Sampling plot \"%s\" not found."
+msgstr ""
+
 #: utils_locale.rserrorsavingmediapaths
 #, object-pascal-format
 msgid "Error saving the media paths: %s"
@@ -16376,6 +16430,11 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rserrorsfound"
 msgid "<p><b>%d errors</b> found! Please fix it before proceeding.</p>"
+msgstr ""
+
+#: utils_locale.rserrorsurveynotfound
+#, object-pascal-format
+msgid "Survey \"%s\" not found."
 msgstr ""
 
 #: utils_locale.rserrortablenotfound
@@ -18856,6 +18915,10 @@ msgctxt "utils_locale.rsprogressimportbandingjournal"
 msgid "Importing banding journals..."
 msgstr ""
 
+#: utils_locale.rsprogressimportbandingweatherlog
+msgid "Importing banding weather log..."
+msgstr ""
+
 #: utils_locale.rsprogressimportcaptures
 msgctxt "utils_locale.rsprogressimportcaptures"
 msgid "Importing captures..."
@@ -19697,6 +19760,10 @@ msgstr ""
 #: utils_locale.rssuccessfulimportbandingjournal
 msgctxt "utils_locale.rssuccessfulimportbandingjournal"
 msgid "Banding journals imported successfully!"
+msgstr ""
+
+#: utils_locale.rssuccessfulimportbandingweatherlog
+msgid "Banding weather log imported successfully!"
 msgstr ""
 
 #: utils_locale.rssuccessfulimportcaptures
