@@ -209,18 +209,6 @@ O Xolmis suporta a importação de dados exportados da plataforma **eBird** em f
 
 Esse recurso permite integrar dados de ciência cidadã ao seu próprio banco de dados de pesquisa.
 
-## Dados de anilhamento
-
-![Diálogo de importação de dados de anilhamento](img/import-banding-data.png)
-
-Selecione no menu principal **Arquivo → Importar → Dados de anilhamento**. Veja detalhes em [Importando dados de anilhamento](importing-banding-data.md).
-
-## Dados de ninhos
-
-![Diálogo de importação de dados de ninhos](img/import-nesting-data.png)
-
-Selecione no menu principal **Arquivo → Importar → Dados de ninhos**. Veja detalhes em [Importando dados de nidificação](importing-nesting-data.md).
-
 ## Coordenadas geográficas
 
 Arquivos contendo coordenadas geográficas podem ser importados e usados em várias tabelas do Xolmis via [GeoAssist](adding-and-editing-data.md#geoassist). Isso permite integrar informações espaciais diretamente aos registros ornitológicos.

@@ -9101,9 +9101,6 @@ object frmMain: TfrmMain
         object mmfImportWizard: TMenuItem
           Action = actImportWizard
         end
-        object Separator1: TMenuItem
-          Caption = '-'
-        end
         object mmfImportXolmisMobile: TMenuItem
           Action = actImportXolmisMobile
         end
@@ -9114,15 +9111,6 @@ object frmMain: TfrmMain
           Action = actImportEbird
         end
         object Separator25: TMenuItem
-          Caption = '-'
-        end
-        object mmfImportCaptures: TMenuItem
-          Action = actImportCaptures
-        end
-        object mmfImportNests: TMenuItem
-          Action = actImportNests
-        end
-        object Separator26: TMenuItem
           Caption = '-'
         end
         object mmfImportCoordinates: TMenuItem

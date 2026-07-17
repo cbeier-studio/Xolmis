@@ -209,18 +209,6 @@ Xolmis supports importing data exported from the **eBird** platform in **CSV** f
 
 This feature allows you to integrate citizen science data with your own research database.
 
-## Banding data
-
-![Import banding data dialog](img/import-banding-data.png)
-
-Select in the main menu **File → Import → Banding Data**. See details in [Importing Banding Data](importing-banding-data.md).
-
-## Nests data
-
-![Import nests data dialog](img/import-nesting-data.png)
-
-Select in the main menu **File → Import → Nests Data**. See details in [Importing Nesting Data](importing-nesting-data.md).
-
 ## Geographical coordinates
 
 Files containing geographical coordinates can be imported and used across various tables in Xolmis via the [GeoAssist](adding-and-editing-data.md#geoassist). This allows you to integrate spatial information directly into your ornithological records.

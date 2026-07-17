@@ -160,8 +160,6 @@ type
     mmfExport: TMenuItem;
     mmfImport: TMenuItem;
     mmfImportEbird: TMenuItem;
-    mmfImportCaptures: TMenuItem;
-    mmfImportNests: TMenuItem;
     mmfImportWizard: TMenuItem;
     mmEntities: TMenuItem;
     mmfSettings: TMenuItem;
@@ -212,7 +210,6 @@ type
     sbNotifications: TSpeedButton;
     sbInsertRecord: TSpeedButton;
     scrollNotifications: TScrollBox;
-    Separator1: TMenuItem;
     Separator11: TMenuItem;
     Separator12: TMenuItem;
     Separator13: TMenuItem;
@@ -227,7 +224,6 @@ type
     Separator23: TMenuItem;
     Separator24: TMenuItem;
     Separator25: TMenuItem;
-    Separator26: TMenuItem;
     Separator27: TMenuItem;
     Separator29: TMenuItem;
     Separator3: TMenuItem;
