@@ -297,8 +297,8 @@ begin
         Result := True;
       end;
     Exit;
-  end;
-
+  end
+  else
   if ARecord is TNest then
   begin
     RNest := TNest(ARecord);
@@ -315,8 +315,8 @@ begin
         Result := True;
       end;
     Exit;
-  end;
-
+  end
+  else
   if ARecord is TSpecimen then
   begin
     RSpecimen := TSpecimen(ARecord);
@@ -343,8 +343,8 @@ begin
         Result := True;
       end;
     Exit;
-  end;
-
+  end
+  else
   if ARecord is TSighting then
   begin
     RSighting := TSighting(ARecord);
@@ -371,8 +371,8 @@ begin
         Result := True;
       end;
     Exit;
-  end;
-
+  end
+  else
   if ARecord is TSurvey then
   begin
     RSurvey := TSurvey(ARecord);
@@ -399,8 +399,8 @@ begin
         Result := True;
       end;
     Exit;
-  end;
-
+  end
+  else
   if ARecord is TVegetation then
   begin
     RVegetation := TVegetation(ARecord);
@@ -417,8 +417,8 @@ begin
         Result := True;
       end;
     Exit;
-  end;
-
+  end
+  else
   if ARecord is TNetEffort then
   begin
     RNetEffort := TNetEffort(ARecord);
@@ -455,8 +455,8 @@ begin
         Result := True;
       end;
     Exit;
-  end;
-
+  end
+  else
   if ARecord is TCapture then
   begin
     RCapture := TCapture(ARecord);

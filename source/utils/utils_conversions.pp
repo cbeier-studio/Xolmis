@@ -90,6 +90,10 @@ uses
   function StrToUserRank(const AValue: String): TUserRank;
   function StrToVideoType(const AValue: String): TVideoType;
 
+  function BodySideToStr(const AValue: TBodySide): String;
+  function CaptureTypeToStr(const AValue: TCaptureType): String;
+  function FeatherTraitToStr(const AValue: TFeatherTrait): String;
+
 implementation
 
 uses utils_global, utils_locale;
@@ -1456,6 +1460,48 @@ begin
     Result := vtOther
   else
     Result := vtUnknown;
+end;
+
+function FeatherTraitToStr(const AValue: TFeatherTrait): String;
+begin
+  Result := EmptyStr;
+
+  case AValue of
+    ftrBody:          Result := 'B';
+    ftrPrimary:       Result := 'P';
+    ftrSecondary:     Result := 'S';
+    ftrRectrix:       Result := 'R';
+    ftrPrimaryCovert: Result := 'PC';
+    ftrGreatCovert:   Result := 'GC';
+    ftrMedianCovert:  Result := 'MC';
+    ftrLesserCovert:  Result := 'LC';
+    ftrCarpalCovert:  Result := 'CC';
+    ftrAlula:         Result := 'AL';
+  end;
+end;
+
+function BodySideToStr(const AValue: TBodySide): String;
+begin
+  Result := EmptyStr;
+
+  case AValue of
+    bsdNotApplicable: Result := '';
+    bsdRight:         Result := 'R';
+    bsdLeft:          Result := 'L';
+  end;
+end;
+
+function CaptureTypeToStr(const AValue: TCaptureType): String;
+begin
+  Result := EmptyStr;
+
+  case AValue of
+    cptNew:         Result := 'N';
+    cptRecapture:   Result := 'R';
+    cptSameDay:     Result := 'S';
+    cptChangeBand:  Result := 'C';
+    cptUnbanded:    Result := 'U';
+  end;
 end;
 
 end.

@@ -1081,7 +1081,7 @@ var
   ext: TSize;
 begin
   // Screen coordinates of the GPS point
-  P := TMapView(Sender).LonLatToScreen(APoint.RealPoint);
+  P := TMapView(Sender).LatLonToScreen(APoint.RealPoint);
 
   // Draw the GPS point with MapMarker bitmap
   //img := TBitmap.Create;

@@ -391,6 +391,8 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindByTaxonTrait(const aTaxonId, aLocalityId: Integer; const aFeatherTrait: String;
+      const aFeatherNumber: Integer; const aBodySide: String; const aDate: TDate; const aTime: TTime; E: TXolmisRecord);
     procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
@@ -781,6 +783,45 @@ begin
     ParamByName('aside').AsString := ARow.Values['body_side'];
     ParamByName('adate').AsDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
     ParamByName('atime').AsTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TFeatherRepository.FindByTaxonTrait(const aTaxonId, aLocalityId: Integer; const aFeatherTrait: String;
+  const aFeatherNumber: Integer; const aBodySide: String; const aDate: TDate; const aTime: TTime; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TFeather) then
+    raise Exception.Create('FindByTaxonTrait: Expected TFeather');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.Feathers.SelectTable(swcNone));
+    Add('WHERE (taxon_id = :ataxon)');
+    Add('AND (locality_id = :alocality)');
+    Add('AND (feather_trait = :atrait)');
+    Add('AND (feather_number = :anumber)');
+    Add('AND (body_side = :aside)');
+    Add('AND (date(sample_date) = date(:adate))');
+    Add('AND (time(sample_time) = time(:atime))');
+
+    ParamByName('ataxon').AsInteger := aTaxonId;
+    ParamByName('alocality').AsInteger := aLocalityId;
+    ParamByName('atrait').AsString := aFeatherTrait;
+    ParamByName('anumber').AsInteger := aFeatherNumber;
+    ParamByName('aside').AsString := aBodySide;
+    ParamByName('adate').AsDate := aDate;
+    ParamByName('atime').AsTime := aTime;
     Open;
     if not EOF then
     begin

@@ -380,41 +380,34 @@ end;
 procedure TFieldMapping.FromJSON(const S: String);
 var
   Obj: TJSONObject;
-  Parser: TJSONParser;
   Tmp: string;
 begin
-  Parser := TJSONParser.Create(S);
-  try
-    Obj := Parser.Parse as TJSONObject;
+  Obj := GetJSON(S) as TJSONObject;
 
-    SourceField := Obj.Get('SourceField', '');
-    TargetField := Obj.Get('TargetField', '');
-    DataType := TSearchDataType(Obj.Get('DataType', 0));
-    Import := Obj.Get('Import', False);
-    LookupTable := TTableType(Obj.Get('LookupTable', 0));
-    LookupField := Obj.Get('LookupField', '');
-    Transformations := StringToTransformations(Obj.Get('Transformations', ''));
-    IsCorrespondingKey := Obj.Get('IsCorrespondingKey', False);
-    TypeErrorHandling := TTypeErrorHandling(Obj.Get('TypeErrorHandling', 0));
-    NullHandling := TNullHandling(Obj.Get('NullHandling', 0));
-    ArrayHandling := TArrayHandling(Obj.Get('ArrayHandling', 0));
+  SourceField := Obj.Get('SourceField', '');
+  TargetField := Obj.Get('TargetField', '');
+  DataType := TSearchDataType(Obj.Get('DataType', 0));
+  Import := Obj.Get('Import', False);
+  LookupTable := TTableType(Obj.Get('LookupTable', 0));
+  LookupField := Obj.Get('LookupField', '');
+  Transformations := StringToTransformations(Obj.Get('Transformations', ''));
+  IsCorrespondingKey := Obj.Get('IsCorrespondingKey', False);
+  TypeErrorHandling := TTypeErrorHandling(Obj.Get('TypeErrorHandling', 0));
+  NullHandling := TNullHandling(Obj.Get('NullHandling', 0));
+  ArrayHandling := TArrayHandling(Obj.Get('ArrayHandling', 0));
 
-    Tmp := Obj.Get('DefaultValue', 'null');
-    if Tmp = 'null' then
-      DefaultValue := Null
-    else
-      DefaultValue := Tmp;
+  Tmp := Obj.Get('DefaultValue', 'null');
+  if Tmp = 'null' then
+    DefaultValue := Null
+  else
+    DefaultValue := Tmp;
 
-    ReplaceCharFrom := Obj.Get('ReplaceCharFrom', '');
-    ReplaceCharTo := Obj.Get('ReplaceCharTo', '');
-    RoundPrecision := Obj.Get('RoundPrecision', 0);
-    ScaleOperation := TScaleOperation(Obj.Get('ScaleOperation', 0));
-    ScaleSize := Obj.Get('ScaleSize', 1.0);
-    CoordinatesFormat := TSourceCoordinatesFormat(Obj.Get('CoordinatesFormat', 0));
-
-  finally
-    Parser.Free;
-  end;
+  ReplaceCharFrom := Obj.Get('ReplaceCharFrom', '');
+  ReplaceCharTo := Obj.Get('ReplaceCharTo', '');
+  RoundPrecision := Obj.Get('RoundPrecision', 0);
+  ScaleOperation := TScaleOperation(Obj.Get('ScaleOperation', 0));
+  ScaleSize := Obj.Get('ScaleSize', 1.0);
+  CoordinatesFormat := TSourceCoordinatesFormat(Obj.Get('CoordinatesFormat', 0));
 end;
 
 function TFieldMapping.HasTransformation(T: TValueTransformation): Boolean;
@@ -1037,58 +1030,52 @@ end;
 
 procedure TFieldMapper.FromJSON(const S: String);
 var
-  Parser: TJSONParser;
   Obj, OptObj: TJSONObject;
   Arr: TJSONArray;
   Data: TJSONData;
   I: Integer;
   Mapping: TFieldMapping;
 begin
-  Parser := TJSONParser.Create(S);
-  try
-    Obj := Parser.Parse as TJSONObject;
+  Obj := GetJSON(S) as TJSONObject;
 
-    FTableType := TablesDict.KeyData[Obj.Get('TableType', '')];
+  FTableType := TablesDict.KeyData[Obj.Get('TableType', '')];
 
-    Data := Obj.Find('Options');
-    if Assigned(Data) and (Data.JSONType = jtObject) then
+  Data := Obj.Find('Options');
+  if Assigned(Data) and (Data.JSONType = jtObject) then
+  begin
+    OptObj := TJSONObject(Data);
+    FOptions.ExistingRecordPolicy := TExistingRecordPolicy(OptObj.Get('ExistingRecordPolicy', Ord(FOptions.ExistingRecordPolicy)));
+    FOptions.ErrorHandling := TImportErrorHandling(OptObj.Get('ErrorHandling', Ord(FOptions.ErrorHandling)));
+    FOptions.Encoding := OptObj.Get('Encoding', FOptions.Encoding);
+    FOptions.Delimiter := OptObj.Get('Delimiter', FOptions.Delimiter)[1];
+    FOptions.HasHeader := OptObj.Get('HasHeader', FOptions.HasHeader);
+    FOptions.QuoteChar := OptObj.Get('QuoteChar', FOptions.QuoteChar)[1];
+    FOptions.TrimFields := OptObj.Get('TrimFields', FOptions.TrimFields);
+    FOptions.SkipEmptyLines := OptObj.Get('SkipEmptyLines', FOptions.SkipEmptyLines);
+    FOptions.ForceNDJSON := OptObj.Get('ForceNDJSON', FOptions.ForceNDJSON);
+    FOptions.IgnoreNulls := OptObj.Get('IgnoreNulls', FOptions.IgnoreNulls);
+    FOptions.RecordsPath := OptObj.Get('RecordsPath', FOptions.RecordsPath);
+    FOptions.RootNodeName := OptObj.Get('RootNodeName', FOptions.RootNodeName);
+    FOptions.RecordNodeName := OptObj.Get('RecordNodeName', FOptions.RecordNodeName);
+    FOptions.SheetName := OptObj.Get('SheetName', FOptions.SheetName);
+    FOptions.SheetIndex := OptObj.Get('SheetIndex', FOptions.SheetIndex);
+    FOptions.DateFormat := OptObj.Get('DateFormat', FOptions.DateFormat);
+    FOptions.TimeFormat := OptObj.Get('TimeFormat', FOptions.TimeFormat);
+    FOptions.DecimalSeparator := OptObj.Get('DecimalSeparator', FOptions.DecimalSeparator)[1];
+    FOptions.SRID := OptObj.Get('SRID', FOptions.SRID);
+  end;
+
+  Data := Obj.Find('Mappings');
+  if Assigned(Data) and (Data.JSONType = jtArray) then
+  begin
+    Arr := TJSONArray(Data);
+    FMap.Clear;
+    for I := 0 to Arr.Count - 1 do
     begin
-      OptObj := TJSONObject(Data);
-      FOptions.ExistingRecordPolicy := TExistingRecordPolicy(OptObj.Get('ExistingRecordPolicy', Ord(FOptions.ExistingRecordPolicy)));
-      FOptions.ErrorHandling := TImportErrorHandling(OptObj.Get('ErrorHandling', Ord(FOptions.ErrorHandling)));
-      FOptions.Encoding := OptObj.Get('Encoding', FOptions.Encoding);
-      FOptions.Delimiter := OptObj.Get('Delimiter', FOptions.Delimiter)[1];
-      FOptions.HasHeader := OptObj.Get('HasHeader', FOptions.HasHeader);
-      FOptions.QuoteChar := OptObj.Get('QuoteChar', FOptions.QuoteChar)[1];
-      FOptions.TrimFields := OptObj.Get('TrimFields', FOptions.TrimFields);
-      FOptions.SkipEmptyLines := OptObj.Get('SkipEmptyLines', FOptions.SkipEmptyLines);
-      FOptions.ForceNDJSON := OptObj.Get('ForceNDJSON', FOptions.ForceNDJSON);
-      FOptions.IgnoreNulls := OptObj.Get('IgnoreNulls', FOptions.IgnoreNulls);
-      FOptions.RecordsPath := OptObj.Get('RecordsPath', FOptions.RecordsPath);
-      FOptions.RootNodeName := OptObj.Get('RootNodeName', FOptions.RootNodeName);
-      FOptions.RecordNodeName := OptObj.Get('RecordNodeName', FOptions.RecordNodeName);
-      FOptions.SheetName := OptObj.Get('SheetName', FOptions.SheetName);
-      FOptions.SheetIndex := OptObj.Get('SheetIndex', FOptions.SheetIndex);
-      FOptions.DateFormat := OptObj.Get('DateFormat', FOptions.DateFormat);
-      FOptions.TimeFormat := OptObj.Get('TimeFormat', FOptions.TimeFormat);
-      FOptions.DecimalSeparator := OptObj.Get('DecimalSeparator', FOptions.DecimalSeparator)[1];
-      FOptions.SRID := OptObj.Get('SRID', FOptions.SRID);
+      Mapping := TFieldMapping.Create;
+      Mapping.FromJSON(Arr.Items[I].AsJSON);
+      FMap.Add(Mapping);
     end;
-
-    Data := Obj.Find('Mappings');
-    if Assigned(Data) and (Data.JSONType = jtArray) then
-    begin
-      Arr := TJSONArray(Data);
-      FMap.Clear;
-      for I := 0 to Arr.Count - 1 do
-      begin
-        Mapping := TFieldMapping.Create;
-        Mapping.FromJSON(Arr.Items[I].AsJSON);
-        FMap.Add(Mapping);
-      end;
-    end;
-  finally
-    Parser.Free;
   end;
 end;
 

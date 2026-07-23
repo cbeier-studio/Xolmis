@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, EditBtn,
-  ATShapeLineBGRA, BCPanel, ColorSpeedButton, BCButton, ATLinkLabel;
+  ATShapeLineBGRA, BCPanel;
 
 type
 

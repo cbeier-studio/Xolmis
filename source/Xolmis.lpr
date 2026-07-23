@@ -51,8 +51,6 @@ uses
   io_xlsx,
   io_ods,
   io_ebird_csv,
-  io_banding_csv,
-  io_nesting_csv,
   { Main form and Data modules }
   udm_main,
   udm_grid,

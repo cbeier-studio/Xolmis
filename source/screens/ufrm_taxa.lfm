@@ -30,7 +30,7 @@ object frmTaxa: TfrmTaxa
     Columns = <    
       item
         Title.Caption = 'Taxon'
-        Width = 287
+        Width = 308
         FieldName = 'scientific_name'
       end    
       item
@@ -923,7 +923,7 @@ object frmTaxa: TfrmTaxa
               Columns = <              
                 item
                   Title.Caption = 'Synonyms'
-                  Width = 358
+                  Width = 375
                   FieldName = 'full_name'
                 end>
               Constraints.MinHeight = 140
@@ -946,7 +946,7 @@ object frmTaxa: TfrmTaxa
               Columns = <              
                 item
                   Title.Caption = 'Subordinate taxa'
-                  Width = 358
+                  Width = 375
                   FieldName = 'full_name'
                 end>
               Constraints.MinHeight = 140

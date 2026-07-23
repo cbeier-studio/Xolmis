@@ -129,6 +129,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindBySpecimen(const aSpecimenId, aPersonId: Integer; E: TXolmisRecord);
     procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
@@ -192,6 +193,8 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindBySpecimen(const aSpecimenId, aPreparerId: Integer; const aAccession, aType, aDate: String;
+      const aDuplicateSeq: Integer; E: TXolmisRecord);
     procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
@@ -517,6 +520,43 @@ begin
     ParamByName('aduplicate').AsInteger := StrToIntDef(ARow.Values['duplicate_seq'], 0);
     ParamByName('atype').AsString := ARow.Values['accession_type'];
     ParamByName('adate').AsDate := StrToDateDef(ARow.Values['preparation_date'], NullDate);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSamplePrepRepository.FindBySpecimen(const aSpecimenId, aPreparerId: Integer; const aAccession, aType,
+  aDate: String; const aDuplicateSeq: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSamplePrep) then
+    raise Exception.Create('FindBySpecimen: Expected TSamplePrep');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.SamplePreps.SelectTable(swcNone));
+    Add('WHERE (specimen_id = :aspecimen)');
+    Add('AND (preparer_id = :apreparer)');
+    Add('AND (accession_num = :anumber)');
+    Add('AND (accession_type = :atype)');
+    Add('AND (duplicate_seq = :aduplicate)');
+    Add('AND (date(preparation_date) = date(:adate))');
+
+    ParamByName('aspecimen').AsInteger := aSpecimenId;
+    ParamByName('apreparer').AsInteger := aPreparerId;
+    ParamByName('anumber').AsString := aAccession;
+    ParamByName('aduplicate').AsInteger := aDuplicateSeq;
+    ParamByName('atype').AsString := aType;
+    ParamByName('adate').AsDate := StrToDateDef(aDate, NullDate);
     Open;
     if not EOF then
     begin
@@ -1596,6 +1636,34 @@ begin
 
     ParamByName('aspecimen').AsInteger := StrToIntDef(ARow.Values['specimen_id'], 0);
     ParamByName('aperson').AsInteger := StrToIntDef(ARow.Values['person_id'], 0);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSpecimenCollectorRepository.FindBySpecimen(const aSpecimenId, aPersonId: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSpecimenCollector) then
+    raise Exception.Create('FindBySpecimen: Expected TSpecimenCollector');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.SpecimenCollectors.SelectTable(swcNone));
+    Add('WHERE (specimen_id = :aspecimen)');
+    Add('AND (person_id = :aperson)');
+
+    ParamByName('aspecimen').AsInteger := aSpecimenId;
+    ParamByName('aperson').AsInteger := aPersonId;
     Open;
     if not EOF then
     begin

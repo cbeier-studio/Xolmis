@@ -5471,7 +5471,7 @@ var
   P: TPoint;
   ext: TSize;
 begin
-  P := TMapView(Sender).LonLatToScreen(APoint.RealPoint);
+  P := TMapView(Sender).LatLonToScreen(APoint.RealPoint);
   ADrawer.BrushStyle := bsSolid;
   ADrawer.PenWidth := 2;
   if APoint.IdOwner = 0 then
@@ -8166,6 +8166,55 @@ begin
   with frmQuickEntry do
   try
     frmQuickEntry.TableType := FChildTable;
+    MasterTable := FTableType;
+    MasterKey := dsLink.DataSet.FieldByName(GetPrimaryKey(FTableType)).AsInteger;
+    case FTableType of
+      tbIndividuals:
+        case FChildTable of
+          tbCaptures:
+          begin
+            frmQuickEntry.TaxonId := dsLink.DataSet.FieldByName(COL_TAXON_ID).AsInteger;
+            frmQuickEntry.BandId := dsLink.DataSet.FieldByName(COL_BAND_ID).AsInteger;
+          end;
+          tbFeathers: frmQuickEntry.TaxonId := dsLink.DataSet.FieldByName(COL_TAXON_ID).AsInteger;
+          tbSightings: frmQuickEntry.TaxonId := dsLink.DataSet.FieldByName(COL_TAXON_ID).AsInteger;
+          tbNests: frmQuickEntry.TaxonId := dsLink.DataSet.FieldByName(COL_TAXON_ID).AsInteger;
+          tbSpecimens: frmQuickEntry.TaxonId := dsLink.DataSet.FieldByName(COL_TAXON_ID).AsInteger;
+          tbPoiLibrary: frmQuickEntry.TaxonId := dsLink.DataSet.FieldByName(COL_TAXON_ID).AsInteger;
+        end;
+      tbNests:
+        case FChildTable of
+          tbEggs: frmQuickEntry.TaxonId := dsLink.DataSet.FieldByName(COL_TAXON_ID).AsInteger;
+        end;
+      tbSurveys:
+        case FChildTable of
+          tbNetsEffort: frmQuickEntry.SampleDate := dsLink.DataSet.FieldByName(COL_SURVEY_DATE).AsDateTime;
+          tbWeatherLogs: frmQuickEntry.SampleDate := dsLink.DataSet.FieldByName(COL_SURVEY_DATE).AsDateTime;
+          tbCaptures:
+          begin
+            frmQuickEntry.SampleDate := dsLink.DataSet.FieldByName(COL_SURVEY_DATE).AsDateTime;
+            frmQuickEntry.LocalityId := dsLink.DataSet.FieldByName(COL_LOCALITY_ID).AsInteger;
+          end;
+          tbSightings:
+          begin
+            frmQuickEntry.SampleDate := dsLink.DataSet.FieldByName(COL_SURVEY_DATE).AsDateTime;
+            frmQuickEntry.MethodId := dsLink.DataSet.FieldByName(COL_METHOD_ID).AsInteger;
+            frmQuickEntry.LocalityId := dsLink.DataSet.FieldByName(COL_LOCALITY_ID).AsInteger;
+          end;
+          tbVegetation: frmQuickEntry.SampleDate := dsLink.DataSet.FieldByName(COL_SURVEY_DATE).AsDateTime;
+          tbPoiLibrary: frmQuickEntry.SampleDate := dsLink.DataSet.FieldByName(COL_SURVEY_DATE).AsDateTime;
+        end;
+      tbSightings:
+        case FChildTable of
+          tbPoiLibrary:
+          begin
+            frmQuickEntry.SampleDate := dsLink.DataSet.FieldByName(COL_SIGHTING_DATE).AsDateTime;
+            frmQuickEntry.TaxonId := dsLink.DataSet.FieldByName(COL_TAXON_ID).AsInteger;
+            frmQuickEntry.ObserverId := dsLink.DataSet.FieldByName(COL_OBSERVER_ID).AsInteger;
+          end;
+        end;
+    end;
+
     ShowModal;
     sbRefreshChildClick(nil);
   finally

@@ -120,6 +120,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindBySamplingPlot(const aSamplingPlot, aNetNumber: Integer; E: TXolmisRecord);
     procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
@@ -870,6 +871,34 @@ begin
 
     ParamByName('aplot').AsInteger := StrToIntDef(ARow.Values['sampling_plot_id'], 0);
     ParamByName('anet').AsInteger := StrToIntDef(ARow.Values['net_number'], 0);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TPermanentNetRepository.FindBySamplingPlot(const aSamplingPlot, aNetNumber: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TPermanentNet) then
+    raise Exception.Create('FindBySamplingPlot: Expected TPermanentNet');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.PermanentNets.SelectTable(swcNone));
+    Add('WHERE (sampling_plot_id = :aplot)');
+    Add('AND (net_number = :anet)');
+
+    ParamByName('aplot').AsInteger := aSamplingPlot;
+    ParamByName('anet').AsInteger := aNetNumber;
     Open;
     if not EOF then
     begin

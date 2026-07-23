@@ -24,7 +24,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="133">
+      <ExcludedIdentifiers Count="135">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -158,13 +158,15 @@
         <Item131 Value="tdlgImport.cbDateFormat.Text"/>
         <Item132 Value="tdlgImport.lblFieldsTargetTable.Caption"/>
         <Item133 Value="tdlgTaxonNotFound.txtTaxonName.Caption"/>
+        <Item134 Value="tfrmQuickEntry.cbExistingRecordPolicy.Text"/>
+        <Item135 Value="tfrmQuickEntry.cbErrorHandling.Text"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="513"/>
+      <BuildNr Value="514"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -220,6 +222,9 @@
               <ShowHintsForSenderNotUsed Value="True"/>
             </Verbosity>
             <WriteFPCLogo Value="False"/>
+            <CompilerMessages>
+              <IgnoredMessages idx6058="True" idx5024="True" idx3124="True" idx3123="True"/>
+            </CompilerMessages>
             <CustomOptions Value="-dDEBUG"/>
           </Other>
         </CompilerOptions>
@@ -881,13 +886,6 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="dialogs\udlg_importnests.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="dlgImportNests"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
         <Filename Value="edit_dialogs\uedt_method.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="edtMethod"/>
@@ -947,13 +945,6 @@
         <Filename Value="dialogs\udlg_export.pp"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="dlgExport"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit>
-      <Unit>
-        <Filename Value="dialogs\udlg_importcaptures.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="dlgImportCaptures"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
@@ -1441,14 +1432,6 @@
       </Unit>
       <Unit>
         <Filename Value="io\io_ebird_csv.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="io\io_banding_csv.pp"/>
-        <IsPartOfProject Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="io\io_nesting_csv.pp"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>

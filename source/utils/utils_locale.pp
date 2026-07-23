@@ -164,6 +164,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorGeneratingFiles = 'Error generating files: %s';
     rsErrorFolderNotFound = 'Directory %s not found.';
     rsErrorFileNotFound = 'File %s not found.';
+    rsErrorInserting = 'An error occurred while inserting row %d: %s';
     rsErrorImporting = 'An error occurred while importing: %s';
     rsErrorImportFinished = 'An error occurred while importing.';
     rsErrorImportProfileNotFound = 'Saved import profile "%s" was not found.';
@@ -271,12 +272,14 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsProgressImportBandingEffort = 'Importing banding effort...';
     rsProgressImportCaptures = 'Importing captures...';
     rsFinishedImporting = 'Finished importing!';
+    rsFinishedInsertingUpdating = 'Finished inserting or updating records!';
     rsProgressGeneratingReport = 'Generating report...';
     rsProgressCreatingTable = 'Creating table: %s (%d/%d)';
     rsProgressCreatingView = 'Creating view: %s (%d/%d)';
     rsProgressPopulatingTables = 'Populating tables... This may take a few minutes.';
     rsProgressOptimizingDatabase = 'Optimizing database...';
     rsUpgradingDatabaseSchema = 'Upgrading database schema...';
+    rsInsertingRecords = 'Inserting records in database...';
 
     { Splash screen messages }
     rsStartingXolmis = 'Starting Xolmis...';
@@ -297,6 +300,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsSuccessfulImportNestRevisions = 'Nest revisions imported successfully!';
     rsSuccessfulImportEggs = 'Eggs imported successfully!';
     rsSuccessfulImportRecords = '%d record(s) successfully imported!';
+    rsSuccessfulInsertRecords = '%d record(s) successfully inserted!';
     rsSuccessfulBackup = 'Backup file created successfully: %s';
     rsSuccessfulRestore = 'Backup restored successfully: %s';
     rsSuccessfulImportCoordinates = 'Coordinates imported successfully!';
@@ -793,6 +797,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsEditedByGrid = 'Edited by grid';
     rsEditedByBatch = 'Edited by batch';
     rsEditedByImport = 'Edited by import';
+    rsEditedByQuickEntry = 'Edited by Quick Entry';
 
     { Users and permissions }
     rsStandardUser = 'Standard';
@@ -921,6 +926,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsBackupInDays = 'Backup in %d day';
     rsBackupInDaysPlural = 'Backup in %d days';
     rsUnitDays = 'day(s)';
+    rsQuickEntrySubmodule = '%s of record %d from %s';
 
     { Files }
     rsFileExtCSV = 'Comma-Separated Values (CSV)';

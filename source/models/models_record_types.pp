@@ -21,7 +21,7 @@ unit models_record_types;
 interface
 
 uses
-  Classes, SysUtils, fgl, DB, SQLDB, io_core, data_types;
+  Classes, SysUtils, fgl, DB, SQLDB, io_core;
 
 type
   TTaxonHierarchy = record

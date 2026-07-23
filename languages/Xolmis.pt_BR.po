@@ -5125,303 +5125,6 @@ msgctxt "tdlgimport.sbsaveprofile1.caption"
 msgid "Save import profile"
 msgstr "Salvar perfil de importação"
 
-#: tdlgimportcaptures.btngeneratefiles.caption
-msgctxt "tdlgimportcaptures.btngeneratefiles.caption"
-msgid "Generate files"
-msgstr "Gerar arquivos"
-
-#: tdlgimportcaptures.btnhelp.caption
-msgctxt "tdlgimportcaptures.btnhelp.caption"
-msgid "&Help"
-msgstr "A&juda"
-
-#: tdlgimportcaptures.caption
-msgctxt "tdlgimportcaptures.caption"
-msgid "Import banding data"
-msgstr "Importar dados de anilhamento"
-
-#: tdlgimportcaptures.ecapturefile.hint
-msgctxt "tdlgimportcaptures.ecapturefile.hint"
-msgid "Select file"
-msgstr "Selecionar arquivo"
-
-#: tdlgimportcaptures.ecapturefile.texthint
-msgctxt "tdlgimportcaptures.ecapturefile.texthint"
-msgid "Select a file..."
-msgstr "Selecione um arquivo..."
-
-#: tdlgimportcaptures.eeffortfile.hint
-msgctxt "tdlgimportcaptures.eeffortfile.hint"
-msgid "Select file"
-msgstr "Selecionar arquivo"
-
-#: tdlgimportcaptures.eeffortfile.texthint
-msgctxt "tdlgimportcaptures.eeffortfile.texthint"
-msgid "Select a file..."
-msgstr "Selecione um arquivo..."
-
-#: tdlgimportcaptures.ejournalfile.hint
-msgctxt "tdlgimportcaptures.ejournalfile.hint"
-msgid "Select file"
-msgstr "Selecionar arquivo"
-
-#: tdlgimportcaptures.ejournalfile.texthint
-msgctxt "tdlgimportcaptures.ejournalfile.texthint"
-msgid "Select a file..."
-msgstr "Selecione um arquivo..."
-
-#: tdlgimportcaptures.eweatherfile.hint
-msgctxt "tdlgimportcaptures.eweatherfile.hint"
-msgid "Select file"
-msgstr "Selecionar arquivo"
-
-#: tdlgimportcaptures.eweatherfile.texthint
-msgctxt "tdlgimportcaptures.eweatherfile.texthint"
-msgid "Select a file..."
-msgstr "Selecione um arquivo..."
-
-#: tdlgimportcaptures.lblcapturefile.caption
-msgctxt "tdlgimportcaptures.lblcapturefile.caption"
-msgid "Captures"
-msgstr "Capturas"
-
-#: tdlgimportcaptures.lbleffortfile.caption
-msgid "Field efforts"
-msgstr "Esforços"
-
-#: tdlgimportcaptures.lblexistingrecordpolicy.caption
-msgctxt "tdlgimportcaptures.lblexistingrecordpolicy.caption"
-msgid "Existing records policy"
-msgstr "Política de registros existentes"
-
-#: tdlgimportcaptures.lblgeneratefiles.caption
-msgctxt "tdlgimportcaptures.lblgeneratefiles.caption"
-msgid "Generate empty files to fill the data"
-msgstr "Gerar arquivos vazios para preencher os dados"
-
-#: tdlgimportcaptures.lbljournalfile.caption
-msgid "Field journal"
-msgstr "Diário de campo"
-
-#: tdlgimportcaptures.lblsubtitleimportfiles.caption
-msgctxt "tdlgimportcaptures.lblsubtitleimportfiles.caption"
-msgid "Select at least one file to start importing."
-msgstr "Selecione ao menos um arquivo para iniciar a importação."
-
-#: tdlgimportcaptures.lbltitleimportfiles.caption
-msgctxt "tdlgimportcaptures.lbltitleimportfiles.caption"
-msgid "Files to import"
-msgstr "Arquivos a importar"
-
-#: tdlgimportcaptures.lbltitleimportsettings.caption
-msgctxt "tdlgimportcaptures.lbltitleimportsettings.caption"
-msgid "Import settings"
-msgstr "Configurações de importação"
-
-#: tdlgimportcaptures.lblunknowntaxa.caption
-msgctxt "tdlgimportcaptures.lblunknowntaxa.caption"
-msgid "Unknown taxon found"
-msgstr "Táxon desconhecido encontrado"
-
-#: tdlgimportcaptures.lblweatherfile.caption
-msgid "Weather log"
-msgstr "Clima"
-
-#: tdlgimportcaptures.savedlg.title
-msgctxt "tdlgimportcaptures.savedlg.title"
-msgid "Generate files as"
-msgstr "Gerar arquivos como"
-
-#: tdlgimportcaptures.savelogdlg.title
-msgctxt "tdlgimportcaptures.savelogdlg.title"
-msgid "Save log as"
-msgstr "Salvar log como"
-
-#: tdlgimportcaptures.sbcancel.caption
-msgctxt "tdlgimportcaptures.sbcancel.caption"
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: tdlgimportcaptures.sbclearcapturefile.hint
-msgctxt "tdlgimportcaptures.sbclearcapturefile.hint"
-msgid "Clear field"
-msgstr "Limpar campo"
-
-#: tdlgimportcaptures.sbcleareffortfile.hint
-msgctxt "tdlgimportcaptures.sbcleareffortfile.hint"
-msgid "Clear field"
-msgstr "Limpar campo"
-
-#: tdlgimportcaptures.sbclearjournalfile.hint
-msgctxt "tdlgimportcaptures.sbclearjournalfile.hint"
-msgid "Clear field"
-msgstr "Limpar campo"
-
-#: tdlgimportcaptures.sbclearweatherfile.hint
-msgctxt "tdlgimportcaptures.sbclearweatherfile.hint"
-msgid "Clear field"
-msgstr "Limpar campo"
-
-#: tdlgimportcaptures.sbclose.caption
-msgctxt "tdlgimportcaptures.sbclose.caption"
-msgid "Close"
-msgstr "Fechar"
-
-#: tdlgimportcaptures.sbretry.caption
-msgctxt "tdlgimportcaptures.sbretry.caption"
-msgid "Try again"
-msgstr "Tentar novamente"
-
-#: tdlgimportcaptures.sbrun.caption
-msgctxt "tdlgimportcaptures.sbrun.caption"
-msgid "Import"
-msgstr "Importar"
-
-#: tdlgimportcaptures.sbsavelog.caption
-msgctxt "tdlgimportcaptures.sbsavelog.caption"
-msgid "Save log"
-msgstr "Salvar log"
-
-#: tdlgimportnests.btngeneratefiles.caption
-msgctxt "tdlgimportnests.btngeneratefiles.caption"
-msgid "Generate files"
-msgstr "Gerar arquivos"
-
-#: tdlgimportnests.btnhelp.caption
-msgctxt "tdlgimportnests.btnhelp.caption"
-msgid "&Help"
-msgstr "A&juda"
-
-#: tdlgimportnests.caption
-msgctxt "tdlgimportnests.caption"
-msgid "Import nesting data"
-msgstr "Importar dados de nidificação"
-
-#: tdlgimportnests.eeggfile.hint
-msgctxt "tdlgimportnests.eeggfile.hint"
-msgid "Select file"
-msgstr "Selecionar arquivo"
-
-#: tdlgimportnests.eeggfile.texthint
-msgctxt "tdlgimportnests.eeggfile.texthint"
-msgid "Select a file..."
-msgstr "Selecione um arquivo..."
-
-#: tdlgimportnests.enestfile.hint
-msgctxt "tdlgimportnests.enestfile.hint"
-msgid "Select file"
-msgstr "Selecionar arquivo"
-
-#: tdlgimportnests.enestfile.texthint
-msgctxt "tdlgimportnests.enestfile.texthint"
-msgid "Select a file..."
-msgstr "Selecione um arquivo..."
-
-#: tdlgimportnests.erevisionfile.hint
-msgctxt "tdlgimportnests.erevisionfile.hint"
-msgid "Select file"
-msgstr "Selecionar arquivo"
-
-#: tdlgimportnests.erevisionfile.texthint
-msgctxt "tdlgimportnests.erevisionfile.texthint"
-msgid "Select a file..."
-msgstr "Selecione um arquivo..."
-
-#: tdlgimportnests.lbleggfile.caption
-msgctxt "tdlgimportnests.lbleggfile.caption"
-msgid "Eggs"
-msgstr "Ovos"
-
-#: tdlgimportnests.lblexistingrecordpolicy.caption
-msgctxt "tdlgimportnests.lblexistingrecordpolicy.caption"
-msgid "Existing records policy"
-msgstr "Política de registros existentes"
-
-#: tdlgimportnests.lblgeneratefiles.caption
-msgctxt "tdlgimportnests.lblgeneratefiles.caption"
-msgid "Generate empty files to fill the data"
-msgstr "Gerar arquivos vazios para preencher os dados"
-
-#: tdlgimportnests.lblnestfile.caption
-msgctxt "tdlgimportnests.lblnestfile.caption"
-msgid "Nests"
-msgstr "Ninhos"
-
-#: tdlgimportnests.lblrevisionfile.caption
-msgctxt "tdlgimportnests.lblrevisionfile.caption"
-msgid "Nest revisions"
-msgstr "Revisões de ninho"
-
-#: tdlgimportnests.lblsubtitleimportfiles.caption
-msgctxt "tdlgimportnests.lblsubtitleimportfiles.caption"
-msgid "Select at least one file to start importing."
-msgstr "Selecione ao menos um arquivo para iniciar a importação."
-
-#: tdlgimportnests.lbltitleimportfiles.caption
-msgctxt "tdlgimportnests.lbltitleimportfiles.caption"
-msgid "Files to import"
-msgstr "Arquivos a importar"
-
-#: tdlgimportnests.lbltitleimportsettings.caption
-msgctxt "tdlgimportnests.lbltitleimportsettings.caption"
-msgid "Import settings"
-msgstr "Configurações de importação"
-
-#: tdlgimportnests.lblunknowntaxa.caption
-msgctxt "tdlgimportnests.lblunknowntaxa.caption"
-msgid "Unknown taxon found"
-msgstr "Táxon desconhecido encontrado"
-
-#: tdlgimportnests.savedlg.title
-msgctxt "tdlgimportnests.savedlg.title"
-msgid "Generate files as"
-msgstr "Gerar arquivos como"
-
-#: tdlgimportnests.savelogdlg.title
-msgctxt "tdlgimportnests.savelogdlg.title"
-msgid "Save log as"
-msgstr "Salvar log como"
-
-#: tdlgimportnests.sbcancel.caption
-msgctxt "tdlgimportnests.sbcancel.caption"
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: tdlgimportnests.sbcleareggfile.hint
-msgctxt "tdlgimportnests.sbcleareggfile.hint"
-msgid "Clear field"
-msgstr "Limpar campo"
-
-#: tdlgimportnests.sbclearnestfile.hint
-msgctxt "tdlgimportnests.sbclearnestfile.hint"
-msgid "Clear field"
-msgstr "Limpar campo"
-
-#: tdlgimportnests.sbclearrevisionfile.hint
-msgctxt "tdlgimportnests.sbclearrevisionfile.hint"
-msgid "Clear field"
-msgstr "Limpar campo"
-
-#: tdlgimportnests.sbclose.caption
-msgctxt "tdlgimportnests.sbclose.caption"
-msgid "Close"
-msgstr "Fechar"
-
-#: tdlgimportnests.sbretry.caption
-msgctxt "tdlgimportnests.sbretry.caption"
-msgid "Try again"
-msgstr "Tentar novamente"
-
-#: tdlgimportnests.sbrun.caption
-msgctxt "tdlgimportnests.sbrun.caption"
-msgid "Import"
-msgstr "Importar"
-
-#: tdlgimportnests.sbsavelog.caption
-msgctxt "tdlgimportnests.sbsavelog.caption"
-msgid "Save log"
-msgstr "Salvar log"
-
 #: tdlgimportxmobile.btnhelp.caption
 msgctxt "tdlgimportxmobile.btnhelp.caption"
 msgid "&Help"
@@ -13031,6 +12734,7 @@ msgid "Rotate right"
 msgstr "Girar para direita"
 
 #: tfrmimageviewer.sbsaveas.caption
+msgctxt "tfrmimageviewer.sbsaveas.caption"
 msgid "Save as..."
 msgstr "Salvar como..."
 
@@ -13801,6 +13505,23 @@ msgctxt "tfrmquickentry.caption"
 msgid "Quick Entry"
 msgstr "Quick Entry"
 
+#: tfrmquickentry.lblerrorhandling.caption
+msgid "If an error occurs during insert:"
+msgstr "Se um erro ocorrer na inserção:"
+
+#: tfrmquickentry.lblexistingrecordpolicy.caption
+msgid "Existing records policy:"
+msgstr "Política para registros existentes:"
+
+#: tfrmquickentry.lbltitleimportsettings.caption
+msgctxt "tfrmquickentry.lbltitleimportsettings.caption"
+msgid "Options"
+msgstr "Opções"
+
+#: tfrmquickentry.lbltitleprogress.caption
+msgid "Progress"
+msgstr "Progresso"
+
 #: tfrmquickentry.pmgclearall.caption
 msgctxt "tfrmquickentry.pmgclearall.caption"
 msgid "Clear all"
@@ -13815,6 +13536,11 @@ msgstr "Apagar linha"
 msgctxt "tfrmquickentry.pmginsertrow.caption"
 msgid "Insert row"
 msgstr "Inserir linha"
+
+#: tfrmquickentry.savelogdlg.title
+msgctxt "tfrmquickentry.savelogdlg.title"
+msgid "Save log as"
+msgstr "Salvar log como"
 
 #: tfrmquickentry.sbaddrows.caption
 msgctxt "tfrmquickentry.sbaddrows.caption"
@@ -13831,10 +13557,29 @@ msgctxt "tfrmquickentry.sbdelrows.caption"
 msgid "Delete row"
 msgstr "Apagar linha"
 
-#: tfrmquickentry.sbimport.caption
-msgctxt "tfrmquickentry.sbimport.caption"
-msgid "Import"
-msgstr "Importar"
+#: tfrmquickentry.sbinsertrecords.caption
+msgid "Insert records"
+msgstr "Inserir registros"
+
+#: tfrmquickentry.sbopen.hint
+msgctxt "tfrmquickentry.sbopen.hint"
+msgid "Open"
+msgstr "Abrir"
+
+#: tfrmquickentry.sboptions.hint
+msgctxt "tfrmquickentry.sboptions.hint"
+msgid "Options"
+msgstr "Opções"
+
+#: tfrmquickentry.sbsaveas.hint
+msgctxt "tfrmquickentry.sbsaveas.hint"
+msgid "Save as..."
+msgstr "Salvar como..."
+
+#: tfrmquickentry.sbsavelog.caption
+msgctxt "tfrmquickentry.sbsavelog.caption"
+msgid "Save log"
+msgstr "Salvar log"
 
 #: tfrmtaxa.caption
 msgctxt "tfrmtaxa.caption"
@@ -15926,6 +15671,10 @@ msgctxt "utils_locale.rseditedbyimport"
 msgid "Edited by import"
 msgstr "Editado por importação"
 
+#: utils_locale.rseditedbyquickentry
+msgid "Edited by Quick Entry"
+msgstr "Editado via Quick Entry"
+
 #: utils_locale.rseggbiconical
 msgctxt "utils_locale.rseggbiconical"
 msgid "Biconical"
@@ -16265,6 +16014,11 @@ msgstr "Perfil de importação salvo \"%s\" não foi encontrado."
 #: utils_locale.rserrorimportprofileselectbeforesaving
 msgid "Select an import profile before saving."
 msgstr "Selecione um perfil de importação antes de salvar."
+
+#: utils_locale.rserrorinserting
+#, object-pascal-format
+msgid "An error occurred while inserting row %d: %s"
+msgstr "Um erro ocorreu ao inserir a linha %d: %s"
 
 #: utils_locale.rserrorinvalidbooleanforfield
 #, object-pascal-format
@@ -16752,6 +16506,10 @@ msgctxt "utils_locale.rsfinishedimporting"
 msgid "Finished importing!"
 msgstr "Importação finalizada!"
 
+#: utils_locale.rsfinishedinsertingupdating
+msgid "Finished inserting or updating records!"
+msgstr "Finalizada inserção ou atualização de registros!"
+
 #: utils_locale.rsflightmolt
 msgctxt "utils_locale.rsflightmolt"
 msgid "flight feathers molt"
@@ -17203,6 +16961,10 @@ msgstr "Inserido por importação"
 #: utils_locale.rsinsertedbyquickentry
 msgid "Inserted by Quick Entry"
 msgstr "Inserido no Quick Entry"
+
+#: utils_locale.rsinsertingrecords
+msgid "Inserting records in database..."
+msgstr "Inserindo registros no banco de dados..."
 
 #: utils_locale.rsinsertingtoponyms
 msgid "Inserting toponyms in Gazetteer..."
@@ -19257,6 +19019,11 @@ msgctxt "utils_locale.rsquickentry"
 msgid "Quick Entry"
 msgstr "Quick Entry"
 
+#: utils_locale.rsquickentrysubmodule
+#, object-pascal-format
+msgid "%s of record %d from %s"
+msgstr "%s do registro %d de %s"
+
 #: utils_locale.rsquickexport
 msgid "Quick Export"
 msgstr "Exportação rápida"
@@ -19972,6 +19739,11 @@ msgstr "Ninhos importados com sucesso!"
 #, object-pascal-format
 msgid "%d record(s) successfully imported!"
 msgstr "%d registro(s) importado(s) com sucesso!"
+
+#: utils_locale.rssuccessfulinsertrecords
+#, object-pascal-format
+msgid "%d record(s) successfully inserted!"
+msgstr "%d registro(s) inserido(s) com sucesso!"
 
 #: utils_locale.rssuccessfulloadimportprofile
 msgid "Import profile loaded successfully."

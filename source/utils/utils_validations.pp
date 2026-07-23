@@ -1240,7 +1240,7 @@ end;
 
 function RecordExists(aTable: TTableType; aFieldName, aValue: String): Boolean;
 var
-  i: Integer;
+  i, dummyI: Integer;
   Qry: TSQLQuery;
 begin
   Result := False;
@@ -1253,7 +1253,10 @@ begin
     Add('SELECT count(%afield) FROM %tabname WHERE %afield = :keyv');
     MacroByName('AFIELD').Value := aFieldName;
     MacroByName('TABNAME').Value := TABLE_NAMES[aTable];
-    ParamByName('KEYV').AsString := aValue;
+    if TryStrToInt(aValue, dummyI) then
+      ParamByName('KEYV').AsInteger := dummyI
+    else
+      ParamByName('KEYV').AsString := aValue;
     // GravaLogSQL(SQL);
     Open;
     i := Fields[0].AsInteger;

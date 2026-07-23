@@ -545,6 +545,7 @@ begin
 
   TablesDict.Clear;
 
+  TablesDict.Add('', tbNone);
   TablesDict.Add(rsTitleUsers, tbUsers);
   //tbRecordHistory,
   //tbRecordVerifications,
@@ -597,6 +598,7 @@ begin
 
   LocaleTablesDict.Clear;
 
+  LocaleTablesDict.Add(tbNone, '');
   LocaleTablesDict.Add(tbUsers, rsTitleUsers);
   //tbRecordHistory,
   //tbRecordVerifications,

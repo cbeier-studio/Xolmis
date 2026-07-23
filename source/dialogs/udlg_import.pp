@@ -1949,7 +1949,6 @@ procedure TdlgImport.LoadLookupFields;
 var
   T: TTableSchema;
   F: TFieldSchema;
-  i: Integer;
 begin
   if not FieldMapLoaded then
     Exit;
@@ -2055,7 +2054,6 @@ procedure TdlgImport.LoadTargetFields;
 var
   T: TTableSchema;
   F: TFieldSchema;
-  i: Integer;
 begin
   T := DBSchema.GetTable(FTableType);
   if (T = nil) or (T.Fields.Count = 0) then
