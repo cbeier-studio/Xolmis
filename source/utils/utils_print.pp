@@ -45,7 +45,7 @@ const
 
   procedure PrintPreview(aReportFile: String; aDataSource: TDataSource; aDetailSource1: TDataSource = nil;
     aDetailSource2: TDataSource = nil; aDetailSource3: TDataSource = nil; aDetailSource4: TDataSource = nil;
-    aDetailSource5: TDataSource = nil);
+    aDetailSource5: TDataSource = nil; aDetailSource6: TDataSource = nil; aDetailSource7: TDataSource = nil);
 
 implementation
 
@@ -53,8 +53,8 @@ uses
   utils_locale, utils_global, utils_dialogs, ufrm_printpreview;
 
 procedure PrintPreview(aReportFile: String; aDataSource: TDataSource; aDetailSource1: TDataSource;
-  aDetailSource2: TDataSource; aDetailSource3: TDataSource; aDetailSource4: TDataSource;
-  aDetailSource5: TDataSource);
+  aDetailSource2: TDataSource; aDetailSource3: TDataSource; aDetailSource4: TDataSource; aDetailSource5: TDataSource;
+  aDetailSource6: TDataSource; aDetailSource7: TDataSource);
 begin
 
   if not FileExists(ConcatPaths([InstallDir, 'reports\', aReportFile])) then
@@ -79,6 +79,8 @@ begin
       DetailSource3 := aDetailSource3;
       DetailSource4 := aDetailSource4;
       DetailSource5 := aDetailSource5;
+      DetailSource6 := aDetailSource6;
+      DetailSource7 := aDetailSource7;
 
       ShowModal;
     finally

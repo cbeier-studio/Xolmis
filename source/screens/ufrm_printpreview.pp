@@ -37,6 +37,8 @@ type
     frDetails4: TfrDBDataSet;
     frDetails3: TfrDBDataSet;
     frDetails2: TfrDBDataSet;
+    frDetails6: TfrDBDataSet;
+    frDetails7: TfrDBDataSet;
     frPreview: TfrPreview;
     pmSavePdf: TMenuItem;
     pmZoomActualSize: TMenuItem;
@@ -101,6 +103,8 @@ type
     procedure tbZoomChangeValue(Sender: TObject);
   private
     FDataSource, FDetailSource1, FDetailSource2, FDetailSource3, FDetailSource4, FDetailSource5: TDataSource;
+    FDetailSource6: TDataSource;
+    FDetailSource7: TDataSource;
     FReportName: String;
     procedure SetDataSource(AValue: TDataSource);
     procedure SetDetailSource1(AValue: TDataSource);
@@ -108,6 +112,8 @@ type
     procedure SetDetailSource3(AValue: TDataSource);
     procedure SetDetailSource4(AValue: TDataSource);
     procedure SetDetailSource5(AValue: TDataSource);
+    procedure SetDetailSource6(AValue: TDataSource);
+    procedure SetDetailSource7(AValue: TDataSource);
     procedure SetReportName(AValue: String);
     procedure ApplyDarkMode;
     procedure UpdateButtons;
@@ -118,6 +124,8 @@ type
     property DetailSource3: TDataSource read FDetailSource3 write SetDetailSource3;
     property DetailSource4: TDataSource read FDetailSource4 write SetDetailSource4;
     property DetailSource5: TDataSource read FDetailSource5 write SetDetailSource5;
+    property DetailSource6: TDataSource read FDetailSource6 write SetDetailSource6;
+    property DetailSource7: TDataSource read FDetailSource7 write SetDetailSource7;
     property ReportName: String read FReportName write SetReportName;
   end;
 
@@ -406,6 +414,18 @@ procedure TfrmPrintPreview.SetDetailSource5(AValue: TDataSource);
 begin
   FDetailSource5 := AValue;
   frDetails5.DataSource := FDetailSource5;
+end;
+
+procedure TfrmPrintPreview.SetDetailSource6(AValue: TDataSource);
+begin
+  FDetailSource6 := AValue;
+  frDetails6.DataSource := FDetailSource6;
+end;
+
+procedure TfrmPrintPreview.SetDetailSource7(AValue: TDataSource);
+begin
+  FDetailSource7 := AValue;
+  frDetails7.DataSource := FDetailSource7;
 end;
 
 procedure TfrmPrintPreview.SetReportName(AValue: String);

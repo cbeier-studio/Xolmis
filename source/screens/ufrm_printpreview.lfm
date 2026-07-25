@@ -1867,4 +1867,14 @@ object frmPrintPreview: TfrmPrintPreview
     Left = 680
     Top = 233
   end
+  object frDetails6: TfrDBDataSet
+    CloseDataSource = True
+    Left = 744
+    Top = 233
+  end
+  object frDetails7: TfrDBDataSet
+    CloseDataSource = True
+    Left = 808
+    Top = 233
+  end
 end
