@@ -4962,6 +4962,24 @@ begin
   if (IsColumn) or not (FColumnsLoaded) then
     Exit;
 
+  if (FMasterKey > 0) then
+  begin
+    case FTableType of
+      tbPoiLibrary,
+      tbSightings,
+      tbCaptures:
+      begin
+        case FMasterTable of
+          tbSurveys: SetCellValue(COL_SURVEY_NAME, sIndex, GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, FMasterKey));
+          tbIndividuals: SetCellValue(COL_INDIVIDUAL_NAME, sIndex, GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FMasterKey));
+        end;
+      end;
+      tbFeathers: SetCellValue(COL_INDIVIDUAL_NAME, sIndex, GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FMasterKey));
+      tbNestRevisions,
+      tbEggs: SetCellValue(COL_NEST_NAME, sIndex, GetName(TBL_NESTS, COL_FULL_NAME, COL_NEST_ID, FMasterKey));
+      tbSurveys: SetCellValue(COL_EXPEDITION_NAME, sIndex, GetName(TBL_EXPEDITIONS, COL_EXPEDITION_NAME, COL_EXPEDITION_ID, FMasterKey));
+    end;
+  end;
   if (FSampleDate <> NullDate) then
   begin
     case FTableType of

@@ -25,14 +25,28 @@ Batch entry is useful when dealing with large datasets, such as multiple capture
 
 The **Quick Entry** tool (under development) allows users to insert records in a **spreadsheet-like interface**, enabling fast typing and bulk data input. This feature is designed especially for field teams digitizing large amounts of data at once.
 
+#### Options
+
+Click the **Options** button in the top toolbar to open or close the insert options panel. In the panel there are two options that control the insert behavior:
+
+- **Existing records policy**:
+    - **Ignore existing**: when a record was found in the database, do nothing.
+    - **Replace existing**: replace the found record with the inserted data.
+- **If an error occurred while inserting**:
+    - **Abort insert**: stop and undo the current insert.
+    - **Ignore and keep inserting**: record the error without stopping the insert.
+
 #### How it works
 
 - **Spreadsheet interface**: Records are entered in rows, similar to a spreadsheet. Each row corresponds to a record, and each cell represents a field.  
 - **Temporary storage**: Data entered in Quick Entry is **automatically saved in separate files by module**, ensuring that no information is lost during the process.  
-- **Import step required**: These files are not added to the main database until the user explicitly clicks **Import**. This gives full control over what is integrated.  
-- **Validation before import**: When importing, Xolmis validates the data to ensure consistency and accuracy.  
+- **Insert step required**: These files are not added to the main database until the user explicitly clicks **Insert records**. This gives full control over what is integrated.  
+- **Validation before insert**: When inserting, Xolmis validates the data to ensure consistency and accuracy.  
 - **Error highlighting**: Cells with problems (e.g., invalid formats, missing required values) are highlighted in **red**, making it easy to spot and correct issues.  
-- **Editing flexibility**: Users can freely add new rows (records) or delete rows before importing, adjusting the dataset as needed.  
+- **Editing flexibility**: Users can freely add new rows (records) or delete rows before inserting, adjusting the dataset as needed.
+
+!!! tip
+    You can copy data from spreadsheet apps, like Microsoft Excel, and paste it in the Quick Entry grid. For that, it is recommended that the columns are already in the same order from the Quick Entry.
 
 #### Benefits
 
@@ -43,11 +57,11 @@ The **Quick Entry** tool (under development) allows users to insert records in a
 
 #### Quick Entry best practices
 
-- **Review before import**: Always check highlighted cells and correct errors before importing.  
-- **Use backups**: Perform a database backup before importing large batches.  
-- **Incremental imports**: For very large datasets, import in smaller batches to simplify validation.  
+- **Review before insert**: Always check highlighted cells and correct errors before inserting records in the database.  
+- **Use backups**: Perform a database backup before inserting large batches.  
+- **Incremental inserts**: For very large datasets, insert in smaller batches to simplify validation.  
 
-By combining a **spreadsheet-like interface** with **automatic saving, validation, and controlled import**, Quick Entry ensures that bulk data entry is both **fast and reliable**, while protecting the integrity of the Xolmis database.
+By combining a **spreadsheet-like interface** with **automatic saving, validation, and controlled insert**, Quick Entry ensures that bulk data entry is both **fast and reliable**, while protecting the integrity of the Xolmis database.
 
 ### Batch dialogs
 

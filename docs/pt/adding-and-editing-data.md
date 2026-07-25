@@ -23,16 +23,30 @@ A entrada em lote é útil ao lidar com grandes conjuntos de dados, como múltip
 
 ### Quick Entry
 
-A ferramenta **Quick Entry** (em desenvolvimento) permite inserir registros em uma **interface semelhante a uma planilha**, possibilitando digitação rápida e entrada de dados em massa. Esse recurso foi projetado especialmente para equipes de campo que digitalizam grandes quantidades de dados de uma só vez.
+A ferramenta **Entrada rápida** (em desenvolvimento) permite inserir registros em uma **interface semelhante a uma planilha**, possibilitando digitação rápida e entrada de dados em massa. Esse recurso foi projetado especialmente para equipes de campo que digitalizam grandes quantidades de dados de uma só vez.
+
+#### Opções
+
+Clique no botão de **Opções** na barra de ferramentas do topo para abrir ou fechar o painel de opções de inserção. No painel há duas opções que controlam como será o comportamento da inserção de registros:
+
+- **Política de registros existentes**:
+    - **Ignorar existentes**: ao encontrar um registro no banco de dados, não faz nada.
+    - **Substituir existentes**: substitui o registro encontrado com os dados inseridos.
+- **Se ocorrer um erro na inserção**:
+    - **Abortar a inserção**: interrompe e desfaz a inserção atual.
+    - **Ignorar e continuar**: registra o erro sem interromper a inserção.
 
 #### Como funciona
 
 - **Interface de planilha**: Registros são inseridos em linhas, semelhantes a uma planilha. Cada linha corresponde a um registro e cada célula representa um campo.  
 - **Armazenamento temporário**: Os dados inseridos na Entrada rápida são **automaticamente salvos em arquivos separados por módulo**, garantindo que nenhuma informação seja perdida durante o processo.  
-- **Etapa de importação necessária**: Esses arquivos não são adicionados ao banco de dados principal até que o usuário clique explicitamente em **Importar**. Isso dá controle total sobre o que será integrado.  
-- **Validação antes da importação**: Ao importar, o Xolmis valida os dados para garantir consistência e precisão.  
+- **Etapa de inserção necessária**: Esses arquivos não são adicionados ao banco de dados principal até que o usuário clique explicitamente em **Inserir registros**. Isso dá controle total sobre o que será integrado.  
+- **Validação antes da inserção**: Ao inserir registros, o Xolmis valida os dados para garantir consistência e precisão.  
 - **Destaque de erros**: Células com problemas (ex.: formatos inválidos, valores obrigatórios ausentes) são destacadas em **vermelho**, facilitando a identificação e correção.  
-- **Flexibilidade de edição**: Usuários podem adicionar novas linhas (registros) ou excluir linhas antes de importar, ajustando o conjunto de dados conforme necessário.  
+- **Flexibilidade de edição**: Usuários podem adicionar novas linhas (registros) ou excluir linhas antes de importar, ajustando o conjunto de dados conforme necessário.
+
+!!! tip
+    Você pode copiar dados de um aplicativo de planilhas, como o Microsoft Excel, e colar na grade da Entrada rápida. Para isso, recomenda-se que as colunas já estejam na mesma ordem da Entrada rápida.
 
 #### Benefícios
 
@@ -43,11 +57,11 @@ A ferramenta **Quick Entry** (em desenvolvimento) permite inserir registros em u
 
 #### Boas práticas da Entrada rápida
 
-- **Revisar antes de importar**: Sempre verifique células destacadas e corrija erros antes da importação.  
-- **Usar backups**: Faça backup do banco de dados antes de importar grandes lotes.  
-- **Importações incrementais**: Para conjuntos de dados muito grandes, importe em lotes menores para simplificar a validação.  
+- **Revisar antes de inserir**: Sempre verifique células destacadas e corrija erros antes da inserção no banco de dados.  
+- **Usar backups**: Faça backup do banco de dados antes de inserir grandes lotes.  
+- **Inserções incrementais**: Para conjuntos de dados muito grandes, insira em lotes menores para simplificar a validação.  
 
-Ao combinar uma **interface semelhante a planilha** com **salvamento automático, validação e importação controlada**, a Entrada rápida garante que a entrada de dados em massa seja **rápida e confiável**, protegendo a integridade do banco de dados do Xolmis.
+Ao combinar uma **interface semelhante a planilha** com **salvamento automático, validação e inserção controlada**, a Entrada rápida garante que a entrada de dados em massa seja **rápida e confiável**, protegendo a integridade do banco de dados do Xolmis.
 
 ### Diálogos em lote
 
