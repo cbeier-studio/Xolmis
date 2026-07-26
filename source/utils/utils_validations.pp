@@ -1250,7 +1250,11 @@ begin
     MacroCheck := True;
     DataBase := DMM.sqlCon;
     Clear;
-    Add('SELECT count(%afield) FROM %tabname WHERE %afield = :keyv');
+    Add('SELECT count(%afield) FROM %tabname');
+    if TryStrToInt(aValue, dummyI) then
+      Add('WHERE %afield = :keyv')
+    else
+      Add('WHERE lower(%afield) = lower(:keyv)');
     MacroByName('AFIELD').Value := aFieldName;
     MacroByName('TABNAME').Value := TABLE_NAMES[aTable];
     if TryStrToInt(aValue, dummyI) then
@@ -1309,7 +1313,7 @@ begin
     DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT %keyf FROM %tabname');
-    Add('WHERE (%uniquef = :uniquev) AND (%keyf != :keyv)');
+    Add('WHERE (lower(%uniquef) = lower(:uniquev)) AND (%keyf != :keyv)');
     MacroByName('KEYF').Value := aKeyField;
     MacroByName('TABNAME').Value := TABLE_NAMES[aTable];
     MacroByName('UNIQUEF').Value := aNameField;
@@ -1360,7 +1364,10 @@ begin
   begin
     if i > Low(FieldsSet) then
       SQLText := SQLText + ' AND ';
-    SQLText := SQLText + '(%field' + IntToStr(i) + ' = :value' + IntToStr(i) + ')';
+    if VarIsStr(ValuesSet[i]) then
+      SQLText := SQLText + '(lower(%field' + IntToStr(i) + ') = lower(:value' + IntToStr(i) + '))'
+    else
+      SQLText := SQLText + '(%field' + IntToStr(i) + ' = :value' + IntToStr(i) + ')';
   end;
 
   // Ignore current record when an existing key was provided
