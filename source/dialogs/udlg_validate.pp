@@ -21,15 +21,15 @@ unit udlg_validate;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, IpHtml, atshapelinebgra;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Pixie.HtmlView, atshapelinebgra;
 
 type
 
   { TdlgValidate }
 
   TdlgValidate = class(TForm)
-    LV: TIpHtmlPanel;
     lineBottom: TShapeLineBGRA;
+    LV: TPixieHtmlView;
     sbOK: TButton;
     pBottom: TPanel;
     procedure sbOKClick(Sender: TObject);
@@ -41,6 +41,7 @@ type
     FMsgList: TStrings;
     FHtml: TStrings;
     FHeader: String;
+    procedure ApplyDarkMode;
   public
     property Header: String read FHeader write FHeader;
     property MessageList: TStrings read FMsgList write FMsgList;
@@ -51,7 +52,7 @@ var
 
 implementation
 
-uses utils_locale, utils_global;
+uses utils_locale, utils_global, uDarkStyleParams, Pixie.Types;
 
 {$R *.lfm}
 
@@ -61,6 +62,11 @@ procedure TdlgValidate.sbOKClick(Sender: TObject);
 begin
   GravaStat(Name, 'SBOK', 'click');
   ModalResult := mrOK;
+end;
+
+procedure TdlgValidate.ApplyDarkMode;
+begin
+  LV.ColorScheme := pcsDark;
 end;
 
 procedure TdlgValidate.FormCreate(Sender: TObject);
@@ -90,6 +96,24 @@ procedure TdlgValidate.FormShow(Sender: TObject);
 var
   i: Integer;
 begin
+  if IsDarkModeEnabled then
+    ApplyDarkMode;
+
+  FHtml.Add('<html><style>');
+  FHtml.Add('body {');
+  FHtml.Add('  font-family: Segoe UI, Arial, sans-serif;');
+  if IsDarkModeEnabled then
+  begin
+    FHtml.Add('  background-color: #1c1c1c;');
+    FHtml.Add('  color: #ffffff;');
+  end
+  else
+  begin
+    FHtml.Add('  background-color: #ffffff;');
+    FHtml.Add('  color: #000000;');
+  end;
+  FHtml.Add('}');
+  FHtml.Add('</style>');
   FHtml.Add('<body>');
   if FHeader <> EmptyStr then
   begin
@@ -111,9 +135,10 @@ begin
   end;
   FHtml.Add('</ul>');
   FHtml.Add('</body>');
+  FHtml.Add('</html>');
 
-  LV.SetHtmlFromStr(FHtml.Text);
-  LV.Refresh;
+  LV.LoadFromString(FHtml.Text);
+  //LV.Refresh;
 end;
 
 end.

@@ -60,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated **Lazarus** to v4.6 (development environment).  
 - Updated **SQLite** to v3.53.1 (database engine).
 - Replaced `DCPcrypt` for `HashLib` package and updated password hash to Argon2id.
+- Replaced `TurboPowerIPro` for `Pixie` package.
 
 ### Removed
 

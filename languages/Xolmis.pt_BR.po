@@ -37,11 +37,6 @@ msgctxt "data_columns.rscaccesslevel"
 msgid "Access level"
 msgstr "Nível de acesso"
 
-#: data_columns.rscacronym
-msgctxt "data_columns.rscacronym"
-msgid "Acronym"
-msgstr "Abreviatura"
-
 #: data_columns.rscaction
 msgctxt "data_columns.rscaction"
 msgid "Action"
@@ -20690,3 +20685,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+

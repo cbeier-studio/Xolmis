@@ -51,7 +51,6 @@ resourcestring
   rscConnectionName = 'Connection name';
   rscDescription = 'Description';
   rscEBirdName = 'eBird name';
-  rscAcronym = 'Acronym';
   rscAbbreviation = 'Abbreviation';
   rscSequence = 'Sequence';
   rscMainRank = 'Main rank';

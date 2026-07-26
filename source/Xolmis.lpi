@@ -166,7 +166,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="514"/>
+      <BuildNr Value="515"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -482,10 +482,10 @@
     </RunParams>
     <RequiredPackages>
       <Item>
-        <PackageName Value="HashLib4PascalPackage"/>
+        <PackageName Value="Pixie.Package.Lazarus"/>
       </Item>
       <Item>
-        <PackageName Value="TurboPowerIPro"/>
+        <PackageName Value="HashLib4PascalPackage"/>
       </Item>
       <Item>
         <PackageName Value="virtualtreeview_package"/>
