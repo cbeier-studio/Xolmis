@@ -99,33 +99,52 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  FHtml.Add('<html><style>');
-  FHtml.Add('body {');
-  FHtml.Add('  font-family: Segoe UI, Arial, sans-serif;');
+  FHtml.Add('<!DOCTYPE html>');
+  FHtml.Add('<html><head><style>');
+  FHtml.Add('  body {');
+  FHtml.Add('    font-family: Segoe UI, Arial, sans-serif;');
+  FHtml.Add('    font-size: 14px;');
   if IsDarkModeEnabled then
   begin
-    FHtml.Add('  background-color: #1c1c1c;');
-    FHtml.Add('  color: #ffffff;');
+    FHtml.Add('    background-color: #1c1c1c;');
+    FHtml.Add('    color: #ffffff;');
   end
   else
   begin
-    FHtml.Add('  background-color: #ffffff;');
-    FHtml.Add('  color: #000000;');
+    FHtml.Add('    background-color: #ffffff;');
+    FHtml.Add('    color: #000000;');
   end;
-  FHtml.Add('}');
-  FHtml.Add('</style>');
+  FHtml.Add('  }');
+  FHtml.Add('  .alert {');
+  if IsDarkModeEnabled then
+  begin
+    FHtml.Add('    background-color: #433519;');
+    FHtml.Add('    color: #fce100;');
+  end
+  else
+  begin
+    FHtml.Add('    background-color: #fff4ce;');
+    FHtml.Add('    color: #9d5d00;');
+  end;
+  FHtml.Add('    padding: 10px 12px;');
+  FHtml.Add('    margin-bottom: 10px;');
+  FHtml.Add('    width: 100%;');
+  FHtml.Add('  }');
+  FHtml.Add('</style></head>');
   FHtml.Add('<body>');
   if FHeader <> EmptyStr then
   begin
-    FHtml.Add('<p>' + FHeader + '</p>');
+    FHtml.Add('<div class="alert"><p>' + FHeader + '</p></div>');
     FHtml.Add('<br>');
   end
   else
   begin
+    FHtml.Add('<div class="alert">');
     if FMsgList.Count > 1 then
       FHtml.Add(Format(rsErrorsFound, [FMsgList.Count]))
     else
       FHtml.Add(Format(rsErrorFound, [FMsgList.Count]));
+    FHtml.Add('</div>');
   end;
 
   FHtml.Add('<ul>');
@@ -136,6 +155,8 @@ begin
   FHtml.Add('</ul>');
   FHtml.Add('</body>');
   FHtml.Add('</html>');
+
+  LogDebug(FHtml.Text);
 
   LV.LoadFromString(FHtml.Text);
   //LV.Refresh;
