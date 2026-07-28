@@ -378,8 +378,8 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE ((full_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-            'OR (user_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
+        'WHERE ((lower(full_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
+            'OR (lower(user_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM))) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:

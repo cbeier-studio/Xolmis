@@ -83,7 +83,7 @@ begin
     swcNone: ;
     swcFindText:
     begin
-      Result := Result + 'WHERE (scientific_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ';
+      Result := Result + 'WHERE (lower(scientific_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ';
       if not (tfAll in aRankFilter) then
       begin
         if (tfMain in aRankFilter) then

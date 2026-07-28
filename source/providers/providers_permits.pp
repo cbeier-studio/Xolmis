@@ -78,7 +78,7 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE (permit_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
+        'WHERE (lower(permit_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:

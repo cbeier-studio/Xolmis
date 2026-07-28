@@ -99,6 +99,28 @@
       </element><element name="TNotification.MarkAsRead"><short>Mark the notification as read.</short>
       </element><element name="TNotification.Dismiss"><short>Dismiss the notification.</short>
       </element>
+    <element name="HasInternetConnection"><short>Check if the internet connection is working</short>
+      </element><element name="WriteDiff"><short>Write record history entries for each edited field.</short>
+      </element><element name="TEventBus"><short>Implements a simple publish/subscribe event bus mechanism.</short><descr><p>TEventBus provides a lightweight event dispatching system based on application-defined events. Subscribers can register handler methods for specific events, and the event bus will invoke all registered handlers when an event is published. It supports subscribing, unsubscribing, and publishing events, and internally manages lists of method pointers associated with each event type.</p>
+        </descr>
+      </element><element name="TEventBus.Create"><short>Creates a new instance of TEventBus.</short><descr><p>Initializes the internal subscriber lists for all supported application events. After construction, the event bus is ready to accept subscriptions and publish events.</p>
+        </descr>
+      </element><element name="TEventBus.Destroy"><short>Destroys the event bus instance.</short><descr><p>Releases all internal data structures used to store subscribers. After destruction, all event subscriptions are lost.</p>
+        </descr>
+      </element><element name="TEventBus.Subscribe"><short>Registers a handler method for a specific event.</short><descr><p>Adds the given handler method to the list of subscribers associated with the specified event. When the event is published, the handler will be invoked. Duplicate subscriptions are ignored.</p><ul><li><var>E</var>: The event type to subscribe to.</li><li><var>Handler</var>: The method that will be invoked when the event is published.</li>
+          </ul>
+        </descr>
+      </element><element name="TEventBus.Publish"><short>Publishes an event to all registered subscribers.</short><descr><p>Invokes all handler methods previously subscribed to the specified event. Handlers are executed in the order they were registered. Exceptions raised by handlers are not suppressed and will propagate to the caller.</p><ul><li><var>E</var>: The event type to publish.</li>
+          </ul>
+        </descr>
+      </element><element name="TEventBus.Unsubscribe"><short>Removes a handler method from the subscriber list of an event.</short><descr><p>If the given handler is currently subscribed to the specified event, it is removed from the subscriber list. If the handler is not found, the call has no effect.</p><ul><li><var>E</var>: The event type from which the handler should be removed.</li><li><var>Handler</var>: The handler method to remove.</li>
+          </ul>
+        </descr>
+      </element><element name="TEventBus.MethodsEqual"><short>Compares two method pointers for equality.</short><descr><p>Returns <b>True</b> if both method pointers refer to the same code address and the same instance. This helper is used internally to detect duplicate subscriptions and to remove existing handlers.</p>
+        </descr>
+      </element><element name="TEventBus.IndexOfSubscriber"><short>Returns the index of a handler in the subscriber list of an event.</short><descr><p>Searches the list of subscribers associated with the given event and returns the index of the handler method if found. If the handler is not subscribed, -1 is returned. This method is used internally by Subscribe and Unsubscribe.</p>
+        </descr>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

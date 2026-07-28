@@ -109,9 +109,9 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE ((full_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-          'OR (site_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-          'OR (abbreviation ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ';
+        'WHERE ((lower(full_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
+          'OR (lower(site_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
+          'OR (lower(abbreviation) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM))) ';
       if not (gfAll in aRankFilter) then
       begin
         Result := Result + 'AND (';

@@ -200,7 +200,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_consts, data_columns, udm_main;
+  utils_locale, utils_global, utils_validations, data_consts, data_columns, udm_main;
 
 function AddField(ATableSchema: TTableSchema; const AName: String; ADisplayName: String; AType: TSearchDataType; ARequired: Boolean;
   AMaxLen: Integer; AIsPK: Boolean; AIsFK: Boolean; ALookup: TTableType; ALookupField: String): TFieldSchema;
@@ -7854,11 +7854,13 @@ begin
   if Trim(S) = '' then
     Exit(Null);
 
+  if LookupInfo.LookupKeyField = EmptyStr then
+    LookupInfo.LookupKeyField := PRIMARY_KEY_FIELDS[LookupInfo.LookupTable];
+
   // If already is integer, assume ID
   if TryStrToInt(S, LookupID) then
-    Exit(LookupID);
-
-  LookupInfo.LookupKeyField := PRIMARY_KEY_FIELDS[LookupInfo.LookupTable];
+    if ForeignValueExists(LookupInfo.LookupTable, LookupInfo.LookupKeyField, LookupID, LookupInfo.DisplayFieldName) then
+      Exit(LookupID);
 
   if LookupInfo.LookupField = EmptyStr then
     LookupInfo.LookupField := LookupInfo.LookupKeyField;
@@ -7879,24 +7881,24 @@ var
   AllowedValues: TStringList;
 begin
   // Required field
-  if (Rules.RequiredField) and (VarIsNull(V)) then
+  if (Rules.RequiredField) and (VarIsEmpty(V) or VarIsNull(V)) then
     raise Exception.CreateFmt(rsErrorRequiredField, [Name]);
 
   // Maximum length (for text)
   if (DataType = sdtText) and (Rules.MaxLength > 0) then
-    if (not VarIsNull(V)) and (Length(VarToStr(V)) > Rules.MaxLength) then
+    if (not VarIsEmpty(V)) and (not VarIsNull(V)) and (Length(VarToStr(V)) > Rules.MaxLength) then
       raise Exception.CreateFmt(rsErrorValueExceededMaxLength, [VarToStr(V), Rules.MaxLength, Name]);
 
   // Value within range (numeric)
   if ((DataType = sdtInteger) or (DataType = sdtFloat)) and
-    (Rules.MinValue <> Rules.MaxValue) and (not VarIsNull(V)) then
+    (Rules.MinValue <> Rules.MaxValue) and (not VarIsEmpty(V)) and (not VarIsNull(V)) then
   begin
     if (VarAsType(V, varDouble) < Rules.MinValue) or (VarAsType(V, varDouble) > Rules.MaxValue) then
       raise Exception.CreateFmt(rsValueNotInRange, [Name, Rules.MinValue, Rules.MaxValue]);
   end;
   // Value within range (date and time)
   if ((DataType = sdtDate) or (DataType = sdtTime) or (DataType = sdtDateTime)) and
-    (Rules.MinDateTime <> Rules.MaxDateTime) and (not VarIsNull(V)) then
+    (Rules.MinDateTime <> Rules.MaxDateTime) and (not VarIsEmpty(V)) and (not VarIsNull(V)) then
   begin
     if (VarToDateTime(V) < Rules.MinDateTime) or (VarToDateTime(V) > Rules.MaxDateTime) then
       raise Exception.CreateFmt(rsDateTimeNotInRange, [Name, DateTimeToStr(Rules.MinDateTime), DateTimeToStr(Rules.MaxDateTime)]);
@@ -7908,7 +7910,7 @@ begin
     AllowedValues := TStringList.Create;
     try
       AllowedValues.CommaText := Rules.ValueList;
-      if (not VarIsNull(V)) and (AllowedValues.IndexOf(VarToStr(V)) < 0) then
+      if (not VarIsEmpty(V)) and (not VarIsNull(V)) and (AllowedValues.IndexOf(VarToStr(V)) < 0) then
         raise Exception.CreateFmt(rsErrorValueNotAllowedForField, [VarToStr(V), Name, Rules.ValueList]);
     finally
       AllowedValues.Free;
@@ -7916,7 +7918,7 @@ begin
   end;
 
   // Lookup: validate if ID exists
-  if (DataType = sdtLookup) and (not VarIsNull(V)) then
+  if (DataType = sdtLookup) and (not VarIsEmpty(V)) and (not VarIsNull(V)) then
   begin
     if not LookupValueExists(V) then
       raise Exception.CreateFmt(rsErrorLookupValueNotFoundForField, [VarToStr(V), LookupTableName]);

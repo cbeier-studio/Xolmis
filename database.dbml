@@ -474,6 +474,14 @@ Ref: images.nest_revision_id > nest_revisions.nest_revision_id [update: cascade]
 Ref: images.egg_id > eggs.egg_id [update: cascade]
 Ref: images.specimen_id > specimens.specimen_id [update: cascade]
 
+Table import_profiles {
+    profile_id integer [primary key, increment, unique, not null]
+    profile_name varchar(100) [unique, not null]
+    settings text
+    insert_date datetime
+    update_date datetime
+}
+
 Table individuals {
     individual_id integer [primary key, increment, unique, not null]
     formatted_name varchar(150)

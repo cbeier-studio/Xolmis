@@ -103,8 +103,7 @@ type
     procedure tbZoomChangeValue(Sender: TObject);
   private
     FDataSource, FDetailSource1, FDetailSource2, FDetailSource3, FDetailSource4, FDetailSource5: TDataSource;
-    FDetailSource6: TDataSource;
-    FDetailSource7: TDataSource;
+    FDetailSource6, FDetailSource7: TDataSource;
     FReportName: String;
     procedure SetDataSource(AValue: TDataSource);
     procedure SetDetailSource1(AValue: TDataSource);

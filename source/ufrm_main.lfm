@@ -19,12 +19,12 @@ object frmMain: TfrmMain
   OnShow = FormShow
   object pNotifications: TPanel
     Left = 863
-    Height = 825
+    Height = 830
     Top = 45
     Width = 330
     Align = alRight
     BevelOuter = bvNone
-    ClientHeight = 825
+    ClientHeight = 830
     ClientWidth = 330
     TabOrder = 4
     Visible = False
@@ -71,7 +71,7 @@ object frmMain: TfrmMain
     end
     object scrollNotifications: TScrollBox
       Left = 0
-      Height = 775
+      Height = 780
       Top = 50
       Width = 330
       HorzScrollBar.Page = 1
@@ -79,7 +79,7 @@ object frmMain: TfrmMain
       VertScrollBar.Page = 50
       Align = alClient
       BorderStyle = bsNone
-      ClientHeight = 775
+      ClientHeight = 780
       ClientWidth = 330
       TabOrder = 1
       object pNotificationList: TPanel
@@ -102,7 +102,7 @@ object frmMain: TfrmMain
       AnchorSideTop.Side = asrCenter
       Left = 107
       Height = 87
-      Top = 369
+      Top = 372
       Width = 117
       AutoSize = True
       ChildSizing.LeftRightSpacing = 16
@@ -171,17 +171,17 @@ object frmMain: TfrmMain
   end
   object pLeftTabs: TPanel
     Left = 0
-    Height = 825
+    Height = 830
     Top = 45
     Width = 863
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 825
+    ClientHeight = 830
     ClientWidth = 863
     TabOrder = 0
     object PGW: TTDICardPanel
       Left = 0
-      Height = 825
+      Height = 830
       Top = 0
       Width = 863
       Align = alClient
@@ -764,8 +764,8 @@ object frmMain: TfrmMain
   end
   object SBar: TStatusBar
     Left = 0
-    Height = 28
-    Top = 870
+    Height = 23
+    Top = 875
     Width = 1193
     Panels = <    
       item

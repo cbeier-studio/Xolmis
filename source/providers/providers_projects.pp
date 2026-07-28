@@ -164,8 +164,8 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE ((project_title ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-            'OR (short_title ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
+        'WHERE ((lower(project_title) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
+            'OR (lower(short_title) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM))) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:
@@ -516,7 +516,7 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE (goal_description ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
+        'WHERE (lower(goal_description) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:
@@ -821,7 +821,7 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE (rubric_item ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
+        'WHERE (lower(rubric_item) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:

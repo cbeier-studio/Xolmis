@@ -410,7 +410,7 @@ uses
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding, udm_reports,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, ubatch_feathers,
-  udlg_about, udlg_bandsbalance, udlg_bandhistory, udlg_importcaptures, udlg_importnests,
+  udlg_about, udlg_bandsbalance, udlg_bandhistory,
   udlg_importxmobile, udlg_import, udlg_splash, udlg_loading, udlg_tourtip, udlg_onboarding,
   ufrm_geoconverter, ufrm_maintenance, ufrm_taxa;
 
@@ -509,13 +509,13 @@ end;
 
 procedure TfrmMain.actImportCapturesExecute(Sender: TObject);
 begin
-  dlgImportCaptures := TdlgImportCaptures.Create(nil);
-  with dlgImportCaptures do
-  try
-    ShowModal;
-  finally
-    FreeAndNil(dlgImportCaptures);
-  end;
+  //dlgImportCaptures := TdlgImportCaptures.Create(nil);
+  //with dlgImportCaptures do
+  //try
+  //  ShowModal;
+  //finally
+  //  FreeAndNil(dlgImportCaptures);
+  //end;
 end;
 
 procedure TfrmMain.actImportCoordinatesExecute(Sender: TObject);
@@ -553,13 +553,13 @@ end;
 
 procedure TfrmMain.actImportNestsExecute(Sender: TObject);
 begin
-  dlgImportNests := TdlgImportNests.Create(nil);
-  with dlgImportNests do
-  try
-    ShowModal;
-  finally
-    FreeAndNil(dlgImportNests);
-  end;
+  //dlgImportNests := TdlgImportNests.Create(nil);
+  //with dlgImportNests do
+  //try
+  //  ShowModal;
+  //finally
+  //  FreeAndNil(dlgImportNests);
+  //end;
 end;
 
 procedure TfrmMain.actImportWizardExecute(Sender: TObject);

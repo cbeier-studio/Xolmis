@@ -158,7 +158,7 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE (expedition_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
+        'WHERE (lower(expedition_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:
@@ -363,7 +363,7 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE (full_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
+        'WHERE (lower(full_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:
@@ -795,7 +795,7 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE (full_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
+        'WHERE (lower(full_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:

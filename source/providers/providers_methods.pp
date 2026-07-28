@@ -85,8 +85,8 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE ((method_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-            'OR (abbreviation ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
+        'WHERE ((lower(method_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
+            'OR (lower(abbreviation) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM))) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:

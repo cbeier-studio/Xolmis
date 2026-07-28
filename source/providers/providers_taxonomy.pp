@@ -97,8 +97,8 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE ((rank_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ' +
-            'OR (abbreviation ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM)) ' +
+        'WHERE ((lower(rank_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
+            'OR (lower(abbreviation) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM))) ' +
           'AND (active_status = 1) ';
     end;
     swcActiveAll:
@@ -305,7 +305,7 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE (scientific_name ' + CRITERIA_OPERATORS[aCriteria] + ' :VALPARAM) ';
+        'WHERE (lower(scientific_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ';
       if not (tfAll in aRankFilter) then
       begin
         if (tfMain in aRankFilter) then

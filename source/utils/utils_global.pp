@@ -129,8 +129,6 @@ const
   HELP_COORDINATES_CONVERTER: String      = 'coordinates-converter.html';
   HELP_EXPORTING_DATA: String             = 'exporting-data.html';
   HELP_IMPORTING_DATA: String             = 'importing-data.html';
-  HELP_IMPORTING_BANDING_DATA: String     = 'importing-banding-data.html';
-  HELP_IMPORTING_NESTING_DATA: String     = 'importing-nesting-data.html';
   HELP_MAP: String                        = 'map.html';
   HELP_PRINT_DATA: String                 = 'print-data.html';
   HELP_RECORD_HISTORY: String             = 'record-history.html';
@@ -1326,6 +1324,9 @@ end;
 
 procedure TXolmisSettings.SaveToFile;
 begin
+  if not Assigned(FConfig) then
+    Exit;
+
   { General }
   FConfig.SetValue('/GENERAL/StartPage', FStartPage);
   FConfig.SetValue('/GENERAL/ConfirmCancel', FConfirmCancel);
