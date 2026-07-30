@@ -553,7 +553,7 @@ function TFieldMapper.Apply(const Row: TXRow): TXRow;
 var
   Mapping: TFieldMapping;
   FSchema: TFieldSchema;
-  SourceValue, DestValue, lat, lon: String;
+  SourceValue, DestValue, SLat, SLong: String;
   I, dummyI: Integer;
   scaleValue, dummyF: Double;
   coordValue: Extended;
@@ -564,6 +564,10 @@ var
   ConvertedValue: Variant;
   dummyB: Boolean;
   y, m: Integer;
+  SourceType, TargetType: TMapCoordinateType;
+  Coord, Converted: IMapCoordinate;
+  DecPoint: TMapPoint;
+  SepSet: set of Char;
 begin
   Result := TXRow.Create;
 
@@ -713,67 +717,65 @@ begin
     if vtrConvertCoordinates in Mapping.Transformations then
     begin
       case Mapping.CoordinatesFormat of
-        scfDD: ;
-        scfDMS:
+        scfDD:   SourceType := mcDecimal;
+        scfDMS:  SourceType := mcDMS;
+        scfUTM:  SourceType := mcUTM;
+      end;
+
+      TargetType := mcDecimal;
+
+      case Mapping.CoordinateAxis of
+        smaNone: ;
+        smaLong:
         begin
-          case Mapping.CoordinateAxis of
-            smaNone: ;
-            smaLong:
-            begin
-              dmsPoint.X.FromString(DestValue);
-              DestValue := FloatToStr(DmsToDecimal(dmsPoint).X);
-            end;
-            smaLat:
-            begin
-              dmsPoint.Y.FromString(DestValue);
-              DestValue := FloatToStr(DmsToDecimal(dmsPoint).Y);
-            end;
-            smaLatLong:
-            begin
-              dmsPoint.X.FromString(ExtractDelimited(1, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]));
-              dmsPoint.Y.FromString(ExtractDelimited(0, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]));
-              DestValue := DmsToDecimal(dmsPoint).ToString();
-            end;
-            smaLongLat:
-            begin
-              dmsPoint.X.FromString(ExtractDelimited(0, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]));
-              dmsPoint.Y.FromString(ExtractDelimited(1, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]));
-              DestValue := DmsToDecimal(dmsPoint).ToString();
-            end;
-          end;
+          Coord := TCoordinateRegistry.CreateInstance(SourceType);
+
+          if not Coord.FromString(DestValue) then
+            raise ECoordinateParseError.Create('Invalid coordinate: ' + DestValue);
+
+          Converted := TCoordinateConverter.Convert(Coord, TargetType);
+          DecPoint := Converted.ToDecimal;
+
+          DestValue := FloatToStr(DecPoint.X);
         end;
-        scfUTM:
+
+        smaLat:
         begin
-          { #todo : Select Zone, Band and Hemisphere of UTM coordinates }
-          case Mapping.CoordinateAxis of
-            smaNone: ;
-            smaLong:
-            begin
-              if TryStrToFloat(DestValue, coordValue, FS) then
-              begin
-                utmPoint.X := coordValue;
-                DestValue := FloatToStr(UtmToDecimal(utmPoint).X);
-              end;
-            end;
-            smaLat:
-            begin
-              if TryStrToFloat(DestValue, coordValue, FS) then
-              begin
-                utmPoint.Y := coordValue;
-                DestValue := FloatToStr(UtmToDecimal(utmPoint).Y);
-              end;
-            end;
-            smaLatLong:
-            begin
-              utmPoint.FromString(DestValue);
-              DestValue := UtmToDecimal(utmPoint).ToString();
-            end;
-            smaLongLat:
-            begin
-              utmPoint.FromString(DestValue);
-              DestValue := UtmToDecimal(utmPoint).ToString();
-            end;
+          Coord := TCoordinateRegistry.CreateInstance(SourceType);
+
+          if not Coord.FromString(DestValue) then
+            raise ECoordinateParseError.Create('Invalid coordinate: ' + DestValue);
+
+          Converted := TCoordinateConverter.Convert(Coord, TargetType);
+          DecPoint := Converted.ToDecimal;
+
+          DestValue := FloatToStr(DecPoint.Y);
+        end;
+
+        smaLatLong, smaLongLat:
+        begin
+          SepSet := COORDINATES_SEPARATORS - [Options.DecimalSeparator];
+
+          if Mapping.CoordinateAxis = smaLatLong then
+          begin
+            SLat := ExtractDelimited(0, DestValue, SepSet);
+            SLong := ExtractDelimited(1, DestValue, SepSet);
+          end
+          else
+          begin
+            SLong := ExtractDelimited(0, DestValue, SepSet);
+            SLat := ExtractDelimited(1, DestValue, SepSet);
           end;
+
+          Coord := TCoordinateRegistry.CreateInstance(SourceType);
+
+          if not Coord.FromString(SLong + ';' + SLat) then
+            raise ECoordinateParseError.Create('Invalid coordinate pair: ' + DestValue);
+
+          Converted := TCoordinateConverter.Convert(Coord, TargetType);
+          DecPoint := Converted.ToDecimal;
+
+          DestValue := DecPoint.ToString(8, spSemicolon);
         end;
       end;
     end;
@@ -783,31 +785,31 @@ begin
     begin
       if Mapping.CoordinateAxis = smaLatLong then
       begin
-        lat := ExtractDelimited(0, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
-        lon := ExtractDelimited(1, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
+        SLat := ExtractDelimited(0, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
+        SLong := ExtractDelimited(1, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
       end
       else if Mapping.CoordinateAxis = smaLongLat then
       begin
-        lon := ExtractDelimited(0, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
-        lat := ExtractDelimited(1, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
+        SLong := ExtractDelimited(0, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
+        SLat := ExtractDelimited(1, DestValue, COORDINATES_SEPARATORS - [Options.DecimalSeparator]);
       end;
 
       // write two fields
       if (Mapping.TargetField = COL_START_LONGITUDE) or (Mapping.TargetField = COL_START_LATITUDE) then
       begin
-        Result.Values[COL_START_LATITUDE] := lat;
-        Result.Values[COL_START_LONGITUDE] := lon;
+        Result.Values[COL_START_LATITUDE] := SLat;
+        Result.Values[COL_START_LONGITUDE] := SLong;
       end
       else
       if (Mapping.TargetField = COL_END_LONGITUDE) or (Mapping.TargetField = COL_END_LATITUDE) then
       begin
-        Result.Values[COL_END_LATITUDE] := lat;
-        Result.Values[COL_END_LONGITUDE] := lon;
+        Result.Values[COL_END_LATITUDE] := SLat;
+        Result.Values[COL_END_LONGITUDE] := SLong;
       end
       else
       begin
-        Result.Values[COL_LATITUDE] := lat;
-        Result.Values[COL_LONGITUDE] := lon;
+        Result.Values[COL_LATITUDE] := SLat;
+        Result.Values[COL_LONGITUDE] := SLong;
       end;
 
       Continue; // do not write the original field

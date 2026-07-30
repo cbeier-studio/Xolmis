@@ -24,11 +24,11 @@ interface
 uses
   { System }
   Classes, Types, SysUtils, Math, LazUTF8, StrUtils, RegExpr, XMLRead, XMLWrite, DOM, Zipper, fgl,
-  fpjson, jsonparser, CSVDocument, DateUtils, TypInfo,
+  fpjson, jsonparser, jsonscanner, CSVDocument, DateUtils, TypInfo,
   { VCL }
   Forms, Controls, ExtCtrls, laz.VirtualTrees, mvMapViewer, EditBtn,
   { Data }
-  DB, SQLDB, models_record_types, data_types;
+  DB, SQLDB, data_types;
 
 const
   DATUM_A: Extended = 6378137;          // equatorial radius (in meters), semi major axis
@@ -54,6 +54,14 @@ const
 
 type
 
+  TCoordinateFormatOptions = record
+    IncludeSymbols: Boolean;   // DMS: ° ' "
+    IncludeZone: Boolean;      // UTM: zone and band
+    Precision: Integer;        // decimal places
+    Separator: TSeparator;     // textual separator
+    Axis: TMapAxis;            // one or both axis
+  end;
+
   { TMapPoint }
 
   TMapPoint = record
@@ -61,7 +69,7 @@ type
     Name: String;
     Notes: String;
     function FromString(aCoord: String; aSeparator: TSeparator = spSemicolon): Boolean;
-    function ToString(aSeparator: TSeparator = spSemicolon): String;
+    function ToString(aPrecision: Integer; aSeparator: TSeparator = spSemicolon): String;
   end;
 
   { TDMS }
@@ -112,6 +120,87 @@ type
 
   TMapPointList = specialize TFPGObjectList<TMapPointObject>;
 
+  IMapCoordinate = interface ['{445B465E-F437-4AE2-9498-3EA48C228536}']
+    function ToDecimal: TMapPoint;
+    function FromDecimal(const P: TMapPoint): IMapCoordinate;
+
+    function ToString(const Options: TCoordinateFormatOptions): String;
+    function FromString(const S: String): Boolean;
+
+    function GetCoordinateType: TMapCoordinateType;
+  end;
+
+  { TDecimalCoord }
+
+  TDecimalCoord = class(TInterfacedObject, IMapCoordinate)
+  private
+    FPoint: TMapPoint;
+  public
+    constructor Create; overload;
+    constructor Create(const P: TMapPoint); overload;
+
+    function ToDecimal: TMapPoint;
+    function FromDecimal(const P: TMapPoint): IMapCoordinate;
+
+    function ToString(const Options: TCoordinateFormatOptions): String; reintroduce;
+    function FromString(const S: String): Boolean;
+
+    function GetCoordinateType: TMapCoordinateType;
+  end;
+
+  { TDMSCoord }
+
+  TDMSCoord = class(TInterfacedObject, IMapCoordinate)
+  private
+    FPoint: TDMSPoint;
+  public
+    constructor Create; overload;
+    constructor Create(const P: TDMSPoint); overload;
+
+    function ToDecimal: TMapPoint;
+    function FromDecimal(const P: TMapPoint): IMapCoordinate;
+
+    function ToString(const Options: TCoordinateFormatOptions): String; reintroduce;
+    function FromString(const S: String): Boolean;
+
+    function GetCoordinateType: TMapCoordinateType;
+  end;
+
+  { TUTMCoord }
+
+  TUTMCoord = class(TInterfacedObject, IMapCoordinate)
+  private
+    FPoint: TUTMPoint;
+  public
+    constructor Create; overload;
+    constructor Create(const P: TUTMPoint); overload;
+
+    function ToDecimal: TMapPoint;
+    function FromDecimal(const P: TMapPoint): IMapCoordinate;
+
+    function ToString(const Options: TCoordinateFormatOptions): String; reintroduce;
+    function FromString(const S: String): Boolean;
+
+    function GetCoordinateType: TMapCoordinateType;
+  end;
+
+  { TCoordinateRegistry }
+
+  TCoordinateRegistry = class
+  private
+    class var FFormats: array[TMapCoordinateType] of TClass;
+  public
+    class procedure RegisterFormat(AType: TMapCoordinateType; AClass: TClass);
+    class function CreateInstance(AType: TMapCoordinateType): IMapCoordinate;
+  end;
+
+  { TCoordinateConverter }
+
+  TCoordinateConverter = class
+  public
+    class function Convert(const Source: IMapCoordinate; TargetType: TMapCoordinateType): IMapCoordinate;
+  end;
+
 type
   TCountry = record
     Id: Integer;
@@ -148,21 +237,26 @@ type
   PProvince = ^TProvince;
   PCity = ^TCity;
 
+type
+  ECoordinateParseError = class(Exception);
+  ECoordinateConversionError = class(Exception);
+
 var
   GazetteerJSONData: TJSONData = nil;
   GazetteerJSONArray: TJSONArray = nil;
 
   { Geographic coordinates conversion routines }
 
+  function DefaultCoordinateOptions: TCoordinateFormatOptions;
   function RemoveSymbolsDMS(aCoord: String): String;
 
   { >> returns Map Points }
-  function DecimalToDms(aDec: TMapPoint): TDMSPoint;
-  function UtmToDms(aUtm: TUTMPoint): TDMSPoint;
-  function DmsToDecimal(aDms: TDMSPoint): TMapPoint;
-  function UtmToDecimal(aUtm: TUTMPoint): TMapPoint;
-  function DecimalToUtm(aDec: TMapPoint): TUTMPoint;
-  function DmsToUtm(aDms: TDMSPoint): TUTMPoint;
+  function DecimalToDms(aDec: TMapPoint): TDMSPoint; deprecated;
+  function UtmToDms(aUtm: TUTMPoint): TDMSPoint; deprecated;
+  function DmsToDecimal(aDms: TDMSPoint): TMapPoint; deprecated;
+  function UtmToDecimal(aUtm: TUTMPoint): TMapPoint; deprecated;
+  function DecimalToUtm(aDec: TMapPoint): TUTMPoint; deprecated;
+  function DmsToUtm(aDms: TDMSPoint): TUTMPoint; deprecated;
   function DecimalToMercator(aDec: TMapPoint): TMercatorPoint;
   function MercatorToDecimal(aMerc: TMercatorPoint): TMapPoint;
 
@@ -500,7 +594,7 @@ begin
       Result := aDMS.Y.ToString(WithSymbols);
   end;
   {$IFDEF DEBUG}
-  LogDebug('Converted Decimal to DMS axis: ' + aCoord.ToString + ' -> ' + Result);
+  LogDebug('Converted Decimal to DMS axis: ' + aCoord.ToString(8) + ' -> ' + Result);
   {$ENDIF}
 end;
 
@@ -617,7 +711,7 @@ begin
 
   // Create node <coordinates> within <Point>
   CoordNode := Doc.CreateElement('coordinates');
-  CoordNode.TextContent := aMapPoint.ToString(spComma);
+  CoordNode.TextContent := aMapPoint.ToString(8, spComma);
   PointNode.AppendChild(CoordNode);
 end;
 
@@ -751,7 +845,7 @@ var
     Parser: TJSONParser;
     JSONData: TJSONData;
   begin
-    Parser := TJSONParser.Create(JSONStr);
+    Parser := TJSONParser.Create(JSONStr, [joUTF8]);
     try
       JSONData := Parser.Parse;
       try
@@ -1057,7 +1151,7 @@ procedure ViewMapPoint(aMapPoint: TMapPoint; aZoom: Integer; aMap: TMapView);
 begin
 
   {$IFDEF DEBUG}
-  LogDebug('View map with coordinates ' + aMapPoint.ToString);
+  LogDebug('View map with coordinates ' + aMapPoint.ToString(8));
   {$ENDIF}
 
 end;
@@ -1323,42 +1417,53 @@ begin
   LogInfo(Format('Cities loaded from JSON with %d records', [Result.Count]));
 end;
 
+function DefaultCoordinateOptions: TCoordinateFormatOptions;
+begin
+  Result.IncludeSymbols := True;
+  Result.IncludeZone := True;
+  Result.Axis := maBoth;
+  Result.Precision := 8;
+  Result.Separator := spSemicolon;
+end;
+
 { TUTMPoint }
 
 function TUTMPoint.FromString(aCoord: String; aSeparator: TSeparator): Boolean;
 var
   Z: String;
-  Sep: set of Char;
+  Sep: Char;
 begin
   Result := False;
-  Sep := [SEPARATORS[aSeparator]];
+  Sep := SEPARATORS[aSeparator];
+  if Sep = #0 then
+    raise ECoordinateParseError.Create('Invalid separator for UTM point');
 
-  if (WordCount(aCoord, Sep) < 2) then
+  if (WordCount(aCoord, [Sep]) < 2) then
     Exit;
 
-  { Zone X Y }
-  if (WordCount(aCoord, Sep) = 3) then
-  begin
-    Z := StringReplace(ExtractWord(1, aCoord, Sep), ' ', '', [rfReplaceAll]);
-    if not TryStrToInt(Trim(Copy(Z, 1, Length(Z) - 1)), Zone) then
-      Exit;
-    Band := Z[Length(Z)];
+  try
+    { Zone X Y }
+    if (WordCount(aCoord, [Sep]) = 3) then
+    begin
+      Z := StringReplace(ExtractWord(1, aCoord, [Sep]), ' ', '', [rfReplaceAll]);
+      Zone := StrToInt(Trim(Copy(Z, 1, Length(Z) - 1)));
+      Band := Z[Length(Z)];
 
-    if not TryStrToFloat(Trim(ExtractWord(2, aCoord, Sep)), X) then
-      Exit;
-    if not TryStrToFloat(Trim(ExtractWord(3, aCoord, Sep)), Y) then
-      Exit;
-  end
-  else
-  { X Y }
-  begin
-    if not TryStrToFloat(Trim(ExtractWord(1, aCoord, Sep)), X) then
-      Exit;
-    if not TryStrToFloat(Trim(ExtractWord(2, aCoord, Sep)), Y) then
-      Exit;
+      X := StrToFloat(Trim(ExtractWord(2, aCoord, [Sep])));
+      Y := StrToFloat(Trim(ExtractWord(3, aCoord, [Sep])));
+    end
+    else
+    { X Y }
+    begin
+      X := StrToFloat(Trim(ExtractWord(1, aCoord, [Sep])));
+      Y := StrToFloat(Trim(ExtractWord(2, aCoord, [Sep])));
+    end;
+
+    Result := True;
+  except
+    on E: Exception do
+      raise ECoordinateParseError.Create('Error parsing UTM: ' + E.Message);
   end;
-
-  Result := True;
 end;
 
 function TUTMPoint.ToString(WithZone: Boolean; aSeparator: TSeparator): String;
@@ -1395,27 +1500,307 @@ begin
   FData.Notes := aNote;
 end;
 
+{ TDecimalCoord }
+
+constructor TDecimalCoord.Create(const P: TMapPoint);
+begin
+  inherited Create;
+  FPoint := P;
+end;
+
+constructor TDecimalCoord.Create;
+begin
+  inherited Create;
+  FPoint.X := 0;
+  FPoint.Y := 0;
+end;
+
+function TDecimalCoord.FromDecimal(const P: TMapPoint): IMapCoordinate;
+begin
+  FPoint := P;
+  Result := Self;
+end;
+
+function TDecimalCoord.FromString(const S: String): Boolean;
+begin
+  Result := FPoint.FromString(S, spSemicolon);
+end;
+
+function TDecimalCoord.GetCoordinateType: TMapCoordinateType;
+begin
+  Result := mcDecimal;
+end;
+
+function TDecimalCoord.ToDecimal: TMapPoint;
+begin
+  Result := FPoint;
+end;
+
+function TDecimalCoord.ToString(const Options: TCoordinateFormatOptions): String;
+begin
+  case Options.Axis of
+    maLongitude: Result := Format('%.' + IntToStr(Options.Precision) + 'f', [FPoint.X]);
+    maLatitude: Result := Format('%.' + IntToStr(Options.Precision) + 'f', [FPoint.Y]);
+  else
+    Result := FPoint.ToString(Options.Precision, Options.Separator);
+  end;
+end;
+
+{ TDMSCoord }
+
+constructor TDMSCoord.Create(const P: TDMSPoint);
+begin
+  inherited Create;
+  FPoint := P;
+end;
+
+constructor TDMSCoord.Create;
+begin
+  inherited Create;
+end;
+
+function TDMSCoord.FromDecimal(const P: TMapPoint): IMapCoordinate;
+var
+  f, m: Extended;
+  IsNegative: Boolean;
+begin
+  // Longitude
+  f := P.X;
+  IsNegative := Sign(f) = NegativeValue;
+  if IsNegative then
+    f := Abs(f);
+  with FPoint.X do
+  begin
+    Hemisphere := BoolToText(IsNegative, 'W', 'E')[1];
+    Degrees := Trunc(f);
+    m := Frac(f) * 60;
+    Minutes := Trunc(m);
+    Seconds := Frac(m) * 60;
+    Text := Format('%d %2.2d %s %s', [Degrees, Minutes, FormatFloat('00.00', Seconds), Hemisphere]);
+  end;
+
+  // Latitude
+  f := P.Y;
+  IsNegative := Sign(f) = NegativeValue;
+  if IsNegative then
+    f := Abs(f);
+  with FPoint.Y do
+  begin
+    Hemisphere := BoolToText(IsNegative, 'S', 'N')[1];
+    Degrees := Trunc(f);
+    m := Frac(f) * 60;
+    Minutes := Trunc(m);
+    Seconds := Frac(m) * 60;
+    Text := Format('%d %2.2d %s %s', [Degrees, Minutes, FormatFloat('00.00', Seconds), Hemisphere]);
+  end;
+
+  Result := Self;
+end;
+
+function TDMSCoord.FromString(const S: String): Boolean;
+begin
+  Result := FPoint.FromString(S, spSemicolon);
+end;
+
+function TDMSCoord.GetCoordinateType: TMapCoordinateType;
+begin
+  Result := mcDMS;
+end;
+
+function TDMSCoord.ToDecimal: TMapPoint;
+begin
+  // Longitude
+  with FPoint.X do
+  begin
+    Result.X := ((Seconds + (Minutes * 60)) / 3600) + Degrees;
+    if Hemisphere = 'W' then
+      Result.X := -Abs(Result.X);
+  end;
+
+  // Latitude
+  with FPoint.Y do
+  begin
+    Result.Y := ((Seconds + (Minutes * 60)) / 3600) + Degrees;
+    if Hemisphere = 'S' then
+      Result.Y := -Abs(Result.Y);
+  end;
+end;
+
+function TDMSCoord.ToString(const Options: TCoordinateFormatOptions): String;
+begin
+  case Options.Axis of
+    maLongitude: Result := FPoint.X.ToString(Options.IncludeSymbols);
+    maLatitude: Result := FPoint.Y.ToString(Options.IncludeSymbols);
+  else
+    Result := FPoint.ToString(Options.IncludeSymbols, Options.Separator);
+  end;
+end;
+
+{ TUTMCoord }
+
+constructor TUTMCoord.Create(const P: TUTMPoint);
+begin
+  inherited Create;
+  FPoint := P;
+end;
+
+constructor TUTMCoord.Create;
+begin
+  inherited Create;
+end;
+
+function TUTMCoord.FromDecimal(const P: TMapPoint): IMapCoordinate;
+var
+  RadX, RadY, DeltaLambda, Xi, Eta, Ni, Zeta, A2, J2, J4, J6, Alfa, Beta, Gamma, Bfi: Extended;
+  MeridHuso: Integer;
+  E2S, cPolar: Extended;
+  IsNegative: Boolean;
+begin
+  // Eccent:= (Sqrt(sqr(DATUM_A)-sqr(DATUM_B))/DATUM_A);
+  // Eccent2:= (Sqrt(sqr(DATUM_A)-sqr(DATUM_B))/DATUM_B);
+  E2S := Sqr(Sqrt(Sqr(DATUM_A) - Sqr(DATUM_B)) / DATUM_B); // 2a Eccentricity
+  cPolar := +(Sqr(DATUM_A)) / DATUM_B;                    // Polar radius of curvature
+
+  IsNegative := Sign(P.Y) = NegativeValue;
+  FPoint.Band := UTM_BANDS[Trunc(P.Y / 8)];
+  FPoint.Zone := Trunc((P.X / 6) + 31);
+
+  RadX := (P.X * pi) / 180;   // Longitude in radians
+  RadY := (P.Y * pi) / 180;   // Latitude in radians
+
+  MeridHuso := 6 * FPoint.Zone - 183;
+  DeltaLambda := +(RadX) - ((MeridHuso * pi) / 180);
+  Xi := (0.5) * ln((1 + (cos(RadY) * sin(DeltaLambda))) / (1 - (cos(RadY) * sin(DeltaLambda))));
+  Eta := ArcTan(Tan(RadY) / cos(DeltaLambda)) - RadY;
+  Ni := (cPolar / Power(1 + E2S * Sqr(cos(RadY)), 0.5)) * K_0;
+  Zeta := (E2S / 2) * Sqr(Xi) * Sqr(cos(RadY));
+  A2 := +(sin(2 * RadY)) * Sqr(cos(RadY));
+  J2 := RadY + (sin(2 * RadY) / 2);
+  J4 := ((3 * J2) + A2) / 4;
+  J6 := (5 * J4 + A2 * Sqr(cos(RadY))) / 3;
+  Alfa := (3 / 4) * E2S;
+  Beta := (5 / 3) * Sqr(Alfa);
+  Gamma := (35 / 27) * Power(Alfa, 3);
+  Bfi := K_0 * cPolar * (RadY - (Alfa * J2) + (Beta * J4) - (Gamma * J6));
+
+  FPoint.X := Xi * Ni * (1 + Zeta / 3) + E_0;
+  FPoint.Y := Eta * Ni * (1 + Zeta) + Bfi;
+  if IsNegative then
+    FPoint.Y := FPoint.Y + N_0;
+
+  Result := Self;
+end;
+
+function TUTMCoord.FromString(const S: String): Boolean;
+begin
+  Result := FPoint.FromString(S, spSemicolon);
+end;
+
+function TUTMCoord.GetCoordinateType: TMapCoordinateType;
+begin
+  Result := mcUTM;
+end;
+
+function TUTMCoord.ToDecimal: TMapPoint;
+var
+  X, Y, DeltaLambda, A, Xi, Eta, Ni, Zeta, A1, A2, J2, J4, J6, Alfa, Beta, Gamma, Bfi: Extended;
+  MeridCentral: Integer;
+  E2S, cPolar, Fi, FiRad, b, SenhXi, Tau: Extended;
+  IsNegative: Boolean;
+begin
+  // Eccent:= (Sqrt(sqr(DATUM_A)-sqr(DATUM_B))/DATUM_A);
+  // Eccent2:= (Sqrt(sqr(DATUM_A)-sqr(DATUM_B))/DATUM_B);
+  E2S := Sqr(Sqrt(Sqr(DATUM_A) - Sqr(DATUM_B)) / DATUM_B); // 2a Eccentricity
+  cPolar := +(Sqr(DATUM_A)) / DATUM_B;                    // Polar radius of curvature
+
+  IsNegative:= Ord(FPoint.Band) > Ord('N');
+  X := FPoint.X;
+  Y := FPoint.Y;
+  MeridCentral := 6 * FPoint.Zone - 183;
+  if IsNegative then
+    Y := Y - N_0;
+
+  Fi := Y / (6366197.724 * K_0);
+  Ni := (cPolar / Power(1 + E2S * Sqr(cos(Fi)), 0.5)) * K_0;
+  A := (X - E_0) / Ni;
+  A1 := sin(2 * Fi);
+  A2 := A1 * Sqr(cos(Fi));
+  J2 := Fi + (A1 / 2);
+  J4 := ((3 * J2) + A2) / 4;
+  J6 := (5 * J4 + A2 * Sqr(cos(Fi))) / 3;
+  Alfa := (3 / 4) * E2S;
+  Beta := (5 / 3) * Sqr(Alfa);
+  Gamma := (35 / 27) * Power(Alfa, 3);
+  Bfi := K_0 * cPolar * (Fi - (Alfa * J2) + (Beta * J4) - (Gamma * J6));
+  b := (Y - Bfi) / Ni;
+  Zeta := ((E2S * Sqr(A)) / 2) * Sqr(cos(Fi));
+  Xi := A * (1 - (Zeta / 3));
+  Eta := (b * (1 - Zeta)) + Fi;
+  SenhXi := (Exp(Xi) - Exp(-Xi)) / 2;
+  DeltaLambda := ArcTan(SenhXi / cos(Eta));
+  Tau := ArcTan(cos(DeltaLambda) * Tan(Eta));
+  FiRad := Fi + (1 + E2S * Sqr(cos(Fi)) - (3 / 2) * E2S * sin(Fi) * cos(Fi) * (Tau - Fi)) *
+    (Tau - Fi);
+
+  Result.Y := +(FiRad / pi) * 180;
+  Result.X := +((DeltaLambda / pi) * 180) + MeridCentral;
+end;
+
+function TUTMCoord.ToString(const Options: TCoordinateFormatOptions): String;
+begin
+  case Options.Axis of
+    maLongitude: Result := Format('%.3f', [FPoint.X]);
+    maLatitude: Result := Format('%.3f', [FPoint.Y]);
+  else
+    Result := FPoint.ToString(Options.IncludeZone, Options.Separator);
+  end;
+end;
+
+{ TCoordinateRegistry }
+
+class function TCoordinateRegistry.CreateInstance(AType: TMapCoordinateType): IMapCoordinate;
+begin
+  if FFormats[AType] = nil then
+    raise ECoordinateConversionError.Create('No coordinate class registered for this type');
+
+  Result := FFormats[AType].Create as IMapCoordinate;
+end;
+
+class procedure TCoordinateRegistry.RegisterFormat(AType: TMapCoordinateType; AClass: TClass);
+begin
+  FFormats[AType] := AClass;
+end;
+
+{ TCoordinateConverter }
+
+class function TCoordinateConverter.Convert(const Source: IMapCoordinate; TargetType: TMapCoordinateType
+  ): IMapCoordinate;
+var
+  Dec: TMapPoint;
+  Target: IMapCoordinate;
+begin
+  Dec := Source.ToDecimal;
+  Target := TCoordinateRegistry.CreateInstance(TargetType);
+  Result := Target.FromDecimal(Dec);
+end;
+
 { TDMSPoint }
 
 function TDMSPoint.FromString(aCoord: String; aSeparator: TSeparator): Boolean;
 var
-  Sep: set of Char;
+  Sep: Char;
 begin
   Result := False;
-  Sep := [SEPARATORS[aSeparator]];
+  Sep := SEPARATORS[aSeparator];
+  if Sep = #0 then
+    raise ECoordinateParseError.Create('Invalid separator for DMS point');
+
   aCoord := RemoveSymbolsDMS(aCoord);
 
-  if (WordCount(aCoord, Sep) <> 2) then
+  if (WordCount(aCoord, [Sep]) <> 2) then
     Exit;
 
-  { Longitude }
-  if not X.FromString(ExtractWord(1, aCoord, Sep)) then
-    Exit;
-  { Latitude }
-  if not Y.FromString(ExtractWord(2, aCoord, Sep)) then
-    Exit;
-
-  Result := True;
+  Result := X.FromString(ExtractWord(1, aCoord, [Sep])) and Y.FromString(ExtractWord(2, aCoord, [Sep]));
 end;
 
 function TDMSPoint.ToString(WithSymbols: Boolean; aSeparator: TSeparator): String;
@@ -1448,34 +1833,36 @@ begin
   if (WordCount(aCoord, [' ']) < 3) then
     Exit;
 
-  if not TryStrToInt(ExtractWord(1, aCoord, [' ']), Degrees) then
-    Exit;
-  if not TryStrToInt(ExtractWord(2, aCoord, [' ']), Minutes) then
-    Exit;
+  try
+    Degrees := StrToInt(ExtractWord(1, aCoord, [' ']));
+    Minutes := StrToInt(ExtractWord(2, aCoord, [' ']));
 
-  { Degrees Minutes Seconds Hemisphere }
-  if (WordCount(aCoord, [' ']) = 4) then
-  begin
-    if not TryStrToFloat(ExtractWord(3, aCoord, [' ']), Seconds) then
-      Exit;
-    if not CharInSet(ExtractWord(4, aCoord, [' '])[1], ['N', 'S', 'E', 'W']) then
-      Exit;
+    { Degrees Minutes Seconds Hemisphere }
+    if (WordCount(aCoord, [' ']) = 4) then
+    begin
+      Seconds := StrToFloat(ExtractWord(3, aCoord, [' ']));
+      if not CharInSet(ExtractWord(4, aCoord, [' '])[1], ['N', 'S', 'E', 'W']) then
+        raise Exception.Create('Unrecognized hemisphere');
 
-    Hemisphere := ExtractWord(4, aCoord, [' '])[1];
-  end
-  else
-  { Degrees Minutes Hemisphere }
-  if (WordCount(aCoord, [' ']) = 3) then
-  begin
-    if not CharInSet(ExtractWord(3, aCoord, [' '])[1], ['N', 'S', 'E', 'W']) then
-      Exit;
+      Hemisphere := ExtractWord(4, aCoord, [' '])[1];
+    end
+    else
+    { Degrees Minutes Hemisphere }
+    if (WordCount(aCoord, [' ']) = 3) then
+    begin
+      if not CharInSet(ExtractWord(3, aCoord, [' '])[1], ['N', 'S', 'E', 'W']) then
+        raise Exception.Create('Unrecognized hemisphere');
 
-    Hemisphere := ExtractWord(3, aCoord, [' '])[1];
+      Hemisphere := ExtractWord(3, aCoord, [' '])[1];
+    end;
+
+    Text := Format('%d %2.2d %s %s', [Degrees, Minutes, FormatFloat('00.00', Seconds), Hemisphere]);
+
+    Result := True;
+  except
+    on E: Exception do
+      raise ECoordinateParseError.Create('Error parsing DMS: ' + E.Message);
   end;
-
-  Text := Format('%d %2.2d %s %s', [Degrees, Minutes, FormatFloat('00.00', Seconds), Hemisphere]);
-
-  Result := True;
 end;
 
 function TDMS.ToString(WithSymbols: Boolean): String;
@@ -1490,41 +1877,52 @@ end;
 
 function TMapPoint.FromString(aCoord: String; aSeparator: TSeparator): Boolean;
 var
-  Sep: set of Char;
+  Sep: Char;
 begin
   Result := False;
-  Sep := [SEPARATORS[aSeparator]];
+  Sep := SEPARATORS[aSeparator];
+  if Sep = #0 then
+    raise ECoordinateParseError.Create('Invalid separator for decimal coordinates');
 
-  if (WordCount(aCoord, Sep) <> 2) then
+  if (WordCount(aCoord, [Sep]) <> 2) then
     Exit;
 
-  if not TryStrToFloat(Trim(ExtractWord(1, aCoord, Sep)), X) then
-    Exit;
-  if not TryStrToFloat(Trim(ExtractWord(2, aCoord, Sep)), Y) then
-    Exit;
-
-  Result := True;
+  try
+    X := StrToFloat(Trim(ExtractWord(1, aCoord, [Sep])));
+    Y := StrToFloat(Trim(ExtractWord(2, aCoord, [Sep])));
+    Result := True;
+  except
+    on E: Exception do
+      raise ECoordinateParseError.Create('Error parsing decimal coordinates: ' + E.Message);
+  end;
 end;
 
-function TMapPoint.ToString(aSeparator: TSeparator): String;
+function TMapPoint.ToString(aPrecision: Integer; aSeparator: TSeparator): String;
 var
-  sX, sY, sep: String;
+  sX, sY, sep, fmask: String;
 begin
-  sep:= SEPARATORS[aSeparator];
+  sep := SEPARATORS[aSeparator];
+  fmask := '###0.' + StringOfChar('0', aPrecision);
 
   if aSeparator = spComma then
   begin
-    sX := StringReplace(FloatToStr(X), ',', '.', []);
-    sY := StringReplace(FloatToStr(Y), ',', '.', []);
+    sX := StringReplace(FormatFloat(fmask, X), ',', '.', []);
+    sY := StringReplace(FormatFloat(fmask, Y), ',', '.', []);
   end
   else
   begin
-    sX := FloatToStr(X);
-    sY := FloatToStr(Y);
+    sX := FormatFloat(fmask, X);
+    sY := FormatFloat(fmask, Y);
   end;
 
   Result := Format('%s%s %s', [sX, sep, sY]);
 end;
+
+initialization
+  // Register default formats
+  TCoordinateRegistry.RegisterFormat(mcDecimal, TDecimalCoord);
+  TCoordinateRegistry.RegisterFormat(mcDMS, TDMSCoord);
+  TCoordinateRegistry.RegisterFormat(mcUTM, TUTMCoord);
 
 end.
 

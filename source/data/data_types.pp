@@ -210,7 +210,7 @@ type
   TSearchDataType = (sdtText, sdtInteger, sdtFloat, sdtDate, sdtTime, sdtDateTime, sdtBoolean, sdtList,
     sdtLookup, sdtYear, sdtMonthYear, sdtSplitDate);
   TFilterValue = (fvNone, fvReset, fvAll, fvMarked, fvUnmarked, fvDeleted, fvQueued);
-  TSeparator = (spNone, spSemicolon, spComma, spColon, spPeriod, spPipe, spSlash, spHyphen, spUnderline);
+  TSeparator = (spNone, spSemicolon, spComma, spColon, spPeriod, spPipe, spSlash, spHyphen, spUnderline, spSpace);
   TSQLAndOr = (aoNone, aoAnd, aoOr);
   TRecordActiveStatus = (rsAll, rsActive, rsInactive, rsNone);
   TSummaryKind = (
@@ -256,7 +256,7 @@ const
     'DateTime', 'Boolean');
   SEARCH_DATA_TYPES: array[TSearchDataType] of String = ('Text', 'Integer', 'Float', 'Date', 'Time',
     'DateTime', 'Boolean', 'List', 'Lookup', 'Year', 'MonthYear', 'SplitDate');
-  SEPARATORS: array [TSeparator] of Char = (#0, ';', ',', ':', '.', '|', '/', '-', '_');
+  SEPARATORS: array [TSeparator] of Char = (#0, ';', ',', ':', '.', '|', '/', '-', '_', ' ');
   COORDINATES_SEPARATORS: set of Char = [';', ',', ':', '|', '/'];
 
 type

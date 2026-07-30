@@ -987,6 +987,8 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsLongitude = 'Longitude';
     rsLatitudeCaption = 'Latitude: <font color="$00C75F5B">%s</font>';
     rsLongitudeCaption = 'Longitude: <font color="$00C75F5B">%s</font>';
+    rsLatitudeWithCoordinate = 'Latitude: %s';
+    rsLongitudeWithCoordinate = 'Longitude: %s';
     rsExactCoordinate = 'Exact';
     rsApproximatedCoordinate = 'Approximated';
     rsReferenceCoordinate = 'Reference coordinate';

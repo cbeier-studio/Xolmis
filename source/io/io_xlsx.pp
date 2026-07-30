@@ -141,49 +141,41 @@ var
   Dt: TDateTime;
   N, Lon, Lat: Double;
   Coord: TMapPoint;
-  DMS: TDMSPoint;
-  UTM: TUTMPoint;
+  FDecCoord, FConvertedCoord: IMapCoordinate;
+  TargetType: TMapCoordinateType;
+  CoordOpt: TCoordinateFormatOptions;
 begin
   Result := FieldValue;
 
   if Result = '' then
     Exit;
 
+  CoordOpt := DefaultCoordinateOptions;
+
   // Coordinates are always stored in decimal degrees and can be exported as DMS/UTM.
   if IsCoordinateField(FieldName) then
   begin
     case Options.CoordinatesFormat of
-      tcfDD: ;
-      tcfDMS:
-      begin
-        if TryGetCoordinatePair(Row, FieldName, FS, Lon, Lat) then
-        begin
-          Coord.X := Lon;
-          Coord.Y := Lat;
-          DMS := DecimalToDms(Coord);
-
-          if IsLongitudeField(FieldName) then
-            Result := DMS.X.ToString(True)
-          else
-            Result := DMS.Y.ToString(True);
-        end;
-      end;
-      tcfUTM:
-      begin
-        if TryGetCoordinatePair(Row, FieldName, FS, Lon, Lat) then
-        begin
-          Coord.X := Lon;
-          Coord.Y := Lat;
-          UTM := DecimalToUtm(Coord);
-
-          // Keep two columns: longitude column as Easting, latitude as Northing.
-          if IsLongitudeField(FieldName) then
-            Result := FormatFloat('#####0.000', UTM.X)
-          else
-            Result := FormatFloat('#######0.000', UTM.Y);
-        end;
-      end;
+      tcfDD: TargetType := mcDecimal;
+      tcfDMS: TargetType := mcDMS;
+      tcfUTM: TargetType := mcUTM;
     end;
+
+    if TryGetCoordinatePair(Row, FieldName, FS, Lon, Lat) then
+    begin
+      Coord.X := Lon;
+      Coord.Y := Lat;
+      FDecCoord := TCoordinateRegistry.CreateInstance(mcDecimal);
+      FDecCoord.FromDecimal(Coord);
+      FConvertedCoord := TCoordinateConverter.Convert(FDecCoord, TargetType);
+
+      if IsLongitudeField(FieldName) then
+        CoordOpt.Axis := maLongitude
+      else
+        CoordOpt.Axis := maLatitude;
+      Result := FConvertedCoord.ToString(CoordOpt);
+    end;
+
     Exit;
   end;
 

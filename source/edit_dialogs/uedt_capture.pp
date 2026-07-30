@@ -675,6 +675,8 @@ var
   Ax: TMapAxis;
   aField, aDMS: String;
   C: Extended;
+  Opt: TCoordinateFormatOptions;
+  FDecCoord, FDmsCoord: IMapCoordinate;
 begin
   aDMS := '';
   if Sender = eLongitude then
@@ -691,23 +693,40 @@ begin
   else
     Exit;
 
-  C := dsLink.DataSet.FieldByName(aField).AsFloat;
-  if C <> 0.0 then
-    aDMS := AxisDecToDMS(FloatToStr(C), Ax, True);
+  Opt := DefaultCoordinateOptions;
+  Opt.Axis := Ax;
 
+  C := dsLink.DataSet.FieldByName(aField).AsFloat;
   case Ax of
-    maBoth:
-      ;
+    maBoth: ;
     maLongitude:
-      if aDMS = '' then
-        lblLongitude.Caption := rsLongitude + ':'
+    begin
+      if C <> 0.0 then
+      begin
+        FDecCoord := TCoordinateRegistry.CreateInstance(mcDecimal);
+        if FDecCoord.FromString(FloatToStr(C) + '; 0.0') then
+        begin
+          FDmsCoord := TCoordinateConverter.Convert(FDecCoord, mcDMS);
+          lblLongitude.Caption := Format(rsLongitudeWithCoordinate, [FDmsCoord.ToString(Opt)]);
+        end;
+      end
       else
-        lblLongitude.Caption := Format(rsLongitudeCaption, [aDMS]);
+        lblLongitude.Caption := rsLongitude + ':';
+    end;
     maLatitude:
-      if aDMS = '' then
-        lblLatitude.Caption := rsLatitude + ':'
+    begin
+      if C <> 0.0 then
+      begin
+        FDecCoord := TCoordinateRegistry.CreateInstance(mcDecimal);
+        if FDecCoord.FromString('0.0; ' + FloatToStr(C)) then
+        begin
+          FDmsCoord := TCoordinateConverter.Convert(FDecCoord, mcDMS);
+          lblLatitude.Caption := Format(rsLatitudeWithCoordinate, [FDmsCoord.ToString(Opt)]);
+        end;
+      end
       else
-        lblLatitude.Caption := Format(rsLatitudeCaption, [aDMS]);
+        lblLatitude.Caption := rsLatitude + ':';
+    end;
   end;
 end;
 

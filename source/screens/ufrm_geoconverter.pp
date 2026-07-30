@@ -23,7 +23,6 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, ComCtrls,
   Menus, SynEdit, BCPanel, SynEditTypes, SynEditMarks, StrUtils, LConvEncoding, utils_gis,
-  //ucsvhighlighter,
   RegExpr;
 
 type
@@ -105,7 +104,6 @@ type
     procedure seConvertFromPaste(Sender: TObject; var AText: String; var AMode: TSynSelectionMode;
       ALogStartPos: TPoint; var AnAction: TSynCopyPasteAction);
   private
-    //CSVHighlighter: TCSVHighlighter;
     procedure AddMark(aLine: Integer);
     procedure ApplyDarkMode;
     function DetectCoordinateType(const aText: String): TMapCoordinateType;
@@ -122,7 +120,7 @@ var
 
 implementation
 
-uses utils_locale, utils_global, utils_dialogs, utils_themes, udm_main, uDarkStyleParams;
+uses utils_locale, utils_global, utils_dialogs, utils_themes, data_types, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -208,10 +206,6 @@ begin
   cbConvertFrom.ItemIndex := 0;
   cbConvertTo.ItemIndex := 1;
   UpdateButtons;
-
-  //CSVHighlighter := TCSVHighlighter.Create(Self);
-  //seConvertFrom.Highlighter := CSVHighlighter;
-  //seConverted.Highlighter := CSVHighlighter;
 end;
 
 procedure TfrmGeoConverter.FormResize(Sender: TObject);
@@ -317,8 +311,7 @@ var
   i: Integer;
   S: String;
   MP: TMapPoint;
-  pDMS: TDMSPoint;
-  pUTM: TUTMPoint;
+  Coord, DecCoord: IMapCoordinate;
   L: TStrings;
   MCT: TMapCoordinateType;
 begin
@@ -337,31 +330,25 @@ begin
       for i := 0 to L.Count - 1 do
       begin
         S := Trim(L[i]);
-        if S <> EmptyStr then
-        begin
-          case MCT of
-            mcDecimal: ;
-            mcDMS:
-            begin
-              if pDMS.FromString(S) then
-                S := DmsToDecimal(pDms).ToString;
-            end;
-            mcUTM:
-            begin
-              if pUTM.FromString(S) then
-                S := UtmToDecimal(pUTM).ToString;
-            end;
-          end;
+        if S = EmptyStr then
+          Continue;
 
-          MP.FromString(S);
-          with DMM.tabGeoBank do
-          begin
-            Append;
-            FieldByName('coordinate_name').AsString := 'Converted_' + IntToStr(i + 1);
-            FieldByName('longitude').AsFloat := MP.X;
-            FieldByName('latitude').AsFloat := MP.Y;
-            Post;
-          end;
+        Coord := TCoordinateRegistry.CreateInstance(MCT);
+
+        if not Coord.FromString(S) then
+          raise ECoordinateParseError.Create('Invalid coordinate: ' + S);
+
+        DecCoord := TCoordinateConverter.Convert(Coord, mcDecimal);
+
+        MP := DecCoord.ToDecimal;
+
+        with DMM.tabGeoBank do
+        begin
+          Append;
+          FieldByName('coordinate_name').AsString := 'Converted_' + IntToStr(i + 1);
+          FieldByName('longitude').AsFloat := MP.X;
+          FieldByName('latitude').AsFloat := MP.Y;
+          Post;
         end;
       end;
     except
@@ -385,26 +372,26 @@ begin
 end;
 
 procedure TfrmGeoConverter.sbConvertClick(Sender: TObject);
-type
-  TConvertCoord = (cvSame, cvDecimalDms, cvDecimalUtm, cvDmsDecimal, cvDmsUtm, cvUtmDecimal, cvUtmDms);
 var
   i: Integer;
-  l: String;
-  pDec: TMapPoint;
-  pDMS: TDMSPoint;
-  pUTM: TUTMPoint;
-  Conv: TConvertCoord;
+  Line: String;
+  SourceType, TargetType: TMapCoordinateType;
+  Coord, Converted: IMapCoordinate;
+  FOptions: TCoordinateFormatOptions;
 begin
-  Conv := cvSame;
-
   if seConvertFrom.Lines.Count = 0 then
     Exit;
+
   if (cbConvertFrom.ItemIndex < 0) or (cbConvertTo.ItemIndex < 0) then
   begin
     MsgDlg('', rsSelectCoordinatesTypes, mtInformation);
     Exit;
   end;
-  if (cbConvertFrom.ItemIndex = 2) and (eUTMZone.Text = '') then
+
+  SourceType := TMapCoordinateType(cbConvertFrom.ItemIndex);
+  TargetType := TMapCoordinateType(cbConvertTo.ItemIndex);
+
+  if (SourceType = mcUTM) and (eUTMZone.Text = '') then
   begin
     MsgDlg('', rsInformUTMZone, mtInformation);
     if eUTMZone.CanSetFocus then
@@ -412,36 +399,18 @@ begin
     Exit;
   end;
 
-  case cbConvertFrom.ItemIndex of
-    0:  // Decimal Degrees
-      case cbConvertTo.ItemIndex of
-        0: Conv := cvSame;
-        1: Conv := cvDecimalDms;
-        2: Conv := cvDecimalUtm;
-      end;
-    1:  // Degrees Minutes Seconds
-      case cbConvertTo.ItemIndex of
-        0: Conv := cvDmsDecimal;
-        1: Conv := cvSame;
-        2: Conv := cvDmsUtm;
-      end;
-    2:  // UTM
-      case cbConvertTo.ItemIndex of
-        0: Conv := cvUtmDecimal;
-        1: Conv := cvUtmDms;
-        2: Conv := cvSame;
-      end;
-  end;
-
-  // "Conversion" to the same format
-  if Conv = cvSame then
+  if SourceType = TargetType then
   begin
     MsgDlg('', rsSameCoordinateFormat, mtInformation);
-//    mTo.Lines.Assign(seConvertFrom.Lines);
     Exit;
   end;
 
+  FOptions := DefaultCoordinateOptions;
+  FOptions.IncludeZone := ckAddUnitsZone.Checked;
+  FOptions.IncludeSymbols := ckAddUnitsZone.Checked;
+
   LogEvent(leaStart, 'Convert coordinates');
+
   try
     PBar.Position := 0;
     PBar.Max := seConvertFrom.Lines.Count;
@@ -454,73 +423,30 @@ begin
 
     for i := 0 to seConvertFrom.Lines.Count - 1 do
     begin
-      l := seConvertFrom.Lines[i];
-      case Conv of
-        cvSame: { nothing } ;
-        cvDecimalDms:          // Decimal -> DMS
-          begin
-            if Trim(l) = EmptyStr then
-              seConverted.Lines.Add('')
-            else
-            if pDec.FromString(l) then
-              seConverted.Lines.Add(DecimalToDms(pDec).ToString(ckAddUnitsZone.Checked))
-            else
-              seConverted.Lines.Add(Format('%s: %s [%d]',[rsTitleError, l, i + 1]));
-          end;
-        cvDecimalUtm:          // Decimal -> UTM
-          begin
-            if Trim(l) = EmptyStr then
-              seConverted.Lines.Add('')
-            else
-            if pDec.FromString(l) then
-              seConverted.Lines.Add(DecimalToUtm(pDec).ToString(ckAddUnitsZone.Checked))
-            else
-              seConverted.Lines.Add(Format('%s: %s [%d]',[rsTitleError, l, i + 1]));
-          end;
-        cvDmsDecimal:          // DMS -> Decimal
-          begin
-            if Trim(l) = EmptyStr then
-              seConverted.Lines.Add('')
-            else
-            if pDms.FromString(l) then
-              seConverted.Lines.Add(DmsToDecimal(pDms).ToString)
-            else
-              seConverted.Lines.Add(Format('%s: %s [%d]',[rsTitleError, l, i + 1]));
-          end;
-        cvDmsUtm:              // DMS -> UTM
-          begin
-            if Trim(l) = EmptyStr then
-              seConverted.Lines.Add('')
-            else
-            if pDms.FromString(l) then
-              seConverted.Lines.Add(DmsToUtm(pDms).ToString(ckAddUnitsZone.Checked))
-            else
-              seConverted.Lines.Add(Format('%s: %s [%d]',[rsTitleError, l, i + 1]));
-          end;
-        cvUtmDecimal:          // UTM -> Decimal
-          begin
-            if Trim(l) = EmptyStr then
-              seConverted.Lines.Add('')
-            else
-            if pUtm.FromString(l) then
-              seConverted.Lines.Add(UtmToDecimal(pUtm).ToString)
-            else
-              seConverted.Lines.Add(Format('%s: %s [%d]',[rsTitleError, l, i + 1]));
-          end;
-        cvUtmDms:              // UTM -> DMS
-          begin
-            if Trim(l) = EmptyStr then
-              seConverted.Lines.Add('')
-            else
-            if pUtm.FromString(l) then
-              seConverted.Lines.Add(UtmToDms(pUtm).ToString(ckAddUnitsZone.Checked))
-            else
-              seConverted.Lines.Add(Format('%s: %s [%d]',[rsTitleError, l, i + 1]));
-          end;
-      end;
-      if seConverted.Lines[i].StartsWith(rsTitleError, True) then
+      Line := Trim(seConvertFrom.Lines[i]);
+
+      if Line = '' then
       begin
-        AddMark(i + 1);
+        seConverted.Lines.Add('');
+        Continue;
+      end;
+
+      try
+        Coord := TCoordinateRegistry.CreateInstance(SourceType);
+
+        if not Coord.FromString(Line) then
+          raise ECoordinateParseError.Create('Invalid coordinate');
+
+        Converted := TCoordinateConverter.Convert(Coord, TargetType);
+
+        seConverted.Lines.Add(Converted.ToString(FOptions));
+
+      except
+        on E: Exception do
+        begin
+          seConverted.Lines.Add(Format('%s: %s [%d]', [rsTitleError, Line, i + 1]));
+          AddMark(i + 1);
+        end;
       end;
 
       PBar.Position := i + 1;

@@ -102,7 +102,7 @@ var
 implementation
 
 uses
-  utils_global, utils_themes, udm_main, uDarkStyleParams;
+  utils_global, utils_themes, data_types, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -278,8 +278,12 @@ begin
 end;
 
 procedure TdlgGeoAssist.sbOKClick(Sender: TObject);
+var
+  FOptions: TCoordinateFormatOptions;
 begin
   GravaStat(Name, 'sbOK', 'click');
+
+  FOptions := DefaultCoordinateOptions;
 
   if PG.ActivePage = tabImported then
   begin
@@ -289,7 +293,7 @@ begin
     if ckDeleteUsed.Checked then
       dsGeoBank.DataSet.Delete;
   end;
-  FPointStr := FDecPoint.ToString;
+  FPointStr := FDecPoint.ToString(FOptions.Precision, FOptions.Separator);
 
   ModalResult := mrOK;
 end;
@@ -335,7 +339,13 @@ begin
 end;
 
 procedure TdlgGeoAssist.ConvertCoordinate;
+var
+  DmsCoord: IMapCoordinate;
+  DecCoord: IMapCoordinate;
+  FOptions: TCoordinateFormatOptions;
 begin
+  FOptions := DefaultCoordinateOptions;
+
   FDmsPoint.X.Degrees := elongDeg.Value;
   FDmsPoint.X.Minutes := elongMin.Value;
   FDmsPoint.X.Seconds := elongSec.Value;
@@ -352,8 +362,11 @@ begin
   else
     FDmsPoint.Y.Hemisphere := 'S';
 
-  FDecPoint := DmsToDecimal(FDmsPoint);
-  pDecimal.Caption := FDecPoint.ToString;
+  DmsCoord := TDMSCoord.Create(FDmsPoint);
+  DecCoord := TCoordinateConverter.Convert(DmsCoord, mcDecimal);
+  FDecPoint := DecCoord.ToDecimal;
+
+  pDecimal.Caption := FDecPoint.ToString(FOptions.Precision, FOptions.Separator);
 
   FChangeZoom := True;
 end;
@@ -388,6 +401,9 @@ begin
 end;
 
 procedure TdlgGeoAssist.FormShow(Sender: TObject);
+var
+  FDecCoord, FDmsCoord: IMapCoordinate;
+  FOptions: TCoordinateFormatOptions;
 begin
   //{$IFDEF MSWINDOWS}
   //SetRoundedCorners(Self.Handle, rcSmall);
@@ -396,12 +412,15 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  FOptions := DefaultCoordinateOptions;
+
   if Length(FPointStr) > 0 then
     FDecPoint.FromString(FPointStr);
 
   if not (FDecPoint.X = 0) and not (FDecPoint.Y = 0) then
   begin
-    FDmsPoint := DecimalToDms(FDecPoint);
+    FDecCoord := TDecimalCoord.Create(FDecPoint);
+    FDmsCoord := TCoordinateConverter.Convert(FDecCoord, mcDMS);
 
     elongDeg.Value := FDMSPoint.X.Degrees;
     elongMin.Value := FDMSPoint.X.Minutes;
@@ -419,8 +438,7 @@ begin
   if cblatHem.ItemIndex < 0 then
     cblatHem.ItemIndex := 1;
 
-  //FDecPoint := DmsToDecimal(FDmsPoint);
-  pDecimal.Caption := FDecPoint.ToString;
+  pDecimal.Caption := FDecPoint.ToString(FOptions.Precision, FOptions.Separator);
 
   if not dsGeoBank.DataSet.Active then
     dsGeoBank.DataSet.Open;

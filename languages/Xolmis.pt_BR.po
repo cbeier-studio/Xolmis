@@ -17080,6 +17080,11 @@ msgctxt "utils_locale.rslatitudecaption"
 msgid "Latitude: <font color=\"$00C75F5B\">%s</font>"
 msgstr "Latitude: <font color=\"$00C75F5B\">%s</font>"
 
+#: utils_locale.rslatitudewithcoordinate
+#, object-pascal-format
+msgid "Latitude: %s"
+msgstr "Latitude: %s"
+
 #: utils_locale.rsleftleg
 #, object-pascal-format
 msgctxt "utils_locale.rsleftleg"
@@ -17237,6 +17242,11 @@ msgstr "Longitude"
 msgctxt "utils_locale.rslongitudecaption"
 msgid "Longitude: <font color=\"$00C75F5B\">%s</font>"
 msgstr "Longitude: <font color=\"$00C75F5B\">%s</font>"
+
+#: utils_locale.rslongitudewithcoordinate
+#, object-pascal-format
+msgid "Longitude: %s"
+msgstr "Longitude: %s"
 
 #: utils_locale.rslossabandonment
 msgid "Abandonment"
@@ -20685,4 +20695,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-
