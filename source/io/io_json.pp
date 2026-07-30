@@ -21,7 +21,7 @@ unit io_json;
 interface
 
 uses
-  Classes, SysUtils, fgl, fpjson, jsonparser, jsonreader, LConvEncoding, Math, streamex, io_core;
+  Classes, SysUtils, fgl, fpjson, jsonparser, jsonreader, jsonscanner, LConvEncoding, Math, streamex, io_core;
 
 type
 
@@ -430,7 +430,7 @@ begin
         begin
           Utf8Stream := TStringStream.Create(Line, TEncoding.UTF8);
           try
-            Parser := TJSONParser.Create(Utf8Stream);
+            Parser := TJSONParser.Create(Utf8Stream, [joUTF8]);
             Data := Parser.Parse;
             try
               if Data.JSONType = jtObject then
@@ -462,7 +462,7 @@ begin
   // Regular JSON
   Utf8Stream := TStringStream.Create(Utf8Text, TEncoding.UTF8);
   try
-    Parser := TJSONParser.Create(Utf8Stream);
+    Parser := TJSONParser.Create(Utf8Stream, [joUTF8]);
     Data := Parser.Parse;
     try
       Node := ResolveRecordsPath(Data, Options.RecordsPath);
@@ -535,7 +535,7 @@ begin
         Line := Trim(Reader.ReadLine);
         if Line = '' then Continue;
 
-        parser := TJSONParser.Create(Line);
+        parser := TJSONParser.Create(Line, [joUTF8]);
         try
           root := parser.Parse;
           try
@@ -571,7 +571,7 @@ begin
   else
   begin
     // JSON clássico como estava
-    parser := TJSONParser.Create(Stream);
+    parser := TJSONParser.Create(Stream, [joUTF8]);
     try
       root := parser.Parse;
       try
@@ -616,7 +616,7 @@ begin
         if Line = '' then
           Continue;
 
-        Parser := TJSONParser.Create(Line);
+        Parser := TJSONParser.Create(Line, [joUTF8]);
         try
           Data := Parser.Parse;
           try
@@ -657,7 +657,7 @@ begin
   else
   begin
     Stream.Position := 0;
-    Parser := TJSONParser.Create(Stream);
+    Parser := TJSONParser.Create(Stream, [joUTF8]);
     try
       Data := Parser.Parse;
       try
@@ -776,7 +776,7 @@ begin
       if Line = '' then
         Continue;
 
-      Parser := TJSONParser.Create(Line);
+      Parser := TJSONParser.Create(Line, [joUTF8]);
       try
         Data := Parser.Parse;
         try
@@ -820,7 +820,7 @@ begin
       if Line = '' then
         Continue;
 
-      Parser := TJSONParser.Create(Line);
+      Parser := TJSONParser.Create(Line, [joUTF8]);
       try
         Data := Parser.Parse;
         try
@@ -869,7 +869,7 @@ begin
       if Line = '' then
         Continue;
 
-      Parser := TJSONParser.Create(Line);
+      Parser := TJSONParser.Create(Line, [joUTF8]);
       try
         Data := Parser.Parse;
         try

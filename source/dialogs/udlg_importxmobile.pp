@@ -166,9 +166,9 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_editdialogs,
-  data_types, data_management, data_getvalue, data_consts,
+  data_types, data_getvalue, data_consts,
   models_geo, models_sightings, models_specimens,
-  udm_main, udm_grid, udm_sampling, uedt_survey, uedt_nest, udlg_loading, udlg_taxonnotfound, uDarkStyleParams;
+  udm_main, udm_grid, udm_sampling, udlg_loading, udlg_taxonnotfound, uDarkStyleParams;
 
 {$R *.lfm}
 

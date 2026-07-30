@@ -21,7 +21,7 @@ unit udlg_import;
 interface
 
 uses
-  BCPanel, Classes, SysUtils, fpjson, jsonparser, LCLIntf, fgl, BGRABitmapTypes, Math,
+  BCPanel, Classes, SysUtils, fpjson, jsonparser, jsonscanner, LCLIntf, fgl, BGRABitmapTypes, Math,
   dbf, DB, SQLDB, BufDataset, Forms, Controls, Graphics, Dialogs, ExtCtrls, ToggleSwitch,
   StdCtrls, Grids, Buttons, EditBtn, ComCtrls, Menus, Spin, fpsTypes, fpSpreadsheet, xlsbiff8,
   xlsxooxml, atshapelinebgra,
@@ -1667,7 +1667,7 @@ begin
   try
     Stream := TFileStream.Create(AFileName, fmOpenRead or fmShareDenyWrite);
     try
-      Parser := TJSONParser.Create(Stream);
+      Parser := TJSONParser.Create(Stream, [joUTF8]);
       try
         Data := Parser.Parse;
         try
@@ -2217,7 +2217,7 @@ procedure TdlgImport.sbCancelClick(Sender: TObject);
 begin
   if (nbPages.PageIndex = 4) and (FImportSettings.Cancel.IsCancellationRequested = False) then
   begin
-    TCancellationToken(FImportSettings.Cancel).RequestCancel;
+    FImportSettings.Cancel.RequestCancel;
   end
   else
   begin
@@ -2336,7 +2336,7 @@ begin
     if JsonText = EmptyStr then
       raise EImportError.Create(rsErrorImportProfileFileEmpty);
 
-    Parser := TJSONParser.Create(JsonText);
+    Parser := TJSONParser.Create(JsonText, [joUTF8]);
     try
       JsonData := Parser.Parse;
       try
@@ -2489,7 +2489,7 @@ begin
   if SettingsText = EmptyStr then
     raise EImportError.CreateFmt(rsErrorImportProfileEmpty, [ProfileName]);
 
-  Parser := TJSONParser.Create(SettingsText);
+  Parser := TJSONParser.Create(SettingsText, [joUTF8]);
   try
     SettingsData := Parser.Parse;
     try

@@ -134,6 +134,7 @@ begin
     Resp := GetJSON(aValue);
     if Resp.Count > 0 then
     begin
+      Obj := Resp as TJSONObject;
       Id := Obj.Get('id');
       ScientificName := Obj.Get('scientific.name');
       AcceptedName := Obj.Get('accepted.name');

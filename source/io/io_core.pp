@@ -98,9 +98,10 @@ type
   TProgressProc = procedure(const Percent: Byte; const Msg: string) of object;
 
   // Simple cancellation token
-  ICancellation = interface
-    ['{68A4C5A9-8E0F-4A64-8B8F-7E5F3B2F5F2A}']
+  ICancellation = interface ['{68A4C5A9-8E0F-4A64-8B8F-7E5F3B2F5F2A}']
     function IsCancellationRequested: Boolean;
+    procedure RequestCancel;
+    procedure Reset;
   end;
 
   { TCancellationToken }

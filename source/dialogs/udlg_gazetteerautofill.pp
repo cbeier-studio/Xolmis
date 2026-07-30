@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls, CheckLst, VirtualTrees, LazUtils,
-  Buttons, Translations, fpjson, jsonparser, utils_gis;
+  Buttons, Translations, fpjson, jsonparser, jsonscanner, utils_gis;
 
 type
 
@@ -218,7 +218,7 @@ begin
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
   Site := TSite.Create();
   try
-    Parser := TJSONParser.Create(FS, True);
+    Parser := TJSONParser.Create(FS, [joUTF8]);
     try
       JSONData := Parser.Parse;
       JSONArray := TJSONArray(JSONData);
@@ -309,7 +309,7 @@ begin
   Site := TSite.Create();
   currentLang := GetLanguageID;
   try
-    Parser := TJSONParser.Create(FS, True);
+    Parser := TJSONParser.Create(FS, [joUTF8]);
     try
       JSONData := Parser.Parse;
       JSONArray := TJSONArray(JSONData);

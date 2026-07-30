@@ -160,10 +160,18 @@ var
   zipName: String;
 begin
   Result := False;
-  LogEvent(leaStart, 'Backup: ' + databaseConnection.Database + ' -> ' + tmpName);
 
   //if not MsgDlg(rsTitleBackup, rsPromptBackupNow, mtConfirmation) then
   //  Exit;
+
+  if not (DirectoryExists(xSettings.BackupFolder)) then
+    CreateDir(xSettings.BackupFolder);
+  dbName := ExtractFileNameWithoutExt(ExtractFileName(DMM.sqlCon.DatabaseName));
+  bkpName := Format('backup_%s_%s.sbk', [dbName, FormatDateTime('yyyyMMdd_HHmm', Now)]);
+  tmpName := ConcatPaths([TempDir, bkpName]);
+  bkpName := ConcatPaths([xSettings.BackupFolder, ChangeFileExt(bkpName, '.zip')]);
+
+  LogEvent(leaStart, 'Backup: ' + databaseConnection.Database + ' -> ' + tmpName);
 
   if not FileExists(databaseConnection.Database) then
   begin
@@ -182,12 +190,7 @@ begin
     //dlgProgress.Max := 100;
     //dlgProgress.Indeterminate := True;
 
-    if not (DirectoryExists(xSettings.BackupFolder)) then
-      CreateDir(xSettings.BackupFolder);
-    dbName := ExtractFileNameWithoutExt(ExtractFileName(DMM.sqlCon.DatabaseName));
-    bkpName := Format('backup_%s_%s.sbk', [dbName, FormatDateTime('yyyyMMdd_HHmm', Now)]);
-    tmpName := ConcatPaths([TempDir, bkpName]);
-    bkpName := ConcatPaths([xSettings.BackupFolder, ChangeFileExt(bkpName, '.zip')]);
+
 
     //F_Main.Taskbar.ProgressMaxValue := 100;
     //F_Main.Taskbar.ProgressState := TTaskBarProgressState.Normal;
