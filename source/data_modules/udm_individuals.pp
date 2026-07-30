@@ -21,7 +21,7 @@ unit udm_individuals;
 interface
 
 uses
-  Classes, SysUtils, SQLDB, DB, StrUtils, models_birds, models_sampling, models_breeding, models_sightings,
+  Classes, SysUtils, SQLDB, DB, models_birds, models_breeding, models_sightings,
   models_specimens, models_geo;
 
 type

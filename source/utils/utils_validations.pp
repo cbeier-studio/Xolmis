@@ -569,6 +569,10 @@ var
   FDate1, FDate2: Integer;
 begin
   Result := False;
+  FDay1 := '';
+  FDay2 := '';
+  FMonth1 := '';
+  FMonth2 := '';
 
   // Validate partial dates
   if not(ValidPartialDate(aDate)) or not(ValidPartialDate(aReferenceDate)) then
@@ -584,17 +588,7 @@ begin
     begin
       FDay1 := Format('%2.2d', [aDate.Day]);
       FDay2 := Format('%2.2d', [aReferenceDate.Day]);
-    end
-    else
-    begin
-      FDay1 := '';
-      FDay2 := '';
     end;
-  end
-  else
-  begin
-    FMonth1 := '';
-    FMonth2 := '';
   end;
 
   // Assemble values and convert to integer

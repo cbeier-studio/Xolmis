@@ -117,7 +117,7 @@ begin
         lblHint.Caption := rsAutofillCountries;
         lblState.Visible := False;
         currentLang := GetLanguageID;
-        FList := LoadCountriesFromJSON(currentLang.LanguageID);
+        FList := LoadCountriesFromJSON;
         for i := 0 to FList.Count - 1 do
         begin
           Country := PCountry(FList.Items[i]);
@@ -296,7 +296,7 @@ var
   Country, Site: TSite;
   SiteRepo: TSiteRepository;
   i, j: Integer;
-  CountryID, StateID, idx: Integer;
+  idx: Integer;
   sCountryName: String;
   FileName: String;
   currentLang: TLanguageID;
@@ -391,8 +391,6 @@ begin
 end;
 
 procedure TdlgGazetteerAutofill.sbSaveClick(Sender: TObject);
-var
-  i: Integer;
 begin
   if GetCheckedCount = 0 then
   begin

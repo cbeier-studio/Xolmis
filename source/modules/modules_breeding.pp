@@ -110,8 +110,7 @@ implementation
 uses
   utils_locale, utils_global, utils_graphics, utils_themes, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media,
-  uDarkStyleParams,
-  udm_main, udm_grid, udm_breeding, udm_individuals, ufrm_customgrid;
+  udm_grid, udm_breeding, udm_individuals, ufrm_customgrid;
 
 { TNestsModuleController }
 
@@ -138,8 +137,6 @@ procedure TNestsModuleController.ApplyFilters;
 const
   NestFate: array of String = ('P', 'S', 'U');
   NestSupport: array of String = ('G', 'P', 'H', 'F', 'S', 'C', 'A', 'O');
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin
@@ -550,8 +547,6 @@ procedure TNestRevisionsModuleController.ApplyFilters;
 const
   NestStatus: array of String = ('A', 'I', 'U');
   NestStages: array of String = ('C', 'L', 'I', 'H', 'N', 'X', 'U');
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin
@@ -840,8 +835,6 @@ const
   EggShapes: array of String = ('S', 'E', 'O', 'P', 'C', 'B', 'Y', 'L', 'U');
   EggPatterns: array of String = ('P', 'B', 'S', 'T', 'W', 'PS', 'BS', 'U');
   EggTextures: array of String = ('C', 'S', 'G', 'P', 'U');
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin

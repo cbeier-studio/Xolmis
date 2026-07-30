@@ -308,7 +308,6 @@ var
   cls: TImporterClass;
   fs: TFileStream;
   ext: string;
-  importer: TImporter;
 begin
   fs := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
   try
@@ -557,10 +556,7 @@ var
   SourceValue, DestValue, SLat, SLong: String;
   I, dummyI: Integer;
   scaleValue, dummyF: Double;
-  coordValue: Extended;
   dateValue, dummyDT: TDateTime;
-  dmsPoint: TDMSPoint;
-  utmPoint: TUTMPoint;
   FS: TFormatSettings;
   ConvertedValue: Variant;
   dummyB: Boolean;

@@ -171,8 +171,7 @@ implementation
 uses
   utils_locale, utils_global, utils_validations, utils_taxonomy,
   data_consts, data_columns, data_getvalue, data_setparam, data_providers,
-  models_users,
-  udm_main;
+  models_users;
 
 { TTaxon }
 
@@ -710,7 +709,7 @@ end;
 procedure TTaxonRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TTaxon;
-  RankAbbrev, IocRankAbbrev: String;
+  RankAbbrev: String;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;

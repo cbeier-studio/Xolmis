@@ -42,7 +42,7 @@ implementation
 
 uses
   utils_locale, utils_graphics, data_consts, data_columns, data_filters, models_media,
-  udm_main, udm_grid, ufrm_customgrid;
+  udm_grid, ufrm_customgrid;
 
 { TMethodsModuleController }
 
@@ -61,8 +61,6 @@ begin
 end;
 
 procedure TMethodsModuleController.ApplyFilters;
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin

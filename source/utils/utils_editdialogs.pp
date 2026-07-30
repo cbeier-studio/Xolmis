@@ -2891,7 +2891,7 @@ begin
     aDataSet.Open;
     CloseQueryAfter := True;
   end;
-
+  { #todo : Review EditConnection: IsNew not used }
   LogEvent(leaOpen, 'Connection edit dialog');
   edtDatabase := TedtDatabase.Create(Application);
   with edtDatabase do

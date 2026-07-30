@@ -72,6 +72,9 @@ var
   F, S, T: String;
 begin
   Result := '';
+  F := '-';
+  S := '-';
+  T := '-';
 
   case rgFirst.ItemIndex of
    -1: F := '-';

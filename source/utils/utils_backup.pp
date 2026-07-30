@@ -274,7 +274,7 @@ var
   Bck: TSQLite3Backup;
   BckConn: TSQLite3Connection;
   BckTrans: TSQLTransaction;
-  aBckProgress: TOnBackupProgress;
+  //aBckProgress: TOnBackupProgress;
   zipped: Boolean;
 begin
   Result := False;

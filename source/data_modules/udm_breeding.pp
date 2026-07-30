@@ -123,7 +123,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_management, data_types, data_columns;
+  utils_locale, data_columns;
 
 {$R *.lfm}
 

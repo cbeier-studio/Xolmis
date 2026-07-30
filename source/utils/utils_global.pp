@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Variants, DateUtils, LCLIntf, lazfileutils, FileUtil, jsonconf, fgl, StrUtils,
-  Forms, Controls, Dialogs, Menus, Buttons, Graphics, DB, SQLDB, URIParser,
+  Forms, Controls, Dialogs, Menus, Buttons, Graphics, DB, SQLDB,
   utils_system, data_types, data_providers, models_record_types,
   udm_main, ucfg_database;
 
@@ -572,7 +572,7 @@ function CheckLogsFull: Boolean;
 const
   KB = 1024;         // 1 KB = 1024 bytes
   MB = 1024 * KB;    // 1 MB = 1024 KB
-  GB = 1024 * MB;    // 1 GB = 1024 MB
+  //GB = 1024 * MB;    // 1 GB = 1024 MB
 var
   Logs: TStringList;
   oldLog, currLog: String;
@@ -965,7 +965,7 @@ begin
   HelpUrl := StringReplace(HelpPath, '\', '/', [rfReplaceAll]);
   //if aTopic <> EmptyStr then
   //  HelpUrl := HelpUrl + '#' + aTopic;
-
+  { #todo : Review OpenHelp: aTopic not used }
   OpenURL(HelpUrl);
 
   LogDebug('Help file opened: ' + aHelpFile);

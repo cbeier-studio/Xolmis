@@ -23,7 +23,7 @@ interface
 uses
   Classes, EditBtn, SysUtils, Types, DB, Forms, Controls, Graphics, Dialogs,
   ExtCtrls, StdCtrls, Buttons, Menus, Character,
-  atshapelinebgra, utils_system, models_bands;
+  atshapelinebgra, models_bands;
 
 type
 

@@ -4785,7 +4785,6 @@ procedure TfrmQuickEntry.LoadJsonToGrid(const aFileName: String);
 var
   Obj, RowObj: TJSONObject;
   Rows: TJSONArray;
-  Parser: TJSONParser;
   JSONText: TStringList;
   i, j, FileSchema: Integer;
   FileModule: String;

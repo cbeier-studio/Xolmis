@@ -80,7 +80,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs,
-  data_types, data_consts, data_getvalue, data_columns,
+  data_columns,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}

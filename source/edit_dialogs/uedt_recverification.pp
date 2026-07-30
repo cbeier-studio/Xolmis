@@ -75,8 +75,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, data_consts, utils_editdialogs,
-  udm_main, udm_grid, udm_breeding, udm_individuals, udm_sampling,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_editdialogs,
+  udm_main, udm_grid, udm_sampling,
   uDarkStyleParams;
 
 {$R *.lfm}

@@ -92,8 +92,7 @@ implementation
 uses
   utils_locale, utils_global, utils_validations,
   data_consts, data_columns, data_setparam, data_getvalue, data_providers,
-  models_users,
-  udm_main;
+  models_users;
 
 { TInstitution }
 

@@ -7847,7 +7847,7 @@ end;
 
 function TFieldSchema.ResolveLookup(const S: string): Variant;
 var
-  SQL, LookupIdField: string;
+  SQL: string;
   LookupID: Integer;
 begin
   // Empty value → return NULL

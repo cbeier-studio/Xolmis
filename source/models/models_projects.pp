@@ -23,8 +23,7 @@ interface
 uses
   Classes, SysUtils, Variants, fpjson, DateUtils, TypInfo, fgl,
   DB, SQLDB,
-  models_record_types, io_core,
-  udm_main;
+  models_record_types, io_core;
 
 type
 

@@ -115,9 +115,9 @@ implementation
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_editdialogs,
   utils_conversions, utils_fullnames, utils_validations,
-  data_types, data_getvalue, data_columns, data_consts,
+  data_types, data_getvalue, data_consts,
   models_record_types, models_bands,
-  udm_main, udm_grid, udlg_progress, udlg_loading, uDarkStyleParams;
+  udm_main, udm_grid, udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 

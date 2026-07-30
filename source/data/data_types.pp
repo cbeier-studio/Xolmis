@@ -1301,6 +1301,8 @@ end;
 
 function TCustomSearch.RunSearch: Integer;
 begin
+  Result := 0;
+
   if not Assigned(FDataSet) then
     Exit;
 

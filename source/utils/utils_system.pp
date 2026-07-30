@@ -25,13 +25,13 @@ uses
   { System }
   Classes, SysUtils, Variants, DateUtils, RegExpr, LCLIntf, LCLType, LazFileUtils,
   { Winapi }
-  {$IFDEF MSWINDOWS} Windows, DwmApi, Messages,{$ENDIF}
+  {$IFDEF MSWINDOWS} Windows, DwmApi, {$ENDIF}
   { VCL }
   Controls, ComCtrls, Graphics, Dialogs, Forms, Types,
   { Data }
   DB, SQLDB,
   { Forms }
-  models_record_types, data_types;
+  data_types;
 
 {$IFDEF MSWINDOWS}
 type
@@ -110,7 +110,7 @@ var
 
 implementation
 
-uses utils_global, utils_locale, utils_validations, udm_main, udlg_rechistory, udlg_recverifications, uedt_recverification;
+uses utils_global, utils_locale, udm_main, udlg_rechistory, udlg_recverifications, uedt_recverification;
 
 procedure PositionWindow(const aPos: TDialogPosition; aForm: TForm);
 begin

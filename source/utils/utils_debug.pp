@@ -46,6 +46,7 @@ implementation
 uses
   utils_global;
 
+
 { TElapsedTimer }
 
 constructor TElapsedTimer.Create(aProcess: String; aPart: String);

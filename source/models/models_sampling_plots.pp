@@ -133,10 +133,9 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_validations, utils_fullnames, utils_conversions,
+  utils_locale, utils_global, utils_validations, utils_conversions,
   data_columns, data_consts, data_setparam, data_getvalue, data_providers,
-  models_users,
-  udm_main;
+  models_users;
 
 { TSamplingPlot }
 

@@ -43,7 +43,7 @@ implementation
 
 uses
   utils_locale, data_consts, data_columns, data_filters, models_media,
-  udm_main, udm_grid, ufrm_customgrid;
+  udm_grid, ufrm_customgrid;
 
 { TGazetteerModuleController }
 
@@ -65,8 +65,6 @@ end;
 procedure TGazetteerModuleController.ApplyFilters;
 const
   SiteRanks: array of String = ('P', 'E', 'R', 'M', 'D', 'L');
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin

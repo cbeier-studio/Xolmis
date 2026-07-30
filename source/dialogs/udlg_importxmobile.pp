@@ -693,6 +693,8 @@ var
   aObserverKey, aLocalityKey, aSurveyKey: Integer;
   aLocalityName, aObserverName: String;
 begin
+  aLocalityKey := 0;
+
   Grid := TStringGrid(Sender);
   if (Grid.EditorMode) and (Grid.Col >= 4) then
   begin
@@ -906,10 +908,8 @@ procedure TdlgImportXMobile.ImportInventories;
 var
   SurveyRepo: TSurveyRepository;
   aSurvey, aOldSurvey: TSurvey;
-  aSighting: TSighting;
-  p, j, aSurveyKey, aObserverKey: Integer;
+  p, aSurveyKey, aObserverKey: Integer;
   Inventory: TMobileInventory;
-  aObserver: String;
   stopWithError: Boolean;
 begin
   nbPages.PageIndex := 2;
@@ -1071,7 +1071,7 @@ end;
 
 procedure TdlgImportXMobile.ImportNests;
 var
-  p, j, aNestKey: Integer;
+  p, aNestKey: Integer;
   aNest, aOldNest: TNest;
   Repo: TNestRepository;
   Nest: TMobileNest;

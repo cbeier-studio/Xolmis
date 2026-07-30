@@ -72,7 +72,7 @@ type
   private
     FIsNew: Boolean;
     FExpedition: TExpedition;
-    FLocalityId, FProjectId: Integer;
+    FProjectId: Integer;
     procedure SetExpedition(Value: TExpedition);
     procedure GetRecord;
     procedure SetRecord;
@@ -299,6 +299,8 @@ var
 begin
   Result := True;
   Msgs := TStringList.Create;
+  vsd1 := False;
+  ved1 := False;
 
   // Required fields
   if (eName.Text = EmptyStr) then

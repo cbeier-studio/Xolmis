@@ -403,15 +403,15 @@ implementation
 uses
   utils_locale, utils_dialogs, utils_system, utils_autoupdate, utils_permissions, utils_backup,
   utils_editdialogs, utils_themes, utils_gis,
-  models_access_control, models_users, models_geo, models_taxonomy, models_record_types,
+  models_access_control, models_users, models_taxonomy, models_record_types,
   data_management, data_schema,
-  io_core, io_ebird_csv,
+  io_ebird_csv,
   uDarkStyleParams,
   udm_main, udm_lookup, udm_grid, udm_sampling, udm_individuals, udm_breeding, udm_reports,
   ucfg_database, ucfg_users, ucfg_options,
   ubatch_bands, ubatch_feathers,
   udlg_about, udlg_bandsbalance, udlg_bandhistory,
-  udlg_importxmobile, udlg_import, udlg_splash, udlg_loading, udlg_tourtip, udlg_onboarding,
+  udlg_importxmobile, udlg_import, udlg_loading, udlg_tourtip, udlg_onboarding,
   ufrm_geoconverter, ufrm_maintenance, ufrm_taxa;
 
 {$R *.lfm}

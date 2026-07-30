@@ -74,7 +74,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_conversions,
-  data_types, data_consts, data_getvalue, data_columns, models_record_types,
+  data_columns, models_record_types,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}

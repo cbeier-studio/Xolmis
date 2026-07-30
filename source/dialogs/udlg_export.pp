@@ -21,8 +21,8 @@ unit udlg_export;
 interface
 
 uses
-  Classes, SysUtils, Forms, DB, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, EditBtn, CheckLst, StdCtrls,
-  Buttons, ComboEx, Spin, Menus, atshapelinebgra, BCPanel, BCComboBox, ToggleSwitch,
+  Classes, SysUtils, Forms, DB, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls, CheckLst, StdCtrls,
+  Buttons, ComboEx, Spin, Menus, atshapelinebgra, BCPanel, ToggleSwitch,
   io_core;
 
 type
@@ -139,7 +139,7 @@ implementation
 
 uses
   {$IFDEF WINDOWS}Windows,{$ENDIF}
-  utils_global, utils_dialogs, utils_locale, utils_themes, udm_main, ucfg_delimiters, uDarkStyleParams, io_json,
+  utils_global, utils_dialogs, utils_locale, utils_themes, udm_main, uDarkStyleParams, io_json,
   io_xml, io_csv, io_ods, io_xlsx;
 
 {$R *.lfm}

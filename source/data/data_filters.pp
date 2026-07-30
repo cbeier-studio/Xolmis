@@ -28,7 +28,7 @@ uses
   { Data }
   DB, SQLDB,
   { CBS }
-  data_types, models_taxonomy, models_geo, models_record_types;
+  data_types, models_taxonomy, models_record_types;
 
 type
 

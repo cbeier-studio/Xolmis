@@ -26,7 +26,7 @@ interface
 
 uses
   Classes, SysUtils, Graphics
-  {$IFDEF MSWINDOWS}, Windows, Win32Proc, Registry {$ENDIF}{$IFDEF DARWIN},
+  {$IFDEF MSWINDOWS}, Win32Proc, Registry {$ENDIF}{$IFDEF DARWIN},
   CocoaAll, CocoaUtils, MacOSAll {$ENDIF};
 
 const

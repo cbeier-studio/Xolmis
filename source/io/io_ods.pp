@@ -146,6 +146,7 @@ var
   CoordOpt: TCoordinateFormatOptions;
 begin
   Result := FieldValue;
+  TargetType := mcDecimal;
 
   if Result = '' then
     Exit;
@@ -427,6 +428,7 @@ class function TODSImporter.Probe(const FileName: string; Stream: TStream): Inte
 var
   ext: String;
 begin
+  { #todo : Review TODSImporter.Probe: Stream not used }
   ext := LowerCase(ExtractFileExt(FileName));
   if (ext = '.ods') then
     Exit(85);

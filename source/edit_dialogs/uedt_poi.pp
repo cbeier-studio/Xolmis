@@ -127,7 +127,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_system, utils_dialogs, utils_finddialogs, utils_validations,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations,
   utils_editdialogs, utils_gis, utils_conversions,
   data_types, data_consts, data_getvalue, data_columns, models_record_types, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
@@ -619,6 +619,7 @@ var
 begin
   Result := True;
   Msgs := TStringList.Create;
+  Msg := '';
 
   // Required fields
   if (eName.Text = EmptyStr) then

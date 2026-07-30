@@ -161,6 +161,7 @@ var
   CoordOpt: TCoordinateFormatOptions;
 begin
   Result := FieldValue;
+  TargetType := mcDecimal;
 
   if Result = '' then
     Exit;

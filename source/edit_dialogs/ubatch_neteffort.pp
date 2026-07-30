@@ -330,6 +330,14 @@ var
 begin
   Result := True;
   Msgs := TStringList.Create;
+  vot1 := False;
+  vot2 := False;
+  vot3 := False;
+  vot4 := False;
+  vct1 := False;
+  vct2 := False;
+  vct3 := False;
+  vct4 := False;
 
   // Required fields
   if eStartNumber.Text = EmptyStr then

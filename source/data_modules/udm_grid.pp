@@ -21,7 +21,7 @@ unit udm_grid;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StrUtils, Graphics, DateUtils, BufDataset,
+  Classes, SysUtils, DB, SQLDB, Graphics, DateUtils, BufDataset,
   { CBS }
   models_geo, models_projects, models_botany, models_taxonomy, models_birds, models_sampling, models_breeding,
   models_sightings, models_bands, models_institutions, models_people, models_permits, models_specimens,

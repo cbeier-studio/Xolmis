@@ -21,7 +21,7 @@ unit udm_sampling;
 interface
 
 uses
-  Classes, SysUtils, SQLDB, DB, LResources, StrUtils, models_birds, models_sampling, models_bands, models_sightings,
+  Classes, SysUtils, SQLDB, DB, LResources, models_birds, models_sampling, models_sightings,
   models_geo;
 
 type

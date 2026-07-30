@@ -1250,13 +1250,13 @@ type
     procedure CreatePanelTabs;
     procedure CreateModules;
 
-    procedure AddAudio(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
-    procedure AddDocument(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
+    procedure AddAudio(aFileName: String; aAttachment: TMediaAttachment);
+    procedure AddDocument(aFileName: String; aAttachment: TMediaAttachment);
     procedure AddGridColumns(aTable: TTableType; aGrid: TDBGrid);
     procedure AddOrEditChild(const aTableType: TTableType; const isNew: Boolean);
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
       aUseTablePrefix: Boolean = False);
-    procedure AddVideo(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
+    procedure AddVideo(aFileName: String; aAttachment: TMediaAttachment);
 
     procedure ApplyDarkMode;
     function AttachMediaDlg(aTableType: TTableType; aMediaType: TAttachMediaTypes = []): TMediaAttachment;
@@ -1300,7 +1300,7 @@ type
 
     procedure SaveColumnsConfig;
 
-    procedure SetGridColumns(aTable: TTableType; aGrid: TDBGrid);
+    procedure SetGridColumns(aGrid: TDBGrid);
 
     procedure SetModule;
 
@@ -1390,7 +1390,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_system, utils_themes, utils_editdialogs, utils_dialogs, utils_math,
-  utils_finddialogs, utils_print, utils_validations, utils_gis, utils_taxonomy, utils_graphics,
+  utils_finddialogs, utils_print, utils_gis, utils_taxonomy,
   data_management, data_getvalue, data_columns, data_blobs, data_setparam, data_consts,
   models_access_control, models_taxonomy, models_users, models_record_types,
   modules_bands, modules_birds, modules_botany, modules_breeding, modules_gazetteer, modules_institutions,
@@ -1970,7 +1970,7 @@ begin
   Result := HasTablePermission(ATable, 'PRINT');
 end;
 
-procedure TfrmCustomGrid.AddAudio(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
+procedure TfrmCustomGrid.AddAudio(aFileName: String; aAttachment: TMediaAttachment);
 var
   relPath: String;
   SearchRec: TSearchRec;
@@ -2027,7 +2027,7 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.AddDocument(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
+procedure TfrmCustomGrid.AddDocument(aFileName: String; aAttachment: TMediaAttachment);
 var
   relPath: String;
   SearchRec: TSearchRec;
@@ -2137,7 +2137,7 @@ begin
         //C := nil;
       end;
 
-    SetGridColumns(aTable, aGrid);
+    SetGridColumns(aGrid);
 
     LoadRecordColumns;
     LoadRecordRow;
@@ -2249,7 +2249,7 @@ begin
   UpdateGridTitles(DBG, FSearch);
 end;
 
-procedure TfrmCustomGrid.AddVideo(aDataSet: TDataSet; aFileName: String; aAttachment: TMediaAttachment);
+procedure TfrmCustomGrid.AddVideo(aFileName: String; aAttachment: TMediaAttachment);
 var
   relPath: String;
   SearchRec: TSearchRec;
@@ -4799,16 +4799,16 @@ begin
 
           // Import media by type
           if (sbShowImages.Visible) and (Ext in SUPPORTED_IMAGE_EXTENSIONS) then
-            AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, FileNames[i], FAttachment)
+            AddImage(qImages, COL_IMAGE_FILENAME, FileNames[i], FAttachment)
           else
           if (sbShowAudio.Visible) and (Ext in SUPPORTED_AUDIO_EXTENSIONS) then
-            AddAudio(qAudios, FileNames[i], FAttachment)
+            AddAudio(FileNames[i], FAttachment)
           else
           if (sbShowVideos.Visible) and (Ext in SUPPORTED_VIDEO_EXTENSIONS) then
-            AddVideo(qAudios, FileNames[i], FAttachment)
+            AddVideo(FileNames[i], FAttachment)
           else
           if (sbShowDocs.Visible) and (SupportedDocs.IndexOf(Ext) <> -1) then
-            AddDocument(qDocs, FileNames[i], FAttachment);
+            AddDocument(FileNames[i], FAttachment);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
@@ -5776,7 +5776,7 @@ begin
         begin
           dlgProgress.Text := Format(rsProgressImportDocs, [i + 1, DMM.OpenDocs.Files.Count]);
 
-          AddDocument(qDocs, DMM.OpenDocs.Files[i], FAttachment);
+          AddDocument(DMM.OpenDocs.Files[i], FAttachment);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
@@ -7123,6 +7123,8 @@ var
   poi: TGpsPoint;
   rp: TRealPoint;
 begin
+  rp.InitLatLon(0, 0);
+
   mapGeo.GPSItems.Clear(0);
   mapGeo.GPSItems.Clear(1);
   mapGeo.Refresh;
@@ -7243,7 +7245,7 @@ begin
         begin
           dlgProgress.Text := Format(rsProgressImportAudios, [i + 1, DMM.OpenAudios.Files.Count]);
 
-          AddAudio(qAudios, DMM.OpenAudios.Files[i], FAttachment);
+          AddAudio(DMM.OpenAudios.Files[i], FAttachment);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
@@ -7345,7 +7347,7 @@ begin
         begin
           dlgProgress.Text := Format(rsProgressImportImages, [i + 1, DMM.OpenImgs.Files.Count]);
 
-          AddImage(qImages, tbImages, COL_IMAGE_FILENAME, COL_IMAGE_THUMBNAIL, DMM.OpenImgs.Files[i], FAttachment);
+          AddImage(qImages, COL_IMAGE_FILENAME, DMM.OpenImgs.Files[i], FAttachment);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
@@ -7420,7 +7422,7 @@ begin
         begin
           dlgProgress.Text := Format(rsProgressImportVideos, [i + 1, DMM.OpenVideos.Files.Count]);
 
-          AddVideo(qVideos, DMM.OpenVideos.Files[i], FAttachment);
+          AddVideo(DMM.OpenVideos.Files[i], FAttachment);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;
@@ -7495,6 +7497,7 @@ procedure TfrmCustomGrid.sbChildVerificationsClick(Sender: TObject);
 var
   DS: TDataSet;
 begin
+  DS := nil;
   //with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
   //begin
   //  pmVerifications.PopupComponent := sbChildVerifications;
@@ -8654,7 +8657,7 @@ begin
   Search(FSearchString);
 end;
 
-procedure TfrmCustomGrid.SetGridColumns(aTable: TTableType; aGrid: TDBGrid);
+procedure TfrmCustomGrid.SetGridColumns(aGrid: TDBGrid);
 begin
   if aGrid.DataSource = nil then
     Exit;
@@ -9173,6 +9176,7 @@ var
   aId, aTotalProblems: Integer;
   aStatus: TRecordReviewStatus;
 begin
+  DS := nil;
   TimerRecordUpdate.Enabled := False;
   aTotalProblems := 0;
 

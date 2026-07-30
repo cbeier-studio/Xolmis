@@ -81,7 +81,7 @@ var
 implementation
 
 uses
-  utils_global, utils_validations, utils_locale, utils_conversions,
+  utils_global, utils_validations, utils_locale,
   data_consts, data_columns, data_getvalue, data_providers,
   udm_main;
 
@@ -270,7 +270,6 @@ procedure TUserRepository.Delete(E: TXolmisRecord);
 var
   Qry: TSQLQuery;
   R: TUser;
-  RoleText: String;
 begin
   if not (E is TUser) then
     raise Exception.Create('Delete: Expected TUser');

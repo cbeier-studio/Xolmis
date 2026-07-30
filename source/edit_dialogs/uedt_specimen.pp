@@ -143,7 +143,7 @@ implementation
 uses
   utils_locale, utils_global, utils_system, utils_dialogs, utils_finddialogs, utils_validations,
   utils_editdialogs, utils_gis, utils_conversions, utils_themes,
-  data_types, data_consts, data_getvalue, data_columns, models_record_types, models_geo, models_taxonomy,
+  data_types, data_consts, data_getvalue, data_columns, models_record_types, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
 { TedtSpecimen }
@@ -780,6 +780,7 @@ var
 begin
   Result := True;
   Msgs := TStringList.Create;
+  Msg := '';
 
   // Required fields
   if (eFieldNumber.Text = EmptyStr) then

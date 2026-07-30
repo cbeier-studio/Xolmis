@@ -673,12 +673,11 @@ end;
 procedure TedtCapture.eLongitudeExit(Sender: TObject);
 var
   Ax: TMapAxis;
-  aField, aDMS: String;
+  aField: String;
   C: Extended;
   Opt: TCoordinateFormatOptions;
   FDecCoord, FDmsCoord: IMapCoordinate;
 begin
-  aDMS := '';
   if Sender = eLongitude then
   begin
     aField := COL_LONGITUDE;
@@ -1485,6 +1484,9 @@ var
   end;
 
 begin
+  Band := nil;
+  aEdit := nil;
+
   case aLeg of
     bpRightTarsus:
       begin
@@ -1741,7 +1743,6 @@ end;
 function TedtCapture.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;

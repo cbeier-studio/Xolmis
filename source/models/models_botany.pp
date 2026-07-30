@@ -130,6 +130,9 @@ const
   Italicos: set of TBotanicalRank = [brGenus, brSubgenus, brSection, brSubsection, brSeries, brSubseries, brSpecies,
     brSubspecies, brVariety, brSubvariety, brForm, brSubform];
 begin
+  Html := '';
+  Epi := '';
+
   if Trim(aSciName.Name) = EmptyStr then
   begin
     Result := EmptyStr;

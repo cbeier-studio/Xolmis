@@ -109,7 +109,7 @@ uses
   data_consts, data_columns, data_filters, models_media,
   modules_birds, modules_sightings, modules_pois,
   uDarkStyleParams,
-  udm_main, udm_grid, udm_sampling, ufrm_customgrid;
+  udm_grid, udm_sampling, ufrm_customgrid;
 
 { TExpeditionsModuleController }
 
@@ -130,8 +130,6 @@ begin
 end;
 
 procedure TExpeditionsModuleController.ApplyFilters;
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin
@@ -301,8 +299,6 @@ begin
 end;
 
 procedure TSurveysModuleController.ApplyFilters;
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin
@@ -408,10 +404,8 @@ end;
 function TSurveysModuleController.Search(AValue: String): Boolean;
 var
   i, g, m, y: Longint;
-  Dt, Dt1, Dt2, Tm1, Tm2: TDateTime;
+  Dt, Tm1, Tm2: TDateTime;
   Crit: TCriteriaType;
-  y1, y2, M1, M2: Integer;
-  V1, V2: String;
   PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;

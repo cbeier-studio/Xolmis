@@ -281,7 +281,7 @@ const
 implementation
 
 uses
-  utils_locale, utils_global, data_consts, data_getvalue, utils_conversions;
+  utils_global, data_getvalue, utils_conversions;
 
 { TMobilePoi }
 

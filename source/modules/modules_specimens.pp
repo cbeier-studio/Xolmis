@@ -74,8 +74,7 @@ implementation
 uses
   utils_locale, utils_graphics, utils_themes, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media,
-  uDarkStyleParams,
-  udm_main, udm_grid, udm_individuals, ufrm_customgrid;
+  udm_grid, udm_individuals, ufrm_customgrid;
 
 { TSpecimensModuleController }
 
@@ -101,8 +100,6 @@ end;
 procedure TSpecimensModuleController.ApplyFilters;
 const
   SampleTypes: array of String = ('WS', 'PS', 'N', 'B', 'E', 'P', 'F', 'BS', 'C', 'S', 'T', 'D', 'R');
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin

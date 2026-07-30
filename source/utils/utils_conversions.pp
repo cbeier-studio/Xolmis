@@ -374,6 +374,7 @@ end;
 
 function StrToAccessionType(const AValue: String): String;
 begin
+  Result := EmptyStr;
   if (AValue = rsSampleSkinStandard) then
     Result := 'NS'
   else
@@ -443,6 +444,7 @@ end;
 
 function StrToActivityStatus(const AValue: String): TActivityStatus;
 begin
+  Result := astToDo;
   if (AValue = rsActivityToDo) or (AValue = 'T') then
     Result := astToDo
   else
@@ -855,6 +857,7 @@ end;
 
 function StrToFeatherTrait(const AValue: String): TFeatherTrait;
 begin
+  Result := ftrBody;
   if (AValue = rsTraitBody) or (AValue = 'B') then
     Result := ftrBody
   else
@@ -888,6 +891,7 @@ end;
 
 function StrToGoalStatus(const AValue: String): TGoalStatus;
 begin
+  Result := gstPending;
   if (AValue = rsGoalPending) or (AValue = 'P') then
     Result := gstPending
   else
@@ -1055,6 +1059,7 @@ end;
 
 function StrToNestShape(const AValue: String): String;
 begin
+  Result := EmptyStr;
   if (AValue = rsNestShapeScrape) then
     Result := 'SC'
   else
@@ -1119,6 +1124,7 @@ end;
 
 function StrToPermitStatus(const AValue: String): TPermitStatus;
 begin
+  Result := pstActive;
   if (AValue = rsPermitActive) or (AValue = 'A') then
     Result := pstActive
   else
@@ -1174,6 +1180,7 @@ end;
 
 function StrToProjectStatus(const AValue: String): TProjectStatus;
 begin
+  Result := prtPlanned;
   if (AValue = rsProjectPlanned) or (AValue = 'P') then
     Result := prtPlanned
   else
@@ -1240,6 +1247,7 @@ end;
 
 function StrToSpecimenType(const AValue: String): TSpecimenType;
 begin
+  Result := sptEmpty;
   if (AValue = rsSpecimenCarcassWhole) or (AValue = 'WS') then
     Result := sptWholeCarcass
   else
@@ -1332,6 +1340,7 @@ end;
 
 function StrToSubjectStatus(const AValue: String): TSubjectStatus;
 begin
+  Result := sstNormal;
   if (AValue = rsStatusNormal) or (AValue = 'N') then
     Result := sstNormal
   else
@@ -1350,6 +1359,7 @@ end;
 
 function StrToSupportType(const AValue: String): String;
 begin
+  Result := EmptyStr;
   if (AValue = rsSupportGround) then
     Result := 'G'
   else

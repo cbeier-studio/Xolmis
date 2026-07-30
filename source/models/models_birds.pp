@@ -407,7 +407,7 @@ implementation
 uses
   utils_system, utils_global, models_users, utils_validations, utils_fullnames, utils_conversions,
   data_types, data_columns, data_setparam, data_getvalue, data_consts, data_providers,
-  utils_locale, udm_main;
+  utils_locale;
 
 { TFeather }
 

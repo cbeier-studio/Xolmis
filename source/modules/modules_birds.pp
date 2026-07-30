@@ -89,10 +89,10 @@ implementation
 
 uses
   utils_locale, utils_global, utils_themes, utils_math, utils_graphics, utils_validations, utils_system,
-  data_consts, data_columns, data_filters, data_getvalue,
+  data_consts, data_columns, data_filters,
   modules_sightings, modules_breeding, modules_specimens, modules_pois,
   models_media, models_record_types, uDarkStyleParams,
-  udm_main, udm_grid, udm_sampling, udm_individuals, ufrm_customgrid;
+  udm_grid, udm_sampling, udm_individuals, ufrm_customgrid;
 
 { TIndividualsModuleController }
 
@@ -1004,12 +1004,10 @@ end;
 
 function TCapturesModuleController.Search(AValue: String): Boolean;
 var
-  i, g, y1, y2, m1, m2, y, m: Longint;
+  i, g, y, m: Longint;
   dt: TDateTime;
-  Dt1, Dt2: TDateTime;
   Tm1, Tm2: TDateTime;
   Crit: TCriteriaType;
-  V1, V2: String;
   PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;
@@ -1514,8 +1512,6 @@ begin
 end;
 
 procedure TFeathersModuleController.ApplyFilters;
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin

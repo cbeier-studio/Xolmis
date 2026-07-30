@@ -21,8 +21,8 @@ unit utils_graphics;
 interface
 
 uses
-  Classes, SysUtils, Graphics, Controls, StdCtrls, ExtCtrls, ImgList, DB, EditBtn, DateUtils,
-  StrUtils, LCLIntf, LCLType, data_types;
+  Classes, SysUtils, Graphics, Controls, StdCtrls, ExtCtrls, ImgList, EditBtn, DateUtils,
+  StrUtils, LCLIntf, LCLType;
 
   { Modify the graphic interface elements }
   procedure DrawDragDropOverlay(aControl: TCustomControl);
@@ -46,7 +46,7 @@ uses
 implementation
 
 uses
-  utils_themes, utils_locale, utils_count, models_bands, models_record_types;
+  utils_themes, utils_locale, models_record_types;
 
 procedure MakeRounded(Control: TWinControl);
 var

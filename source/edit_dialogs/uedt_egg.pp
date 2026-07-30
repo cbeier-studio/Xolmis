@@ -146,7 +146,7 @@ uses
   utils_conversions,
   data_types, data_getvalue, data_consts, data_columns,
   models_taxonomy, models_record_types,
-  udm_main, udm_grid, udm_breeding, uDarkStyleParams;
+  udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -625,11 +625,9 @@ end;
 function TedtEgg.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
   if (eEggSeq.Value = 0) then

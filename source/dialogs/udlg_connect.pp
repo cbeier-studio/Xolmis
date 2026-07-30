@@ -90,8 +90,10 @@ begin
 end;
 
 function TdlgConnect.IsDevAuthBypassEnabled: Boolean;
+{$IFDEF DEBUG}
 var
   EnvValue: String;
+{$ENDIF}
 begin
   {$IFDEF DEBUG}
   EnvValue := UpperCase(Trim(GetEnvironmentVariable('XOLMIS_DEV_AUTH_BYPASS')));

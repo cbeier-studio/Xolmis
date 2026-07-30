@@ -43,9 +43,9 @@ implementation
 
 uses
   utils_locale, utils_global, utils_graphics, utils_themes, utils_validations,
-  data_consts, data_columns, data_filters, models_media,
+  data_consts, data_columns, data_filters,
   uDarkStyleParams,
-  udm_main, udm_grid, ufrm_customgrid;
+  udm_grid, ufrm_customgrid;
 
 { TBandsModuleController }
 

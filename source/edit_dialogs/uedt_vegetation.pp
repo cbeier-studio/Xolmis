@@ -117,7 +117,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_validations, utils_gis, utils_conversions,
-  data_columns, data_consts, models_record_types, models_geo,
+  data_columns, models_record_types,
   udm_main, uDarkStyleParams;
 
 {$R *.lfm}

@@ -120,7 +120,7 @@ var
 
 implementation
 
-uses utils_locale, utils_global, utils_dialogs, utils_themes, data_types, udm_main, uDarkStyleParams;
+uses utils_locale, utils_global, utils_dialogs, utils_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

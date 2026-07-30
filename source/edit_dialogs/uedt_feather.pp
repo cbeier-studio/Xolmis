@@ -536,10 +536,8 @@ end;
 function TedtFeather.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  Msg: String;
 begin
   Result := True;
-  Msg := EmptyStr;
   Msgs := TStringList.Create;
 
   // Required fields

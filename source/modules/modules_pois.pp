@@ -54,8 +54,7 @@ implementation
 uses
   utils_locale, utils_graphics, utils_themes, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media,
-  uDarkStyleParams,
-  udm_main, udm_grid, udm_individuals, udm_sampling, ufrm_customgrid;
+  udm_grid, udm_individuals, udm_sampling, ufrm_customgrid;
 
 { TPoiModuleController }
 
@@ -168,7 +167,6 @@ var
   i, g, m, y: Longint;
   dt: TDateTime;
   Crit: TCriteriaType;
-  dia, mes, ano: Word;
   PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;

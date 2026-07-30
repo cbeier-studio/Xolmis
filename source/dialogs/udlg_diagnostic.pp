@@ -25,7 +25,7 @@ interface
 
 uses
   Classes, ExtCtrls, SysUtils, Forms, Controls, Graphics, StdCtrls, Buttons, Clipbrd,
-  {$IFDEF WINDOWS} Windows, Win32Proc,{$ENDIF}{$IFDEF DARWIN} CocoaAll,{$ENDIF}
+  {$IFDEF WINDOWS} Win32Proc,{$ENDIF}{$IFDEF DARWIN} CocoaAll,{$ENDIF}
   Dialogs, ValEdit, Grids;
 
 type

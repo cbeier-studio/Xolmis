@@ -71,7 +71,7 @@ begin
       rsInactive:
         sFilter := ' (ativo = 0)';
     end;
-
+    { #todo : Review MarkedCount }
     with Qry, SQL do
     begin
       MacroCheck := True;

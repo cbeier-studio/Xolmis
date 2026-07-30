@@ -291,7 +291,7 @@ var
     : Boolean; overload;
 
   { Gazetteer Autofill }
-  function LoadCountriesFromJSON(const Lang: String): TList;
+  function LoadCountriesFromJSON: TList;
   function LoadCountryFromJSON(const CountryIso: String): TCountry;
   function LoadCitiesFromJSON(CountryIso2, StateIso2: String): TList;
   procedure FreeGazetteerCache;
@@ -300,7 +300,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_conversions, utils_validations, data_columns, data_setparam, models_users,
+  utils_global, utils_conversions,
   udm_main, udlg_geoassist;
 
 function GetGazetteerJSONArray: TJSONArray;
@@ -506,6 +506,7 @@ var
   IsNegative: Boolean;
 begin
   Result := '';
+  h := '';
 
   if (Length(aCoord) = 0) then
     Exit;
@@ -902,7 +903,7 @@ procedure LoadKMLPoints(const aFileName: String);
 var
   Doc: TXMLDocument;
   PlacemarkNode, nameNode, descriptionNode, PointNode, CoordNode: TDOMNode;
-  PlacemarkList, nameList, PointList: TDOMNodeList;
+  PlacemarkList: TDOMNodeList;
   Unzip: TUnZipper;
   aKMLFile: String;
   i: Integer;
@@ -1297,7 +1298,7 @@ end;
 
 { Gazetteer Autofill }
 
-function LoadCountriesFromJSON(const Lang: String): TList;
+function LoadCountriesFromJSON: TList;
 var
   JSONArray: TJSONArray;
   CountryObj, TranslationsObj: TJSONObject;

@@ -551,7 +551,7 @@ end;
 function TdlgColorBands.GetCodeFromLetter(aLetter: String): TBandColorCode;
 var
   cCode: array of String;
-  i, n: Integer;
+  n: Integer;
 begin
   Result := ccNone;
   n := 0;

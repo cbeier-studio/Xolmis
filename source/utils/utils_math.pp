@@ -279,7 +279,7 @@ end;
 
 function ModifiedZScore(aTaxon: Integer; aField: String; aValue: Extended): Extended;
 var
-  Med, MAD, Sum: Extended;
+  Med, MAD: Extended;
   i: Integer;
   ColumnValues, Differences: array of Extended;
   Qry: TSQLQuery;

@@ -126,7 +126,6 @@ function TBrazilianFlora.GetData(aValue: String): Boolean;
 var
   Resp: TJSONData;
   Obj: TJSONObject;
-  i: Integer;
 begin
   Result := False;
   Resp := nil;
@@ -170,7 +169,6 @@ function TPlantList.GetData(aValue: String): Boolean;
 var
   Resp: TJSONData;
   Obj: TJSONObject;
-  i: Integer;
 begin
   Result := False;
   Resp := nil;

@@ -178,7 +178,7 @@ var
 implementation
 
 uses
-  utils_global, utils_dialogs, utils_editdialogs, utils_finddialogs, models_record_types,
+  utils_global, utils_finddialogs, models_record_types,
   data_types, data_getvalue, data_consts,
   udm_main, uDarkStyleParams;
 

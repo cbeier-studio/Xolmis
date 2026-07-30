@@ -202,6 +202,7 @@ var
   p: Integer;
 begin
   p := FSubmodules.Add(TSubmoduleController.Create(FOwner));
+  { #todo : Review TModuleController.AddSubmodule: variables not used }
 end;
 
 destructor TModuleController.Destroy;

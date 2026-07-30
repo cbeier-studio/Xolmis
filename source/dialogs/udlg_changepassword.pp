@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, EditBtn,
-  DBCtrls, atshapelinebgra, StdCtrls, DB;
+  DBCtrls, atshapelinebgra, StdCtrls;
 
 type
 
@@ -64,7 +64,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_graphics, utils_dialogs, utils_themes,
-  udm_main, uDarkStyleParams, utils_passwords;
+  uDarkStyleParams, utils_passwords;
 
 {$R *.lfm}
 

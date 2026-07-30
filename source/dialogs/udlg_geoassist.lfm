@@ -480,17 +480,17 @@ object dlgGeoAssist: TdlgGeoAssist
         Columns = <        
           item
             Title.Caption = 'Name'
-            Width = 105
+            Width = 112
             FieldName = 'coordinate_name'
           end        
           item
             Title.Caption = 'Longitude'
-            Width = 104
+            Width = 111
             FieldName = 'longitude'
           end        
           item
             Title.Caption = 'Latitude'
-            Width = 104
+            Width = 111
             FieldName = 'latitude'
           end>
         Constraints.MinHeight = 230

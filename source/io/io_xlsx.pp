@@ -146,6 +146,7 @@ var
   CoordOpt: TCoordinateFormatOptions;
 begin
   Result := FieldValue;
+  TargetType := mcDecimal;
 
   if Result = '' then
     Exit;
@@ -427,6 +428,7 @@ class function TXLSXImporter.Probe(const FileName: string; Stream: TStream): Int
 var
   ext: String;
 begin
+  { #todo : Review TXLSXImporter.Probe: Stream not used }
   ext := LowerCase(ExtractFileExt(FileName));
   if (ext = '.xlsx') or (ext = '.xls') then
     Exit(85);

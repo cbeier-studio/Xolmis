@@ -125,7 +125,7 @@ uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_themes, utils_validations, utils_editdialogs,
   utils_conversions,
   data_types, data_getvalue, data_consts, data_columns, models_record_types, models_taxonomy,
-  udm_breeding, udm_main, udm_grid, uDarkStyleParams;
+  udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 

@@ -336,6 +336,8 @@ var
 begin
   Result := True;
   Msgs := TStringList.Create;
+  vdd1 := False;
+  ved1 := False;
 
   // Required fields
   if (eName.Text = EmptyStr) then

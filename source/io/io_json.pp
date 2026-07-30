@@ -173,6 +173,7 @@ var
   CoordOpt: TCoordinateFormatOptions;
 begin
   Result := FieldValue;
+  TargetType := mcDecimal;
 
   if Result = '' then
     Exit;
@@ -362,13 +363,11 @@ end;
 
 function TJSONImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
 var
-  RawBytes: TBytes;
   RawText, Utf8Text, DetectedEncoding: String;
   Utf8Stream: TStringStream;
   Parser: TJSONParser;
   Data, Node: TJSONData;
   Arr: TJSONArray;
-  Obj: TJSONObject;
   SL: TStringList;
   Line: String;
   Row: TXRow;
@@ -600,7 +599,7 @@ begin
   Stream.Position := 0;
 
   LogEvent(leaStart, 'Preview JSON file');
-
+  { #todo : Review TJSONImporter.PreviewRows: Options not used }
   if IsNDJSON(Stream) then
   begin
     Stream.Position := 0;
@@ -765,7 +764,7 @@ var
 begin
   Result := TStringList.Create;
   Stream.Position := 0;
-
+  { #todo : Review TJSONImporter.GetFieldNames: Options not used }
   LogEvent(leaStart, 'Get NDJSON file column names');
 
   Reader := TStreamReader.Create(Stream);
@@ -811,7 +810,7 @@ var
   i: Integer;
 begin
   LogEvent(leaStart, 'Import NDJSON file');
-
+  { #todo : Review TNDJSONImporter.Import: Options not used }
   Reader := TStreamReader.Create(Stream);
   try
     while not Reader.Eof do
@@ -858,7 +857,7 @@ var
   i, Count: Integer;
 begin
   Stream.Position := 0;
-
+  { #todo : Review TNDJSONImporter.PreviewRows: Options not used }
   LogEvent(leaStart, 'Preview NDJSON file');
   Reader := TStreamReader.Create(Stream);
   try
@@ -899,6 +898,7 @@ end;
 
 class function TNDJSONImporter.Probe(const FileName: string; Stream: TStream): Integer;
 begin
+  { #todo : Review TNDJSONImporter.Probe: Stream not used }
   if (SameText(ExtractFileExt(FileName), '.ndjson')) or (SameText(ExtractFileExt(FileName), '.jsonl')) then
     Exit(95)
   else

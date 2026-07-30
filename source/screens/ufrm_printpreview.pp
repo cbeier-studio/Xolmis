@@ -135,7 +135,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, models_access_control, models_users,
-  udlg_loading, udlg_progress, udm_reports, uDarkStyleParams;
+  udlg_loading, uDarkStyleParams;
 
 {$R *.lfm}
 

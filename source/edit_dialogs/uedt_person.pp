@@ -184,7 +184,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs,
-  data_types, data_getvalue, data_consts, data_columns, models_record_types, models_geo,
+  data_types, data_getvalue, data_consts, data_columns, models_record_types,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}

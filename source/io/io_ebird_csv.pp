@@ -76,8 +76,8 @@ implementation
 
 uses
   {$IFDEF DARWIN}iosxlocale,{$ENDIF}
-  utils_locale, utils_global, utils_dialogs, utils_system, utils_validations,
-  data_types, data_getvalue, data_consts, io_csv,
+  utils_locale, utils_global, utils_dialogs,
+  data_types, data_getvalue, io_csv,
   models_users, models_taxonomy, models_geo, models_sightings,
   udm_main, udlg_progress;
 

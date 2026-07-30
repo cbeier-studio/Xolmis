@@ -239,13 +239,6 @@ type
   private
     FSourceFile: String;
     FFileFormat: TImportFileType;
-    FImporter: TImporter;
-    FCSVImporter: TCSVImporter;
-    FDBFImporter: TDBFImporter;
-    FJSONImporter: TJSONImporter;
-    FODSImporter: TODSImporter;
-    FXLSImporter: TXLSXImporter;
-    FXMLImporter: TXMLImporter;
     //FDataSet: TDataSet;
     FFieldMap: TFieldMapper;
     FTargetFields: TFieldsDictionary;
@@ -311,9 +304,9 @@ procedure TdlgImport.AddImportRow(const XRow: TXRow);
 var
   Rec, OldRec: TXolmisRecord;
   Repo: TXolmisRepository;
-  Msg: string;
+  //Msg: string;
   Exists: Boolean;
-  Id: Integer;
+  //Id: Integer;
 begin
   Exists := False;
 
@@ -1159,8 +1152,6 @@ begin
 end;
 
 procedure TdlgImport.eSourceFileChange(Sender: TObject);
-var
-  jData: TJSONArray;
 begin
   //sbPrior.Enabled := False;
   sbNext.Enabled := IsRequiredFilledSource;
@@ -1704,7 +1695,7 @@ var
   MissingInProfile: TStringList;
   MissingInFile: TStringList;
   Ext, A, Source: string;
-  i, idx: Integer;
+  i: Integer;
   S: TColumnTypeStats;
   T: TTableSchema;
   F: TFieldSchema;
@@ -2443,7 +2434,7 @@ end;
 
 procedure TdlgImport.sbRetryClick(Sender: TObject);
 begin
-  TCancellationToken(FImportSettings.Cancel).Reset;
+  FImportSettings.Cancel.Reset;
   nbPages.PageIndex := 0;
 end;
 

@@ -142,7 +142,7 @@ implementation
 uses
   utils_global, utils_locale, utils_dialogs, utils_finddialogs, utils_conversions, utils_editdialogs, utils_gis,
   utils_validations,
-  data_types, data_consts, data_getvalue, data_columns, models_record_types, models_taxonomy, models_geo,
+  data_types, data_consts, data_getvalue, data_columns, models_record_types, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -612,6 +612,7 @@ var
 begin
   Result := True;
   Msgs := TStringList.Create;
+  Msg := '';
 
   // Required fields
   if (eImageDate.Text = EmptyStr) then

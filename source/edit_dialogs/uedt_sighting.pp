@@ -23,7 +23,7 @@ interface
 uses
   Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs, DateUtils,
   ExtCtrls, Character, StdCtrls, Buttons, Menus, atshapelinebgra,
-  BCPanel, models_birds, models_sightings;
+  BCPanel, models_sightings;
 
 type
 
@@ -193,7 +193,7 @@ implementation
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs,
   utils_gis, utils_conversions,
-  data_types, data_consts, data_getvalue, data_columns, models_record_types, models_taxonomy, models_geo,
+  data_types, data_consts, data_getvalue, data_columns, models_record_types, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -443,6 +443,8 @@ var
   EditText: String;
   PosX: Integer;
 begin
+  EditText := '';
+
   FormKeyPress(Sender, Key);
 
   if not (Key in AllowedChars) then

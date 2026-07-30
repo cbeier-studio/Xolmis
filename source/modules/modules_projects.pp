@@ -95,7 +95,7 @@ uses
   utils_locale, utils_global, utils_graphics, utils_themes, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media,
   uDarkStyleParams,
-  udm_main, udm_grid, ufrm_customgrid;
+  udm_grid, ufrm_customgrid;
 
 { TProjectsModuleController }
 
@@ -179,10 +179,9 @@ end;
 
 function TProjectsModuleController.Search(AValue: String): Boolean;
 var
-  i, g, m, y, y1, y2, M1, M2: Integer;
-  dt, Dt1, Dt2: TDateTime;
+  i, g, m, y: Integer;
+  dt: TDateTime;
   Crit: TCriteriaType;
-  V1, V2: String;
   PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;

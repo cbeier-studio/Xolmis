@@ -21,7 +21,7 @@ unit ubatch_feathers;
 interface
 
 uses
-  atshapelinebgra, Classes, DB, ExtCtrls, Spin, SysUtils, Forms, Controls, StdCtrls, EditBtn, Character,
+  atshapelinebgra, Classes, ExtCtrls, Spin, SysUtils, Forms, Controls, StdCtrls, EditBtn, Character,
   Graphics, Dialogs, Buttons, Menus, DateUtils;
 
 type
@@ -181,8 +181,8 @@ implementation
 
 uses
   utils_locale, utils_global, utils_finddialogs, utils_dialogs, utils_editdialogs, utils_validations, utils_conversions,
-  data_types, data_getvalue, data_columns, data_consts, models_record_types, models_birds, models_geo, models_taxonomy,
-  udlg_loading, udlg_progress, udm_main, udm_grid, uDarkStyleParams;
+  data_types, data_getvalue, data_columns, data_consts, models_record_types, models_birds, models_taxonomy,
+  udlg_loading, udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
 

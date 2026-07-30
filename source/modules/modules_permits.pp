@@ -44,7 +44,7 @@ implementation
 uses
   utils_locale, utils_graphics, utils_themes, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media,
-  udm_main, udm_grid, ufrm_customgrid, uDarkStyleParams;
+  udm_grid, ufrm_customgrid, uDarkStyleParams;
 
 { TPermitsModuleController }
 
@@ -65,8 +65,6 @@ end;
 procedure TPermitsModuleController.ApplyFilters;
 const
   PermitTypes: array of String = ('B', 'C', 'R', 'E', 'T', 'O');
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin

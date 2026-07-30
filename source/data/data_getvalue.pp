@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, StdCtrls, DateUtils, StrUtils, Variants,
-  models_record_types, models_taxonomy, utils_gis, models_sampling;
+  models_record_types, utils_gis, models_sampling;
 
 type
   TRecordReviewStatus = (rvwNotReviewed, rvwRecordOk, rvwRecordWithProblems);
@@ -71,7 +71,7 @@ type
 implementation
 
 uses
-  utils_taxonomy, data_consts, data_columns, udm_main,
+  utils_taxonomy, data_consts, udm_main,
   models_birds, models_breeding, models_sampling_plots, models_sightings, models_specimens;
 
 function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
@@ -732,7 +732,7 @@ end;
 function GetRank(const aKey: Integer): TZooRank;
 var
   ab: String;
-  i: Integer;
+  //i: Integer;
 begin
   Result := trSpecies;
   ab := GetName(TBL_TAXON_RANKS, COL_RANK_ID, COL_ABBREVIATION, aKey);
@@ -1112,6 +1112,7 @@ procedure GetTimeStamp(aField: TField; aTimeStampField: TDateTime);
 var
   vTimeStamp: TDateTime;
 begin
+  { #todo : Review GetTimeStamp }
   if not (aField.IsNull) then
     if TryISOStrToDateTime(aField.AsString, vTimeStamp) then
       aTimeStampField := vTimeStamp

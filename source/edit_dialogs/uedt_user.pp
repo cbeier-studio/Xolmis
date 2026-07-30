@@ -69,7 +69,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_types, data_consts, models_access_control, udm_main, uDarkStyleParams;
+  utils_locale, utils_global, data_consts, models_access_control, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 

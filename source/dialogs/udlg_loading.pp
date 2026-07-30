@@ -55,7 +55,7 @@ var
 implementation
 
 uses
-  utils_system, utils_themes, uDarkStyleParams;
+  utils_system, utils_themes;
 
 {$R *.lfm}
 

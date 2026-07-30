@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, ExtCtrls, LCLType,
   StdCtrls, Buttons, Grids, DBGrids, Menus, BCPanel, ColorSpeedButton, RegExpr, StrUtils,
-  utils_system, data_types, models_geo, models_taxonomy, models_record_types;
+  utils_system, data_types, models_taxonomy, models_record_types;
 
 type
 
@@ -169,11 +169,7 @@ begin
 end;
 
 procedure TdlgFind.FindBands(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -192,12 +188,7 @@ begin
 end;
 
 procedure TdlgFind.FindBotany(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
-  F: TTaxonFilter;
 begin
-  Operador:= GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -216,11 +207,7 @@ begin
 end;
 
 procedure TdlgFind.FindCaptures(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -239,11 +226,7 @@ begin
 end;
 
 procedure TdlgFind.FindEggs(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -262,11 +245,7 @@ begin
 end;
 
 procedure TdlgFind.FindExpeditions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -285,11 +264,7 @@ begin
 end;
 
 procedure TdlgFind.FindFeathers(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -308,13 +283,7 @@ begin
 end;
 
 procedure TdlgFind.FindGazetteer(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador, strFiltro, strOr: String;
-  F: TGazetteerFilter;
 begin
-  Operador := GetCriteria(aCriteria);
-  strOr := EmptyStr;
-
   with aSQL do
   begin
     case aFilter of
@@ -333,11 +302,7 @@ begin
 end;
 
 procedure TdlgFind.FindIndividuals(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -356,11 +321,7 @@ begin
 end;
 
 procedure TdlgFind.FindInstitutions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador:= GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -379,11 +340,7 @@ begin
 end;
 
 procedure TdlgFind.FindMethods(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -402,11 +359,7 @@ begin
 end;
 
 procedure TdlgFind.FindNestRevisions(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -425,11 +378,7 @@ begin
 end;
 
 procedure TdlgFind.FindNests(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -448,11 +397,7 @@ begin
 end;
 
 procedure TdlgFind.FindNetEffort(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -471,11 +416,7 @@ begin
 end;
 
 procedure TdlgFind.FindSamplingPlots(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -494,11 +435,7 @@ begin
 end;
 
 procedure TdlgFind.FindPeople(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador:= GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -517,11 +454,7 @@ begin
 end;
 
 procedure TdlgFind.FindPermanentNets(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -540,11 +473,7 @@ begin
 end;
 
 procedure TdlgFind.FindPermits(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -563,11 +492,7 @@ begin
 end;
 
 procedure TdlgFind.FindProjectGoals(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador:= GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -586,11 +511,7 @@ begin
 end;
 
 procedure TdlgFind.FindProjectRubrics(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador:= GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -609,11 +530,7 @@ begin
 end;
 
 procedure TdlgFind.FindProjects(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador:= GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -632,11 +549,7 @@ begin
 end;
 
 procedure TdlgFind.FindSamplePreps(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -655,11 +568,7 @@ begin
 end;
 
 procedure TdlgFind.FindSightings(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -678,11 +587,7 @@ begin
 end;
 
 procedure TdlgFind.FindSpecimens(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -701,11 +606,7 @@ begin
 end;
 
 procedure TdlgFind.FindSurveys(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -724,12 +625,7 @@ begin
 end;
 
 procedure TdlgFind.FindTaxa(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
-  F: TTaxonFilter;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -748,11 +644,7 @@ begin
 end;
 
 procedure TdlgFind.FindTaxonRanks(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -771,11 +663,7 @@ begin
 end;
 
 procedure TdlgFind.FindUsers(aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
-var
-  Operador: String;
 begin
-  Operador := GetCriteria(aCriteria);
-
   with aSQL do
   begin
     case aFilter of
@@ -998,6 +886,8 @@ function TdlgFind.Search(aValue: String): Boolean;
 var
   Criterio: TCriteriaType;
 begin
+  Result := False;
+
   Criterio := crLike;
   if ExecRegExpr('^#.+$', aValue) then
   begin

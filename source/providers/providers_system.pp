@@ -310,6 +310,7 @@ end;
 
 function TUsersSQL.CreateTable: String;
 begin
+  Result := EmptyStr;
   case FBackend of
     dbSqlite,
     dbPostgre,
@@ -523,6 +524,7 @@ end;
 
 function TRolesSQL.CreateTable: String;
 begin
+  Result := EmptyStr;
   case FBackend of
     dbSqlite,
     dbPostgre,
@@ -615,6 +617,7 @@ end;
 
 function TPermissionsSQL.CreateTable: String;
 begin
+  Result := EmptyStr;
   case FBackend of
     dbSqlite,
     dbPostgre,
@@ -707,6 +710,7 @@ end;
 
 function TRolePermissionsSQL.CreateTable: String;
 begin
+  Result := EmptyStr;
   case FBackend of
     dbSqlite,
     dbPostgre,
@@ -792,6 +796,7 @@ end;
 
 function TDBMetadataSQL.CreateTable: String;
 begin
+  Result := EmptyStr;
   case FBackend of
     dbSqlite,
     dbPostgre,
@@ -818,6 +823,7 @@ end;
 
 function TDBMetadataSQL.Insert: String;
 begin
+  Result := EmptyStr;
   case FBackend of
     dbSqlite:
     begin
@@ -908,6 +914,7 @@ end;
 
 function TRecordHistorySQL.CreateTable: String;
 begin
+  Result := EmptyStr;
   case FBackend of
     dbSqlite,
     dbPostgre,
@@ -1031,6 +1038,7 @@ end;
 
 function TRecordVerificationsSQL.CreateTable: String;
 begin
+  Result := EmptyStr;
   case FBackend of
     dbSqlite,
     dbPostgre,
@@ -1134,6 +1142,7 @@ end;
 
 function TImportProfilesSQL.CreateTable: String;
 begin
+  Result := EmptyStr;
   case FBackend of
     dbSqlite,
     dbPostgre,

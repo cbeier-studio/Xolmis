@@ -21,7 +21,7 @@ unit data_services;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, StrUtils,
+  Classes, SysUtils, SQLDB,
   models_record_types, models_bands, models_birds;
 
 type
@@ -248,7 +248,7 @@ begin
     FBandRepo.GetById(ABand.Id, FOldBand);
     ABand.IndividualId := 0;
     ApplyStatusChange(ABand, bstRemoved);
-
+    { #todo : Review TBandMovementService.RemoveFromIndividual: AIndividualId not used }
     // write the record history
     WriteDiff(tbBands, FOldBand, ABand);
   finally

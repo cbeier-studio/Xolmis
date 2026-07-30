@@ -31,7 +31,7 @@ const
   THUMB_QUALITY: Integer = 75;  // percent
 
   { Image (BLOB field) manipulation }
-  function AddImage(aDataset: TDataset; aTable: TTableType; aPathField, aBlobField: String;
+  function AddImage(aDataset: TDataset; aPathField: String;
     aFileName: String; aAttachment: TMediaAttachment): Boolean;
   procedure ExibeFoto(DataSet: TDataset; aBlobField: String; TargetImage: TImage);
   procedure GravaFoto(DataSet: TDataset; aBlobField, FileName: String);
@@ -47,7 +47,7 @@ const
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_validations, data_consts,
+  utils_locale, utils_global, utils_dialogs, data_consts,
   udm_main, udlg_progress, ufrm_imageviewer,
   {$IFDEF DEBUG}utils_debug,{$ENDIF}
   fpeGlobal, fpeTags, fpeExifData, Math, BGRAReadJpeg, BGRAWriteJpeg, BGRAThumbnail;
@@ -56,8 +56,7 @@ uses
 { Image (BLOB field) manipulation }
 { ----------------------------------------------------------------------------------------- }
 
-function AddImage(aDataset: TDataset; aTable: TTableType; aPathField, aBlobField: String; aFileName: String;
-  aAttachment: TMediaAttachment): Boolean;
+function AddImage(aDataset: TDataset; aPathField: String; aFileName: String; aAttachment: TMediaAttachment): Boolean;
 var
   imgExif: TImgInfo;
   aTag: TTag;

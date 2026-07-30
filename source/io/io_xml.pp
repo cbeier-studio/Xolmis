@@ -147,6 +147,7 @@ var
   CoordOpt: TCoordinateFormatOptions;
 begin
   Result := FieldValue;
+  TargetType := mcDecimal;
 
   if Result = '' then
     Exit;
@@ -260,14 +261,12 @@ end;
 
 function TXMLImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
 var
-  RawBytes: TBytes;
   RawText, Utf8Text, DetectedEncoding: String;
   Utf8Stream: TStringStream;
   Doc: TXMLDocument;
   NodeList: TDOMNodeList;
   Node, Child: TDOMNode;
   Attr: TDOMAttr;
-  SL: TStringList;
   i, j: Integer;
 
   function ResolvePath(Node: TDOMNode; const Path: String): TDOMNode;
@@ -515,6 +514,7 @@ class function TXMLImporter.Probe(const FileName: string; Stream: TStream): Inte
 var
   ext: String;
 begin
+  { #todo : Review TXMLImporter.Probe: Stream not used }
   ext := LowerCase(ExtractFileExt(FileName));
   if (ext = '.xml') then Exit(80);
   Result := 25;

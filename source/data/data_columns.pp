@@ -870,7 +870,7 @@ procedure LoadFieldsSettings(aDataSet: TDataSet; const aFileName: String);
 var
   JSONData: TJSONData;
   FieldsArray: TJSONArray;
-  I, FieldIdx: Integer;
+  I: Integer;
   FieldObj: TJSONObject;
   FieldName: string;
   Visible: Boolean;
@@ -1915,8 +1915,8 @@ end;
 
 procedure TranslateBands(aDataSet: TDataSet);
 var
-  FTbl: TTableSchema;
-  FField: TFieldSchema;
+  //FTbl: TTableSchema;
+  //FField: TFieldSchema;
   i: Integer;
 begin
   with aDataSet do

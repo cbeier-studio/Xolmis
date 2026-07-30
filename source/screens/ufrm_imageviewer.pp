@@ -114,8 +114,8 @@ var
 implementation
 
 uses
-  Clipbrd, data_consts, utils_global, utils_locale, uDarkStyleParams, FPImage, FPCanvas, FPImgCanv,
-  fpeMetadata, fpeGlobal, fpeTags, fpeExifData;
+  Clipbrd, data_consts, utils_global, utils_locale, uDarkStyleParams, FPImage, FPCanvas,
+  fpeMetadata, fpeGlobal, fpeExifData;
 
 {$R *.lfm}
 

@@ -23,7 +23,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, MaskEdit, Spin, DBGrids,
   ComCtrls, mvMapViewer, mvTypes, mvGpsObj, mvDE_BGRA, atshapelinebgra, BCPanel, SpinEx, Types,
-  utils_system, utils_gis, DB, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins;
+  utils_gis, DB, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins;
 
 type
 
@@ -102,7 +102,7 @@ var
 implementation
 
 uses
-  utils_global, utils_themes, data_types, udm_main, uDarkStyleParams;
+  utils_global, utils_themes, udm_main, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -139,7 +139,7 @@ var
   //img: TBitmap;
 begin
   // Screen coordinates of the GPS point
-  P := TMapView(Sender).LonLatToScreen(APoint.RealPoint);
+  P := TMapView(Sender).LatLonToScreen(APoint.RealPoint);
 
   // Draw the GPS point with MapMarker bitmap
   //img := TBitmap.Create;
@@ -421,6 +421,7 @@ begin
   begin
     FDecCoord := TDecimalCoord.Create(FDecPoint);
     FDmsCoord := TCoordinateConverter.Convert(FDecCoord, mcDMS);
+    FDmsPoint.FromString(FDmsCoord.ToString(FOptions), FOptions.Separator);
 
     elongDeg.Value := FDMSPoint.X.Degrees;
     elongMin.Value := FDMSPoint.X.Minutes;

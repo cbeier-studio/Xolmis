@@ -155,7 +155,7 @@ const
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_conversions, utils_count, utils_debug,
+  utils_locale, utils_global, utils_dialogs, utils_conversions, utils_count, {$IFDEF DEBUG}utils_debug,{$ENDIF}
   data_consts, data_schema, data_providers, data_getvalue,
   models_access_control, models_record_types, models_users, models_methods, models_taxonomy,
   udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress, udlg_loading;
@@ -305,7 +305,7 @@ var
   Trans: TSQLTransaction;
 begin
   Result := False;
-
+  { #todo : Review CreateUserDatabase: aProtocol not used }
   LogEvent(leaStart, Format('Create database: %s', [aFilename]));
   dlgProgress := TdlgProgress.Create(nil);
   Conn := TSQLConnector.Create(nil);
@@ -2966,6 +2966,7 @@ var
   DS: TDataSource;
 begin
   Result := nil;
+  DS := nil;
 
   case aTableType of
     tbNone:           DS := nil;
@@ -3623,7 +3624,7 @@ begin
       rsInactive:
         sFilter := ' (ativo = 0)';
     end;
-
+    { #todo : Review MarkAllRecords and overload }
     sChecked := BoolToText(IsChecked, '1', '0');
 
     with Qry, SQL do

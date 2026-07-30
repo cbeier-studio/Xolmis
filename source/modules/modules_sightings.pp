@@ -54,7 +54,7 @@ implementation
 uses
   utils_locale, utils_graphics, utils_themes, utils_validations, utils_system,
   data_consts, data_columns, data_filters, models_media, modules_pois,
-  udm_main, udm_grid, udm_sampling, udm_individuals, ufrm_customgrid, uDarkStyleParams;
+  udm_grid, udm_sampling, udm_individuals, ufrm_customgrid;
 
 { TSightingsModuleController }
 
@@ -78,8 +78,6 @@ begin
 end;
 
 procedure TSightingsModuleController.ApplyFilters;
-var
-  sf: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin
@@ -200,11 +198,9 @@ end;
 
 function TSightingsModuleController.Search(AValue: String): Boolean;
 var
-  i, g, m, y, y1, y2: Longint;
-  dt, Dt1, Dt2, Tm1, Tm2: TDateTime;
+  i, g, m, y: Longint;
+  dt, Tm1, Tm2: TDateTime;
   Crit: TCriteriaType;
-  V1, V2: String;
-  M1, M2: Integer;
   PartialStart, PartialEnd: TPartialDate;
 begin
   Result := False;

@@ -73,8 +73,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_validations,
-  data_types, data_management, data_columns, data_getvalue, data_consts,
+  utils_locale, utils_validations,
+  data_types, data_management, data_getvalue, data_consts,
   models_users, models_taxonomy,
   udm_main, udlg_progress;
 
@@ -184,6 +184,8 @@ end;
 
 function StringToZooRank(const aRankStr: String): TZooRank;
 begin
+  Result := trNone;
+
   if aRankStr = EmptyStr then
     Exit;
 
