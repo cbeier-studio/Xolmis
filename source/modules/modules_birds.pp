@@ -111,7 +111,7 @@ begin
 
   FSubmodules.Add(TCapturesSubmoduleController.Create(FOwner));
   FSubmodules.Add(TFeathersSubmoduleController.Create(FOwner));
-  FSubmodules.Add(TSightingsSubmoduleController.create(FOwner));
+  FSubmodules.Add(TSightingsSubmoduleController.Create(FOwner));
   FSubmodules.Add(TNestsSubmoduleController.Create(FOwner));
   FSubmodules.Add(TSpecimensSubmoduleController.Create(FOwner));
   FSubmodules.Add(TPoiSubmoduleController.Create(FOwner));

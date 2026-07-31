@@ -1209,7 +1209,7 @@ begin
           if (Individual.RemovedBandId > 0) then
           begin
             FRepoBand.GetById(Individual.RemovedBandId, FRemovedBand);
-            MoveBand.RemoveFromIndividual(FRemovedBand, Individual.Id, Individual.BandChangeDate);
+            MoveBand.RemoveFromIndividual(FRemovedBand, Individual.BandChangeDate);
             LogInfo(Format('Band ID=%d status updated to removed', [FRemovedBand.Id]));
           end;
           if (Individual.BandId > 0) then
@@ -1346,7 +1346,7 @@ begin
         if (Capture.RemovedBandId > 0) then
         begin
           FRepoBand.GetById(Capture.RemovedBandId, FRemovedBand);
-          MoveBand.RemoveFromIndividual(FRemovedBand, aIndividual, Capture.CaptureDate);
+          MoveBand.RemoveFromIndividual(FRemovedBand, Capture.CaptureDate);
           LogInfo(Format('Band ID=%d status updated to removed', [FRemovedBand.Id]));
         end;
         if (Capture.BandId > 0) then

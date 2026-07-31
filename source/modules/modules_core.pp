@@ -167,9 +167,6 @@ type
     constructor Create(AOwner: TForm); override;
     destructor Destroy; override;
 
-    procedure AddSubmodule(ATableType: TTableType; ACaptionText: String; ADataSet: TDataSet; AGrid: TDBGrid;
-      APageIndex: Integer; AUiFlags: TGridUiFlags); virtual;
-
     procedure ConfigureColumns(AGrid: TDBGrid); virtual; abstract;
     procedure ClearFilters; virtual; abstract;
     procedure ApplyFilters; virtual; abstract;
@@ -194,15 +191,6 @@ constructor TModuleController.Create(AOwner: TForm);
 begin
   inherited Create(AOwner);
   FSubmodules := TSubmoduleList.Create();
-end;
-
-procedure TModuleController.AddSubmodule(ATableType: TTableType; ACaptionText: String; ADataSet: TDataSet;
-  AGrid: TDBGrid; APageIndex: Integer; AUiFlags: TGridUiFlags);
-var
-  p: Integer;
-begin
-  p := FSubmodules.Add(TSubmoduleController.Create(FOwner));
-  { #todo : Review TModuleController.AddSubmodule: variables not used }
 end;
 
 destructor TModuleController.Destroy;

@@ -399,6 +399,9 @@ var
 begin
   Result := TStringList.Create;
 
+  if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+    Exit;
+
   LogEvent(leaStart, 'Get JSON file column names');
 
   // Read bytes from stream
@@ -424,6 +427,9 @@ begin
       SL.Text := Utf8Text;
       if SL.Count > 0 then
       begin
+        if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+          Exit;
+
         Line := SL[0].Trim;
         if Line <> '' then
         begin
@@ -438,7 +444,10 @@ begin
                 try
                   AddJSONToRow('', Data, Row);
                   for i := 0 to Row.Count - 1 do
-                    Result.Add(Row.Names[i]);
+                    if Options.TrimFields then
+                      Result.Add(Trim(Row.Names[i]))
+                    else
+                      Result.Add(Row.Names[i]);
                 finally
                   Row.Free;
                 end;
@@ -477,7 +486,10 @@ begin
           try
             AddJSONToRow('', Arr.Items[0], Row);
             for i := 0 to Row.Count - 1 do
-              Result.Add(Row.Names[i]);
+              if Options.TrimFields then
+                Result.Add(Trim(Row.Names[i]))
+              else
+                Result.Add(Row.Names[i]);
           finally
             Row.Free;
           end;
@@ -491,7 +503,10 @@ begin
         try
           AddJSONToRow('', Node, Row);
           for i := 0 to Row.Count - 1 do
-            Result.Add(Row.Names[i]);
+            if Options.TrimFields then
+              Result.Add(Trim(Row.Names[i]))
+            else
+              Result.Add(Row.Names[i]);
         finally
           Row.Free;
         end;
@@ -591,16 +606,45 @@ var
   Parser: TJSONParser;
   Data: TJSONData;
   Reader: TStreamReader;
+  Node: TJSONData;
   Arr: TJSONArray;
   Row, Transformed: TXRow;
   Line: string;
-  i, Count: Integer;
+  i, Count, Progress: Integer;
+  UseNDJSON: Boolean;
+
+  function ResolveRecordsPath(Root: TJSONData; const Path: String): TJSONData;
+  var
+    Parts: TStringArray;
+    J: Integer;
+    Cur: TJSONData;
+  begin
+    Result := Root;
+    if Path = '' then Exit;
+
+    Parts := Path.Split(['/']);
+    Cur := Root;
+
+    for J := 0 to High(Parts) do
+    begin
+      if (Cur.JSONType = jtObject) and (TJSONObject(Cur).Find(Parts[J]) <> nil) then
+        Cur := TJSONObject(Cur).Find(Parts[J])
+      else
+        Exit(nil);
+    end;
+
+    Result := Cur;
+  end;
 begin
   Stream.Position := 0;
 
   LogEvent(leaStart, 'Preview JSON file');
-  { #todo : Review TJSONImporter.PreviewRows: Options not used }
-  if IsNDJSON(Stream) then
+
+  if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+    Exit;
+
+  UseNDJSON := Options.ForceNDJSON or IsNDJSON(Stream);
+  if UseNDJSON then
   begin
     Stream.Position := 0;
     Reader := TStreamReader.Create(Stream);
@@ -609,6 +653,9 @@ begin
       while not Reader.Eof do
       begin
         if Count >= MaxRows then
+          Break;
+
+        if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
           Break;
 
         Line := Trim(Reader.ReadLine);
@@ -621,6 +668,8 @@ begin
           try
             Row := TXRow.Create;
             try
+              Transformed := Row;
+
               if Data.JSONType = jtObject then
                 AddJSONToRow('', Data, Row)
               else
@@ -648,6 +697,12 @@ begin
         end;
 
         Inc(Count);
+
+        if Assigned(Options.OnProgress) then
+        begin
+          Progress := Trunc(Count * 100.0 / Max(1, MaxRows));
+          Options.OnProgress(Progress, rsImportingJSON);
+        end;
       end;
     finally
       Reader.Free;
@@ -660,17 +715,26 @@ begin
     try
       Data := Parser.Parse;
       try
-        if Data.JSONType = jtArray then
+        Node := ResolveRecordsPath(Data, Options.RecordsPath);
+        if Node = nil then
+          Exit;
+
+        if Node.JSONType = jtArray then
         begin
-          Arr := TJSONArray(Data);
+          Arr := TJSONArray(Node);
           Count := 0;
           for i := 0 to Arr.Count - 1 do
           begin
             if Count >= MaxRows then
               Break;
 
+            if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+              Break;
+
             Row := TXRow.Create;
             try
+              Transformed := Row;
+
               if Arr.Items[i].JSONType = jtObject then
                 AddJSONToRow('', Arr.Items[i], Row)
               else
@@ -692,13 +756,23 @@ begin
             end;
 
             Inc(Count);
+
+            if Assigned(Options.OnProgress) then
+            begin
+              Progress := Trunc(Count * 100.0 / Max(1, Min(MaxRows, Arr.Count)));
+              Options.OnProgress(Progress, rsImportingJSON);
+            end;
           end;
         end
-        else if Data.JSONType = jtObject then
+        else if Node.JSONType = jtObject then
         begin
+          if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+            Exit;
+
           Row := TXRow.Create;
           try
-            AddJSONToRow('', Data, Row);
+            Transformed := Row;
+            AddJSONToRow('', Node, Row);
 
             if Assigned(FMapper) then
               Transformed := FMapper.Apply(Row)
@@ -712,6 +786,9 @@ begin
               Transformed.Free;
             Row.Free;
           end;
+
+          if Assigned(Options.OnProgress) then
+            Options.OnProgress(100, rsImportingJSON);
         end;
       finally
         Data.Free;
@@ -755,92 +832,170 @@ end;
 
 function TNDJSONImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
 var
-  Reader: TStreamReader;
+  RawText, Utf8Text, DetectedEncoding: String;
+  SL: TStringList;
   Line: string;
-  Parser: TJSONParser;
   Data: TJSONData;
   Obj: TJSONObject;
-  i: Integer;
+  i, j: Integer;
 begin
   Result := TStringList.Create;
   Stream.Position := 0;
-  { #todo : Review TJSONImporter.GetFieldNames: Options not used }
+
+  if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+    Exit;
+
   LogEvent(leaStart, 'Get NDJSON file column names');
 
-  Reader := TStreamReader.Create(Stream);
+  // Read bytes from stream
+  SetLength(RawText, Stream.Size);
+  if Stream.Size > 0 then
+    Stream.ReadBuffer(RawText[1], Stream.Size);
+
+  // Convert encoding -> UTF-8
+  if Options.Encoding <> '' then
+    Utf8Text := ConvertEncoding(RawText, Options.Encoding, 'utf-8')
+  else
+  begin
+    DetectedEncoding := GuessEncoding(RawText);
+    Utf8Text := ConvertEncoding(RawText, DetectedEncoding, 'utf-8');
+  end;
+
+  SL := TStringList.Create;
   try
-    while not Reader.Eof do
+    SL.Text := Utf8Text;
+    for i := 0 to SL.Count - 1 do
     begin
-      Line := Trim(Reader.ReadLine);
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
+
+      Line := Trim(SL[i]);
       if Line = '' then
         Continue;
 
-      Parser := TJSONParser.Create(Line, [joUTF8]);
+      Data := GetJSON(Line);
       try
-        Data := Parser.Parse;
-        try
-          if Data.JSONType = jtObject then
-          begin
-            Obj := TJSONObject(Data);
-            for i := 0 to Obj.Count - 1 do
-              Result.Add(Obj.Names[i]);
-            Exit; // só precisamos da primeira linha
-          end;
-        finally
-          Data.Free;
+        if Data.JSONType = jtObject then
+        begin
+          Obj := TJSONObject(Data);
+          for j := 0 to Obj.Count - 1 do
+            if Options.TrimFields then
+              Result.Add(Trim(Obj.Names[j]))
+            else
+              Result.Add(Obj.Names[j]);
+          Exit; // needs only first non-empty object line
         end;
       finally
-        Parser.Free;
+        Data.Free;
       end;
     end;
   finally
-    Reader.Free;
+    SL.Free;
     LogEvent(leaFinish, 'Get NDJSON file column names');
   end;
 end;
 
 procedure TNDJSONImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);
 var
-  Reader: TStreamReader;
+  RawText, Utf8Text, DetectedEncoding: String;
+  SL: TStringList;
   Line: string;
-  Parser: TJSONParser;
   Data: TJSONData;
   Obj: TJSONObject;
-  Row: TXRow;
-  i: Integer;
+  Row, Transformed: TXRow;
+  i, j, Total, Processed: Integer;
+  KeyName, Value: String;
 begin
+  Stream.Position := 0;
+
   LogEvent(leaStart, 'Import NDJSON file');
-  { #todo : Review TNDJSONImporter.Import: Options not used }
-  Reader := TStreamReader.Create(Stream);
+
+  if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+    Exit;
+
+  // Read bytes from stream
+  SetLength(RawText, Stream.Size);
+  if Stream.Size > 0 then
+    Stream.ReadBuffer(RawText[1], Stream.Size);
+
+  // Convert encoding -> UTF-8
+  if Options.Encoding <> '' then
+    Utf8Text := ConvertEncoding(RawText, Options.Encoding, 'utf-8')
+  else
+  begin
+    DetectedEncoding := GuessEncoding(RawText);
+    Utf8Text := ConvertEncoding(RawText, DetectedEncoding, 'utf-8');
+  end;
+
+  SL := TStringList.Create;
   try
-    while not Reader.Eof do
+    SL.Text := Utf8Text;
+
+    Total := 0;
+    for i := 0 to SL.Count - 1 do
+      if Trim(SL[i]) <> '' then
+        Inc(Total);
+
+    Processed := 0;
+    for i := 0 to SL.Count - 1 do
     begin
-      Line := Trim(Reader.ReadLine);
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
+
+      Line := Trim(SL[i]);
       if Line = '' then
         Continue;
 
-      Parser := TJSONParser.Create(Line, [joUTF8]);
+      Data := GetJSON(Line);
       try
-        Data := Parser.Parse;
-        try
-          if Data.JSONType = jtObject then
-          begin
-            Obj := TJSONObject(Data);
-            Row := TXRow.Create;
-            for i := 0 to Obj.Count - 1 do
-              Row.Values[Obj.Names[i]] := Obj.Items[i].AsString;
-            RowOut(Row);
+        if Data.JSONType = jtObject then
+        begin
+          Obj := TJSONObject(Data);
+          Row := TXRow.Create;
+          try
+            Transformed := Row;
+
+            for j := 0 to Obj.Count - 1 do
+            begin
+              KeyName := Obj.Names[j];
+              Value := Obj.Items[j].AsString;
+
+              if Options.TrimFields then
+              begin
+                KeyName := Trim(KeyName);
+                Value := Trim(Value);
+              end;
+
+              if Options.IgnoreNulls and (Value = '') then
+                Continue;
+
+              Row.Values[KeyName] := Value;
+            end;
+
+            if Assigned(FMapper) then
+              Transformed := FMapper.Apply(Row);
+
+            if Assigned(RowOut) then
+              RowOut(Transformed);
+          finally
+            if Transformed <> Row then
+              Transformed.Free;
             Row.Free;
           end;
-        finally
-          Data.Free;
         end;
       finally
-        Parser.Free;
+        Data.Free;
       end;
+
+      Inc(Processed);
+      if Assigned(Options.OnProgress) then
+        Options.OnProgress(Trunc(Processed * 100.0 / Max(1, Total)), rsImportingNDJSON);
+
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
     end;
   finally
-    Reader.Free;
+    SL.Free;
     LogEvent(leaFinish, 'Import NDJSON file');
   end;
 end;
@@ -857,13 +1012,19 @@ var
   i, Count: Integer;
 begin
   Stream.Position := 0;
-  { #todo : Review TNDJSONImporter.PreviewRows: Options not used }
+
+  if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+    Exit;
+
   LogEvent(leaStart, 'Preview NDJSON file');
   Reader := TStreamReader.Create(Stream);
   try
     Count := 0;
     while (not Reader.Eof) and (Count < MaxRows) do
     begin
+      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+        Break;
+
       Line := Trim(Reader.ReadLine);
       if Line = '' then
         Continue;
@@ -882,6 +1043,9 @@ begin
             Row.Free;
 
             Inc(Count);
+
+            if Assigned(Options.OnProgress) then
+              Options.OnProgress(Trunc(Count * 100.0 / Max(1, MaxRows)), rsImportingNDJSON);
           end;
         finally
           Data.Free;

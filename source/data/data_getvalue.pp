@@ -1112,7 +1112,6 @@ procedure GetTimeStamp(aField: TField; aTimeStampField: TDateTime);
 var
   vTimeStamp: TDateTime;
 begin
-  { #todo : Review GetTimeStamp }
   if not (aField.IsNull) then
     if TryISOStrToDateTime(aField.AsString, vTimeStamp) then
       aTimeStampField := vTimeStamp

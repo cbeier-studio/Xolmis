@@ -51,7 +51,7 @@ type
       const ANotes: String = '');
     procedure UseInCapture(ABand: TBand; AIndividualId: Integer; ADate: TDate;
       const ANotes: String = '');
-    procedure RemoveFromIndividual(ABand: TBand; AIndividualId: Integer; ADate: TDate; const ANotes: String = '');
+    procedure RemoveFromIndividual(ABand: TBand; ADate: TDate; const ANotes: String = '');
     procedure TransferToAnotherPerson(ABand: TBand; ANewCarrierId: Integer; ADate: TDate;
       const ANotes: String = '');
     procedure MarkAsBroken(ABand: TBand; ADate: TDate; const ANotes: String = '');
@@ -238,8 +238,7 @@ begin
     ASenderId, ACarrierId, ANotes);
 end;
 
-procedure TBandMovementService.RemoveFromIndividual(ABand: TBand; AIndividualId: Integer; ADate: TDate;
-  const ANotes: String);
+procedure TBandMovementService.RemoveFromIndividual(ABand: TBand; ADate: TDate; const ANotes: String);
 var
   FOldBand: TBand;
 begin
@@ -248,7 +247,7 @@ begin
     FBandRepo.GetById(ABand.Id, FOldBand);
     ABand.IndividualId := 0;
     ApplyStatusChange(ABand, bstRemoved);
-    { #todo : Review TBandMovementService.RemoveFromIndividual: AIndividualId not used }
+
     // write the record history
     WriteDiff(tbBands, FOldBand, ABand);
   finally

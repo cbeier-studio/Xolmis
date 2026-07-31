@@ -139,10 +139,8 @@ const
   procedure RestoreChildRecords(ChildTable: TTableType; ParentField: String; ParentId: Integer);
   procedure MarkRecord(aTableName, aFieldName: String; aKeyValue: Integer);
   procedure UnmarkRecord(aTableName, aFieldName: String; aKeyValue: Integer);
-  procedure MarkAllRecords(const aTable: TTableType; IsChecked: Boolean; aKeyField: String;
-    aModifier: TRecordStatus; aWhere: TStrings); overload;
-  procedure MarkAllRecords(const aTable: TTableType; aKeyField: String; aModifier: TRecordStatus;
-    aWhere: TStrings; ackMarcados: TCheckBox); overload;
+  procedure MarkAllRecords(const aTable: TTableType; IsChecked: Boolean; aKeyField: String; aWhere: TStrings); overload;
+  procedure MarkAllRecords(const aTable: TTableType; aKeyField: String; aWhere: TStrings; ackMarcados: TCheckBox); overload;
   procedure QueueRecord(aTableName, aFieldName: String; aKeyValue: Integer);
   procedure UnqueueRecord(aTableName, aFieldName: String; aKeyValue: Integer);
   procedure UpdateBand(aBand, aIndividual: Integer; aStatus: String; aDate: TDate); deprecated;
@@ -305,7 +303,7 @@ var
   Trans: TSQLTransaction;
 begin
   Result := False;
-  { #todo : Review CreateUserDatabase: aProtocol not used }
+
   LogEvent(leaStart, Format('Create database: %s', [aFilename]));
   dlgProgress := TdlgProgress.Create(nil);
   Conn := TSQLConnector.Create(nil);
@@ -318,7 +316,12 @@ begin
     dlgProgress.Show;
     Application.ProcessMessages;
 
-    Conn.ConnectorType := 'SQLite3';
+    case aProtocol of
+      dbSqlite:   Conn.ConnectorType := 'SQLite3';
+      dbFirebird: Conn.ConnectorType := 'Firebird';
+      dbPostgre:  Conn.ConnectorType := 'PostgreSQL';
+      dbMaria:    Conn.ConnectorType := 'MySQL 5.6';
+    end;
     Conn.CharSet := 'UTF-8';
     Conn.LoginPrompt := False;
     Conn.DatabaseName := aFileName;
@@ -339,7 +342,7 @@ begin
       dlgProgress.Text := rsProgressPreparing;
       Application.ProcessMessages;
 
-      case databaseConnection.Backend of
+      case aProtocol of
         dbSqlite:   Conn.ExecuteDirect('PRAGMA foreign_keys = off;');
         dbFirebird: ;
         dbPostgre:  Conn.ExecuteDirect('SET CONSTRAINTS ALL DEFERRED;');
@@ -755,7 +758,7 @@ begin
           Trans.StartTransaction;
 
       finally
-        case databaseConnection.Backend of
+        case aProtocol of
           dbSqlite:   Conn.ExecuteDirect('PRAGMA foreign_keys = on;');
           dbFirebird: ;
           dbPostgre:  Conn.ExecuteDirect('SET CONSTRAINTS ALL IMMEDIATE;');
@@ -781,7 +784,7 @@ begin
       dlgProgress.Text := rsProgressOptimizingDatabase;
       Application.ProcessMessages;
       LogDebug('Optimize database');
-      case databaseConnection.Backend of
+      case aProtocol of
         dbSqlite:   Conn.ExecuteDirect('PRAGMA optimize;');
         dbFirebird: ;
         dbPostgre:
@@ -3608,23 +3611,13 @@ begin
   end;
 end;
 
-procedure MarkAllRecords(const aTable: TTableType; IsChecked: Boolean; aKeyField: String;
-  aModifier: TRecordStatus; aWhere: TStrings);
+procedure MarkAllRecords(const aTable: TTableType; IsChecked: Boolean; aKeyField: String; aWhere: TStrings);
 var
   Qry: TSQLQuery;
   sFilter, sChecked: String;
 begin
   Qry := TSQLQuery.Create(DMM.sqlCon);
   try
-    case aModifier.Status of
-      rsAll:
-        sFilter := EmptyStr;
-      rsActive:
-        sFilter := ' (ativo = 1)';
-      rsInactive:
-        sFilter := ' (ativo = 0)';
-    end;
-    { #todo : Review MarkAllRecords and overload }
     sChecked := BoolToText(IsChecked, '1', '0');
 
     with Qry, SQL do
@@ -3649,8 +3642,7 @@ begin
   end;
 end;
 
-procedure MarkAllRecords(const aTable: TTableType; aKeyField: String; aModifier: TRecordStatus;
-  aWhere: TStrings; ackMarcados: TCheckBox);
+procedure MarkAllRecords(const aTable: TTableType; aKeyField: String; aWhere: TStrings; ackMarcados: TCheckBox);
 var
   Qry: TSQLQuery;
   // m,ms: Integer;
@@ -3662,14 +3654,14 @@ begin
   try
     TabName := TABLE_NAMES[aTable];
 
-    case aModifier.Status of
-      rsAll:
-        ;
-      rsActive:
-        sFilter := ' (ativo = 1)';
-      rsInactive:
-        sFilter := ' (ativo = 0)';
-    end;
+    //case aModifier.Status of
+    //  rsAll:
+    //    ;
+    //  rsActive:
+    //    sFilter := ' (ativo = 1)';
+    //  rsInactive:
+    //    sFilter := ' (ativo = 0)';
+    //end;
 
     case ackMarcados.State of
       cbUnchecked:

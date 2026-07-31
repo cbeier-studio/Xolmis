@@ -173,8 +173,6 @@ var
 begin
   GravaStat(Name, TComponent(Sender).Name, 'click');
 
-  { #todo : Validate values }
-
   { Double quoted values as text }
   FQuotedAsText := tsQuotedAsText.Checked;
   { Delimiter }

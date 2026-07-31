@@ -1086,7 +1086,7 @@ begin
         begin
           FBand.Clear;
           BandRepo.GetById(Obj.RemovedBandId, FBand);
-          MoveBand.RemoveFromIndividual(FBand, Obj.IndividualId, Obj.CaptureDate);
+          MoveBand.RemoveFromIndividual(FBand, Obj.CaptureDate);
           LogInfo(Format('Band ID=%d status updated to removed', [Obj.RemovedBandId]));
         end;
         if (Obj.BandId > 0) then
@@ -1735,7 +1735,7 @@ begin
             BandRepo.GetById(Obj.RemovedBandId, FBand);
             if (FBand.Id > 0) then
             begin
-              MoveBand.RemoveFromIndividual(FBand, Obj.Id, Obj.BandChangeDate);
+              MoveBand.RemoveFromIndividual(FBand, Obj.BandChangeDate);
               LogInfo(Format('Band ID=%d status updated to removed', [FBand.Id]));
             end;
           end;
