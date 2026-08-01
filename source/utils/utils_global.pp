@@ -797,13 +797,14 @@ begin
   case databaseConnection.Backend of
     dbSqlite:
       begin
-        //aConnector.ConnectionDefName := databaseConnection.Name;
         aConnector.Params.Clear;
         aConnector.ConnectorType := 'SQLite3';
         aConnector.DatabaseName := databaseConnection.Database;
-        aConnector.Params.Add('StringFormat=' + sqliteStringFormats[Ord(databaseConnection.StringFormat)]);
-        aConnector.Params.Add('OpenMode=' + sqliteOpenModes[Ord(databaseConnection.OpenMode)]);
-        aConnector.Params.Add('GUIDFormat=' + sqliteGUIDFormats[Ord(databaseConnection.GUIDFormat)]);
+        //aConnector.Params.Add('StringFormat=' + sqliteStringFormats[Ord(databaseConnection.StringFormat)]);
+        //aConnector.Params.Add('OpenMode=' + sqliteOpenModes[Ord(databaseConnection.OpenMode)]);
+        //aConnector.Params.Add('GUIDFormat=' + sqliteGUIDFormats[Ord(databaseConnection.GUIDFormat)]);
+        aConnector.Params.Add('JournalMode=WAL');
+        aConnector.Params.Add('ForeignKeys=True');
         {$IFDEF DEBUG}
         aConnector.Params.Add('LockingMode=Normal');
         aConnector.Params.Add('Synchronous=Full');
@@ -814,18 +815,41 @@ begin
       end;
     dbFirebird:
       begin
-        //aConnector.ConnectionDefName := databaseConnection.Name;
         aConnector.Params.Clear;
         aConnector.ConnectorType := 'Firebird';
         aConnector.DatabaseName := databaseConnection.Database;
         aConnector.HostName := databaseConnection.Server;
         aConnector.UserName := databaseConnection.UserName;
         aConnector.Password := databaseConnection.Password;
-        aConnector.Params.Add('Protocol=' + fbProtocols[Ord(databaseConnection.Protocol)]);
+        //aConnector.Params.Add('Protocol=' + fbProtocols[Ord(databaseConnection.Protocol)]);
         aConnector.Params.Add('Port=' + IntToStr(databaseConnection.Port));
-        aConnector.Params.Add('CharacterSet=' + databaseConnection.CharacterSet);
-        aConnector.Params.Add('OpenMode=' + fbOpenModes[Ord(databaseConnection.OpenMode)]);
-        aConnector.Params.Add('PageSize=' + IntToStr(databaseConnection.PageSize));
+        aConnector.Params.Add('CharSet=' + databaseConnection.CharacterSet);
+        //aConnector.Params.Add('OpenMode=' + fbOpenModes[Ord(databaseConnection.OpenMode)]);
+        //aConnector.Params.Add('PageSize=' + IntToStr(databaseConnection.PageSize));
+      end;
+    dbPostgre:
+      begin
+        aConnector.Params.Clear;
+        aConnector.ConnectorType := 'PostgreSQL';
+        aConnector.DatabaseName := databaseConnection.Database;
+        aConnector.HostName := databaseConnection.Server;
+        aConnector.UserName := databaseConnection.UserName;
+        aConnector.Password := databaseConnection.Password;
+        aConnector.Params.Add('SSLMode=disable');
+        aConnector.Params.Add('Port=' + IntToStr(databaseConnection.Port));
+        aConnector.Params.Add('ApplicationName=Xolmis');
+      end;
+    dbMaria:
+      begin
+        aConnector.Params.Clear;
+        aConnector.ConnectorType := 'Firebird';
+        aConnector.DatabaseName := databaseConnection.Database;
+        aConnector.HostName := databaseConnection.Server;
+        aConnector.UserName := databaseConnection.UserName;
+        aConnector.Password := databaseConnection.Password;
+        aConnector.Params.Add('UseSSL=False');
+        aConnector.Params.Add('Port=' + IntToStr(databaseConnection.Port));
+        aConnector.Params.Add('CharSet=' + databaseConnection.CharacterSet);
       end;
   end;
   //aConnector.CheckConnectionDef;
