@@ -466,7 +466,7 @@ begin
     for i := 0 to aLista.Count - 1 do
     begin
       aAuthors[i].Citation := Trim(aLista[i]);
-      with TSQLQuery.Create(DMM.sqlCon) do
+      with TSQLQuery.Create(nil) do
       try
         Database := DMM.sqlCon;
         SQL.Add('SELECT person_id FROM people WHERE abbreviation = :abrev');

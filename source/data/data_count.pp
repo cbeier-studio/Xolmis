@@ -61,7 +61,7 @@ var
 begin
   Result := 0;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   try
     case aModifier.Status of
       rsAll:
@@ -109,7 +109,7 @@ var
   t, f, m, ms: Integer;
   sFound, sReg, sMarked, sFilter: String;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   try
     case aModifier.Status of
       rsAll:

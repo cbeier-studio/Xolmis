@@ -1015,7 +1015,7 @@ var
 begin
   if FSurveyId > 0 then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     try
       Qry.Database := DMM.sqlCon;
       Qry.Transaction := DMM.sqlTrans;
@@ -1208,7 +1208,7 @@ procedure TedtCapture.GetCameras;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;

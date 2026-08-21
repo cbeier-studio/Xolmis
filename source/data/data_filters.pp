@@ -151,7 +151,7 @@ var
   xNode, orderParent, familyParent: PVirtualNode;
 begin
   // Set database query for taxon hierarchy
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   Qry.Database := DMM.sqlCon;
   with Qry, SQL do
   try
@@ -314,7 +314,7 @@ var
   xNode, monthParent, yearParent: PVirtualNode;
 begin
   // Set database query for date hierarchy
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   Q := Qry.SQL;
   try
     Qry.DataBase := DMM.sqlCon;
@@ -496,7 +496,7 @@ var
   xNode, stateParent, countryParent: PVirtualNode;
 begin
   // Set database query for site hierarchy
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;

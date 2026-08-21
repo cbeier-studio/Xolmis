@@ -394,7 +394,7 @@ begin
   Application.ProcessMessages;
 
   LogEvent(leaStart, 'Recreate image thumbnails');
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;

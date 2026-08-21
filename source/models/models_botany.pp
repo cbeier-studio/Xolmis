@@ -96,7 +96,7 @@ var
 begin
   Result := False;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;

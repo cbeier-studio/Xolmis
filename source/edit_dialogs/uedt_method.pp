@@ -173,7 +173,7 @@ procedure TedtMethod.GetCategories;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;

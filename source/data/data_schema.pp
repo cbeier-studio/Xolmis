@@ -1441,7 +1441,7 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   // >> Get camera names
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
@@ -3146,7 +3146,7 @@ begin
   T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   // >> Get categories
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;

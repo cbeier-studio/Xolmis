@@ -96,7 +96,7 @@ begin
     Tabela := TABLE_NAMES[FTableType];
   Tipo := VerificationTypes[cbStatus.ItemIndex];
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;

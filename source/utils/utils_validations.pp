@@ -1132,7 +1132,7 @@ var
   Qry: TSQLQuery;
 begin
   Result := False;
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -1238,7 +1238,7 @@ var
   Qry: TSQLQuery;
 begin
   Result := False;
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -1300,7 +1300,7 @@ begin
   if (Trim(aNameValue) = '') then
     Exit;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -1440,7 +1440,7 @@ var
   Qry: TSQLQuery;
 begin
   Result := True;
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -1470,7 +1470,7 @@ begin
   if aDataset.FieldByName(aQualifier).AsString <> 'sp.' then
     Exit;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;

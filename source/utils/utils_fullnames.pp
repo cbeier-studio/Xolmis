@@ -101,7 +101,7 @@ begin
 
   if aBand > 0 then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       Database := DMM.sqlCon;
@@ -161,7 +161,7 @@ begin
   DecodeDate(aDate, a, m, d);
   if aBand > 0 then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       Database := DMM.sqlCon;
