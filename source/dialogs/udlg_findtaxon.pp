@@ -88,7 +88,7 @@ var
 implementation
 
 uses
-  utils_global, data_getvalue, data_consts, utils_conversions, utils_themes, uDarkStyleParams;
+  utils_locale, utils_global, data_getvalue, data_consts, utils_conversions, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -239,15 +239,7 @@ begin
     ApplyDarkMode;
 
   lblName.DataField := COL_SCIENTIFIC_NAME;
-  Verna := xSettings.VernacularNamesLanguage;
-  case Verna of
-    0:
-      lblVernacular.DataField := COL_PORTUGUESE_NAME;
-    1:
-      lblVernacular.DataField := COL_ENGLISH_NAME;
-    2:
-      lblVernacular.DataField := COL_SPANISH_NAME;
-  end;
+  lblVernacular.DataField := COL_VERNACULAR_NAME;
   oOrder := COL_SCIENTIFIC_NAME;
   oDirection := 'ASC';
   EP.SetFocus;
@@ -332,6 +324,11 @@ begin
       LogDebug('Search: ' + aValor);
       {$ENDIF}
       SetSelect(SQL, fvReset, Criterio);
+      case xSettings.VernacularNamesLanguage of
+        0: ParamByName('LANG').AsInteger := GetLanguageKey(rsPortuguese);
+        1: ParamByName('LANG').AsInteger := GetLanguageKey(rsEnglish);
+        2: ParamByName('LANG').AsInteger := GetLanguageKey(rsSpanish);
+      end;
       case Criterio of
         crLike:
           begin
@@ -422,7 +419,7 @@ begin
   else
   if (tfMain in aFilter) then
   begin
-    aSQL.Add('AND (zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+    aSQL.Add('AND (t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
     aSQL.Add('WHERE taxon_ranks.main_rank = 1)) ');
   end
   else
@@ -436,32 +433,32 @@ begin
         // tfClasses: Add('AND ((NIV_CODIGO = 3) or (NIV_CODIGO = 14)) ');
         tfOrders:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation LIKE ''%ord.'')) ');
         end;
         tfFamilies:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation LIKE ''%fam.'')) ');
         end;
         tfTribes:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation LIKE ''%tr.'')) ');
         end;
         tfGenera:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation LIKE ''%g.'')) ');
         end;
         tfSpecies:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE (taxon_ranks.abbreviation = ''supersp.'') OR (taxon_ranks.abbreviation = ''sp.''))) ');
         end;
         tfSubspecies:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE (taxon_ranks.abbreviation = ''ssp.'')');
           //if not (tfSubspeciesGroups in aFilter) then
           //  aSQL.Add('OR (taxon_ranks.abbreviation = ''grp. (mono)'')');
@@ -469,37 +466,37 @@ begin
         end;
         tfSubspeciesGroups:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation LIKE ''grp. %'')) ');
         end;
         tfSpuhs:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation = ''spuh'')) ');
         end;
         tfSlashes:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation = ''slash'')) ');
         end;
         tfForms:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation = ''form'')) ');
         end;
         tfDomestics:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation = ''domest.'')) ');
         end;
         tfHybrids:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation = ''hybrid'')) ');
         end;
         tfIntergrades:
         begin
-          aSQL.Add(AndOr + '(zoo_taxa.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
+          aSQL.Add(AndOr + '(t.rank_id IN (SELECT taxon_ranks.rank_id FROM taxon_ranks ');
           aSQL.Add('WHERE taxon_ranks.abbreviation = ''intergrade'')) ');
         end;
       end;
@@ -518,9 +515,9 @@ procedure TdlgFindTaxon.pContentClick(Sender: TObject);
 begin
   if (qFind.RecordCount > 0) then
   begin
-    if (UsarValido) and (qFind.FieldByName(COL_VALID_ID).AsInteger > 0) then
+    if (UsarValido) then
     begin
-      Codigo := qFind.FieldByName(COL_VALID_ID).AsInteger;
+      Codigo := qFind.FieldByName(COL_TAXON_ID).AsInteger;
       Nome := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, Codigo);
     end
     else
@@ -545,47 +542,74 @@ begin
   with aSQL do
   begin
     Clear;
-    Add('SELECT taxon_id, scientific_name, formatted_name, valid_id, english_name, portuguese_name, spanish_name');
-    Add('FROM zoo_taxa ');
+
+    // Valid taxa
+    Add('SELECT t.taxon_id AS taxon_id, t.scientific_name AS scientific_name, t.formatted_name AS formatted_name,');
+    Add('  v.vernacular_name AS vernacular_name');
+    Add('FROM zoo_taxa AS t');
+    Add('LEFT JOIN zoo_vernacular v ON v.taxon_id = t.taxon_id');
+    Add('  AND v.language_id = :LANG');
+    Add('  AND v.preferred = 1');
+    Add('  AND v.active_status = 1');
+
+    // Filters
     case aFilter of
-      fvNone:
-        ; // do nothing
+      fvNone: ;
       fvReset:
         begin
-          Add('WHERE ((scientific_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (english_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (ioc_english_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (portuguese_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (spanish_name ' + Operador + ' :VALPARAM) ');
-          Add('OR (other_portuguese_names ' + Operador + ' :VALPARAM) ');
-          Add('OR (ebird_code ' + Operador + ' :VALPARAM) ');
-          Add('OR (quick_code ' + Operador + ' :VALPARAM)) ');
+          Add('WHERE ((t.scientific_name ' + Operador + ' :VALPARAM)');
+          Add('   OR (t.ebird_code ' + Operador + ' :VALPARAM)');
+          Add('   OR (t.quick_code ' + Operador + ' :VALPARAM))');
 
           if not (tfAll in FiltroTaxon) then
             GetRankFilter(aSQL, FiltroTaxon);
-          Add('AND (active_status = 1)');
+
+          Add('AND (t.active_status = 1)');
         end;
       fvAll:
-        Add('WHERE (active_status = 1)');
+        Add('WHERE (t.active_status = 1)');
       fvMarked:
-        Add('WHERE (marked_status = 1) AND (active_status = 1)');
+        Add('WHERE (t.marked_status = 1) AND (t.active_status = 1)');
       fvDeleted:
-        Add('WHERE (active_status = 0)');
+        Add('WHERE (t.active_status = 0)');
     end;
 
-    //case xSettings.Taxonomy of
-    //  0: Add('AND (clements_taxonomy = 1)');
-    //  1: Add('AND (ioc_taxonomy = 1)');
-    //  2: Add('AND (cbro_taxonomy = 1)');
-    //end;
-    if not xSettings.ShowSynonyms then
-      Add('AND ((valid_id = 0) OR (valid_id ISNULL))');
-
-    if Trim(oOrder) <> EmptyStr then
+    // Synonyms
+    if xSettings.ShowSynonyms then
     begin
-      if oDirection <> EmptyStr then
+      Add('UNION');
+
+      Add('SELECT s.taxon_id AS taxon_id, s.scientific_name AS scientific_name, s.formatted_name AS formatted_name,');
+      Add('  v2.vernacular_name AS vernacular_name');
+      Add('FROM zoo_synonyms AS s');
+      Add('LEFT JOIN zoo_vernacular v2 ON v2.taxon_id = s.taxon_id');
+      Add('  AND v2.language_id = :LANG');
+      Add('  AND v2.preferred = 1');
+      Add('  AND v2.active_status = 1');
+
+      case aFilter of
+        fvNone: ;
+        fvReset:
+          begin
+            Add('WHERE (s.scientific_name ' + Operador + ' :VALPARAM)');
+            Add('AND (s.active_status = 1)');
+          end;
+        fvAll:
+          Add('WHERE (s.active_status = 1)');
+        fvMarked:
+          Add('WHERE (s.marked_status = 1) AND (s.active_status = 1)');
+        fvDeleted:
+          Add('WHERE (s.active_status = 0)');
+      end;
+    end;
+
+    // Ordering
+    if Trim(oOrder) <> '' then
+    begin
+      if oDirection <> '' then
         AD := oDirection;
-      Add('ORDER BY ' + oOrder + {' collate pt_BR ' +} ' ' + AD);
+
+      Add('ORDER BY ' + oOrder + ' ' + AD);
     end;
   end;
 end;

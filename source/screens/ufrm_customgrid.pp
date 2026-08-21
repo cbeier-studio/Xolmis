@@ -6953,7 +6953,7 @@ begin
             if not DMM.sqlTrans.Active then
               DMM.sqlTrans.StartTransaction;
             try
-              Qry := TSQLQuery.Create(DMM.sqlCon);
+              Qry := TSQLQuery.Create(nil);
               with Qry, SQL do
               try
                 SQLConnection := DMM.sqlCon;
@@ -6989,7 +6989,7 @@ begin
             if not DMM.sqlTrans.Active then
               DMM.sqlTrans.StartTransaction;
             try
-              Qry := TSQLQuery.Create(DMM.sqlCon);
+              Qry := TSQLQuery.Create(nil);
               with Qry, SQL do
               try
                 SQLConnection := DMM.sqlCon;
@@ -7029,7 +7029,7 @@ begin
             if not DMM.sqlTrans.Active then
               DMM.sqlTrans.StartTransaction;
             try
-              Qry := TSQLQuery.Create(DMM.sqlCon);
+              Qry := TSQLQuery.Create(nil);
               with Qry, SQL do
               try
                 SQLConnection := DMM.sqlCon;
@@ -7079,7 +7079,7 @@ begin
             if not DMM.sqlTrans.Active then
               DMM.sqlTrans.StartTransaction;
             try
-              Qry := TSQLQuery.Create(DMM.sqlCon);
+              Qry := TSQLQuery.Create(nil);
               with Qry, SQL do
               try
                 SQLConnection := DMM.sqlCon;

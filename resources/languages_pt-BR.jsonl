@@ -1,0 +1,4 @@
+{ "language_id" : 4, "macrolanguage_code" : "pt", "country_code" : "BR", "variation_code" : null, "language_name" : "Português Brasileiro", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "language_id" : 1, "macrolanguage_code" : "en", "country_code" : null, "variation_code" : null, "language_name" : "Inglês", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "language_id" : 2, "macrolanguage_code" : "pt", "country_code" : null, "variation_code" : null, "language_name" : "Português", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "language_id" : 3, "macrolanguage_code" : "es", "country_code" : null, "variation_code" : null, "language_name" : "Espanhol", "insert_date" : null, "update_date" : null, "active_status" : true }

@@ -1,0 +1,249 @@
+{ "country_id" : 3, "country_code" : "AF", "country_name" : "Afghanistan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 6, "country_code" : "AL", "country_name" : "Albania", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 62, "country_code" : "DZ", "country_name" : "Algeria", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 11, "country_code" : "AS", "country_name" : "American Samoa", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 1, "country_code" : "AD", "country_name" : "Andorra", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 8, "country_code" : "AO", "country_name" : "Angola", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 5, "country_code" : "AI", "country_name" : "Anguilla", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 9, "country_code" : "AQ", "country_name" : "Antarctica", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 4, "country_code" : "AG", "country_name" : "Antigua and Barbuda", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 10, "country_code" : "AR", "country_name" : "Argentina", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 7, "country_code" : "AM", "country_name" : "Armenia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 14, "country_code" : "AW", "country_name" : "Aruba", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 13, "country_code" : "AU", "country_name" : "Australia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 12, "country_code" : "AT", "country_name" : "Austria", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 16, "country_code" : "AZ", "country_name" : "Azerbaijan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 32, "country_code" : "BS", "country_name" : "Bahamas", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 23, "country_code" : "BH", "country_name" : "Bahrain", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 19, "country_code" : "BD", "country_name" : "Bangladesh", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 18, "country_code" : "BB", "country_name" : "Barbados", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 36, "country_code" : "BY", "country_name" : "Belarus", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 20, "country_code" : "BE", "country_name" : "Belgium", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 37, "country_code" : "BZ", "country_name" : "Belize", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 25, "country_code" : "BJ", "country_name" : "Benin", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 27, "country_code" : "BM", "country_name" : "Bermuda", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 33, "country_code" : "BT", "country_name" : "Bhutan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 29, "country_code" : "BO", "country_name" : "Bolivia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 30, "country_code" : "BQ", "country_name" : "Bonaire, Sint Eustatius and Saba", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 17, "country_code" : "BA", "country_name" : "Bosnia and Herzegovina", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 35, "country_code" : "BW", "country_name" : "Botswana", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 34, "country_code" : "BV", "country_name" : "Bouvet Island", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 31, "country_code" : "BR", "country_name" : "Brazil", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 106, "country_code" : "IO", "country_name" : "British Indian Ocean Territory", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 28, "country_code" : "BN", "country_name" : "Brunei Darussalam", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 22, "country_code" : "BG", "country_name" : "Bulgaria", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 21, "country_code" : "BF", "country_name" : "Burkina Faso", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 24, "country_code" : "BI", "country_name" : "Burundi", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 52, "country_code" : "CV", "country_name" : "Cabo Verde", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 117, "country_code" : "KH", "country_name" : "Cambodia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 47, "country_code" : "CM", "country_name" : "Cameroon", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 38, "country_code" : "CA", "country_name" : "Canada", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 124, "country_code" : "KY", "country_name" : "Cayman Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 41, "country_code" : "CF", "country_name" : "Central African Republic", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 215, "country_code" : "TD", "country_name" : "Chad", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 46, "country_code" : "CL", "country_name" : "Chile", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 48, "country_code" : "CN", "country_name" : "China", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 54, "country_code" : "CX", "country_name" : "Christmas Island", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 39, "country_code" : "CC", "country_name" : "Cocos (Keeling) Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 49, "country_code" : "CO", "country_name" : "Colombia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 119, "country_code" : "KM", "country_name" : "Comoros", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 42, "country_code" : "CG", "country_name" : "Congo", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 45, "country_code" : "CK", "country_name" : "Cook Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 50, "country_code" : "CR", "country_name" : "Costa Rica", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 98, "country_code" : "HR", "country_name" : "Croatia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 51, "country_code" : "CU", "country_name" : "Cuba", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 53, "country_code" : "CW", "country_name" : "Curaçao", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 55, "country_code" : "CY", "country_name" : "Cyprus", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 56, "country_code" : "CZ", "country_name" : "Czechia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 40, "country_code" : "CD", "country_name" : "Democratic Republic of the Congo", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 59, "country_code" : "DK", "country_name" : "Denmark", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 58, "country_code" : "DJ", "country_name" : "Djibouti", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 60, "country_code" : "DM", "country_name" : "Dominica", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 61, "country_code" : "DO", "country_name" : "Dominican Republic", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 63, "country_code" : "EC", "country_name" : "Ecuador", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 65, "country_code" : "EG", "country_name" : "Egypt", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 210, "country_code" : "SV", "country_name" : "El Salvador", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 88, "country_code" : "GQ", "country_name" : "Equatorial Guinea", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 67, "country_code" : "ER", "country_name" : "Eritrea", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 64, "country_code" : "EE", "country_name" : "Estonia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 213, "country_code" : "SZ", "country_name" : "Eswatini", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 69, "country_code" : "ET", "country_name" : "Ethiopia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 72, "country_code" : "FK", "country_name" : "Falkland Islands (Malvinas)", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 74, "country_code" : "FO", "country_name" : "Faroe Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 71, "country_code" : "FJ", "country_name" : "Fiji", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 70, "country_code" : "FI", "country_name" : "Finland", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 75, "country_code" : "FR", "country_name" : "France", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 80, "country_code" : "GF", "country_name" : "French Guiana", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 175, "country_code" : "PF", "country_name" : "French Polynesia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 216, "country_code" : "TF", "country_name" : "French Southern Territories", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 76, "country_code" : "GA", "country_name" : "Gabon", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 85, "country_code" : "GM", "country_name" : "Gambia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 79, "country_code" : "GE", "country_name" : "Georgia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 57, "country_code" : "DE", "country_name" : "Germany", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 82, "country_code" : "GH", "country_name" : "Ghana", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 83, "country_code" : "GI", "country_name" : "Gibraltar", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 89, "country_code" : "GR", "country_name" : "Greece", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 84, "country_code" : "GL", "country_name" : "Greenland", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 78, "country_code" : "GD", "country_name" : "Grenada", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 87, "country_code" : "GP", "country_name" : "Guadeloupe", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 92, "country_code" : "GU", "country_name" : "Guam", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 91, "country_code" : "GT", "country_name" : "Guatemala", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 81, "country_code" : "GG", "country_name" : "Guernsey", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 86, "country_code" : "GN", "country_name" : "Guinea", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 93, "country_code" : "GW", "country_name" : "Guinea-Bissau", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 94, "country_code" : "GY", "country_name" : "Guyana", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 99, "country_code" : "HT", "country_name" : "Haiti", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 96, "country_code" : "HM", "country_name" : "Heard Island and McDonald Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 97, "country_code" : "HN", "country_name" : "Honduras", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 95, "country_code" : "HK", "country_name" : "Hong Kong", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 100, "country_code" : "HU", "country_name" : "Hungary", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 109, "country_code" : "IS", "country_name" : "Iceland", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 105, "country_code" : "IN", "country_name" : "India", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 101, "country_code" : "ID", "country_name" : "Indonesia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 108, "country_code" : "IR", "country_name" : "Iran", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 107, "country_code" : "IQ", "country_name" : "Iraq", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 102, "country_code" : "IE", "country_name" : "Ireland", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 104, "country_code" : "IM", "country_name" : "Isle of Man", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 103, "country_code" : "IL", "country_name" : "Israel", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 110, "country_code" : "IT", "country_name" : "Italy", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 44, "country_code" : "CI", "country_name" : "Ivory Coast", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 112, "country_code" : "JM", "country_name" : "Jamaica", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 114, "country_code" : "JP", "country_name" : "Japan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 111, "country_code" : "JE", "country_name" : "Jersey", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 113, "country_code" : "JO", "country_name" : "Jordan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 125, "country_code" : "KZ", "country_name" : "Kazakhstan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 115, "country_code" : "KE", "country_name" : "Kenya", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 118, "country_code" : "KI", "country_name" : "Kiribati", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 123, "country_code" : "KW", "country_name" : "Kuwait", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 116, "country_code" : "KG", "country_name" : "Kyrgyzstan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 126, "country_code" : "LA", "country_name" : "Laos", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 135, "country_code" : "LV", "country_name" : "Latvia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 127, "country_code" : "LB", "country_name" : "Lebanon", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 132, "country_code" : "LS", "country_name" : "Lesotho", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 131, "country_code" : "LR", "country_name" : "Liberia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 136, "country_code" : "LY", "country_name" : "Libya", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 129, "country_code" : "LI", "country_name" : "Liechtenstein", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 133, "country_code" : "LT", "country_name" : "Lithuania", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 134, "country_code" : "LU", "country_name" : "Luxembourg", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 148, "country_code" : "MO", "country_name" : "Macao", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 142, "country_code" : "MG", "country_name" : "Madagascar", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 156, "country_code" : "MW", "country_name" : "Malawi", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 158, "country_code" : "MY", "country_name" : "Malaysia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 155, "country_code" : "MV", "country_name" : "Maldives", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 145, "country_code" : "ML", "country_name" : "Mali", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 153, "country_code" : "MT", "country_name" : "Malta", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 143, "country_code" : "MH", "country_name" : "Marshall Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 150, "country_code" : "MQ", "country_name" : "Martinique", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 151, "country_code" : "MR", "country_name" : "Mauritania", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 154, "country_code" : "MU", "country_name" : "Mauritius", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 246, "country_code" : "YT", "country_name" : "Mayotte", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 157, "country_code" : "MX", "country_name" : "Mexico", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 73, "country_code" : "FM", "country_name" : "Micronesia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 139, "country_code" : "MD", "country_name" : "Moldova", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 138, "country_code" : "MC", "country_name" : "Monaco", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 147, "country_code" : "MN", "country_name" : "Mongolia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 140, "country_code" : "ME", "country_name" : "Montenegro", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 152, "country_code" : "MS", "country_name" : "Montserrat", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 137, "country_code" : "MA", "country_name" : "Morocco", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 159, "country_code" : "MZ", "country_name" : "Mozambique", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 146, "country_code" : "MM", "country_name" : "Myanmar", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 160, "country_code" : "NA", "country_name" : "Namibia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 169, "country_code" : "NR", "country_name" : "Nauru", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 168, "country_code" : "NP", "country_name" : "Nepal", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 166, "country_code" : "NL", "country_name" : "Netherlands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 161, "country_code" : "NC", "country_name" : "New Caledonia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 171, "country_code" : "NZ", "country_name" : "New Zealand", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 165, "country_code" : "NI", "country_name" : "Nicaragua", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 162, "country_code" : "NE", "country_name" : "Niger", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 164, "country_code" : "NG", "country_name" : "Nigeria", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 170, "country_code" : "NU", "country_name" : "Niue", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 163, "country_code" : "NF", "country_name" : "Norfolk Island", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 121, "country_code" : "KP", "country_name" : "North Korea", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 144, "country_code" : "MK", "country_name" : "North Macedonia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 149, "country_code" : "MP", "country_name" : "Northern Mariana Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 167, "country_code" : "NO", "country_name" : "Norway", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 172, "country_code" : "OM", "country_name" : "Oman", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 178, "country_code" : "PK", "country_name" : "Pakistan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 185, "country_code" : "PW", "country_name" : "Palau", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 183, "country_code" : "PS", "country_name" : "Palestine", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 173, "country_code" : "PA", "country_name" : "Panama", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 176, "country_code" : "PG", "country_name" : "Papua New Guinea", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 186, "country_code" : "PY", "country_name" : "Paraguay", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 174, "country_code" : "PE", "country_name" : "Peru", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 177, "country_code" : "PH", "country_name" : "Philippines", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 181, "country_code" : "PN", "country_name" : "Pitcairn", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 179, "country_code" : "PL", "country_name" : "Poland", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 184, "country_code" : "PT", "country_name" : "Portugal", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 182, "country_code" : "PR", "country_name" : "Puerto Rico", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 187, "country_code" : "QA", "country_name" : "Qatar", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 189, "country_code" : "RO", "country_name" : "Romania", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 191, "country_code" : "RU", "country_name" : "Russia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 192, "country_code" : "RW", "country_name" : "Rwanda", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 188, "country_code" : "RE", "country_name" : "Réunion", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 26, "country_code" : "BL", "country_name" : "Saint Barthélemy", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 199, "country_code" : "SH", "country_name" : "Saint Helena, Ascension and Tristan da Cunha", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 120, "country_code" : "KN", "country_name" : "Saint Kitts and Nevis", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 128, "country_code" : "LC", "country_name" : "Saint Lucia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 141, "country_code" : "MF", "country_name" : "Saint Martin (French part)", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 180, "country_code" : "PM", "country_name" : "Saint Pierre and Miquelon", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 237, "country_code" : "VC", "country_name" : "Saint Vincent and the Grenadines", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 244, "country_code" : "WS", "country_name" : "Samoa", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 204, "country_code" : "SM", "country_name" : "San Marino", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 209, "country_code" : "ST", "country_name" : "Sao Tome and Principe", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 193, "country_code" : "SA", "country_name" : "Saudi Arabia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 205, "country_code" : "SN", "country_name" : "Senegal", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 190, "country_code" : "RS", "country_name" : "Serbia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 195, "country_code" : "SC", "country_name" : "Seychelles", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 203, "country_code" : "SL", "country_name" : "Sierra Leone", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 198, "country_code" : "SG", "country_name" : "Singapore", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 211, "country_code" : "SX", "country_name" : "Sint Maarten (Dutch part)", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 202, "country_code" : "SK", "country_name" : "Slovakia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 200, "country_code" : "SI", "country_name" : "Slovenia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 194, "country_code" : "SB", "country_name" : "Solomon Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 206, "country_code" : "SO", "country_name" : "Somalia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 247, "country_code" : "ZA", "country_name" : "South Africa", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 90, "country_code" : "GS", "country_name" : "South Georgia and the South Sandwich Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 122, "country_code" : "KR", "country_name" : "South Korea", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 208, "country_code" : "SS", "country_name" : "South Sudan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 68, "country_code" : "ES", "country_name" : "Spain", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 130, "country_code" : "LK", "country_name" : "Sri Lanka", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 196, "country_code" : "SD", "country_name" : "Sudan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 207, "country_code" : "SR", "country_name" : "Suriname", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 201, "country_code" : "SJ", "country_name" : "Svalbard and Jan Mayen", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 197, "country_code" : "SE", "country_name" : "Sweden", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 43, "country_code" : "CH", "country_name" : "Switzerland", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 212, "country_code" : "SY", "country_name" : "Syria", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 228, "country_code" : "TW", "country_name" : "Taiwan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 219, "country_code" : "TJ", "country_name" : "Tajikistan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 229, "country_code" : "TZ", "country_name" : "Tanzania", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 218, "country_code" : "TH", "country_name" : "Thailand", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 221, "country_code" : "TL", "country_name" : "Timor-Leste", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 217, "country_code" : "TG", "country_name" : "Togo", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 220, "country_code" : "TK", "country_name" : "Tokelau", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 224, "country_code" : "TO", "country_name" : "Tonga", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 226, "country_code" : "TT", "country_name" : "Trinidad and Tobago", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 223, "country_code" : "TN", "country_name" : "Tunisia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 225, "country_code" : "TR", "country_name" : "Turkey", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 222, "country_code" : "TM", "country_name" : "Turkmenistan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 214, "country_code" : "TC", "country_name" : "Turks and Caicos Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 227, "country_code" : "TV", "country_name" : "Tuvalu", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 231, "country_code" : "UG", "country_name" : "Uganda", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 230, "country_code" : "UA", "country_name" : "Ukraine", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 2, "country_code" : "AE", "country_name" : "United Arab Emirates", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 77, "country_code" : "GB", "country_name" : "United Kingdom of Great Britain and Northern Ireland", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 232, "country_code" : "UM", "country_name" : "United States Minor Outlying Islands", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 233, "country_code" : "US", "country_name" : "United States of America", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 234, "country_code" : "UY", "country_name" : "Uruguay", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 235, "country_code" : "UZ", "country_name" : "Uzbekistan", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 242, "country_code" : "VU", "country_name" : "Vanuatu", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 236, "country_code" : "VA", "country_name" : "Vatican City State", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 238, "country_code" : "VE", "country_name" : "Venezuela", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 241, "country_code" : "VN", "country_name" : "Vietnam", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 239, "country_code" : "VG", "country_name" : "Virgin Islands (British)", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 240, "country_code" : "VI", "country_name" : "Virgin Islands (U.S.)", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 243, "country_code" : "WF", "country_name" : "Wallis and Futuna", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 66, "country_code" : "EH", "country_name" : "Western Sahara", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 245, "country_code" : "YE", "country_name" : "Yemen", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 248, "country_code" : "ZM", "country_name" : "Zambia", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 249, "country_code" : "ZW", "country_name" : "Zimbabwe", "insert_date" : null, "update_date" : null, "active_status" : true }
+{ "country_id" : 15, "country_code" : "AX", "country_name" : "Åland Islands", "insert_date" : null, "update_date" : null, "active_status" : true }

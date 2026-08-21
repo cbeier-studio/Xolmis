@@ -16,6 +16,8 @@ type
   { TfrmTaxa }
 
   TfrmTaxa = class(TForm)
+    dsVernacular: TDataSource;
+    gridVernacular: TDBGrid;
     lblEmptyQuery: TLabel;
     pEmptyQueryOptions: TBCPanel;
     sbEmptyClearAll: TSpeedButton;
@@ -31,9 +33,6 @@ type
     chartYear: TChart;
     monthlySeries: TBarSeries;
     chartBGRA: TChartGUIConnectorBGRA;
-    ckCBRO: TDBCheckBox;
-    ckClements: TDBCheckBox;
-    ckIOC: TDBCheckBox;
     dsSynonyms: TDataSource;
     dsChilds: TDataSource;
     eSearch: TEdit;
@@ -58,11 +57,7 @@ type
     imgIUCN: TImageList;
     iSearch: TImageList;
     iSearchDark: TImageList;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
     Label5: TLabel;
-    lblValidName: TLabel;
     pConservation: TPanel;
     pConstrainedBox: TPanel;
     pContent: TPanel;
@@ -75,7 +70,6 @@ type
     pScientificName: TPanel;
     pSideToolbar: TPanel;
     pTaxonInfo: TPanel;
-    pTaxonomies: TPanel;
     pToolbar: TBCPanel;
     pSearch: TBCPanel;
     pTop: TPanel;
@@ -101,14 +95,9 @@ type
     tvHierarchy: TTreeView;
     txtAuthorship: TDBText;
     txtDistribution: TDBText;
-    txtDistributionIOC: TDBText;
-    txtEnglishName: TDBText;
     txtExtinctionYear: TDBText;
-    txtPortugueseName: TDBText;
     txtRank: TDBText;
     txtScientificName: TDBText;
-    txtSpanishName: TDBText;
-    txtValidName: TDBText;
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure dsLinkStateChange(Sender: TObject);
     procedure eSearchChange(Sender: TObject);
@@ -152,7 +141,6 @@ type
     procedure SplitRightMoved(Sender: TObject);
     procedure TimerDataTimer(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
-    procedure txtValidNameClick(Sender: TObject);
     procedure txtValidNameMouseEnter(Sender: TObject);
     procedure txtValidNameMouseLeave(Sender: TObject);
   private
@@ -171,6 +159,7 @@ type
     procedure LoadNestFateChart;
     procedure LoadRecordsMap;
     procedure LoadYearlyChart;
+    function OccurrInBrazil(aTaxonId: Integer): Boolean;
     function Search(AValue: String): Boolean;
     procedure SetSearchString(aValue: String);
     procedure UpdateButtons;
@@ -200,26 +189,26 @@ begin
   sbEmptyGotoSearch.Images := iButtonsDark;
   sbEmptyClearAll.Images := iButtonsDark;
 
-  pEmptyQueryOptions.Background.Color := clSolidBGSecondaryDark;
-  pEmptyQueryOptions.Border.Color := clSystemSolidNeutralFGDark;
+  pEmptyQueryOptions.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pEmptyQueryOptions.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pEmptyQueryOptions.Color := pEmptyQuery.Color;
 
-  pSearch.Background.Color := clCardBGDefaultDark;
-  pSearch.Border.Color := clSolidBGSecondaryDark;
+  pSearch.Background.Color := ActiveTheme.Background.ControlDefault;
+  pSearch.Border.Color := ActiveTheme.Border.Default; // ActiveTheme.Background.SolidSecondary;
   pSearch.ParentBackground := True;
   eSearch.Color := pSearch.Background.Color;
-  sbClearSearch.StateHover.Color := clSolidBGSecondaryDark;
-  sbClearSearch.StateActive.Color := clSolidBGTertiaryDark;
+  sbClearSearch.StateHover.Color := ActiveTheme.Background.SolidSecondary;
+  sbClearSearch.StateActive.Color := ActiveTheme.Background.SolidTertiary;
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
-  sbOptionsSearch.StateHover.Color := clSolidBGSecondaryDark;
-  sbOptionsSearch.StateActive.Color := clSolidBGTertiaryDark;
+  sbOptionsSearch.StateHover.Color := ActiveTheme.Background.SolidSecondary;
+  sbOptionsSearch.StateActive.Color := ActiveTheme.Background.SolidTertiary;
   sbOptionsSearch.StateNormal.Color := pSearch.Background.Color;
   iconSearch.Images := iSearchDark;
   sbClearSearch.Images := iSearchDark;
   sbOptionsSearch.Images := iSearchDark;
 
-  pToolbar.Background.Color := clCardBGDefaultDark;
-  pToolbar.Border.Color := clCardBGSecondaryDark;
+  pToolbar.Background.Color := ActiveTheme.Background.CardDefault;
+  pToolbar.Border.Color := ActiveTheme.Border.Default; // clCardBGSecondaryDark;
   sbShareRecords.Images := iButtonsDark;
   sbPrint.Images := iButtonsDark;
 
@@ -232,35 +221,34 @@ begin
   sbIUCNRedList.Images := DMM.iWebDark;
   sbGBIF.Images := DMM.iWebDark;
 
-  chartSeasonality.Title.Font.Color := clTextPrimaryDark;
-  chartSeasonality.Legend.Font.Color := clTextPrimaryDark;
-  chartSeasonality.BottomAxis.Title.LabelFont.Color := clTextPrimaryDark;
-  chartSeasonality.BottomAxis.Marks.LabelFont.Color := clTextPrimaryDark;
-  chartSeasonality.LeftAxis.Title.LabelFont.Color := clTextPrimaryDark;
-  chartSeasonality.LeftAxis.Marks.LabelFont.Color := clTextPrimaryDark;
+  chartSeasonality.Title.Font.Color := ActiveTheme.Foreground.TextPrimary;
+  chartSeasonality.Legend.Font.Color := ActiveTheme.Foreground.TextPrimary;
+  chartSeasonality.BottomAxis.Title.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
+  chartSeasonality.BottomAxis.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
+  chartSeasonality.LeftAxis.Title.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
+  chartSeasonality.LeftAxis.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
 
-  chartYear.Title.Font.Color := clTextPrimaryDark;
-  chartYear.Legend.Font.Color := clTextPrimaryDark;
-  chartYear.BottomAxis.Title.LabelFont.Color := clTextPrimaryDark;
-  chartYear.BottomAxis.Marks.LabelFont.Color := clTextPrimaryDark;
-  chartYear.LeftAxis.Title.LabelFont.Color := clTextPrimaryDark;
-  chartYear.LeftAxis.Marks.LabelFont.Color := clTextPrimaryDark;
+  chartYear.Title.Font.Color := ActiveTheme.Foreground.TextPrimary;
+  chartYear.Legend.Font.Color := ActiveTheme.Foreground.TextPrimary;
+  chartYear.BottomAxis.Title.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
+  chartYear.BottomAxis.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
+  chartYear.LeftAxis.Title.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
+  chartYear.LeftAxis.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
 
-  chartNestFate.Title.Font.Color := clTextPrimaryDark;
-  chartNestFate.Legend.Font.Color := clTextPrimaryDark;
-  NestFateSeries.Marks.LabelFont.Color := clTextPrimaryDark;
+  chartNestFate.Title.Font.Color := ActiveTheme.Foreground.TextPrimary;
+  chartNestFate.Legend.Font.Color := ActiveTheme.Foreground.TextPrimary;
+  NestFateSeries.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
 
-  pNestProductivity.Background.Color := clSolidBGSecondaryDark;
-  pNestProductivity.Border.Color := clSystemSolidNeutralFGDark;
+  pNestProductivity.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pNestProductivity.Border.Color := ActiveTheme.Border.Default; // clSystemSolidNeutralFGDark;
 
-  txtScientificName.Font.Color := clVioletFG1Dark;
-  txtValidName.Font.Color := clVioletFG1Dark;
-  lblLinkCaptures.Font.Color := clVioletFG1Dark;
-  lblLinkEggs.Font.Color := clVioletFG1Dark;
-  lblLinkIndividuals.Font.Color := clVioletFG1Dark;
-  lblLinkNests.Font.Color := clVioletFG1Dark;
-  lblLinkSightings.Font.Color := clVioletFG1Dark;
-  lblLinkSpecimens.Font.Color := clVioletFG1Dark;
+  txtScientificName.Font.Color := ActiveTheme.Interactive.WindowTitle;
+  lblLinkCaptures.Font.Color := ActiveTheme.Interactive.Link;
+  lblLinkEggs.Font.Color := ActiveTheme.Interactive.Link;
+  lblLinkIndividuals.Font.Color := ActiveTheme.Interactive.Link;
+  lblLinkNests.Font.Color := ActiveTheme.Interactive.Link;
+  lblLinkSightings.Font.Color := ActiveTheme.Interactive.Link;
+  lblLinkSpecimens.Font.Color := ActiveTheme.Interactive.Link;
 end;
 
 procedure TfrmTaxa.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -292,13 +280,13 @@ begin
   //  pSearch.Width := ClientWidth div 4;
   if IsDarkModeEnabled then
   begin
-    pSearch.Background.Color := clSolidBGBaseDark;
-    pSearch.Border.Color := clSolidBGTertiaryDark;
+    pSearch.Background.Color := ActiveTheme.Background.SolidBase;
+    pSearch.Border.Color := ActiveTheme.AccentPalette.Dark1; //clSolidBGTertiaryDark;
   end
   else
   begin
     pSearch.Background.Color := clWhite;
-    pSearch.Border.Color := clAccentFillTertiaryLight;
+    pSearch.Border.Color := ActiveTheme.AccentFill.Tertiary;
   end;
   //pSearch.Border.Width := 2;
   eSearch.Color := pSearch.Background.Color;
@@ -312,13 +300,13 @@ begin
   //  pSearch.Width := 148;
   if IsDarkModeEnabled then
   begin
-    pSearch.Background.Color := clCardBGDefaultDark;
-    pSearch.Border.Color := clSolidBGSecondaryDark;
+    pSearch.Background.Color := ActiveTheme.Background.ControlDefault;
+    pSearch.Border.Color := ActiveTheme.Border.Default; // ActiveTheme.Background.SolidSecondary;
   end
   else
   begin
-    pSearch.Background.Color := $00FAFAFA;
-    pSearch.Border.Color := clDefaultBorderLight;
+    pSearch.Background.Color := ActiveTheme.Background.CardSecondary;
+    pSearch.Border.Color := ActiveTheme.Border.Default;
   end;
   pSearch.Border.Width := 1;
   eSearch.Color := pSearch.Background.Color;
@@ -337,6 +325,7 @@ end;
 procedure TfrmTaxa.FormDestroy(Sender: TObject);
 begin
   dsChilds.DataSet.Close;
+  dsVernacular.DataSet.Close;
   dsSynonyms.DataSet.Close;
   dsLink.DataSet.Close;
 
@@ -376,6 +365,7 @@ begin
   SetZooTaxaSQL(DMG.qTaxa.SQL, fvReset);
 
   dsLink.DataSet.Open;
+  dsVernacular.DataSet.Open;
   dsSynonyms.DataSet.Open;
   dsChilds.DataSet.Open;
 
@@ -620,7 +610,7 @@ var
 begin
   if (Column.FieldName = 'scientific_name') and (Assigned(Column.Field)) then
   begin
-    aRank := GetRankType(TDBGrid(Sender).Columns[2].Field.AsInteger);
+    aRank := GetRankType(TDBGrid(Sender).Columns[1].Field.AsInteger);
     if aRank >= trSuperGenus then
       TDBGrid(Sender).Canvas.Font.Style := [fsItalic]
     else
@@ -640,11 +630,12 @@ begin
         else
           TDBGrid(Sender).Canvas.Font.Color := clGreen;
 
-      if (TDBGrid(Sender).Columns[1].Field.AsInteger > 0) then
-        if IsDarkModeEnabled then
-          TDBGrid(Sender).Canvas.Font.Color := $009F9F9F
-        else
-          TDBGrid(Sender).Canvas.Font.Color := $00646464;
+      // Greyed text if not valid taxon
+      //if (TDBGrid(Sender).Columns[1].Field.AsInteger > 0) then
+      //  if IsDarkModeEnabled then
+      //    TDBGrid(Sender).Canvas.Font.Color := $009F9F9F
+      //  else
+      //    TDBGrid(Sender).Canvas.Font.Color := $00646464;
     end;
   end;
 end;
@@ -1138,6 +1129,32 @@ begin
   ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
 end;
 
+function TfrmTaxa.OccurrInBrazil(aTaxonId: Integer): Boolean;
+var
+  BrazilId: Integer;
+  Qry: TSQLQuery;
+begin
+  Result := False;
+
+  BrazilId := GetCountryFromCode('BR');
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Add('SELECT taxon_country_id FROM zoo_countries');
+    Add('WHERE taxon_id = :taxon_id AND country_id = :country_id AND active_status = 1');
+    ParamByName('taxon_id').AsInteger := aTaxonId;
+    ParamByName('country_id').AsInteger := BrazilId;
+    Open;
+    First;
+    if not EOF then
+      Result := True;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
 procedure TfrmTaxa.pmfShowRecordedTaxaClick(Sender: TObject);
 begin
   TimerFind.Enabled := False;
@@ -1287,11 +1304,19 @@ end;
 
 procedure TfrmTaxa.sbWikiavesClick(Sender: TObject);
 var
-  FUrlSearch: String;
+  FUrlSearch, FVernacular: String;
   Url: String;
+  FLang: Integer;
 begin
+  FLang := 0;
+  FVernacular := EmptyStr;
+
   if GetRankType(dsLink.DataSet.FieldByName('rank_id').AsInteger) = trSpecies then
-    FUrlSearch := HTTPEncode(RemoveDiacritics(dsLink.DataSet.FieldByName('portuguese_name').AsString))
+  begin
+    FLang := GetKey(TBL_LANGUAGES, COL_LANGUAGE_ID, COL_LANGUAGE_NAME, rsPortuguese);
+    FVernacular := GetVernacularName(dsLink.DataSet.FieldByName('taxon_id').AsInteger, FLang);
+    FUrlSearch := HTTPEncode(RemoveDiacritics(FVernacular))
+  end
   else
     FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
   Url := 'https://www.wikiaves.com.br/wiki/' + FUrlSearch;
@@ -1376,16 +1401,6 @@ begin
       begin
         g := FSearch.TextFilters.Add(TSearchGroup.Create);
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('scientific_name', 'Scientific name', sdtText, Crit,
-          True, aValue));
-        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('english_name', 'English name', sdtText, Crit,
-          True, aValue));
-        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('ioc_english_name', 'English name (IOC)', sdtText, Crit,
-          True, aValue));
-        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('spanish_name', 'Spanish name', sdtText, Crit,
-          True, aValue));
-        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('portuguese_name', 'Portuguese name', sdtText, Crit,
-          True, aValue));
-        FSearch.TextFilters[g].Fields.Add(TSearchField.Create('other_portuguese_names', 'Other portuguese names', sdtText, Crit,
           True, aValue));
         FSearch.TextFilters[g].Fields.Add(TSearchField.Create('ebird_code', 'eBird code', sdtText, Crit,
           True, aValue));
@@ -1476,9 +1491,6 @@ begin
     imgConservation.ImageIndex := 0;
   end;
 
-  lblValidName.Visible := DMG.qTaxa.FieldByName('valid_id').AsInteger > 0;
-  txtValidName.Visible := lblValidName.Visible;
-
   tvHierarchy.Items.Clear;
   if dsLink.DataSet.FieldByName('order_id').AsInteger > 0 then
   begin
@@ -1504,15 +1516,19 @@ begin
 
   if dsLink.DataSet.RecordCount > 0 then
   begin
+    DMG.qVernacularTaxa.ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
     DMG.qSynonymTaxa.ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
     DMG.qChildTaxa.ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
+    dsVernacular.DataSet.Refresh;
     dsSynonyms.DataSet.Refresh;
     dsChilds.DataSet.Refresh;
   end
   else
   begin
+    DMG.qVernacularTaxa.ParamByName('taxon_id').AsInteger := 0;
     DMG.qSynonymTaxa.ParamByName('taxon_id').AsInteger := 0;
     DMG.qChildTaxa.ParamByName('taxon_id').AsInteger := 0;
+    dsVernacular.DataSet.Refresh;
     dsSynonyms.DataSet.Refresh;
     dsChilds.DataSet.Refresh;
   end;
@@ -1524,7 +1540,7 @@ begin
   GetNestsCount;
   GetEggsCount;
 
-  sbWikiaves.Visible := dsLink.DataSet.FieldByName('cbro_taxonomy').AsBoolean = True;
+  sbWikiaves.Visible := OccurrInBrazil(dsLink.DataSet.FieldByName('taxon_id').AsInteger);
   sbBirdsOfTheWorld.Visible := dsLink.DataSet.FieldByName('ebird_code').AsString <> EmptyStr;
 
   LoadRecordsMap;
@@ -1543,12 +1559,6 @@ begin
   TimerFind.Enabled := False;
 
   SetSearchString(eSearch.Text);
-end;
-
-procedure TfrmTaxa.txtValidNameClick(Sender: TObject);
-begin
-  if (not DMG.qTaxa.FieldByName('valid_id').IsNull) then
-    eSearch.Text := DMG.qTaxa.FieldByName('valid_id').AsString;
 end;
 
 procedure TfrmTaxa.txtValidNameMouseEnter(Sender: TObject);

@@ -24,51 +24,77 @@ uses
   Classes, SysUtils, Forms, StrUtils, ComCtrls, DB, SQLDB, RegExpr, laz.VirtualTrees, CheckLst, fpjson,
   fgl, models_record_types;
 
+type
+  TTaxonomyAction = (taNew, taSplit, taLump, taMove, taUpdate);
+  TChangeSuffix   = (csKeep, csA, csUs, csUm, csI, csE);
+
+  TBrackets = (brParenthesis, brSquare, brCurly);
+
 var
   ZooRankDict: specialize TFPGMap<String, TZooRank>;
 
-  function GetRankType(aKey: Integer): TZooRank;
+const
+  colorGroup: String      = 'green';   //clGreen
+  colorSlash: String      = 'maroon';  //clMaroon
+  //colorSp: String         = 'black';
+  colorSpuh: String       = 'purple';  //clPurple
+  colorEnglish: String    = 'teal';    //clTeal
+  colorDomestic: String   = 'cornflowerblue'; //'$00FF870F';
+  colorForm: String       = 'cadetblue'; //'$00CCA400';
+  colorHybrid: String     = 'darkslateblue'; //'$00D2003F';
+  colorIntergrade: String = 'goldenrod'; //'$0000D2D2';
+  colorAuthorship: String = 'gray';    //clGray
+  Bracks: array of String = ('(', ')', '[', ']');
+  Suffixes: array [TChangeSuffix] of String = ('', 'a', 'us', 'um', 'i', 'e');
+
+  function Italic(const AText: String): String; inline;
+  function Colored(const AText: String; const AColor: String): String; inline;
+  function Bold(const AText: String): String; inline;
+  function Enclosed(const AText: String; ABracket: TBrackets): String; inline;
+  procedure ExtractParents(const AText: String; out Parent1, Parent2: String);
+  function ChangeSuffix(const Suffix: TChangeSuffix; AText: String): String;
+
+  function GetRankType(aRankKey: Integer): TZooRank;
   procedure InitZooRankDict;
   function StringToZooRank(const aRankStr: String): TZooRank;
 
+  function FormatDomestic(const aName: String): String;
+  function FormatForm(const aName: String): String;
+  function FormatHybrid(const aName: String): String;
+  function FormatIntergrade(const aName: String): String;
+  function FormatMonotypicGroup(const aName: String): String;
+  function FormatPolitypicGroup(const aName: String): String;
+  function FormatSlash(const aName: String): String;
+  function FormatSpuh(const aName: String): String;
   function FormattedBirdName(aName: String; aRank: Integer; aAuthor: String = ''): String;
 
   procedure LoadTaxaRanks(aConnection: TSQLConnection; aList: TCheckListBox);
 
   { Taxonomies management }
   procedure RewriteTaxonHierarchy;
+  procedure CopySynonyms(FromTaxonId, ToTaxonId: Integer);
 
   function ReadTaxonomyVersion: Double;
   procedure WriteTaxonomyVersion(aVersion: Double);
 
-  procedure SplitTaxon(aSubspecies: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-    ExecNow: Boolean = True);
-  procedure LumpTaxon(aSpecies, ToSpecies: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-    ExecNow: Boolean = True);
+  procedure SplitTaxon(aSubspeciesId: Integer);
+  procedure LumpTaxon(aSpeciesId, ToSpeciesId: Integer);
 
-  procedure MoveToSpecies(aSubspecies, ToSpecies: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-    ExecNow: Boolean = True);
-  procedure MoveToGenus(aSpecies, ToGenus: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-    ExecNow: Boolean = True);
-  procedure MoveToFamily(aFamily: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-    ExecNow: Boolean = True);
-  procedure MoveToOrder(aOrder: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-    ExecNow: Boolean = True);
+  procedure MoveToSpecies(aSubspecies, ToSpecies: Integer; Suffix: TChangeSuffix = csKeep);
+  procedure MoveToGenus(aSpecies, ToGenus: Integer; Suffix: TChangeSuffix = csKeep);
+  procedure MoveToFamily(aTaxonId, toFamilyId: Integer);
+  procedure MoveToOrder(aTaxonId, toOrderId: Integer);
 
   procedure UpdateScientificName(aTaxon: Integer; aNewName: String; aDataset: TSQLQuery;
     ExecNow: Boolean = True);
-  procedure UpdateEnglishName(aTaxon: Integer; aNewName: String; aTaxonomy: TBirdTaxonomies;
+  procedure UpdateVernacularName(aTaxonId, aLanguageId: Integer; aNewName: String; isPreferred: Boolean;
     aDataset: TSQLQuery; ExecNow: Boolean = True);
-  procedure UpdatePortuguesName(aTaxon: Integer; aNewName: String; aDataset: TSQLQuery;
-    ExecNow: Boolean = True);
-  procedure UpdateOutrosPortugues(aTaxon: Integer; aNewName: String; aDataset: TSQLQuery;
-    ExecNow: Boolean = True);
-  procedure UpdateSpanishName(aTaxon: Integer; aNewName: String; aDataset: TSQLQuery; ExecNow: Boolean = True);
   procedure UpdateAuthorship(aTaxon: Integer; aNewName: String; aDataset: TSQLQuery; ExecNow: Boolean = True);
   procedure UpdateDistribution(aTaxon: Integer; aDist: String; aTaxonomy: TBirdTaxonomies;
     aDataset: TSQLQuery; ExecNow: Boolean = True);
   procedure UpdateExtinction(aTaxon: Integer; IsExtinct: Boolean; aYear: String; aDataset: TSQLQuery;
     ExecNow: Boolean = True);
+  procedure UpdateCountryOccurrence(FromTaxonId, ToTaxonId: Integer);
 
 implementation
 
@@ -78,16 +104,16 @@ uses
   models_users, models_taxonomy,
   udm_main, udlg_progress;
 
-function GetRankType(aKey: Integer): TZooRank;
+function GetRankType(aRankKey: Integer): TZooRank;
 var
-  Repo: TRankRepository;
+  aRepo: TRankRepository;
   aRank: TRank;
   //i: TZooRank;
 begin
-  Result := trDomain;
-  Repo := TRankRepository.Create(DMM.sqlCon);
+  Result := trNone;
+  aRepo := TRankRepository.Create(DMM.sqlCon);
   aRank := TRank.Create();
-  Repo.GetById(aKey, aRank);
+  aRepo.GetById(aRankKey, aRank);
   try
     Result := StringToZooRank(aRank.Abbreviation);
     //for i := Low(ZOOLOGICAL_RANKS) to High(ZOOLOGICAL_RANKS) do
@@ -95,7 +121,7 @@ begin
     //    Result := TZooRank(i);
   finally
     FreeAndNil(aRank);
-    Repo.Free;
+    aRepo.Free;
   end;
 end;
 
@@ -189,7 +215,8 @@ begin
   if aRankStr = EmptyStr then
     Exit;
 
-  InitZooRankDict;
+  if not Assigned(ZooRankDict) then
+    InitZooRankDict;
 
   if not ZooRankDict.TryGetData(aRankStr, Result) then
     raise Exception.CreateFmt('Invalid Zoo Rank: %s', [aRankStr]);
@@ -199,400 +226,71 @@ begin
 end;
 
 function FormattedBirdName(aName: String; aRank: Integer; aAuthor: String = ''): String;
-const
-  colorGroup: String      = 'clGreen';
-  colorSlash: String      = 'clMaroon';
-  colorSpuh: String       = 'clPurple';
-  colorEnglish: String    = 'clTeal';
-  colorDomestic: String   = '$00FF870F';
-  colorForm: String       = '$00CCA400';
-  colorHybrid: String     = '$00D2003F';
-  colorIntergrade: String = '$0000D2D2';
-  colorAuthorship: String = 'clGray';
-  //colorGroup: String      = 'green';
-  //colorSlash: String      = 'maroon';
-  //colorSpuh: String       = 'purple';
-  //colorEnglish: String    = 'teal';
-  //colorDomestic: String   = 'cornflowerblue';
-  //colorForm: String       = 'cadetblue';
-  //colorHybrid: String     = 'darkslateblue';
-  //colorIntergrade: String = 'goldenrod';
-  //colorAuthorship: String = 'gray';
-  Bracks: array of String = ('(', ')', '[', ']');
 var
-  b: Integer;
-  nome, aBracket, outBrackets, Parent1, Parent2: String;
-  RankType: TZooRank;
+  nome: String;
 begin
   Result := EmptyStr;
   nome := EmptyStr;
-  aBracket := EmptyStr;
-  outBrackets := EmptyStr;
-  b := 0;
 
-  RankType := GetRankType(aRank);
-  case RankType of
-    trDomain..trInfratribe:
-      begin
-        nome := aName;
-      end;
-    trSupergenus..trSubspecies:
-      begin
-        nome := '<i>' + aName + '</i>';
-      end;
-    trMonotypicGroup:
-      begin
-        nome := Format('<i>%s %s <font color="%s">%s</font></i>', [ExtractWord(1, aName, [' ']),
-          ExtractWord(2, aName, [' ']), colorGroup, ExtractWord(3, aName, [' '])]);
-      end;
-    trPolitypicGroup:
-      begin
-        if (Pos('/', aName) > 0) then
-          nome := Format('<i>%s %s <font color="%s">%s</font></i>', [ExtractWord(1, aName, [' ']),
-            ExtractWord(2, aName, [' ']), colorGroup, ExtractWord(3, aName, [' '])])
-        else
-        if (Pos('[', aName) > 0) then
-        begin
-          aBracket := Trim(ExtractDelimited(2, aName, ['[',']']));
-          nome := Format('<i>%s %s</i> <font color="%s">[<i>%s</i> %s]</font>',
-            [ExtractWord(1, aName, [' ']), ExtractWord(2, aName, [' ']), colorGroup,
-            ExtractWord(1, aBracket, [' ']), ExtractWord(2, aBracket, [' '])]);
-        end;
-      end;
-    trSpuh:
-      begin
-        if (Pos('(', aName) > 0) then
-        begin
-          outBrackets := Trim(ExtractDelimited(1, aName, Brackets));
-          aBracket := Trim(ExtractDelimited(2, aName, Brackets));
-
-          if IsWordPresent('Domestic', aBracket, [' ']) then
-            aBracket := Format('<font color="%s">(%s)</font>', [colorDomestic, aBracket])
-          else
-          if ExecRegExpr('^[a-z].+ complex$', aBracket) then
-            aBracket := Format('<font color="%s">(<i>%s</i> complex)</font>', [colorEnglish,
-              ExtractWord(1, aBracket, [' '])])
-          else
-          if ExecRegExpr('^former .+ sp.$', aBracket) then
-            aBracket := Format('<font color="%s">(former <i>%s</i> sp.)</font>', [colorEnglish,
-              ExtractWord(2, aBracket, [' '])])
-          else
-            aBracket := Format('<font color="%s">(%s)</font>', [colorEnglish, aBracket])
-        end
-        else
-          outBrackets := aName;
-
-        if (Pos('/', outBrackets) > 0) then
-        begin
-          if not IsWordPresent('sp.', outBrackets, [' ']) then
-          begin
-            nome := Format('<font color="%s"><i>%s</i></font>', [colorSpuh, outBrackets]);
-          end
-          else
-          begin
-            if ExecRegExpr('.+(formes|idae|inae).*', outBrackets) then
-            begin
-              nome := Format('<font color="%s">%s</font> <b>sp.</b>', [colorSpuh,
-                ExtractWord(1, outBrackets, [' '])]);
-            end
-            else
-            if IsWordPresent('eagle', outBrackets, ['/', ' ']) then
-            begin
-              nome := Format('<font color="%s"><i>%s</i>/%s</font> <b>sp.</b>', [colorSpuh,
-                ExtractWord(1, outBrackets, ['/', ' ']), ExtractWord(2, outBrackets, ['/', ' '])]);
-            end
-            else
-            begin
-              nome := Format('<font color="%s"><i>%s</i></font> <b>sp.</b>',
-                [colorSpuh, ExtractWord(1, outBrackets, [' '])]);
-            end;
-          end;
-        end
-        else
-        begin
-          if ExecRegExpr('.+(formes|idae|inae).*', outBrackets) then
-          begin
-            nome := Format('<font color="%s">%s</font> <b>sp.</b>', [colorSpuh,
-              ExtractWord(1, outBrackets, [' '])]);
-          end
-          else
-          begin
-            nome := Format('<font color="%s"><i>%s</i></font> <b>sp.</b>',
-              [colorSpuh, ExtractWord(1, outBrackets, [' '])]);
-          end;
-        end;
-
-        if (aBracket <> EmptyStr) then
-          nome := nome + ' ' + aBracket;
-      end;
-    trSlash:
-      begin
-        if (Pos('(', aName) > 0) then
-        begin
-          outBrackets := Trim(ExtractDelimited(1, aName, Brackets));
-          aBracket := Format('<font color="%s">(%s)</font>', [colorEnglish,
-            Trim(ExtractDelimited(2, aName, Brackets))]);
-        end
-        else
-          outBrackets := aName;
-
-        if (Pos('sp.', outBrackets) > 0) then
-        begin
-          if ExecRegExpr('.+ sp.\/.+', outBrackets) then
-          begin
-            nome := Format('<font color="%s"><i>%s</i></font> <b>sp.</b><font color="%s">/<i>%s</i></font>',
-              [colorSlash, ExtractWord(1, outBrackets, [' ']), colorSlash,
-              ExtractWord(2, outBrackets, ['/'])]);
-          end
-          else
-          begin
-            outBrackets := StringReplace(outBrackets, ' sp.', '', []);
-            nome := Format('<font color="%s"><i>%s</i></font> <b>sp.</b>',
-              [colorSlash, outBrackets]);
-          end;
-        end
-        else
-        if ExecRegExpr('.+\/[A-Z].+', outBrackets) then
-          nome := Format('<font color="%s"><i>%s</i></font>',
-              [colorSlash, outBrackets])
-        else
-        if (WordCount(outBrackets, [' ']) = 2) then
-          nome := Format('<i>%s <font color="%s">%s</font></i>',
-              [ExtractWord(1, outBrackets, [' ']), colorSlash, ExtractWord(2, outBrackets, [' '])]);
-
-        if (aBracket <> EmptyStr) then
-          nome := nome + ' ' + aBracket;
-      end;
-    trHybrid:
-      begin
-        if (Pos(' x ', aName) > 0) then
-        begin
-          aName := StringReplace(aName, ' x ', ' | ', [rfReplaceAll]);
-          Parent1 := Trim(ExtractDelimited(1, aName, ['|']));
-          Parent2 := Trim(ExtractDelimited(2, aName, ['|']));
-        end
-        else
-        begin
-          Parent1 := aName;
-          Parent2 := EmptyStr;
-        end;
-
-        if (Pos('(', Parent1) > 0) then
-        begin
-          if IsWordPresent('Domestic', Parent1, [' '] + Brackets) then
-            aBracket := Format('<font color="%s">(%s)</font>', [colorDomestic,
-              Trim(ExtractDelimited(2, Parent1, Brackets))])
-          else
-          if IsWordPresent('hybrid', Parent1, [' '] + Brackets) then
-            aBracket := Format('<font color="%s">(%s)</font>', [colorHybrid,
-              Trim(ExtractDelimited(2, Parent1, Brackets))]);
-          Parent1 := Trim(ExtractDelimited(1, Parent1, Brackets));
-        end;
-
-        if (Pos('sp.', Parent1) > 0) then
-          Parent1 := Format('<i>%s</i> <b>sp.</b>', [ExtractDelimited(1, Parent1, [' '])])
-        else
-          Parent1 := Format('<i>%s</i>', [Parent1]);
-
-        if (aBracket <> EmptyStr) then
-          Parent1 := Parent1 + ' ' + aBracket;
-
-        aBracket := EmptyStr;
-        if (Parent2 <> EmptyStr) then
-        begin
-          if (Pos('(', Parent2) > 0) then
-          begin
-            if IsWordPresent('Domestic', Parent2, [' '] + Brackets) then
-              aBracket := Format('<font color="%s">(%s)</font>', [colorDomestic,
-                Trim(ExtractDelimited(2, Parent2, Brackets))])
-            else
-            if IsWordPresent('hybrid', Parent2, [' '] + Brackets) then
-              aBracket := Format('<font color="%s">(%s)</font>', [colorHybrid,
-                Trim(ExtractDelimited(2, Parent2, Brackets))])
-            else
-              aBracket := Format('<font color="%s">(%s)</font>', [colorEnglish,
-                Trim(ExtractDelimited(2, Parent2, Brackets))]);
-            Parent2 := Trim(ExtractDelimited(1, Parent2, Brackets));
-          end;
-
-          if (Pos('sp.', Parent2) > 0) then
-          begin
-            if ExecRegExpr('.+(formes|idae|inae)', ExtractDelimited(1, Parent2, [' '])) then
-              Parent2 := Format('%s <b>sp.</b>', [Trim(ExtractDelimited(1, Parent2, [' ']))])
-            else
-              Parent2 := Format('<i>%s</i> <b>sp.</b>', [Trim(ExtractDelimited(1, Parent2, [' ']))]);
-          end
-          else
-            Parent2 := Format('<i>%s</i>', [Parent2]);
-
-          if (aBracket <> EmptyStr) then
-            Parent2 := Parent2 + ' ' + aBracket;
-        end;
-
-        if (Parent2 <> EmptyStr) then
-          nome := Format('%s <font color="%s"><b>×</b></font> %s', [Parent1, colorHybrid, Parent2])
-        else
-          nome := Parent1;
-      end;
-    trIntergrade:
-      begin
-        aBracket := Trim(ExtractDelimited(2, aName, Brackets));
-        if (aBracket <> EmptyStr) then
-        begin
-          if (Pos(' x ', aBracket) > 0) then
-            aBracket := Format('<font color="%s">[<i>%s</i> Group <font color="%s"><b>×</b></font> <i>%s</i> Group]</font>',
-              [colorGroup, ExtractWord(1, aBracket, [' ']), colorIntergrade, ExtractWord(4, aBracket, [' '])])
-          else
-          if IsWordPresent('intergrade', aBracket, [' ']) then
-            aBracket := Format('<font color="%s">(<i>%s</i> intergrade)</font>', [colorIntergrade,
-              ExtractWord(1, aBracket, [' '])])
-          else
-          if IsWordPresent('Group', aBracket, [' ']) then
-            aBracket := Format('<font color="%s">[<i>%s</i> Group]</font>', [colorGroup,
-              ExtractWord(1, aBracket, [' '])]);
-        end;
-
-        if (Pos(' x ', aName) = 0) then
-        begin
-          nome := Format('<i>%s</i> %s', [Trim(ExtractDelimited(1, aName, Brackets)), aBracket]);
-        end
-        else
-        begin
-          if ExecRegExpr('.+ \[.+ x .+\]', aName) then
-          begin
-            nome := Format('<i>%s</i> %s', [Trim(ExtractDelimited(1, aName, Brackets)), aBracket]);
-          end
-          else
-          begin
-            if (Pos(' x ', aName) > 0) then
-            begin
-              aName := StringReplace(aName, ' x ', ' | ', [rfReplaceAll]);
-              Parent1 := Trim(ExtractDelimited(1, aName, ['|']));
-              Parent2 := Trim(ExtractDelimited(2, aName, ['|']));
-            end
-            else
-            begin
-              Parent1 := aName;
-              Parent2 := EmptyStr;
-            end;
-
-            if (Pos(']', Parent1) > 0) then
-              Parent1 := Format('<i>%s</i> %s', [Trim(ExtractDelimited(1, Parent1, Brackets)), aBracket])
-            else
-            if (Pos('/', Parent1) > 0) then
-              Parent1 := Format('<i>%s %s <font color="%s">%s</font></i>', [ExtractWord(1, Parent1, [' ']),
-                ExtractWord(2, Parent1, [' ']), colorGroup, ExtractWord(3, Parent1, [' '])])
-            else
-              Parent1 := Format('<i>%s</i>', [Parent1]);
-
-            if (Pos('[', Parent2) > 0) then
-              Parent2 := aBracket
-            else
-            if (Pos('/', Parent2) > 0) then
-              Parent2 := Format('<font color="%s"><i>%s</i></font>', [colorGroup, Parent2])
-            else
-              Parent2 := Format('<i>%s</i>', [Parent2]);
-
-            nome := Format('%s <font color="%s"><b>×</b></font> %s', [Parent1, colorIntergrade,
-              Parent2]);
-          end;
-        end;
-      end;
-    trForm:
-      begin
-        if (Pos('(', aName) > 0) or (Pos('[', aName) > 0) then
-        begin
-          if (Pos('(', aName) > 0) then
-            b := 0
-          else
-          if (Pos('[', aName) > 0) then
-            b := 2;
-
-          if ExecRegExpr('.+(formes|idae|inae)', ExtractDelimited(1, aName, Brackets)) then
-            nome := Format('%s <font color="%s">%s%s%s</font>', [Trim(ExtractDelimited(1, aName, Brackets)),
-              colorForm, Bracks[b], Trim(ExtractDelimited(2, aName, Brackets)), Bracks[b + 1]])
-          else
-            nome := Format('<i>%s</i> <font color="%s">%s%s%s</font>', [Trim(ExtractDelimited(1, aName, Brackets)),
-              colorForm, Bracks[b], Trim(ExtractDelimited(2, aName, Brackets)), Bracks[b + 1]]);
-        end
-        else
-        if (WordCount(aName, [' ']) = 3) then
-          nome := Format('<i>%s %s <font color="%s">%s</font></i>', [ExtractWord(1, aName, [' ']),
-            ExtractWord(2, aName, [' ']), colorForm, ExtractWord(3, aName, [' '])]);
-      end;
-    trDomestic:
-      begin
-        if (Pos('(', aName) > 0) then
-          nome := Format('<i>%s</i> <font color="%s">(%s)</font>', [Trim(ExtractDelimited(1, aName, Brackets)),
-            colorDomestic, Trim(ExtractDelimited(2, aName, Brackets))]);
-      end;
+  case GetRankType(aRank) of
+    trDomain..trInfratribe:     nome := aName;
+    trSupergenus..trSubspecies: nome := Italic(aName);
+    trMonotypicGroup:           nome := FormatMonotypicGroup(aName);
+    trPolitypicGroup:           nome := FormatPolitypicGroup(aName);
+    trSpuh:                     nome := FormatSpuh(aName);
+    trSlash:                    nome := FormatSlash(aName);
+    trHybrid:                   nome := FormatHybrid(aName);
+    trIntergrade:               nome := FormatIntergrade(aName);
+    trForm:                     nome := FormatForm(aName);
+    trDomestic:                 nome := FormatDomestic(aName);
   end;
   { Authorship }
   if aAuthor <> EmptyStr then
-    nome := Format('%s <font color="%s">%s</font>', [nome, colorAuthorship, aAuthor]);
+    nome := nome + ' ' + Colored(aAuthor, colorAuthorship);
 
   Result := nome;
 end;
 
 procedure LoadTaxaRanks(aConnection: TSQLConnection; aList: TCheckListBox);
 var
-  nome: String;
-  // i: Integer;
   Qry: TSQLQuery;
   Lista: TStrings;
-  // STree: TMemoryStream;
 begin
   Lista := TStringList.Create;
-  // STree:= TMemoryStream.Create;
-  // STree.Position:= 0;
   Qry := TSQLQuery.Create(aConnection);
   Qry.Database := aConnection;
   with Qry do
   try
     SQL.Clear;
 
-    SQL.Add('SELECT t.rank_id,');
+    SQL.Add('SELECT DISTINCT z.rank_id,');
     SQL.Add('   r.rank_name AS rank_name,');
     SQL.Add('   r.rank_seq AS sort_num');
-    SQL.Add('FROM zoo_taxa AS t');
-    SQL.Add('LEFT JOIN taxon_ranks AS r ON t.rank_id = r.rank_id');
-    SQL.Add('WHERE (t.rank_id > 0) AND (t.active_status = 1)');
-    SQL.Add('GROUP BY t.rank_id');
+    SQL.Add('FROM zoo_taxa AS z');
+    SQL.Add('LEFT JOIN taxon_ranks AS r ON z.rank_id = r.rank_id');
+    SQL.Add('WHERE (z.rank_id > 0) AND (z.active_status = 1)');
+    SQL.Add('GROUP BY z.rank_id');
     SQL.Add('ORDER BY sort_num ASC');
 
     Open;
     if RecordCount > 0 then
     begin
-      // PBar.Max:= RecordCount;
-      // PBar.Position:= 0;
-      // PBar.Visible:= True;
       aList.Items.BeginUpdate;
       aList.Items.Clear;
-      nome := '';
 
-      // Cria lista para arvore
       First;
       repeat
-        nome := FieldByName('rank_name').AsString;
-        Lista.Add(nome);
+        Lista.Add(FieldByName('rank_name').AsString);
 
-        // PBar.Position:= RecNo;
         Next;
       until EOF;
-      // Lista.SaveToFile('TaxonTree.txt');
-      // Lista.SaveToStream(STree);
-      // STree.SaveToFile('TaxonTreeStream.txt');
-      // STree.Position:= 0;
       aList.Items.Assign(Lista);
       aList.Items.EndUpdate;
-      // PBar.Visible:= False;
-      // PBar.Position:= 0;
     end;
     Close;
   finally
     FreeAndNil(Qry);
     Lista.Free;
-    // STree.Free;
   end;
 end;
 
@@ -602,211 +300,132 @@ var
   iOrder, iFamily, iSubfamily, iGenus, iSpecies, iMonoGroup, iPoliGroup, iSubspecies: Integer;
 begin
   dlgProgress := TdlgProgress.Create(nil);
+  dlgProgress.Title := rsTitleTaxonHierarchy;
+  dlgProgress.Text := rsProgressPreparing;
+  dlgProgress.Indeterminate := True;
+  dlgProgress.Max := 7;
+  dlgProgress.AllowCancel := False;
+  dlgProgress.ShowModal;
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
   try
-    dlgProgress.lblTitle.Caption := rsTitleTaxonHierarchy;
-    dlgProgress.lStatus.Caption := rsProgressPreparing;
-    dlgProgress.PBar.Style := pbstMarquee;
-    dlgProgress.Show;
-    Qry := TSQLQuery.Create(DMM.sqlCon);
-    with Qry, SQL do
+    DataBase := DMM.sqlCon;
+    Transaction := DMM.sqlTrans;
+    MacroCheck := True;
+    dlgProgress.Indeterminate := False;
+    dlgProgress.Position := 0;
+
+    iOrder := GetRankKey('ord.', ncZoological);
+    iFamily := GetRankKey('fam.', ncZoological);
+    iSubfamily := GetRankKey('subfam.', ncZoological);
+    iGenus := GetRankKey('g.', ncZoological);
+    iSpecies := GetRankKey('sp.', ncZoological);
+    iMonoGroup := GetRankKey('grp. (mono)', ncZoological);
+    iPoliGroup := GetRankKey('grp. (poli)', ncZoological);
+    iSubspecies := GetRankKey('ssp.', ncZoological);
+
+    DMM.sqlTrans.StartTransaction;
     try
-      DataBase := DMM.sqlCon;
-      Transaction := DMM.sqlTrans;
-      MacroCheck := True;
-      dlgProgress.PBar.Position := 0;
+      { Order }
+      dlgProgress.Text := Format(rsProgressRewritingHierarchy, [AnsiLowerCase(rsCaptionOrder)]);
+      Clear;
+      Add('UPDATE zoo_taxa');
+      Add('SET order_id = taxon_id');
+      Add('WHERE (zoo_taxa.rank_id = :rank_id)');
+      ParamByName('RANK_ID').AsInteger := iOrder;
+      ExecSQL;
+      dlgProgress.Position := dlgProgress.Position + 1;
+      Application.ProcessMessages;
 
-      iOrder := GetRankKey('ord.', ncZoological);
-      iFamily := GetRankKey('fam.', ncZoological);
-      iSubfamily := GetRankKey('subfam.', ncZoological);
-      iGenus := GetRankKey('g.', ncZoological);
-      iSpecies := GetRankKey('sp.', ncZoological);
-      iMonoGroup := GetRankKey('grp. (mono)', ncZoological);
-      iPoliGroup := GetRankKey('grp. (poli)', ncZoological);
-      iSubspecies := GetRankKey('ssp.', ncZoological);
+      { Family }
+      dlgProgress.Text := Format(rsProgressRewritingHierarchy, [AnsiLowerCase(rsCaptionFamily)]);
+      Clear;
+      Add('UPDATE zoo_taxa');
+      Add('SET family_id = zoo_taxa.taxon_id, order_id = parent.order_id');
+      Add('FROM (SELECT taxon_id, order_id FROM zoo_taxa) AS parent');
+      Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+      ParamByName('RANK_ID').AsInteger := iFamily;
+      ExecSQL;
+      dlgProgress.Position := dlgProgress.Position + 1;
+      Application.ProcessMessages;
 
-      DMM.sqlTrans.StartTransaction;
-      try
-        { Order }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsCaptionOrder)]);
-        Clear;
-        Add('UPDATE zoo_taxa SET');
-        Add('  order_id = taxon_id');
-        Add('WHERE zoo_taxa.rank_id = :rank_id');
-        ParamByName('RANK_ID').AsInteger := iOrder;
-        ExecSQL;
-        Application.ProcessMessages;
+      { Subfamily }
+      dlgProgress.Text := Format(rsProgressRewritingHierarchy, [AnsiLowerCase(rsCaptionSubfamily)]);
+      Clear;
+      Add('UPDATE zoo_taxa');
+      Add('SET subfamily_id = zoo_taxa.taxon_id, family_id = parent.family_id, order_id = parent.order_id');
+      Add('FROM (SELECT taxon_id, order_id, family_id FROM zoo_taxa) AS parent');
+      Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+      ParamByName('RANK_ID').AsInteger := iSubfamily;
+      ExecSQL;
+      dlgProgress.Position := dlgProgress.Position + 1;
+      Application.ProcessMessages;
 
-        { Family }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsCaptionFamily)]);
-        Clear;
-        Add('UPDATE zoo_taxa SET');
-        Add('  family_id = zoo_taxa.taxon_id,');
-        Add('  order_id = parent.order_id');
-        Add('FROM (SELECT taxon_id, order_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
-        ParamByName('RANK_ID').AsInteger := iFamily;
-        ExecSQL;
-        Application.ProcessMessages;
+      { Genus }
+      dlgProgress.Text := Format(rsProgressRewritingHierarchy, [AnsiLowerCase(rsCaptionGenus)]);
+      Clear;
+      Add('UPDATE zoo_taxa');
+      Add('SET genus_id = zoo_taxa.taxon_id, subfamily_id = parent.subfamily_id, ');
+      Add('  family_id = parent.family_id, order_id = parent.order_id');
+      Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id FROM zoo_taxa) AS parent');
+      Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+      ParamByName('RANK_ID').AsInteger := iGenus;
+      ExecSQL;
+      dlgProgress.Position := dlgProgress.Position + 1;
+      Application.ProcessMessages;
 
-        { Subfamily }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsCaptionSubfamily)]);
-        Clear;
-        Add('UPDATE zoo_taxa SET');
-        Add('  subfamily_id = zoo_taxa.taxon_id,');
-        Add('  family_id = parent.family_id,');
-        Add('  order_id = parent.order_id');
-        Add('FROM (SELECT taxon_id, order_id, family_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
-        ParamByName('RANK_ID').AsInteger := iSubfamily;
-        ExecSQL;
-        Application.ProcessMessages;
+      { Species }
+      dlgProgress.Text := Format(rsProgressRewritingHierarchy, [AnsiLowerCase(rsCaptionSpecies)]);
+      Clear;
+      Add('UPDATE zoo_taxa');
+      Add('SET species_id = zoo_taxa.taxon_id, genus_id = parent.genus_id, ');
+      Add('  subfamily_id = parent.subfamily_id, family_id = parent.family_id, order_id = parent.order_id');
+      Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id, genus_id FROM zoo_taxa) AS parent');
+      Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+      ParamByName('RANK_ID').AsInteger := iSpecies;
+      ExecSQL;
+      dlgProgress.Position := dlgProgress.Position + 1;
+      Application.ProcessMessages;
 
-        { Genus }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsCaptionGenus)]);
-        Clear;
-        Add('UPDATE zoo_taxa SET');
-        Add('  genus_id = zoo_taxa.taxon_id,');
-        Add('  subfamily_id = parent.subfamily_id,');
-        Add('  family_id = parent.family_id,');
-        Add('  order_id = parent.order_id');
-        Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
-        ParamByName('RANK_ID').AsInteger := iGenus;
-        ExecSQL;
-        Application.ProcessMessages;
+      { Mono and politypic groups }
+      dlgProgress.Text := Format(rsProgressRewritingHierarchy, [AnsiLowerCase(rsCaptionSspGroup)]);
+      Clear;
+      Add('UPDATE zoo_taxa');
+      Add('SET subspecies_group_id = zoo_taxa.taxon_id, species_id = parent.species_id, genus_id = parent.genus_id, ');
+      Add('  subfamily_id = parent.subfamily_id, family_id = parent.family_id, order_id = parent.order_id');
+      Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa) AS parent');
+      Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+      ParamByName('RANK_ID').AsInteger := iMonoGroup;
+      ExecSQL;
+      Application.ProcessMessages;
+      ParamByName('RANK_ID').AsInteger := iPoliGroup;
+      ExecSQL;
+      dlgProgress.Position := dlgProgress.Position + 1;
+      Application.ProcessMessages;
 
-        { Species }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsCaptionSpecies)]);
-        Clear;
-        Add('UPDATE zoo_taxa SET');
-        Add('  species_id = zoo_taxa.taxon_id,');
-        Add('  genus_id = parent.genus_id,');
-        Add('  subfamily_id = parent.subfamily_id,');
-        Add('  family_id = parent.family_id,');
-        Add('  order_id = parent.order_id');
-        Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id, genus_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
-        ParamByName('RANK_ID').AsInteger := iSpecies;
-        ExecSQL;
-        Application.ProcessMessages;
+      { Subspecies, domestic, form }
+      dlgProgress.Text := Format(rsProgressRewritingHierarchy, [AnsiLowerCase(rsCaptionSubspecificTaxa)]);
+      Clear;
+      Add('UPDATE zoo_taxa');
+      Add('SET subspecies_group_id = parent.subspecies_group_id, species_id = parent.species_id, ');
+      Add('  genus_id = parent.genus_id, subfamily_id = parent.subfamily_id, family_id = parent.family_id, ');
+      Add('  order_id = parent.order_id');
+      Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id, genus_id, species_id, ');
+      Add('  subspecies_group_id FROM zoo_taxa) AS parent');
+      Add('WHERE (zoo_taxa.rank_id = :rank_id) AND (zoo_taxa.parent_taxon_id = parent.taxon_id)');
+      ParamByName('RANK_ID').AsInteger := iSubspecies;
+      ExecSQL;
+      dlgProgress.Position := dlgProgress.Position + 1;
+      Application.ProcessMessages;
 
-        { Mono and politypic groups }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsCaptionSspGroup)]);
-        Clear;
-        Add('UPDATE zoo_taxa SET');
-        Add('  subspecies_group_id = zoo_taxa.taxon_id,');
-        Add('  species_id = parent.species_id,');
-        Add('  genus_id = parent.genus_id,');
-        Add('  subfamily_id = parent.subfamily_id,');
-        Add('  family_id = parent.family_id,');
-        Add('  order_id = parent.order_id');
-        Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id, genus_id, species_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
-        ParamByName('RANK_ID').AsInteger := iMonoGroup;
-        ExecSQL;
-        Application.ProcessMessages;
-        ParamByName('RANK_ID').AsInteger := iPoliGroup;
-        ExecSQL;
-        Application.ProcessMessages;
-
-        { Subspecies, domestic, form }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsCaptionSubspecificTaxa)]);
-        Clear;
-        Add('UPDATE zoo_taxa SET');
-        Add('  subspecies_group_id = parent.subspecies_group_id,');
-        Add('  species_id = parent.species_id,');
-        Add('  genus_id = parent.genus_id,');
-        Add('  subfamily_id = parent.subfamily_id,');
-        Add('  family_id = parent.family_id,');
-        Add('  order_id = parent.order_id');
-        Add('FROM (SELECT taxon_id, order_id, family_id, subfamily_id, genus_id, species_id, ' +
-          'subspecies_group_id FROM zoo_taxa) AS parent');
-        Add('WHERE (zoo_taxa.rank_id = :rank_id) OR (zoo_taxa.parent_taxon_id = parent.taxon_id)');
-        ParamByName('RANK_ID').AsInteger := iSubspecies;
-        ExecSQL;
-        Application.ProcessMessages;
-
-        { Update taxon hierarchy in other tables }
-        Clear;
-        Add('UPDATE %table_id SET');
-        Add('  species_id = parent.species_id,');
-        Add('  genus_id = parent.genus_id,');
-        Add('  family_id = parent.family_id,');
-        Add('  order_id = parent.order_id');
-        Add('FROM (SELECT taxon_id, order_id, family_id, genus_id, species_id FROM zoo_taxa) AS parent');
-        Add('WHERE (%table_id.taxon_id = parent.taxon_id)');
-        { Update Individuals }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsTitleIndividuals)]);
-        MacroByName('TABLE_ID').Value := 'individuals';
-        ExecSQL;
-        Application.ProcessMessages;
-        { Update Captures }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsTitleCaptures)]);
-        MacroByName('TABLE_ID').Value := 'captures';
-        ExecSQL;
-        Application.ProcessMessages;
-        { Update Sightings }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsTitleSightings)]);
-        MacroByName('TABLE_ID').Value := 'sightings';
-        ExecSQL;
-        Application.ProcessMessages;
-        { Update Nests }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsTitleNests)]);
-        MacroByName('TABLE_ID').Value := 'nests';
-        ExecSQL;
-        Application.ProcessMessages;
-        { Update Eggs }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsTitleEggs)]);
-        MacroByName('TABLE_ID').Value := 'eggs';
-        ExecSQL;
-        Application.ProcessMessages;
-        { Update Specimens }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsTitleSpecimens)]);
-        MacroByName('TABLE_ID').Value := 'specimens';
-        ExecSQL;
-        Application.ProcessMessages;
-        { Update Sample preps }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsTitleSamplePreps)]);
-        MacroByName('TABLE_ID').Value := 'sample_preps';
-        ExecSQL;
-        Application.ProcessMessages;
-        { Update Images }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsCaptionImages)]);
-        MacroByName('TABLE_ID').Value := 'images';
-        ExecSQL;
-        Application.ProcessMessages;
-        { Update Audio library }
-        dlgProgress.lStatus.Caption := Format(rsProgressRewritingHierarchy,
-            [AnsiLowerCase(rsCaptionAudioLibrary)]);
-        MacroByName('TABLE_ID').Value := 'audio_library';
-        ExecSQL;
-        Application.ProcessMessages;
-
-        dlgProgress.lStatus.Caption := rsProgressFinishing;
-        DMM.sqlTrans.CommitRetaining;
-      except
-        DMM.sqlTrans.RollbackRetaining;
-        raise Exception.Create(rsErrorRewritingHierarchy);
-      end;
-    finally
-      FreeAndNil(Qry);
+      dlgProgress.Text := rsProgressFinishing;
+      DMM.sqlTrans.CommitRetaining;
+    except
+      DMM.sqlTrans.RollbackRetaining;
+      raise Exception.Create(rsErrorRewritingHierarchy);
     end;
   finally
+    FreeAndNil(Qry);
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
   end;
@@ -825,836 +444,506 @@ begin
   WriteDatabaseMetadata(DMM.sqlCon, 'taxonomy_version', FloatToStr(aVersion));
 end;
 
-procedure SplitTaxon(aSubspecies: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-  ExecNow: Boolean);
+procedure SplitTaxon(aSubspeciesId: Integer);
 var
-  OldName, NewName: String;
-  SpRank, ParentGenus, ValidSp, ExistingId: Integer;
-  Ssp: TTaxon;
+  OldName, NewName, NewEpithet: String;
+  ParentGenusId: Integer;
+  Repo: TTaxonRepository;
+  Ssp, toSp: TTaxon;
+  SynRepo: TTaxonSynonymRepository;
+  Synonym: TTaxonSynonym;
+  Qry: TSQLQuery;
+  SameSp: Boolean;
 begin
-  ExistingId := 0;
-  OldName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aSubspecies);
-  NewName := ExtractWord(1, OldName, [' ']) + ' ' + ExtractWord(3, OldName, [' ']);
-  SpRank := GetRankKey('sp.', ncZoological);
-  ParentGenus := GetValidTaxon(ExtractWord(1, OldName, [' ']));
-  Ssp := TTaxon.Create(aSubspecies);
+  Repo := TTaxonRepository.Create(DMM.sqlCon);
+  Ssp := TTaxon.Create();
+  Repo.GetById(aSubspeciesId, Ssp);
+  toSp := TTaxon.Create();
 
-  try
-    // If taxon exists
-    if RecordExists(tbZooTaxa, COL_SCIENTIFIC_NAME, NewName) = True then
+  SynRepo := TTaxonSynonymRepository.Create(DMM.sqlCon);
+  Synonym := TTaxonSynonym.Create();
+
+  OldName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aSubspeciesId);
+  if Ssp.Rank = trPolitypicGroup then
+  begin
+    if Pos('/', OldName) > 0 then
     begin
-      ExistingId := GetValidTaxon(NewName);
-      with aDataset do
-      begin
-        if ExecNow then
-          SQL.Clear;
-
-        SQL.Add('UPDATE zoo_taxa SET ');
-        if (btClements in aTaxonomy) then { Clementes/eBird }
-        begin
-          SQL.Add('clements_taxonomy = 1,');
-          SQL.Add('valid_id = null,');
-          // SQL.Add('TAX_ENGLISH = '+QuotedStr(Ssp.NomeEnglish)+',');
-          SQL.Add('distribution = :geodist,');
-          ParamByName('GEODIST').DataType := ftMemo;
-          ParamByName('GEODIST').AsString := Ssp.Distribution;
-        end;
-        if (btIOC in aTaxonomy) then { IOC }
-        begin
-          SQL.Add('ioc_taxonomy = 1,');
-          SQL.Add('ioc_rank_id = :nivel_ioc,');
-          SQL.Add('ioc_parent_raxon_id = :sup_ioc,');
-          SQL.Add('ioc_distribution = :geodist_ioc,');
-          ParamByName('NIVEL_IOC').AsInteger := SpRank;
-          ParamByName('SUP_IOC').AsInteger := ParentGenus;
-          ParamByName('GEODIST').DataType := ftMemo;
-          ParamByName('GEODIST').AsString := Ssp.IocDistribution;
-        end;
-        if (btCBRO in aTaxonomy) then { CBRO }
-        begin
-          SQL.Add('cbro_taxonomy = 1,');
-          SQL.Add('cbro_rank_id = :nivel_cbro,');
-          SQL.Add('cbro_parent_taxon_id = :sup_cbro,');
-          ParamByName('NIVEL_CBRO').AsInteger := SpRank;
-          ParamByName('SUP_CBRO').AsInteger := ParentGenus;
-        end;
-        SQL.Add('update_date = datetime(''now'',''localtime''), user_updated = :auser');
-        SQL.Add('WHERE taxon_id = :ataxon;');
-        ParamByName('AUSER').AsInteger := ActiveUser.Id;
-        ParamByName('ATAXON').AsInteger := ExistingId;
-
-        if ExecNow then
-          ExecSQL;
-      end;
+      NewEpithet := ExtractWord(3, OldName, [' ','/']);
+      NewName := ExtractWord(1, OldName, [' ']) + ' ' + NewEpithet;
     end
     else
+      NewName := ExtractWord(1, OldName, [' ']) + ' ' + Trim(ExtractWord(3, OldName, [' '] + Brackets))
+  end
+  else
+    NewName := ExtractWord(1, OldName, [' ']) + ' ' + ExtractWord(3, OldName, [' ']);
+  Repo.FindBy(COL_SCIENTIFIC_NAME, NewName, toSp);
+  SameSp := NewName = GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, Ssp.ParentTaxonId);
 
-    // If taxon does not exist
+  ParentGenusId := 0;
+
+  try
+    // If taxon exists, activate it
+    if not toSp.IsNew then
     begin
-      with aDataset do
-      begin
-        if ExecNow then
-          SQL.Clear;
-        // List fields
-        SQL.Add('INSERT INTO zoo_taxa (scientific_name, formatted_name, authorship, english_name,');
-        SQL.Add('rank_id, parent_taxon_id, extinct, extinction_year, species_id, genus_id,');
-        SQL.Add('subfamily_id, family_id, order_id, subspecies_group_id, genus_name, species_epithet,');
-        if (btClements in aTaxonomy) then
-          SQL.Add('clements_taxonomy, distribution, ebird_code,');
-        if (btIOC in aTaxonomy) then
-          SQL.Add('ioc_taxonomy, ioc_rank_id, ioc_parent_taxon_id, ioc_english_name, ioc_distribution,');
-        if (btCBRO in aTaxonomy) then
-          SQL.Add('cbro_taxonomy, cbro_rank_id, cbro_parent_taxon_id,');
-        SQL.Add('insert_date, user_inserted) ');
-        // List values
-        SQL.Add('VALUES (:aname, :aformattedname, :autoria, :aenglish, :anivel, :asup,');
-        SQL.Add(':aextinto, :anoextinto, :aspecies, :agenus, :asubfamily, :afamily, :aorder, 0,');
-        SQL.Add(':agenusname, :aepithet,');
-        if (btClements in aTaxonomy) then
-        begin
-          SQL.Add('1, :geodist, :aebirdcode,');
-        end;
-        if (btIOC in aTaxonomy) then
-        begin
-          SQL.Add('1, :anivelioc, :asupioc, :aenglishioc, :geodistioc,');
-        end;
-        if (btCBRO in aTaxonomy) then
-        begin
-          SQL.Add('1, :anivelcbro, :asupcbro,');
-        end;
-        SQL.Add('datetime(''now'',''localtime''), :auser);');
-        ParamByName('ANAME').AsString := NewName;
-        ParamByName('AFORMATTEDNAME').AsString := FormattedBirdName(NewName, SpRank);
-        ParamByName('AUTORIA').AsString := Ssp.Authorship;
-        ParamByName('AENGLISH').AsString := Ssp.EnglishName;
-        ParamByName('ANIVEL').AsInteger := SpRank;
-        ParamByName('ASUP').AsInteger := ParentGenus;
-        ParamByName('AEXTINTO').AsInteger := Integer(Ssp.Extinct);
-        ParamByName('ANOEXTINTO').AsString := Ssp.ExtinctionYear;
-        ParamByName('ASPECIES').AsInteger := GetLastInsertedKey('zoo_taxa') + 1;
-        ParamByName('AGENUS').AsInteger := ParentGenus;
-        ParamByName('ASUBFAMILY').AsInteger := Ssp.SubfamilyId;
-        ParamByName('AFAMILY').AsInteger := Ssp.FamilyId;
-        ParamByName('AORDER').AsInteger := Ssp.OrderId;
-        ParamByName('AGENUSNAME').AsString := ExtractWord(1, OldName, [' ']);
-        ParamByName('AEPITHET').AsString := ExtractWord(3, OldName, [' ']);
-        if (btClements in aTaxonomy) then
-        begin
-          ParamByName('GEODIST').DataType := ftMemo;
-          ParamByName('GEODIST').AsString := Ssp.Distribution;
-          ParamByName('AEBIRDCODE').AsString := Ssp.EbirdCode;
-        end;
-        if (btIOC in aTaxonomy) then
-        begin
-          ParamByName('ANIVELIOC').AsInteger := SpRank;
-          ParamByName('ASUPIOC').AsInteger := ParentGenus;
-          ParamByName('AENGLISHIOC').AsString := Ssp.IocEnglishName;
-          ParamByName('GEODISTIOC').DataType := ftMemo;
-          ParamByName('GEODISTIOC').AsString := Ssp.IocDistribution;
-        end;
-        if (btCBRO in aTaxonomy) then
-        begin
-          ParamByName('ANIVELCBRO').AsInteger := SpRank;
-          ParamByName('ASUPCBRO').AsInteger := ParentGenus;
-        end;
-        ParamByName('AUSER').AsInteger := ActiveUser.Id;
+      toSp.Distribution := Ssp.Distribution;
+      toSp.Accepted := True;
 
-        if ExecNow then
-          ExecSQL;
-      end;
+      Repo.Update(toSp);
+    end
+    else
+    // If taxon does not exist, create it
+    begin
+      ParentGenusId := GetKey(TBL_ZOO_TAXA, COL_TAXON_ID, COL_SCIENTIFIC_NAME, ExtractWord(1, OldName, [' ']));
+
+      toSp.ScientificName := NewName;
+      toSp.FormattedName := FormattedBirdName(NewName, GetRankKey(ZOOLOGICAL_RANKS[trSpecies], ncZoological));
+      toSp.Authorship := Ssp.Authorship;
+      toSp.Rank := trSpecies;
+      toSp.ParentTaxonId := ParentGenusId;
+      toSp.Extinct := Ssp.Extinct;
+      toSp.ExtinctionYear := Ssp.ExtinctionYear;
+      toSp.Distribution := Ssp.Distribution;
+      toSp.EbirdCode := Ssp.EbirdCode;
+      toSp.Accepted := True;
+
+      Repo.Insert(toSp);
+
+      //Synonym.TaxonId := toSp.Id;
+      //Synonym.ScientificName := NewName;
+      //Synonym.Valid := True;
+      //
+      //SynRepo.Insert(Synonym);
     end;
 
     // Update subspecies
-    if ExistingId > 0 then
-      ValidSp := ExistingId
-    else
-      ValidSp := GetLastInsertedKey(TBL_ZOO_TAXA);
-    with aDataset do
+    //if not (Ssp.RankId = trPolitypicGroup) and (not SameSp) then
     begin
-      if ExecNow then
-        SQL.Clear;
-      SQL.Add('UPDATE zoo_taxa SET ');
-      if (btClements in aTaxonomy) then { Clementes/eBird }
-      begin
-        SQL.Add('clements_taxonomy = 0,');
-        SQL.Add('valid_id = :aval,');
-      end;
-      if (btIOC in aTaxonomy) then { IOC }
-      begin
-        SQL.Add('ioc_taxonomy = 0,');
-        SQL.Add('ioc_rank_id = :arank,');
-        SQL.Add('ioc_valid_id = :aval,');
-      end;
-      if (btCBRO in aTaxonomy) then { CBRO }
-      begin
-        SQL.Add('cbro_taxonomy = 0,');
-        SQL.Add('cbro_rank_id = :arank,');
-        SQL.Add('cbro_valid_id = :aval,');
-      end;
-      SQL.Add('update_date = datetime(''now'',''localtime''), user_updated = :auser');
-      SQL.Add('WHERE taxon_id = :ataxon;');
-      if (Params.FindParam('ARANK') <> nil) then
-      begin
-        ParamByName('ARANK').AsInteger := SpRank;
-      end;
-      ParamByName('AVAL').AsInteger := ValidSp;
-      ParamByName('AUSER').AsInteger := ActiveUser.Id;
-      ParamByName('ATAXON').AsInteger := aSubspecies;
-      if ExecNow then
-        ExecSQL;
+      Ssp.Accepted := False;
+      Repo.Update(Ssp);
     end;
 
-  finally
-    FreeAndNil(Ssp);
-  end;
+    // Update synonyms
+    Synonym.Clear;
+    SynRepo.FindByTaxon(toSp.Id, OldName, Synonym);
+    if Synonym.IsNew then
+    begin
+      Synonym.TaxonId := toSp.Id;
+      Synonym.ScientificName := OldName;
 
+      SynRepo.Insert(Synonym);
+    end;
+
+    // Move subspecies when it is a politypic subspecies group
+    if Ssp.Rank = trPolitypicGroup then
+    begin
+      Qry := TSQLQuery.Create(nil);
+      with Qry, SQL do
+      try
+        DataBase := DMM.sqlCon;
+        Add('SELECT taxon_id FROM zoo_taxa');
+        Add('WHERE (parent_taxon_id = :parent_taxon_id)');
+        ParamByName('parent_taxon_id').AsInteger := aSubspeciesId;
+        Open;
+        if not EOF then
+        begin
+          First;
+          repeat
+            MoveToSpecies(FieldByName('taxon_id').AsInteger, toSp.Id);
+            Next;
+          until EOF;
+        end;
+        Close;
+      finally
+        FreeAndNil(Qry);
+      end;
+    end;
+  finally
+    FreeAndNil(Synonym);
+    SynRepo.Free;
+    FreeAndNil(Ssp);
+    FreeAndNil(toSp);
+    Repo.Free;
+  end;
 end;
 
-procedure LumpTaxon(aSpecies, ToSpecies: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-  ExecNow: Boolean);
+procedure LumpTaxon(aSpeciesId, ToSpeciesId: Integer);
 var
   OldName, LumpToName, NewName: String;
-  SspRank, ParentSp, ValidSp, ExistingId: Integer;
-  Ssp, LumpToSp: TTaxon;
+  Repo: TTaxonRepository;
+  Species, toSsp: TTaxon;
+  SynRepo: TTaxonSynonymRepository;
+  Synonym: TTaxonSynonym;
+  Qry: TSQLQuery;
 begin
-  ExistingId := 0;
-  OldName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aSpecies);
-  LumpToName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, ToSpecies);
+  Repo := TTaxonRepository.Create(DMM.sqlCon);
+  Species := TTaxon.Create();
+  Repo.GetById(aSpeciesId, Species);
+  toSsp := TTaxon.Create();
+
+  SynRepo := TTaxonSynonymRepository.Create(DMM.sqlCon);
+  Synonym := TTaxonSynonym.Create();
+
+  OldName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aSpeciesId);
+  LumpToName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, ToSpeciesId);
   NewName := LumpToName + ' ' + ExtractWord(2, OldName, [' ']);
-  SspRank := GetRankKey('ssp.', ncZoological);
-  ParentSp := ToSpecies;
-  Ssp := TTaxon.Create(aSpecies);
-  LumpToSp := TTaxon.Create(ToSpecies);
+  Repo.FindBy(COL_SCIENTIFIC_NAME, NewName, toSsp);
 
   try
-    // If taxon exists
-    if RecordExists(tbZooTaxa, COL_SCIENTIFIC_NAME, NewName) = True then
+    // If taxon exists, activate it
+    if not toSsp.IsNew then
     begin
-      ExistingId := GetValidTaxon(NewName);
-      with aDataset do
-      begin
-        if ExecNow then
-          SQL.Clear;
-        SQL.Add('UPDATE zoo_taxa SET ');
-        if (btClements in aTaxonomy) then { Clementes/eBird }
-        begin
-          SQL.Add('clements_taxonomy = 1,');
-          SQL.Add('valid_id = null,');
-          SQL.Add('distribution = :geodist,');
-        end;
-        if (btIOC in aTaxonomy) then { IOC }
-        begin
-          SQL.Add('ioc_taxonomy = 1,');
-          SQL.Add('ioc_rank_id = :arank,');
-          SQL.Add('ioc_parent_taxon_id = :asup,');
-          SQL.Add('ioc_distribution = :geodistioc,');
-        end;
-        if (btCBRO in aTaxonomy) then { CBRO }
-        begin
-          SQL.Add('cbro_taxonomy = 1,');
-          SQL.Add('cbro_rank_id = :arank,');
-          SQL.Add('cbro_parent_taxon_id = :asup,');
-        end;
-        SQL.Add('update_date = datetime(''now'',''localtime''), user_updated = :auser');
-        SQL.Add('WHERE taxon_id = :ataxon;');
-        if (Params.FindParam('ARANK') <> nil) then
-        begin
-          ParamByName('ARANK').AsInteger := SspRank;
-        end;
-        if (Params.FindParam('ASUP') <> nil) then
-        begin
-          ParamByName('ASUP').AsInteger := ParentSp;
-        end;
-        if (Params.FindParam('GEODIST') <> nil) then
-        begin
-          ParamByName('GEODIST').DataType := ftMemo;
-          ParamByName('GEODIST').AsString := Ssp.Distribution;
-        end;
-        if (Params.FindParam('GEODISTIOC') <> nil) then
-        begin
-          ParamByName('GEODISTIOC').DataType := ftMemo;
-          ParamByName('GEODISTIOC').AsString := Ssp.IocDistribution;
-        end;
-        ParamByName('AUSER').AsInteger := ActiveUser.Id;
-        ParamByName('ATAXON').AsInteger := ExistingId;
-        if ExecNow then
-          ExecSQL;
-      end;
+      toSsp.Accepted := True;
+      toSsp.Distribution := Species.Distribution;
+
+      Repo.Update(toSsp);
     end
     else
-
-    // If taxon does not exist
+    // If taxon does not exist, create it
     begin
-      with aDataset do
-      begin
-        if ExecNow then
-          SQL.Clear;
-        // List fields
-        SQL.Add('INSERT INTO zoo_taxa (scientific_name, formatted_name, authorship, english_name,');
-        SQL.Add('rank_id, parent_taxon_id, extinct, extinction_year, species_id, genus_id,');
-        SQL.Add('subfamily_id, family_id, order_id, subspecies_group_id, genus_name, species_epithet,');
-        if (btClements in aTaxonomy) then
-          SQL.Add('clements_taxonomy, distribution, ebird_code,');
-        if (btIOC in aTaxonomy) then
-          SQL.Add('ioc_taxonomy, ioc_rank_id, ioc_parent_taxon_id, ioc_english_name, ioc_distribution,');
-        if (btCBRO in aTaxonomy) then
-          SQL.Add('cbro_taxonomy, cbro_rank_id, cbro_parent_taxon_id,');
-        SQL.Add('insert_date, user_inserted) ');
-        // List values
-        SQL.Add('VALUES (:aname, :aformattedname, :autoria, :aenglish, :anivel, :asup,');
-        SQL.Add(':aextinto, :anoextinto, :aspecies, :agenus, :asubfamily, :afamily, :aorder, 0,');
-        SQL.Add(':agenusname, :aepithet,');
-        if (btClements in aTaxonomy) then
-        begin
-          SQL.Add('1, :geodist, :aebirdcode,');
-        end;
-        if (btIOC in aTaxonomy) then
-        begin
-          SQL.Add('1, :anivelioc, :asupioc, :aenglishioc, :geodistioc,');
-        end;
-        if (btCBRO in aTaxonomy) then
-        begin
-          SQL.Add('1, :anivelcbro, :asupcbro,');
-        end;
-        SQL.Add('datetime(''now'',''localtime''), :auser);');
-        ParamByName('ANAME').AsString := NewName;
-        ParamByName('AFORMATTEDNAME').AsString := FormattedBirdName(NewName, SspRank);
-        ParamByName('AUTORIA').AsString := Ssp.Authorship;
-        ParamByName('AENGLISH').AsString := Ssp.EnglishName;
-        ParamByName('ANIVEL').AsInteger := SspRank;
-        ParamByName('ASUP').AsInteger := ParentSp;
-        ParamByName('AEXTINTO').AsInteger := Integer(Ssp.Extinct);
-        ParamByName('ANOEXTINTO').AsString := Ssp.ExtinctionYear;
-        ParamByName('ASPECIES').AsInteger := LumpToSp.SpeciesId;
-        ParamByName('AGENUS').AsInteger := LumpToSp.GenusId;
-        ParamByName('ASUBFAMILY').AsInteger := LumpToSp.SubfamilyId;
-        ParamByName('AFAMILY').AsInteger := LumpToSp.FamilyId;
-        ParamByName('AORDER').AsInteger := LumpToSp.OrderId;
-        ParamByName('AGENUSNAME').AsString := ExtractWord(1, NewName, [' ']);
-        ParamByName('AEPITHET').AsString := ExtractWord(2, NewName, [' ']);
-        if (btClements in aTaxonomy) then
-        begin
-          ParamByName('GEODIST').DataType := ftMemo;
-          ParamByName('GEODIST').AsString := Ssp.Distribution;
-          ParamByName('AEBIRDCODE').AsString := Ssp.EbirdCode;
-        end;
-        if (btIOC in aTaxonomy) then
-        begin
-          ParamByName('ANIVELIOC').AsInteger := SspRank;
-          ParamByName('ASUPIOC').AsInteger := ParentSp;
-          ParamByName('AENGLISHIOC').AsString := Ssp.IocEnglishName;
-          ParamByName('GEODISTIOC').DataType := ftMemo;
-          ParamByName('GEODISTIOC').AsString := Ssp.IocDistribution;
-        end;
-        if (btCBRO in aTaxonomy) then
-        begin
-          ParamByName('ANIVELCBRO').AsInteger := SspRank;
-          ParamByName('ASUPCBRO').AsInteger := ParentSp;
-        end;
-        ParamByName('AUSER').AsInteger := ActiveUser.Id;
+      toSsp.ScientificName := NewName;
+      toSsp.FormattedName := FormattedBirdName(NewName, GetRankKey(ZOOLOGICAL_RANKS[trSubspecies], ncZoological));
+      toSsp.Authorship := Species.Authorship;
+      toSsp.Rank := trSubspecies;
+      toSsp.ParentTaxonId := ToSpeciesId;
+      toSsp.Extinct := Species.Extinct;
+      toSsp.ExtinctionYear := Species.ExtinctionYear;
+      toSsp.Distribution := Species.Distribution;
+      toSsp.EbirdCode := Species.EbirdCode;
+      toSsp.Accepted := True;
 
-        if ExecNow then
-          ExecSQL;
-      end;
+      Repo.Insert(toSsp);
+
+      //Synonym.TaxonId := toSsp.Id;
+      //Synonym.ScientificName := NewName;
+      //Synonym.Valid := True;
+      //
+      //SynRepo.Insert(Synonym);
     end;
 
     // Update subspecies
-    if ExistingId > 0 then
-      ValidSp := ExistingId
-    else
-      ValidSp := GetLastInsertedKey(TBL_ZOO_TAXA);
-    with aDataset do
-    begin
-      if ExecNow then
-        SQL.Clear;
-      SQL.Add('UPDATE zoo_taxa SET ');
-      if (btClements in aTaxonomy) then { Clementes/eBird }
-      begin
-        SQL.Add('clements_taxonomy = 0,');
-        SQL.Add('valid_id = :avalid,');
-      end;
-      if (btIOC in aTaxonomy) then { IOC }
-      begin
-        SQL.Add('ioc_taxonomy = 0,');
-        SQL.Add('ioc_rank_id = :arank,');
-        SQL.Add('ioc_valid_id = :avalid,');
-      end;
-      if (btCBRO in aTaxonomy) then { CBRO }
-      begin
-        SQL.Add('cbro_taxonomy = 0,');
-        SQL.Add('cbro_rank_id = :arank,');
-        SQL.Add('cbro_valid_id = :avalid,');
-      end;
-      SQL.Add('update_date = datetime(''now'',''localtime''), user_updated = :auser');
-      SQL.Add('WHERE taxon_id = :ataxon;');
-      if (Params.FindParam('ARANK') <> nil) then
-      begin
-        ParamByName('ARANK').AsInteger := SspRank;
-      end;
-      if (Params.FindParam('AVALID') <> nil) then
-      begin
-        ParamByName('AVALID').AsInteger := ValidSp;
-      end;
-      ParamByName('AUSER').AsInteger := ActiveUser.Id;
-      ParamByName('ATAXON').AsInteger := aSpecies;
+    Species.Accepted := False;
+    Repo.Update(Species);
 
-      if ExecNow then
-        ExecSQL;
+    // Update synonyms
+    Synonym.Clear;
+    SynRepo.FindByTaxon(toSsp.Id, OldName, Synonym);
+    if Synonym.IsNew then
+    begin
+      Synonym.TaxonId := toSsp.Id;
+      Synonym.ScientificName := OldName;
+
+      SynRepo.Insert(Synonym);
     end;
 
+    // Move subspecies groups and subspecies
+    Qry := TSQLQuery.Create(nil);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+      Add('SELECT taxon_id FROM zoo_taxa');
+      Add('WHERE (parent_taxon_id = :parent_taxon_id)');
+      ParamByName('parent_taxon_id').AsInteger := aSpeciesId;
+      Open;
+      if not EOF then
+      begin
+        First;
+        repeat
+          MoveToSpecies(FieldByName('taxon_id').AsInteger, ToSpeciesId);
+          Next;
+        until EOF;
+      end;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
   finally
-    FreeAndNil(Ssp);
-    FreeAndNil(LumpToSp);
+    FreeAndNil(Synonym);
+    SynRepo.Free;
+    FreeAndNil(toSsp);
+    FreeAndNil(Species);
+    Repo.Free;
   end;
-
 end;
 
-procedure MoveToSpecies(aSubspecies, ToSpecies: Integer; aTaxonomy: TBirdTaxonomies;
-  aDataset: TSQLQuery; ExecNow: Boolean);
+procedure MoveToSpecies(aSubspecies, ToSpecies: Integer; Suffix: TChangeSuffix);
 var
   OldName, MoveToName, NewName: String;
-  OldRankId, aRankId, ParentSp, ValidSsp, ExistingId: Integer;
-  Ssp, MoveToSp: TTaxon;
-  OldRank: TZooRank;
+  Repo: TTaxonRepository;
+  Ssp, toSsp: TTaxon;
+  SynRepo: TTaxonSynonymRepository;
+  Synonym: TTaxonSynonym;
+  Qry: TSQLQuery;
 begin
-  ExistingId := 0;
-  OldRankId := GetRankFromTaxon(aSubspecies);
-  OldRank := GetRankType(OldRankId);
+  Repo := TTaxonRepository.Create(DMM.sqlCon);
+  Ssp := TTaxon.Create();
+  Repo.GetById(aSubspecies, Ssp);
+  toSsp := TTaxon.Create();
+
+  SynRepo := TTaxonSynonymRepository.Create(DMM.sqlCon);
+  Synonym := TTaxonSynonym.Create();
+
   OldName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aSubspecies);
   MoveToName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, ToSpecies);
-  if OldRank = trPolitypicGroup then
-    NewName := MoveToName + ' ' + Trim(ExtractWord(2, OldName, Brackets))
+  if (WordCount(MoveToName, [' ']) > 2) then
+    MoveToName := ExtractWord(1, MoveToName, [' ']) + ' ' + ExtractWord(2, MoveToName, [' ']);
+  if Ssp.Rank = trPolitypicGroup then
+  begin
+    if Pos('/', OldName) > 0 then
+      NewName := MoveToName + ' ' + ChangeSuffix(Suffix, Trim(ExtractWord(3, OldName, [' '])))
+    else
+      NewName := MoveToName + ' ' + ChangeSuffix(Suffix, Trim(ExtractWord(3, OldName, [' '] + Brackets)));
+  end
   else
-    NewName := MoveToName + ' ' + ExtractWord(3, OldName, [' ']);
-  ParentSp := ToSpecies;
-  Ssp := TTaxon.Create(aSubspecies);
-  aRankId := GetRankKey(ZOOLOGICAL_RANKS[Ssp.Rank], ncZoological);
-  MoveToSp := TTaxon.Create(ToSpecies);
-  //GravaLog('MOVE TO SPECIES', OldName + ' -> ' + MoveToName + ' = ' + NewName);
+  if Ssp.Rank = trForm then
+  begin
+    if (Pos('[', OldName) > 0) or (Pos('(', OldName) > 0) then
+      NewName := MoveToName + ' ' + ChangeSuffix(Suffix, Trim(ExtractWord(3, OldName, Brackets)))
+    else
+      NewName := MoveToName + ' ' + ChangeSuffix(Suffix, Trim(ExtractWord(3, OldName, [' '])));
+  end
+  else
+    NewName := MoveToName + ' ' + ChangeSuffix(Suffix, ExtractWord(3, OldName, [' ']));
+  // Suffix
+  //NewName := ChangeSuffix(Suffix, NewName);
+
+  Repo.FindBy(COL_SCIENTIFIC_NAME, NewName, toSsp);
 
   try
-    // If taxon exists
-    if RecordExists(tbZooTaxa, COL_SCIENTIFIC_NAME, NewName) = True then
+    // If taxon exists, update it
+    if not toSsp.IsNew then
     begin
-      ExistingId := GetValidTaxon(NewName);
-      with aDataset do
-      begin
-        if ExecNow then
-          SQL.Clear;
-        SQL.Add('UPDATE zoo_taxa SET ');
-        if (btClements in aTaxonomy) then { Clementes/eBird }
-        begin
-          SQL.Add('clements_taxonomy = 1,');
-          case OldRank of
-            trMonotypicGroup:
-              begin
-                SQL.Add('rank_id = :arankmono,');
-                SQL.Add('formatted_name = :aformattedmono,');
-              end;
-            trPolitypicGroup:
-              begin
-                SQL.Add('rank_id = :arankpoli,');
-                SQL.Add('formatted_name = :aformattedpoli,');
-              end;
-          else
-            SQL.Add('rank_id = :arank,');
-            SQL.Add('formatted_name = :aformattedname,');
-          end;
-          SQL.Add('valid_id = null,');
-          // SQL.Add('TAX_ENGLISH = '+QuotedStr(Ssp.NomeEnglish)+',');
-          SQL.Add('distribution = :geodist,');
-        end;
-        if (btIOC in aTaxonomy) then { IOC }
-        begin
-          SQL.Add('ioc_taxonomy = 1,');
-          SQL.Add('ioc_rank_id = :arank,');
-          SQL.Add('ioc_parent_taxon_id = :asup,');
-          SQL.Add('ioc_distribution = :geodistioc,');
-        end;
-        if (btCBRO in aTaxonomy) then { CBRO }
-        begin
-          SQL.Add('cbro_taxonomy = 1,');
-          SQL.Add('cbro_rank_id = :arank,');
-          SQL.Add('cbro_parent_taxon_id = :asup,');
-        end;
-        SQL.Add('update_date = datetime(''now'',''localtime''), user_updated = :auser');
-        SQL.Add('WHERE taxon_id = :ataxon;');
-        if (Params.FindParam('ASUP') <> nil) then
-        begin
-          ParamByName('ASUP').AsInteger := ParentSp;
-        end;
-        if (Params.FindParam('GEODIST') <> nil) then
-        begin
-          ParamByName('GEODIST').DataType := ftMemo;
-          ParamByName('GEODIST').AsString := Ssp.Distribution;
-        end;
-        if (Params.FindParam('GEODISTIOC') <> nil) then
-        begin
-          ParamByName('GEODISTIOC').DataType := ftMemo;
-          ParamByName('GEODISTIOC').AsString := Ssp.IocDistribution;
-        end;
-        case OldRank of
-          trMonotypicGroup:
-            begin
-              ParamByName('ARANKMONO').AsInteger := OldRankId;
-              ParamByName('AFORMATTEDMONO').AsString := FormattedBirdName(NewName, OldRankId);
-            end;
-          trPolitypicGroup:
-            begin
-              ParamByName('ARANKPOLI').AsInteger := OldRankId;
-              ParamByName('AFORMATTEDPOLI').AsString := FormattedBirdName(NewName, OldRankId);
-            end;
-        else
-          ParamByName('ARANK').AsInteger := aRankId;
-          ParamByName('AFORMATTEDNAME').AsString := FormattedBirdName(NewName, aRankId);
-        end;
-        ParamByName('AUSER').AsInteger := ActiveUser.Id;
-        ParamByName('ATAXON').AsInteger := ExistingId;
+      toSsp.Accepted := True;
+      toSsp.Distribution := Ssp.Distribution;
+      toSsp.Rank := Ssp.Rank;
+      toSsp.FormattedName := FormattedBirdName(NewName, GetRankKey(ZOOLOGICAL_RANKS[Ssp.Rank], ncZoological));
 
-        if ExecNow then
-          ExecSQL;
-      end;
+      Repo.Update(toSsp);
     end
     else
-
-    // If taxon does not exist
+    // If taxon does not exist, create it
     begin
-      with aDataset do
-      begin
-        if ExecNow then
-          SQL.Clear;
-        // List fields
-        SQL.Add('INSERT INTO zoo_taxa (scientific_name, formatted_name, authorship, english_name,');
-        SQL.Add('rank_id, parent_taxon_id, extinct, extinction_year, species_id, genus_id, subfamily_id,');
-        SQL.Add('family_id, order_id, subspecies_group_id, genus_name, species_epithet, subspecies_epithet,');
-        if (btClements in aTaxonomy) then
-          SQL.Add('clements_taxonomy, distribution, ebird_code,');
-        if (btIOC in aTaxonomy) then
-          SQL.Add('ioc_taxonomy, ioc_rank_id, ioc_parent_taxon_id, ioc_english_name, ioc_distribution,');
-        if (btCBRO in aTaxonomy) then
-          SQL.Add('cbro_taxonomy, cbro_rank_id, cbro_parent_taxon_id,');
-        SQL.Add('insert_date, user_inserted) ');
-        // List values
-        SQL.Add('VALUES (:aname, :aformattedname, :autoria, :aenglish, :anivel, :asup,');
-        SQL.Add(':aextinto, :anoextinto, :aspecies, :agenus, :asubfamily, :afamily, :aorder, 0,');
-        SQL.Add(':agenusname, :aepithet, :asspepithet,');
-        if (btClements in aTaxonomy) then
-        begin
-          SQL.Add('1, :geodist, :aebirdcode,');
-        end;
-        if (btIOC in aTaxonomy) then
-        begin
-          SQL.Add('1, :anivelioc, :asupioc, :aenglishioc, :geodistioc,');
-        end;
-        if (btCBRO in aTaxonomy) then
-        begin
-          SQL.Add('1, :anivelcbro, :asupcbro,');
-        end;
-        SQL.Add('datetime(''now'',''localtime''), :auser);');
-        ParamByName('ANAME').AsString := NewName;
-        ParamByName('AFORMATTEDNAME').AsString := FormattedBirdName(NewName, OldRankId);
-        ParamByName('AUTORIA').AsString := Ssp.Authorship;
-        ParamByName('AENGLISH').AsString := Ssp.EnglishName;
-        ParamByName('ANIVEL').AsInteger := OldRankId;
-        ParamByName('ASUP').AsInteger := ParentSp;
-        ParamByName('AEXTINTO').AsInteger := Integer(Ssp.Extinct);
-        ParamByName('ANOEXTINTO').AsString := Ssp.ExtinctionYear;
-        ParamByName('ASPECIES').AsInteger := MoveToSp.SpeciesId;
-        ParamByName('AGENUS').AsInteger := MoveToSp.GenusId;
-        ParamByName('ASUBFAMILY').AsInteger := MoveToSp.SubfamilyId;
-        ParamByName('AFAMILY').AsInteger := MoveToSp.FamilyId;
-        ParamByName('AORDER').AsInteger := MoveToSp.OrderId;
-        //ParamByName('AGENUSNAME').AsString := MoveToSp.GenusEpithet;
-        //ParamByName('AEPITHET').AsString := MoveToSp.SpeciesEpithet;
-        //ParamByName('ASSPEPITHET').AsString := ExtractWord(3, NewName, [' ']);
-        if (btClements in aTaxonomy) then
-        begin
-          ParamByName('GEODIST').DataType := ftMemo;
-          ParamByName('GEODIST').AsString := Ssp.Distribution;
-          ParamByName('AEBIRDCODE').AsString := Ssp.EbirdCode;
-        end;
-        if (btIOC in aTaxonomy) then
-        begin
-          ParamByName('ANIVELIOC').AsInteger := GetRankKey('ssp.', ncZoological);
-          ParamByName('ASUPIOC').AsInteger := ParentSp;
-          ParamByName('AENGLISHIOC').AsString := Ssp.IocEnglishName;
-          ParamByName('GEODISTIOC').DataType := ftMemo;
-          ParamByName('GEODISTIOC').AsString := Ssp.IocDistribution;
-        end;
-        if (btCBRO in aTaxonomy) then
-        begin
-          ParamByName('ANIVELCBRO').AsInteger := GetRankKey('ssp.', ncZoological);
-          ParamByName('ASUPCBRO').AsInteger := ParentSp;
-        end;
-        ParamByName('AUSER').AsInteger := ActiveUser.Id;
+      toSsp.ScientificName := NewName;
+      toSsp.FormattedName := FormattedBirdName(NewName, GetRankKey(ZOOLOGICAL_RANKS[Ssp.Rank], ncZoological));
+      toSsp.Authorship := Ssp.Authorship;
+      toSsp.Rank := Ssp.Rank;
+      toSsp.ParentTaxonId := ToSpecies;
+      toSsp.Extinct := Ssp.Extinct;
+      toSsp.ExtinctionYear := Ssp.ExtinctionYear;
+      toSsp.Distribution := Ssp.Distribution;
+      toSsp.EbirdCode := Ssp.EbirdCode;
+      toSsp.Accepted := True;
 
-        if ExecNow then
-          ExecSQL;
-      end;
+      Repo.Insert(toSsp);
+
+      //Synonym.TaxonId := toSsp.Id;
+      //Synonym.ScientificName := NewName;
+      //Synonym.Valid := True;
+      //
+      //SynRepo.Insert(Synonym);
     end;
 
     // Update subspecies
-    if ExistingId > 0 then
-      ValidSsp := ExistingId
-    else
-      ValidSsp := GetLastInsertedKey(TBL_ZOO_TAXA);
-    with aDataset do
+    Ssp.Accepted := False;
+    Repo.Update(Ssp);
+
+    // Update synonyms
+    Synonym.Clear;
+    SynRepo.FindByTaxon(toSsp.Id, OldName, Synonym);
+    if Synonym.IsNew then
     begin
-      if ExecNow then
-        SQL.Clear;
-      SQL.Add('UPDATE zoo_taxa SET ');
-      if (btClements in aTaxonomy) then { Clementes/eBird }
-      begin
-        SQL.Add('clements_taxonomy = 0,');
-        SQL.Add('valid_id = :avalid,');
-      end;
-      if (btIOC in aTaxonomy) then { IOC }
-      begin
-        SQL.Add('ioc_taxonomy = 0,');
-        SQL.Add('ioc_rank_id = :arank,');
-        SQL.Add('ioc_valid_id = :avalid,');
-      end;
-      if (btCBRO in aTaxonomy) then { CBRO }
-      begin
-        SQL.Add('cbro_taxonomy = 0,');
-        SQL.Add('cbro_rank_id = :arank,');
-        SQL.Add('cbro_valid_id = :avalid,');
-      end;
-      SQL.Add('update_date = datetime(''now'',''localtime''), user_updated = :auser');
-      SQL.Add('WHERE taxon_id = :ataxon;');
-      if (Params.FindParam('ARANK') <> nil) then
-      begin
-        ParamByName('ARANK').AsInteger := GetRankKey('ssp.', ncZoological);
-      end;
-      if (Params.FindParam('AVALID') <> nil) then
-      begin
-        ParamByName('AVALID').AsInteger := ValidSsp;
-      end;
-      ParamByName('AUSER').AsInteger := ActiveUser.Id;
-      ParamByName('ATAXON').AsInteger := aSubspecies;
+      Synonym.TaxonId := toSsp.Id;
+      Synonym.ScientificName := OldName;
 
-      if ExecNow then
-        ExecSQL;
+      SynRepo.Insert(Synonym);
     end;
+    CopySynonyms(Ssp.Id, toSsp.Id);
 
+    // Update country lists
+    UpdateCountryOccurrence(Ssp.Id, toSsp.Id);
+
+    // Move subspecies from subspecies group
+    if Ssp.Rank = trPolitypicGroup then
+    begin
+      Qry := TSQLQuery.Create(nil);
+      with Qry, SQL do
+      try
+        DataBase := DMM.sqlCon;
+        Add('SELECT taxon_id FROM zoo_taxa');
+        Add('WHERE (parent_taxon_id = :parent_taxon_id)');
+        ParamByName('parent_taxon_id').AsInteger := aSubspecies;
+        Open;
+        if not EOF then
+        begin
+          First;
+          repeat
+            MoveToSpecies(FieldByName('taxon_id').AsInteger, toSsp.Id, Suffix);
+            Next;
+          until EOF;
+        end;
+        Close;
+      finally
+        FreeAndNil(Qry);
+      end;
+    end;
   finally
+    FreeAndNil(Synonym);
+    SynRepo.Free;
+    FreeAndNil(toSsp);
     FreeAndNil(Ssp);
-    FreeAndNil(MoveToSp);
+    Repo.Free;
   end;
-
 end;
 
-procedure MoveToGenus(aSpecies, ToGenus: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-  ExecNow: Boolean);
+procedure MoveToGenus(aSpecies, ToGenus: Integer; Suffix: TChangeSuffix);
 var
   OldName, MoveToName, NewName: String;
-  SpRank, ParentGenus, ValidSp, ExistingId: Integer;
-  Ssp, Gen: TTaxon;
+  Repo: TTaxonRepository;
+  Species, toSp: TTaxon;
+  SynRepo: TTaxonSynonymRepository;
+  Synonym: TTaxonSynonym;
+  Qry: TSQLQuery;
 begin
-  ExistingId := 0;
+  Repo := TTaxonRepository.Create(DMM.sqlCon);
+  Species := TTaxon.Create();
+  Repo.GetById(aSpecies, Species);
+  toSp := TTaxon.Create();
+
+  SynRepo := TTaxonSynonymRepository.Create(DMM.sqlCon);
+  Synonym := TTaxonSynonym.Create();
+
   OldName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aSpecies);
   MoveToName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, ToGenus);
-  NewName := MoveToName + ' ' + ExtractWord(2, OldName, [' ']);
-  SpRank := GetRankKey('sp.', ncZoological);
-  ParentGenus := ToGenus;
-  Ssp := TTaxon.Create(aSpecies);
-  Gen := TTaxon.Create(ToGenus);
+  NewName := MoveToName + ' ' + ChangeSuffix(Suffix, ExtractWord(2, OldName, [' ']));
+  // Suffix
+  //NewName := ChangeSuffix(Suffix, NewName);
+
+  Repo.FindBy(COL_SCIENTIFIC_NAME, NewName, toSp);
 
   try
-    // If taxon exists
-    if RecordExists(tbZooTaxa, COL_SCIENTIFIC_NAME, NewName) = True then
+    // If taxon exists, update it
+    if not toSp.IsNew then
     begin
-      ExistingId := GetValidTaxon(NewName);
-      with aDataset do
-      begin
-        if ExecNow then
-          SQL.Clear;
-        SQL.Add('UPDATE zoo_taxa SET ');
-        if (btClements in aTaxonomy) then { Clementes/eBird }
-        begin
-          SQL.Add('clements_taxonomy = 1,');
-          SQL.Add('valid_id = null,');
-          // SQL.Add('TAX_ENGLISH = '+QuotedStr(Ssp.NomeEnglish)+',');
-          SQL.Add('distribution = :geodist,');
-        end;
-        if (btIOC in aTaxonomy) then { IOC }
-        begin
-          SQL.Add('ioc_taxonomy = 1,');
-          SQL.Add('ioc_rank_id = :arank,');
-          SQL.Add('ioc_parent_taxon_id = :asup,');
-          SQL.Add('ioc_distribution = :geodistioc,');
-        end;
-        if (btCBRO in aTaxonomy) then { CBRO }
-        begin
-          SQL.Add('cbro_taxonomy = 1,');
-          SQL.Add('cbro_rank_id = :arank,');
-          SQL.Add('cbro_parent_taxon_id = :asup,');
-        end;
-        SQL.Add('update_date = datetime(''now'',''localtime''), user_updated = :auser');
-        SQL.Add('WHERE taxon_id = :ataxon;');
+      toSp.Accepted := True;
+      toSp.Distribution := Species.Distribution;
 
-        if (Params.FindParam('ARANK') <> nil) then
-        begin
-          ParamByName('ARANK').AsInteger := SpRank;
-        end;
-        if (Params.FindParam('ASUP') <> nil) then
-        begin
-          ParamByName('ASUP').AsInteger := ParentGenus;
-        end;
-        if (Params.FindParam('GEODIST') <> nil) then
-        begin
-          ParamByName('GEODIST').DataType := ftMemo;
-          ParamByName('GEODIST').AsString := Ssp.Distribution;
-        end;
-        if (Params.FindParam('GEODISTIOC') <> nil) then
-        begin
-          ParamByName('GEODISTIOC').DataType := ftMemo;
-          ParamByName('GEODISTIOC').AsString := Ssp.IocDistribution;
-        end;
-        ParamByName('AUSER').AsInteger := ActiveUser.Id;
-        ParamByName('ATAXON').AsInteger := ExistingId;
-
-        if ExecNow then
-          ExecSQL;
-      end;
+      Repo.Update(toSp);
     end
     else
-    // If taxon does not exist
+    // If taxon does not exist, create it
     begin
-      with aDataset do
-      begin
-        if ExecNow then
-          SQL.Clear;
-        // List fields
-        SQL.Add('INSERT INTO zoo_taxa (scientific_name, formatted_name, authorship, english_name,');
-        SQL.Add('rank_id, parent_taxon_id, extinct, extinction_year, species_id, genus_id, subfamily_id,');
-        SQL.Add('family_id, order_id, subspecies_group_id, genus_name, species_epithet, subspecies_epithet,');
-        if (btClements in aTaxonomy) then
-          SQL.Add('clements_taxonomy, distribution, ebird_code,');
-        if (btIOC in aTaxonomy) then
-          SQL.Add('ioc_taxonomy, ioc_rank_id, ioc_parent_taxon_id, ioc_english_name, ioc_distribution,');
-        if (btCBRO in aTaxonomy) then
-          SQL.Add('cbro_taxonomy, cbro_rank_id, cbro_parent_taxon_id,');
-        SQL.Add('insert_date, user_inserted) ');
-        // List values
-        SQL.Add('VALUES (:aname, :aformattedname, :autoria, :aenglish, :anivel, :asup,');
-        SQL.Add(':aextinto, :anoextinto, :aspecies, :agenus, :asubfamily, :afamily, :aorder, 0,');
-        SQL.Add(':agenusname, :aepithet, null,');
-        if (btClements in aTaxonomy) then
-        begin
-          SQL.Add('1, :geodist, :aebirdcode,');
-        end;
-        if (btIOC in aTaxonomy) then
-        begin
-          SQL.Add('1, :anivelioc, :asupioc, :aenglishioc, :geodistioc,');
-        end;
-        if (btCBRO in aTaxonomy) then
-        begin
-          SQL.Add('1, :anivelcbro, :asupcbro,');
-        end;
-        SQL.Add('datetime(''now'',''localtime''), :auser);');
-        ParamByName('ANAME').AsString := NewName;
-        ParamByName('AFORMATTEDNAME').AsString := FormattedBirdName(NewName, SpRank);
-        ParamByName('AUTORIA').AsString := Ssp.Authorship;
-        ParamByName('AENGLISH').AsString := Ssp.EnglishName;
-        ParamByName('ANIVEL').AsInteger := SpRank;
-        ParamByName('ASUP').AsInteger := ParentGenus;
-        ParamByName('AEXTINTO').AsInteger := Integer(Ssp.Extinct);
-        ParamByName('ANOEXTINTO').AsString := Ssp.ExtinctionYear;
-        ParamByName('ASPECIES').AsInteger := GetLastInsertedKey('zoo_taxa') + 1;
-        ParamByName('AGENUS').AsInteger := ToGenus;
-        ParamByName('ASUBFAMILY').AsInteger := Gen.SubfamilyId;
-        ParamByName('AFAMILY').AsInteger := Gen.FamilyId;
-        ParamByName('AORDER').AsInteger := Gen.OrderId;
-        ParamByName('AGENUSNAME').AsString := Gen.ScientificName;
-        ParamByName('AEPITHET').AsString := ExtractWord(2, NewName, [' ']);
-        if (btClements in aTaxonomy) then
-        begin
-          ParamByName('GEODIST').DataType := ftMemo;
-          ParamByName('GEODIST').AsString := Ssp.Distribution;
-          ParamByName('AEBIRDCODE').AsString := Ssp.EbirdCode;
-        end;
-        if (btIOC in aTaxonomy) then
-        begin
-          ParamByName('ANIVELIOC').AsInteger := SpRank;
-          ParamByName('ASUPIOC').AsInteger := ParentGenus;
-          ParamByName('AENGLISHIOC').AsString := Ssp.IocEnglishName;
-          ParamByName('GEODISTIOC').DataType := ftMemo;
-          ParamByName('GEODISTIOC').AsString := Ssp.IocDistribution;
-        end;
-        if (btCBRO in aTaxonomy) then
-        begin
-          ParamByName('ANIVELCBRO').AsInteger := SpRank;
-          ParamByName('ASUPCBRO').AsInteger := ParentGenus;
-        end;
-        ParamByName('AUSER').AsInteger := ActiveUser.Id;
+      toSp.ScientificName := NewName;
+      toSp.FormattedName := FormattedBirdName(NewName, GetRankKey(ZOOLOGICAL_RANKS[trSpecies], ncZoological));
+      toSp.Authorship := Species.Authorship;
+      toSp.Rank := trSpecies;
+      toSp.ParentTaxonId := ToGenus;
+      toSp.Extinct := Species.Extinct;
+      toSp.ExtinctionYear := Species.ExtinctionYear;
+      toSp.Distribution := Species.Distribution;
+      toSp.EbirdCode := Species.EbirdCode;
+      toSp.Accepted := True;
 
-        if ExecNow then
-          ExecSQL;
-      end;
+      Repo.Insert(toSp);
+
+      //Synonym.TaxonId := toSp.Id;
+      //Synonym.ScientificName := NewName;
+      //Synonym.Valid := True;
+      //
+      //SynRepo.Insert(Synonym);
     end;
 
     // Update subspecies
-    if ExistingId > 0 then
-      ValidSp := ExistingId
-    else
-      ValidSp := GetLastInsertedKey(TBL_ZOO_TAXA);
-    with aDataset do
+    Species.Accepted := False;
+    Repo.Update(Species);
+
+    // Update synonyms
+    Synonym.Clear;
+    SynRepo.FindByTaxon(toSp.Id, OldName, Synonym);
+    if Synonym.IsNew then
     begin
-      if ExecNow then
-        SQL.Clear;
-      SQL.Add('UPDATE zoo_taxa SET ');
-      if (btClements in aTaxonomy) then { Clementes/eBird }
-      begin
-        SQL.Add('clements_taxonomy = 0,');
-        SQL.Add('valid_id = :avalid,');
-      end;
-      if (btIOC in aTaxonomy) then { IOC }
-      begin
-        SQL.Add('ioc_taxonomy = 0,');
-        SQL.Add('ioc_rank_id = :arank,');
-        SQL.Add('ioc_valid_id = :avalid,');
-      end;
-      if (btCBRO in aTaxonomy) then { CBRO }
-      begin
-        SQL.Add('cbro_taxonomy = 0,');
-        SQL.Add('cbro_rank_id = :arank,');
-        SQL.Add('cbro_valid_id = :avalid,');
-      end;
-      SQL.Add('update_date = datetime(''now'',''localtime''), user_updated = :auser');
-      SQL.Add('WHERE taxon_id = :ataxon;');
-      if (Params.FindParam('ARANK') <> nil) then
-        begin
-          ParamByName('ARANK').AsInteger := SpRank;
-        end;
-        if (Params.FindParam('AVALID') <> nil) then
-        begin
-          ParamByName('AVALID').AsInteger := ValidSp;
-        end;
-        ParamByName('AUSER').AsInteger := ActiveUser.Id;
-        ParamByName('ATAXON').AsInteger := aSpecies;
+      Synonym.TaxonId := toSp.Id;
+      Synonym.ScientificName := OldName;
 
-      if ExecNow then
-        ExecSQL;
+      SynRepo.Insert(Synonym);
     end;
+    CopySynonyms(Species.Id, toSp.Id);
 
+    // Update country lists
+    UpdateCountryOccurrence(Species.Id, toSp.Id);
+
+    // Move subspecies groups and subspecies
+    Qry := TSQLQuery.Create(nil);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+      Add('SELECT taxon_id FROM zoo_taxa');
+      Add('WHERE (parent_taxon_id = :parent_taxon_id)');
+      ParamByName('parent_taxon_id').AsInteger := aSpecies;
+      Open;
+      if not EOF then
+      begin
+        First;
+        repeat
+          MoveToSpecies(FieldByName('taxon_id').AsInteger, toSp.Id, Suffix);
+          Next;
+        until EOF;
+      end;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
   finally
-    FreeAndNil(Ssp);
-    FreeAndNil(Gen);
+    FreeAndNil(Synonym);
+    SynRepo.Free;
+    FreeAndNil(Species);
+    FreeAndNil(toSp);
+    Repo.Free;
   end;
-
 end;
 
-procedure MoveToFamily(aFamily: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-  ExecNow: Boolean);
+procedure MoveToFamily(aTaxonId, toFamilyId: Integer);
+var
+  Repo: TTaxonRepository;
+  Taxon: TTaxon;
 begin
-  { #todo : Move taxon to family }
+  Repo := TTaxonRepository.Create(DMM.sqlCon);
+  Taxon := TTaxon.Create();
+  try
+    Repo.GetById(aTaxonId, Taxon);
+    if not Taxon.IsNew then
+    begin
+      if Taxon.Rank = trGenus then
+        Taxon.ParentTaxonId := toFamilyId;
+      Taxon.FamilyId := toFamilyId;
+
+      Repo.Update(Taxon);
+    end;
+  finally
+    FreeAndNil(Taxon);
+    Repo.Free;
+  end;
 end;
 
-procedure MoveToOrder(aOrder: Integer; aTaxonomy: TBirdTaxonomies; aDataset: TSQLQuery;
-  ExecNow: Boolean);
+procedure MoveToOrder(aTaxonId, toOrderId: Integer);
+var
+  Repo: TTaxonRepository;
+  Taxon: TTaxon;
 begin
-  { #todo : Move taxon to order }
+  Repo := TTaxonRepository.Create(DMM.sqlCon);
+  Taxon := TTaxon.Create();
+  try
+    Repo.GetById(aTaxonId, Taxon);
+    if not Taxon.IsNew then
+    begin
+      if Taxon.Rank = trFamily then
+        Taxon.ParentTaxonId := toOrderId;
+      Taxon.OrderId := toOrderId;
+
+      Repo.Update(Taxon);
+    end;
+  finally
+    FreeAndNil(Taxon);
+    Repo.Free;
+  end;
 end;
 
 procedure UpdateScientificName(aTaxon: Integer; aNewName: String; aDataset: TSQLQuery;
@@ -1666,73 +955,10 @@ begin
   with aDataset, SQL do
   begin
     Clear;
-    Add('UPDATE zoo_taxa SET scientific_name = :newname, formatted_name = :newhtml WHERE taxon_id = :ataxon;');
-    ParamByName('NEWNAME').AsString := aNewName;
-    ParamByName('NEWHTML').AsString := FormattedBirdName(aNewName, RankId);
-    ParamByName('ATAXON').AsInteger := aTaxon;
-
-    if ExecNow then
-      ExecSQL;
-  end;
-end;
-
-procedure UpdateEnglishName(aTaxon: Integer; aNewName: String; aTaxonomy: TBirdTaxonomies;
-  aDataset: TSQLQuery; ExecNow: Boolean);
-begin
-  with aDataset, SQL do
-  begin
-    Clear;
-    if (btClements in aTaxonomy) then
-      Add('UPDATE zoo_taxa SET english_name = :newname WHERE taxon_id = :ataxon;');
-    if (btIOC in aTaxonomy) then
-      Add('UPDATE zoo_taxa SET ioc_english_name = :newname WHERE taxon_id = :ataxon;');
-    ParamByName('NEWNAME').AsString := aNewName;
-    ParamByName('ATAXON').AsInteger := aTaxon;
-
-    if ExecNow then
-      ExecSQL;
-  end;
-end;
-
-procedure UpdatePortuguesName(aTaxon: Integer; aNewName: String; aDataset: TSQLQuery;
-  ExecNow: Boolean);
-begin
-  with aDataset, SQL do
-  begin
-    Clear;
-    Add('UPDATE zoo_taxa SET portuguese_name = :newname WHERE taxon_id = :ataxon;');
-    ParamByName('NEWNAME').AsString := aNewName;
-    ParamByName('ATAXON').AsInteger := aTaxon;
-
-    if ExecNow then
-      ExecSQL;
-  end;
-end;
-
-procedure UpdateOutrosPortugues(aTaxon: Integer; aNewName: String; aDataset: TSQLQuery;
-  ExecNow: Boolean);
-begin
-  with aDataset, SQL do
-  begin
-    Clear;
-    Add('UPDATE zoo_taxa SET other_portuguese_names = :newname WHERE taxon_id = :ataxon;');
-    ParamByName('NEWNAME').AsString := aNewName;
-    ParamByName('ATAXON').AsInteger := aTaxon;
-
-    if ExecNow then
-      ExecSQL;
-  end;
-end;
-
-procedure UpdateSpanishName(aTaxon: Integer; aNewName: String; aDataset: TSQLQuery; ExecNow: Boolean
-  );
-begin
-  with aDataset, SQL do
-  begin
-    Clear;
-    Add('UPDATE zoo_taxa SET spanish_name = :newname WHERE taxon_id = :ataxon;');
-    ParamByName('NEWNAME').AsString := aNewName;
-    ParamByName('ATAXON').AsInteger := aTaxon;
+    Add('UPDATE zoo_taxa SET scientific_name = :full_name, formatted_name = :formatted_name WHERE (taxon_id = :id);');
+    ParamByName('scientific_name').AsString := aNewName;
+    ParamByName('formatted_name').AsString := FormattedBirdName(aNewName, RankId);
+    ParamByName('id').AsInteger := aTaxon;
 
     if ExecNow then
       ExecSQL;
@@ -1744,9 +970,9 @@ begin
   with aDataset, SQL do
   begin
     Clear;
-    Add('UPDATE zoo_taxa SET authorship = :autor WHERE taxon_id = :ataxon;');
-    ParamByName('AUTOR').AsString := aNewName;
-    ParamByName('ATAXON').AsInteger := aTaxon;
+    Add('UPDATE zoo_taxa SET authorship = :authorship WHERE (taxon_id = :id);');
+    ParamByName('authorship').AsString := aNewName;
+    ParamByName('id').AsInteger := aTaxon;
 
     if ExecNow then
       ExecSQL;
@@ -1759,12 +985,9 @@ begin
   with aDataset, SQL do
   begin
     Clear;
-    if (btClements in aTaxonomy) then
-      Add('UPDATE zoo_taxa SET distribution = :geodist WHERE taxon_id = :ataxon;');
-    if (btIOC in aTaxonomy) then
-      Add('UPDATE zoo_taxa SET ioc_distribution = :geodist WHERE taxon_id = :ataxon;');
-    ParamByName('GEODIST').AsString := aDist;
-    ParamByName('ATAXON').AsInteger := aTaxon;
+    Add('UPDATE zoo_taxa SET distribution = :distribution WHERE (taxon_id = :id);');
+    ParamByName('distribution').AsString := aDist;
+    ParamByName('id').AsInteger := aTaxon;
 
     if ExecNow then
       ExecSQL;
@@ -1779,15 +1002,452 @@ begin
     Clear;
     if IsExtinct = True then
     begin
-      Add('UPDATE zoo_taxa SET extinct = 1, extinction_year = :ayear WHERE taxon_id = :ataxon;');
-      ParamByName('AYEAR').AsString := aYear;
+      Add('UPDATE zoo_taxa SET extinct = 1, extinction_year = :extinction_year WHERE (taxon_id = :id);');
+      ParamByName('extinction_year').AsString := aYear;
     end
     else
-      Add('UPDATE zoo_taxa SET extinct = 0 WHERE taxon_id = :ataxon;');
-    ParamByName('ATAXON').AsInteger := aTaxon;
+      Add('UPDATE zoo_taxa SET extinct = 0 WHERE taxon_id = :id;');
+    ParamByName('id').AsInteger := aTaxon;
 
     if ExecNow then
       ExecSQL;
+  end;
+end;
+
+function Italic(const AText: String): String;
+begin
+  Result := '<i>' + AText + '</i>';
+end;
+
+function Colored(const AText: String; const AColor: String): String;
+begin
+  Result := Format('<font color="%s">%s</font>', [AColor, AText]);
+end;
+
+function Bold(const AText: String): String;
+begin
+  Result := '<b>' + AText + '</b>';
+end;
+
+function Enclosed(const AText: String; ABracket: TBrackets): String;
+begin
+  case ABracket of
+    brParenthesis:  Result := '(' + AText + ')';
+    brSquare:       Result := '[' + AText + ']';
+    brCurly:        Result := '{' + AText + '}';
+  end;
+end;
+
+procedure ExtractParents(const AText: String; out Parent1, Parent2: String);
+var
+  aName: String;
+begin
+  if (Pos(' x ', AText) > 0) then
+  begin
+    aName := StringReplace(AText, ' x ', ' | ', [rfReplaceAll]);
+    Parent1 := Trim(ExtractDelimited(1, aName, ['|']));
+    Parent2 := Trim(ExtractDelimited(2, aName, ['|']));
+  end
+  else
+  begin
+    Parent1 := AText;
+    Parent2 := EmptyStr;
+  end;
+end;
+
+function ChangeSuffix(const Suffix: TChangeSuffix; AText: String): String;
+begin
+  case Suffix of
+    csKeep: Result := AText;
+    csA:  Result := ReplaceRegExpr('(us|um)\b', AText, 'a');
+    csUs: Result := ReplaceRegExpr('(a|um)\b', AText, 'us');
+    csUm: Result := ReplaceRegExpr('(a|e|us)\b', AText, 'um');
+    csI:  Result := ReplaceRegExpr('(a|us|um)\b', AText, 'i');
+    csE:  Result := ReplaceRegExpr('(us|um)\b', AText, 'e');
+  else
+    Result := AText;
+  end;
+end;
+
+function FormatDomestic(const aName: String): String;
+var
+  nome: String;
+begin
+  if (Pos('(', aName) > 0) then
+    nome := Italic(Trim(ExtractDelimited(1, aName, Brackets))) + ' ' +
+      Colored(Enclosed(Trim(ExtractDelimited(2, aName, Brackets)), brParenthesis), colorDomestic)
+  else
+    nome := aName;
+
+  Result := nome;
+end;
+
+function FormatForm(const aName: String): String;
+var
+  nome: String;
+  aBracket: TBrackets;
+begin
+  aBracket := brParenthesis;
+
+  if (Pos('(', aName) > 0) or (Pos('[', aName) > 0) then
+  begin
+    if (Pos('(', aName) > 0) then
+      aBracket := brParenthesis
+    else
+    if (Pos('[', aName) > 0) then
+      aBracket := brSquare;
+
+    if ExecRegExpr('.+(formes|idae|inae)', ExtractDelimited(1, aName, Brackets)) then
+      nome := Trim(ExtractDelimited(1, aName, Brackets)) + ' ' +
+        Colored(Enclosed(Trim(ExtractDelimited(2, aName, Brackets)), aBracket), colorForm)
+    else
+      nome := Italic(Trim(ExtractDelimited(1, aName, Brackets))) + ' ' +
+        Colored(Enclosed(Trim(ExtractDelimited(2, aName, Brackets)), aBracket), colorForm);
+  end
+  else
+  if (WordCount(aName, [' ']) = 3) then
+    nome := Italic(ExtractWord(1, aName, [' ']) + ' ' + ExtractWord(2, aName, [' ']) + ' ' +
+      Colored(ExtractWord(3, aName, [' ']), colorForm));
+
+  Result := nome;
+end;
+
+function FormatHybrid(const aName: String): String;
+var
+  Parent1, Parent2, aBracket, nome: String;
+begin
+  ExtractParents(aName, Parent1, Parent2);
+
+  if (Pos('(', Parent1) > 0) then
+  begin
+    if IsWordPresent('Domestic', Parent1, [' '] + Brackets) then
+      aBracket := Colored(Enclosed(Trim(ExtractDelimited(2, Parent1, Brackets)), brParenthesis), colorDomestic)
+    else
+    if IsWordPresent('hybrid', Parent1, [' '] + Brackets) then
+      aBracket := Colored(Enclosed(Trim(ExtractDelimited(2, Parent1, Brackets)), brParenthesis), colorHybrid);
+    Parent1 := Trim(ExtractDelimited(1, Parent1, Brackets));
+  end;
+
+  if (Pos('sp.', Parent1) > 0) then
+    Parent1 := Italic(Trim(ExtractDelimited(1, Parent1, [' ']))) + ' ' + Bold('sp.')
+  else
+    Parent1 := Italic(Parent1);
+
+  if (aBracket <> EmptyStr) then
+    Parent1 := Parent1 + ' ' + aBracket;
+
+  aBracket := EmptyStr;
+  if (Parent2 <> EmptyStr) then
+  begin
+    if (Pos('(', Parent2) > 0) then
+    begin
+      if IsWordPresent('Domestic', Parent2, [' '] + Brackets) then
+        aBracket := Colored(Enclosed(Trim(ExtractDelimited(2, Parent2, Brackets)), brParenthesis), colorDomestic)
+      else
+      if IsWordPresent('hybrid', Parent2, [' '] + Brackets) then
+        aBracket := Colored(Enclosed(Trim(ExtractDelimited(2, Parent2, Brackets)), brParenthesis), colorHybrid)
+      else
+        aBracket := Colored(Enclosed(Trim(ExtractDelimited(2, Parent2, Brackets)), brParenthesis), colorEnglish);
+      Parent2 := Trim(ExtractDelimited(1, Parent2, Brackets));
+    end;
+
+    if (Pos('sp.', Parent2) > 0) then
+    begin
+      if ExecRegExpr('.+(formes|idae|inae)', ExtractDelimited(1, Parent2, [' '])) then
+        Parent2 := Trim(ExtractDelimited(1, Parent2, [' '])) + ' ' + Bold('sp.')
+      else
+        Parent2 := Italic(Trim(ExtractDelimited(1, Parent2, [' ']))) + ' ' + Bold('sp.');
+    end
+    else
+      Parent2 := Italic(Parent2);
+
+    if (aBracket <> EmptyStr) then
+      Parent2 := Parent2 + ' ' + aBracket;
+  end;
+
+  if (Parent2 <> EmptyStr) then
+    nome := Parent1 + ' ' + Colored(Bold('×'), colorHybrid) + ' ' + Parent2
+  else
+    nome := Parent1;
+
+  Result := nome;
+end;
+
+function FormatIntergrade(const aName: String): String;
+var
+  aBracket, nome, Parent1, Parent2: String;
+begin
+  aBracket := Trim(ExtractDelimited(2, aName, Brackets));
+  if (aBracket <> EmptyStr) then
+  begin
+    if (Pos(' x ', aBracket) > 0) then
+      aBracket := Colored(Enclosed(Italic(ExtractWord(1, aBracket, [' '])) + ' Group ' +
+        Colored(Bold('×'), colorIntergrade) + ' ' + Italic(ExtractWord(4, aBracket, [' '])) +
+        ' Group', brSquare), colorGroup)
+    else
+    if IsWordPresent('intergrade', aBracket, [' ']) then
+      aBracket := Colored(Enclosed(Italic(ExtractWord(1, aBracket, [' '])) + ' intergrade', brParenthesis), colorIntergrade)
+    else
+    if IsWordPresent('Group', aBracket, [' ']) then
+      aBracket := Colored(Enclosed(Italic(ExtractWord(1, aBracket, [' '])) + ' Group', brSquare), colorGroup);
+  end;
+
+  if (Pos(' x ', aName) = 0) then
+  begin
+    nome := Italic(Trim(ExtractDelimited(1, aName, Brackets))) + ' ' + aBracket;
+  end
+  else
+  begin
+    if ExecRegExpr('.+ \[.+ x .+\]', aName) then
+    begin
+      nome := Italic(Trim(ExtractDelimited(1, aName, Brackets))) + ' ' + aBracket;
+    end
+    else
+    begin
+      ExtractParents(aName, Parent1, Parent2);
+
+      if (Pos(']', Parent1) > 0) then
+        Parent1 := Italic(Trim(ExtractDelimited(1, aName, Brackets))) + ' ' + aBracket
+      else
+      if (Pos('/', Parent1) > 0) then
+        Parent1 := Italic(ExtractDelimited(1, Parent1, [' ']) + ' ' + ExtractWord(2, Parent1, [' ']) + ' ' +
+          Colored(ExtractWord(3, Parent1, [' ']), colorGroup))
+      else
+        Parent1 := Italic(Parent1);
+
+      if (Pos('[', Parent2) > 0) then
+        Parent2 := aBracket
+      else
+      if (Pos('/', Parent2) > 0) then
+        Parent2 := Colored(Italic(Parent2), colorGroup)
+      else
+        Parent2 := Italic(Parent2);
+
+      nome := Parent1 + ' ' + Colored(Bold('×'), colorIntergrade) + ' ' + Parent2;
+    end;
+  end;
+
+  Result := nome;
+end;
+
+function FormatMonotypicGroup(const aName: String): String;
+var
+  nome: String;
+begin
+  nome := Italic(Format('%s %s %s', [ExtractWord(1, aName, [' ']),
+    ExtractWord(2, aName, [' ']), Colored(ExtractWord(3, aName, [' ']), colorGroup)]));
+
+  Result := nome;
+end;
+
+function FormatPolitypicGroup(const aName: String): String;
+var
+  nome, aBracket: String;
+begin
+  if (Pos('/', aName) > 0) then
+    nome := Italic(Format('%s %s %s', [ExtractWord(1, aName, [' ']),
+      ExtractWord(2, aName, [' ']), Colored(ExtractWord(3, aName, [' ']), colorGroup)]))
+  else
+  if (Pos('[', aName) > 0) then
+  begin
+    aBracket := Trim(ExtractDelimited(2, aName, ['[',']']));
+    nome := Italic(ExtractWord(1, aName, [' ']) + ' ' + ExtractWord(2, aName, [' '])) + ' ' +
+      Colored(Enclosed(Italic(ExtractWord(1, aBracket, [' '])) + ' ' + ExtractWord(2, aBracket, [' ']), brSquare), colorGroup);
+  end;
+
+  Result := nome;
+end;
+
+function FormatSlash(const aName: String): String;
+var
+  outBrackets, aBracket, nome: String;
+begin
+  if (Pos('(', aName) > 0) then
+  begin
+    outBrackets := Trim(ExtractDelimited(1, aName, Brackets));
+    aBracket := Colored(Enclosed(Trim(ExtractDelimited(2, aName, Brackets)), brParenthesis), colorEnglish);
+  end
+  else
+    outBrackets := aName;
+
+  if (Pos('sp.', outBrackets) > 0) then
+  begin
+    if ExecRegExpr('.+ sp.\/.+', outBrackets) then
+    begin
+      nome := Colored(Italic(ExtractWord(1, outBrackets, [' '])), colorSlash) + ' ' + Bold('sp.') +
+        Colored(ExtractWord(2, outBrackets, ['/']), colorSlash);
+    end
+    else
+    begin
+      outBrackets := StringReplace(outBrackets, ' sp.', '', []);
+      nome := Colored(Italic(outBrackets), colorSlash) + ' ' + Bold('sp.');
+    end;
+  end
+  else
+  if ExecRegExpr('.+\/[A-Z].+', outBrackets) then
+    nome := Colored(Italic(outBrackets), colorSlash)
+  else
+  if (WordCount(outBrackets, [' ']) = 2) then
+    nome := Italic(ExtractWord(1, outBrackets, [' ']) + ' ' + Colored(ExtractWord(2, outBrackets, [' ']), colorSlash));
+
+  if (aBracket <> EmptyStr) then
+    nome := nome + ' ' + aBracket;
+
+  Result := nome;
+end;
+
+function FormatSpuh(const aName: String): String;
+var
+  outBrackets, aBracket, nome: String;
+begin
+  if (Pos('(', aName) > 0) then
+  begin
+    outBrackets := Trim(ExtractDelimited(1, aName, Brackets));
+    aBracket := Trim(ExtractDelimited(2, aName, Brackets));
+
+    if IsWordPresent('Domestic', aBracket, [' ']) then
+      aBracket := Colored(Enclosed(aBracket, brParenthesis), colorDomestic)
+    else
+    if ExecRegExpr('^[a-z].+ complex$', aBracket) then
+      aBracket := Colored(Enclosed(Italic(ExtractWord(1, aBracket, [' '])) + ' complex', brParenthesis), colorEnglish)
+    else
+    if ExecRegExpr('^former .+ sp.$', aBracket) then
+      aBracket := Colored(Enclosed('former ' + Italic(ExtractWord(2, aBracket, [' '])) + ' sp.', brParenthesis), colorEnglish)
+    else
+      aBracket := Colored(Enclosed(aBracket, brParenthesis), colorEnglish);
+  end
+  else
+    outBrackets := aName;
+
+  if (Pos('/', outBrackets) > 0) then
+  begin
+    if not IsWordPresent('sp.', outBrackets, [' ']) then
+    begin
+      nome := Colored(Italic(outBrackets), colorSpuh);
+    end
+    else
+    begin
+      if ExecRegExpr('.+(formes|idae|inae).*', outBrackets) then
+      begin
+        nome := Colored(ExtractWord(1, outBrackets, [' ']), colorSpuh) + ' ' + Bold('sp.');
+      end
+      else
+      if IsWordPresent('eagle', outBrackets, ['/', ' ']) then
+      begin
+        nome := Colored(Italic(ExtractWord(1, outBrackets, ['/', ' '])) + '/' +
+          ExtractWord(2, outBrackets, ['/', ' ']), colorSpuh) + ' ' + Bold('sp.');
+      end
+      else
+      begin
+        nome := Colored(Italic(ExtractWord(1, outBrackets, [' '])), colorSpuh) + ' ' + Bold('sp.');
+      end;
+    end;
+  end
+  else
+  begin
+    if ExecRegExpr('.+(formes|idae|inae).*', outBrackets) then
+    begin
+      nome := Colored(ExtractWord(1, outBrackets, [' ']), colorSpuh) + ' ' + Bold('sp.');
+    end
+    else
+    begin
+      nome := Colored(Italic(ExtractWord(1, outBrackets, [' '])), colorSpuh) + ' ' + Bold('sp.');
+    end;
+  end;
+
+  if (aBracket <> EmptyStr) then
+    nome := nome + ' ' + aBracket;
+
+  Result := nome;
+end;
+
+procedure UpdateVernacularName(aTaxonId, aLanguageId: Integer; aNewName: String; isPreferred: Boolean;
+  aDataset: TSQLQuery; ExecNow: Boolean);
+begin
+  with aDataset, SQL do
+  begin
+    Clear;
+    Add('INSERT INTO vernacular_names (taxon_id, language_id, vernacular_name, preferred)');
+    Add('VALUES (:taxon_id, :language_id, :vernacular_name, :preferred);');
+    ParamByName('taxon_id').AsInteger := aTaxonId;
+    ParamByName('language_id').AsInteger := aLanguageId;
+    ParamByName('verncaular_name').AsString := aNewName;
+    ParamByName('preferred').AsBoolean := isPreferred;
+
+    if ExecNow then
+      ExecSQL;
+  end;
+end;
+
+procedure CopySynonyms(FromTaxonId, ToTaxonId: Integer);
+var
+  Q: TSQLQuery;
+  SynonymID, PercentDone: Integer;
+  SynonymName: String;
+  Synonym: TTaxonSynonym;
+  SynRepo: TTaxonSynonymRepository;
+begin
+  Q := TSQLQuery.Create(nil);
+  SynRepo := TTaxonSynonymRepository.Create(DMM.sqlCon);
+  Synonym := TTaxonSynonym.Create();
+  try
+    Q.DataBase := DMM.sqlCon;
+    //dlgLoading.Max := 100;
+    //dlgLoading.Show;
+    //dlgLoading.UpdateProgress('Copying synonyms...', -1);
+    Q.SQL.Add('SELECT synonym_id, scientific_name FROM zoo_synonyms');
+    Q.SQL.ADD('WHERE (taxon_id = :old_taxon_id)');
+    Q.ParamByName('old_taxon_id').AsInteger := FromTaxonId;
+    Q.Open;
+    Q.First;
+    PercentDone := 0;
+    while not Q.EOF do
+    begin
+      Synonym.Clear;
+      SynonymID := Q.FieldByName('synonym_id').AsInteger;
+      SynonymName := Q.FieldByName('scientific_name').AsString;
+      //FinalTaxonID := ResolveValidID(OriginalTaxonID);
+
+      SynRepo.FindByTaxon(ToTaxonId, SynonymName, Synonym);
+      if Synonym.IsNew then
+      begin
+        Synonym.TaxonId := ToTaxonId;
+        Synonym.Valid := False;
+
+        SynRepo.Insert(Synonym);
+      end;
+
+      PercentDone := Round((Q.RecNo * 100) / Q.RecordCount);
+      //dlgLoading.UpdateProgress(Format('Copying synonyms (%d%%)', [PercentDone]), PercentDone);
+      Q.Next;
+    end;
+  finally
+    //dlgLoading.Hide;
+    SynRepo.Free;
+    Synonym.Free;
+    Q.Free;
+  end;
+end;
+
+procedure UpdateCountryOccurrence(FromTaxonId, ToTaxonId: Integer);
+var
+  Q: TSQLQuery;
+begin
+  Q := TSQLQuery.Create(nil);
+  with Q, SQL do
+  try
+    DataBase := DMM.sqlCon;
+
+    Clear;
+    Add('UPDATE zoo_countries SET taxon_id = :new_taxon_id');
+    Add('WHERE (taxon_id = :old_taxon_id);');
+    ParamByName('new_taxon_id').AsInteger := ToTaxonId;
+    ParamByName('old_taxon_id').AsInteger := FromTaxonId;
+
+    ExecSQL;
+
+  finally
+    FreeAndNil(Q);
   end;
 end;
 

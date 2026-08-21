@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 12;
+  SCHEMA_VERSION: Integer = 13;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -54,8 +54,13 @@ const
   procedure CreateRecordHistoryTable(Connection: TSQLConnector);
   procedure CreateRecordVerificationsTable(Connection: TSQLConnector);
   procedure CreateImportProfilesTable(Connection: TSQLConnector);
+  procedure CreateLanguagesTable(Connection: TSQLConnector);
+  procedure CreateCountriesTable(Connection: TSQLConnector);
   procedure CreateTaxonRanksTable(Connection: TSQLConnector);
   procedure CreateZooTaxaTable(Connection: TSQLConnector);
+  procedure CreateZooSynonymsTable(Connection: TSQLConnector);
+  procedure CreateZooVernacularTable(Connection: TSQLConnector);
+  procedure CreateZooCountriesTable(Connection: TSQLConnector);
   procedure CreateBotanicTaxaTable(Connection: TSQLConnector);
   procedure CreateMethodsTable(Connection: TSQLConnector);
   procedure CreateGazetteerTable(Connection: TSQLConnector);
@@ -110,8 +115,11 @@ const
 
   procedure SeedAccessControlTables(Connection: TSQLConnector);
   procedure CreateAdminUser(Connection: TSQLConnector);
+  procedure PopulateLanguagesTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
+  procedure PopulateCountriesTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
   procedure PopulateMethodsTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
   procedure PopulateTaxonRanksTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
+  procedure PopulateZooTaxaTableFromCSV(Connection: TSQLConnector; var aProgressBar: TProgressBar); deprecated;
   procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
 
   { Database information and management }
@@ -311,7 +319,7 @@ begin
   try
     dlgProgress.Title := rsTitleCreateDatabase;
     dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := 59; // Number of tables and views to create
+    dlgProgress.Max := 64; // Number of tables and views to create
     dlgProgress.Position := 0;
     dlgProgress.Show;
     Application.ProcessMessages;
@@ -340,13 +348,12 @@ begin
 
       // Create database file
       dlgProgress.Text := rsProgressPreparing;
-      Application.ProcessMessages;
 
       case aProtocol of
         dbSqlite:   Conn.ExecuteDirect('PRAGMA foreign_keys = off;');
-        dbFirebird: ;
+        dbFirebird,
         dbPostgre:  Conn.ExecuteDirect('SET CONSTRAINTS ALL DEFERRED;');
-        dbMaria: ;
+        dbMaria:    Conn.ExecuteDirect('SET FOREIGN_KEY_CHECKS = 0;');
       end;
       LogDebug('Database foreign keys disabled');
 
@@ -354,356 +361,322 @@ begin
         // >> Create tables
         // Database metadata
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleDBMetadata, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateDBMetadataTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Roles
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsRoles, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateRolesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Permissions
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsPermissions, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreatePermissionsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Role permissions
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsRolePermissions, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateRolePermissionsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Users
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleUsers, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateUsersTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Record history
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleHistory, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateRecordHistoryTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Record verifications
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVerifications, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateRecordVerificationsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Import profiles
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleImportProfiles, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateImportProfilesTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Languages
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleLanguages, dlgProgress.Position + 1, dlgProgress.Max]);
+        CreateLanguagesTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Countries
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleCountries, dlgProgress.Position + 1, dlgProgress.Max]);
+        CreateCountriesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Taxon ranks
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleTaxonRanks, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateTaxonRanksTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Zoo taxa
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleZooTaxa, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateZooTaxaTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Taxon synonyms
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleTaxonSynonyms, dlgProgress.Position + 1, dlgProgress.Max]);
+        CreateZooSynonymsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Taxon vernacular names
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleTaxonVernacularNames, dlgProgress.Position + 1, dlgProgress.Max]);
+        CreateZooVernacularTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Taxon occurrence in countries
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleTaxonOccurrence, dlgProgress.Position + 1, dlgProgress.Max]);
+        CreateZooCountriesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Botanic taxa
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBotanicalTaxa, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateBotanicTaxaTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Methods
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleMethods, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateMethodsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Gazetteer
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleGazetteer, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateGazetteerTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Institutions
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleInstitutions, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateInstitutionsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // People
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleResearchers, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreatePeopleTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Sampling plots
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSamplingPlots, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateSamplingPlotsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Permanent nets
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePermanentNets, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreatePermanentNetsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Permits
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePermits, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreatePermitsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Projects
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjects, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateProjectsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Project members
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectMembers, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateProjectTeamTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Project goals
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectGoals, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateProjectGoalsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Project chronogram
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectChronograms, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateProjectChronogramsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Project budget
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectBudgets, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateProjectBudgetsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Project expenses
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleProjectExpenses, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateProjectExpensesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Expeditions
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsCaptionExpeditions, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateExpeditionsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Surveys
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSurveys, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateSurveysTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Survey members
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSurveyTeam, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateSurveyTeamTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Nets effort
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNetsEffort, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateNetsEffortTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Weather logs
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleWeather, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateWeatherLogsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Vegetation
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVegetation, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateVegetationTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Bands
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBands, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateBandsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Band history
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleBandHistory, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateBandHistoryTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Individuals
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleIndividuals, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateIndividualsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Sightings
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSightings, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateSightingsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Captures
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleCaptures, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateCapturesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Feathers
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleFeathersAndMolt, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateFeathersTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Nests
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNests, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateNestsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Nest owners
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNestOwners, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateNestOwnersTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Nest revisions
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleNestRevisions, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateNestRevisionsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Eggs
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleEggs, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateEggsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Specimens
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSpecimens, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateSpecimensTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Specimen collectors
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSpecimenCollectors, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateSpecimenCollectorsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Sample preps
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSamplePreps, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateSamplePrepsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // POI library
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitlePoiLibrary, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreatePoiLibraryTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Images
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleImages, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateImagesTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Documents
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleDocuments, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateDocumentsTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Audio recordings
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleAudioLibrary, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateAudioLibraryTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Videos
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleVideos, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateVideosTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // >> Create views
         // Next birthdays
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleNextBirthdays, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateNextBirthdaysView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Last surveys
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleLastSurveys, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateLastSurveysView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Last lifers
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleLastLifers, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateLastLifersView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Expired permits
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleExpiredPermits, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateExpiredPermitsView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Bands balance
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleBandsBalance, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateBandsLeftoverView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Bands running out
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleBandsRunningOut, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateBandsRunningOutView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Average expedition duration
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleAvgExpeditionDuration, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateAvgExpeditionDurationView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Ending projects
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleEndingProjects, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateEndingProjectsView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Expiring activities
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleExpiringActivities, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateExpiringActivitiesView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Upcoming fieldwork (expeditions and surveys outside expeditions)
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleUpcomingFieldwork, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateUpcomingFieldworkView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Nests due for review
         dlgProgress.Text := Format(rsProgressCreatingView, [rsTitleNestRevisions, dlgProgress.Position + 1, dlgProgress.Max]);
-        Application.ProcessMessages;
         CreateNestsReviewDueView(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
@@ -713,7 +686,7 @@ begin
 
         // Populate tables
         dlgProgress.Text := rsProgressPopulatingTables;
-        dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
+        dlgProgress.Indeterminate := True;
         Application.ProcessMessages;
         LogDebug('Populating database');
 
@@ -735,6 +708,7 @@ begin
         Trans.CommitRetaining;
         if not Trans.Active then
           Trans.StartTransaction;
+        dlgProgress.Indeterminate := False;
 
         // Populate methods
         PopulateMethodsTable(Conn, dlgProgress.PBar);
@@ -750,6 +724,20 @@ begin
         if not Trans.Active then
           Trans.StartTransaction;
 
+        // Populate countries
+        PopulateCountriesTable(Conn, dlgProgress.PBar);
+
+        Trans.CommitRetaining;
+        if not Trans.Active then
+          Trans.StartTransaction;
+
+        // Populate languages
+        PopulateLanguagesTable(Conn, dlgProgress.PBar);
+
+        Trans.CommitRetaining;
+        if not Trans.Active then
+          Trans.StartTransaction;
+
         // Populate bird taxa
         PopulateZooTaxaTable(Conn, dlgProgress.PBar);
 
@@ -760,16 +748,16 @@ begin
       finally
         case aProtocol of
           dbSqlite:   Conn.ExecuteDirect('PRAGMA foreign_keys = on;');
-          dbFirebird: ;
+          dbFirebird,
           dbPostgre:  Conn.ExecuteDirect('SET CONSTRAINTS ALL IMMEDIATE;');
-          dbMaria: ;
+          dbMaria:    Conn.ExecuteDirect('SET FOREIGN_KEY_CHECKS = 1;');
         end;
         LogDebug('Database foreign keys enabled');
       end;
 
       // Write metadata to the database
       dlgProgress.Text := rsProgressFinishing;
-      dlgProgress.PBar.Style := TProgressBarStyle.pbstMarquee;
+      dlgProgress.Indeterminate := True;
       Application.ProcessMessages;
       LogDebug('Adding database metadata');
       WriteDatabaseMetadata(Conn, 'name', aName);
@@ -786,13 +774,22 @@ begin
       LogDebug('Optimize database');
       case aProtocol of
         dbSqlite:   Conn.ExecuteDirect('PRAGMA optimize;');
-        dbFirebird: ;
+        dbFirebird:
+        begin
+          Conn.ExecuteDirect('ALTER DATABASE SET SWEEP INTERVAL 0;');
+          Conn.ExecuteDirect('ALTER DATABASE SET SWEEP INTERVAL 20000;'); // default value
+          Conn.ExecuteDirect('SET STATISTICS INDEX ALL;');
+        end;
         dbPostgre:
         begin
           Conn.ExecuteDirect('VACUUM;');
           Conn.ExecuteDirect('ANALYZE;');
         end;
-        dbMaria: ;
+        dbMaria:
+        begin
+          Conn.ExecuteDirect('OPTIMIZE TABLE zoo_taxa;');
+          Conn.ExecuteDirect('ANALYZE TABLE zoo_taxa;');
+        end;
       end;
 
       dlgProgress.Hide;
@@ -824,9 +821,11 @@ end;
 function UpgradeDatabaseSchema(aProtocol: TDatabaseBackend): Boolean;
 var
   OldVersion: Integer;
+  NeedsOptimization: Boolean;
 begin
   Result := False;
 
+  NeedsOptimization := False;
   OldVersion := StrToIntDef(ReadDatabaseMetadata(DMM.sqlCon, 'version'), 1);
 
   // Do not forget to update the SCHEMA_VERSION const value
@@ -840,7 +839,12 @@ begin
     DMM.sqlCon.Open;
 
   LogEvent(leaStart, 'Upgrade database schema');
-  DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = off;');
+  case aProtocol of
+    dbSqlite:   DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = off;');
+    dbFirebird,
+    dbPostgre:  DMM.sqlCon.ExecuteDirect('SET CONSTRAINTS ALL DEFERRED;');
+    dbMaria:    DMM.sqlCon.ExecuteDirect('SET FOREIGN_KEY_CHECKS = 0;');
+  end;
 
   if not DMM.sqlTrans.Active then
     DMM.sqlTrans.StartTransaction;
@@ -1189,6 +1193,49 @@ begin
         Result := True;
       end;
 
+      if OldVersion < 13 then
+      begin
+        LogDebug('Upgrading database schema to version 13');
+
+        // Drop tables
+        DMM.sqlCon.ExecuteDirect('DROP TABLE zoo_taxa;');
+        // Create tables
+        CreateLanguagesTable(DMM.sqlCon);
+        CreateCountriesTable(DMM.sqlCon);
+        CreateZooTaxaTable(DMM.sqlCon);
+        CreateZooSynonymsTable(DMM.sqlCon);
+        CreateZooVernacularTable(DMM.sqlCon);
+        CreateZooCountriesTable(DMM.sqlCon);
+
+        DMM.sqlTrans.CommitRetaining;
+        if not DMM.sqlTrans.Active then
+          DMM.sqlTrans.StartTransaction;
+
+        // Populate tables
+        dlgProgress := TdlgProgress.Create(nil);
+        try
+          dlgProgress.Title := rsTitleUpgradeDatabase;
+          dlgProgress.Text := rsProgressPreparing;
+          dlgProgress.Position := 0;
+          dlgProgress.AllowCancel := False;
+          dlgProgress.Show;
+
+          dlgProgress.Text := rsProgressPopulatingTables + ' ' + rsTitleCountries;
+          PopulateCountriesTable(DMM.sqlCon, dlgProgress.PBar);
+          dlgProgress.Text := rsProgressPopulatingTables + ' ' + rsTitleLanguages;
+          PopulateLanguagesTable(DMM.sqlCon, dlgProgress.PBar);
+          dlgProgress.Text := rsProgressPopulatingTables + ' ' + rsTitleZooTaxa;
+          PopulateZooTaxaTable(DMM.sqlCon, dlgProgress.PBar);
+        finally
+          dlgProgress.Close;
+          if Assigned(dlgProgress) then
+            FreeAndNil(dlgProgress);
+        end;
+
+        NeedsOptimization := True;
+        Result := True;
+      end;
+
       if Result then
       begin
         WriteDatabaseMetadata(DMM.sqlCon, 'version', IntToStr(SCHEMA_VERSION));
@@ -1207,9 +1254,42 @@ begin
     end;
 
   finally
-    DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = on;');
+    case aProtocol of
+      dbSqlite:   DMM.sqlCon.ExecuteDirect('PRAGMA foreign_keys = on;');
+      dbFirebird,
+      dbPostgre:  DMM.sqlCon.ExecuteDirect('SET CONSTRAINTS ALL IMMEDIATE;');
+      dbMaria:    DMM.sqlCon.ExecuteDirect('SET FOREIGN_KEY_CHECKS = 1;');
+    end;
     LogEvent(leaFinish, 'Upgrade database schema');
     dlgLoading.Hide;
+
+    if NeedsOptimization then
+    begin
+      dlgLoading.Show;
+      dlgLoading.UpdateProgress(rsOptimizingDatabase, -1);
+      Application.ProcessMessages;
+      LogDebug('Optimize database');
+      case aProtocol of
+        dbSqlite:   DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+        dbFirebird:
+        begin
+          DMM.sqlCon.ExecuteDirect('ALTER DATABASE SET SWEEP INTERVAL 0;');
+          DMM.sqlCon.ExecuteDirect('ALTER DATABASE SET SWEEP INTERVAL 20000;'); // default value
+          DMM.sqlCon.ExecuteDirect('SET STATISTICS INDEX ALL;');
+        end;
+        dbPostgre:
+        begin
+          DMM.sqlCon.ExecuteDirect('VACUUM;');
+          DMM.sqlCon.ExecuteDirect('ANALYZE;');
+        end;
+        dbMaria:
+        begin
+          DMM.sqlCon.ExecuteDirect('OPTIMIZE TABLE zoo_taxa;');
+          DMM.sqlCon.ExecuteDirect('ANALYZE TABLE zoo_taxa;');
+        end;
+      end;
+      dlgLoading.Hide;
+    end;
   end;
 
   //if Result then
@@ -1342,6 +1422,18 @@ begin
   Connection.ExecuteDirect(xProvider.ImportProfiles.CreateTable);
 end;
 
+procedure CreateLanguagesTable(Connection: TSQLConnector);
+begin
+  LogDebug('Creating languages table');
+  Connection.ExecuteDirect(xProvider.Languages.CreateTable);
+end;
+
+procedure CreateCountriesTable(Connection: TSQLConnector);
+begin
+  LogDebug('Creating countries table');
+  Connection.ExecuteDirect(xProvider.Countries.CreateTable);
+end;
+
 procedure CreateTaxonRanksTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating taxon_ranks table');
@@ -1393,28 +1485,8 @@ begin
     'parent_taxon_id COLLATE BINARY' +
   ');');
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_parent_taxon_ioc ON zoo_taxa (' +
-    'ioc_parent_taxon_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_valid ON zoo_taxa (' +
-    'valid_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_valid_ioc ON zoo_taxa (' +
-    'ioc_valid_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_english_name ON zoo_taxa (' +
-    'english_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_portuguese_name ON zoo_taxa (' +
-    'portuguese_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_spanish_name ON zoo_taxa (' +
-    'spanish_name COLLATE NOCASE' +
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_concept_id ON zoo_taxa (' +
+    'taxon_concept_id COLLATE NOCASE' +
   ');');
 
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_quickcodes ON zoo_taxa (' +
@@ -1425,17 +1497,35 @@ begin
     'rank_id COLLATE BINARY' +
   ');');
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_rank_ioc ON zoo_taxa (' +
-    'ioc_rank_id COLLATE BINARY' +
-  ');');
-
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_sort_num ON zoo_taxa (' +
     'sort_num COLLATE BINARY' +
   ');');
+end;
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_sort_num_ioc ON zoo_taxa (' +
-    'ioc_sort_num COLLATE BINARY' +
+procedure CreateZooSynonymsTable(Connection: TSQLConnector);
+begin
+  LogDebug('Creating zoo_synonyms table');
+  Connection.ExecuteDirect(xProvider.ZooSynonyms.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_synonyms_name ON zoo_synonyms (' +
+    'scientific_name COLLATE NOCASE' +
   ');');
+end;
+
+procedure CreateZooVernacularTable(Connection: TSQLConnector);
+begin
+  LogDebug('Creating zoo_vernacular table');
+  Connection.ExecuteDirect(xProvider.ZooVernacular.CreateTable);
+
+  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_vernacular_name ON zoo_vernacular (' +
+    'vernacular_name COLLATE NOCASE' +
+  ');');
+end;
+
+procedure CreateZooCountriesTable(Connection: TSQLConnector);
+begin
+  LogDebug('Creating zoo_countries table');
+  Connection.ExecuteDirect(xProvider.ZooCountries.CreateTable);
 end;
 
 procedure CreateBotanicTaxaTable(Connection: TSQLConnector);
@@ -2583,6 +2673,168 @@ begin
   end;
 end;
 
+procedure PopulateLanguagesTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
+var
+  FRepo: TLanguageRepository;
+  FLang: TLanguage;
+  FFilePath: String;
+  JLines: TStringList;
+  JData: TJSONData;
+  i: Integer;
+  currentLang: TLanguageID;
+begin
+  currentLang := GetLanguageID;
+  if SameText(currentLang.LanguageID, 'pt-BR') then
+    FFilePath := ConcatPaths([AppDataDir, 'languages_pt-BR.jsonl'])
+  else
+    FFilePath := ConcatPaths([AppDataDir, 'languages_en-US.jsonl']);
+
+  if not FileExists(FFilePath) then
+    raise Exception.CreateFmt(rsErrorFileNotFound, [FFilePath]);
+
+  LogEvent(leaStart, 'Populate languages table');
+
+  if not Connection.Transaction.Active then
+    Connection.Transaction.StartTransaction;
+
+  FRepo := TLanguageRepository.Create(Connection);
+  FLang := TLanguage.Create();
+  JLines := TStringList.Create;
+  try
+    try
+      JLines.LoadFromFile(FFilePath);
+      if JLines.Count > 0 then
+      begin
+        if Assigned(aProgressBar) then
+        begin
+          aProgressBar.Position := 0;
+          aProgressBar.Style := TProgressBarStyle.pbstNormal;
+          aProgressBar.Max := JLines.Count;
+        end;
+        Application.ProcessMessages;
+        for i := 0 to JLines.Count - 1 do
+        begin
+          if Trim(JLines[i]) <> EmptyStr then
+          begin
+            JData := GetJSON(JLines[i]);
+            try
+              FLang.Clear;
+              FLang.FromJSON(JData.AsJSON);
+              if GetLanguageKey(FLang.LanguageName) > 0 then
+                FRepo.Update(FLang)
+              else
+                FRepo.Insert(FLang);
+            finally
+              FreeAndNil(JData);
+            end;
+          end;
+
+          if Assigned(aProgressBar) then
+            aProgressBar.Position := i + 1;
+        end;
+      end;
+
+      Connection.Transaction.CommitRetaining;
+    except
+      on E: Exception do
+      begin
+        Connection.Transaction.RollbackRetaining;
+        MsgDlg(rsTitleError, Format(rsErrorLoadingDataFromJSONFile, [E.Message]), mtError);
+      end;
+    end;
+  finally
+    FreeAndNil(FLang);
+    FRepo.Free;
+    FreeAndNil(JLines);
+  end;
+  LogEvent(leaFinish, 'Populate languages table');
+end;
+
+procedure PopulateCountriesTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
+var
+  FRepo: TCountryRepository;
+  FCountry: TCountry;
+  ExistingCountry: TCountry;
+  FFilePath: String;
+  JLines: TStringList;
+  JData: TJSONData;
+  i: Integer;
+  currentLang: TLanguageID;
+begin
+  currentLang := GetLanguageID;
+  if SameText(currentLang.LanguageID, 'pt-BR') then
+    FFilePath := ConcatPaths([AppDataDir, 'countries_pt-BR.jsonl'])
+  else
+    FFilePath := ConcatPaths([AppDataDir, 'countries_en-US.jsonl']);
+
+  if not FileExists(FFilePath) then
+    raise Exception.CreateFmt(rsErrorFileNotFound, [FFilePath]);
+
+  LogEvent(leaStart, 'Populate countries table');
+
+  if not Connection.Transaction.Active then
+    Connection.Transaction.StartTransaction;
+
+  FRepo := TCountryRepository.Create(Connection);
+  FCountry := TCountry.Create();
+  ExistingCountry := TCountry.Create();
+  JLines := TStringList.Create;
+  try
+    try
+      JLines.LoadFromFile(FFilePath);
+      if JLines.Count > 0 then
+      begin
+        if Assigned(aProgressBar) then
+        begin
+          aProgressBar.Position := 0;
+          aProgressBar.Style := TProgressBarStyle.pbstNormal;
+          aProgressBar.Max := JLines.Count;
+        end;
+        Application.ProcessMessages;
+        for i := 0 to JLines.Count - 1 do
+        begin
+          if Trim(JLines[i]) <> EmptyStr then
+          begin
+            JData := GetJSON(JLines[i]);
+            try
+              FCountry.Clear;
+              FCountry.FromJSON(JData.AsJSON);
+              ExistingCountry.Clear;
+              FRepo.FindBy(COL_COUNTRY_CODE, FCountry.CountryCode, ExistingCountry);
+              if ExistingCountry.Id > 0 then
+              begin
+                FCountry.Id := ExistingCountry.Id;
+                FRepo.Update(FCountry)
+              end
+              else
+                FRepo.Insert(FCountry);
+            finally
+              FreeAndNil(JData);
+            end;
+          end;
+
+          if Assigned(aProgressBar) then
+            aProgressBar.Position := i + 1;
+        end;
+      end;
+
+      Connection.Transaction.CommitRetaining;
+    except
+      on E: Exception do
+      begin
+        Connection.Transaction.RollbackRetaining;
+        MsgDlg(rsTitleError, Format(rsErrorLoadingDataFromJSONFile, [E.Message]), mtError);
+      end;
+    end;
+  finally
+    FreeAndNil(ExistingCountry);
+    FreeAndNil(FCountry);
+    FRepo.Free;
+    FreeAndNil(JLines);
+  end;
+  LogEvent(leaFinish, 'Populate countries table');
+end;
+
 procedure PopulateMethodsTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
 var
   FRepo: TMethodRepository;
@@ -2723,7 +2975,7 @@ begin
   LogEvent(leaFinish, 'Populate taxon_ranks table');
 end;
 
-procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
+procedure PopulateZooTaxaTableFromCSV(Connection: TSQLConnector; var aProgressBar: TProgressBar);
 var
   Qry: TSQLQuery;
   FS: TFormatSettings;
@@ -2858,6 +3110,250 @@ begin
     {$ENDIF}
     FreeAndNil(Qry);
     Close;
+  end;
+end;
+
+procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
+var
+  Reader: TFileStream;
+  ReadBuffer: array[0..65535] of Byte;
+  BufferLength, BufferPosition: Integer;
+  BytesConsumed: Int64;
+  LanguageIds, CountryIds: TStringList;
+  LookupQuery: TSQLQuery;
+  Line: UTF8String;
+  Taxon: TTaxon;
+  Syn: TTaxonSynonym;
+  Vern: TVernacularName;
+  Ctry: TTaxonCountry;
+  RepoTaxon: TTaxonRepository;
+  RepoSyn: TTaxonSynonymRepository;
+  RepoVern: TVernacularRepository;
+  RepoCountry: TTaxonCountryRepository;
+  JSONObj, ArrSyn, ArrVern, ArrCountry: TJSONData;
+  i, j, CurrentLine: Integer;
+  FFilePath: String;
+  {$IFDEF DEBUG}
+  Usage: TElapsedTimer;
+  {$ENDIF}
+
+  function ReadLineFromStream(out ALine: UTF8String): Boolean;
+  var
+    ByteValue: Byte;
+  begin
+    ALine := EmptyStr;
+    while True do
+    begin
+      if BufferPosition >= BufferLength then
+      begin
+        BufferLength := Reader.Read(ReadBuffer, SizeOf(ReadBuffer));
+        BufferPosition := 0;
+        if BufferLength = 0 then
+          Exit(ALine <> EmptyStr);
+      end;
+
+      ByteValue := ReadBuffer[BufferPosition];
+      Inc(BufferPosition);
+      Inc(BytesConsumed);
+      if ByteValue = 10 then
+        Exit(True);
+      if ByteValue <> 13 then
+        ALine := ALine + AnsiChar(ByteValue);
+    end;
+  end;
+
+  function GetLanguageId(const AName: String): Integer;
+  begin
+    Result := StrToIntDef(LanguageIds.Values[AName], 0);
+  end;
+
+  function GetCountryId(const ACode: String): Integer;
+  begin
+    Result := StrToIntDef(CountryIds.Values[ACode], 0);
+  end;
+
+  procedure LoadLookupIds(const ASQL, AKeyField, AIdField: String; AValues: TStringList);
+  begin
+    LookupQuery.SQL.Text := ASQL;
+    LookupQuery.Open;
+    try
+      while not LookupQuery.EOF do
+      begin
+        AValues.Values[LookupQuery.FieldByName(AKeyField).AsString] :=
+          IntToStr(LookupQuery.FieldByName(AIdField).AsInteger);
+        LookupQuery.Next;
+      end;
+    finally
+      LookupQuery.Close;
+    end;
+  end;
+
+  function GetRequiredString(const AItem: TJSONData; const AFieldName: String): String;
+  var
+    Value: TJSONData;
+  begin
+    Value := AItem.FindPath(AFieldName);
+    if (Value = nil) or (Value.JSONType <> jtString) or (Value.AsString = EmptyStr) then
+      raise Exception.CreateFmt('Missing required string field "%s".', [AFieldName]);
+    Result := Value.AsString;
+  end;
+
+begin
+  LogDebug('Populating zoo_taxa table');
+  FFilePath := ConcatPaths([AppDataDir, 'zoo_taxa_seed.jsonl']);
+
+  if not FileExists(FFilePath) then
+    raise Exception.CreateFmt(rsErrorFileNotFound, [FFilePath]);
+
+  {$IFDEF DEBUG}
+  Usage := TElapsedTimer.Create('Populating zoo_taxa table');
+  {$ENDIF}
+
+  Reader := nil;
+  BufferLength := 0;
+  BufferPosition := 0;
+  BytesConsumed := 0;
+  LanguageIds := nil;
+  CountryIds := nil;
+  LookupQuery := nil;
+  Taxon := nil;
+  Syn := nil;
+  Vern := nil;
+  Ctry := nil;
+  RepoTaxon := nil;
+  RepoSyn := nil;
+  RepoVern := nil;
+  RepoCountry := nil;
+  try
+    RepoTaxon := TTaxonRepository.Create(Connection);
+    RepoSyn := TTaxonSynonymRepository.Create(Connection);
+    RepoVern := TVernacularRepository.Create(Connection);
+    RepoCountry := TTaxonCountryRepository.Create(Connection);
+    LookupQuery := TSQLQuery.Create(nil);
+    LookupQuery.Database := Connection;
+    LookupQuery.Transaction := Connection.Transaction;
+    LanguageIds := TStringList.Create;
+    LanguageIds.CaseSensitive := False;
+    CountryIds := TStringList.Create;
+    CountryIds.CaseSensitive := False;
+    LoadLookupIds('SELECT language_name, language_id FROM languages', 'language_name', 'language_id', LanguageIds);
+    LoadLookupIds('SELECT country_code, country_id FROM countries', 'country_code', 'country_id', CountryIds);
+
+    Reader := TFileStream.Create(FFilePath, fmOpenRead or fmShareDenyNone);
+    Taxon := TTaxon.Create;
+    Syn := TTaxonSynonym.Create;
+    Vern := TVernacularName.Create;
+    Ctry := TTaxonCountry.Create;
+    if Assigned(aProgressBar) then
+    begin
+      aProgressBar.Position := 0;
+      aProgressBar.Max := 1000;
+      aProgressBar.Style := pbstNormal;
+    end;
+    try
+      if not Connection.Transaction.Active then
+        Connection.Transaction.StartTransaction;
+
+      i := 0;
+      CurrentLine := 0;
+
+      while ReadLineFromStream(Line) do
+      begin
+        Inc(CurrentLine);
+        Line := Trim(Line);
+        if Line = '' then
+          Continue;
+
+        JSONObj := GetJSON(Line);
+        try
+
+          // Taxon
+          Taxon.Clear;
+          Taxon.FromJSON(Line);
+          RepoTaxon.Insert(Taxon);
+
+          // Synonyms
+          ArrSyn := JSONObj.FindPath('synonyms');
+          if (ArrSyn <> nil) and (ArrSyn.JSONType = jtArray) and (ArrSyn.Count > 0) then
+            for j := 0 to ArrSyn.Count - 1 do
+            begin
+              Syn.Clear;
+              Syn.FromJSON(ArrSyn.Items[j].AsJSON);
+              Syn.TaxonId := Taxon.Id;
+              RepoSyn.Insert(Syn);
+            end;
+
+          // Vernacular names
+          ArrVern := JSONObj.FindPath('vernacular_names');
+          if (ArrVern <> nil) and (ArrVern.JSONType = jtArray) and (ArrVern.Count > 0) then
+            for j := 0 to ArrVern.Count - 1 do
+            begin
+              Vern.Clear;
+              Vern.FromJSON(ArrVern.Items[j].AsJSON);
+              Vern.TaxonId := Taxon.Id;
+              //Vern.LanguageId := GetLanguageId(GetRequiredString(ArrVern.Items[j], 'language_name'));
+              RepoVern.Insert(Vern);
+            end;
+
+          // Countries
+          ArrCountry := JSONObj.FindPath('countries');
+          if (ArrCountry <> nil) and (ArrCountry.JSONType = jtArray) and (ArrCountry.Count > 0) then
+            for j := 0 to ArrCountry.Count - 1 do
+            begin
+              Ctry.Clear;
+              Ctry.FromJSON(ArrCountry.Items[j].AsJSON);
+              Ctry.TaxonId := Taxon.Id;
+              //Ctry.CountryId := GetCountryId(GetRequiredString(ArrCountry.Items[j], 'country_code'));
+              RepoCountry.Insert(Ctry);
+            end;
+
+          // Periodic commit
+          Inc(i);
+          if i >= 500 then
+          begin
+            Connection.Transaction.CommitRetaining;
+            i := 0;
+            Application.ProcessMessages;
+          end;
+
+          if Assigned(aProgressBar) then
+          begin
+            aProgressBar.Position := Round((BytesConsumed / Reader.Size) * aProgressBar.Max);
+            //Application.ProcessMessages;
+          end;
+        finally
+          FreeAndNil(JSONObj);
+        end;
+      end;
+
+      Connection.Transaction.CommitRetaining;
+
+    except
+      on E: Exception do
+      begin
+        Connection.Transaction.RollbackRetaining;
+        MsgDlg(rsTitleError, Format(rsErrorPopulatingTables,
+          [Format('Line %d: %s', [CurrentLine, E.Message])]), mtError);
+        raise;
+      end;
+    end;
+  finally
+    FreeAndNil(Ctry);
+    FreeAndNil(Vern);
+    FreeAndNil(Syn);
+    FreeAndNil(Taxon);
+    FreeAndNil(Reader);
+    FreeAndNil(CountryIds);
+    FreeAndNil(LanguageIds);
+    FreeAndNil(LookupQuery);
+    FreeAndNil(RepoCountry);
+    FreeAndNil(RepoVern);
+    FreeAndNil(RepoSyn);
+    FreeAndNil(RepoTaxon);
+    {$IFDEF DEBUG}
+    Usage.StopTimer;
+    FreeAndNil(Usage);
+    {$ENDIF}
   end;
 end;
 
@@ -3106,7 +3602,7 @@ var
 begin
   Result := 0;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3135,7 +3631,7 @@ var
 begin
   Result := 0;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3194,7 +3690,7 @@ begin
   if not DMM.sqlCon.Connected then
     DMM.sqlCon.Open;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3230,6 +3726,26 @@ end;
 
 procedure OptimizeDB;
 begin
+  //case aProtocol of
+  //  dbSqlite:   DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+  //  dbFirebird:
+  //  begin
+  //    DMM.sqlCon.ExecuteDirect('ALTER DATABASE SET SWEEP INTERVAL 0;');
+  //    DMM.sqlCon.ExecuteDirect('ALTER DATABASE SET SWEEP INTERVAL 20000;'); // default value
+  //    DMM.sqlCon.ExecuteDirect('SET STATISTICS INDEX ALL;');
+  //  end;
+  //  dbPostgre:
+  //  begin
+  //    DMM.sqlCon.ExecuteDirect('VACUUM;');
+  //    DMM.sqlCon.ExecuteDirect('ANALYZE;');
+  //  end;
+  //  dbMaria:
+  //  begin
+  //    DMM.sqlCon.ExecuteDirect('OPTIMIZE TABLE zoo_taxa;');
+  //    DMM.sqlCon.ExecuteDirect('ANALYZE TABLE zoo_taxa;');
+  //  end;
+  //end;
+
   LogInfo('Vacuum database: ' + databaseConnection.Name);
   DMM.sqlCon.ExecuteDirect('END TRANSACTION;');
   DMM.sqlCon.ExecuteDirect('VACUUM;');
@@ -3246,7 +3762,7 @@ function CheckDB: Boolean;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -3337,7 +3853,7 @@ begin
   aKeyValue := aDataSet.FieldByName(aKeyField).AsInteger;
 
   LogDebug(Format('Record %d from %s set inactive', [aKeyValue, TABLE_NAMES[aTable]]));
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3380,7 +3896,7 @@ var
   Qry: TSQLQuery;
 begin
   LogDebug(Format('Child records of parent %d from %s set inactive', [ParentId, TABLE_NAMES[ChildTable]]));
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3451,7 +3967,7 @@ begin
   aKeyField := GetPrimaryKey(aDataSet);
   aKeyValue := aDataSet.FieldByName(aKeyField).AsInteger;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3498,7 +4014,7 @@ var
   Qry: TSQLQuery;
 begin
   LogDebug(Format('Child records of parent %d from %s set active', [ParentId, TABLE_NAMES[ChildTable]]));
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3563,7 +4079,7 @@ var
   Qry: TSQLQuery;
 begin
   LogDebug(Format('Record %d from %s set marked', [aKeyValue, aTableName]));
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3590,7 +4106,7 @@ var
   Qry: TSQLQuery;
 begin
   LogDebug(Format('Record %d from %s set unmarked', [aKeyValue, aTableName]));
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3616,7 +4132,7 @@ var
   Qry: TSQLQuery;
   sFilter, sChecked: String;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   try
     sChecked := BoolToText(IsChecked, '1', '0');
 
@@ -3650,7 +4166,7 @@ var
   // sMarked,
   sFilter, Checked: String;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   try
     TabName := TABLE_NAMES[aTable];
 
@@ -3736,7 +4252,7 @@ var
   Qry: TSQLQuery;
 begin
   LogDebug(Format('Record %d from %s set queued', [aKeyValue, aTableName]));
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3761,7 +4277,7 @@ var
   Qry: TSQLQuery;
 begin
   LogDebug(Format('Record %d from %s set unqueued', [aKeyValue, aTableName]));
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3785,7 +4301,7 @@ var
 begin
   LogDebug(Format('Update band status: %d', [aBand]));
   Dt := FormatDateTime('yyyy-mm-dd', aDate);
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -3817,7 +4333,7 @@ var
 begin
   LogDebug(Format('Update individual: %d', [aIndividual]));
   Dt := FormatDateTime('yyyy-mm-dd', aDate);
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -3845,7 +4361,7 @@ var
 begin
   LogDebug(Format('Change individual %d band from %d to %d', [aIndividual, aRemovedBand, aNewBand]));
   Dt := FormatDateTime('yyyy-mm-dd', aDate);
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;

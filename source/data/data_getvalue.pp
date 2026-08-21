@@ -30,6 +30,7 @@ type
   function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
   function GetName(aTable, aNameField, aKeyField: String; aKeyValue: Integer): String;
   function GetNameConcat(aTable, aNameField1, aNameField2, aKeyField: String; aKeyValue: Integer): String;
+  function GetVernacularName(const aTaxonId, aLanguageId: Integer): String;
   function GetFieldValue(aTable, aField, aKeyField: String; aKeyValue: Integer): Variant;
   function GetLatLong(aTable, aLongField, aLatField, aNameField, aKeyField: String;
     aKeyValue: Integer; var aMapPoint: TMapPoint): Boolean;
@@ -42,6 +43,8 @@ type
   function GetRankFromTaxon(aTaxonKey: Integer): Integer;
   function GetRank(const aKey: Integer): TZooRank;
   function GetRankKey(const aName: String; aNomenclatureCode: TNomenclatureCode): Integer;
+  function GetCountryFromCode(const aCode: String): Integer;
+  function GetLanguageKey(const aName: String): Integer;
   function GetValidTaxon(const aTaxonName: String): Integer;
   function GetValidBotanicalTaxon(const aTaxonName: String): Integer;
   function GetPersonKey(const aName: String): Integer;
@@ -82,7 +85,7 @@ begin
     Result := 0
   else
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       MacroCheck := True;
@@ -114,7 +117,7 @@ begin
 
   if aKeyValue > 0 then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       MacroCheck := True;
@@ -146,7 +149,7 @@ begin
 
   if aKeyValue > 0 then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       MacroCheck := True;
@@ -168,6 +171,34 @@ begin
     finally
       FreeAndNil(Qry);
     end;
+  end;
+end;
+
+function GetVernacularName(const aTaxonId, aLanguageId: Integer): String;
+var
+  Qry: TSQLQuery;
+begin
+  Result := EmptyStr;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT vernacular_name FROM zoo_vernacular');
+    Add('WHERE taxon_id = :taxon_id AND language_id = :language_id AND preferred = 1');
+    ParamByName('taxon_id').AsInteger := aTaxonId;
+    ParamByName('language_id').AsInteger := aLanguageId;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+    begin
+      First;
+      Result := FieldByName('vernacular_name').AsString;
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 
@@ -210,7 +241,7 @@ begin
   Result := False;
   if aKeyValue > 0 then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       MacroCheck := True;
@@ -517,7 +548,7 @@ begin
 
   if aNameValue <> EmptyStr then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       DataBase := DMM.sqlCon;
@@ -567,7 +598,7 @@ begin
 
   if aNameValue <> EmptyStr then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       DataBase := DMM.sqlCon;
@@ -607,7 +638,7 @@ begin
 
   if aNameValue <> EmptyStr then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       DataBase := DMM.sqlCon;
@@ -649,7 +680,7 @@ begin
 
   if aNameValue <> EmptyStr then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       DataBase := DMM.sqlCon;
@@ -687,7 +718,7 @@ function GetRankFromSite(aSiteKey: Integer): String;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -710,7 +741,7 @@ function GetRankFromTaxon(aTaxonKey: Integer): Integer;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -749,13 +780,13 @@ function GetRankKey(const aName: String; aNomenclatureCode: TNomenclatureCode): 
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT rank_id FROM taxon_ranks');
-    Add('WHERE ((abbreviation = :aname) OR (rank_name = :aname))');
+    Add('WHERE ((abbreviation = :aname COLLATE NOCASE) OR (rank_name = :aname COLLATE NOCASE))');
     case aNomenclatureCode of
       ncBoth:       Add('AND ((icbn = 1) OR (iczn = 1))');
       ncBotanical:  Add('AND (icbn = 1)');
@@ -774,30 +805,85 @@ begin
   end;
 end;
 
-function GetValidTaxon(const aTaxonName: String): Integer;
+function GetCountryFromCode(const aCode: String): Integer;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Result := 0;
+
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
     Clear;
-    Add('SELECT taxon_id, valid_id FROM zoo_taxa');
-    Add('WHERE (scientific_name = :aname)');
-    Add('OR (quick_code = :aname)');
+    Add('SELECT country_id FROM countries');
+    Add('WHERE (country_code = :aname)');
+    ParamByName('aname').AsString := aCode;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+    begin
+      First;
+      Result := FieldByName('country_id').AsInteger;
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetLanguageKey(const aName: String): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Result := 0;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT language_id FROM languages');
+    Add('WHERE (language_name = :aname)');
+    ParamByName('aname').AsString := aName;
+    // GravaLogSQL(SQL);
+    Open;
+    if not(IsEmpty) then
+    begin
+      First;
+      Result := FieldByName('language_id').AsInteger;
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetValidTaxon(const aTaxonName: String): Integer;
+var
+  Qry: TSQLQuery;
+begin
+  Result := 0;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    Clear;
+    Add('SELECT taxon_id FROM zoo_taxa');
+    Add('WHERE scientific_name = :aname COLLATE NOCASE');
+    Add('  OR quick_code = :aname COLLATE NOCASE');
+    Add('UNION');
+    Add('SELECT taxon_id FROM zoo_synonyms');
+    Add('WHERE scientific_name = :aname COLLATE NOCASE');
     ParamByName('aname').AsString := aTaxonName;
     // GravaLogSQL(SQL);
     Open;
     if not(IsEmpty) then
     begin
-      if FieldByName('valid_id').AsInteger > 0 then
-        Result := FieldByName('valid_id').AsInteger
-      else
-        Result := FieldByName('taxon_id').AsInteger;
-    end
-    else
-      Result := 0;
+      First;
+      Result := FieldByName('taxon_id').AsInteger;
+    end;
     Close;
   finally
     FreeAndNil(Qry);
@@ -808,7 +894,7 @@ function GetValidBotanicalTaxon(const aTaxonName: String): Integer;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -836,7 +922,7 @@ function GetPersonKey(const aName: String): Integer;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -860,7 +946,7 @@ function GetInstitutionKey(const aName: String): Integer;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -884,7 +970,7 @@ function GetMethodKey(const aName: String): Integer;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -908,7 +994,7 @@ function GetSamplingPlotKey(const aName: String): Integer;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -932,7 +1018,7 @@ function GetBandKey(const aName: String): Integer;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -1039,7 +1125,7 @@ begin
   BandKey := GetBandKey(SearchName);
   if BandKey > 0 then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       DataBase := DMM.sqlCon;
@@ -1062,7 +1148,7 @@ begin
   // 3) Combination of right/left tarsus color codes: rX/lY (also dX/eY), '-' means empty.
   if ParseBandCombo(SearchName, RightTarsus, LeftTarsus) then
   begin
-    Qry := TSQLQuery.Create(DMM.sqlCon);
+    Qry := TSQLQuery.Create(nil);
     with Qry, SQL do
     try
       DataBase := DMM.sqlCon;
@@ -1088,7 +1174,7 @@ function GetProjectKey(const aName: String): Integer;
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     DataBase := DMM.sqlCon;
@@ -1123,7 +1209,7 @@ procedure GetTaxonHierarchy(aDataset: TDataset; aTaxon: Integer);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
@@ -1150,7 +1236,7 @@ procedure GetBotanicHierarchy(aDataset: TDataset; aTaxon: Integer);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
@@ -1173,7 +1259,7 @@ procedure GetSiteHierarchy(aDataset: TDataset; aSite: Integer);
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
@@ -1200,7 +1286,7 @@ procedure FillComboBox(aComboBox: TComboBox; aTable, aField, aSort: String; aFil
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -1238,7 +1324,7 @@ procedure FillStrings(aStrings: TStrings; aTable, aField, aSort: String; aFilter
 var
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -1281,7 +1367,7 @@ begin
   if aProjectId = 0 then
     Exit;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
@@ -1321,7 +1407,7 @@ begin
   if aProjectId = 0 then
     Exit;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
@@ -1353,7 +1439,7 @@ begin
   if aRubricId = 0 then
     Exit;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
@@ -1386,7 +1472,7 @@ begin
   if aSpecimenId = 0 then
     Exit;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;

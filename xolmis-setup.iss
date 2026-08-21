@@ -42,7 +42,11 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "{#MyAppSource}\Xolmis.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppSource}\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "languages\Xolmis.pt_BR.mo"; DestDir: "{app}\languages"
-Source: "resources\zoo_taxa_init.csv"; DestDir: "{localappdata}\{#MyAppName}"
+Source: "resources\zoo_taxa_seed.jsonl"; DestDir: "{localappdata}\{#MyAppName}"
+Source: "resources\languages_en-US.jsonl"; DestDir: "{localappdata}\{#MyAppName}"
+Source: "resources\languages_pt-BR.jsonl"; DestDir: "{localappdata}\{#MyAppName}"
+Source: "resources\countries_en-US.jsonl"; DestDir: "{localappdata}\{#MyAppName}"
+Source: "resources\countries_pt-BR.jsonl"; DestDir: "{localappdata}\{#MyAppName}"
 Source: "resources\countries+states+cities.json"; DestDir: "{localappdata}\{#MyAppName}"
 Source: "resources\methods_en-US.json"; DestDir: "{localappdata}\{#MyAppName}"
 Source: "resources\methods_pt-BR.json"; DestDir: "{localappdata}\{#MyAppName}"

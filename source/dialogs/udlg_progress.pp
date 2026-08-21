@@ -101,12 +101,14 @@ procedure TdlgProgress.SetTitle(aTitle: String);
 begin
   sTitle := aTitle;
   lblTitle.Caption := sTitle;
+  Application.ProcessMessages;
 end;
 
 procedure TdlgProgress.SetText(aText: String);
 begin
   sText := aText;
   lStatus.Caption := sText;
+  Application.ProcessMessages;
 end;
 
 procedure TdlgProgress.SetMin(aMin: Integer);
@@ -130,6 +132,7 @@ begin
 
   vPosition := aValue;
   PBar.Position := vPosition;
+  Application.ProcessMessages;
 end;
 
 procedure TdlgProgress.SetAllowCancel(aValue: Boolean);

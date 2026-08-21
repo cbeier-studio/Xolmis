@@ -85,6 +85,16 @@ type
     function Delete: string;
   end;
 
+  ICountriesSQL = interface ['{4379D833-6C1C-450E-A813-6B53DAF7F1B9}']
+    function CreateTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Insert: string;
+    function Update: string;
+    function Delete: string;
+    function Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
+  end;
+
   IRolesSQL = interface ['{47C9D2CC-6E0B-4F35-B0C9-7D8D4D0C5B8D}']
     function CreateTable: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
@@ -206,6 +216,16 @@ type
   end;
 
   IInstitutionsSQL = interface ['{F733D4BF-AA06-486C-94E9-7B22375701D2}']
+    function CreateTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Insert: string;
+    function Update: string;
+    function Delete: string;
+    function Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
+  end;
+
+  ILanguagesSQL = interface ['{DF5A8018-56A9-48D0-AB1A-0AE88642999F}']
     function CreateTable: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -502,6 +522,26 @@ type
     function Delete: string;
   end;
 
+  IZooCountriesSQL = interface ['{62393E94-2313-42E6-A4D2-698820E519C6}']
+    function CreateTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Insert: string;
+    function Update: string;
+    function Delete: string;
+    function Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType; aTaxonId: Integer): String;
+  end;
+
+  IZooSynonymsSQL = interface ['{13E07D46-BFA8-49F3-8177-A613668BB02E}']
+    function CreateTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Insert: string;
+    function Update: string;
+    function Delete: string;
+    function Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
+  end;
+
   IZooTaxaSQL = interface ['{50E78A98-6D91-4BDE-8170-197BF4D03867}']
     function CreateTable: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
@@ -515,6 +555,15 @@ type
     function Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType; aRankFilter: TTaxonFilters): String;
   end;
 
+  IZooVernacularSQL = interface ['{623C699F-6968-45BD-AED5-1AFDAD85D310}']
+    function CreateTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Insert: string;
+    function Update: string;
+    function Delete: string;
+  end;
+
   // --- Unified provider ---
 
   ISQLProvider = interface ['{D7A2D8F4-9B5E-4B0F-8F4C-3A6EAD4E4D44}']
@@ -526,6 +575,7 @@ type
     function BotanicalTaxa: IBotanicalTaxaSQL;
     function Captures: ICapturesSQL;
     function Connections: IConnectionsSQL;
+    function Countries: ICountriesSQL;
     function DBMetadata: IDBMetadataSQL;
     function Documents: IDocumentsSQL;
     function Eggs: IEggsSQL;
@@ -536,6 +586,7 @@ type
     function ImportProfiles: IImportProfilesSQL;
     function Individuals: IIndividualsSQL;
     function Institutions: IInstitutionsSQL;
+    function Languages: ILanguagesSQL;
     function Methods: IMethodsSQL;
     function Permissions: IPermissionsSQL;
     function NestRevisions: INestRevisionsSQL;
@@ -568,7 +619,10 @@ type
     function Vegetations: IVegetationsSQL;
     function Videos: IVideosSQL;
     function WeatherLogs: IWeatherLogsSQL;
+    function ZooCountries: IZooCountriesSQL;
+    function ZooSynonyms: IZooSynonymsSQL;
     function ZooTaxa: IZooTaxaSQL;
+    function ZooVernacular: IZooVernacularSQL;
   end;
 
   { TSQLProvider }
@@ -583,6 +637,7 @@ type
     FBotanicalTaxa: IBotanicalTaxaSQL;
     FCaptures: ICapturesSQL;
     FConnections: IConnectionsSQL;
+    FCountries: ICountriesSQL;
     FDBMetadata: IDBMetadataSQL;
     FDocuments: IDocumentsSQL;
     FEggs: IEggsSQL;
@@ -593,6 +648,7 @@ type
     FImportProfiles: IImportProfilesSQL;
     FIndividuals: IIndividualsSQL;
     FInstitutions: IInstitutionsSQL;
+    FLanguages: ILanguagesSQL;
     FMethods: IMethodsSQL;
     FPermissions: IPermissionsSQL;
     FNestRevisions: INestRevisionsSQL;
@@ -625,7 +681,10 @@ type
     FVegetations: IVegetationsSQL;
     FVideos: IVideosSQL;
     FWeatherLogs: IWeatherLogsSQL;
+    FZooCountries: IZooCountriesSQL;
+    FZooSynonyms: IZooSynonymsSQL;
     FZooTaxa: IZooTaxaSQL;
+    FZooVernacular: IZooVernacularSQL;
   public
     constructor Create(ABackend: TDatabaseBackend);
 
@@ -637,6 +696,7 @@ type
     function BotanicalTaxa: IBotanicalTaxaSQL;
     function Captures: ICapturesSQL;
     function Connections: IConnectionsSQL;
+    function Countries: ICountriesSQL;
     function DBMetadata: IDBMetadataSQL;
     function Documents: IDocumentsSQL;
     function Eggs: IEggsSQL;
@@ -647,6 +707,7 @@ type
     function ImportProfiles: IImportProfilesSQL;
     function Individuals: IIndividualsSQL;
     function Institutions: IInstitutionsSQL;
+    function Languages: ILanguagesSQL;
     function Methods: IMethodsSQL;
     function Permissions: IPermissionsSQL;
     function NestRevisions: INestRevisionsSQL;
@@ -679,7 +740,10 @@ type
     function Vegetations: IVegetationsSQL;
     function Videos: IVideosSQL;
     function WeatherLogs: IWeatherLogsSQL;
+    function ZooCountries: IZooCountriesSQL;
+    function ZooSynonyms: IZooSynonymsSQL;
     function ZooTaxa: IZooTaxaSQL;
+    function ZooVernacular: IZooVernacularSQL;
   end;
 
 implementation
@@ -704,6 +768,7 @@ begin
   FBotanicalTaxa      := TBotanicalTaxaSQL.Create(FBackend);
   FCaptures           := TCapturesSQL.Create(FBackend);
   FConnections        := TConnectionsSQL.Create(FBackend);
+  FCountries          := TCountriesSQL.Create(FBackend);
   FDBMetadata         := TDBMetadataSQL.Create(FBackend);
   FDocuments          := TDocumentsSQL.Create(FBackend);
   FEggs               := TEggsSQL.Create(FBackend);
@@ -714,6 +779,7 @@ begin
   FImportProfiles     := TImportProfilesSQL.Create(FBackend);
   FIndividuals        := TIndividualsSQL.Create(FBackend);
   FInstitutions       := TInstitutionsSQL.Create(FBackend);
+  FLanguages          := TLanguagesSQL.Create(FBackend);
   FMethods            := TMethodsSQL.Create(FBackend);
   FPermissions        := TPermissionsSQL.Create(FBackend);
   FNestOwners         := TNestOwnersSQL.Create(FBackend);
@@ -746,7 +812,10 @@ begin
   FVegetations        := TVegetationsSQL.Create(FBackend);
   FVideos             := TVideosSQL.Create(FBackend);
   FWeatherLogs        := TWeatherLogsSQL.Create(FBackend);
+  FZooCountries       := TZooCountriesSQL.Create(FBackend);
+  FZooSynonyms        := TZooSynonymsSQL.Create(FBackend);
   FZooTaxa            := TZooTaxaSQL.Create(FBackend);
+  FZooVernacular      := TZooVernacularSQL.Create(FBackend);
 end;
 
 function TSQLProvider.Audios: IAudiosSQL;
@@ -782,6 +851,11 @@ end;
 function TSQLProvider.Connections: IConnectionsSQL;
 begin
   Result := FConnections;
+end;
+
+function TSQLProvider.Countries: ICountriesSQL;
+begin
+  Result := FCountries;
 end;
 
 function TSQLProvider.DBMetadata: IDBMetadataSQL;
@@ -832,6 +906,11 @@ end;
 function TSQLProvider.Institutions: IInstitutionsSQL;
 begin
   Result := FInstitutions;
+end;
+
+function TSQLProvider.Languages: ILanguagesSQL;
+begin
+  Result := FLanguages;
 end;
 
 function TSQLProvider.Methods: IMethodsSQL;
@@ -994,9 +1073,24 @@ begin
   Result := FWeatherLogs;
 end;
 
+function TSQLProvider.ZooCountries: IZooCountriesSQL;
+begin
+  Result := FZooCountries;
+end;
+
+function TSQLProvider.ZooSynonyms: IZooSynonymsSQL;
+begin
+  Result := FZooSynonyms;
+end;
+
 function TSQLProvider.ZooTaxa: IZooTaxaSQL;
 begin
   Result := FZooTaxa;
+end;
+
+function TSQLProvider.ZooVernacular: IZooVernacularSQL;
+begin
+  Result := FZooVernacular;
 end;
 
 end.

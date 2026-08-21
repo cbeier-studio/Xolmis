@@ -47,9 +47,14 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsTitleCoordinateConverter = 'Coordinates converter';
     rsTitleUsers = 'Users';
     rsTitleHistory = 'History';
+    rsTitleLanguages = 'Languages';
+    rsTitleCountries = 'Countries';
     rsTitleTaxonRanks = 'Taxonomic ranks';
     rsTitleBotanicalTaxa = 'Botanical taxa';
     rsTitleZooTaxa = 'Taxa';
+    rsTitleTaxonSynonyms = 'Taxon synonyms';
+    rsTitleTaxonVernacularNames = 'Taxon vernacular names';
+    rsTitleTaxonOccurrence = 'Taxon occurrence';
     rsTitleSightings = 'Sightings';
     rsTitleCaptures = 'Captures';
     rsTitleBands = 'Bands';
@@ -280,6 +285,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsProgressOptimizingDatabase = 'Optimizing database...';
     rsUpgradingDatabaseSchema = 'Upgrading database schema...';
     rsInsertingRecords = 'Inserting records in database...';
+    rsOptimizingDatabase = 'Optimizing database...';
 
     { Splash screen messages }
     rsStartingXolmis = 'Starting Xolmis...';

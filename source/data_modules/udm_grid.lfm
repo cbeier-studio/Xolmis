@@ -15326,9 +15326,6 @@ object DMG: TDMG
       'SELECT z.*,'
       '    r.rank_name AS rank_name,'
       '    u.scientific_name AS parent_taxon_name,'
-      '    v.scientific_name AS valid_name,'
-      '    ui.scientific_name AS ioc_parent_name,'
-      '    vi.scientific_name AS ioc_valid_name,'
       '    o.scientific_name AS order_name,'
       '    f.scientific_name AS family_name,'
       '    s.scientific_name AS subfamily_name,'
@@ -15338,9 +15335,6 @@ object DMG: TDMG
       'FROM zoo_taxa AS z'
       'LEFT JOIN taxon_ranks AS r ON z.rank_id = r.rank_id'
       'LEFT JOIN zoo_taxa AS u ON z.parent_taxon_id = u.taxon_id'
-      'LEFT JOIN zoo_taxa AS v ON z.valid_id = v.taxon_id'
-      'LEFT JOIN zoo_taxa AS ui ON z.ioc_parent_taxon_id = ui.taxon_id'
-      'LEFT JOIN zoo_taxa AS vi ON z.ioc_valid_id = vi.taxon_id'
       'LEFT JOIN zoo_taxa AS o ON z.order_id = o.taxon_id'
       'LEFT JOIN zoo_taxa AS f ON z.family_id = f.taxon_id'
       'LEFT JOIN zoo_taxa AS s ON z.subfamily_id = s.taxon_id'
@@ -15398,40 +15392,10 @@ object DMG: TDMG
       Visible = False
       Size = 250
     end
-    object qTaxaenglish_name: TStringField
-      FieldKind = fkData
-      FieldName = 'english_name'
-      Index = 4
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 100
-    end
-    object qTaxaportuguese_name: TStringField
-      FieldKind = fkData
-      FieldName = 'portuguese_name'
-      Index = 5
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 100
-    end
-    object qTaxaspanish_name: TStringField
-      FieldKind = fkData
-      FieldName = 'spanish_name'
-      Index = 6
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 100
-    end
     object qTaxaquick_code: TStringField
       FieldKind = fkData
       FieldName = 'quick_code'
-      Index = 7
+      Index = 4
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15441,7 +15405,7 @@ object DMG: TDMG
     object qTaxarank_id: TLargeintField
       FieldKind = fkData
       FieldName = 'rank_id'
-      Index = 8
+      Index = 5
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15451,7 +15415,7 @@ object DMG: TDMG
     object qTaxarank_name: TStringField
       FieldKind = fkData
       FieldName = 'rank_name'
-      Index = 9
+      Index = 6
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -15461,7 +15425,7 @@ object DMG: TDMG
     object qTaxaparent_taxon_id: TLargeintField
       FieldKind = fkData
       FieldName = 'parent_taxon_id'
-      Index = 10
+      Index = 7
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15471,27 +15435,7 @@ object DMG: TDMG
     object qTaxaparent_taxon_name: TStringField
       FieldKind = fkData
       FieldName = 'parent_taxon_name'
-      Index = 11
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = True
-      Size = 100
-    end
-    object qTaxavalid_id: TLargeintField
-      FieldKind = fkData
-      FieldName = 'valid_id'
-      Index = 12
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qTaxavalid_name: TStringField
-      FieldKind = fkData
-      FieldName = 'valid_name'
-      Index = 13
+      Index = 8
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15502,7 +15446,7 @@ object DMG: TDMG
       DisplayLabel = 'Conservation status'
       FieldKind = fkData
       FieldName = 'iucn_status'
-      Index = 14
+      Index = 9
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15512,7 +15456,7 @@ object DMG: TDMG
     object qTaxaextinct: TBooleanField
       FieldKind = fkData
       FieldName = 'extinct'
-      Index = 15
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15522,7 +15466,7 @@ object DMG: TDMG
     object qTaxaextinction_year: TStringField
       FieldKind = fkData
       FieldName = 'extinction_year'
-      Index = 16
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15532,28 +15476,17 @@ object DMG: TDMG
     object qTaxasort_num: TFloatField
       FieldKind = fkData
       FieldName = 'sort_num'
-      Index = 17
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Precision = -1
     end
-    object qTaxagroup_name: TStringField
-      FieldKind = fkData
-      FieldName = 'group_name'
-      Index = 18
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-      Size = 40
-    end
     object qTaxaorder_id: TLargeintField
       FieldKind = fkData
       FieldName = 'order_id'
-      Index = 19
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15563,7 +15496,7 @@ object DMG: TDMG
     object qTaxaorder_name: TStringField
       FieldKind = fkData
       FieldName = 'order_name'
-      Index = 20
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15573,7 +15506,7 @@ object DMG: TDMG
     object qTaxafamily_id: TLargeintField
       FieldKind = fkData
       FieldName = 'family_id'
-      Index = 21
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15583,7 +15516,7 @@ object DMG: TDMG
     object qTaxafamily_name: TStringField
       FieldKind = fkData
       FieldName = 'family_name'
-      Index = 22
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15593,7 +15526,7 @@ object DMG: TDMG
     object qTaxasubfamily_id: TLargeintField
       FieldKind = fkData
       FieldName = 'subfamily_id'
-      Index = 23
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15603,7 +15536,7 @@ object DMG: TDMG
     object qTaxasubfamily_name: TStringField
       FieldKind = fkData
       FieldName = 'subfamily_name'
-      Index = 24
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15613,7 +15546,7 @@ object DMG: TDMG
     object qTaxagenus_id: TLargeintField
       FieldKind = fkData
       FieldName = 'genus_id'
-      Index = 25
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15623,7 +15556,7 @@ object DMG: TDMG
     object qTaxagenero_name: TStringField
       FieldKind = fkData
       FieldName = 'genero_name'
-      Index = 26
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15633,7 +15566,7 @@ object DMG: TDMG
     object qTaxaspecies_id: TLargeintField
       FieldKind = fkData
       FieldName = 'species_id'
-      Index = 27
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15643,7 +15576,7 @@ object DMG: TDMG
     object qTaxaspecies_name: TStringField
       FieldKind = fkData
       FieldName = 'species_name'
-      Index = 28
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15653,7 +15586,7 @@ object DMG: TDMG
     object qTaxasubspecies_group_id: TLargeintField
       FieldKind = fkData
       FieldName = 'subspecies_group_id'
-      Index = 29
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15663,7 +15596,7 @@ object DMG: TDMG
     object qTaxasubspecies_group_name: TStringField
       FieldKind = fkData
       FieldName = 'subspecies_group_name'
-      Index = 30
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15673,7 +15606,7 @@ object DMG: TDMG
     object qTaxaincertae_sedis: TLargeintField
       FieldKind = fkData
       FieldName = 'incertae_sedis'
-      Index = 31
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15683,126 +15616,16 @@ object DMG: TDMG
     object qTaxaebird_code: TStringField
       FieldKind = fkData
       FieldName = 'ebird_code'
-      Index = 32
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
-    end
-    object qTaxaclements_taxonomy: TBooleanField
-      FieldKind = fkData
-      FieldName = 'clements_taxonomy'
-      Index = 33
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      DisplayValues = 'True;False'
-    end
-    object qTaxaioc_taxonomy: TBooleanField
-      FieldKind = fkData
-      FieldName = 'ioc_taxonomy'
-      Index = 34
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      DisplayValues = 'True;False'
-    end
-    object qTaxaioc_rank_id: TLargeintField
-      FieldKind = fkData
-      FieldName = 'ioc_rank_id'
-      Index = 35
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qTaxaioc_parent_taxon_id: TLargeintField
-      FieldKind = fkData
-      FieldName = 'ioc_parent_taxon_id'
-      Index = 36
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qTaxaioc_parent_name: TStringField
-      FieldKind = fkData
-      FieldName = 'ioc_parent_name'
-      Index = 37
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = True
-      Size = 100
-    end
-    object qTaxaioc_valid_id: TLargeintField
-      FieldKind = fkData
-      FieldName = 'ioc_valid_id'
-      Index = 38
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
-    object qTaxaioc_valid_name: TStringField
-      FieldKind = fkData
-      FieldName = 'ioc_valid_name'
-      Index = 39
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = True
-      Size = 100
-    end
-    object qTaxaioc_sort_num: TFloatField
-      FieldKind = fkData
-      FieldName = 'ioc_sort_num'
-      Index = 40
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Precision = -1
-    end
-    object qTaxaioc_english_name: TStringField
-      FieldKind = fkData
-      FieldName = 'ioc_english_name'
-      Index = 41
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 100
-    end
-    object qTaxacbro_taxonomy: TBooleanField
-      FieldKind = fkData
-      FieldName = 'cbro_taxonomy'
-      Index = 42
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      DisplayValues = 'True;False'
-    end
-    object qTaxaother_portuguese_names: TStringField
-      FieldKind = fkData
-      FieldName = 'other_portuguese_names'
-      Index = 43
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Size = 150
     end
     object qTaxadistribution: TMemoField
       FieldKind = fkData
       FieldName = 'distribution'
-      Index = 44
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15811,22 +15634,10 @@ object DMG: TDMG
       BlobType = ftMemo
       Transliterate = False
     end
-    object qTaxaioc_distribution: TMemoField
-      FieldKind = fkData
-      FieldName = 'ioc_distribution'
-      Index = 45
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      OnGetText = qTaxaioc_distributionGetText
-      BlobType = ftMemo
-      Transliterate = False
-    end
     object qTaxataxon_concept_id: TStringField
       FieldKind = fkData
       FieldName = 'taxon_concept_id'
-      Index = 46
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15836,7 +15647,7 @@ object DMG: TDMG
     object qTaxaaccepted_status: TBooleanField
       FieldKind = fkData
       FieldName = 'accepted_status'
-      Index = 47
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15846,7 +15657,7 @@ object DMG: TDMG
     object qTaxataxon_id: TLargeintField
       FieldKind = fkData
       FieldName = 'taxon_id'
-      Index = 48
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -15855,7 +15666,7 @@ object DMG: TDMG
     object qTaxauser_inserted: TLongintField
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 49
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15865,7 +15676,7 @@ object DMG: TDMG
     object qTaxauser_updated: TLongintField
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 50
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15875,7 +15686,7 @@ object DMG: TDMG
     object qTaxainsert_date: TDateTimeField
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 51
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15885,7 +15696,7 @@ object DMG: TDMG
     object qTaxaupdate_date: TDateTimeField
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 52
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15895,7 +15706,7 @@ object DMG: TDMG
     object qTaxaexported_status: TBooleanField
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 53
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15906,7 +15717,7 @@ object DMG: TDMG
     object qTaxaactive_status: TBooleanField
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 54
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15917,7 +15728,7 @@ object DMG: TDMG
     object qTaxainactivated_by: TStringField
       FieldKind = fkData
       FieldName = 'inactivated_by'
-      Index = 55
+      Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15949,8 +15760,8 @@ object DMG: TDMG
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
     SQL.Strings = (
-      'SELECT valid_id, scientific_name, formatted_name FROM zoo_taxa'
-      'WHERE (valid_id = :taxon_id) AND (active_status = 1)'
+      'SELECT scientific_name, formatted_name FROM zoo_synonyms'
+      'WHERE (taxon_id = :taxon_id) AND (active_status = 1)'
       'ORDER BY scientific_name ASC'
       ''
     )
@@ -15961,22 +15772,13 @@ object DMG: TDMG
         ParamType = ptInput
       end>
     Macros = <>
+    DataSource = dsTaxa
     Left = 710
     Top = 143
-    object qSynonymTaxavalid_id: TLargeintField
-      FieldKind = fkData
-      FieldName = 'valid_id'
-      Index = 0
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-      Visible = False
-    end
     object qSynonymTaxascientific_name: TStringField
       FieldKind = fkData
       FieldName = 'scientific_name'
-      Index = 1
+      Index = 0
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -15986,7 +15788,7 @@ object DMG: TDMG
     object qSynonymTaxaformatted_name: TStringField
       FieldKind = fkData
       FieldName = 'formatted_name'
-      Index = 2
+      Index = 1
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -16026,6 +15828,7 @@ object DMG: TDMG
         ParamType = ptInput
       end>
     Macros = <>
+    DataSource = dsTaxa
     Left = 710
     Top = 198
     object qChildTaxascientific_name: TStringField
@@ -21134,5 +20937,84 @@ object DMG: TDMG
     DataSet = qPois
     Left = 282
     Top = 488
+  end
+  object qVernacularTaxa: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'vernacular_name'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end    
+      item
+        Name = 'language_name'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'preferred'
+        DataType = ftBoolean
+        Precision = -1
+      end>
+    Database = DMM.sqlCon
+    Transaction = DMM.sqlTrans
+    SQL.Strings = (
+      'SELECT'
+      '  zv.vernacular_name,'
+      '  lg.language_name,'
+      '  zv.preferred'
+      'FROM zoo_vernacular AS zv'
+      'LEFT JOIN languages AS lg ON zv.language_id = lg.language_id'
+      'WHERE (zv.taxon_id = :taxon_id) AND (zv.active_status = 1)'
+      'GROUP BY zv.language_id'
+      'ORDER BY zv.vernacular_name ASC'
+      ''
+    )
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'taxon_id'
+        ParamType = ptInput
+      end>
+    Macros = <>
+    DataSource = dsTaxa
+    Left = 776
+    Top = 168
+    object qVernacularTaxavernacular_name: TStringField
+      DisplayLabel = 'Vernacular name'
+      FieldKind = fkData
+      FieldName = 'vernacular_name'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 150
+    end
+    object qVernacularTaxalanguage_name: TStringField
+      DisplayLabel = 'Language'
+      DisplayWidth = 20
+      FieldKind = fkData
+      FieldName = 'language_name'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = True
+      Size = 100
+    end
+    object qVernacularTaxapreferred: TBooleanField
+      DisplayLabel = 'Preferred'
+      FieldKind = fkData
+      FieldName = 'preferred'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      DisplayValues = 'True;False'
+    end
   end
 end

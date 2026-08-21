@@ -155,6 +155,40 @@ type
     function Delete: String;
   end;
 
+  { TCountriesSQL }
+
+  TCountriesSQL = class(TInterfacedObject, ICountriesSQL)
+  private
+    FBackend: TDatabaseBackend;
+  public
+    constructor Create(ABackend: TDatabaseBackend);
+
+    function CreateTable: String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function Insert: String;
+    function Update: String;
+    function Delete: String;
+    function Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
+  end;
+
+  { TLanguagesSQL }
+
+  TLanguagesSQL = class(TInterfacedObject, ILanguagesSQL)
+  private
+    FBackend: TDatabaseBackend;
+  public
+    constructor Create(ABackend: TDatabaseBackend);
+
+    function CreateTable: String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function Insert: String;
+    function Update: String;
+    function Delete: String;
+    function Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
+  end;
+
 implementation
 
 { TConnectionsSQL }
@@ -1247,6 +1281,314 @@ begin
       'settings = :settings, ' +
       'update_date = datetime(''now'',''localtime'') ' +
     'WHERE (profile_id = :profile_id) ';
+end;
+
+{ TCountriesSQL }
+
+constructor TCountriesSQL.Create(ABackend: TDatabaseBackend);
+begin
+  inherited Create;
+  FBackend := ABackend;
+end;
+
+function TCountriesSQL.CreateTable: String;
+begin
+  Result :=
+    'CREATE TABLE IF NOT EXISTS countries (' +
+      'country_id      INTEGER       PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
+      'country_code    VARCHAR (5)   UNIQUE NOT NULL,' +
+      'country_name    VARCHAR (100) UNIQUE NOT NULL,' +
+      'user_inserted   INTEGER,' +
+      'user_updated    INTEGER,' +
+      'insert_date     DATETIME,' +
+      'update_date     DATETIME,' +
+      'exported_status BOOLEAN      DEFAULT (0),' +
+      'marked_status   BOOLEAN      DEFAULT (0),' +
+      'active_status   BOOLEAN      DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
+    ');';
+end;
+
+function TCountriesSQL.Delete: String;
+begin
+  Result :=
+    'DELETE FROM countries ' +
+    'WHERE country_id = :aid';
+end;
+
+function TCountriesSQL.Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
+begin
+  Result := 'SELECT country_id, country_name, country_code FROM countries ';
+
+  case aWhere of
+    swcNone: ;
+    swcFindText:
+    begin
+      Result := Result +
+        'WHERE ((lower(country_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
+          'OR ((lower(country_code) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM))) ' +
+          'AND (active_status = 1) ';
+    end;
+    swcActiveAll:
+      Result := Result + 'WHERE (active_status = 1) ';
+    swcActiveMarked:
+      Result := Result + 'WHERE (marked_status = 1) AND (active_status = 1) ';
+    swcInactive:
+      Result := Result + 'WHERE (active_status = 0) ';
+  end;
+end;
+
+function TCountriesSQL.Insert: String;
+begin
+  Result :=
+    'INSERT INTO countries (' +
+      'country_id, ' +
+      'country_code, ' +
+      'country_name, ' +
+      'user_inserted, ' +
+      'insert_date) ' +
+    'VALUES (' +
+      ':country_id, ' +
+      ':country_code, ' +
+      ':country_name, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))';
+end;
+
+function TCountriesSQL.SelectAll(aWhere: TSQLWhereClause): String;
+begin
+  Result := 'SELECT * FROM countries ';
+
+  case aWhere of
+    swcNone: ;
+    swcId:
+      Result := Result + 'WHERE (country_id = :cod) ';
+    swcUpdateId:
+      Result := Result + 'WHERE (country_id = :country_id) ';
+    swcFieldValue:
+      Result := Result + 'WHERE (%afield = :avalue) ';
+    swcActiveEmpty:
+      Result := Result + 'WHERE (country_id = -1) AND (active_status = 1) ';
+    swcActiveAll:
+      Result := Result + 'WHERE (active_status = 1) ';
+    swcActiveMarked:
+      Result := Result + 'WHERE (active_status = 1) AND (marked_status = 1) ';
+    swcInactive:
+      Result := Result + 'WHERE (active_status = 0) ';
+    swcActiveParent: ;
+    swcFindText: ;
+  end;
+end;
+
+function TCountriesSQL.SelectTable(aWhere: TSQLWhereClause): String;
+begin
+  Result :=
+    'SELECT ' +
+      'country_id, ' +
+      'country_code, ' +
+      'country_name, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status, ' +
+      'inactivated_by ' +
+    'FROM countries ';
+
+  case aWhere of
+    swcNone: ;
+    swcId:
+      Result := Result + 'WHERE (country_id = :cod) ';
+    swcUpdateId:
+      Result := Result + 'WHERE (country_id = :country_id) ';
+    swcFieldValue:
+      Result := Result + 'WHERE (%afield = :avalue) ';
+    swcActiveEmpty:
+      Result := Result + 'WHERE (country_id = -1) AND (active_status = 1) ';
+    swcActiveAll:
+      Result := Result + 'WHERE (active_status = 1) ';
+    swcActiveMarked:
+      Result := Result + 'WHERE (active_status = 1) AND (marked_status = 1) ';
+    swcInactive:
+      Result := Result + 'WHERE (active_status = 0) ';
+    swcActiveParent: ;
+    swcFindText: ;
+  end;
+end;
+
+function TCountriesSQL.Update: String;
+begin
+  Result :=
+    'UPDATE countries SET ' +
+      'country_code = :country_code, ' +
+      'country_name = :country_name, ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ' +
+    'WHERE (country_id = :country_id) ';
+end;
+
+{ TLanguagesSQL }
+
+constructor TLanguagesSQL.Create(ABackend: TDatabaseBackend);
+begin
+  inherited Create;
+  FBackend := ABackend;
+end;
+
+function TLanguagesSQL.CreateTable: String;
+begin
+  Result :=
+    'CREATE TABLE IF NOT EXISTS languages (' +
+      'language_id     INTEGER       PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
+      'macrolanguage_code VARCHAR (3) NOT NULL,' +
+      'country_code    VARCHAR (3),' +
+      'variation_code  VARCHAR (10),' +
+      'language_name   VARCHAR (100) UNIQUE NOT NULL,' +
+      'user_inserted   INTEGER,' +
+      'user_updated    INTEGER,' +
+      'insert_date     DATETIME,' +
+      'update_date     DATETIME,' +
+      'exported_status BOOLEAN      DEFAULT (0),' +
+      'marked_status   BOOLEAN      DEFAULT (0),' +
+      'active_status   BOOLEAN      DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5)' +
+    ');';
+end;
+
+function TLanguagesSQL.Delete: String;
+begin
+  Result :=
+    'DELETE FROM languages ' +
+    'WHERE language_id = :aid';
+end;
+
+function TLanguagesSQL.Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
+begin
+  Result := 'SELECT language_id, language_name FROM languages ';
+
+  case aWhere of
+    swcNone: ;
+    swcFindText:
+    begin
+      Result := Result +
+        'WHERE ((lower(language_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
+          'OR ((lower(macrolanguage_code) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
+          'OR ((lower(country_code) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ' +
+          'OR ((lower(variation_code) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM))) ' +
+          'AND (active_status = 1) ';
+    end;
+    swcActiveAll:
+      Result := Result + 'WHERE (active_status = 1) ';
+    swcActiveMarked:
+      Result := Result + 'WHERE (marked_status = 1) AND (active_status = 1) ';
+    swcInactive:
+      Result := Result + 'WHERE (active_status = 0) ';
+  end;
+end;
+
+function TLanguagesSQL.Insert: String;
+begin
+  Result :=
+    'INSERT INTO languages (' +
+      'language_id, ' +
+      'macrolanguage_code, ' +
+      'country_code, ' +
+      'variation_code, ' +
+      'language_name, ' +
+      'user_inserted, ' +
+      'insert_date) ' +
+    'VALUES (' +
+      ':language_id, ' +
+      ':macrolanguage_code, ' +
+      ':country_code, ' +
+      ':variation_code, ' +
+      ':language_name, ' +
+      ':user_inserted, ' +
+      'datetime(''now'', ''subsec''))';
+end;
+
+function TLanguagesSQL.SelectAll(aWhere: TSQLWhereClause): String;
+begin
+  Result := 'SELECT * FROM languages ';
+
+  case aWhere of
+    swcNone: ;
+    swcId:
+      Result := Result + 'WHERE (language_id = :cod) ';
+    swcUpdateId:
+      Result := Result + 'WHERE (language_id = :language_id) ';
+    swcFieldValue:
+      Result := Result + 'WHERE (%afield = :avalue) ';
+    swcActiveEmpty:
+      Result := Result + 'WHERE (language_id = -1) AND (active_status = 1) ';
+    swcActiveAll:
+      Result := Result + 'WHERE (active_status = 1) ';
+    swcActiveMarked:
+      Result := Result + 'WHERE (active_status = 1) AND (marked_status = 1) ';
+    swcInactive:
+      Result := Result + 'WHERE (active_status = 0) ';
+    swcActiveParent: ;
+    swcFindText: ;
+  end;
+end;
+
+function TLanguagesSQL.SelectTable(aWhere: TSQLWhereClause): String;
+begin
+  Result :=
+    'SELECT ' +
+      'language_id, ' +
+      'macrolanguage_code, ' +
+      'country_code, ' +
+      'variation_code, ' +
+      'language_name, ' +
+      'user_inserted, ' +
+      'user_updated, ' +
+      'datetime(insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(update_date, ''localtime'') AS update_date, ' +
+      'exported_status, ' +
+      'marked_status, ' +
+      'active_status, ' +
+      'inactivated_by ' +
+    'FROM languages ';
+
+  case aWhere of
+    swcNone: ;
+    swcId:
+      Result := Result + 'WHERE (language_id = :cod) ';
+    swcUpdateId:
+      Result := Result + 'WHERE (language_id = :language_id) ';
+    swcFieldValue:
+      Result := Result + 'WHERE (%afield = :avalue) ';
+    swcActiveEmpty:
+      Result := Result + 'WHERE (language_id = -1) AND (active_status = 1) ';
+    swcActiveAll:
+      Result := Result + 'WHERE (active_status = 1) ';
+    swcActiveMarked:
+      Result := Result + 'WHERE (active_status = 1) AND (marked_status = 1) ';
+    swcInactive:
+      Result := Result + 'WHERE (active_status = 0) ';
+    swcActiveParent: ;
+    swcFindText: ;
+  end;
+end;
+
+function TLanguagesSQL.Update: String;
+begin
+  Result :=
+    'UPDATE languages SET ' +
+      'macrolanguage_code = :macrolanguage_code, ' +
+      'country_code = :country_code, ' +
+      'variation_code = :variation_code, ' +
+      'language_name = :language_name, ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'',''subsec'') ' +
+    'WHERE (language_id = :language_id) ';
 end;
 
 end.

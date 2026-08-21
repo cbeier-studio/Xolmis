@@ -2100,8 +2100,10 @@ begin
     Add(rsTitlePermanentNets);
     Add(rsTitleBotanicalTaxa);
   end;
+  cbTarget.Sorted := True;
 
   cbLookupTable.Items.Assign(cbTarget.Items);
+  cbLookupTable.Sorted := True;
 end;
 
 procedure TdlgImport.pmfDeselectAllClick(Sender: TObject);

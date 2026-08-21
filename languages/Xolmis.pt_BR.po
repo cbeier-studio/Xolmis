@@ -27,6 +27,11 @@ msgctxt "data_columns.rscabstract"
 msgid "Abstract"
 msgstr "Resumo"
 
+#: data_columns.rscaccepted
+msgctxt "data_columns.rscaccepted"
+msgid "Accepted"
+msgstr "Aceito"
+
 #: data_columns.rscaccessionnr
 msgctxt "data_columns.rscaccessionnr"
 msgid "Accession nº"
@@ -1061,6 +1066,10 @@ msgctxt "data_columns.rscisinebird"
 msgid "Is in eBird"
 msgstr "Está no eBird"
 
+#: data_columns.rscisvalid
+msgid "Is valid"
+msgstr "É válido"
+
 #: data_columns.rscitem
 msgctxt "data_columns.rscitem"
 msgid "Item"
@@ -1075,6 +1084,10 @@ msgstr "Distância de Kipp"
 msgctxt "data_columns.rsclanguage"
 msgid "Language"
 msgstr "Idioma"
+
+#: data_columns.rsclanguageid
+msgid "Language ID"
+msgstr "Idioma ID"
 
 #: data_columns.rsclastdateactive
 msgctxt "data_columns.rsclastdateactive"
@@ -1159,6 +1172,10 @@ msgstr "Causa da perda"
 msgctxt "data_columns.rscmackinnonlist"
 msgid "Mackinnon list"
 msgstr "Lista de Mackinnon"
+
+#: data_columns.rscmacrolanguage
+msgid "Macrolanguage"
+msgstr "Macroidioma"
 
 #: data_columns.rscmaingoal
 msgctxt "data_columns.rscmaingoal"
@@ -1790,6 +1807,10 @@ msgctxt "data_columns.rscprecipitation"
 msgid "Precipitation"
 msgstr "Precipitação"
 
+#: data_columns.rscpreferred
+msgid "Preferred"
+msgstr "Preferível"
+
 #: data_columns.rscprefix
 msgctxt "data_columns.rscprefix"
 msgid "Prefix"
@@ -2346,6 +2367,10 @@ msgctxt "data_columns.rsctaxon"
 msgid "Taxon"
 msgstr "Táxon"
 
+#: data_columns.rsctaxonconceptid
+msgid "Taxon concept ID"
+msgstr "ID do conceito de táxon"
+
 #: data_columns.rsctaxonformatted
 msgctxt "data_columns.rsctaxonformatted"
 msgid "Taxon (formatted)"
@@ -2465,6 +2490,15 @@ msgstr "Nome válido ID"
 msgctxt "data_columns.rscvalue"
 msgid "Value"
 msgstr "Valor"
+
+#: data_columns.rscvariation
+msgid "Variation"
+msgstr "Variação"
+
+#: data_columns.rscvernacularname
+msgctxt "data_columns.rscvernacularname"
+msgid "Vernacular name"
+msgstr "Nome vernacular"
 
 #: data_columns.rscvernacularnames
 msgctxt "data_columns.rscvernacularnames"
@@ -13601,21 +13635,6 @@ msgctxt "tfrmtaxa.chartyear.axislist[1].title.caption"
 msgid "Year"
 msgstr "Ano"
 
-#: tfrmtaxa.ckcbro.caption
-msgctxt "tfrmtaxa.ckcbro.caption"
-msgid "CBRO"
-msgstr "CBRO"
-
-#: tfrmtaxa.ckclements.caption
-msgctxt "tfrmtaxa.ckclements.caption"
-msgid "Clements"
-msgstr "Clements"
-
-#: tfrmtaxa.ckioc.caption
-msgctxt "tfrmtaxa.ckioc.caption"
-msgid "IOC"
-msgstr "IOC"
-
 #: tfrmtaxa.esearch.texthint
 msgctxt "tfrmtaxa.esearch.texthint"
 msgid "Search"
@@ -13636,27 +13655,18 @@ msgstr "Táxon"
 
 #: tfrmtaxa.gridtaxa.columns[1].title.caption
 msgctxt "tfrmtaxa.gridtaxa.columns[1].title.caption"
-msgid "Valid name ID"
-msgstr "Nome válido ID"
-
-#: tfrmtaxa.gridtaxa.columns[2].title.caption
 msgid "Rank ID"
 msgstr "Nível ID"
 
-#: tfrmtaxa.label2.caption
-msgctxt "tfrmtaxa.label2.caption"
-msgid "English"
-msgstr "Inglês"
+#: tfrmtaxa.gridvernacular.columns[0].title.caption
+msgctxt "tfrmtaxa.gridvernacular.columns[0].title.caption"
+msgid "Language"
+msgstr "Idioma"
 
-#: tfrmtaxa.label3.caption
-msgctxt "tfrmtaxa.label3.caption"
-msgid "Spanish"
-msgstr "Espanhol"
-
-#: tfrmtaxa.label4.caption
-msgctxt "tfrmtaxa.label4.caption"
-msgid "Portuguese"
-msgstr "Português"
+#: tfrmtaxa.gridvernacular.columns[1].title.caption
+msgctxt "tfrmtaxa.gridvernacular.columns[1].title.caption"
+msgid "Vernacular name"
+msgstr "Nome vernacular"
 
 #: tfrmtaxa.label5.caption
 msgid "Geographical distribution"
@@ -13694,10 +13704,6 @@ msgstr "Espécimes (0)"
 #: tfrmtaxa.lblmeannestproductivity.caption
 msgid "mean nest productivity"
 msgstr "produtividade média do ninho"
-
-#: tfrmtaxa.lblvalidname.caption
-msgid "Synonym of"
-msgstr "Sinônimo de"
 
 #: tfrmtaxa.pmfshowrecordedtaxa.caption
 msgid "Show only the recorded taxa"
@@ -18338,6 +18344,11 @@ msgstr "Abrir banco de dados"
 msgid "Open import profile"
 msgstr "Abrir perfil de importação"
 
+#: utils_locale.rsoptimizingdatabase
+msgctxt "utils_locale.rsoptimizingdatabase"
+msgid "Optimizing database..."
+msgstr "Otimizando banco de dados..."
+
 #: utils_locale.rsoriginalsearch
 msgctxt "utils_locale.rsoriginalsearch"
 msgid "Original search"
@@ -20001,6 +20012,10 @@ msgctxt "utils_locale.rstitlecoordinateconverter"
 msgid "Coordinates converter"
 msgstr "Conversor de coordenadas"
 
+#: utils_locale.rstitlecountries
+msgid "Countries"
+msgstr "Países"
+
 #: utils_locale.rstitlecreatedatabase
 msgctxt "utils_locale.rstitlecreatedatabase"
 msgid "Create database"
@@ -20107,6 +20122,10 @@ msgstr "Entrada de texto necessária"
 msgctxt "utils_locale.rstitleinstitutions"
 msgid "Institutions"
 msgstr "Instituições"
+
+#: utils_locale.rstitlelanguages
+msgid "Languages"
+msgstr "Idiomas"
 
 #: utils_locale.rstitlelastlifers
 msgctxt "utils_locale.rstitlelastlifers"
@@ -20302,10 +20321,22 @@ msgctxt "utils_locale.rstitletaxonhierarchy"
 msgid "Taxa hierarchy"
 msgstr "Hierarquia de táxons"
 
+#: utils_locale.rstitletaxonoccurrence
+msgid "Taxon occurrence"
+msgstr "Ocorrência do táxon"
+
 #: utils_locale.rstitletaxonranks
 msgctxt "utils_locale.rstitletaxonranks"
 msgid "Taxonomic ranks"
 msgstr "Níveis taxonômicos"
+
+#: utils_locale.rstitletaxonsynonyms
+msgid "Taxon synonyms"
+msgstr "Sinônimos do táxon"
+
+#: utils_locale.rstitletaxonvernacularnames
+msgid "Taxon vernacular names"
+msgstr "Nomes vernaculares do táxon"
 
 #: utils_locale.rstitleteam
 msgctxt "utils_locale.rstitleteam"

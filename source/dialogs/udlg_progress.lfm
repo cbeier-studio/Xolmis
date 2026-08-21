@@ -12,6 +12,7 @@ object dlgProgress: TdlgProgress
   Constraints.MaxWidth = 500
   Constraints.MinHeight = 160
   Constraints.MinWidth = 400
+  FormStyle = fsStayOnTop
   PopupMode = pmAuto
   Position = poMainFormCenter
   LCLVersion = '4.6.0.0'

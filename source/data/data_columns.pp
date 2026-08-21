@@ -521,6 +521,14 @@ resourcestring
   rscPermitStatus = 'Permit status';
   rscReportDate = 'Report date';
   rscDeletedBy = 'Deleted by';
+  rscLanguageId = 'Language ID';
+  rscPreferred = 'Preferred';
+  rscVernacularName = 'Vernacular name';
+  rscIsValid = 'Is valid';
+  rscVariation = 'Variation';
+  rscTaxonConceptId = 'Taxon concept ID';
+  rscAccepted = 'Accepted';
+  rscMacrolanguage = 'Macrolanguage';
 
   rscValue = 'Value';
   rscTally = 'Count';
@@ -577,10 +585,15 @@ resourcestring
   procedure TranslateRecordVerifications(aDataSet: TDataSet);
   procedure TranslateConnections(aDataSet: TDataSet);
   procedure TranslateUsers(aDataSet: TDataSet);
+  procedure TranslateCountries(aDataSet: TDataSet);
+  procedure TranslateLanguages(aDataSet: TDataSet);
   procedure TranslateMethods(aDataSet: TDataSet);
   procedure TranslateTaxonRanks(aDataSet: TDataSet);
   procedure TranslateBotanicTaxa(aDataSet: TDataSet);
   procedure TranslateZooTaxa(aDataSet: TDataSet);
+  procedure TranslateZooSynonyms(aDataSet: TDataSet);
+  procedure TranslateZooVernacular(aDataSet: TDataSet);
+  procedure TranslateZooCountries(aDataSet: TDataSet);
   procedure TranslateInstitutions(aDataSet: TDataSet);
   procedure TranslatePeople(aDataSet: TDataSet);
   procedure TranslateProjects(aDataSet: TDataSet);
@@ -1149,9 +1162,6 @@ begin
         'scientific_name':        Fields[i].DisplayLabel := rscScientificName;
         'authorship':             Fields[i].DisplayLabel := rscAuthorship;
         'formatted_name':         Fields[i].DisplayLabel := rscScientificName;
-        'english_name':           Fields[i].DisplayLabel := rscEnglishName;
-        'portuguese_name':        Fields[i].DisplayLabel := rscPortugueseName;
-        'spanish_name':           Fields[i].DisplayLabel := rscSpanishName;
         'quick_code':             Fields[i].DisplayLabel := rscQuickCode;
         'rank_id':                Fields[i].DisplayLabel := rscTaxonomicRankID;
         'rank_name':              Fields[i].DisplayLabel := rscTaxonomicRank;
@@ -1163,7 +1173,6 @@ begin
         'extinct':                Fields[i].DisplayLabel := rscExtinct;
         'extinction_year':        Fields[i].DisplayLabel := rscExtinctionYear;
         'sort_num':               Fields[i].DisplayLabel := rscTaxonomicSequence;
-        'group_name':             Fields[i].DisplayLabel := rscSubspeciesGroup;
         'subspecies_group_id':    Fields[i].DisplayLabel := rscSubspeciesGroupID;
         'species_id':             Fields[i].DisplayLabel := rscSpeciesID;
         'genus_id':               Fields[i].DisplayLabel := rscGenusID;
@@ -1172,7 +1181,20 @@ begin
         'order_id':               Fields[i].DisplayLabel := rscOrderID;
         'incertae_sedis':         Fields[i].DisplayLabel := rscIncertaeSedis;
         'ebird_code':             Fields[i].DisplayLabel := rscEBirdCode;
-        { --- deprecated --- }
+        'distribution':           Fields[i].DisplayLabel := rscDistribution;
+        'taxon_id':               Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
+        { VVV deprecated VVV }
+        'english_name':           Fields[i].DisplayLabel := rscEnglishName;
+        'portuguese_name':        Fields[i].DisplayLabel := rscPortugueseName;
+        'spanish_name':           Fields[i].DisplayLabel := rscSpanishName;
+        'group_name':             Fields[i].DisplayLabel := rscSubspeciesGroup;
         'clements_taxonomy':      Fields[i].DisplayLabel := rscClements;
         'ioc_taxonomy':           Fields[i].DisplayLabel := rscIOC;
         'ioc_rank_id':            Fields[i].DisplayLabel := rscTaxonomicRankID;
@@ -1184,9 +1206,7 @@ begin
         'ioc_sort_num':           Fields[i].DisplayLabel := rscTaxonomicSequence;
         'ioc_english_name':       Fields[i].DisplayLabel := rscEnglishName;
         'cbro_taxonomy':          Fields[i].DisplayLabel := rscCBRO;
-        { ------------------ }
         'other_portuguese_names': Fields[i].DisplayLabel := rscOtherPortugueseNames;
-        { --- deprecated --- }
         'cbro_rank_id':           Fields[i].DisplayLabel := rscTaxonomicRankID;
         'cbro_rank_name':         Fields[i].DisplayLabel := rscTaxonomicRank;
         'cbro_parent_taxon_id':   Fields[i].DisplayLabel := rscParentTaxonID;
@@ -1197,17 +1217,8 @@ begin
         'genus_epithet':          Fields[i].DisplayLabel := rscGenusEpithet;
         'species_epithet':        Fields[i].DisplayLabel := rscSpeciesEpithet;
         'subspecies_epithet':     Fields[i].DisplayLabel := rscSubspeciesEpithet;
-        { ------------------ }
-        'distribution':           Fields[i].DisplayLabel := rscDistribution;
-        'ioc_distribution':       Fields[i].DisplayLabel := rscDistribution; // deprecated
-        'taxon_id':               Fields[i].DisplayLabel := rscId;
-        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
-        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
-        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
-        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
-        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
-        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
-        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
+        'ioc_distribution':       Fields[i].DisplayLabel := rscDistribution;
+        { AAA------------AAA }
       end;
     end;
   end;
@@ -3701,6 +3712,141 @@ begin
 
     if SQL.Count > 0 then
       Open;
+  end;
+end;
+
+procedure TranslateZooSynonyms(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'scientific_name':        Fields[i].DisplayLabel := rscScientificName;
+        'authorship':             Fields[i].DisplayLabel := rscAuthorship;
+        'formatted_name':         Fields[i].DisplayLabel := rscScientificName;
+        'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
+        'valid_status':           Fields[i].DisplayLabel := rscIsValid;
+        'synonym_id':             Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateZooVernacular(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'vernacular_name':        Fields[i].DisplayLabel := rscVernacularName;
+        'language_id':            Fields[i].DisplayLabel := rscLanguageId;
+        'language_name':          Fields[i].DisplayLabel := rscLanguage;
+        'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
+        'preferred':              Fields[i].DisplayLabel := rscPreferred;
+        'vernacular_id':          Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateZooCountries(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'country_name':           Fields[i].DisplayLabel := rscCountry;
+        'country_id':             Fields[i].DisplayLabel := rscCountryID;
+        'taxon_id':               Fields[i].DisplayLabel := rscTaxonID;
+        'taxon_name':             Fields[i].DisplayLabel := rscTaxon;
+        'taxon_country_id':       Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateCountries(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'country_name':           Fields[i].DisplayLabel := rscCountry;
+        'country_code':           Fields[i].DisplayLabel := rscAbbreviation;
+        'country_id':             Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateLanguages(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'language_name':          Fields[i].DisplayLabel := rscName;
+        'macrolanguage_code':     Fields[i].DisplayLabel := rscLanguage;
+        'country_code':           Fields[i].DisplayLabel := rscCountry;
+        'variation_code':         Fields[i].DisplayLabel := rscVariation;
+        'language_id':            Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
+      end;
+    end;
   end;
 end;
 

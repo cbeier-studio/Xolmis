@@ -62,6 +62,8 @@ type
     tbUsers,
     tbRecordHistory,
     tbRecordVerifications,
+    tbLanguages,
+    tbCountries,
     tbGazetteer,
     tbSamplingPlots,
     tbPermanentNets,
@@ -72,6 +74,9 @@ type
     tbPermits,
     tbTaxonRanks,
     tbZooTaxa,
+    tbZooSynonyms,
+    tbZooVernacular,
+    tbZooCountries,
     tbBotanicTaxa,
     tbBands,
     tbBandHistory,
@@ -108,13 +113,15 @@ type
 
 const
   TABLE_ALIASES: array [TTableType] of String = ('',
-    'u','rh','rv','g','pl','pn','it','p','pj','pt','l','r','z','bt','b','bh','i','c','ft',
+    'u','rh','rv','lg','co','g','pl','pn','it','p','pj','pt','l','r','z','zs','zv','zc','bt','b','bh','i','c','ft',
     'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','snd','doc','veg',
     'pg','pc','pb','px','poi','vid');
   TABLE_NAMES: array [TTableType] of String = ('',
     'users',
     'record_history',
     'record_verifications',
+    'languages',
+    'countries',
     'gazetteer',
     'sampling_plots',
     'permanent_nets',
@@ -125,6 +132,9 @@ const
     'permits',
     'taxon_ranks',
     'zoo_taxa',
+    'zoo_synonyms',
+    'zoo_vernacular',
+    'zoo_countries',
     'botanic_taxa',
     'bands',
     'band_history',
@@ -159,6 +169,8 @@ const
     'user_id',
     'event_id',
     'verification_id',
+    'language_id',
+    'country_id',
     'site_id',
     'sampling_plot_id',
     'permanent_net_id',
@@ -169,6 +181,9 @@ const
     'permit_id',
     'rank_id',
     'taxon_id',
+    'synonym_id',
+    'vernacular_id',
+    'taxon_country_id',
     'taxon_id',
     'band_id',
     'event_id',
@@ -549,6 +564,8 @@ begin
   TablesDict.Add(rsTitleUsers, tbUsers);
   //tbRecordHistory,
   //tbRecordVerifications,
+  TablesDict.Add(rsTitleLanguages, tbLanguages);
+  TablesDict.Add(rsTitleCountries, tbCountries);
   TablesDict.Add(rsTitleGazetteer, tbGazetteer);
   TablesDict.Add(rsTitleSamplingPlots, tbSamplingPlots);
   TablesDict.Add(rsTitlePermanentNets, tbPermanentNets);
@@ -564,6 +581,9 @@ begin
   TablesDict.Add(rsTitleBotanicalTaxa, tbBotanicTaxa);
   TablesDict.Add(rsTitleTaxonRanks, tbTaxonRanks);
   TablesDict.Add(rsTitleZooTaxa, tbZooTaxa);
+  TablesDict.Add(rsTitleTaxonSynonyms, tbZooSynonyms);
+  TablesDict.Add(rsTitleTaxonVernacularNames, tbZooVernacular);
+  TablesDict.Add(rsTitleTaxonOccurrence, tbZooCountries);
   TablesDict.Add(rsTitleBands, tbBands);
   TablesDict.Add(rsTitleBandHistory, tbBandHistory);
   TablesDict.Add(rsTitleIndividuals, tbIndividuals);
@@ -602,6 +622,8 @@ begin
   LocaleTablesDict.Add(tbUsers, rsTitleUsers);
   //tbRecordHistory,
   //tbRecordVerifications,
+  LocaleTablesDict.Add(tbLanguages, rsTitleLanguages);
+  LocaleTablesDict.Add(tbCountries, rsTitleCountries);
   LocaleTablesDict.Add(tbGazetteer, rsTitleGazetteer);
   LocaleTablesDict.Add(tbSamplingPlots, rsTitleSamplingPlots);
   LocaleTablesDict.Add(tbPermanentNets, rsTitlePermanentNets);
@@ -617,6 +639,9 @@ begin
   LocaleTablesDict.Add(tbBotanicTaxa, rsTitleBotanicalTaxa);
   LocaleTablesDict.Add(tbTaxonRanks, rsTitleTaxonRanks);
   LocaleTablesDict.Add(tbZooTaxa, rsTitleZooTaxa);
+  LocaleTablesDict.Add(tbZooSynonyms, rsTitleTaxonSynonyms);
+  LocaleTablesDict.Add(tbZooVernacular, rsTitleTaxonVernacularNames);
+  LocaleTablesDict.Add(tbZooCountries, rsTitleTaxonOccurrence);
   LocaleTablesDict.Add(tbBands, rsTitleBands);
   LocaleTablesDict.Add(tbBandHistory, rsTitleBandHistory);
   LocaleTablesDict.Add(tbIndividuals, rsTitleIndividuals);

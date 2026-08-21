@@ -899,13 +899,12 @@ type
     qSurveysnet_effort: TFloatField;
     qSurveysstate_id: TLongintField;
     qSurveysstate_name: TStringField;
+    qVernacularTaxa: TSQLQuery;
     qSynonymTaxascientific_name: TStringField;
     qTaxaaccepted_status: TBooleanField;
     qTaxafamily_name: TStringField;
     qTaxagenero_name: TStringField;
     qTaxainactivated_by: TStringField;
-    qTaxaioc_parent_name: TStringField;
-    qTaxaioc_valid_name: TStringField;
     qTaxaiucn_status: TStringField;
     qTaxaorder_name: TStringField;
     qTaxaparent_taxon_name: TStringField;
@@ -915,7 +914,6 @@ type
     qTaxasubfamily_name: TStringField;
     qTaxasubspecies_group_name: TStringField;
     qTaxataxon_concept_id: TStringField;
-    qTaxavalid_name: TStringField;
     qTaxonRanks: TSQLQuery;
     qNestsactive_days: TFloatField;
     qNestsactive_status: TBooleanField;
@@ -1253,7 +1251,6 @@ type
     qSurveyTeamuser_updated: TLongintField;
     qSurveyTeamvisitor: TBooleanField;
     qSynonymTaxaformatted_name: TStringField;
-    qSynonymTaxavalid_id: TLargeintField;
     qTaxa: TSQLQuery;
     qSynonymTaxa: TSQLQuery;
     qChildTaxa: TSQLQuery;
@@ -1261,36 +1258,22 @@ type
     qDocuments: TSQLQuery;
     qTaxaactive_status: TBooleanField;
     qTaxaauthorship: TStringField;
-    qTaxacbro_taxonomy: TBooleanField;
-    qTaxaclements_taxonomy: TBooleanField;
     qTaxadistribution: TMemoField;
     qTaxaebird_code: TStringField;
-    qTaxaenglish_name: TStringField;
     qTaxaexported_status: TBooleanField;
     qTaxaextinct: TBooleanField;
     qTaxaextinction_year: TStringField;
     qTaxafamily_id: TLargeintField;
     qTaxaformatted_name: TStringField;
     qTaxagenus_id: TLargeintField;
-    qTaxagroup_name: TStringField;
     qTaxaincertae_sedis: TLargeintField;
     qTaxainsert_date: TDateTimeField;
-    qTaxaioc_distribution: TMemoField;
-    qTaxaioc_english_name: TStringField;
-    qTaxaioc_parent_taxon_id: TLargeintField;
-    qTaxaioc_rank_id: TLargeintField;
-    qTaxaioc_sort_num: TFloatField;
-    qTaxaioc_taxonomy: TBooleanField;
-    qTaxaioc_valid_id: TLargeintField;
     qTaxamarked_status: TBooleanField;
     qTaxaorder_id: TLargeintField;
-    qTaxaother_portuguese_names: TStringField;
     qTaxaparent_taxon_id: TLargeintField;
-    qTaxaportuguese_name: TStringField;
     qTaxaquick_code: TStringField;
     qTaxarank_id: TLargeintField;
     qTaxasort_num: TFloatField;
-    qTaxaspanish_name: TStringField;
     qTaxaspecies_id: TLargeintField;
     qTaxasubfamily_id: TLargeintField;
     qTaxasubspecies_group_id: TLargeintField;
@@ -1298,7 +1281,6 @@ type
     qTaxaupdate_date: TDateTimeField;
     qTaxauser_inserted: TLongintField;
     qTaxauser_updated: TLongintField;
-    qTaxavalid_id: TLargeintField;
     qBandHistory: TSQLQuery;
     qTaxonRanksabbreviation: TStringField;
     qTaxonRanksactive_status: TBooleanField;
@@ -1318,6 +1300,9 @@ type
     qTaxonRanksupdate_date: TDateTimeField;
     qTaxonRanksuser_inserted: TLongintField;
     qTaxonRanksuser_updated: TLongintField;
+    qVernacularTaxalanguage_name: TStringField;
+    qVernacularTaxapreferred: TBooleanField;
+    qVernacularTaxavernacular_name: TStringField;
     qWeatherLogsactive_status: TBooleanField;
     qWeatherLogsatmospheric_pressure: TFloatField;
     qWeatherLogscloud_cover: TLongintField;
@@ -1671,6 +1656,8 @@ begin
   TranslateSpecimenCollectors(qSampleCollectors);
   TranslateSamplePreps(qSamplePreps);
   TranslateZooTaxa(qTaxa);
+  TranslateZooSynonyms(qSynonymTaxa);
+  TranslateZooVernacular(qVernacularTaxa);
 end;
 
 procedure TDMG.qBandsAfterInsert(DataSet: TDataSet);
@@ -1815,7 +1802,7 @@ begin
   if Sender.AsInteger = 0 then
     Exit;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;
@@ -3285,7 +3272,7 @@ begin
   if Sender.AsInteger = 0 then
     Exit;
 
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     MacroCheck := True;

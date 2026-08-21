@@ -93,8 +93,6 @@ type
     sqliteLibLoader: TSQLDBLibraryLoader;
     qsConn: TSQLQuery;
     qsUsageData: TSQLQuery;
-    scriptTablesMap: TSQLScript;
-    scriptFieldsMap: TSQLScript;
     sqlTrans: TSQLTransaction;
     batchCsvRead: TSdfDataSet;
     dsUsers: TDataSource;

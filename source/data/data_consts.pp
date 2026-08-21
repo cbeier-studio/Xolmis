@@ -30,12 +30,17 @@ const
   TBL_USERS = 'users';
   TBL_RECORD_HISTORY = 'record_history';
   TBL_RECORD_VERIFICATIONS = 'record_verifications';
+  TBL_COUNTRIES = 'countries';
+  TBL_LANGUAGES = 'languages';
   TBL_GAZETTEER = 'gazetteer';
   TBL_SAMPLING_PLOTS = 'sampling_plots';
   TBL_PERMANENT_NETS = 'permanent_nets';
   TBL_METHODS = 'methods';
   TBL_TAXON_RANKS = 'taxon_ranks';
   TBL_ZOO_TAXA = 'zoo_taxa';
+  TBL_ZOO_SYNONYMS = 'zoo_synonyms';
+  TBL_ZOO_VERNACULAR = 'zoo_vernacular';
+  TBL_ZOO_COUNTRIES = 'zoo_countries';
   TBL_BOTANIC_TAXA = 'botanic_taxa';
   TBL_INSTITUTIONS = 'institutions';
   TBL_PEOPLE = 'people';
@@ -160,6 +165,14 @@ const
   COL_ALLOW_EXPORT = 'allow_export';
   COL_ALLOW_IMPORT = 'allow_import';
 
+  // Languages columns
+const
+  COL_LANGUAGE_ID = 'language_id';
+  COL_MACROLANGUAGE_CODE = 'macrolanguage_code';
+  COL_COUNTRY_CODE = 'country_code';
+  COL_VARIATION_CODE = 'variation_code';
+  COL_LANGUAGE_NAME = 'language_name';
+
   // Methods columns
 const
   COL_METHOD_ID = 'method_id';
@@ -189,6 +202,7 @@ const
   COL_SCIENTIFIC_NAME = 'scientific_name';
   COL_TAXON_NAME = 'taxon_name';
   COL_AUTHORSHIP = 'authorship';
+  COL_CONCEPT_ID = 'taxon_concept_id';
   COL_ENGLISH_NAME = 'english_name';
   COL_SPANISH_NAME = 'spanish_name';
   COL_PORTUGUESE_NAME = 'portuguese_name';
@@ -205,6 +219,20 @@ const
   COL_EBIRD_CODE = 'ebird_code';
   COL_OTHER_NAMES = 'other_portuguese_names';
   COL_DISTRIBUTION = 'distribution';
+
+  // Taxon synonyms columns
+const
+  COL_SYNONYM_ID = 'synonym_id';
+  COL_VALID_STATUS = 'valid_status';
+
+  // Vernacular names columns
+const
+  COL_VERNACULAR_ID = 'vernacular_id';
+  COL_PREFERRED = 'preferred';
+
+  // Taxon countries columns
+const
+  COL_TAXON_COUNTRY_ID = 'taxon_country_id';
 
   // Institutions columns
 const

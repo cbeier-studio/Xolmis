@@ -24,19 +24,69 @@ uses
   Classes, SysUtils, fgl, DB, SQLDB, io_core;
 
 type
+  // Bird taxonomy
+  TBirdTaxonomy = (btClements, btIoc, btCbro);
+  TBirdTaxonomies = set of TBirdTaxonomy;
+  TTaxonomyAction = (taNew, taSplit, taLump, taMove, taUpdate);
+  TZooRank = (trNone,
+    {Domain}
+    trDomain, trSubDomain,
+    {Kingdom}
+    trHyperkingdom, trSuperkingdom, trKingdom, trSubkingdom, trInfrakingdom, trParvkingdom,
+    {Phylum}
+    trSuperphylum, trPhylum, trSubphylum, trInfraphylum, trMicrophylum,
+    {Class}
+    trSuperclass, trClass, trSubclass, trInfraclass, trSubterclass, trParvclass,
+    {Division}
+    trSuperdivision, trDivision, trSubdivision, trInfradivision,
+    {Legion}
+    trSuperlegion, trLegion, trSublegion, trInfralegion,
+    {Cohort}
+    trSupercohort, trCohort, trSubcohort, trInfracohort,
+    {Order}
+    trGigaorder, trMegaorder, trGrandorder, trHyperorder, trSuperorder, trSeriesOrder,
+    trOrder, trNanorder, trHypoorder, trMinorder, trSuborder, trInfraorder, trParvorder,
+    {Section}
+    trSection, trSubsection,
+    {Family}
+    trGigafamily, trMegafamily, trGrandfamily, trHyperfamily, trSuperfamily, trEpifamily,
+    trSeriesFamily, trGroupFamily, trFamily, trSubfamily, trInfrafamily,
+    {Tribe}
+    trSupertribe, trTribe, trSubtribe, trInfratribe,
+    {Genus}
+    trSupergenus, trGenus, trSubgenus,
+    {Species}
+    trSuperspecies, trSpecies,
+    {Subspecies}
+    trSubspecies, trMonotypicGroup, trPolitypicGroup,
+    {eBird special taxa}
+    trForm, trSpuh, trHybrid, trIntergrade, trDomestic, trSlash);
+  TEbirdRank = (erSpuh, erHybrid, erIntergrade, erDomestic, erSlash, erForm);
+  TTaxonFilter = (tfAll, tfMain, {tfKingdoms, tfPhyla, tfClasses,} tfOrders, tfFamilies, tfTribes,
+    tfGenera, tfSpecies, tfSubspecies, tfSubspeciesGroups, tfSpuhs, tfSlashes, tfForms, tfDomestics,
+    tfHybrids, tfIntergrades);
+  TTaxonFilters = set of TTaxonFilter;
+
+  THierarchyLevel = record
+    Id: Integer;
+    Clear: Boolean;
+  end;
+
   TTaxonHierarchy = record
-    OrderId: Integer;
-    FamilyId: Integer;
-    SubfamilyId: Integer;
-    GenusId: Integer;
-    SpeciesId: Integer;
-    SubspeciesGroupId: Integer;
+    TaxonId: Integer;
+    ParentTaxon: THierarchyLevel;
+    Order: THierarchyLevel;
+    Family: THierarchyLevel;
+    Subfamily: THierarchyLevel;
+    Genus: THierarchyLevel;
+    Species: THierarchyLevel;
+    SubspeciesGroup: THierarchyLevel;
   end;
 
   TSiteHierarchy = record
-    CountryId: Integer;
-    StateId: Integer;
-    MunicipalityId: Integer;
+    CountryId: THierarchyLevel;
+    StateId: THierarchyLevel;
+    MunicipalityId: THierarchyLevel;
   end;
 
 type
@@ -86,7 +136,9 @@ type
   protected
     FScientificName: String;
     FFormattedName: String;
+    FConceptId: String;
     FAuthorship: String;
+    FRank: TZooRank;
     FParentTaxonId: Integer;
     FValidId: Integer;
     FOrderId: Integer;
@@ -100,7 +152,9 @@ type
   published
     property ScientificName: String read FScientificName write FScientificName;
     property FormattedName: String read FFormattedName write FFormattedName;
+    property ConceptId: String read FConceptId write FConceptId;
     property Authorship: String read FAuthorship write FAuthorship;
+    property Rank: TZooRank read FRank write FRank;
     property ParentTaxonId: Integer read FParentTaxonId write FParentTaxonId;
     property ValidId: Integer read FValidId write FValidId;
     property OrderId: Integer read FOrderId write FOrderId;
@@ -209,49 +263,6 @@ type
     {Special ranks}
     brCultivarGroup, brCultivar, brGrex, brHybrid);
   TBotanicalRankMap = specialize TFPGMap<String, TBotanicalRank>;
-
-  // Bird taxonomy
-  TBirdTaxonomy = (btClements, btIoc, btCbro);
-  TBirdTaxonomies = set of TBirdTaxonomy;
-  TTaxonomyAction = (taNew, taSplit, taLump, taMove, taUpdate);
-  TZooRank = (trNone,
-    {Domain}
-    trDomain, trSubDomain,
-    {Kingdom}
-    trHyperkingdom, trSuperkingdom, trKingdom, trSubkingdom, trInfrakingdom, trParvkingdom,
-    {Phylum}
-    trSuperphylum, trPhylum, trSubphylum, trInfraphylum, trMicrophylum,
-    {Class}
-    trSuperclass, trClass, trSubclass, trInfraclass, trSubterclass, trParvclass,
-    {Division}
-    trSuperdivision, trDivision, trSubdivision, trInfradivision,
-    {Legion}
-    trSuperlegion, trLegion, trSublegion, trInfralegion,
-    {Cohort}
-    trSupercohort, trCohort, trSubcohort, trInfracohort,
-    {Order}
-    trGigaorder, trMegaorder, trGrandorder, trHyperorder, trSuperorder, trSeriesOrder,
-    trOrder, trNanorder, trHypoorder, trMinorder, trSuborder, trInfraorder, trParvorder,
-    {Section}
-    trSection, trSubsection,
-    {Family}
-    trGigafamily, trMegafamily, trGrandfamily, trHyperfamily, trSuperfamily, trEpifamily,
-    trSeriesFamily, trGroupFamily, trFamily, trSubfamily, trInfrafamily,
-    {Tribe}
-    trSupertribe, trTribe, trSubtribe, trInfratribe,
-    {Genus}
-    trSupergenus, trGenus, trSubgenus,
-    {Species}
-    trSuperspecies, trSpecies,
-    {Subspecies}
-    trSubspecies, trMonotypicGroup, trPolitypicGroup,
-    {eBird special taxa}
-    trForm, trSpuh, trHybrid, trIntergrade, trDomestic, trSlash);
-  TEbirdRank = (erSpuh, erHybrid, erIntergrade, erDomestic, erSlash, erForm);
-  TTaxonFilter = (tfAll, tfMain, {tfKingdoms, tfPhyla, tfClasses,} tfOrders, tfFamilies, tfTribes,
-    tfGenera, tfSpecies, tfSubspecies, tfSubspeciesGroups, tfSpuhs, tfSlashes, tfForms, tfDomestics,
-    tfHybrids, tfIntergrades);
-  TTaxonFilters = set of TTaxonFilter;
 
   // Charts
   TChartCounts = record
@@ -606,15 +617,17 @@ begin
   inherited Assign(Source);
   if Source is TCustomTaxon then
   begin
-    ScientificName       := TCustomTaxon(Source).ScientificName;
-    FormattedName  := TCustomTaxon(Source).FormattedName;
-    Authorship     := TCustomTaxon(Source).Authorship;
-    ParentTaxonId  := TCustomTaxon(Source).ParentTaxonId;
-    ValidId        := TCustomTaxon(Source).ValidId;
-    OrderId        := TCustomTaxon(Source).OrderId;
-    FamilyId       := TCustomTaxon(Source).FamilyId;
-    GenusId        := TCustomTaxon(Source).GenusId;
-    SpeciesId      := TCustomTaxon(Source).SpeciesId;
+    FScientificName := TCustomTaxon(Source).ScientificName;
+    FFormattedName  := TCustomTaxon(Source).FormattedName;
+    FConceptId      := TCustomTaxon(Source).ConceptId;
+    FAuthorship     := TCustomTaxon(Source).Authorship;
+    FRank           := TCustomTaxon(Source).Rank;
+    FParentTaxonId  := TCustomTaxon(Source).ParentTaxonId;
+    FValidId        := TCustomTaxon(Source).ValidId;
+    FOrderId        := TCustomTaxon(Source).OrderId;
+    FamilyId        := TCustomTaxon(Source).FamilyId;
+    FGenusId        := TCustomTaxon(Source).GenusId;
+    FSpeciesId      := TCustomTaxon(Source).SpeciesId;
   end;
 end;
 
@@ -623,8 +636,9 @@ begin
   inherited Clear;
   FScientificName := EmptyStr;
   FFormattedName := EmptyStr;
+  FConceptId := EmptyStr;
   FAuthorship := EmptyStr;
-  //FRankId := 0;
+  FRank := trNone;
   FParentTaxonId := 0;
   FValidId := 0;
   FOrderId := 0;

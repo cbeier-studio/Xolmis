@@ -156,6 +156,17 @@ Table botanic_taxa {
 
 Ref: botanic_taxa.rank_id > taxon_ranks.rank_id [update: cascade]
 
+Table countries {
+    country_id integer [primary key, unique, increment, not null]
+    country_code varchar(5) [unique, not null]
+    country_name varchar(100) [unique, not null]
+    ~audit_fields
+
+    indexes {
+        country_code [name: 'idx_country_code', note: 'COLLATE NOCASE']
+    }
+}
+
 Table captures {
     capture_id integer [primary key, unique, increment, not null]
     survey_id integer
@@ -550,6 +561,19 @@ Table institutions {
 Ref: institutions.municipality_id > gazetteer.site_id [update: cascade]
 Ref: institutions.state_id > gazetteer.site_id [update: cascade]
 Ref: institutions.country_id > gazetteer.site_id [update: cascade]
+
+Table languages {
+    language_id integer [primary key, increment, unique, not null]
+    macrolanguage_code varchar(3) [not null]
+    country_code varchar(3)
+    variation_code varchar(10)
+    language_name varchar(100) [unique, not null]
+    ~audit_fields
+
+    indexes {
+        (macrolanguage_code, country_code, variation_code) [name: 'idx_languages_code', note: 'COLLATE NOCASE']
+    }
+}
 
 Table methods {
     method_id integer [primary key, increment, unique, not null]
@@ -1343,23 +1367,39 @@ Table weather_logs {
 Ref: weather_logs.survey_id > surveys.survey_id [delete: cascade, update: cascade]
 Ref: weather_logs.observer_id > people.person_id [update: cascade]
 
+Table zoo_countries {
+    taxon_country_id integer [primary key, increment, unique, not null]
+    taxon_id integer [not null]
+    country_id integer [not null]
+    ~audit_fields
+}
+
+Ref: zoo_countries.taxon_id > zoo_taxa.taxon_id [delete: cascade, update: cascade]
+Ref: zoo_countries.country_id > countries.country_id [update: cascade]
+
+Table zoo_synonyms {
+    synonym_id integer [primary key, increment, unique, not null]
+    taxon_id integer [not null]
+    scientific_name varchar(100) [not null]
+    authorship varchar(150)
+    formatted_name varchar(250)
+    ~audit_fields
+}
+
+Ref: zoo_synonyms.taxon_id > zoo_taxa.taxon_id [delete: cascade, update: cascade]
+
 Table zoo_taxa {
     taxon_id integer [primary key, increment, unique, not null]
     scientific_name varchar(100) [unique, not null]
     authorship varchar(150)
     formatted_name varchar(250)
-    english_name varchar(100)
-    portuguese_name varchar(100)
-    spanish_name varchar(100)
     quick_code varchar(10)
     rank_id integer [not null]
     parent_taxon_id integer
-    valid_id integer
     iucn_status varchar(5)
     extinct boolean [default: false]
     extinction_year varchar(25)
     sort_num real
-    group_name varchar(40)
     order_id integer
     family_id integer
     subfamily_id integer
@@ -1371,24 +1411,11 @@ Table zoo_taxa {
     taxon_concept_id varchar(30)
     accepted_status boolean [default: true]
     distribution text
-    clements_taxonomy boolean [default: false]
-    ioc_taxonomy boolean [default: false]
-    ioc_rank_id integer // DROP COLUMN
-    ioc_parent_taxon_id integer // DROP COLUMN
-    ioc_valid_id integer // DROP COLUMN
-    ioc_sort_num real // DROP COLUMN
-    ioc_english_name varchar(100) // DROP COLUMN
-    ioc_distribution text // DROP COLUMN
-    cbro_taxonomy boolean [default: false]
-    other_portuguese_names varchar(150)
     ~audit_fields
 
     indexes {
         authorship [name: 'idx_zoo_taxa_authorship', note: 'COLLATE NOCASE']
         ebird_code [name: 'idx_zoo_taxa_ebird_code'] // [note: 'COLLATE NOCASE']
-        english_name [name: 'idx_zoo_taxa_english_name', note: 'COLLATE NOCASE']
-        portuguese_name [name: 'idx_zoo_taxa_portuguese_name', note: 'COLLATE NOCASE']
-        spanish_name [name: 'idx_zoo_taxa_spanish_name', note: 'COLLATE NOCASE']
         order_id [name: 'idx_zoo_taxa_order']
         family_id [name: 'idx_zoo_taxa_family']
         subfamily_id [name: 'idx_zoo_taxa_subfamily']
@@ -1396,16 +1423,22 @@ Table zoo_taxa {
         species_id [name: 'idx_zoo_taxa_species']
         subspecies_group_id [name: 'idx_zoo_taxa_subspecies_group']
         parent_taxon_id [name: 'idx_zoo_taxa_parent_taxon']
-        ioc_parent_taxon_id [name: 'idx_zoo_taxa_parent_taxon_ioc'] // DROP INDEX
-        valid_id [name: 'idx_zoo_taxa_valid']
-        ioc_valid_id [name: 'idx_zoo_taxa_valid_ioc'] // DROP INDEX
         quick_code [name: 'idx_zoo_taxa_quickcodes'] // [note: 'COLLATE NOCASE']
         rank_id [name: 'idx_zoo_taxa_rank']
-        ioc_rank_id [name: 'idx_zoo_taxa_rank_ioc'] // DROP INDEX
         sort_num [name: 'idx_zoo_taxa_sort_num']
-        ioc_sort_num [name: 'idx_zoo_taxa_sort_num_ioc'] // DROP INDEX
     }
 }
 
 Ref: zoo_taxa.rank_id > taxon_ranks.rank_id [update: cascade]
-Ref: zoo_taxa.ioc_rank_id > taxon_ranks.rank_id [update: cascade] // DROP CONSTRAINT
+
+Table zoo_vernacular {
+    vernacular_id integer [primary key, increment, unique, not null]
+    taxon_id integer
+    language_id integer
+    vernacular_name varchar(150) [not null]
+    preferred boolean [default: false]
+    ~audit_fields
+}
+
+Ref: zoo_vernacular.taxon_id > zoo_taxa.taxon_id [delete: cascade]
+Ref: zoo_vernacular.language_id > languages.language_id [update: cascade]

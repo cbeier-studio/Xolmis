@@ -33,6 +33,7 @@ The complete texts of licenses are available in the links below.
 | Dynamic Database Controls (ibcontrols) | https://github.com/MWASoftware/ibcontrols | [IDPL-1.0](http://www.firebirdsql.org/index.php?op=doc&id=idpl) and [LGPL](https://www.gnu.org/licenses/lgpl.html) |
 | DCPCrypt | https://wiki.lazarus.freepascal.org/DCPcrypt | [MIT](https://opensource.org/license/mit) |
 | ATFlatControls | https://github.com/Alexey-T/ATFlatControls | [MPL-2.0](https://spdx.org/licenses/MPL-2.0.html) or [LGPL](https://www.gnu.org/licenses/lgpl.html) |
+| Pixie | https://gitlab.com/retrofoxed/pixie | [MIT](https://opensource.org/license/mit) |
 
 ## Graphics
 
@@ -54,7 +55,7 @@ Clements, J. F., P. C. Rasmussen, T. S. Schulenberg, M. J. Iliff, J. A. Gerbrach
 Data by Countries States Cities Database
 https://github.com/dr5hn/countries-states-cities-database | [ODbL-1.0](https://opendatacommons.org/licenses/odbl/1-0/)
 
-## Observações
+## Notes
 
 - Xolmis Desktop is distributed under **[GPL-3.0-or-later](https://www.gnu.org/licenses/gpl-3.0.pt-br.html)**, but each dependency keeps its own license.  
-- The complete license are available in the official sites.  
+- The complete license are available in the official sites.

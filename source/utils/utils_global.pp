@@ -505,10 +505,70 @@ end;
 { System logging }
 { ---------------------------------------------------------------------------------------- }
 
+const
+  LOG_SIZE_CHECK_INTERVAL_MS = 5000; // throttle log size checks so bulk logging (e.g. big imports) stays fast
+
+var
+  FLastLogSizeCheckTick: QWord = 0;
+
+function NextOldLogFileName: String;
+var
+  Logs: TStringList;
+begin
+  Logs := TStringList.Create;
+  try
+    Logs.Assign(FindAllFiles(AppDataDir, 'xlmslog-old*.txt'));
+    Result := ConcatPaths([AppDataDir, Format('xlmslog-old-%d.txt', [Logs.Count + 1])]);
+  finally
+    FreeAndNil(Logs);
+  end;
+end;
+
+{ Renames the current log file and reopens the log, without losing evLog's active state }
+procedure RotateActiveLogFile;
+var
+  currLog: String;
+begin
+  currLog := ConcatPaths([AppDataDir, LOG_FILE]);
+
+  DMM.evLog.Active := False;
+  try
+    RenameFile(currLog, NextOldLogFileName);
+  finally
+    DMM.evLog.FileName := currLog;
+    DMM.evLog.Active := True;
+  end;
+
+  LogEvent(leaStarting, '=========================================');
+  LogWarning('Log file reached the max size, started new log file');
+end;
+
+{ Checks the active log file size and rotates it on the fly if it reached the limit.
+  Throttled by LOG_SIZE_CHECK_INTERVAL_MS to avoid a FileSize call on every single log write. }
+procedure CheckActiveLogSize;
+const
+  MB = 1024 * 1024;
+var
+  nowTick: QWord;
+begin
+  nowTick := GetTickCount64;
+  if (FLastLogSizeCheckTick <> 0) and (nowTick - FLastLogSizeCheckTick < LOG_SIZE_CHECK_INTERVAL_MS) then
+    Exit;
+  FLastLogSizeCheckTick := nowTick;
+
+  if not DMM.evLog.Active or (DMM.evLog.FileName = EmptyStr) then
+    Exit;
+
+  if FileExists(DMM.evLog.FileName) and (FileSize(DMM.evLog.FileName) >= (MAX_LOG_SIZE * MB)) then
+    RotateActiveLogFile;
+end;
+
 procedure LogEvent(aAction: TLogEventAction; Msg: String);
 begin
   if not xSettings.AllowWriteLogs then
     Exit;
+
+  CheckActiveLogSize;
 
   case aAction of
     leaStarting,
@@ -531,6 +591,8 @@ begin
   if not xSettings.AllowWriteLogs then
     Exit;
 
+  CheckActiveLogSize;
+
   DMM.evLog.Debug(Msg);
 end;
 
@@ -541,6 +603,8 @@ begin
   if not xSettings.WriteDetailedLogs then
     Exit;
 
+  CheckActiveLogSize;
+
   DMM.evLog.Debug(TrimList(aSQL));
 end;
 
@@ -548,6 +612,8 @@ procedure LogError(Msg: String);
 begin
   if not xSettings.AllowWriteLogs then
     Exit;
+
+  CheckActiveLogSize;
 
   DMM.evLog.Error(Msg);
 end;
@@ -557,6 +623,8 @@ begin
   if not xSettings.AllowWriteLogs then
     Exit;
 
+  CheckActiveLogSize;
+
   DMM.evLog.Warning(Msg);
 end;
 
@@ -564,6 +632,8 @@ procedure LogInfo(Msg: String);
 begin
   if not xSettings.AllowWriteLogs then
     Exit;
+
+  CheckActiveLogSize;
 
   DMM.evLog.Info(Msg);
 end;
@@ -574,33 +644,25 @@ const
   MB = 1024 * KB;    // 1 MB = 1024 KB
   //GB = 1024 * MB;    // 1 GB = 1024 MB
 var
-  Logs: TStringList;
-  oldLog, currLog: String;
+  currLog: String;
   LogSize: Int64;
   LogSizeMB: Double;
 begin
   Result := False;
 
   LogSizeMB := 0.0;
-  oldLog := EmptyStr;
   currLog := ConcatPaths([AppDataDir, LOG_FILE]);
   if FileExists(currLog) then
   begin
-    Logs := TStringList.Create;
-    try
-      { If the log file is bigger than MAX_LOG_SIZE in MB }
-      LogSize := FileSize(currLog);
-      LogSizeMB := (LogSize / MB);
-      if (Round(LogSizeMB)) >= MAX_LOG_SIZE then
-      begin
-        Result := True;
-        LogWarning('Log file reached maximum size, started new log file');
-        Logs.Assign(FindAllFiles(AppDataDir, 'xlmslog-old*.txt'));
-        oldLog := ConcatPaths([AppDataDir, Format('xlmslog-old-%d.txt', [Logs.Count + 1])]);
-        RenameFile(currLog, oldLog);
-      end;
-    finally
-      FreeAndNil(Logs);
+    { If the log file is bigger than MAX_LOG_SIZE in MB }
+    LogSize := FileSize(currLog);
+    LogSizeMB := (LogSize / MB);
+    if (Round(LogSizeMB)) >= MAX_LOG_SIZE then
+    begin
+      Result := True;
+      { Do not log here: evLog is not configured/active yet at this point,
+        and TEventLog auto-activates itself (with the wrong file) on first use. }
+      RenameFile(currLog, NextOldLogFileName);
     end;
   end;
 end;
@@ -611,7 +673,7 @@ var
   Cod: Integer;
   Qry: TSQLQuery;
 begin
-  Qry := TSQLQuery.Create(DMM.sqlCon);
+  Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
     Database := DMM.sqlCon;
