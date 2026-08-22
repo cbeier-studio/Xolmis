@@ -190,7 +190,8 @@ type
   THistoryAction = (haCreated, haEdited, haDeleted, haRestored);
   TLogEventAction = (leaStarting, leaEnd, leaStart, leaFinish, leaOpen, leaClose, leaActiveTab,
     leaExecute, leaCommit, leaRollback);
-  TAppEvent = (evGazetteerChanged, evMethodCategoryChanged, evAutoAdjustColumnsChanged, evDefaultRowHeightChanged);
+  TAppEvent = (evGazetteerChanged, evMethodCategoryChanged, evAutoAdjustColumnsChanged, evDefaultRowHeightChanged,
+    evDatabaseRestored);
 
 
 const

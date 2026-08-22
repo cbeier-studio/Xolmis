@@ -42,7 +42,7 @@ uses
 
 implementation
 
-uses utils_locale, utils_global, utils_dialogs, udlg_progress, udlg_loading;
+uses utils_locale, utils_global, utils_dialogs, udlg_progress, udlg_loading, data_management;
 
 function NewBackup: boolean;
 var
@@ -369,6 +369,16 @@ begin
     end;
   finally
     DMM.sqlCon.Open;
+  end;
+
+  { The restored file may come from an older Xolmis version, so the schema must be brought up to date
+    before any module reads/writes to the database. Other open forms/tabs still hold datasets and
+    connections bound to the previous database content, so they are notified to close and reload. }
+  if Result then
+  begin
+    UpgradeDatabaseSchema(databaseConnection.Backend);
+    xSettings.LoadMediaFoldersFromDatabase;
+    EventBus.Publish(evDatabaseRestored);
   end;
 end;
 

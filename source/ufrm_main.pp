@@ -345,6 +345,7 @@ type
     //procedure OpenIndividuals(Sender: TObject; var aForm: TfrmIndividuals; aTableType: TTableType;
     //  aCaption: String; aIcon: Integer = -1); overload;
     procedure CloseAllTabs(ClosePinned: Boolean = False; ExceptIndex: Integer = -1);
+    procedure OnDatabaseRestored;
     procedure ApplyDarkMode;
     function FindScheduledNotificationCheck(const CheckName: String): Integer;
     procedure RemoveScheduledNotificationCheck(Index: Integer);
@@ -978,6 +979,24 @@ begin
   end;
 end;
 
+// Discards tabs/datasets bound to the previous database content and reloads the UI after a restore
+procedure TfrmMain.OnDatabaseRestored;
+begin
+  FBandStockCheckDone := False;
+  FPermitExpiringCheckDone := False;
+  FProjectEndingCheckDone := False;
+  FActivityEndingCheckDone := False;
+  FUpcomingFieldworkCheckDone := False;
+  FNestNeedingRevisionCheckDone := False;
+  LogDebug('Database restored from backup');
+  CloseAllTabs(True);
+  sbHomeClick(nil);
+
+  UpdateMenu(PGW.ActivePageComponent);
+  UpdateStatusBar;
+  ScheduleInitialNotificationChecks;
+end;
+
 procedure TfrmMain.eSearchChange(Sender: TObject);
 begin
   TimerFind.Enabled := False;
@@ -1154,6 +1173,8 @@ begin
     //MsgDlg(Format(rsSuccessfulUpdate, [APP_NAME]),
     //  Format(rsUpdatedNewVersion, [GetBuildInfoAsString]), mtInformation);
   //end;
+  EventBus.Subscribe(evDatabaseRestored, @OnDatabaseRestored);
+
   Application.ProcessMessages;
 end;
 

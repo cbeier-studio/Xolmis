@@ -474,7 +474,7 @@ begin
     Exit;
 
   // Find files in directory
-  if FindFirst(IncludeTrailingPathDelimiter(AppDataDir) + '*.txt', faAnyFile, FileInfo) = 0 then
+  if FindFirst(IncludeTrailingPathDelimiter(AppDataDir) + 'xlmslog-old-*.txt', faAnyFile, FileInfo) = 0 then
   try
     repeat
       // Ignore "." and ".."
