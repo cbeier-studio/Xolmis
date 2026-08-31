@@ -12,7 +12,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Version Minor="2" Release="1"/>
+    <Version Minor="2" Release="2"/>
     <Files>
       <Item>
         <Filename Value="dbeditbutton.pp"/>
@@ -34,8 +34,16 @@
         <HasRegisterProc Value="True"/>
         <UnitName Value="ToggleSwitch"/>
       </Item>
+      <Item>
+        <Filename Value="chipspanel.pp"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="chipspanel"/>
+      </Item>
     </Files>
     <RequiredPkgs>
+      <Item>
+        <PackageName Value="bgracontrols"/>
+      </Item>
       <Item>
         <PackageName Value="BGRABitmapPack"/>
       </Item>

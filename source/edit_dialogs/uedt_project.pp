@@ -84,6 +84,7 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
+    procedure ControlEnter(Sender: TObject);
   private
     FIsNew: Boolean;
     FProject: TProject;
@@ -119,6 +120,27 @@ end;
 procedure TedtProject.btnHelpClick(Sender: TObject);
 begin
   OpenHelp(HELP_PROJECTS);
+end;
+
+procedure TedtProject.ControlEnter(Sender: TObject);
+var
+  Ctrl: TControl;
+  R: TRect;
+begin
+  if not (Sender is TControl) or not Assigned(SBox) then
+    Exit;
+
+  Ctrl := TControl(Sender);
+
+  R := Ctrl.ClientRect;
+  R.TopLeft := SBox.ScreenToClient(Ctrl.ClientToScreen(R.TopLeft));
+  R.BottomRight := SBox.ScreenToClient(Ctrl.ClientToScreen(R.BottomRight));
+
+  if R.Bottom > SBox.ClientHeight then
+    SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + (R.Bottom - SBox.ClientHeight) + 12
+  else
+  if R.Top < 0 then
+    SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblContactName.Height;
 end;
 
 procedure TedtProject.dsLinkDataChange(Sender: TObject; Field: TField);

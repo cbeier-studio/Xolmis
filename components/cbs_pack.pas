@@ -8,7 +8,7 @@ unit cbs_pack;
 interface
 
 uses
-  DBEditButton, TDICardPanel, dbimagegallery, ToggleSwitch, LazarusPackageIntf;
+  DBEditButton, TDICardPanel, dbimagegallery, ToggleSwitch, chipspanel, LazarusPackageIntf;
 
 implementation
 
@@ -18,6 +18,7 @@ begin
   RegisterUnit('TDICardPanel', @TDICardPanel.Register);
   RegisterUnit('dbimagegallery', @dbimagegallery.Register);
   RegisterUnit('ToggleSwitch', @ToggleSwitch.Register);
+  RegisterUnit('chipspanel', @chipspanel.Register);
 end;
 
 initialization

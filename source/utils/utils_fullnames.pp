@@ -40,7 +40,7 @@ uses
   function GetNestFullName(aDate: TDate; aTaxon: Integer; aSite: Integer; aFieldNumber: String = ''): String;
   function GetNestRevisionFullName(aDate: TDate; aNest: Integer; aStage: String; aStatus: String): String;
   function GetSpecimenFullName(aFieldNumber: String; aSampleType: TSpecimenType; aTaxonId, aSiteId: Integer): String;
-  function GetSightingFullName(aTaxon: Integer; aCustomTaxon: String; aDate: TDate; aTime: TTime; aLocality, aObserver: Integer): String;
+  function GetSightingFullName(aTaxon: Integer; aCustomTaxon: String; aDate: TDate; aTime: TTime; aLocality: Integer): String;
   function GetEggFullName(aTaxon: Integer; aCustomTaxon, aFieldNumber: String; aDate: TDate): String;
 
 implementation
@@ -287,10 +287,10 @@ begin
     aFeatherNumber, aBodySide, aFeatherAge]));
 end;
 
-function GetSightingFullName(aTaxon: Integer; aCustomTaxon: String; aDate: TDate; aTime: TTime; aLocality,
-  aObserver: Integer): String;
+function GetSightingFullName(aTaxon: Integer; aCustomTaxon: String; aDate: TDate; aTime: TTime; aLocality: Integer
+  ): String;
 var
-  TaxonName, LocalityName, ObserverAbbrev: String;
+  TaxonName, LocalityName: String;
   //aYear, aMonth, aDay: Word;
 begin
   Result := EmptyStr;
@@ -300,16 +300,16 @@ begin
   else
     TaxonName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aTaxon);
   LocalityName := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, aLocality);
-  ObserverAbbrev := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, aObserver);
+  //ObserverAbbrev := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, aObserver);
 
   //DecodeDate(aDate, aYear, aMonth, aDay);
   if (aTime <> NullTime) then
   begin
     Result := Trim(Format('%s %s %s %s %s', [TaxonName, FormatDateTime('yyyy-mm-dd', aDate), FormatDateTime('hh:nn:ss', aTime),
-      LocalityName, ObserverAbbrev]));
+      LocalityName]));
   end
   else
-    Result := Trim(Format('%s %s %s %s', [TaxonName, FormatDateTime('yyyy-mm-dd', aDate), LocalityName, ObserverAbbrev]));
+    Result := Trim(Format('%s %s %s %s', [TaxonName, FormatDateTime('yyyy-mm-dd', aDate), LocalityName]));
 end;
 
 function GetEggFullName(aTaxon: Integer; aCustomTaxon, aFieldNumber: String; aDate: TDate): String;

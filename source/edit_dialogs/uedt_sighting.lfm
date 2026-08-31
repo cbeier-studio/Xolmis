@@ -124,7 +124,7 @@ object edtSighting: TedtSighting
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1128
+      Height = 1136
       Top = 0
       Width = 436
       Align = alTop
@@ -134,13 +134,13 @@ object edtSighting: TedtSighting
       ChildSizing.TopBottomSpacing = 16
       ChildSizing.EnlargeHorizontal = crsSameSize
       ChildSizing.ShrinkHorizontal = crsSameSize
-      ClientHeight = 1128
+      ClientHeight = 1136
       ClientWidth = 436
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 113
-        Top = 983
+        Top = 991
         Width = 436
         Align = alTop
         AutoSize = True
@@ -176,6 +176,7 @@ object edtSighting: TedtSighting
           Constraints.MinWidth = 405
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
@@ -183,7 +184,7 @@ object edtSighting: TedtSighting
       object pLongitudeLatitude: TPanel
         Left = 0
         Height = 45
-        Top = 223
+        Top = 231
         Width = 436
         Align = alTop
         AutoSize = True
@@ -236,6 +237,7 @@ object edtSighting: TedtSighting
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLongitudeButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
         end
@@ -256,6 +258,7 @@ object edtSighting: TedtSighting
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eLongitudeButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
         end
@@ -263,7 +266,7 @@ object edtSighting: TedtSighting
       object pDateTime: TPanel
         Left = 0
         Height = 45
-        Top = 313
+        Top = 321
         Width = 436
         Align = alTop
         AutoSize = True
@@ -318,6 +321,7 @@ object edtSighting: TedtSighting
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eDateButtonClick
           OnEditingDone = eMethodEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -328,6 +332,7 @@ object edtSighting: TedtSighting
           Width = 194
           TabOrder = 1
           TextHint = 'HH:MM'
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -335,7 +340,7 @@ object edtSighting: TedtSighting
       object pQuantityDistance: TPanel
         Left = 0
         Height = 45
-        Top = 461
+        Top = 469
         Width = 436
         Align = alTop
         AutoSize = True
@@ -378,6 +383,7 @@ object edtSighting: TedtSighting
           Width = 194
           MaxValue = 999999999
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -389,6 +395,7 @@ object edtSighting: TedtSighting
           DecimalPlaces = 1
           MaxValue = 999999999
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -396,7 +403,7 @@ object edtSighting: TedtSighting
       object pMackinnonListNumber: TPanel
         Left = 0
         Height = 45
-        Top = 596
+        Top = 604
         Width = 436
         Align = alTop
         AutoSize = True
@@ -439,6 +446,7 @@ object edtSighting: TedtSighting
           Width = 194
           NumbersOnly = True
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -446,7 +454,7 @@ object edtSighting: TedtSighting
       object pDetectionBreeding: TPanel
         Left = 0
         Height = 45
-        Top = 551
+        Top = 559
         Width = 436
         Align = alTop
         AutoSize = True
@@ -498,6 +506,7 @@ object edtSighting: TedtSighting
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eDetectionTypeButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -517,6 +526,7 @@ object edtSighting: TedtSighting
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eBreedingStatusButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -524,7 +534,7 @@ object edtSighting: TedtSighting
       object pCapturesRecapturesUnbanded: TPanel
         Left = 0
         Height = 45
-        Top = 754
+        Top = 762
         Width = 436
         Align = alTop
         AutoSize = True
@@ -579,6 +589,7 @@ object edtSighting: TedtSighting
           MaxValue = 999999999
           TabOrder = 0
           OnEditingDone = eNewCapturesTallyEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -590,6 +601,7 @@ object edtSighting: TedtSighting
           MaxValue = 999999999
           TabOrder = 1
           OnEditingDone = eNewCapturesTallyEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -601,6 +613,7 @@ object edtSighting: TedtSighting
           MaxValue = 999999999
           TabOrder = 2
           OnEditingDone = eNewCapturesTallyEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -608,7 +621,7 @@ object edtSighting: TedtSighting
       object pLocality: TPanel
         Left = 0
         Height = 45
-        Top = 178
+        Top = 186
         Width = 436
         Align = alTop
         AutoSize = True
@@ -651,13 +664,14 @@ object edtSighting: TedtSighting
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
           OnEditingDone = eMethodEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
         end
       end
       object pObserver: TPanel
         Left = 0
-        Height = 45
+        Height = 53
         Top = 88
         Width = 436
         Align = alTop
@@ -670,11 +684,11 @@ object edtSighting: TedtSighting
         ChildSizing.ShrinkHorizontal = crsSameSize
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
+        ClientHeight = 53
         ClientWidth = 436
         ParentBackground = False
         TabOrder = 1
-        object lblRequester: TLabel
+        object lblObserver: TLabel
           Left = 16
           Height = 15
           Top = 3
@@ -683,31 +697,52 @@ object edtSighting: TedtSighting
           Caption = 'Observer:'
           ParentColor = False
           ParentFont = False
+          WordWrap = True
         end
-        object eObserver: TEditButton
+        object pObserversToolbar: TPanel
           Left = 16
-          Height = 23
+          Height = 26
           Top = 22
           Width = 404
-          ButtonWidth = 23
-          Images = DMM.iEdits
-          ImageIndex = 0
-          MaxLength = 0
-          NumGlyphs = 1
-          ParentShowHint = False
-          PasswordChar = #0
-          ShowHint = True
-          Spacing = 0
+          BevelOuter = bvNone
+          ClientHeight = 26
+          ClientWidth = 404
+          TabOrder = 1
+          Visible = False
+          object btnAddObserver: TBitBtn
+            AnchorSideLeft.Control = pObserversToolbar
+            AnchorSideTop.Control = pObserversToolbar
+            Left = 0
+            Height = 26
+            Top = 0
+            Width = 116
+            AutoSize = True
+            Caption = 'Add observer'
+            Images = DMM.iEdits
+            ImageIndex = 8
+            TabOrder = 0
+            OnClick = btnAddObserverClick
+            OnEnter = ControlEnter
+          end
+        end
+        object pObserverChips: TChipsPanel
+          Left = 16
+          Height = 1
+          Top = 52
+          Width = 404
+          AutoSize = True
+          BevelOuter = bvNone
+          ControlList = <>
+          FlowLayout = tlTop
+          FlowStyle = fsLeftRightTopBottom
           TabOrder = 0
-          OnButtonClick = eObserverButtonClick
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eObserverKeyPress
+          MultiSelect = True
         end
       end
       object pMethod: TPanel
         Left = 0
         Height = 45
-        Top = 133
+        Top = 141
         Width = 436
         Align = alTop
         AutoSize = True
@@ -750,6 +785,7 @@ object edtSighting: TedtSighting
           TabOrder = 0
           OnButtonClick = eMethodButtonClick
           OnEditingDone = eMethodEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMethodKeyPress
         end
@@ -757,7 +793,7 @@ object edtSighting: TedtSighting
       object pTaxon: TPanel
         Left = 0
         Height = 45
-        Top = 371
+        Top = 379
         Width = 436
         Align = alTop
         AutoSize = True
@@ -807,6 +843,7 @@ object edtSighting: TedtSighting
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
           OnEditingDone = eMethodEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
@@ -829,7 +866,7 @@ object edtSighting: TedtSighting
       object pIndividual: TPanel
         Left = 0
         Height = 45
-        Top = 416
+        Top = 424
         Width = 436
         Align = alTop
         AutoSize = True
@@ -873,6 +910,7 @@ object edtSighting: TedtSighting
           TabOrder = 0
           OnButtonClick = eIndividualButtonClick
           OnEditingDone = eIndividualEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eIndividualKeyPress
         end
@@ -880,7 +918,7 @@ object edtSighting: TedtSighting
       object pHowWasRecorded: TPanel
         Left = 0
         Height = 87
-        Top = 654
+        Top = 662
         Width = 436
         Align = alTop
         AutoSize = True
@@ -925,6 +963,7 @@ object edtSighting: TedtSighting
           Width = 194
           Caption = 'Captured'
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyPress = eDateKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -935,6 +974,7 @@ object edtSighting: TedtSighting
           Width = 194
           Caption = 'Seen'
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyPress = eDateKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -945,6 +985,7 @@ object edtSighting: TedtSighting
           Width = 194
           Caption = 'Heard'
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyPress = eDateKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -955,6 +996,7 @@ object edtSighting: TedtSighting
           Width = 194
           Caption = 'Photographed'
           TabOrder = 3
+          OnEnter = ControlEnter
           OnKeyPress = eDateKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -965,6 +1007,7 @@ object edtSighting: TedtSighting
           Width = 194
           Caption = 'Recorded audio'
           TabOrder = 4
+          OnEnter = ControlEnter
           OnKeyPress = eDateKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -972,7 +1015,7 @@ object edtSighting: TedtSighting
       object pMalesFemalesNotSexed: TPanel
         Left = 0
         Height = 45
-        Top = 812
+        Top = 820
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1025,6 +1068,7 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 124
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMalesTallyKeyPress
         end
@@ -1034,6 +1078,7 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 124
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMalesTallyKeyPress
         end
@@ -1043,6 +1088,7 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 124
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMalesTallyKeyPress
         end
@@ -1050,7 +1096,7 @@ object edtSighting: TedtSighting
       object pAdultsImmaturesNotAged: TPanel
         Left = 0
         Height = 45
-        Top = 870
+        Top = 878
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1103,6 +1149,7 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 124
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMalesTallyKeyPress
         end
@@ -1112,6 +1159,7 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 124
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMalesTallyKeyPress
         end
@@ -1121,6 +1169,7 @@ object edtSighting: TedtSighting
           Top = 22
           Width = 124
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMalesTallyKeyPress
         end
@@ -1128,7 +1177,7 @@ object edtSighting: TedtSighting
       object pInEbirdNotSurveying: TPanel
         Left = 0
         Height = 42
-        Top = 928
+        Top = 936
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1150,6 +1199,7 @@ object edtSighting: TedtSighting
           Width = 131
           Caption = 'Record is on eBird'
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyPress = eDateKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -1160,6 +1210,7 @@ object edtSighting: TedtSighting
           Width = 131
           Caption = 'Outside the sampling'
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyPress = eDateKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -1242,6 +1293,7 @@ object edtSighting: TedtSighting
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eSurveyButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eSurveyKeyPress
         end
@@ -1249,7 +1301,7 @@ object edtSighting: TedtSighting
       object pFlightHeightDirection: TPanel
         Left = 0
         Height = 45
-        Top = 506
+        Top = 514
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1293,6 +1345,7 @@ object edtSighting: TedtSighting
           DecimalPlaces = 1
           MaxValue = 999999999
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -1323,12 +1376,13 @@ object edtSighting: TedtSighting
           )
           Style = csDropDownList
           TabOrder = 1
+          OnEnter = ControlEnter
         end
       end
       object pCoordinatesPrecision: TPanel
         Left = 0
         Height = 45
-        Top = 268
+        Top = 276
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1362,6 +1416,7 @@ object edtSighting: TedtSighting
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
         end
       end

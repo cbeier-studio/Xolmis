@@ -6,7 +6,7 @@ object edtInstitution: TedtInstitution
   AutoSize = True
   Caption = 'New institution'
   ClientHeight = 689
-  ClientWidth = 413
+  ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
@@ -181,6 +181,7 @@ object edtInstitution: TedtInstitution
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eMunicipalityButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMunicipalityKeyPress
         end
@@ -221,6 +222,7 @@ object edtInstitution: TedtInstitution
           Width = 367
           TabOrder = 0
           OnEditingDone = eFullnameEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -271,6 +273,7 @@ object edtInstitution: TedtInstitution
           Width = 176
           TabOrder = 0
           OnEditingDone = eFullnameEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -310,6 +313,7 @@ object edtInstitution: TedtInstitution
           Top = 23
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -349,6 +353,7 @@ object edtInstitution: TedtInstitution
           Top = 23
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -398,6 +403,7 @@ object edtInstitution: TedtInstitution
           Top = 23
           Width = 176
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -448,6 +454,7 @@ object edtInstitution: TedtInstitution
           Top = 23
           Width = 176
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -489,6 +496,7 @@ object edtInstitution: TedtInstitution
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
@@ -528,6 +536,7 @@ object edtInstitution: TedtInstitution
           Top = 23
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -578,6 +587,7 @@ object edtInstitution: TedtInstitution
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eStateButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eStateKeyPress
         end
@@ -628,6 +638,7 @@ object edtInstitution: TedtInstitution
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eCountryButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCountryKeyPress
         end
@@ -668,6 +679,7 @@ object edtInstitution: TedtInstitution
           Top = 23
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -707,6 +719,7 @@ object edtInstitution: TedtInstitution
           Top = 23
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end

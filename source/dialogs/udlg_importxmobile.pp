@@ -1475,23 +1475,28 @@ var
   Species: TMobileSpecies;
   aRepo: TSightingRepository;
   aSighting, aOldSighting: TSighting;
+  ObsRepo: TSightingObserverRepository;
+  aObserver: TSightingObserver;
   aTaxonId, aObserverId, aLocalityId: Integer;
   Msg: String;
 begin
   if Inventory.FSpeciesList.Count > 0 then
   begin
+    ObsRepo := TSightingObserverRepository.Create(DMM.sqlCon);
+    aObserver := TSightingObserver.Create();
     aRepo := TSightingRepository.Create(DMM.sqlCon);
     aSighting := TSighting.Create();
     try
       // iterate through species list
       for Species in Inventory.FSpeciesList do
       begin
+        aObserver.Clear;
         aSighting.Clear;
         aTaxonId := GetValidTaxon(Species.FSpeciesName);
         aObserverId := GetPersonKey(Inventory.FObserver);
         aLocalityId := GetSiteKey(Inventory.FLocalityName);
 
-        aRepo.FindByCombo(Inventory.FSurveyKey, aTaxonId, aObserverId, Species.FSpeciesName, aSighting);
+        aRepo.FindByCombo(Inventory.FSurveyKey, aTaxonId, Species.FSpeciesName, aSighting);
         if not aSighting.IsNew then
         begin
           // if sighting exists, update it
@@ -1501,7 +1506,7 @@ begin
           try
             Species.ToSighting(aSighting);
             aSighting.LocalityId := aLocalityId;
-            aSighting.ObserverId := aObserverId;
+            //aSighting.ObserverId := aObserverId;
             if aSighting.SightingDate = NullDate then
               aSighting.SightingDate := Inventory.FStartTime;
             if not aSighting.Validate(Msg) then
@@ -1559,7 +1564,7 @@ begin
           end;
           aSighting.SurveyId := Inventory.FSurveyKey;
           aSighting.LocalityId := aLocalityId;
-          aSighting.ObserverId := aObserverId;
+          //aSighting.ObserverId := aObserverId;
           if aSighting.SightingDate = NullDate then
             aSighting.SightingDate := Inventory.FStartTime;
           if not aSighting.Validate(Msg) then
@@ -1570,12 +1575,24 @@ begin
           WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByImport);
         end;
 
+        // Import sighting observer
+        ObsRepo.FindBySighting(aSighting.Id, aObserverId, aObserver);
+        if aObserver.IsNew then
+        begin
+          aObserver.SightingId := aSighting.Id;
+          aObserver.PersonId := aObserverId;
+          ObsRepo.Insert(aObserver);
+          WriteRecHistory(tbSightingObservers, haCreated, 0, '', '', '', rsInsertedByImport);
+        end;
+
         // Import POIs
         ImportPois(Inventory, Species);
       end;
     finally
+      aObserver.Free;
       aSighting.Free;
       aRepo.Free;
+      ObsRepo.Free;
     end;
   end;
 end;

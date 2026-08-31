@@ -1063,6 +1063,20 @@ Table sampling_plots {
 
 Ref: sampling_plots.locality_id > gazetteer.site_id [update: cascade]
 
+Table sighting_observers {
+    sighting_observer_id integer [primary key, increment, unique, not null]
+    sighting_id integer
+    person_id integer
+    ~audit_fields
+
+    indexes {
+        (sighting_id, person_id) [unique, name: 'idx_sighting_observers_sighting_person']
+    }
+}
+
+Ref: sighting_observers.sighting_id > sightings.sighting_id [delete: cascade, update: cascade]
+Ref: sighting_observers.person_id > people.person_id [update: cascade]
+
 Table sightings {
     sighting_id integer [primary key, increment, unique, not null]
     survey_id integer

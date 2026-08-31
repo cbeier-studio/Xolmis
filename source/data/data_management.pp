@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 13;
+  SCHEMA_VERSION: Integer = 14;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -85,6 +85,7 @@ const
   procedure CreateBandHistoryTable(Connection: TSQLConnector);
   procedure CreateIndividualsTable(Connection: TSQLConnector);
   procedure CreateSightingsTable(Connection: TSQLConnector);
+  procedure CreateSightingObserversTable(Connection: TSQLConnector);
   procedure CreateCapturesTable(Connection: TSQLConnector);
   procedure CreateFeathersTable(connection: TSQLConnector);
   procedure CreateMoltsTable(Connection: TSQLConnector); deprecated;
@@ -121,6 +122,8 @@ const
   procedure PopulateTaxonRanksTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
   procedure PopulateZooTaxaTableFromCSV(Connection: TSQLConnector; var aProgressBar: TProgressBar); deprecated;
   procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
+
+  procedure MigrateSightingObservers(Connection: TSQLConnector);
 
   { Database information and management }
   function GetTableType(aTableName: String): TTableType;
@@ -319,7 +322,7 @@ begin
   try
     dlgProgress.Title := rsTitleCreateDatabase;
     dlgProgress.Text := rsProgressPreparing;
-    dlgProgress.Max := 64; // Number of tables and views to create
+    dlgProgress.Max := 65; // Number of tables and views to create
     dlgProgress.Position := 0;
     dlgProgress.Show;
     Application.ProcessMessages;
@@ -552,6 +555,11 @@ begin
         // Sightings
         dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSightings, dlgProgress.Position + 1, dlgProgress.Max]);
         CreateSightingsTable(Conn);
+        dlgProgress.Position := dlgProgress.Position + 1;
+
+        // Sighting observers
+        dlgProgress.Text := Format(rsProgressCreatingTable, [rsTitleSightingObservers, dlgProgress.Position + 1, dlgProgress.Max]);
+        CreateSightingObserversTable(Conn);
         dlgProgress.Position := dlgProgress.Position + 1;
 
         // Captures
@@ -1236,6 +1244,17 @@ begin
         Result := True;
       end;
 
+      if OldVersion < 14 then
+      begin
+        LogDebug('Upgrading database schema to version 14');
+
+        CreateSightingObserversTable(DMM.sqlCon);
+
+        MigrateSightingObservers(DMM.sqlCon);
+
+        Result := True;
+      end;
+
       if Result then
       begin
         WriteDatabaseMetadata(DMM.sqlCon, 'version', IntToStr(SCHEMA_VERSION));
@@ -1881,6 +1900,12 @@ begin
   Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_date ON sightings (' +
     'sighting_date COLLATE BINARY' +
   ');');
+end;
+
+procedure CreateSightingObserversTable(Connection: TSQLConnector);
+begin
+  LogDebug('Creating sighting_observers table');
+  Connection.ExecuteDirect(xProvider.SightingObservers.CreateTable);
 end;
 
 procedure CreateCapturesTable(Connection: TSQLConnector);
@@ -3354,6 +3379,31 @@ begin
     Usage.StopTimer;
     FreeAndNil(Usage);
     {$ENDIF}
+  end;
+end;
+
+procedure MigrateSightingObservers(Connection: TSQLConnector);
+var
+  Qry: TSQLQuery;
+begin
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    DataBase := Connection;
+    Transaction := Connection.Transaction;
+
+    Add('INSERT INTO sighting_observers (sighting_id, person_id, user_inserted, insert_date)');
+    Add('SELECT');
+    Add('  sighting_id,');
+    Add('  observer_id AS person_id,');
+    Add('  user_inserted,');
+    Add('  insert_date');
+    Add('FROM sightings');
+    Add('WHERE observer_id IS NOT NULL;');
+
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
   end;
 end;
 

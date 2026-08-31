@@ -869,7 +869,7 @@ type
     qSightingslocality_name: TStringField;
     qSightingsmethod_name: TStringField;
     qSightingsmunicipality_id: TLongintField;
-    qSightingsobserver_name: TStringField;
+    qSightingsobservers_list: TStringField;
     qSightingsorder_id: TLongintField;
     qSightingsout_of_sample: TBooleanField;
     qSightingsspecies_id: TLongintField;
@@ -1140,7 +1140,6 @@ type
     qSightingsnotes: TMemoField;
     qSightingsnot_aged_tally: TStringField;
     qSightingsnot_sexed_tally: TStringField;
-    qSightingsobserver_id: TLongintField;
     qSightingsrecaptures_tally: TLongintField;
     qSightingssighting_date: TDateField;
     qSightingssighting_id: TAutoIncField;

@@ -166,16 +166,13 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="518"/>
+      <BuildNr Value="519"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
     <BuildModes>
       <Item Name="Default" Default="True"/>
       <Item Name="Debug">
-        <MacroValues Count="1">
-          <Macro1 Name="LCLWidgetType" Value="win32"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -230,9 +227,6 @@
         </CompilerOptions>
       </Item>
       <Item Name="Debug-MacOS">
-        <MacroValues Count="1">
-          <Macro2 Name="LCLWidgetType" Value="cocoa"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -284,9 +278,6 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-Win64">
-        <MacroValues Count="1">
-          <Macro1 Name="LCLWidgetType" Value="win32"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -326,9 +317,6 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-MacOS">
-        <MacroValues Count="1">
-          <Macro2 Name="LCLWidgetType" Value="cocoa"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -374,9 +362,6 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-GTK">
-        <MacroValues Count="1">
-          <Macro3 Name="LCLWidgetType" Value="gtk2"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -422,9 +407,6 @@
         </CompilerOptions>
       </Item>
       <Item Name="Release-Qt">
-        <MacroValues Count="1">
-          <Macro4 Name="LCLWidgetType" Value="qt6"/>
-        </MacroValues>
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -481,6 +463,9 @@
       <FormatVersion Value="2"/>
     </RunParams>
     <RequiredPackages>
+      <Item>
+        <PackageName Value="tageditpackage"/>
+      </Item>
       <Item>
         <PackageName Value="Pixie.Package.Lazarus"/>
       </Item>

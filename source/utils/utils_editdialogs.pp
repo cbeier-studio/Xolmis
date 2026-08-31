@@ -66,6 +66,8 @@ uses
   function EditVideoInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew: Boolean = False): Boolean;
   function EditWeatherLog(aDataSet: TDataSet; aSurvey: Integer = 0; IsNew: Boolean = False): Boolean;
 
+  procedure SaveSightingObservers(aSightingId: Integer; aSelectedIDs: TStrings);
+
 implementation
 
 uses
@@ -2084,6 +2086,7 @@ function EditSighting(aDataSet: TDataSet; aSurvey: Integer; aIndividual: Integer
 var
   FRepo: TSightingRepository;
   FRecord, FOldRecord: TSighting;
+  SelectedPersonIDs: TStringList;
 begin
   LogEvent(leaOpen, 'Sighting edit dialog');
   Application.CreateForm(TedtSighting, edtSighting);
@@ -2137,6 +2140,16 @@ begin
         end
         else
           WriteRecHistory(tbSightings, haCreated, 0, '', '', '', rsInsertedByForm);
+
+        // Save sighting observers
+        SelectedPersonIDs := TStringList.Create;
+        try
+          pObserverChips.GetSelectedIDs(SelectedPersonIDs);
+
+          SaveSightingObservers(Sighting.Id, SelectedPersonIDs);
+        finally
+          SelectedPersonIDs.Free;
+        end;
 
         DMM.sqlTrans.CommitRetaining;
       except
@@ -3220,6 +3233,103 @@ begin
     FRepo.Free;
     FreeAndNil(edtPoi);
     LogEvent(leaClose, 'Occurrence point edit dialog');
+  end;
+end;
+
+procedure SaveSightingObservers(aSightingId: Integer; aSelectedIDs: TStrings);
+var
+  Qry: TSQLQuery;
+  ObsRepo: TSightingObserverRepository;
+  ExistingObs: TSightingObserver;
+  NewObs: TSightingObserver;
+  I: Integer;
+  ObsId, PersonId: Integer;
+  PersonIdStr: String;
+  DbPersonIDs: TStringList;
+begin
+  ObsRepo := TSightingObserverRepository.Create(DMM.sqlCon);
+  DbPersonIDs := TStringList.Create;
+  try
+    // 1. Get the observers from database
+    Qry := TSQLQuery.Create(nil);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+
+      Add('SELECT so.person_id, p.abbreviation AS person_name FROM sighting_observers AS so');
+      Add('LEFT JOIN people AS p ON so.person_id = p.person_id');
+      Add('WHERE (so.sighting_id = :sighting_id) AND (so.active_status = 1)');
+      Add('ORDER BY person_name ASC');
+      ParamByName('sighting_id').AsInteger := aSightingId;
+      Open;
+      if not IsEmpty then
+      begin
+        First;
+        while not EOF do
+        begin
+          PersonIdStr := Qry.FieldByName(COL_PERSON_ID).AsString;
+          ObsId := Qry.FieldByName(COL_SIGHTING_OBSERVER_ID).AsInteger;
+
+          DbPersonIDs.AddObject(PersonIdStr, TObject(PtrInt(ObsId)));
+          Next;
+        end;
+      end;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
+
+    // 2. Remove from database observers not selected
+    for I := 0 to DbPersonIDs.Count - 1 do
+    begin
+      PersonIdStr := DbPersonIDs[I];
+      ObsId := Integer(PtrInt(DbPersonIDs.Objects[I]));
+
+      if aSelectedIDs.IndexOf(PersonIdStr) < 0 then
+      begin
+        ExistingObs := TSightingObserver.Create;
+        try
+          ExistingObs.Id := ObsId;
+          ExistingObs.SightingId := aSightingId;
+          ExistingObs.PersonId := StrToIntDef(PersonIdStr, 0);
+
+          ObsRepo.Delete(ExistingObs);
+
+          WriteRecHistory(tbSightingObservers, haDeleted, ObsId, '', '', '', rsEditedByForm);
+        finally
+          ExistingObs.Free;
+        end;
+      end;
+    end;
+
+    // 3. Add selected observers not in database
+    for I := 0 to aSelectedIDs.Count - 1 do
+    begin
+      PersonIdStr := aSelectedIDs[I];
+
+      if DbPersonIDs.IndexOf(PersonIdStr) < 0 then
+      begin
+        PersonId := StrToIntDef(PersonIdStr, 0);
+        if PersonId > 0 then
+        begin
+          NewObs := TSightingObserver.Create;
+          try
+            NewObs.SightingId := aSightingId;
+            NewObs.PersonId := PersonId;
+
+            ObsRepo.Insert(NewObs);
+
+            WriteRecHistory(tbSightingObservers, haCreated, 0, '', '', '', rsInsertedByForm);
+          finally
+            NewObs.Free;
+          end;
+        end;
+      end;
+    end;
+
+  finally
+    DbPersonIDs.Free;
+    ObsRepo.Free;
   end;
 end;
 

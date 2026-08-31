@@ -162,6 +162,7 @@ type
     procedure sbAddImageClick(Sender: TObject);
     procedure sbRemoveImageClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
+    procedure ControlEnter(Sender: TObject);
   private
     FIsNew, FPictureChanged: Boolean;
     FPerson: TPerson;
@@ -216,6 +217,27 @@ procedure TedtPerson.btnNewClick(Sender: TObject);
 begin
   with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
     pmNew.Popup(X, Y);
+end;
+
+procedure TedtPerson.ControlEnter(Sender: TObject);
+var
+  Ctrl: TControl;
+  R: TRect;
+begin
+  if not (Sender is TControl) or not Assigned(SBox) then
+    Exit;
+
+  Ctrl := TControl(Sender);
+
+  R := Ctrl.ClientRect;
+  R.TopLeft := SBox.ScreenToClient(Ctrl.ClientToScreen(R.TopLeft));
+  R.BottomRight := SBox.ScreenToClient(Ctrl.ClientToScreen(R.BottomRight));
+
+  if R.Bottom > SBox.ClientHeight then
+    SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + (R.Bottom - SBox.ClientHeight) + 12
+  else
+  if R.Top < 0 then
+    SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblMunicipality.Height;
 end;
 
 procedure TedtPerson.dsLinkDataChange(Sender: TObject; Field: TField);

@@ -1506,9 +1506,16 @@ msgid "Observer ID"
 msgstr "Observador ID"
 
 #: data_columns.rscobservers
+#, fuzzy
+#| msgid "# observers"
 msgctxt "data_columns.rscobservers"
-msgid "# observers"
+msgid "Observers"
 msgstr "# observadores"
+
+#: data_columns.rscobserversquant
+msgctxt "data_columns.rscobserversquant"
+msgid "# observers"
+msgstr ""
 
 #: data_columns.rscoldvalue
 msgctxt "data_columns.rscoldvalue"
@@ -7819,24 +7826,6 @@ msgctxt "tedtnest.lblactivedays.caption"
 msgid "Total active-days:"
 msgstr "Total de dias ativos:"
 
-#: tedtnest.lblbandstatus3.caption
-msgid "Nest encounter date:"
-msgstr "Data de encontro do ninho:"
-
-#: tedtnest.lblbandstatus4.caption
-msgctxt "tedtnest.lblbandstatus4.caption"
-msgid "Longitude:"
-msgstr "Longitude:"
-
-#: tedtnest.lblbandstatus8.caption
-msgid "Last date:"
-msgstr "Última data:"
-
-#: tedtnest.lblbandstatus9.caption
-msgctxt "tedtnest.lblbandstatus9.caption"
-msgid "Latitude:"
-msgstr "Latitude:"
-
 #: tedtnest.lblcenterdistance.caption
 msgctxt "tedtnest.lblcenterdistance.caption"
 msgid "Distance from plant center:"
@@ -7875,6 +7864,16 @@ msgstr "Maior diâmetro externo:"
 msgid "Lesser external diameter:"
 msgstr "Menor diâmetro externo:"
 
+#: tedtnest.lblfieldnumber.caption
+msgctxt "tedtnest.lblfieldnumber.caption"
+msgid "Field number: *"
+msgstr "Número de campo: *"
+
+#: tedtnest.lblfounddate.caption
+msgctxt "tedtnest.lblfounddate.caption"
+msgid "Nest encounter date:"
+msgstr "Data de encontro do ninho:"
+
 #: tedtnest.lblheightaboveground.caption
 msgctxt "tedtnest.lblheightaboveground.caption"
 msgid "Height at ground level:"
@@ -7898,10 +7897,25 @@ msgstr "Maior diâmetro interno:"
 msgid "Lesser internal diameter:"
 msgstr "Menor diâmetro interno:"
 
+#: tedtnest.lbllastdate.caption
+msgctxt "tedtnest.lbllastdate.caption"
+msgid "Last date:"
+msgstr "Última data:"
+
+#: tedtnest.lbllatitude.caption
+msgctxt "tedtnest.lbllatitude.caption"
+msgid "Latitude:"
+msgstr "Latitude:"
+
 #: tedtnest.lbllocality.caption
 msgctxt "tedtnest.lbllocality.caption"
 msgid "Locality: *"
 msgstr "Localidade: *"
+
+#: tedtnest.lbllongitude.caption
+msgctxt "tedtnest.lbllongitude.caption"
+msgid "Longitude:"
+msgstr "Longitude:"
 
 #: tedtnest.lbllosscause.caption
 msgid "Cause of loss:"
@@ -7911,6 +7925,11 @@ msgstr "Causa da perda:"
 msgctxt "tedtnest.lblnestcover.caption"
 msgid "Cover (%):"
 msgstr "Cobertura (%):"
+
+#: tedtnest.lblnestfate.caption
+msgctxt "tedtnest.lblnestfate.caption"
+msgid "Fate:"
+msgstr "Destino:"
 
 #: tedtnest.lblnestlingdays.caption
 msgctxt "tedtnest.lblnestlingdays.caption"
@@ -7926,6 +7945,11 @@ msgstr "Forma do ninho:"
 msgctxt "tedtnest.lblnotes.caption"
 msgid "Notes:"
 msgstr "Anotações:"
+
+#: tedtnest.lblobserver.caption
+msgctxt "tedtnest.lblobserver.caption"
+msgid "Observer: *"
+msgstr "Observador: *"
 
 #: tedtnest.lblothersupport.caption
 msgctxt "tedtnest.lblothersupport.caption"
@@ -7957,22 +7981,8 @@ msgctxt "tedtnest.lblproductivity.caption"
 msgid "Productivity:"
 msgstr "Produtividade:"
 
-#: tedtnest.lblrequester.caption
-msgctxt "tedtnest.lblrequester.caption"
-msgid "Field number: *"
-msgstr "Número de campo: *"
-
-#: tedtnest.lblrequester1.caption
-msgctxt "tedtnest.lblrequester1.caption"
-msgid "Observer: *"
-msgstr "Observador: *"
-
-#: tedtnest.lblrequester3.caption
-msgid "Fate:"
-msgstr "Destino:"
-
-#: tedtnest.lblsupplier1.caption
-msgctxt "tedtnest.lblsupplier1.caption"
+#: tedtnest.lblproject.caption
+msgctxt "tedtnest.lblproject.caption"
 msgid "Project:"
 msgstr "Projeto:"
 
@@ -9424,6 +9434,10 @@ msgctxt "tedtsamplingplot.sbsave.caption"
 msgid "Save"
 msgstr "Salvar"
 
+#: tedtsighting.btnaddobserver.caption
+msgid "Add observer"
+msgstr "Adicionar observador"
+
 #: tedtsighting.btnnew.caption
 msgctxt "tedtsighting.btnnew.caption"
 msgid "New"
@@ -9612,6 +9626,11 @@ msgctxt "tedtsighting.lblnotsexedtally.caption"
 msgid "Nr. of birds not sexed:"
 msgstr "Nº de não sexados:"
 
+#: tedtsighting.lblobserver.caption
+msgctxt "tedtsighting.lblobserver.caption"
+msgid "Observer:"
+msgstr "Observador:"
+
 #: tedtsighting.lblquantity.caption
 msgctxt "tedtsighting.lblquantity.caption"
 msgid "Quantity:"
@@ -9621,11 +9640,6 @@ msgstr "Quantidade:"
 msgctxt "tedtsighting.lblrecapturestally.caption"
 msgid "Nr. of recaptures:"
 msgstr "Nº de recapturas:"
-
-#: tedtsighting.lblrequester.caption
-msgctxt "tedtsighting.lblrequester.caption"
-msgid "Observer:"
-msgstr "Observador:"
 
 #: tedtsighting.lblsurvey.caption
 msgctxt "tedtsighting.lblsurvey.caption"
@@ -17893,6 +17907,14 @@ msgctxt "utils_locale.rsnumberofrecords"
 msgid "Number of records"
 msgstr "Nº de registros"
 
+#: utils_locale.rsobserversaddremove
+msgid "Observers: (add the involved observers and remove the others)"
+msgstr "Observadores: (adicione os observadores envolvidos e remova os outros)"
+
+#: utils_locale.rsobserversselect
+msgid "Observers: (select the observers involved)"
+msgstr "Observadores: (selecione os observadores envolvidos)"
+
 #: utils_locale.rsonboardingaddmedia
 msgid ""
 "To add files in Xolmis, you have two options:\n"
@@ -20291,6 +20313,10 @@ msgctxt "utils_locale.rstitleselectdatabasefile"
 msgid "Select database"
 msgstr "Selecionar banco de dados"
 
+#: utils_locale.rstitlesightingobservers
+msgid "Sighting observers"
+msgstr "Observadores do registro"
+
 #: utils_locale.rstitlesightings
 msgctxt "utils_locale.rstitlesightings"
 msgid "Sightings"
@@ -20726,3 +20752,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+

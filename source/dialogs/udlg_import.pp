@@ -1041,6 +1041,7 @@ begin
     tbNetsEffort:         Result := TNetEffort.Create;
     tbWeatherLogs:        Result := TWeatherLog.Create;
     tbSightings:          Result := TSighting.Create;
+    tbSightingObservers:  Result := TSightingObserver.Create;
     tbSpecimens:          Result := TSpecimen.Create;
     tbSamplePreps:        Result := TSamplePrep.Create;
     tbSpecimenCollectors: Result := TSpecimenCollector.Create;
@@ -1093,6 +1094,7 @@ begin
     tbNetsEffort:         Result := TNetEffortRepository.Create(DMM.sqlCon);
     tbWeatherLogs:        Result := TWeatherLogRepository.Create(DMM.sqlCon);
     tbSightings:          Result := TSightingRepository.Create(DMM.sqlCon);
+    tbSightingObservers:  Result := TSightingObserverRepository.Create(DMM.sqlCon);
     tbSpecimens:          Result := TSpecimenRepository.Create(DMM.sqlCon);
     tbSamplePreps:        Result := TSamplePrepRepository.Create(DMM.sqlCon);
     tbSpecimenCollectors: Result := TSpecimenCollectorRepository.Create(DMM.sqlCon);
@@ -2074,6 +2076,7 @@ begin
     Add(rsTitleVegetation);
     Add(rsTitleMethods);
     Add(rsTitleSightings);
+    Add(rsTitleSightingObservers);
     Add(rsTitleOccurrencePoints);
     Add(rsTitleSpecimens);
     Add(rsTitleSamplePreps);

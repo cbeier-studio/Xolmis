@@ -85,27 +85,27 @@ type
     lblCenterDistance: TLabel;
     lblInternalHeight: TLabel;
     lblExternalHeight: TLabel;
-    lblBandStatus3: TLabel;
-    lblBandStatus4: TLabel;
+    lblFoundDate: TLabel;
+    lblLongitude: TLabel;
     lblLossCause: TLabel;
     lblNestShape: TLabel;
     lblSupportType: TLabel;
     lblPlantHeight: TLabel;
     lblPlantMaxDiameter: TLabel;
-    lblBandStatus8: TLabel;
-    lblBandStatus9: TLabel;
+    lblLastDate: TLabel;
+    lblLatitude: TLabel;
     lblNotes: TLabel;
     lblDescription: TLabel;
-    lblRequester: TLabel;
-    lblRequester1: TLabel;
+    lblFieldNumber: TLabel;
+    lblObserver: TLabel;
     lblSupportPlant1: TLabel;
     lblOtherSupport: TLabel;
     lblSupportPlant2: TLabel;
     lblProductivity: TLabel;
-    lblRequester3: TLabel;
+    lblNestFate: TLabel;
     lblNestCover: TLabel;
     lblLocality: TLabel;
-    lblSupplier1: TLabel;
+    lblProject: TLabel;
     lineBottom: TShapeLineBGRA;
     mDescription: TMemo;
     pCoordinatesPrecision: TPanel;
@@ -179,6 +179,7 @@ type
     procedure pmnNewProjectClick(Sender: TObject);
     procedure sbAddCustomTaxonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
+    procedure ControlEnter(Sender: TObject);
   private
     FIsNew: Boolean;
     FNest: TNest;
@@ -246,6 +247,27 @@ begin
     pOtherSupport.Visible := True
   else
     pOtherSupport.Visible := False;
+end;
+
+procedure TedtNest.ControlEnter(Sender: TObject);
+var
+  Ctrl: TControl;
+  R: TRect;
+begin
+  if not (Sender is TControl) or not Assigned(SBox) then
+    Exit;
+
+  Ctrl := TControl(Sender);
+
+  R := Ctrl.ClientRect;
+  R.TopLeft := SBox.ScreenToClient(Ctrl.ClientToScreen(R.TopLeft));
+  R.BottomRight := SBox.ScreenToClient(Ctrl.ClientToScreen(R.BottomRight));
+
+  if R.Bottom > SBox.ClientHeight then
+    SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + (R.Bottom - SBox.ClientHeight) + 12
+  else
+  if R.Top < 0 then
+    SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblLongitude.Height;
 end;
 
 procedure TedtNest.dsLinkDataChange(Sender: TObject; Field: TField);

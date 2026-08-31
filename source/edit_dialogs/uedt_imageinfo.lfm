@@ -7,7 +7,7 @@ object edtImageInfo: TedtImageInfo
   BorderIcons = [biSystemMenu]
   Caption = 'Image info'
   ClientHeight = 681
-  ClientWidth = 413
+  ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto
@@ -183,6 +183,7 @@ object edtImageInfo: TedtImageInfo
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
         end
@@ -233,6 +234,7 @@ object edtImageInfo: TedtImageInfo
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eAuthorButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eAuthorKeyPress
         end
@@ -273,6 +275,7 @@ object edtImageInfo: TedtImageInfo
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
@@ -335,6 +338,7 @@ object edtImageInfo: TedtImageInfo
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eImageDateButtonClick
           OnEditingDone = eImageDateEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
         end
@@ -345,6 +349,7 @@ object edtImageInfo: TedtImageInfo
           Width = 175
           TabOrder = 1
           TextHint = 'HH:MM'
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
         end
@@ -386,6 +391,7 @@ object edtImageInfo: TedtImageInfo
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
         end
@@ -427,6 +433,7 @@ object edtImageInfo: TedtImageInfo
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
         end
@@ -487,6 +494,7 @@ object edtImageInfo: TedtImageInfo
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLongitudeButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
         end
@@ -507,6 +515,7 @@ object edtImageInfo: TedtImageInfo
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eLongitudeButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
         end
@@ -558,6 +567,7 @@ object edtImageInfo: TedtImageInfo
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
@@ -609,6 +619,7 @@ object edtImageInfo: TedtImageInfo
           TabOrder = 0
           OnButtonClick = eFilePathButtonClick
           OnEditingDone = eImageDateEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
         end
@@ -661,6 +672,7 @@ object edtImageInfo: TedtImageInfo
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
         end
@@ -670,6 +682,7 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 175
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
         end
@@ -709,6 +722,7 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
         end
@@ -748,6 +762,7 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
         end
@@ -787,6 +802,7 @@ object edtImageInfo: TedtImageInfo
           Top = 22
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
         end

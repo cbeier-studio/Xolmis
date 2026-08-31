@@ -55,6 +55,7 @@ const
   TBL_SURVEYS = 'surveys';
   TBL_SURVEY_TEAM = 'survey_team';
   TBL_SIGHTINGS = 'sightings';
+  TBL_SIGHTING_OBSERVERS = 'sighting_observers';
   TBL_VEGETATION = 'vegetation';
   TBL_WEATHER_LOGS = 'weather_logs';
   TBL_SPECIMENS = 'specimens';
@@ -433,6 +434,10 @@ const
   COL_BREEDING_STATUS = 'breeding_status';
   COL_OUT_OF_SAMPLE = 'out_of_sample';
   COL_EBIRD_AVAILABLE = 'ebird_available';
+
+const
+  // Sighting observers columns
+  COL_SIGHTING_OBSERVER_ID = 'sighting_observer_id';
 
   // POI library columns
 const

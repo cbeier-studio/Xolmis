@@ -187,6 +187,7 @@ var
   procedure RegisterProjectTeamSchema(DB: TDatabaseSchema);
   procedure RegisterSamplePrepsSchema(DB: TDatabaseSchema);
   procedure RegisterSamplingPlotsSchema(DB: TDatabaseSchema);
+  procedure RegisterSightingObserversSchema(DB: TDatabaseSchema);
   procedure RegisterSightingsSchema(DB: TDatabaseSchema);
   procedure RegisterSpecimenCollectorsSchema(DB: TDatabaseSchema);
   procedure RegisterSpecimensSchema(DB: TDatabaseSchema);
@@ -6009,6 +6010,85 @@ begin
   DB.Tables.Add(T);
 end;
 
+procedure RegisterSightingObserversSchema(DB: TDatabaseSchema);
+var
+  T: TTableSchema;
+begin
+  T := TTableSchema.Create;
+  T.TableType := tbSightingObservers;
+  T.TableName := TBL_SIGHTING_OBSERVERS;
+  T.DisplayName := LocaleTablesDict[tbSightingObservers];
+  // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
+  T.QuickEntrySchemaVersion := 1;
+
+  // ID
+  AddField(T, 'sighting_observer_id', rscId, sdtInteger, True, 0, True);
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  // Sighting ID
+  AddField(T, 'sighting_id', rscSightingID, sdtInteger, False, 0, False, True, tbSightings);
+  T.Fields.Last.Aliases.CommaText := SIGHTING_ALIASES;
+  T.Fields.Last.LookupInfo.LookupField := COL_SIGHTiNG_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_SIGHTING_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  // Observer ID
+  AddField(T, 'person_id', rscObserverID, sdtInteger, True, 0, False, True, tbPeople);
+  T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
+  T.Fields.Last.LookupInfo.LookupField := COL_PERSON_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PERSON_NAME;
+  // Observer
+  AddField(T, 'person_name', rscObserver, sdtText, True, 0, False, False, tbPeople);
+  T.Fields.Last.ExportName := PERSON_ALIASES;
+  T.Fields.Last.LookupInfo.LookupField := COL_PERSON_ID;
+  T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
+  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  T.Fields.Last.IsVirtual := True;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.ImportVisible := False;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_PERSON_NAME;
+  // Record audit
+  AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
+  AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
+  AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
+  T.Fields.Last.DefaultValue := 1;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+
+  DB.Tables.Add(T);
+end;
+
 procedure RegisterSightingsSchema(DB: TDatabaseSchema);
 var
   T: TTableSchema;
@@ -6018,7 +6098,7 @@ begin
   T.TableName := TBL_SIGHTINGS;
   T.DisplayName := LocaleTablesDict[tbSightings];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 4;
+  T.QuickEntrySchemaVersion := 5;
 
   // ID
   AddField(T, 'sighting_id', rscId, sdtInteger, True, 0, True);
@@ -6047,29 +6127,36 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_SURVEY_NAME;
-  // Observer ID
-  AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
-  T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
-  T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
-  T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
-  T.Fields.Last.QuickEntryVisible := False;
-  T.Fields.Last.SummaryKind := skCount;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
-  // Observer
-  AddField(T, 'observer_name', rscObserver, sdtText, False, 0, False, False, tbPeople);
-  T.Fields.Last.ExportName := 'observer';
-  T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
-  T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
-  T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  // Observers list - added in v5
+  AddField(T, 'observers_list', rscObservers, sdtText);
   T.Fields.Last.IsVirtual := True;
-  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.DisplayWidth := 170;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.ImportVisible := False;
-  T.Fields.Last.SummaryKind := skCount;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
+  T.Fields.Last.SummaryEnabled := False;
+  // Observer ID - removed in v5
+  //AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
+  //T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
+  //T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
+  //T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
+  //T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  //T.Fields.Last.QuickEntryVisible := False;
+  //T.Fields.Last.SummaryKind := skCount;
+  //T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  //T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
+  // Observer - removed in v5
+  //AddField(T, 'observer_name', rscObserver, sdtText, False, 0, False, False, tbPeople);
+  //T.Fields.Last.ExportName := 'observer';
+  //T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
+  //T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
+  //T.Fields.Last.LookupInfo.LookupResultField := COL_FULL_NAME;
+  //T.Fields.Last.IsVirtual := True;
+  //T.Fields.Last.DisplayWidth := 230;
+  //T.Fields.Last.SizePriority := 0;
+  //T.Fields.Last.ImportVisible := False;
+  //T.Fields.Last.SummaryKind := skCount;
+  //T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  //T.Fields.Last.GroupingField := COL_OBSERVER_NAME;
   // Method ID
   AddField(T, 'method_id', rscMethodID, sdtInteger, True, 0, False, True, tbMethods);
   T.Fields.Last.Aliases.CommaText := 'method,método';
@@ -7028,7 +7115,7 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Number of observers
-  AddField(T, 'observers_tally', rscObservers, sdtInteger);
+  AddField(T, 'observers_tally', rscObserversQuant, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'observers,# observers,observadores,# observadores';
   T.Fields.Last.Alignment := taRightJustify;
   T.Fields.Last.SummaryKind := skStats;
@@ -7687,6 +7774,7 @@ begin
   RegisterIndividualsSchema(DBSchema);
   RegisterEggsSchema(DBSchema);
   RegisterSightingsSchema(DBSchema);
+  RegisterSightingObserversSchema(DBSchema);
   RegisterCapturesSchema(DBSchema);
   RegisterFeathersSchema(DBSchema);
   RegisterNestOwnersSchema(DBSchema);

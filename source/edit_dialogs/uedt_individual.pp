@@ -131,6 +131,7 @@ type
     procedure pmnNewBandClick(Sender: TObject);
     procedure pmnNewNestClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
+    procedure ControlEnter(Sender: TObject);
   private
     FIsNew: Boolean;
     FIndividual: TIndividual;
@@ -205,6 +206,27 @@ begin
       SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
+end;
+
+procedure TedtIndividual.ControlEnter(Sender: TObject);
+var
+  Ctrl: TControl;
+  R: TRect;
+begin
+  if not (Sender is TControl) or not Assigned(scrollContent) then
+    Exit;
+
+  Ctrl := TControl(Sender);
+
+  R := Ctrl.ClientRect;
+  R.TopLeft := scrollContent.ScreenToClient(Ctrl.ClientToScreen(R.TopLeft));
+  R.BottomRight := scrollContent.ScreenToClient(Ctrl.ClientToScreen(R.BottomRight));
+
+  if R.Bottom > scrollContent.ClientHeight then
+    scrollContent.VertScrollBar.Position := scrollContent.VertScrollBar.Position + (R.Bottom - scrollContent.ClientHeight) + 12
+  else
+  if R.Top < 0 then
+    scrollContent.VertScrollBar.Position := scrollContent.VertScrollBar.Position + R.Top - 8 - lblBandingDate.Height;
 end;
 
 procedure TedtIndividual.dsLinkDataChange(Sender: TObject; Field: TField);

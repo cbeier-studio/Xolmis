@@ -94,6 +94,7 @@ type
     tbNetsEffort,
     tbWeatherLogs,
     tbSightings,
+    tbSightingObservers,
     tbSpecimens,
     tbSamplePreps,
     tbSpecimenCollectors,
@@ -114,7 +115,7 @@ type
 const
   TABLE_ALIASES: array [TTableType] of String = ('',
     'u','rh','rv','lg','co','g','pl','pn','it','p','pj','pt','l','r','z','zs','zv','zc','bt','b','bh','i','c','ft',
-    'n','no','nr','e','mt','x','sv','st','ef','wl','s','sp','pp','sc','img','snd','doc','veg',
+    'n','no','nr','e','mt','x','sv','st','ef','wl','s','so','sp','pp','sc','img','snd','doc','veg',
     'pg','pc','pb','px','poi','vid');
   TABLE_NAMES: array [TTableType] of String = ('',
     'users',
@@ -152,6 +153,7 @@ const
     'nets_effort',
     'weather_logs',
     'sightings',
+    'sighting_observers',
     'specimens',
     'sample_preps',
     'specimen_collectors',
@@ -201,6 +203,7 @@ const
     'net_id',
     'weather_id',
     'sighting_id',
+    'sighting_observer_id',
     'specimen_id',
     'sample_prep_id',
     'collector_id',
@@ -376,6 +379,7 @@ type
     FDataSet: TSQLQuery;
     FRecordActive: TRecordActiveStatus;
     FSQLWhere: TStrings;
+    FGroupBy: TStrings;
     FSQLOrderBy: String;
     function GetFieldCount: Integer;
     function GetRecordCount: Integer;
@@ -397,6 +401,7 @@ type
     property RecordCount: Integer read GetRecordCount;
     property SQLString: String read GetSQLString;
     property SQLWhere: TStrings read FSQLWhere;
+    property GroupBy: TStrings read FGroupBy;
     property SQLOrderBy: String read FSQLOrderBy;
   end;
 
@@ -600,6 +605,7 @@ begin
   TablesDict.Add(rsTitleNetsEffort, tbNetsEffort);
   TablesDict.Add(rsTitleWeather, tbWeatherLogs);
   TablesDict.Add(rsTitleSightings, tbSightings);
+  TablesDict.Add(rsTitleSightingObservers, tbSightingObservers);
   TablesDict.Add(rsTitleSpecimens, tbSpecimens);
   TablesDict.Add(rsTitleCollectors, tbSpecimenCollectors);
   TablesDict.Add(rsTitleSamplePreps, tbSamplePreps);
@@ -658,6 +664,7 @@ begin
   LocaleTablesDict.Add(tbNetsEffort, rsTitleNetsEffort);
   LocaleTablesDict.Add(tbWeatherLogs, rsTitleWeather);
   LocaleTablesDict.Add(tbSightings, rsTitleSightings);
+  LocaleTablesDict.Add(tbSightingObservers, rsTitleSightingObservers);
   LocaleTablesDict.Add(tbSpecimens, rsTitleSpecimens);
   LocaleTablesDict.Add(tbSpecimenCollectors, rsTitleCollectors);
   LocaleTablesDict.Add(tbSamplePreps, rsTitleSamplePreps);
@@ -726,18 +733,23 @@ begin
   FSortFields := TSortedFields.Create(True);
   FRecordActive := rsActive;
   FSQLWhere := TStringList.Create;
+  FGroupBy := TStringList.Create;
 end;
 
 destructor TCustomSearch.Destroy;
 begin
+  FGroupBy.Clear;
   FSQLWhere.Clear;
   FTextFilters.Clear;
   FQuickFilters.Clear;
   FSortFields.Clear;
+
+  FGroupBy.Free;
   FSQLWhere.Free;
   FTextFilters.Free;
   FQuickFilters.Free;
   FSortFields.Free;
+
   inherited Destroy;
 end;
 
@@ -1270,6 +1282,12 @@ begin
       FDataSet.SQL.Add(AndOrWhere + '(active_status = ' + S + ')');
       FSQLWhere.Add(AndOrWhere + '(active_status = ' + S + ')');
     end;
+
+  // Add GROUP BY clause
+  if FGroupBy.Count > 0 then
+  begin
+    FDataSet.SQL.Add('GROUP BY ' + FGroupBy.CommaText);
+  end;
 
   // Add TextFilters in ORDER BY clause
   if FSortFields.Count > 0 then

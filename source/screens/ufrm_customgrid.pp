@@ -8743,6 +8743,8 @@ begin
   Caption := FModule.CaptionText;
   FSearch.DataSet := TSQLQuery(FModule.DataSet);
   dsLink.DataSet := FSearch.DataSet;
+  if FModule.TableType = tbSightings then
+    FSearch.GroupBy.Text := 's.sighting_id';
 
   // Set default data sorting
   for i := 0 to FModule.DefaultSort.Count - 1 do

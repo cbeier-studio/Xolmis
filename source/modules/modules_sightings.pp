@@ -147,8 +147,8 @@ begin
       ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
       ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
-      ColumnByFieldname(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
+    //if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
+    //  ColumnByFieldname(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
       ColumnByFieldname(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_DETECTION_TYPE).Visible then
@@ -339,8 +339,8 @@ begin
       ColumnByFieldName(COL_TAXON_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_LOCALITY_NAME).Visible then
       ColumnByFieldname(COL_LOCALITY_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
-      ColumnByFieldname(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
+    //if DataSource.DataSet.FieldByName(COL_OBSERVER_NAME).Visible then
+    //  ColumnByFieldname(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
       ColumnByFieldname(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_DETECTION_TYPE).Visible then

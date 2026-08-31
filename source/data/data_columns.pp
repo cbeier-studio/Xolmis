@@ -128,7 +128,8 @@ resourcestring
   rscMistnets = '# mistnets';
   rscDistanceKm = 'Distance (km)';
   rscAreaHa = 'Area (ha)';
-  rscObservers = '# observers';
+  rscObservers = 'Observers';
+  rscObserversQuant = '# observers';
   rscEndLatitude = 'End latitude';
   rscEndLongitude = 'End longitude';
   rscExpedition = 'Expedition';
@@ -612,6 +613,7 @@ resourcestring
   procedure TranslateWeatherLogs(aDataSet: TDataSet);
   procedure TranslateNetsEffort(aDataSet: TDataSet);
   procedure TranslateSightings(aDataSet: TDataSet);
+  procedure TranslateSightingObservers(aDataSet: TDataSet);
   procedure TranslateBands(aDataSet: TDataSet);
   procedure TranslateBandHistory(aDataSet: TDataSet);
   procedure TranslateIndividuals(aDataSet: TDataSet);
@@ -1710,7 +1712,7 @@ begin
         'end_longitude':          Fields[i].DisplayLabel := rscEndLongitude;
         'end_latitude':           Fields[i].DisplayLabel := rscEndLatitude;
         'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
-        'observers_tally':        Fields[i].DisplayLabel := rscObservers;
+        'observers_tally':        Fields[i].DisplayLabel := rscObserversQuant;
         'area_total':             Fields[i].DisplayLabel := rscAreaHa;
         'distance_total':         Fields[i].DisplayLabel := rscDistanceKm;
         'nets_total':             Fields[i].DisplayLabel := rscMistnets;
@@ -1873,6 +1875,7 @@ begin
         'taxon_formatted_name':   Fields[i].DisplayLabel := rscTaxonFormatted;
         'custom_taxon_name':      Fields[i].DisplayLabel := rscCustomTaxonName;
         'mackinnon_list_num':     Fields[i].DisplayLabel := rscMackinnonList;
+        'observers_list':         Fields[i].DisplayLabel := rscObservers;
         'observer_id':            Fields[i].DisplayLabel := rscObserverID;
         'observer_name':          Fields[i].DisplayLabel := rscObserver;
         'subjects_tally':         Fields[i].DisplayLabel := rscIndividuals;
@@ -3838,6 +3841,32 @@ begin
         'country_code':           Fields[i].DisplayLabel := rscCountry;
         'variation_code':         Fields[i].DisplayLabel := rscVariation;
         'language_id':            Fields[i].DisplayLabel := rscId;
+        'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
+        'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
+        'insert_date':            Fields[i].DisplayLabel := rscInsertDate;
+        'update_date':            Fields[i].DisplayLabel := rscUpdateDate;
+        'exported_status':        Fields[i].DisplayLabel := rscExportedStatus;
+        'active_status':          Fields[i].DisplayLabel := rscActiveStatus;
+        'inactivated_by':         Fields[i].DisplayLabel := rscDeletedBy;
+      end;
+    end;
+  end;
+end;
+
+procedure TranslateSightingObservers(aDataSet: TDataSet);
+var
+  i: Integer;
+begin
+  with aDataSet do
+  begin
+    for i := 0 to Fields.Count - 1 do
+    begin
+      case Fields[i].FieldName of
+        'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
+        'sighting_id':            Fields[i].DisplayLabel := rscSightingID;
+        'person_id':              Fields[i].DisplayLabel := rscObserverID;
+        'person_name':            Fields[i].DisplayLabel := rscObserver;
+        'sighting_observer_id':   Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
         'user_updated':           Fields[i].DisplayLabel := rscUserUpdated;
         'insert_date':            Fields[i].DisplayLabel := rscInsertDate;

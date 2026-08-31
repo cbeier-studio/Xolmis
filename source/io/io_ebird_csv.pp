@@ -169,6 +169,12 @@ begin
             Survey.Duration := Reg.Duration;
             Survey.MethodId := aMethod;
             Survey.LocalityId := Toponimo.Id;
+            if ((xSettings.AutoFillCoordinates) and (Reg.Longitude = 0) and (Reg.Latitude = 0)) then
+            begin
+              Survey.StartLatitude := Toponimo.Latitude;
+              Survey.StartLongitude := Toponimo.Longitude;
+              Survey.CoordinatePrecision := cpReference;
+            end;
             Survey.Notes := Reg.ChecklistComments;
             Survey.TotalArea := Reg.AreaCovered;
             Survey.TotalDistance := Reg.DistanceTraveled;
@@ -182,7 +188,7 @@ begin
           end;
 
           { Check if the record already exists }
-          SightRepo.FindByCombo(Survey.Id, Taxon.Id, 0, '', Sight);
+          SightRepo.FindByCombo(Survey.Id, Taxon.Id, '', Sight);
           if Sight.IsNew then
           begin
             { Insert record if it does not exist }

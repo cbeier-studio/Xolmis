@@ -2674,7 +2674,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscObservers, aOld.ObserversTally, FObserversTally, R) then
+  if FieldValuesDiff(rscObserversQuant, aOld.ObserversTally, FObserversTally, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscAreaHa, aOld.TotalArea, FTotalArea, R) then
     Changes.Add(R);

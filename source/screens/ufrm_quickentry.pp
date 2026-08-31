@@ -3876,10 +3876,10 @@ begin
 
         if (FMasterTable = tbSurveys) and (FMasterKey > 0) then
           Repo.FindByCombo(FMasterKey, GetValidTaxon(CellValue(COL_TAXON_NAME, r)),
-            GetPersonKey(CellValue(COL_OBSERVER_NAME, r)), CellValue(COL_CUSTOM_TAXON_NAME, r), Obj)
+            CellValue(COL_CUSTOM_TAXON_NAME, r), Obj)
         else
           Repo.FindByCombo(GetKey(TBL_SURVEYS, COL_SURVEY_ID, COL_FULL_NAME, CellValue(COL_SURVEY_NAME, r)),
-            GetValidTaxon(CellValue(COL_TAXON_NAME, r)), GetPersonKey(CellValue(COL_OBSERVER_NAME, r)),
+            GetValidTaxon(CellValue(COL_TAXON_NAME, r)),
             CellValue(COL_CUSTOM_TAXON_NAME, r), Obj);
         if not (Obj.IsNew) then
         begin
@@ -3894,7 +3894,7 @@ begin
                 Obj.SurveyId := FMasterKey
               else
                 Obj.SurveyId := GetKey(TBL_SURVEYS, COL_SURVEY_ID, COL_FULL_NAME, CellValue(COL_SURVEY_NAME, r));
-              Obj.ObserverId := GetPersonKey(CellValue(COL_OBSERVER_NAME, r));
+              //Obj.ObserverId := GetPersonKey(CellValue(COL_OBSERVER_NAME, r));
               Obj.MethodId := GetMethodKey(CellValue(COL_METHOD_NAME, r));
               Obj.LocalityId := GetSiteKey(CellValue(COL_LOCALITY_NAME, r));
               Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);
@@ -3946,7 +3946,7 @@ begin
             Obj.SurveyId := FMasterKey
           else
             Obj.SurveyId := GetKey(TBL_SURVEYS, COL_SURVEY_ID, COL_FULL_NAME, CellValue(COL_SURVEY_NAME, r));
-          Obj.ObserverId := GetPersonKey(CellValue(COL_OBSERVER_NAME, r));
+          //Obj.ObserverId := GetPersonKey(CellValue(COL_OBSERVER_NAME, r));
           Obj.MethodId := GetMethodKey(CellValue(COL_METHOD_NAME, r));
           Obj.LocalityId := GetSiteKey(CellValue(COL_LOCALITY_NAME, r));
           Obj.Longitude := StrToFloatDef(CellValue(COL_LONGITUDE, r), 0.0);

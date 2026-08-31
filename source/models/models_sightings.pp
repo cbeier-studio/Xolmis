@@ -21,7 +21,7 @@ unit models_sightings;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, io_core;
+  Classes, SysUtils, DB, SQLDB, Generics.Collections, fpjson, DateUtils, models_record_types, io_core;
 
 type
 
@@ -36,7 +36,7 @@ type
     FLatitude: Extended;
     FLongitude: Extended;
     FCoordinatePrecision: TCoordinatePrecision;
-    FObserverId: Integer;
+    //FObserverId: Integer;
     FTaxonId: Integer;
     FCustomTaxonName: String;
     FIndividualId: Integer;
@@ -85,7 +85,7 @@ type
     property Latitude: Extended read FLatitude write FLatitude;
     property Longitude: Extended read FLongitude write FLongitude;
     property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
-    property ObserverId: Integer read FObserverId write FObserverId;
+    //property ObserverId: Integer read FObserverId write FObserverId;
     property TaxonId: Integer read FTaxonId write FTaxonId;
     property CustomTaxonName: String read FCustomTaxonName write FCustomTaxonName;
     property IndividualId: Integer read FIndividualId write FIndividualId;
@@ -125,7 +125,7 @@ type
   public
     function Exists(const Id: Integer): Boolean; override;
     procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
-    procedure FindByCombo(const aSurvey, aTaxon, aObserver: Integer; aCustomTaxon: String; E: TSighting);
+    procedure FindByCombo(const aSurvey, aTaxon: Integer; aCustomTaxon: String; E: TSighting);
     procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
     procedure GetById(const Id: Integer; E: TXolmisRecord); override;
     procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
@@ -134,6 +134,50 @@ type
     procedure Update(E: TXolmisRecord); override;
     procedure Delete(E: TXolmisRecord); override;
   end;
+
+  { TSightingObserver }
+
+  TSightingObserver = class(TXolmisRecord)
+  protected
+    FSightingId: Integer;
+    FPersonId: Integer;
+    FPersonAbbrev: String;
+  public
+    constructor Create(aValue: Integer = 0); reintroduce; virtual;
+    procedure Clear; override;
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce;
+    function Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean; override;
+    function EqualsTo(const Other: TSightingObserver): Boolean;
+    procedure FromJSON(const aJSONString: String); virtual;
+    function ToJSON: String;
+    function ToString: String; override;
+    function Validate(out Msg: string): Boolean; virtual;
+  published
+    property SightingId: Integer read FSightingId write FSightingId;
+    property PersonId: Integer read FPersonId write FPersonId;
+    property PersonAbbreviation: String read FPersonAbbrev write FPersonAbbrev;
+  end;
+
+  { TSightingObserverRepository }
+
+  TSightingObserverRepository = class(TXolmisRepository)
+  protected
+    function TableName: string; override;
+  public
+    function Exists(const Id: Integer): Boolean; override;
+    procedure FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord); override;
+    procedure FindBySighting(const aSightingId, aPersonId: Integer; E: TXolmisRecord);
+    procedure FindByRow(const ARow: TXRow; E: TXolmisRecord); override;
+    procedure GetById(const Id: Integer; E: TXolmisRecord); override;
+    procedure Hydrate(aDataSet: TDataSet; E: TXolmisRecord); override;
+    procedure HydrateFromRow(const ARow: TXRow; E: TXolmisRecord); override;
+    procedure Insert(E: TXolmisRecord); override;
+    procedure Update(E: TXolmisRecord); override;
+    procedure Delete(E: TXolmisRecord); override;
+  end;
+
+  TSightingObserverList = specialize TObjectList<TSightingObserver>;
 
 implementation
 
@@ -163,7 +207,7 @@ begin
     FLatitude := TSighting(Source).Latitude;
     FLongitude := TSighting(Source).Longitude;
     FCoordinatePrecision := TSighting(Source).CoordinatePrecision;
-    FObserverId := TSighting(Source).ObserverId;
+    //FObserverId := TSighting(Source).ObserverId;
     FTaxonId := TSighting(Source).TaxonId;
     FCustomTaxonName := TSighting(Source).CustomTaxonName;
     FIndividualId := TSighting(Source).IndividualId;
@@ -206,7 +250,7 @@ begin
   FLatitude := 0.0;
   FLongitude := 0.0;
   FCoordinatePrecision := cpEmpty;
-  FObserverId := 0;
+  //FObserverId := 0;
   FTaxonId := 0;
   FCustomTaxonName := EmptyStr;
   FIndividualId := 0;
@@ -275,8 +319,8 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscCoordinatePrecision, aOld.CoordinatePrecision, FCoordinatePrecision, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
-    Changes.Add(R);
+  //if FieldValuesDiff(rscObserverID, aOld.ObserverId, FObserverId, R) then
+  //  Changes.Add(R);
   if FieldValuesDiff(rscIndividualID, aOld.IndividualId, FIndividualId, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscTaxonID, aOld.TaxonId, FTaxonId, R) then
@@ -353,7 +397,7 @@ begin
     FLongitude            := Obj.Get('longitude', 0.0);
     FLatitude             := Obj.Get('latitude', 0.0);
     FCoordinatePrecision  := StrToCoordinatePrecision(Obj.Get('coordinate_precision', ''));
-    FObserverId           := Obj.Get('observer_id', 0);
+    //FObserverId           := Obj.Get('observer_id', 0);
     FTaxonId              := Obj.Get('taxon_id', 0);
     FCustomTaxonName      := Obj.Get('custom_taxon_name', '');
     FIndividualId         := Obj.Get('individual_id', 0);
@@ -390,58 +434,58 @@ end;
 
 function TSighting.ToJSON: String;
 var
-  JSONObject: TJSONObject;
+  Obj: TJSONObject;
 begin
-  JSONObject := TJSONObject.Create;
+  Obj := TJSONObject.Create;
   try
-    JSONObject.Add('survey_id', FSurveyId);
-    JSONObject.Add('sighting_date', DateToStr(FSightingDate));
-    JSONObject.Add('sighting_time', TimeToStr(FSightingTime));
-    JSONObject.Add('locality_id', FLocalityId);
-    JSONObject.Add('longitude', FLongitude);
-    JSONObject.Add('latitude', FLatitude);
-    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
-    JSONObject.Add('observer_id', FObserverId);
-    JSONObject.Add('taxon_id', FTaxonId);
-    JSONObject.Add('custom_taxon_name', FCustomTaxonName);
-    JSONObject.Add('individual_id', FIndividualId);
-    JSONObject.Add('subject_tally', FSubjectTally);
-    JSONObject.Add('subject_distance', FSubjectDistance);
-    JSONObject.Add('flight_height', FFlightHeight);
-    JSONObject.Add('flight_direction', FFlightDirection);
-    JSONObject.Add('method_id', FMethodId);
-    JSONObject.Add('mackinnon_list_number', FMackinnonListNumber);
-    JSONObject.Add('captured', FSubjectCaptured);
-    JSONObject.Add('seen', FSubjectSeen);
-    JSONObject.Add('heard', FSubjectHeard);
-    JSONObject.Add('photographed', FSubjectPhotographed);
-    JSONObject.Add('recorded', FSubjectRecorded);
-    JSONObject.Add('males_tally', FMalesTally);
-    JSONObject.Add('females_tally', FFemalesTally);
-    JSONObject.Add('not_sexed_tally', FNotSexedTally);
-    JSONObject.Add('adults_tally', FAdultsTally);
-    JSONObject.Add('immatures_tally', FImmatureTally);
-    JSONObject.Add('not_aged_tally', FNotAgedTally);
-    JSONObject.Add('new_captures_tally', FNewCapturesTally);
-    JSONObject.Add('recaptures_tally', FRecapturesTally);
-    JSONObject.Add('unbanded_tally', FUnbandedTally);
-    JSONObject.Add('detection_type', FDetectionType);
-    JSONObject.Add('breeding_status', FBreedingStatus);
-    JSONObject.Add('out_of_sample', FOutOfSample);
-    JSONObject.Add('is_on_ebird', FIsOnEbird);
-    JSONObject.Add('full_name', FFullName);
-    JSONObject.Add('notes', FNotes);
+    Obj.Add('survey_id', FSurveyId);
+    Obj.Add('sighting_date', DateToStr(FSightingDate));
+    Obj.Add('sighting_time', TimeToStr(FSightingTime));
+    Obj.Add('locality_id', FLocalityId);
+    Obj.Add('longitude', FLongitude);
+    Obj.Add('latitude', FLatitude);
+    Obj.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
+    //Obj.Add('observer_id', FObserverId);
+    Obj.Add('taxon_id', FTaxonId);
+    Obj.Add('custom_taxon_name', FCustomTaxonName);
+    Obj.Add('individual_id', FIndividualId);
+    Obj.Add('subject_tally', FSubjectTally);
+    Obj.Add('subject_distance', FSubjectDistance);
+    Obj.Add('flight_height', FFlightHeight);
+    Obj.Add('flight_direction', FFlightDirection);
+    Obj.Add('method_id', FMethodId);
+    Obj.Add('mackinnon_list_number', FMackinnonListNumber);
+    Obj.Add('captured', FSubjectCaptured);
+    Obj.Add('seen', FSubjectSeen);
+    Obj.Add('heard', FSubjectHeard);
+    Obj.Add('photographed', FSubjectPhotographed);
+    Obj.Add('recorded', FSubjectRecorded);
+    Obj.Add('males_tally', FMalesTally);
+    Obj.Add('females_tally', FFemalesTally);
+    Obj.Add('not_sexed_tally', FNotSexedTally);
+    Obj.Add('adults_tally', FAdultsTally);
+    Obj.Add('immatures_tally', FImmatureTally);
+    Obj.Add('not_aged_tally', FNotAgedTally);
+    Obj.Add('new_captures_tally', FNewCapturesTally);
+    Obj.Add('recaptures_tally', FRecapturesTally);
+    Obj.Add('unbanded_tally', FUnbandedTally);
+    Obj.Add('detection_type', FDetectionType);
+    Obj.Add('breeding_status', FBreedingStatus);
+    Obj.Add('out_of_sample', FOutOfSample);
+    Obj.Add('is_on_ebird', FIsOnEbird);
+    Obj.Add('full_name', FFullName);
+    Obj.Add('notes', FNotes);
 
-    Result := JSONObject.AsJSON;
+    Result := Obj.AsJSON;
   finally
-    JSONObject.Free;
+    Obj.Free;
   end;
 end;
 
 function TSighting.ToString: String;
 begin
   Result := Format('Sighting(Id=%d, SurveyId=%d, SightingDate=%s, SightingTime=%s, LocalityId=%d, ' +
-    'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, ObserverId=%d, TaxonId=%d, CustomTaxonName=%s, ' +
+    'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, TaxonId=%d, CustomTaxonName=%s, ' +
     'IndividualId=%d, SubjectTally=%d, SubjectDistance=%f, FlightHeight=%f, FlightDirection=%s, ' +
     'MethodId=%d, MackinnonListNumber=%d, Captured=%s, Seen=%s, Heard=%s, Photographed=%s, Recorded=%s, ' +
     'MalesTally=%s, FemalesTally=%s, NotSexedTally=%s, AdultsTally=%s, ImmaturesTally=%s, NotAgedTally=%s, ' +
@@ -449,7 +493,7 @@ begin
     'OutOfSample=%s, IsOnEbird=%s, FullName=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FSurveyId, DateToStr(FSightingDate), TimeToStr(FSightingTime), FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision],
-    FObserverId, FTaxonId, FCustomTaxonName, FIndividualId, FSubjectTally, FSubjectDistance,
+    FTaxonId, FCustomTaxonName, FIndividualId, FSubjectTally, FSubjectDistance,
     FFlightHeight, FFlightDirection, FMethodId, FMackinnonListNumber,
     BoolToStr(FSubjectCaptured, 'True', 'False'), BoolToStr(FSubjectSeen, 'True', 'False'),
     BoolToStr(FSubjectHeard, 'True', 'False'), BoolToStr(FSubjectPhotographed, 'True', 'False'),
@@ -577,8 +621,7 @@ begin
   end;
 end;
 
-procedure TSightingRepository.FindByCombo(const aSurvey, aTaxon, aObserver: Integer; aCustomTaxon: String; E: TSighting
-  );
+procedure TSightingRepository.FindByCombo(const aSurvey, aTaxon: Integer; aCustomTaxon: String; E: TSighting);
 var
   Qry: TSQLQuery;
 begin
@@ -592,16 +635,16 @@ begin
       Add('AND (custom_taxon_name = :acustomtaxon)')
     else
       Add('AND (taxon_id = :ataxon)');
-    if aObserver > 0 then
-      Add('AND (observer_id = :aobserver)');
+    //if aObserver > 0 then
+    //  Add('AND (observer_id = :aobserver)');
 
     ParamByName('ASURVEY').AsInteger := aSurvey;
     if (aTaxon <= 0) and (aCustomTaxon <> EmptyStr) then
       ParamByName('ACUSTOMTAXON').AsString := aCustomTaxon
     else
       ParamByName('ATAXON').AsInteger := aTaxon;
-    if aObserver > 0 then
-      ParamByName('AOBSERVER').AsInteger := aObserver;
+    //if aObserver > 0 then
+    //  ParamByName('AOBSERVER').AsInteger := aObserver;
     Open;
     if not EOF then
     begin
@@ -630,7 +673,7 @@ begin
     Add('AND (taxon_id = :ataxon)');
     Add('AND (custom_taxon_name = :custom_taxon_name)');
     Add('AND (individual_id = :aindividual)');
-    Add('AND (observer_id = :aobserver)');
+    //Add('AND (observer_id = :aobserver)');
     Add('AND (date(sighting_date) = date(:adate))');
     Add('AND (time(sighting_time) = time(:atime))');
 
@@ -639,7 +682,7 @@ begin
     ParamByName('alocality').AsInteger := StrToIntDef(ARow.Values['locality_id'], 0);
     ParamByName('asurvey').AsInteger := StrToIntDef(ARow.Values['survey_id'], 0);
     ParamByName('aindividual').AsInteger := StrToIntDef(ARow.Values['individual_id'], 0);
-    ParamByName('aobserver').AsInteger := StrToIntDef(ARow.Values['observer_id'], 0);
+    //ParamByName('aobserver').AsInteger := StrToIntDef(ARow.Values['observer_id'], 0);
     ParamByName('adate').AsDate := StrToDateDef(ARow.Values['sighting_date'], NullDate);
     ParamByName('atime').AsTime := StrToTimeDef(ARow.Values['sighting_time'], NullTime);
     Open;
@@ -698,7 +741,7 @@ begin
     R.Latitude := FieldByName('latitude').AsFloat;
     R.Longitude := FieldByName('longitude').AsFloat;
     R.CoordinatePrecision := StrToCoordinatePrecision(FieldByName('coordinate_precision').AsString);
-    R.ObserverId := FieldByName('observer_id').AsInteger;
+    //R.ObserverId := FieldByName('observer_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.CustomTaxonName := FieldByName('custom_taxon_name').AsString;
     R.IndividualId := FieldByName('individual_id').AsInteger;
@@ -765,8 +808,8 @@ begin
     R.Latitude := StrToFloatDef(ARow.Values['latitude'], 0);
   if ARow.IndexOfName('coordinate_precision') >= 0 then
     R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
-  if ARow.IndexOfName('observer_id') >= 0 then
-    R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
+  //if ARow.IndexOfName('observer_id') >= 0 then
+  //  R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
   if ARow.IndexOfName('custom_taxon_name') >= 0 then
@@ -853,7 +896,7 @@ begin
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('method_id'), R.MethodId);
     SetIntParam(ParamByName('mackinnon_list_num'), R.MackinnonListNumber);
-    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
+    //SetForeignParam(ParamByName('observer_id'), R.ObserverId);
     SetIntParam(ParamByName('subjects_tally'), R.SubjectTally);
     SetFloatParam(ParamByName('subject_distance'), R.SubjectDistance);
     SetFloatParam(ParamByName('flight_height'), R.FlightHeight);
@@ -877,7 +920,7 @@ begin
     ParamByName('out_of_sample').AsBoolean := R.OutOfSample;
     ParamByName('ebird_available').AsBoolean := R.IsOnEbird;
     ParamByName('full_name').AsString := GetSightingFullName(R.TaxonId, R.CustomTaxonName, R.SightingDate,
-      R.SightingTime, R.LocalityId, R.ObserverId);
+      R.SightingTime, R.LocalityId);
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
@@ -928,7 +971,7 @@ begin
     SetStrParam(ParamByName('coordinate_precision'), COORDINATE_PRECISIONS[R.CoordinatePrecision]);
     SetForeignParam(ParamByName('method_id'), R.MethodId);
     SetIntParam(ParamByName('mackinnon_list_num'), R.MackinnonListNumber);
-    SetForeignParam(ParamByName('observer_id'), R.ObserverId);
+    //SetForeignParam(ParamByName('observer_id'), R.ObserverId);
     SetIntParam(ParamByName('subjects_tally'), R.SubjectTally);
     SetFloatParam(ParamByName('subject_distance'), R.SubjectDistance);
     SetFloatParam(ParamByName('flight_height'), R.FlightHeight);
@@ -952,12 +995,431 @@ begin
     ParamByName('out_of_sample').AsBoolean := R.OutOfSample;
     ParamByName('ebird_available').AsBoolean := R.IsOnEbird;
     ParamByName('full_name').AsString := GetSightingFullName(R.TaxonId, R.CustomTaxonName, R.SightingDate,
-      R.SightingTime, R.LocalityId, R.ObserverId);
+      R.SightingTime, R.LocalityId);
     SetStrParam(ParamByName('notes'), R.Notes);
     ParamByName('marked_status').AsBoolean := R.Marked;
     ParamByName('active_status').AsBoolean := R.Active;
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('sighting_id').AsInteger := R.Id;
+
+    ExecSQL;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+{ TSightingObserver }
+
+constructor TSightingObserver.Create(aValue: Integer);
+begin
+  inherited Create;
+  if aValue <> 0 then
+    FId := aValue;
+end;
+
+procedure TSightingObserver.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TSightingObserver then
+  begin
+    FSightingId := TSightingObserver(Source).SightingId;
+    FPersonId := TSightingObserver(Source).PersonId;
+    FPersonAbbrev := TSightingObserver(Source).PersonAbbreviation;
+  end;
+end;
+
+procedure TSightingObserver.Clear;
+begin
+  inherited Clear;
+  FSightingId := 0;
+  FPersonId := 0;
+  FPersonAbbrev := EmptyStr;
+end;
+
+function TSightingObserver.Clone: TXolmisRecord;
+begin
+  Result := TSightingObserver(inherited Clone);
+end;
+
+function TSightingObserver.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
+var
+  aOld: TSightingObserver;
+  R: String;
+begin
+  Result := False;
+
+  if not (OldRec is TSightingObserver) then
+    Exit(False);
+
+  aOld := TSightingObserver(OldRec);
+
+  R := EmptyStr;
+  if Assigned(Changes) then
+    Changes.Clear;
+  if aOld = nil then
+    Exit(False);
+
+  if FieldValuesDiff(rscPersonID, aOld.PersonId, FPersonId, R) then
+    Changes.Add(R);
+
+  Result := Changes.Count > 0;
+end;
+
+function TSightingObserver.EqualsTo(const Other: TSightingObserver): Boolean;
+begin
+  Result := Assigned(Other) and (FId = Other.Id);
+end;
+
+procedure TSightingObserver.FromJSON(const aJSONString: String);
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject(GetJSON(AJSONString));
+  try
+    FSightingId   := Obj.Get('sighting_id', 0);
+    FPersonId     := Obj.Get('person_id', 0);
+    FPersonAbbrev := Obj.Get('person_abbrev', '');
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TSightingObserver.ToJSON: String;
+var
+  Obj: TJSONObject;
+begin
+  Obj := TJSONObject.Create;
+  try
+    Obj.Add('sighting_id', FSightingId);
+    Obj.Add('person_id', FPersonId);
+    Obj.Add('person_abbrev', FPersonAbbrev);
+
+    Result := Obj.AsJSON;
+  finally
+    Obj.Free;
+  end;
+end;
+
+function TSightingObserver.ToString: String;
+begin
+  Result := Format('SightingObserver(Id=%d, SightingId=%d, PersonId=%d, PersonAbbreviation=%s, ' +
+    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    [FId, FSightingId, FPersonId, FPersonAbbrev,
+    DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
+    BoolToStr(FActive, 'True', 'False')]);
+end;
+
+function TSightingObserver.Validate(out Msg: string): Boolean;
+begin
+  if FSightingId = 0 then
+  begin
+    Msg := 'Sighting required.';
+    Exit(False);
+  end;
+  if FPersonId = 0 then
+  begin
+    Msg := 'Person required.';
+    Exit(False);
+  end;
+
+  Msg := '';
+  Result := True;
+end;
+
+{ TSightingObserverRepository }
+
+procedure TSightingObserverRepository.Delete(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TSightingObserver;
+begin
+  if not (E is TSightingObserver) then
+    raise Exception.Create('Delete: Expected TSightingObserver');
+
+  R := TSightingObserver(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TSightingObserverRepository.Delete: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+
+    if not FTrans.Active then
+      FTrans.StartTransaction;
+    try
+      Clear;
+      Add('DELETE FROM %tablename');
+      Add('WHERE (%idname = :aid)');
+
+      MacroByName('tablename').Value := TableName;
+      MacroByName('idname').Value := COL_SIGHTING_OBSERVER_ID;
+      ParamByName('aid').AsInteger := R.Id;
+
+      ExecSQL;
+
+      FTrans.CommitRetaining;
+    except
+      FTrans.RollbackRetaining;
+      raise;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TSightingObserverRepository.Exists(const Id: Integer): Boolean;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := NewQuery;
+  with Qry do
+  try
+    MacroCheck := True;
+    SQL.Text := 'SELECT 1 AS x FROM %tablename WHERE %idname=:id LIMIT 1';
+    MacroByName('tablename').Value := TableName;
+    MacroByName('idname').Value := COL_SIGHTING_OBSERVER_ID;
+    ParamByName('id').AsInteger := Id;
+    Open;
+    Result := not EOF;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSightingObserverRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
+const
+  ALLOWED: array[0..1] of string = (COL_SIGHTING_OBSERVER_ID, COL_FULL_NAME); // whitelist
+var
+  Qry: TSQLQuery;
+  I: Integer;
+  Ok: Boolean;
+begin
+  if not (E is TSightingObserver) then
+    raise Exception.Create('FindBy: Expected TSightingObserver');
+
+  // Avoid FieldName injection: check in whitelist
+  Ok := False;
+  for I := Low(ALLOWED) to High(ALLOWED) do
+    if SameText(FieldName, ALLOWED[I]) then
+    begin
+      Ok := True;
+      Break;
+    end;
+  if not Ok then
+    raise Exception.CreateFmt(rsFieldNotAllowedInFindBy, [FieldName]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+
+    Add(xProvider.SightingObservers.SelectTable(swcFieldValue));
+
+    MacroByName('afield').Value := FieldName;
+    ParamByName('avalue').Value := Value;
+    Open;
+
+    if not EOF then
+    begin
+      Hydrate(Qry, TSightingObserver(E));
+    end;
+
+    Close;
+  finally
+    Qry.Free;
+  end;
+end;
+
+procedure TSightingObserverRepository.FindByRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSightingObserver) then
+    raise Exception.Create('FindByRow: Expected TSightingObserver');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.SightingObservers.SelectTable(swcNone));
+    Add('WHERE (sighting_id = :asighting)');
+    Add('AND (person_id = :aperson)');
+
+    ParamByName('asighting').AsInteger := StrToIntDef(ARow.Values['sighting_id'], 0);
+    ParamByName('aperson').AsInteger := StrToIntDef(ARow.Values['person_id'], 0);
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSightingObserverRepository.FindBySighting(const aSightingId, aPersonId: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSightingObserver) then
+    raise Exception.Create('FindBySighting: Expected TSightingObserver');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.SightingObservers.SelectTable(swcNone));
+    Add('WHERE (sighting_id = :asighting)');
+    Add('AND (person_id = :aperson)');
+
+    ParamByName('asighting').AsInteger := aSightingId;
+    ParamByName('aperson').AsInteger := aPersonId;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, E);
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSightingObserverRepository.GetById(const Id: Integer; E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+begin
+  if not (E is TSightingObserver) then
+    raise Exception.Create('GetById: Expected TSightingObserver');
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.SightingObservers.SelectTable(swcId));
+
+    ParamByName('COD').AsInteger := Id;
+    Open;
+    if not EOF then
+    begin
+      Hydrate(Qry, TSightingObserver(E));
+    end;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TSightingObserverRepository.Hydrate(aDataSet: TDataSet; E: TXolmisRecord);
+var
+  R: TSightingObserver;
+begin
+  if (aDataSet = nil) or (E = nil) or aDataSet.EOF then
+    Exit;
+  if not (E is TSightingObserver) then
+    raise Exception.Create('Hydrate: Expected TSightingObserver');
+
+  R := TSightingObserver(E);
+  with aDataSet do
+  begin
+    R.Id := FieldByName('sighting_observer_id').AsInteger;
+    R.SightingId := FieldByName('sighting_id').AsInteger;
+    R.PersonId := FieldByName('person_id').AsInteger;
+    R.PersonAbbreviation := FieldByName('person_abbrev').AsString;
+    // SQLite may store date and time data as ISO8601 string or Julian date real formats
+    // so it checks in which format it is stored before load the value
+    GetTimeStamp(FieldByName('insert_date'), R.InsertDate);
+    GetTimeStamp(FieldByName('update_date'), R.UpdateDate);
+    R.UserInserted := FieldByName('user_inserted').AsInteger;
+    R.UserUpdated := FieldByName('user_updated').AsInteger;
+    R.Exported := FieldByName('exported_status').AsBoolean;
+    R.Marked := FieldByName('marked_status').AsBoolean;
+    R.Active := FieldByName('active_status').AsBoolean;
+    R.InactivatedBy := FieldByName('inactivated_by').AsString;
+  end;
+end;
+
+procedure TSightingObserverRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
+var
+  R: TSightingObserver;
+begin
+  if (ARow = nil) or (E = nil) then
+    Exit;
+  if not (E is TSightingObserver) then
+    raise Exception.Create('HydrateFromRow: Expected TSightingObserver');
+
+  R := TSightingObserver(E);
+  if ARow.IndexOfName('sighting_id') >= 0 then
+    R.SightingId := StrToIntDef(ARow.Values['sighting_id'], 0);
+  if ARow.IndexOfName('person_id') >= 0 then
+    R.PersonId := StrToIntDef(ARow.Values['person_id'], 0);
+  if ARow.IndexOfName('person_abbrev') >= 0 then
+    R.PersonAbbreviation := ARow.Values['person_abbrev'];
+end;
+
+procedure TSightingObserverRepository.Insert(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TSightingObserver;
+begin
+  if not (E is TSightingObserver) then
+    raise Exception.Create('Insert: Expected TSightingObserver');
+
+  R := TSightingObserver(E);
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.SightingObservers.Insert);
+
+    ParamByName('sighting_id').AsInteger := R.SightingId;
+    SetForeignParam(ParamByName('person_id'), R.PersonId);
+    ParamByName('user_inserted').AsInteger := ActiveUser.Id;
+
+    ExecSQL;
+
+    // Get the record ID
+    Clear;
+    Add('SELECT last_insert_rowid()');
+    Open;
+    R.Id := Fields[0].AsInteger;
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TSightingObserverRepository.TableName: string;
+begin
+  Result := TBL_SIGHTING_OBSERVERS;
+end;
+
+procedure TSightingObserverRepository.Update(E: TXolmisRecord);
+var
+  Qry: TSQLQuery;
+  R: TSightingObserver;
+begin
+  if not (E is TSightingObserver) then
+    raise Exception.Create('Update: Expected TSightingObserver');
+
+  R := TSightingObserver(E);
+  if R.Id = 0 then
+    raise Exception.CreateFmt('TSightingObserverRepository.Update: %s.', [rsErrorEmptyId]);
+
+  Qry := NewQuery;
+  with Qry, SQL do
+  try
+    Clear;
+    Add(xProvider.SightingObservers.Update);
+
+    ParamByName('sighting_id').AsInteger := R.SightingId;
+    SetForeignParam(ParamByName('person_id'), R.PersonId);
+    ParamByName('marked_status').AsBoolean := R.Marked;
+    ParamByName('active_status').AsBoolean := R.Active;
+    ParamByName('user_updated').AsInteger := ActiveUser.Id;
+    ParamByName('sighting_observer_id').AsInteger := R.Id;
 
     ExecSQL;
   finally

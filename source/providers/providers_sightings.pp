@@ -18,13 +18,29 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
-    function SelectTable(aWhere: TSQLWhereClause; aParent: TTableType): String;
-    function SelectAll(aWhere: TSQLWhereClause; aParent: TTableType): String;
-    function SelectDateTree(Grouped: Boolean): String;
-    function Insert: String;
-    function Update: String;
     function Delete: String;
     function Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
+    function Insert: String;
+    function SelectAll(aWhere: TSQLWhereClause; aParent: TTableType): String;
+    function SelectDateTree(Grouped: Boolean): String;
+    function SelectTable(aWhere: TSQLWhereClause; aParent: TTableType): String;
+    function Update: String;
+  end;
+
+  { TSightingObserversSQL }
+
+  TSightingObserversSQL = class(TInterfacedObject, ISightingObserversSQL)
+  private
+    FBackend: TDatabaseBackend;
+  public
+    constructor Create(ABackend: TDatabaseBackend);
+
+    function CreateTable: String;
+    function Delete: String;
+    function Insert: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Update: String;
   end;
 
 implementation
@@ -52,7 +68,7 @@ begin
       'coordinate_precision VARCHAR (3),' +
       'method_id            INTEGER       REFERENCES methods (method_id) ON UPDATE CASCADE,' +
       'mackinnon_list_num   INTEGER,' +
-      'observer_id          INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
+      //'observer_id          INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
       'taxon_id             INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
       'custom_taxon_name    VARCHAR (120),' +
       'subjects_tally       INTEGER,' +
@@ -132,7 +148,7 @@ begin
       'coordinate_precision, ' +
       'method_id, ' +
       'mackinnon_list_num, ' +
-      'observer_id, ' +
+      //'observer_id, ' +
       'taxon_id, ' +
       'custom_taxon_name, ' +
       'subjects_tally, ' +
@@ -173,7 +189,7 @@ begin
       ':coordinate_precision, ' +
       ':method_id, ' +
       ':mackinnon_list_num, ' +
-      ':observer_id, ' +
+      //':observer_id, ' +
       ':taxon_id, ' +
       ':custom_taxon_name, ' +
       ':subjects_tally, ' +
@@ -219,7 +235,7 @@ begin
       'z.genus_id AS genus_id, ' +
       'z.species_id AS species_id, ' +
       'i.full_name AS individual_name, ' +
-      'p.full_name AS observer_name, ' +
+      'GROUP_CONCAT(p.abbreviation, '', '') AS observers_list, ' +
       'sv.full_name AS survey_name, ' +
       'mt.method_name AS method_name, ' +
       'g.full_name AS locality_name, ' +
@@ -229,7 +245,8 @@ begin
     'FROM sightings AS s ' +
     'LEFT JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id ' +
     'LEFT JOIN individuals AS i ON s.individual_id = i.individual_id ' +
-    'LEFT JOIN people AS p ON s.observer_id = p.person_id ' +
+    'LEFT JOIN sighting_observers AS so ON so.sighting_id = s.sighting_id ' +
+    'LEFT JOIN people AS p ON p.person_id = so.person_id ' +
     'LEFT JOIN surveys AS sv ON s.survey_id = sv.survey_id ' +
     'LEFT JOIN methods AS mt ON s.method_id = mt.method_id ' +
     'LEFT JOIN gazetteer AS g ON s.locality_id = g.site_id ';
@@ -237,26 +254,26 @@ begin
   case aWhere of
     swcNone: ;
     swcId:
-      Result := Result + 'WHERE (s.sighting_id = :cod) ';
+      Result := Result + 'WHERE (s.sighting_id = :cod) GROUP BY s.sighting_id ';
     swcUpdateId:
-      Result := Result + 'WHERE (s.sighting_id = :sighting_id) ';
+      Result := Result + 'WHERE (s.sighting_id = :sighting_id) GROUP BY s.sighting_id ';
     swcFieldValue:
-      Result := Result + 'WHERE (%afield = :avalue) ';
+      Result := Result + 'WHERE (%afield = :avalue) GROUP BY s.sighting_id ';
     swcActiveEmpty:
-      Result := Result + 'WHERE (s.sighting_id = -1) AND (s.active_status = 1) ';
+      Result := Result + 'WHERE (s.sighting_id = -1) AND (s.active_status = 1) GROUP BY s.sighting_id ';
     swcActiveAll:
-      Result := Result + 'WHERE (s.active_status = 1) ';
+      Result := Result + 'WHERE (s.active_status = 1) GROUP BY s.sighting_id ';
     swcActiveMarked:
-      Result := Result + 'WHERE (s.active_status = 1) AND (s.marked_status = 1) ';
+      Result := Result + 'WHERE (s.active_status = 1) AND (s.marked_status = 1) GROUP BY s.sighting_id ';
     swcInactive:
-      Result := Result + 'WHERE (s.active_status = 0) ';
+      Result := Result + 'WHERE (s.active_status = 0) GROUP BY s.sighting_id ';
     swcActiveParent:
       begin
         if aParent = tbIndividuals then
-          Result := Result + 'WHERE (s.active_status = 1) AND (s.individual_id = :individual_id) '
+          Result := Result + 'WHERE (s.active_status = 1) AND (s.individual_id = :individual_id) GROUP BY s.sighting_id '
         else
         if aParent = tbSurveys then
-          Result := Result + 'WHERE (s.active_status = 1) AND (s.survey_id = :survey_id) ';
+          Result := Result + 'WHERE (s.active_status = 1) AND (s.survey_id = :survey_id) GROUP BY s.sighting_id ';
       end;
     swcFindText: ;
   end;
@@ -293,7 +310,7 @@ begin
       'coordinate_precision, ' +
       'method_id, ' +
       'mackinnon_list_num, ' +
-      'observer_id, ' +
+      //'observer_id, ' +
       'taxon_id, ' +
       'custom_taxon_name, ' +
       'subjects_tally, ' +
@@ -372,7 +389,7 @@ begin
       'coordinate_precision = :coordinate_precision, ' +
       'method_id = :method_id, ' +
       'mackinnon_list_num = :mackinnon_list_num, ' +
-      'observer_id = :observer_id, ' +
+      //'observer_id = :observer_id, ' +
       'taxon_id = :taxon_id, ' +
       'custom_taxon_name = :custom_taxon_name, ' +
       'subjects_tally = :subjects_tally, ' +
@@ -404,6 +421,134 @@ begin
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'',''subsec'') ' +
     'WHERE (sighting_id = :sighting_id) ';
+end;
+
+{ TSightingObserversSQL }
+
+constructor TSightingObserversSQL.Create(ABackend: TDatabaseBackend);
+begin
+  inherited Create;
+  FBackend := ABackend;
+end;
+
+function TSightingObserversSQL.CreateTable: String;
+begin
+  Result :=
+    'CREATE TABLE IF NOT EXISTS sighting_observers (' +
+      'sighting_observer_id    INTEGER  PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,' +
+      'sighting_id     INTEGER  REFERENCES sightings (sighting_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
+      'person_id       INTEGER  REFERENCES people (person_id) ON UPDATE CASCADE,' +
+      'user_inserted   INTEGER,' +
+      'user_updated    INTEGER,' +
+      'insert_date     DATETIME,' +
+      'update_date     DATETIME,' +
+      'exported_status BOOLEAN  DEFAULT (0),' +
+      'marked_status   BOOLEAN  DEFAULT (0),' +
+      'active_status   BOOLEAN  DEFAULT (1),' +
+      'inactivated_by  VARCHAR (5),' +
+      'UNIQUE(sighting_id, person_id) ON CONFLICT REPLACE' +
+    ');';
+end;
+
+function TSightingObserversSQL.Delete: String;
+begin
+  Result :=
+    'DELETE FROM sighting_observers ' +
+    'WHERE sighting_observer_id = :aid';
+end;
+
+function TSightingObserversSQL.Insert: String;
+begin
+  Result :=
+    'INSERT INTO sighting_observers (' +
+      'sighting_id, ' +
+      'person_id, ' +
+      'user_inserted, ' +
+      'insert_date) ' +
+    'VALUES (' +
+      ':sighting_id, ' +
+      ':person_id, ' +
+      ':user_inserted, ' +
+      'datetime(''now'',''subsec''))';
+end;
+
+function TSightingObserversSQL.SelectAll(aWhere: TSQLWhereClause): String;
+begin
+  Result := 'SELECT * FROM sighting_observers ';
+
+  case aWhere of
+    swcNone: ;
+    swcId:
+      Result := Result + 'WHERE (sighting_observer_id = :cod) ';
+    swcUpdateId:
+      Result := Result + 'WHERE (sighting_observer_id = :sighting_observer_id) ';
+    swcFieldValue:
+      Result := Result + 'WHERE (%afield = :avalue) ';
+    swcActiveEmpty:
+      Result := Result + 'WHERE (sighting_observer_id = -1) AND (active_status = 1) ';
+    swcActiveAll:
+      Result := Result + 'WHERE (active_status = 1) ';
+    swcActiveMarked:
+      Result := Result + 'WHERE (active_status = 1) AND (marked_status = 1) ';
+    swcInactive:
+      Result := Result + 'WHERE (active_status = 0) ';
+    swcActiveParent:
+      Result := Result + 'WHERE (active_status = 1) AND (sighting_id = :sighting_id) ';
+    swcFindText: ;
+  end;
+end;
+
+function TSightingObserversSQL.SelectTable(aWhere: TSQLWhereClause): String;
+begin
+  Result :=
+    'SELECT ' +
+      'so.sighting_observer_id, ' +
+      'so.sighting_id, ' +
+      'so.person_id, ' +
+      'p.abbreviation AS person_abbrev, ' +
+      'so.user_inserted, ' +
+      'so.user_updated, ' +
+      'datetime(so.insert_date, ''localtime'') AS insert_date, ' +
+      'datetime(so.update_date, ''localtime'') AS update_date, ' +
+      'so.exported_status, ' +
+      'so.marked_status, ' +
+      'so.active_status ' +
+    'FROM sighting_observers AS so ' +
+    'LEFT JOIN people AS p ON so.person_id = p.person_id ';
+
+  case aWhere of
+    swcNone: ;
+    swcId:
+      Result := Result + 'WHERE (so.sighting_observer_id = :cod) ';
+    swcUpdateId:
+      Result := Result + 'WHERE (so.sighting_observer_id = :sighting_observer_id) ';
+    swcFieldValue:
+      Result := Result + 'WHERE (%afield = :avalue) ';
+    swcActiveEmpty:
+      Result := Result + 'WHERE (so.sighting_observer_id = -1) AND (so.active_status = 1) ';
+    swcActiveAll:
+      Result := Result + 'WHERE (so.active_status = 1) ';
+    swcActiveMarked:
+      Result := Result + 'WHERE (so.active_status = 1) AND (so.marked_status = 1) ';
+    swcInactive:
+      Result := Result + 'WHERE (so.active_status = 0) ';
+    swcActiveParent:
+      Result := Result + 'WHERE (so.active_status = 1) AND (so.sighting_id = :sighting_id) ';
+    swcFindText: ;
+  end;
+end;
+
+function TSightingObserversSQL.Update: String;
+begin
+  Result :=
+    'UPDATE sighting_observers SET ' +
+      'sighting_id = :sighting_id, ' +
+      'person_id = :person_id, ' +
+      'user_updated = :user_updated, ' +
+      'update_date = datetime(''now'', ''subsec''), ' +
+      'marked_status = :marked_status, ' +
+      'active_status = :active_status ' +
+    'WHERE (sighting_observer_id = :sighting_observer_id) ';
 end;
 
 end.

@@ -179,6 +179,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eMotherButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMotherKeyPress
         end
@@ -237,6 +238,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eBandButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eBandKeyPress
         end
@@ -256,6 +258,7 @@ object edtIndividual: TedtIndividual
           TabOrder = 1
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eBandingDateButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
@@ -305,6 +308,7 @@ object edtIndividual: TedtIndividual
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
           OnEditingDone = eTaxonEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
@@ -346,6 +350,7 @@ object edtIndividual: TedtIndividual
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
@@ -395,6 +400,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eNestButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eNestKeyPress
         end
@@ -443,6 +449,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eFatherButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFatherKeyPress
         end
@@ -516,6 +523,7 @@ object edtIndividual: TedtIndividual
             NumbersOnly = True
             TabOrder = 0
             TextHint = 'YYYY'
+            OnEnter = ControlEnter
             OnKeyDown = FormKeyDown
             OnKeyPress = cbSexKeyPress
           end
@@ -530,6 +538,7 @@ object edtIndividual: TedtIndividual
             NumbersOnly = True
             TabOrder = 1
             TextHint = 'MM'
+            OnEnter = ControlEnter
             OnKeyDown = FormKeyDown
             OnKeyPress = cbSexKeyPress
           end
@@ -544,6 +553,7 @@ object edtIndividual: TedtIndividual
             NumbersOnly = True
             TabOrder = 2
             TextHint = 'DD'
+            OnEnter = ControlEnter
             OnKeyDown = FormKeyDown
             OnKeyPress = cbSexKeyPress
           end
@@ -577,6 +587,7 @@ object edtIndividual: TedtIndividual
             NumbersOnly = True
             TabOrder = 0
             TextHint = 'YYYY'
+            OnEnter = ControlEnter
             OnKeyDown = FormKeyDown
             OnKeyPress = cbSexKeyPress
           end
@@ -591,6 +602,7 @@ object edtIndividual: TedtIndividual
             NumbersOnly = True
             TabOrder = 1
             TextHint = 'MM'
+            OnEnter = ControlEnter
             OnKeyDown = FormKeyDown
             OnKeyPress = cbSexKeyPress
           end
@@ -605,6 +617,7 @@ object edtIndividual: TedtIndividual
             NumbersOnly = True
             TabOrder = 2
             TextHint = 'DD'
+            OnEnter = ControlEnter
             OnKeyDown = FormKeyDown
             OnKeyPress = cbSexKeyPress
           end
@@ -664,6 +677,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eRightTarsusButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
@@ -682,6 +696,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eLeftTarsusButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
@@ -722,6 +737,7 @@ object edtIndividual: TedtIndividual
           Align = alTop
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
@@ -780,6 +796,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eRightTibiaButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
@@ -798,6 +815,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eLeftTibiaButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
@@ -856,6 +874,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eRemovedBandButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
@@ -875,6 +894,7 @@ object edtIndividual: TedtIndividual
           TabOrder = 1
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eBandChangeDateButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
@@ -933,6 +953,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eDoubleBandButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDoubleBandKeyPress
         end
@@ -984,6 +1005,7 @@ object edtIndividual: TedtIndividual
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
@@ -995,6 +1017,7 @@ object edtIndividual: TedtIndividual
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end

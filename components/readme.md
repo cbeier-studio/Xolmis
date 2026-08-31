@@ -17,3 +17,7 @@ Similar to `TEditButton` but data-aware.
 ## TDBImageGallery
 
 Control that load images from a database table and show thumbnails as a gallery.
+
+## TChipsPanel
+
+Panel that displays chips/tags. It has support for adding, removing, and selecting chips.

@@ -56,6 +56,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsTitleTaxonVernacularNames = 'Taxon vernacular names';
     rsTitleTaxonOccurrence = 'Taxon occurrence';
     rsTitleSightings = 'Sightings';
+    rsTitleSightingObservers = 'Sighting observers';
     rsTitleCaptures = 'Captures';
     rsTitleBands = 'Bands';
     rsTitleIndividuals = 'Individuals';
@@ -1077,6 +1078,8 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsPhotographed = 'Photographed';
     rsAudioRecorded = 'Audio recorded';
     rsTemporaryTaxonName = 'Temporary taxon name';
+    rsObserversSelect = 'Observers: (select the observers involved)';
+    rsObserversAddRemove = 'Observers: (add the involved observers and remove the others)';
 
     { Feathers }
     rsFeatherUnknown = 'Unknown';

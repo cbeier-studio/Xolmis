@@ -200,6 +200,7 @@ object edtCapture: TedtCapture
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbAgeKeyPress
         end
@@ -210,6 +211,7 @@ object edtCapture: TedtCapture
           Width = 174
           Caption = 'Escaped'
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -221,6 +223,7 @@ object edtCapture: TedtCapture
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbStatusKeyPress
         end
@@ -232,6 +235,7 @@ object edtCapture: TedtCapture
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 3
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
         end
       end
@@ -262,6 +266,7 @@ object edtCapture: TedtCapture
           Width = 174
           Caption = 'Blood'
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -272,6 +277,7 @@ object edtCapture: TedtCapture
           Width = 174
           Caption = 'Feather(s)'
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -282,6 +288,7 @@ object edtCapture: TedtCapture
           Width = 173
           Caption = 'Feces'
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -292,6 +299,7 @@ object edtCapture: TedtCapture
           Width = 174
           Caption = 'Parasite(s)'
           TabOrder = 3
+          OnEnter = ControlEnter
           OnKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -302,6 +310,7 @@ object edtCapture: TedtCapture
           Width = 174
           Caption = 'Audio(s)'
           TabOrder = 4
+          OnEnter = ControlEnter
           OnKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -312,6 +321,7 @@ object edtCapture: TedtCapture
           Width = 174
           Caption = 'Photo(s)'
           TabOrder = 5
+          OnEnter = ControlEnter
           OnKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -322,6 +332,7 @@ object edtCapture: TedtCapture
           Width = 173
           Caption = 'Claw'
           TabOrder = 6
+          OnEnter = ControlEnter
           OnKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -332,6 +343,7 @@ object edtCapture: TedtCapture
           Width = 174
           Caption = 'Specimen (whole)'
           TabOrder = 7
+          OnEnter = ControlEnter
           OnKeyPress = eCaptureTimeKeyPress
           OnKeyDown = FormKeyDown
         end
@@ -414,6 +426,7 @@ object edtCapture: TedtCapture
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eCaptureDateButtonClick
           OnEditingDone = eIndividualEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -424,6 +437,7 @@ object edtCapture: TedtCapture
           Width = 174
           TabOrder = 1
           TextHint = 'HH:MM'
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -445,6 +459,7 @@ object edtCapture: TedtCapture
           TabOrder = 2
           OnButtonClick = eBanderButtonClick
           OnEditingDone = eIndividualEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eBanderKeyPress
         end
@@ -466,6 +481,7 @@ object edtCapture: TedtCapture
           TabOrder = 3
           OnButtonClick = eAnnotatorButtonClick
           OnEditingDone = eIndividualEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eAnnotatorKeyPress
         end
@@ -526,6 +542,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eSurveyButtonClick
+          OnEnter = ControlEnter
           OnExit = eSurveyExit
           OnKeyDown = FormKeyDown
           OnKeyPress = eSurveyKeyPress
@@ -548,6 +565,7 @@ object edtCapture: TedtCapture
           TabOrder = 1
           OnButtonClick = eLocalityButtonClick
           OnEditingDone = eIndividualEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
         end
@@ -626,6 +644,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eRightTarsusButtonClick
+          OnEnter = ControlEnter
           OnExit = eRightTarsusExit
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -705,6 +724,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 2
           OnButtonClick = eLeftTarsusButtonClick
+          OnEnter = ControlEnter
           OnExit = eRightTarsusExit
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -836,6 +856,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
@@ -857,6 +878,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eBandButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eBandKeyPress
         end
@@ -879,6 +901,7 @@ object edtCapture: TedtCapture
           TabOrder = 2
           OnButtonClick = eRemovedBandButtonClick
           OnEditingDone = eRemovedBandEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRemovedBandKeyPress
         end
@@ -918,6 +941,7 @@ object edtCapture: TedtCapture
           Constraints.MinWidth = 744
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
@@ -998,6 +1022,7 @@ object edtCapture: TedtCapture
           TabOrder = 0
           OnButtonClick = ePhotographer1ButtonClick
           OnEditingDone = ePhotographer1EditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = ePhotographer1KeyPress
         end
@@ -1019,6 +1044,7 @@ object edtCapture: TedtCapture
           TabOrder = 1
           OnButtonClick = ePhotographer2ButtonClick
           OnEditingDone = ePhotographer1EditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = ePhotographer2KeyPress
         end
@@ -1033,6 +1059,7 @@ object edtCapture: TedtCapture
           ItemHeight = 15
           TabOrder = 2
           OnEditingDone = ePhotographer1EditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1195,6 +1222,7 @@ object edtCapture: TedtCapture
           Style = csDropDownList
           TabOrder = 0
           OnEditingDone = eIndividualEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbCaptureTypeKeyPress
           OnSelect = cbCaptureTypeSelect
@@ -1216,6 +1244,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eNetButtonClick
+          OnEnter = ControlEnter
           OnExit = eNetExit
           OnKeyDown = FormKeyDown
           OnKeyPress = eNetKeyPress
@@ -1237,6 +1266,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 2
           OnButtonClick = eLongitudeButtonClick
+          OnEnter = ControlEnter
           OnExit = eLongitudeExit
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
@@ -1258,6 +1288,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 3
           OnButtonClick = eLongitudeButtonClick
+          OnEnter = ControlEnter
           OnExit = eLongitudeExit
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
@@ -1339,6 +1370,7 @@ object edtCapture: TedtCapture
             'L'
           )
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1359,6 +1391,7 @@ object edtCapture: TedtCapture
             'O'
           )
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1382,6 +1415,7 @@ object edtCapture: TedtCapture
             'V'
           )
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1404,6 +1438,7 @@ object edtCapture: TedtCapture
             'F'
           )
           TabOrder = 3
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1482,6 +1517,7 @@ object edtCapture: TedtCapture
             'A'
           )
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1503,6 +1539,7 @@ object edtCapture: TedtCapture
             'X'
           )
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1515,6 +1552,7 @@ object edtCapture: TedtCapture
           MaxValue = 999999
           TabOrder = 2
           OnEditingDone = eRightWingChordEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1527,6 +1565,7 @@ object edtCapture: TedtCapture
           MaxValue = 999999
           TabOrder = 3
           OnEditingDone = eRightWingChordEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1598,6 +1637,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1609,6 +1649,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1619,6 +1660,7 @@ object edtCapture: TedtCapture
           Width = 173
           MaxValue = 999999
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1630,6 +1672,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 3
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1701,6 +1744,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1712,6 +1756,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1723,6 +1768,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1733,6 +1779,7 @@ object edtCapture: TedtCapture
           Width = 174
           MaxValue = 999999
           TabOrder = 3
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1804,6 +1851,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1815,6 +1863,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1826,6 +1875,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1837,6 +1887,7 @@ object edtCapture: TedtCapture
           DecimalPlaces = 1
           MaxValue = 999999
           TabOrder = 3
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1908,6 +1959,7 @@ object edtCapture: TedtCapture
           MaxValue = 999999
           ReadOnly = True
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1928,6 +1980,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eMoltLimitsButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -1950,6 +2003,7 @@ object edtCapture: TedtCapture
             'F'
           )
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2030,6 +2084,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eCycleCodeButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2050,6 +2105,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eHowAgedButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2061,6 +2117,7 @@ object edtCapture: TedtCapture
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbSexKeyPress
         end
@@ -2081,6 +2138,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 3
           OnButtonClick = eHowSexedButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2151,6 +2209,7 @@ object edtCapture: TedtCapture
           Width = 174
           TabOrder = 0
           OnEditingDone = ePhotographer1EditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2161,6 +2220,7 @@ object edtCapture: TedtCapture
           Width = 173
           TabOrder = 1
           OnEditingDone = ePhotographer1EditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2181,6 +2241,7 @@ object edtCapture: TedtCapture
           Top = 23
           Width = 174
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2251,6 +2312,7 @@ object edtCapture: TedtCapture
           Width = 174
           MaxValue = 999999
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2261,6 +2323,7 @@ object edtCapture: TedtCapture
           Width = 174
           MaxValue = 999999
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2271,6 +2334,7 @@ object edtCapture: TedtCapture
           Width = 173
           MaxValue = 999999
           TabOrder = 2
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
         end
@@ -2331,6 +2395,7 @@ object edtCapture: TedtCapture
           TabOrder = 0
           OnButtonClick = eIndividualButtonClick
           OnEditingDone = eIndividualEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eIndividualKeyPress
         end

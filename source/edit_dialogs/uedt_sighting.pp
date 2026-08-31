@@ -21,18 +21,21 @@ unit uedt_sighting;
 interface
 
 uses
-  Classes, EditBtn, Spin, SysUtils, DB, Forms, Controls, Graphics, Dialogs, DateUtils,
+  Classes, EditBtn, Spin, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, DateUtils,
   ExtCtrls, Character, StdCtrls, Buttons, Menus, atshapelinebgra,
-  BCPanel, models_sightings;
+  BCPanel, models_sightings, chipspanel;
 
 type
 
   { TedtSighting }
 
   TedtSighting = class(TForm)
+    btnAddObserver: TBitBtn;
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
     cbCoordinatePrecision: TComboBox;
+    pObserversToolbar: TPanel;
+    pObserverChips: TChipsPanel;
     ckCaptured: TCheckBox;
     ckSeen: TCheckBox;
     ckHeard: TCheckBox;
@@ -54,7 +57,6 @@ type
     eTaxon: TEditButton;
     eIndividual: TEditButton;
     eTime: TEdit;
-    eObserver: TEditButton;
     eMethod: TEditButton;
     eLocality: TEditButton;
     eLongitude: TEditButton;
@@ -88,7 +90,7 @@ type
     lblAdultsTally: TLabel;
     lblImmaturesTally: TLabel;
     lblNotAgedTally: TLabel;
-    lblRequester: TLabel;
+    lblObserver: TLabel;
     lblTaxon: TLabel;
     lblLocality: TLabel;
     lblSurvey: TLabel;
@@ -131,6 +133,7 @@ type
     eUnbandedTally: TSpinEdit;
     eQuantity: TSpinEdit;
     sbAddCustomTaxon: TSpeedButton;
+    procedure btnAddObserverClick(Sender: TObject);
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure eDateKeyPress(Sender: TObject; var Key: char);
@@ -150,8 +153,6 @@ type
     procedure eMethodEditingDone(Sender: TObject);
     procedure eMethodKeyPress(Sender: TObject; var Key: char);
     procedure eNewCapturesTallyEditingDone(Sender: TObject);
-    procedure eObserverButtonClick(Sender: TObject);
-    procedure eObserverKeyPress(Sender: TObject; var Key: char);
     procedure eSurveyButtonClick(Sender: TObject);
     procedure eSurveyKeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
@@ -166,12 +167,14 @@ type
     procedure pmnNewSurveyClick(Sender: TObject);
     procedure sbAddCustomTaxonClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
+    procedure ControlEnter(Sender: TObject);
   private
     FIsNew: Boolean;
     FSighting: TSighting;
     FSurveyId, FObserverId, FMethodId, FLocalityId, FTaxonId, FIndividualId: Integer;
     FCustomTaxonName: String;
     procedure SetSighting(Value: TSighting);
+    procedure GetObservers;
     procedure GetRecord;
     procedure SetRecord;
     function IsRequiredFilled: Boolean;
@@ -206,7 +209,7 @@ begin
   pSurvey.Border.Color := clSystemSolidNeutralFGDark;
 
   eSurvey.Images := DMM.iEditsDark;
-  eObserver.Images := DMM.iEditsDark;
+  //eObserver.Images := DMM.iEditsDark;
   eMethod.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eLongitude.Images := DMM.iEditsDark;
@@ -219,6 +222,18 @@ begin
   eBreedingStatus.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
+  btnAddObserver.Images := DMM.iEditsDark;
+
+  pObserverChips.DarkMode := True;
+end;
+
+procedure TedtSighting.btnAddObserverClick(Sender: TObject);
+begin
+  if FindDlg(tbPeople, btnAddObserver, FObserverId) then
+  begin
+    pObserverChips.AddChip(GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId), IntToStr(FObserverId));
+    xSettings.LastObserverId := FObserverId;
+  end;
 end;
 
 procedure TedtSighting.btnHelpClick(Sender: TObject);
@@ -230,6 +245,27 @@ procedure TedtSighting.btnNewClick(Sender: TObject);
 begin
   with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
     pmNew.Popup(X, Y);
+end;
+
+procedure TedtSighting.ControlEnter(Sender: TObject);
+var
+  Ctrl: TControl;
+  R: TRect;
+begin
+  if not (Sender is TControl) or not Assigned(SBox) then
+    Exit;
+
+  Ctrl := TControl(Sender);
+
+  R := Ctrl.ClientRect;
+  R.TopLeft := SBox.ScreenToClient(Ctrl.ClientToScreen(R.TopLeft));
+  R.BottomRight := SBox.ScreenToClient(Ctrl.ClientToScreen(R.BottomRight));
+
+  if R.Bottom > SBox.ClientHeight then
+    SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + (R.Bottom - SBox.ClientHeight) + 12
+  else
+  if R.Top < 0 then
+    SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblLongitude.Height;
 end;
 
 procedure TedtSighting.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -542,43 +578,6 @@ begin
     ckCaptured.Checked := True;
 end;
 
-procedure TedtSighting.eObserverButtonClick(Sender: TObject);
-begin
-  FindDlg(tbPeople, eObserver, FObserverId);
-  if FObserverId > 0 then
-    xSettings.LastObserverId := FObserverId;
-end;
-
-procedure TedtSighting.eObserverKeyPress(Sender: TObject; var Key: char);
-begin
-  FormKeyPress(Sender, Key);
-
-  { Alphabetic search in numeric field }
-  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
-  begin
-    FindDlg(tbPeople, eObserver, FObserverId, Key);
-    if FObserverId > 0 then
-      xSettings.LastObserverId := FObserverId;
-    Key := #0;
-  end;
-  { CLEAR FIELD = Backspace }
-  if (Key = #8) then
-  begin
-    FObserverId := 0;
-    eObserver.Clear;
-    Key := #0;
-  end;
-  { <ENTER/RETURN> Key }
-  if (Key = #13) and (xSettings.UseEnterAsTab) then
-  begin
-    if (Sender is TEditButton) then
-      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
-    else
-      SelectNext(Sender as TWinControl, True, True);
-    Key := #0;
-  end;
-end;
-
 procedure TedtSighting.eSurveyButtonClick(Sender: TObject);
 begin
   FindDlg(tbSurveys, eSurvey, FSurveyId);
@@ -721,11 +720,12 @@ begin
       FLocalityId := FSighting.LocalityId;
       eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
     end;
-    if (FSighting.ObserverId = 0) and (xSettings.RememberCollectionInfo) then
+    if (FObserverId = 0) and (xSettings.RememberCollectionInfo) then
     begin
-      FSighting.ObserverId := xSettings.LastObserverId;
-      FObserverId := FSighting.ObserverId;
-      eObserver.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
+      //FObserverId := xSettings.LastObserverId;
+      FObserverId := xSettings.LastObserverId;
+      //FObserverId := FSighting.ObserverId;
+      //eObserver.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
     end;
     if (FSighting.MethodId = 0) and (xSettings.RememberCollectionInfo) then
     begin
@@ -742,12 +742,145 @@ begin
   end;
 end;
 
+procedure TedtSighting.GetObservers;
+var
+  Qry: TSQLQuery;
+begin
+  Qry := nil;
+  pObserverChips.ClearSelection;
+  pObserverChips.ClearChips;
+
+  if FSighting.SurveyId > 0 then
+  begin
+    Qry := TSQLQuery.Create(nil);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+
+      // Get observers from survey
+      Add('SELECT st.person_id, p.abbreviation AS person_name FROM survey_team AS st');
+      Add('LEFT JOIN people AS p ON st.person_id = p.person_id');
+      Add('WHERE (st.survey_id = :survey_id) AND (st.active_status = 1)');
+      Add('ORDER BY person_name ASC');
+      ParamByName('survey_id').AsInteger := FSighting.SurveyId;
+      Open;
+      if not IsEmpty then
+      begin
+        First;
+        while not EOF do
+        begin
+          pObserverChips.AddChip(FieldByName('person_name').AsString, FieldByName('person_id').AsString);
+          Next;
+        end;
+        Close;
+
+        Clear;
+        Add('SELECT so.person_id, p.abbreviation AS person_name FROM sighting_observers AS so');
+        Add('LEFT JOIN people AS p ON so.person_id = p.person_id');
+        Add('WHERE (so.sighting_id = :sighting_id) AND (so.active_status = 1)');
+        Add('ORDER BY person_name ASC');
+        ParamByName('sighting_id').AsInteger := FSighting.Id;
+        Open;
+        if not IsEmpty then
+        begin
+          First;
+          while not EOF do
+          begin
+            pObserverChips.SelectByCaption(FieldByName('person_name').AsString);
+            Next;
+          end;
+        end
+        else
+        begin
+          if (pObserverChips.SelectedChips.Count = 0) and (FObserverId > 0) and (xSettings.RememberCollectionInfo) then
+            pObserverChips.SelectByCaption(GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId));
+        end;
+        Close;
+      end
+      else
+      begin
+        Close;
+
+        pObserverChips.Selectable := False;
+        pObserversToolbar.Visible := True;
+
+        Clear;
+        Add('SELECT so.person_id, p.abbreviation AS person_name FROM sighting_observers AS so');
+        Add('LEFT JOIN people AS p ON so.person_id = p.person_id');
+        Add('WHERE (so.sighting_id = :sighting_id) AND (so.active_status = 1)');
+        Add('ORDER BY person_name ASC');
+        ParamByName('sighting_id').AsInteger := FSighting.Id;
+        Open;
+        if not IsEmpty then
+        begin
+          First;
+          while not EOF do
+          begin
+            pObserverChips.AddChip(FieldByName('person_name').AsString, FieldByName('person_id').AsString);
+            Next;
+          end;
+        end
+        else
+        begin
+          if (FObserverId > 0) and (xSettings.RememberCollectionInfo) then
+            pObserverChips.AddChip(GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId), IntToStr(FObserverId));
+        end;
+        Close;
+      end;
+    finally
+      FreeAndNil(Qry);
+    end;
+  end
+  else
+  begin
+    pObserverChips.Selectable := False;
+    pObserversToolbar.Visible := True;
+
+    Qry := TSQLQuery.Create(nil);
+    with Qry, SQL do
+    try
+      DataBase := DMM.sqlCon;
+
+      Add('SELECT so.person_id, p.abbreviation AS person_name FROM sighting_observers AS so');
+      Add('LEFT JOIN people AS p ON so.person_id = p.person_id');
+      Add('WHERE (so.sighting_id = :sighting_id) AND (so.active_status = 1)');
+      Add('ORDER BY person_name ASC');
+      ParamByName('sighting_id').AsInteger := FSighting.Id;
+      Open;
+      if not IsEmpty then
+      begin
+        First;
+        while not EOF do
+        begin
+          pObserverChips.AddChip(FieldByName('person_name').AsString, FieldByName('person_id').AsString);
+          //pObserverChips.SelectByCaption(FieldByName('person_name').AsString);
+          Next;
+        end;
+      end
+      else
+      begin
+        if (pObserverChips.Chips.Count = 0) and (FObserverId > 0) and (xSettings.RememberCollectionInfo) then
+          pObserverChips.AddChip(GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId), IntToStr(FObserverId));
+      end;
+      Close;
+    finally
+      FreeAndNil(Qry);
+    end;
+  end;
+
+  if pObserverChips.Selectable then
+    lblObserver.Caption := rsObserversSelect
+  else
+    lblObserver.Caption := rsObserversAddRemove;
+end;
+
 procedure TedtSighting.GetRecord;
 begin
   FSurveyId := FSighting.SurveyId;
   eSurvey.Text := GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
-  FObserverId := FSighting.ObserverId;
-  eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
+  //FObserverId := FSighting.ObserverId;
+  //eObserver.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId);
+  GetObservers;
   FMethodId := FSighting.MethodId;
   eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
   FLocalityId := FSighting.LocalityId;
@@ -879,7 +1012,7 @@ end;
 procedure TedtSighting.SetRecord;
 begin
   FSighting.SurveyId            := FSurveyId;
-  FSighting.ObserverId          := FObserverId;
+  //FSighting.ObserverId          := FObserverId;
   FSighting.MethodId            := FMethodId;
   FSighting.LocalityId          := FLocalityId;
   FSighting.Longitude           := StrToFloatDef(eLongitude.Text, 0.0);

@@ -269,6 +269,7 @@ type
     procedure pmnNewSurveyClick(Sender: TObject);
     procedure pTaxonBandResize(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
+    procedure ControlEnter(Sender: TObject);
   private
     FIsNew: Boolean;
     FCapture: TCapture;
@@ -1641,6 +1642,27 @@ begin
   finally
     Outliers.Free;
   end;
+end;
+
+procedure TedtCapture.ControlEnter(Sender: TObject);
+var
+  Ctrl: TControl;
+  R: TRect;
+begin
+  if not (Sender is TControl) or not Assigned(SBox) then
+    Exit;
+
+  Ctrl := TControl(Sender);
+
+  R := Ctrl.ClientRect;
+  R.TopLeft := SBox.ScreenToClient(Ctrl.ClientToScreen(R.TopLeft));
+  R.BottomRight := SBox.ScreenToClient(Ctrl.ClientToScreen(R.BottomRight));
+
+  if R.Bottom > SBox.ClientHeight then
+    SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + (R.Bottom - SBox.ClientHeight) + 12
+  else
+  if R.Top < 0 then
+    SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblLongitude.Height;
 end;
 
 procedure TedtCapture.sbSaveClick(Sender: TObject);

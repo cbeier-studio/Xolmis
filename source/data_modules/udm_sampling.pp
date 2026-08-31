@@ -286,8 +286,7 @@ type
     qSightingsnotes: TMemoField;
     qSightingsnot_aged_tally: TStringField;
     qSightingsnot_sexed_tally: TStringField;
-    qSightingsobserver_id: TLongintField;
-    qSightingsobserver_name: TStringField;
+    qSightingsobservers_list: TStringField;
     qSightingsorder_id: TLongintField;
     qSightingsout_of_sample: TBooleanField;
     qSightingsrecaptures_tally: TLongintField;

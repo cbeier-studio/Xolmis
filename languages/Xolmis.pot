@@ -1505,6 +1505,11 @@ msgstr ""
 
 #: data_columns.rscobservers
 msgctxt "data_columns.rscobservers"
+msgid "Observers"
+msgstr ""
+
+#: data_columns.rscobserversquant
+msgctxt "data_columns.rscobserversquant"
 msgid "# observers"
 msgstr ""
 
@@ -7829,24 +7834,6 @@ msgctxt "tedtnest.lblactivedays.caption"
 msgid "Total active-days:"
 msgstr ""
 
-#: tedtnest.lblbandstatus3.caption
-msgid "Nest encounter date:"
-msgstr ""
-
-#: tedtnest.lblbandstatus4.caption
-msgctxt "tedtnest.lblbandstatus4.caption"
-msgid "Longitude:"
-msgstr ""
-
-#: tedtnest.lblbandstatus8.caption
-msgid "Last date:"
-msgstr ""
-
-#: tedtnest.lblbandstatus9.caption
-msgctxt "tedtnest.lblbandstatus9.caption"
-msgid "Latitude:"
-msgstr ""
-
 #: tedtnest.lblcenterdistance.caption
 msgctxt "tedtnest.lblcenterdistance.caption"
 msgid "Distance from plant center:"
@@ -7885,6 +7872,16 @@ msgstr ""
 msgid "Lesser external diameter:"
 msgstr ""
 
+#: tedtnest.lblfieldnumber.caption
+msgctxt "tedtnest.lblfieldnumber.caption"
+msgid "Field number: *"
+msgstr ""
+
+#: tedtnest.lblfounddate.caption
+msgctxt "tedtnest.lblfounddate.caption"
+msgid "Nest encounter date:"
+msgstr ""
+
 #: tedtnest.lblheightaboveground.caption
 msgctxt "tedtnest.lblheightaboveground.caption"
 msgid "Height at ground level:"
@@ -7908,9 +7905,24 @@ msgstr ""
 msgid "Lesser internal diameter:"
 msgstr ""
 
+#: tedtnest.lbllastdate.caption
+msgctxt "tedtnest.lbllastdate.caption"
+msgid "Last date:"
+msgstr ""
+
+#: tedtnest.lbllatitude.caption
+msgctxt "tedtnest.lbllatitude.caption"
+msgid "Latitude:"
+msgstr ""
+
 #: tedtnest.lbllocality.caption
 msgctxt "tedtnest.lbllocality.caption"
 msgid "Locality: *"
+msgstr ""
+
+#: tedtnest.lbllongitude.caption
+msgctxt "tedtnest.lbllongitude.caption"
+msgid "Longitude:"
 msgstr ""
 
 #: tedtnest.lbllosscause.caption
@@ -7920,6 +7932,11 @@ msgstr ""
 #: tedtnest.lblnestcover.caption
 msgctxt "tedtnest.lblnestcover.caption"
 msgid "Cover (%):"
+msgstr ""
+
+#: tedtnest.lblnestfate.caption
+msgctxt "tedtnest.lblnestfate.caption"
+msgid "Fate:"
 msgstr ""
 
 #: tedtnest.lblnestlingdays.caption
@@ -7935,6 +7952,11 @@ msgstr ""
 #: tedtnest.lblnotes.caption
 msgctxt "tedtnest.lblnotes.caption"
 msgid "Notes:"
+msgstr ""
+
+#: tedtnest.lblobserver.caption
+msgctxt "tedtnest.lblobserver.caption"
+msgid "Observer: *"
 msgstr ""
 
 #: tedtnest.lblothersupport.caption
@@ -7967,22 +7989,8 @@ msgctxt "tedtnest.lblproductivity.caption"
 msgid "Productivity:"
 msgstr ""
 
-#: tedtnest.lblrequester.caption
-msgctxt "tedtnest.lblrequester.caption"
-msgid "Field number: *"
-msgstr ""
-
-#: tedtnest.lblrequester1.caption
-msgctxt "tedtnest.lblrequester1.caption"
-msgid "Observer: *"
-msgstr ""
-
-#: tedtnest.lblrequester3.caption
-msgid "Fate:"
-msgstr ""
-
-#: tedtnest.lblsupplier1.caption
-msgctxt "tedtnest.lblsupplier1.caption"
+#: tedtnest.lblproject.caption
+msgctxt "tedtnest.lblproject.caption"
 msgid "Project:"
 msgstr ""
 
@@ -9435,6 +9443,10 @@ msgctxt "tedtsamplingplot.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtsighting.btnaddobserver.caption
+msgid "Add observer"
+msgstr ""
+
 #: tedtsighting.btnnew.caption
 msgctxt "tedtsighting.btnnew.caption"
 msgid "New"
@@ -9623,6 +9635,11 @@ msgctxt "tedtsighting.lblnotsexedtally.caption"
 msgid "Nr. of birds not sexed:"
 msgstr ""
 
+#: tedtsighting.lblobserver.caption
+msgctxt "tedtsighting.lblobserver.caption"
+msgid "Observer:"
+msgstr ""
+
 #: tedtsighting.lblquantity.caption
 msgctxt "tedtsighting.lblquantity.caption"
 msgid "Quantity:"
@@ -9631,11 +9648,6 @@ msgstr ""
 #: tedtsighting.lblrecapturestally.caption
 msgctxt "tedtsighting.lblrecapturestally.caption"
 msgid "Nr. of recaptures:"
-msgstr ""
-
-#: tedtsighting.lblrequester.caption
-msgctxt "tedtsighting.lblrequester.caption"
-msgid "Observer:"
 msgstr ""
 
 #: tedtsighting.lblsurvey.caption
@@ -17895,6 +17907,14 @@ msgctxt "utils_locale.rsnumberofrecords"
 msgid "Number of records"
 msgstr ""
 
+#: utils_locale.rsobserversaddremove
+msgid "Observers: (add the involved observers and remove the others)"
+msgstr ""
+
+#: utils_locale.rsobserversselect
+msgid "Observers: (select the observers involved)"
+msgstr ""
+
 #: utils_locale.rsonboardingaddmedia
 msgid ""
 "To add files in Xolmis, you have two options:\n"
@@ -20114,6 +20134,10 @@ msgstr ""
 #: utils_locale.rstitleselectdatabasefile
 msgctxt "utils_locale.rstitleselectdatabasefile"
 msgid "Select database"
+msgstr ""
+
+#: utils_locale.rstitlesightingobservers
+msgid "Sighting observers"
 msgstr ""
 
 #: utils_locale.rstitlesightings

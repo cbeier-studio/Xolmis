@@ -123,6 +123,7 @@ object edtPerson: TedtPerson
     Constraints.MinWidth = 176
     ParentShowHint = False
     TabOrder = 0
+    OnEnter = ControlEnter
     object pContent: TPanel
       Left = 0
       Height = 1273
@@ -182,6 +183,7 @@ object edtPerson: TedtPerson
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eMunicipalityButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMunicipalityKeyPress
         end
@@ -222,6 +224,7 @@ object edtPerson: TedtPerson
           Width = 368
           TabOrder = 0
           OnEditingDone = eFullnameEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -271,6 +274,7 @@ object edtPerson: TedtPerson
           Width = 176
           TabOrder = 0
           OnEditingDone = eFullnameEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -310,6 +314,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 368
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -349,6 +354,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 368
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -399,6 +405,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -408,6 +415,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -457,6 +465,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -498,6 +507,7 @@ object edtPerson: TedtPerson
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
@@ -537,6 +547,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 368
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -587,6 +598,7 @@ object edtPerson: TedtPerson
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eStateButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eStateKeyPress
         end
@@ -637,6 +649,7 @@ object edtPerson: TedtPerson
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eCountryButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCountryKeyPress
         end
@@ -676,6 +689,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 368
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -715,6 +729,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 368
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -755,6 +770,7 @@ object edtPerson: TedtPerson
           Width = 368
           TabOrder = 0
           OnEditingDone = eFullnameEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -816,6 +832,7 @@ object edtPerson: TedtPerson
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eBirthDateButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -837,6 +854,7 @@ object edtPerson: TedtPerson
           TabOrder = 1
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eDeathDateButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -886,6 +904,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -895,6 +914,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -944,6 +964,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -953,6 +974,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -993,6 +1015,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 368
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -1044,6 +1067,7 @@ object edtPerson: TedtPerson
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eInstitutionButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eInstitutionKeyPress
         end
@@ -1093,6 +1117,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -1102,6 +1127,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -1141,6 +1167,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 368
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -1304,6 +1331,7 @@ object edtPerson: TedtPerson
           )
           Style = csDropDownList
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end
@@ -1320,6 +1348,7 @@ object edtPerson: TedtPerson
           )
           Style = csDropDownList
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
         end

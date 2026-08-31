@@ -569,7 +569,7 @@ end;
 procedure TfrmGeoConverter.UpdateCurrentCaretPos;
 begin
   lblLineCol.Caption := Format('Ln: %d : Col: %d',
-    [seConvertFrom.CaretY, seConvertFrom.CaretX]);
+    [seConvertFrom.CaretXY.Y, seConvertFrom.CaretXY.X]);
 end;
 
 end.

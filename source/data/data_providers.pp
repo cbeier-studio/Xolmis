@@ -424,6 +424,15 @@ type
     function Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
   end;
 
+  ISightingObserversSQL = interface ['{585123F3-B44D-4BC1-A612-661D63F522CE}']
+    function CreateTable: String;
+    function SelectAll(aWhere: TSQLWhereClause): String;
+    function SelectTable(aWhere: TSQLWhereClause): String;
+    function Insert: string;
+    function Update: string;
+    function Delete: string;
+  end;
+
   ISightingsSQL = interface ['{06AE4E98-D0E7-42CB-924D-DB6890FDD7BB}']
     function CreateTable: String;
     function SelectAll(aWhere: TSQLWhereClause; aParent: TTableType): String;
@@ -588,16 +597,14 @@ type
     function Institutions: IInstitutionsSQL;
     function Languages: ILanguagesSQL;
     function Methods: IMethodsSQL;
-    function Permissions: IPermissionsSQL;
     function NestRevisions: INestRevisionsSQL;
     function NestOwners: INestOwnersSQL;
     function Nests: INestsSQL;
     function NetsEffort: INetsEffortSQL;
     function People: IPeopleSQL;
     function PermanentNets: IPermanentNetsSQL;
+    function Permissions: IPermissionsSQL;
     function Permits: IPermitsSQL;
-    function RolePermissions: IRolePermissionsSQL;
-    function Roles: IRolesSQL;
     function PoiLibrary: IPoiLibrarySQL;
     function ProjectBudgets: IProjectBudgetsSQL;
     function ProjectChronograms: IProjectChronogramsSQL;
@@ -607,8 +614,11 @@ type
     function ProjectTeams: IProjectTeamsSQL;
     function RecordHistory: IRecordHistorySQL;
     function RecordVerifications: IRecordVerificationsSQL;
+    function RolePermissions: IRolePermissionsSQL;
+    function Roles: IRolesSQL;
     function SamplePreps: ISamplePrepsSQL;
     function SamplingPlots: ISamplingPlotsSQL;
+    function SightingObservers: ISightingObserversSQL;
     function Sightings: ISightingsSQL;
     function SpecimenCollectors: ISpecimenCollectorsSQL;
     function Specimens: ISpecimensSQL;
@@ -650,13 +660,13 @@ type
     FInstitutions: IInstitutionsSQL;
     FLanguages: ILanguagesSQL;
     FMethods: IMethodsSQL;
-    FPermissions: IPermissionsSQL;
     FNestRevisions: INestRevisionsSQL;
     FNestOwners: INestOwnersSQL;
     FNests: INestsSQL;
     FNetsEffort: INetsEffortSQL;
     FPeople: IPeopleSQL;
     FPermanentNets: IPermanentNetsSQL;
+    FPermissions: IPermissionsSQL;
     FPermits: IPermitsSQL;
     FRolePermissions: IRolePermissionsSQL;
     FRoles: IRolesSQL;
@@ -671,6 +681,7 @@ type
     FRecordVerifications: IRecordVerificationsSQL;
     FSamplePreps: ISamplePrepsSQL;
     FSamplingPlots: ISamplingPlotsSQL;
+    FSightingObservers: ISightingObserversSQL;
     FSightings: ISightingsSQL;
     FSpecimenCollectors: ISpecimenCollectorsSQL;
     FSpecimens: ISpecimensSQL;
@@ -709,16 +720,14 @@ type
     function Institutions: IInstitutionsSQL;
     function Languages: ILanguagesSQL;
     function Methods: IMethodsSQL;
-    function Permissions: IPermissionsSQL;
     function NestRevisions: INestRevisionsSQL;
     function NestOwners: INestOwnersSQL;
     function Nests: INestsSQL;
     function NetsEffort: INetsEffortSQL;
     function People: IPeopleSQL;
     function PermanentNets: IPermanentNetsSQL;
+    function Permissions: IPermissionsSQL;
     function Permits: IPermitsSQL;
-    function RolePermissions: IRolePermissionsSQL;
-    function Roles: IRolesSQL;
     function PoiLibrary: IPoiLibrarySQL;
     function ProjectBudgets: IProjectBudgetsSQL;
     function ProjectChronograms: IProjectChronogramsSQL;
@@ -728,8 +737,11 @@ type
     function ProjectTeams: IProjectTeamsSQL;
     function RecordHistory: IRecordHistorySQL;
     function RecordVerifications: IRecordVerificationsSQL;
+    function RolePermissions: IRolePermissionsSQL;
+    function Roles: IRolesSQL;
     function SamplePreps: ISamplePrepsSQL;
     function SamplingPlots: ISamplingPlotsSQL;
+    function SightingObservers: ISightingObserversSQL;
     function Sightings: ISightingsSQL;
     function SpecimenCollectors: ISpecimenCollectorsSQL;
     function Specimens: ISpecimensSQL;
@@ -781,16 +793,14 @@ begin
   FInstitutions       := TInstitutionsSQL.Create(FBackend);
   FLanguages          := TLanguagesSQL.Create(FBackend);
   FMethods            := TMethodsSQL.Create(FBackend);
-  FPermissions        := TPermissionsSQL.Create(FBackend);
   FNestOwners         := TNestOwnersSQL.Create(FBackend);
   FNestRevisions      := TNestRevisionsSQL.Create(FBackend);
   FNests              := TNestsSQL.Create(FBackend);
   FNetsEffort         := TNetsEffortSQL.Create(FBackend);
   FPeople             := TPeopleSQL.Create(FBackend);
   FPermanentNets      := TPermanentNetsSQL.Create(FBackend);
+  FPermissions        := TPermissionsSQL.Create(FBackend);
   FPermits            := TPermitsSQL.Create(FBackend);
-  FRolePermissions    := TRolePermissionsSQL.Create(FBackend);
-  FRoles              := TRolesSQL.Create(FBackend);
   FPoiLibrary         := TPoiLibrarySQL.Create(FBackend);
   FProjectBudgets     := TProjectBudgetsSQL.Create(FBackend);
   FProjectChronograms := TProjectChronogramsSQL.Create(FBackend);
@@ -800,8 +810,11 @@ begin
   FProjectTeams       := TProjectTeamsSQL.Create(FBackend);
   FRecordHistory      := TRecordHistorySQL.Create(FBackend);
   FRecordVerifications := TRecordVerificationsSQL.Create(FBackend);
+  FRolePermissions    := TRolePermissionsSQL.Create(FBackend);
+  FRoles              := TRolesSQL.Create(FBackend);
   FSamplePreps        := TSamplePrepsSQL.Create(FBackend);
   FSamplingPlots      := TSamplingPlotsSQL.Create(FBackend);
+  FSightingObservers  := TSightingObserversSQL.Create(FBackend);
   FSightings          := TSightingsSQL.Create(FBackend);
   FSpecimenCollectors := TSpecimenCollectorsSQL.Create(FBackend);
   FSpecimens          := TSpecimensSQL.Create(FBackend);
@@ -1021,6 +1034,11 @@ end;
 function TSQLProvider.SamplingPlots: ISamplingPlotsSQL;
 begin
   Result := FSamplingPlots;
+end;
+
+function TSQLProvider.SightingObservers: ISightingObserversSQL;
+begin
+  Result := FSightingObservers;
 end;
 
 function TSQLProvider.Sightings: ISightingsSQL;

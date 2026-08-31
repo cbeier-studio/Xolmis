@@ -181,6 +181,7 @@ object edtVideoInfo: TedtVideoInfo
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
         end
@@ -231,6 +232,7 @@ object edtVideoInfo: TedtVideoInfo
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eAuthorButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eAuthorKeyPress
         end
@@ -271,6 +273,7 @@ object edtVideoInfo: TedtVideoInfo
           Constraints.MinWidth = 365
           ScrollBars = ssAutoVertical
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
@@ -333,6 +336,7 @@ object edtVideoInfo: TedtVideoInfo
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eRecordingDateButtonClick
           OnEditingDone = eRecordingDateEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
         end
         object eRecordingTime: TEdit
@@ -342,6 +346,7 @@ object edtVideoInfo: TedtVideoInfo
           Width = 175
           TabOrder = 1
           TextHint = 'HH:MM'
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -383,6 +388,7 @@ object edtVideoInfo: TedtVideoInfo
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -443,6 +449,7 @@ object edtVideoInfo: TedtVideoInfo
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLongitudeButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
         end
@@ -463,6 +470,7 @@ object edtVideoInfo: TedtVideoInfo
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eLongitudeButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLongitudeKeyPress
         end
@@ -514,6 +522,7 @@ object edtVideoInfo: TedtVideoInfo
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
@@ -565,6 +574,7 @@ object edtVideoInfo: TedtVideoInfo
           TabOrder = 0
           OnButtonClick = eFilePathButtonClick
           OnEditingDone = eRecordingDateEditingDone
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -605,6 +615,7 @@ object edtVideoInfo: TedtVideoInfo
           Top = 22
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -654,6 +665,7 @@ object edtVideoInfo: TedtVideoInfo
           Width = 176
           DecimalPlaces = 1
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -693,6 +705,7 @@ object edtVideoInfo: TedtVideoInfo
           Top = 22
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -732,6 +745,7 @@ object edtVideoInfo: TedtVideoInfo
           Top = 22
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -784,6 +798,7 @@ object edtVideoInfo: TedtVideoInfo
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -794,6 +809,7 @@ object edtVideoInfo: TedtVideoInfo
           Width = 175
           NumbersOnly = True
           TabOrder = 1
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -833,6 +849,7 @@ object edtVideoInfo: TedtVideoInfo
           Top = 22
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -872,6 +889,7 @@ object edtVideoInfo: TedtVideoInfo
           Top = 22
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -911,6 +929,7 @@ object edtVideoInfo: TedtVideoInfo
           Top = 22
           Width = 367
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
         end
@@ -952,6 +971,7 @@ object edtVideoInfo: TedtVideoInfo
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
+          OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
         end
       end
