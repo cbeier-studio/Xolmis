@@ -6418,7 +6418,7 @@ end;
 procedure TfrmCustomGrid.pmPrintSightingsByObserverClick(Sender: TObject);
 var
   Qry, qObservers: TSQLQuery;
-  aSurvey: Integer;
+  aSurvey, i: Integer;
 begin
   aSurvey := 0;
   // Show dialog to select a survey
@@ -6442,10 +6442,11 @@ begin
     qObservers.SQLConnection := DMM.sqlCon;
     qObservers.SQLTransaction := DMM.sqlTrans;
 
-    // Load the list of distinct observers from sightings
-    qObservers.SQL.Text := 'SELECT DISTINCT s.observer_id, p.abbreviation FROM sightings AS s ' +
-      'LEFT JOIN people AS p ON s.observer_id = p.person_id ' +
-      'WHERE (s.survey_id = :survey_id) and (s.observer_id IS NOT NULL);';
+    // Load the list of distinct observers from sighting_observers
+    qObservers.SQL.Text := 'SELECT DISTINCT so.person_id, p.abbreviation FROM sighting_observers AS so ' +
+      'JOIN sightings AS s ON so.sighting_id = s.sighting_id ' +
+      'LEFT JOIN people AS p ON so.person_id = p.person_id ' +
+      'WHERE (s.survey_id = :survey_id) AND (so.active_status = 1) AND (s.active_status = 1);';
     qObservers.ParamByName('survey_id').AsInteger := aSurvey;
     qObservers.Open;
 
@@ -6461,17 +6462,30 @@ begin
     qObservers.First;
     while not qObservers.EOF do
     begin
-      Qry.SQL.Add('MAX(CASE WHEN s.observer_id = ''' + qObservers.FieldByName('observer_id').AsString +
-        ''' THEN ''X'' ELSE '' '' END) AS ' + qObservers.FieldByName('abbreviation').AsString + ', ');
-      
+      Qry.SQL.Add('MAX(CASE WHEN EXISTS (SELECT 1 FROM sighting_observers AS xso WHERE xso.sighting_id = s.sighting_id ' +
+        'AND xso.person_id = ' + qObservers.FieldByName('person_id').AsString + ' AND xso.active_status = 1) ' +
+        'THEN ''X'' ELSE '' '' END) AS ' + qObservers.FieldByName('abbreviation').AsString + ', ');
+
       qObservers.Next;
     end;
-    Qry.SQL.Add('COUNT(DISTINCT s.observer_id) AS X_Count');
+    Qry.SQL.Add('COUNT(DISTINCT so.person_id) AS X_Count');
     Qry.SQL.Add('FROM sightings AS s');
     Qry.SQL.Add('LEFT JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id');
-    Qry.SQL.Add('WHERE s.survey_id = :survey_id');
+    Qry.SQL.Add('LEFT JOIN sighting_observers AS so ON so.sighting_id = s.sighting_id AND so.active_status = 1');
+    Qry.SQL.Add('WHERE (s.survey_id = :survey_id) AND (s.active_status = 1)');
     Qry.SQL.Add('GROUP BY s.taxon_id;');
     Qry.ParamByName('survey_id').AsInteger := aSurvey;
+
+    with Qry do
+    begin
+      for i := 0 to Fields.Count - 1 do
+      begin
+        case Fields[i].FieldName of
+          'scientific_name':        Fields[i].DisplayLabel := rscTaxon;
+          'X_Count':                Fields[i].DisplayLabel := rscTally;
+        end;
+      end;
+    end;
 
     Qry.Open;
 

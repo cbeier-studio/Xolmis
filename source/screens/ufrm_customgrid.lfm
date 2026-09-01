@@ -88,7 +88,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnPrepareCanvas = gridRecordPrepareCanvas
           ColWidths = (
             100
-            348
+            327
           )
         end
       end

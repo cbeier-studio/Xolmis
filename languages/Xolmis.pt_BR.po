@@ -1506,16 +1506,14 @@ msgid "Observer ID"
 msgstr "Observador ID"
 
 #: data_columns.rscobservers
-#, fuzzy
-#| msgid "# observers"
 msgctxt "data_columns.rscobservers"
 msgid "Observers"
-msgstr "# observadores"
+msgstr "Observadores"
 
 #: data_columns.rscobserversquant
 msgctxt "data_columns.rscobserversquant"
 msgid "# observers"
-msgstr ""
+msgstr "# observadores"
 
 #: data_columns.rscoldvalue
 msgctxt "data_columns.rscoldvalue"
@@ -20752,4 +20750,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-
