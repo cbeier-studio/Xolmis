@@ -326,77 +326,46 @@ end;
 
 function TCSVImporter.GetFieldNames(Stream: TStream; const Options: TImportOptions): TStringList;
 var
-  DS: TSdfDataSet;
-  Utf8Stream: TMemoryStream;
-  Bytes: RawByteString;
-  RawText, Utf8Text, DetectedEncoding: String;
-  SL: TStringList;
-  i: Integer;
+  RawLine, Utf8Line, DetectedEncoding: String;
+  Buffer: array[0..4095] of Byte;
+  BytesRead: Integer;
+  LineStream: TStringStream;
 begin
   Result := TStringList.Create;
-  RawText := '';
+  RawLine := '';
 
   LogEvent(leaStart, 'Get CSV file column names');
 
   // Read bytes from stream
   Stream.Position := 0;
-  SetLength(RawText, Stream.Size);
-  if Stream.Size > 0 then
-    Stream.ReadBuffer(RawText[1], Stream.Size);
+  LineStream := TStringStream.Create('');
+  try
+    repeat
+      BytesRead := Stream.Read(Buffer, SizeOf(Buffer));
+      if BytesRead > 0 then
+        LineStream.Write(Buffer, BytesRead);
+    until (Pos(LineEnding, LineStream.DataString) > 0) or (BytesRead = 0);
+
+    // Extract only the first line
+    RawLine := Copy(LineStream.DataString, 1, Pos(LineEnding, LineStream.DataString) - 1);
+  finally
+    LineStream.Free;
+  end;
 
   // Convert encoding → UTF-8
   if Options.Encoding <> '' then
-    Utf8Text := ConvertEncoding(RawText, Options.Encoding, 'utf-8')
+    Utf8Line := ConvertEncoding(RawLine, Options.Encoding, 'utf-8')
   else
   begin
-    DetectedEncoding := GuessEncoding(RawText);
-    Utf8Text := ConvertEncoding(RawText, DetectedEncoding, 'utf-8');
+    DetectedEncoding := GuessEncoding(RawLine);
+    Utf8Line := ConvertEncoding(RawLine, DetectedEncoding, 'utf-8');
   end;
 
-  // Remove empty lines if needed
-  if Options.SkipEmptyLines then
-  begin
-    SL := TStringList.Create;
-    try
-      SL.Text := Utf8Text;
-      for i := SL.Count - 1 downto 0 do
-        if Trim(SL[i]) = '' then
-          SL.Delete(i);
-      Utf8Text := SL.Text;
-    finally
-      SL.Free;
-    end;
-  end;
-
-  // Create stream UTF-8 for the TSdfDataSet
-  Bytes := Utf8Text;
-  Utf8Stream := TMemoryStream.Create;
-
-  DS := TSdfDataSet.Create(nil);
   try
-    DS.Delimiter := Options.Delimiter;
-    //DS.QuoteChar := Options.QuoteChar;
-    DS.FirstLineAsSchema := Options.HasHeader;
-
-    // TrimFields (se suportado)
-    //{$IF declared(soTrimFields)}
-    //if Options.TrimFields then
-    //  DS.Options := DS.Options + [soTrimFields];
-    //{$ENDIF}
-
-    if Length(Bytes) > 0 then
-      Utf8Stream.WriteBuffer(Bytes[1], Length(Bytes));
-    Utf8Stream.Position := 0;
-
-    DS.LoadFromStream(Utf8Stream);
-    DS.Open;
-
-    for i := 0 to DS.Fields.Count - 1 do
-      Result.Add(DS.Fields[i].FieldName);
-
+    Result.Delimiter := Options.Delimiter;
+    Result.StrictDelimiter := True;
+    Result.DelimitedText := Utf8Line;
   finally
-    DS.Free;
-    Utf8Stream.Free;
     LogEvent(leaFinish, 'Get CSV file column names');
   end;
 end;
@@ -472,6 +441,7 @@ begin
     DS.Delimiter := Options.Delimiter;
     //DS.QuoteChar := Options.QuoteChar;
     DS.FirstLineAsSchema := Options.HasHeader;
+    DS.AllowMultiLine := True;
 
     Stream.Position := 0;
     DS.LoadFromStream(Stream);
