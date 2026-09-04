@@ -186,18 +186,6 @@ object frmMain: TfrmMain
       Width = 863
       Align = alClient
       TabOrder = 0
-      TDIActions.CloseTab.Caption = 'Close Tab'
-      TDIActions.CloseTab.ImageIndex = -1
-      TDIActions.CloseTab.Visible = True
-      TDIActions.CloseAllTabs.Caption = 'Close All Tabs'
-      TDIActions.CloseAllTabs.ImageIndex = -1
-      TDIActions.CloseAllTabs.Visible = True
-      TDIActions.NextTab.Caption = 'Next Tab'
-      TDIActions.NextTab.ImageIndex = -1
-      TDIActions.NextTab.Visible = False
-      TDIActions.PreviousTab.Caption = 'Previous Tab'
-      TDIActions.PreviousTab.ImageIndex = -1
-      TDIActions.PreviousTab.Visible = False
     end
   end
   object pMainMenu: TPanel

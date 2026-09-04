@@ -18,7 +18,6 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
   You can also get a copy of the license accessing the address:
   http://www.opensource.org/licenses/lgpl-license.php
-
 }
 
 unit DBEditButton;
@@ -38,18 +37,19 @@ type
   TDBEditButton = class(TCustomControl)
   private
     FButtonOnlyWhenFocused: Boolean;
-    FDBEdit: TDBEdit ;
+    FDBEdit: TDBEdit;
     FButton: TSpeedButton;
     FButtonWidth: Integer;
     FDirectInput: Boolean;
     FFocusOnButtonClick: Boolean;
     FOnButtonClick: TNotifyEvent;
-    FChangeEvent : TNotifyEvent;
+    FChangeEvent: TNotifyEvent;
     FPasswordChar: Char;
     FReadOnly: Boolean;
     FShowHint: Boolean;
     function GetAlignment: TAlignment;
     function GetAutoSelect: Boolean;
+    function GetBorderStyle: TBorderStyle;
     function GetButtonCaption: TTranslateString;
     function GetButtonCursor: TCursor;
     function GetButtonHint: TTranslateString;
@@ -72,9 +72,11 @@ type
     function GetPressedImageIndex: Integer;
     function GetSelectedImageIndex: Integer;
     function GetSpacing: Integer;
+    function GetText: String;
     function GetTextHint: TTranslateString;
     procedure SetAlignment(AValue: TAlignment);
     procedure SetAutoSelect(AValue: Boolean);
+    procedure SetBorderStyle(AValue: TBorderStyle);
     procedure SetButtonCaption(AValue: TTranslateString);
     procedure SetButtonCursor(AValue: TCursor);
     procedure SetButtonHint(AValue: TTranslateString);
@@ -100,53 +102,43 @@ type
     procedure SetSelectedImageIndex(AValue: Integer);
     procedure SetShowHint(AValue: Boolean);
     procedure SetSpacing(AValue: Integer);
+    procedure SetText(AValue: String);
     procedure SetTextHint(AValue: TTranslateString);
     procedure ButtonClick(Sender: TObject);
     procedure FDBEditClick(Sender: TObject);
-    procedure FDBEditContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
+    procedure FDBEditContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure FDBEditDblClick(Sender: TObject);
     procedure FDBEditDragDrop(Sender, Source: TObject; X, Y: Integer);
-    procedure FDBEditDragOver
-      (Sender, Source: TObject; X, Y: Integer; State: TDragState;
-      var Accept: Boolean);
+    procedure FDBEditDragOver(Sender, Source: TObject; X, Y: Integer; State: TDragState; var Accept: Boolean);
     procedure FDBEditEditingDone(Sender: TObject);
     procedure FDBEditEndDrag(Sender, Target: TObject; X, Y: Integer);
     procedure FDBEditEnter(Sender: TObject);
     procedure FDBEditExit(Sender: TObject);
-    procedure FDBEditMouseDown
-      (Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer
-      );
+    procedure FDBEditMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure FDBEditMouseEnter(Sender: TObject);
     procedure FDBEditMouseLeave(Sender: TObject);
-    procedure FDBEditMouseMove
-      (Sender: TObject; Shift: TShiftState; X, Y: Integer);
-    procedure FDBEditMouseUp
-      (Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer
-      );
-    procedure FDBEditMouseWheel
-      (Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
-      var Handled: Boolean);
-    procedure FDBEditMouseWheelDown
-      (Sender: TObject; Shift: TShiftState; MousePos: TPoint;
-      var Handled: Boolean);
-    procedure FDBEditMouseWheelUp
-      (Sender: TObject; Shift: TShiftState; MousePos: TPoint;
-      var Handled: Boolean);
+    procedure FDBEditMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure FDBEditMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure FDBEditMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure FDBEditMouseWheelDown(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+    procedure FDBEditMouseWheelUp(Sender: TObject; Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure FDBEditStartDrag(Sender: TObject; var DragObject: TDragObject);
     procedure FDBEditUTF8KeyPress(Sender: TObject; var UTF8Key: TUTF8Char);
     procedure FDBEditKeyPress(Sender: TObject; var Key: Char);
     procedure FDBEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FDBEditKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   protected
-    procedure FDBEditChange(Sender:TObject);
+    procedure FDBEditChange(Sender: TObject);
+    procedure DoOnChangeBounds; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    function ExecuteAction(AAction: TBasicAction): Boolean;
-    function UpdateAction(AAction: TBasicAction): Boolean;
+    function ExecuteAction(AAction: TBasicAction): Boolean; override;
+    function UpdateAction(AAction: TBasicAction): Boolean; override;
     property Field: TField read GetField;
+    property EditControl: TDBEdit read FDBEdit;
+    property ButtonControl: TSpeedButton read FButton;
   published
     property Align;
     property Alignment: TAlignment read GetAlignment write SetAlignment default taLeftJustify;
@@ -160,9 +152,9 @@ type
     property ButtonCursor: TCursor read GetButtonCursor write SetButtonCursor;
     property ButtonHint: TTranslateString read GetButtonHint write SetButtonHint;
     property ButtonOnlyWhenFocused: Boolean read FButtonOnlyWhenFocused write SetButtonOnlyWhenFocused default False;
-    property ButtonWidth: Integer read GetButtonWidth write SetButtonWidth;
-    property CharCase: TEditCharCase read GetCharCase write SetCharCase;
-    property Color: TColor read GetColor write SetColor;
+    property ButtonWidth: Integer read GetButtonWidth write SetButtonWidth default 25;
+    property CharCase: TEditCharCase read GetCharCase write SetCharCase default ecNormal;
+    property Color: TColor read GetColor write SetColor default clWindow;
     property Constraints;
     property Cursor: TCursor read GetCursor write SetCursor;
     property CustomEditMask: Boolean read GetCustomEditMask write SetCustomEditMask;
@@ -178,14 +170,12 @@ type
     property Flat: Boolean read GetFlat write SetFlat default False;
     property FocusOnButtonClick: Boolean read FFocusOnButtonClick write SetFocusOnButtonClick default False;
     property Font;
-    //property Glyph;
     property Hint: TTranslateString read GetHint write SetHint;
     property HotImageIndex: Integer read GetHotImageIndex write SetHotImageIndex default -1;
     property ImageIndex: Integer read GetImageIndex write SetImageIndex default -1;
     property Images: TCustomImageList read GetImages write SetImages;
     property ImageWidth: Integer read GetImageWidth write SetImageWidth default 0;
-    property MaxLength: Integer read GetMaxLength write SetMaxLength;
-    //property NumGlyphs;
+    property MaxLength: Integer read GetMaxLength write SetMaxLength default 0;
     property ParentBiDiMode;
     property ParentColor;
     property ParentFont;
@@ -194,15 +184,16 @@ type
     property PressedImageIndex: Integer read GetPressedImageIndex write SetPressedImageIndex default -1;
     property ReadOnly: Boolean read FReadOnly write SetReadOnly default False;
     property SelectedImageIndex: Integer read GetSelectedImageIndex write SetSelectedImageIndex default -1;
-    property ShowHint: Boolean read FShowHint write SetShowHint;
-    property Spacing: Integer read GetSpacing write SetSpacing;
+    property ShowHint: Boolean read FShowHint write SetShowHint default False;
+    property Spacing: Integer read GetSpacing write SetSpacing default 0;
     property TabOrder;
     property TabStop;
+    property Text: String read GetText write SetText;
     property TextHint: TTranslateString read GetTextHint write SetTextHint;
     property Visible;
 
-    property OnButtonClick:TNotifyEvent read FOnButtonClick write FOnButtonClick;
-    property OnChange:TNotifyEvent read FChangeEvent write FChangeEvent;
+    property OnButtonClick: TNotifyEvent read FOnButtonClick write FOnButtonClick;
+    property OnChange: TNotifyEvent read FChangeEvent write FChangeEvent;
     property OnClick;
     property OnContextPopup;
     property OnDblClick;
@@ -233,7 +224,7 @@ implementation
 
 procedure Register;
 begin
-  RegisterComponents('CBS',[TDBEditButton]);
+  RegisterComponents('CBS', [TDBEditButton]);
 end;
 
 { TDBEditButton }
@@ -242,10 +233,14 @@ constructor TDBEditButton.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  FDirectInput := True;
+  FButtonWidth := 25;
+
   FDBEdit := TDBEdit.Create(Self);
+  FDBEdit.SetSubComponent(True);
+  FDBEdit.Name := 'SubEdit';
   FDBEdit.Parent := Self;
   FDBEdit.Align := alClient;
-  FDBEdit.ReadOnly := not FDirectInput or FReadOnly;
   FDBEdit.OnChange := @FDBEditChange;
   FDBEdit.OnKeyPress := @FDBEditKeyPress;
   FDBEdit.OnKeyDown := @FDBEditKeyDown;
@@ -271,21 +266,38 @@ begin
   FDBEdit.OnUTF8KeyPress := @FDBEditUTF8KeyPress;
 
   FButton := TSpeedButton.Create(Self);
+  FButton.SetSubComponent(True);
+  FButton.Name := 'SubButton';
   FButton.Parent := Self;
-  FButton.Caption := '';
+  FButton.Caption := '...';
   FButton.OnClick := @ButtonClick;
   FButton.Align := alRight;
-  FButtonWidth := 25;
   FButton.Width := FButtonWidth;
-  FButton.Enabled := not FReadOnly;
 
   Height := FDBEdit.Height;
   Width := 150;
 end;
 
+destructor TDBEditButton.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TDBEditButton.DoOnChangeBounds;
+begin
+  inherited DoOnChangeBounds;
+  if Assigned(FDBEdit) and AutoSize then
+    Height := FDBEdit.Height;
+end;
+
 function TDBEditButton.ExecuteAction(AAction: TBasicAction): Boolean;
 begin
-  Result:= FDBEdit.ExecuteAction(AAction);
+  Result := FDBEdit.ExecuteAction(AAction) or inherited ExecuteAction(AAction);
+end;
+
+function TDBEditButton.UpdateAction(AAction: TBasicAction): Boolean;
+begin
+  Result := FDBEdit.UpdateAction(AAction) or inherited UpdateAction(AAction);
 end;
 
 procedure TDBEditButton.ButtonClick(Sender: TObject);
@@ -294,13 +306,6 @@ begin
     FDBEdit.SetFocus;
   if Assigned(FOnButtonClick) then
     FOnButtonClick(Self);
-end;
-
-destructor TDBEditButton.Destroy;
-begin
-  FDBEdit.Free;
-  FButton.Free;
-  inherited Destroy;
 end;
 
 procedure TDBEditButton.FDBEditChange(Sender: TObject);
@@ -354,7 +359,7 @@ end;
 procedure TDBEditButton.FDBEditEnter(Sender: TObject);
 begin
   if FButtonOnlyWhenFocused then
-    FButton.Visible := FDBEdit.Focused;
+    FButton.Visible := True;
 
   if Assigned(OnEnter) then
     OnEnter(Self);
@@ -362,6 +367,9 @@ end;
 
 procedure TDBEditButton.FDBEditExit(Sender: TObject);
 begin
+  if FButtonOnlyWhenFocused then
+    FButton.Visible := False;
+
   if Assigned(OnExit) then
     OnExit(Self);
 end;
@@ -426,8 +434,7 @@ begin
     OnUTF8KeyPress(Self, UTF8Key);
 end;
 
-procedure TDBEditButton.FDBEditKeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TDBEditButton.FDBEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if Assigned(OnKeyDown) then
     OnKeyDown(Self, Key, Shift);
@@ -439,12 +446,13 @@ begin
     OnKeyPress(Self, Key);
 end;
 
-procedure TDBEditButton.FDBEditKeyUp(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TDBEditButton.FDBEditKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if Assigned(OnKeyUp) then
     OnKeyUp(Self, Key, Shift);
 end;
+
+{ Getters e Setters }
 
 function TDBEditButton.GetAlignment: TAlignment;
 begin
@@ -454,6 +462,11 @@ end;
 function TDBEditButton.GetAutoSelect: Boolean;
 begin
   Result := FDBEdit.AutoSelect;
+end;
+
+function TDBEditButton.GetBorderStyle: TBorderStyle;
+begin
+  Result := FDBEdit.BorderStyle;
 end;
 
 function TDBEditButton.GetButtonCaption: TTranslateString;
@@ -473,7 +486,7 @@ end;
 
 function TDBEditButton.GetButtonWidth: Integer;
 begin
-  Result := FButton.Width;
+  Result := FButtonWidth;
 end;
 
 function TDBEditButton.GetCharCase: TEditCharCase;
@@ -566,6 +579,11 @@ begin
   Result := FButton.BorderSpacing.Left;
 end;
 
+function TDBEditButton.GetText: String;
+begin
+  Result := FDBEdit.Text;
+end;
+
 function TDBEditButton.GetTextHint: TTranslateString;
 begin
   Result := FDBEdit.TextHint;
@@ -579,6 +597,11 @@ end;
 procedure TDBEditButton.SetAutoSelect(AValue: Boolean);
 begin
   FDBEdit.AutoSelect := AValue;
+end;
+
+procedure TDBEditButton.SetBorderStyle(AValue: TBorderStyle);
+begin
+  FDBEdit.BorderStyle := AValue;
 end;
 
 procedure TDBEditButton.SetButtonCaption(AValue: TTranslateString);
@@ -598,18 +621,22 @@ end;
 
 procedure TDBEditButton.SetButtonOnlyWhenFocused(AValue: Boolean);
 begin
-  FButtonOnlyWhenFocused := AValue;
-  if FButtonOnlyWhenFocused then
-    FButton.Visible := FDBEdit.Focused;
+  if FButtonOnlyWhenFocused <> AValue then
+  begin
+    FButtonOnlyWhenFocused := AValue;
+    if FButtonOnlyWhenFocused then
+      FButton.Visible := FDBEdit.Focused
+    else
+      FButton.Visible := True;
+  end;
 end;
 
 procedure TDBEditButton.SetButtonWidth(AValue: Integer);
 begin
-  if FButton.Width <> AValue then
+  if FButtonWidth <> AValue then
   begin
     FButtonWidth := AValue;
     FButton.Width := AValue;
-    Resize; // Call Resize to adjust the size of the TDBEdit
   end;
 end;
 
@@ -636,7 +663,7 @@ end;
 procedure TDBEditButton.SetDirectInput(AValue: Boolean);
 begin
   FDirectInput := AValue;
-  FDBEdit.ReadOnly := not FDirectInput or FReadOnly;
+  FDBEdit.ReadOnly := (not FDirectInput) or FReadOnly;
 end;
 
 procedure TDBEditButton.SetDisabledImageIndex(AValue: Integer);
@@ -686,10 +713,11 @@ end;
 
 procedure TDBEditButton.SetPasswordChar(AValue: Char);
 begin
-  if FPasswordChar = AValue then
-    Exit;
-  FPasswordChar := AValue;
-  FDBEdit.PasswordChar := AValue;
+  if FPasswordChar <> AValue then
+  begin
+    FPasswordChar := AValue;
+    FDBEdit.PasswordChar := AValue;
+  end;
 end;
 
 procedure TDBEditButton.SetPressedImageIndex(AValue: Integer);
@@ -699,8 +727,9 @@ end;
 
 procedure TDBEditButton.SetReadOnly(AValue: Boolean);
 begin
-  FDBEdit.ReadOnly := AValue;
-  FButton.Enabled := not AValue;
+  FReadOnly := AValue;
+  FDBEdit.ReadOnly := (not FDirectInput) or FReadOnly;
+  FButton.Enabled := not FReadOnly;
 end;
 
 procedure TDBEditButton.SetSelectedImageIndex(AValue: Integer);
@@ -710,11 +739,12 @@ end;
 
 procedure TDBEditButton.SetShowHint(AValue: Boolean);
 begin
-  if FShowHint = AValue then Exit;
+  if FShowHint <> AValue then
+  begin
     FShowHint := AValue;
-
-  FDBEdit.ShowHint := FShowHint;
-  FButton.ShowHint := FShowHint;
+    FDBEdit.ShowHint := FShowHint;
+    FButton.ShowHint := FShowHint;
+  end;
 end;
 
 procedure TDBEditButton.SetSpacing(AValue: Integer);
@@ -722,14 +752,14 @@ begin
   FButton.BorderSpacing.Left := AValue;
 end;
 
+procedure TDBEditButton.SetText(AValue: String);
+begin
+  FDBEdit.Text := AValue;
+end;
+
 procedure TDBEditButton.SetTextHint(AValue: TTranslateString);
 begin
   FDBEdit.TextHint := AValue;
-end;
-
-function TDBEditButton.UpdateAction(AAction: TBasicAction): Boolean;
-begin
-  Result := FDBEdit.UpdateAction(AAction);
 end;
 
 end.

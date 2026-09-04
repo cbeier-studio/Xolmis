@@ -464,9 +464,6 @@
     </RunParams>
     <RequiredPackages>
       <Item>
-        <PackageName Value="tageditpackage"/>
-      </Item>
-      <Item>
         <PackageName Value="Pixie.Package.Lazarus"/>
       </Item>
       <Item>

@@ -27,9 +27,6 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
   You can also get a copy of the license accessing the address:
   http://www.opensource.org/licenses/lgpl-license.php
-
-  Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br
-       Rua Coronel Aureliano de Camargo, 973 - Tatuí - SP - 18270-170
 }
 
 unit TDICardPanel;
@@ -44,12 +41,6 @@ uses
 resourcestring
   sOwnerIsNotWinControl = 'TDICardPanel.Owner is not a TWinControl descendant';
   sFormNotAssigned = 'Parameter AForm not Assigned';
-  sMainMenuNotAssigned = 'TTDINoteBook.MainMenu not assigned';
-  sActionTabsMenu = 'Tabs';
-  sActionCloseTab = 'Close Tab';
-  sActionCloseAllTabs = 'Close All Tabs';
-  sActionNextTab = 'Next Tab';
-  sActionPreviousTab = 'Previous Tab';
 
 const
   TDIM_CLOSEPAGE = LM_INTERFACELAST + 500;
@@ -57,148 +48,96 @@ const
 type
   ETDIError = class( Exception ) ;
 
-  TTDIBackgroundCorner = (coTopLeft, coTopRight, coBottomLeft, coBottomRight);
-
-  { TTDIAction }
-
-  TTDIAction = class( TPersistent )
-  private
-    FCaption : String ;
-    FImageIndex : Integer ;
-    FVisible : Boolean ;
-  public
-    Constructor Create ;
-  published
-    property Caption    : String  read FCaption    write FCaption ;
-    property ImageIndex : Integer read FImageIndex write FImageIndex ;
-    property Visible    : Boolean read FVisible    write FVisible;
-  end ;
-
-  { TTDIActions }
-
-  TTDIActions = Class( TPersistent )
-  private
-    FCloseAllTabs : TTDIAction ;
-    FCloseTab : TTDIAction ;
-    FNextTab : TTDIAction ;
-    FPreviousTab : TTDIAction ;
-    FTabsMenu : TTDIAction ;
-  public
-    Constructor Create ;
-    Destructor Destroy ; override;
-  published
-    property TabsMenu     : TTDIAction read FTabsMenu     write FTabsMenu ;
-    property CloseTab     : TTDIAction read FCloseTab     write FCloseTab ;
-    property CloseAllTabs : TTDIAction read FCloseAllTabs write FCloseAllTabs ;
-    property NextTab      : TTDIAction read FNextTab      write FNextTab ;
-    property PreviousTab  : TTDIAction read FPreviousTab  write FPreviousTab ;
-  end ;
+  TTDIPageChangeEvent = procedure(Sender: TObject; AOldPageIndex, ANewPageIndex: Integer) of object;
+  TTDIBeforeClosePageEvent = procedure(Sender: TObject; APageIndex: Integer; var CanClose: Boolean) of object;
+  TTDIAfterClosePageEvent = procedure(Sender: TObject; APageIndex: Integer) of object;
 
   { TTDIPage }
 
   TTDIPage = class(TPage)
   private
-    fsFormInPage : TForm ;
+    fsFormInPage: TForm ;
     fsFormOldParent: TWinControl;
-    fsFormOldCloseEvent : TCloseEvent;
-    fsFormOldAlign : TAlign;
-    fsFormOldClientRect : TRect;
-    fsFormOldBorderStyle : TFormBorderStyle;
+    fsFormOldCloseEvent: TCloseEvent;
+    fsFormOldAlign: TAlign;
+    fsFormOldClientRect: TRect;
+    fsFormOldBorderStyle: TFormBorderStyle;
     fsLastActiveControl: TWinControl;
 
-    procedure OnResizeTDIPage(Sender : TObject) ;
+    procedure OnResizeTDIPage(Sender: TObject);
     procedure OnFormClose(Sender: TObject; var CloseAction: TCloseAction);
 
-    procedure SaveFormProperties ;
-    procedure RestoreFormProperties ;
-
-    procedure SetFormInPage(AValue : TForm) ;
+    procedure SaveFormProperties;
+    procedure RestoreFormProperties;
+    procedure SetFormInPage(AValue: TForm);
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-    procedure CheckFormAlign ;
-
+    procedure CheckFormAlign;
   public
-    constructor Create(TheOwner: TComponent );  override;
-    destructor Destroy ; override;
+    constructor Create(TheOwner: TComponent);  override;
+    destructor Destroy; override;
 
-    procedure RestoreLastFocusedControl ;
+    procedure RestoreLastFocusedControl;
 
-    property FormInPage : TForm read fsFormInPage write SetFormInPage ;
-    property LastActiveControl : TWinControl read fsLastActiveControl write fsLastActiveControl ;
-  end ;
+    property FormInPage: TForm read fsFormInPage write SetFormInPage;
+    property LastActiveControl: TWinControl read fsLastActiveControl write fsLastActiveControl;
+  end;
 
-  TTDIOption = ( tdiRestoreLastActiveControl, tdiVerifyIfCanChangePage, tdiEmulateFormOnActivate ) ;
-  TTDIOptions = set of TTDIOption ;
+  TTDIOption = (tdiRestoreLastActiveControl, tdiVerifyIfCanChangePage, tdiEmulateFormOnActivate);
+  TTDIOptions = set of TTDIOption;
 
   { TTDICardPanel }
 
   TTDICardPanel = class(TNotebook)
   private
-    FBackgroundImage : TImage ;
-    FFixedPages : Integer ;
-    FBackgroundCorner : TTDIBackgroundCorner ;
-    FTDIActions : TTDIActions ;
-    FTDIOptions : TTDIOptions ;
+    FFixedPages: Integer;
+    FTDIOptions: TTDIOptions;
     FShortCutClosePage: TShortCut;
+    FIsRemovingAPage: Boolean;
 
-    FTimerRestoreLastControl : TTimer;
-    FIsRemovingAPage : Boolean;
+    FOnPageChange: TTDIPageChangeEvent;
+    FOnBeforeClosePage: TTDIBeforeClosePageEvent;
+    FOnAfterClosePage: TTDIAfterClosePageEvent;
 
-    procedure SetBackgroundImage(AValue : TImage) ;
-    procedure SetBackgroundCorner(AValue : TTDIBackgroundCorner) ;
-    procedure SetFixedPages(AValue : Integer) ;
+    procedure SetFixedPages(AValue: Integer);
 
-    procedure DrawBackgroundImage ;
-
-    procedure CloseTabClicked( Sender: TObject );
-    procedure CloseAllTabsClicked( Sender: TObject );
-    procedure NextPageClicked( Sender: TObject );
-    procedure PreviousPageClicked( Sender: TObject );
-
-    procedure TimerRestoreLastFocus( Sender: TObject );
-
+    procedure AsyncRestoreFocus(Data: PtrInt);
     procedure RemoveInvalidPages ;
   protected
     function CanChange: Boolean;
-       //{$if (lcl_major > 0) or (lcl_release > 30)} override; {$endif}
     procedure DoChange;
     procedure Loaded;
     procedure RemovePage(Index: Integer);
-       //{$if (lcl_major > 0) or (lcl_release > 30)} override; {$endif}
-
     procedure msg_ClosePage(var Msg: TLMessage); message TDIM_CLOSEPAGE;
-
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
-
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
     constructor Create(TheOwner: TComponent);  override;
-    destructor Destroy ; override;
-    procedure DoCloseTabClicked(APage: TPage);
+    destructor Destroy; override;
 
-    function CreateFormInNewPage( AFormClass: TFormClass; ImageIndex : Integer = -1 ) : TForm;
-    procedure ShowFormInPage( AForm: TForm; ImageIndex : Integer = -1 );
-    Function FindFormInPages( AForm: TForm): Integer ;
+    function CreateFormInNewPage(AFormClass: TFormClass; ImageIndex: Integer = -1): TForm;
+    procedure ShowFormInPage(AForm: TForm; ImageIndex: Integer = -1);
+    Function FindFormInPages(AForm: TForm): Integer ;
+    function GetFormByClass(AFormClass: TFormClass): TForm;
+    function SelectForm(AForm: TForm): Boolean;
+    function SelectFormByClass(AFormClass: TFormClass): Boolean;
 
     Function CanCloseAllPages: Boolean ;
     Function CanCloseAPage( APageIndex: Integer): Boolean;
 
-    procedure RestoreLastFocusedControl ;
-    procedure ScrollPage( ToForward: Boolean );
+    procedure RestoreLastFocusedControl;
+    procedure ScrollPage(ToForward: Boolean);
     procedure CheckInterface;
-
     procedure CloseAllTabs;
+    procedure CloseTab(Index: Integer);
   published
-    property BackgroundImage : TImage read FBackgroundImage write SetBackgroundImage  ;
-    property BackgroundCorner : TTDIBackgroundCorner read FBackgroundCorner write SetBackgroundCorner default coBottomRight ;
-
-    property TDIActions : TTDIActions read FTDIActions write FTDIActions ;
-
-    property TDIOptions : TTDIOptions read FTDIOptions write FTDIOptions
-      default [ tdiRestoreLastActiveControl, tdiVerifyIfCanChangePage ];
+    property TDIOptions: TTDIOptions read FTDIOptions write FTDIOptions default [tdiRestoreLastActiveControl, tdiVerifyIfCanChangePage];
     property ShortCutClosePage: TShortCut read FShortCutClosePage write FShortCutClosePage default 16499;  // Ctrl+F4
-
     property FixedPages : Integer read FFixedPages write SetFixedPages default 0;
+
+    property OnPageChange: TTDIPageChangeEvent read FOnPageChange write FOnPageChange;
+    property OnBeforeClosePage: TTDIBeforeClosePageEvent read FOnBeforeClosePage write FOnBeforeClosePage;
+    property OnAfterClosePage: TTDIAfterClosePageEvent read FOnAfterClosePage write FOnAfterClosePage;
   end;
 
 procedure Register;
@@ -213,65 +152,28 @@ begin
   RegisterComponents('CBS',[TTDICardPanel]);
 end;
 
-{ TTDIAction }
-
-constructor TTDIAction.Create;
-begin
-  FCaption    := '';
-  FImageIndex := -1;
-  FVisible    := True;
-end;
-
-{ TTDIActions }
-
-constructor TTDIActions.Create;
-begin
-  FCloseAllTabs := TTDIAction.Create;
-  FCloseAllTabs.Caption := sActionCloseAllTabs;
-
-  FCloseTab := TTDIAction.Create;
-  FCloseTab.Caption := sActionCloseTab;
-
-  FNextTab := TTDIAction.Create;
-  FNextTab.Caption := sActionNextTab;
-  FNextTab.Visible := False;
-
-  FPreviousTab := TTDIAction.Create;
-  FPreviousTab.Caption := sActionPreviousTab;
-  FPreviousTab.Visible := False;
-end;
-
-destructor TTDIActions.Destroy;
-begin
-  FCloseAllTabs.Free;
-  FCloseTab.Free;
-  FNextTab.Free;
-  FPreviousTab.Free;
-
-  inherited Destroy;
-end;
-
 { TTDIPage }
 
 constructor TTDIPage.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
 
-  Self.Parent   := TWinControl( TheOwner ) ;
-  Self.OnResize := @OnResizeTDIPage ;
+  Self.Parent   := TWinControl(TheOwner);
+  Self.OnResize := @OnResizeTDIPage;
 
-  fsLastActiveControl := nil ;
+  fsLastActiveControl := nil;
 end;
 
 procedure TTDIPage.CheckFormAlign;
 var
   Maximize: Boolean ;
 begin
-  if not Assigned(fsFormInPage) then exit ;
+  if not Assigned(fsFormInPage) then
+    Exit;
 
-  Maximize := not (( fsFormInPage.Constraints.MaxWidth <> 0 ) and (fsFormInPage.Width < Width)) ;
+  Maximize := not ((fsFormInPage.Constraints.MaxWidth <> 0) and (fsFormInPage.Width < Width));
   if Maximize then
-     Maximize := not (( fsFormInPage.Constraints.MaxHeight <> 0 ) and (fsFormInPage.Height < Height));
+     Maximize := not ((fsFormInPage.Constraints.MaxHeight <> 0) and (fsFormInPage.Height < Height));
 
   { If Form has MaxConstrains and doesn't fill all the Screen, Centralize on
     TabSheet }
@@ -280,14 +182,14 @@ begin
     fsFormInPage.Align := alNone;
 
     if (fsFormInPage.Width < Width) then
-      fsFormInPage.Left := Trunc( (Width - fsFormInPage.Width) / 2 )
+      fsFormInPage.Left := (Width - fsFormInPage.Width) div 2
     else
-      fsFormInPage.Left := 0 ;
+      fsFormInPage.Left := 0;
 
     if (fsFormInPage.Height < Height) then
-      fsFormInPage.Top := Trunc( (Height - fsFormInPage.Height) / 2 )
+      fsFormInPage.Top := (Height - fsFormInPage.Height) div 2
     else
-      fsFormInPage.Top := 0 ;
+      fsFormInPage.Top := 0;
   end
   else
     fsFormInPage.Align := alClient;
@@ -302,33 +204,31 @@ procedure TTDIPage.Notification(AComponent: TComponent; Operation: TOperation);
 begin
   inherited Notification(AComponent, Operation);
 
-  if ([csDesigning, csDestroying] * ComponentState <> []) then exit ;
+  if ([csDesigning, csDestroying] * ComponentState <> []) then
+    Exit;
 
   if (Operation = opRemove) and (AComponent = fsFormInPage) then
-  begin
     fsFormInPage := nil;
-  end ;
 end;
 
 procedure TTDIPage.OnFormClose(Sender: TObject; var CloseAction: TCloseAction);
 var
   Msg: TLMessage;
 begin
-  if Assigned( fsFormOldCloseEvent ) then
-     fsFormOldCloseEvent( Sender, CloseAction );
+  if Assigned(fsFormOldCloseEvent) then
+    fsFormOldCloseEvent(Sender, CloseAction);
 
-  if {(CloseAction <> caFree) and} Assigned( fsFormInPage ) then
+  if Assigned(fsFormInPage) then
     RestoreFormProperties;
 
   fsFormInPage := nil;
 
-  if Assigned( Parent ) then
+  if Assigned(Parent) then
   begin
     Msg.msg    := TDIM_CLOSEPAGE;
     Msg.lParam := PageIndex;
-
-    Parent.Dispatch( Msg );
-  end ;
+    Parent.Dispatch(Msg);
+  end;
 end;
 
 procedure TTDIPage.OnResizeTDIPage(Sender: TObject);
@@ -338,10 +238,8 @@ end;
 
 procedure TTDIPage.RestoreFormProperties;
 begin
-  if not Assigned( fsFormInPage ) then exit ;
-
-{  if ([csDesigning, csDestroying] * fsFormInPage.ComponentState <> []) then
-     exit ;}
+  if not Assigned(fsFormInPage) then
+    Exit;
 
   fsFormInPage.Visible     := False;  // This prevent OnFormShow be fired
   fsFormInPage.Parent      := fsFormOldParent;
@@ -352,6 +250,9 @@ begin
   fsFormInPage.Width       := fsFormOldClientRect.Right;
   fsFormInPage.Height      := fsFormOldClientRect.Bottom;
   fsFormInPage.OnClose     := fsFormOldCloseEvent;
+
+  fsFormInPage.RemoveFreeNotification(Self);
+  fsFormInPage := nil;
 end;
 
 procedure TTDIPage.RestoreLastFocusedControl;
@@ -360,34 +261,31 @@ var
 begin
   FocusRestored := False;
 
-  if Assigned( fsLastActiveControl ) then
+  if Assigned(fsLastActiveControl) then
   begin
-    if fsLastActiveControl <> Screen.ActiveControl then
+    if (fsLastActiveControl <> Screen.ActiveControl) and (fsLastActiveControl.CanSetFocus) then
     begin
-      if fsLastActiveControl.CanSetFocus then
-      begin
-        try
-           fsLastActiveControl.SetFocus;
-           FocusRestored := True;
-           //FormInPage.ActiveControl := fsLastActiveControl;
-        except
-        end ;
-      end ;
-    end
+      try
+        fsLastActiveControl.SetFocus;
+        FocusRestored := True;
+      except
+      end;
+    end;
   end;
 
   if not FocusRestored then
   begin
     { No LastActiveControle ? Ok, if current Screen control isn't in TabSheet,
       go to first Control on TabSheet... }
-    if not Self.ContainsControl( Screen.ActiveControl ) then
-      Self.SelectNext( Self, True, True);
+    if not Self.ContainsControl(Screen.ActiveControl) then
+      Self.SelectNext(Self, True, True);
   end
 end;
 
 procedure TTDIPage.SaveFormProperties;
 begin
-  if not Assigned( fsFormInPage ) then exit ;
+  if not Assigned(fsFormInPage) then
+    Exit;
 
   fsFormOldParent            := fsFormInPage.Parent;
   fsFormOldCloseEvent        := fsFormInPage.OnClose;
@@ -401,23 +299,20 @@ end;
 
 procedure TTDIPage.SetFormInPage(AValue: TForm);
 begin
-  fsFormInPage := AValue ;
+  fsFormInPage := AValue;
+  if not Assigned(fsFormInPage) then
+    Exit;
 
-  // Saving Form Properties //
-  SaveFormProperties ;
+  fsFormInPage.FreeNotification(Self);
+  SaveFormProperties;
 
-  // Adjusting Page Caption and Color as the Form //
   Caption := fsFormInPage.Caption;
-  //Color := fsFormInPage.Color;
-
-  // HiJacking the Form.OnClose Event, to detect Form Closed from Inside //
+  // HiJacking the Form.OnClose Event, to detect Form Closed from Inside
   fsFormInPage.OnClose := @OnFormClose;
-
-  // Adjusting AForm Border Style and Align //
-  fsFormInPage.BorderStyle := bsNone ;
-  fsFormInPage.Align       := alClient ;
-
-  // Change Form Parent to the Page //
+  // Adjusting AForm Border Style and Align
+  fsFormInPage.BorderStyle := bsNone;
+  fsFormInPage.Align       := alClient;
+  // Change Form Parent to the Page
   fsFormInPage.Parent := Self;
 end;
 
@@ -427,41 +322,36 @@ constructor TTDICardPanel.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
 
-  FBackgroundCorner      := coBottomRight;
   FFixedPages            := 0;
   FIsRemovingAPage       := False;
   FShortCutClosePage     := 16499;
-  FBackgroundImage       := nil;
-  FTDIActions            := TTDIActions.Create;
-  FTDIOptions            := [ tdiRestoreLastActiveControl,
-                              tdiVerifyIfCanChangePage ] ;
+  FTDIOptions            := [tdiRestoreLastActiveControl, tdiVerifyIfCanChangePage];
+end;
 
-  { This is ugly, I know... but I didn't found a best solution to restore Last
-    Focused Control of TDIPage }
-  FTimerRestoreLastControl := TTimer.Create(Self);
-  FTimerRestoreLastControl.Enabled  := False;
-  FTimerRestoreLastControl.Interval := 10;
-  FTimerRestoreLastControl.OnTimer  := @TimerRestoreLastFocus;
+procedure TTDICardPanel.AsyncRestoreFocus(Data: PtrInt);
+begin
+  if Assigned(ActivePageComponent) and (ActivePageComponent is TTDIPage) then
+    TTDIPage(ActivePageComponent).RestoreLastFocusedControl;
 end;
 
 function TTDICardPanel.CanChange: Boolean;
 var
-  AWinControl : TWinControl ;
+  AWinControl: TWinControl;
 begin
   Result := True;
 
   if ([csDesigning, csDestroying, csFreeNotification] * ComponentState = []) then
   begin
-    if Assigned( ActivePageComponent ) then
+    if Assigned(ActivePageComponent) then
     begin
-      // Saving Last Active Control in Page //
+      // Saving Last Active Control in Page
       AWinControl := Screen.ActiveControl;
 
       if ActivePageComponent is TTDIPage then
       begin
-        if ActivePageComponent.ContainsControl( AWinControl ) then
+        if ActivePageComponent.ContainsControl(AWinControl) then
         begin
-          TTDIPage( ActivePageComponent ).LastActiveControl := AWinControl;
+          TTDIPage(ActivePageComponent).LastActiveControl := AWinControl;
 
           if tdiVerifyIfCanChangePage in FTDIOptions then
           begin
@@ -471,35 +361,28 @@ begin
 
             { If still on same ActiveControl, maybe Focus Control was trapped on
               some OnExit Validation }
-            Result := ( AWinControl <> Screen.ActiveControl );
-          end ;
-        end ;
-      end ;
-    end ;
-  end ;
+            Result := (AWinControl <> Screen.ActiveControl);
+          end;
+        end;
+      end;
+    end;
+  end;
 
-  //{$if (lcl_major > 0) or (lcl_release > 30)}
-  //Result := Result and (inherited CanChange)
-  //{$endif};
-
-  // Emulate FormInPage.OnDeactivate //
+  // Emulate FormInPage.OnDeactivate
   if Result and (tdiRestoreLastActiveControl in FTDIOptions) then
   begin
-    if (not FIsRemovingAPage) and
-       ([csDesigning, csDestroying, csFreeNotification] * ComponentState = []) then
+    if (not FIsRemovingAPage) and ([csDesigning, csDestroying, csFreeNotification] * ComponentState = []) then
     begin
       if (ActivePageComponent is TTDIPage) then
       begin
         with TTDIPage(ActivePageComponent) do
         begin
-          if Assigned( FormInPage ) then
-            if ([csDesigning, csDestroying, csFreeNotification] * FormInPage.ComponentState = []) then
-              if Assigned( FormInPage.OnDeactivate ) then
-                if FormInPage.Visible then
-                  FormInPage.OnDeactivate( Self );
-        end ;
-      end ;
-    end ;
+          if Assigned(FormInPage) and ([csDesigning, csDestroying, csFreeNotification] * FormInPage.ComponentState = []) then
+            if Assigned(FormInPage.OnDeactivate) and FormInPage.Visible then
+              FormInPage.OnDeactivate(Self);
+        end;
+      end;
+    end;
   end;
 end;
 
@@ -508,14 +391,15 @@ var
   I : Integer ;
 begin
   Result := True;
-  if PageCount < 1 then exit ;
+  if PageCount < 1 then
+    Exit;
 
   I := 0;
-  while Result and ( I < PageCount ) do
+  while Result and (I < PageCount) do
   begin
-    Result := CanCloseAPage( I );
+    Result := CanCloseAPage(I);
     Inc(I)
-  end ;
+  end;
 end;
 
 function TTDICardPanel.CanCloseAPage(APageIndex: Integer): Boolean;
@@ -525,119 +409,66 @@ begin
   if (Page[APageIndex] is TTDIPage) then
     with TTDIPage(Page[APageIndex]) do
     begin
-      if Assigned( FormInPage ) then
+      if Assigned(FormInPage) then
         Result := FormInPage.CloseQuery;
-    end ;
+    end;
 end;
 
 procedure TTDICardPanel.CheckInterface;
 begin
-  if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then exit ;
+  if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then
+    Exit;
 
   Visible := (PageCount > 0);
-
-  // Checking for Close Button visibility //
-  //if (FCloseTabButtom <> tbNone) then
-  //begin
-  //  if Visible then
-  //    ShowCloseButtom
-  //  else
-  //    HideCloseButtom;
-  //end ;
-
-  // Checking for Tabs Menu visibility //
-  //if Visible and (FTabsMenuItem <> nil) then
-  //begin
-  //  with FTabsMenuItem do
-  //  begin
-  //    Caption    := TDIActions.TabsMenu.Caption;
-  //    Visible    := TDIActions.TabsMenu.Visible;
-  //    ImageIndex := TDIActions.TabsMenu.ImageIndex;
-  //  end ;
-  //end ;
-
-  // Drawing Background Image //
-  if Visible then
-    DrawBackgroundImage;
 end;
 
 procedure TTDICardPanel.CloseAllTabs;
-begin
-  CloseAllTabsClicked(Nil);
-end;
-
-procedure TTDICardPanel.CloseAllTabsClicked(Sender: TObject);
 var
-  LastPageCount : Integer ;
+  I: Integer;
 begin
-   if PageCount < 1 then exit ;
+  if PageCount < 1 then
+    Exit;
 
-   LastPageCount := -1 ;
-   PageIndex     := PageCount-1;  // Go to Last page
-   // Close while have pages, and Pages still being closed //
-   while (PageCount > FFixedPages) and (LastPageCount <> PageCount) do
-   begin
-     LastPageCount := PageCount ;
-     RemovePage( PageIndex );
-     Application.ProcessMessages;
-   end;
+  for I := PageCount - 1 downto FFixedPages do
+    RemovePage(I);
 end;
 
-procedure TTDICardPanel.CloseTabClicked(Sender: TObject);
+procedure TTDICardPanel.CloseTab(Index: Integer);
 begin
-  RemovePage( PageIndex );
+  RemovePage(Index);
 end;
 
 function TTDICardPanel.CreateFormInNewPage(AFormClass: TFormClass; ImageIndex: Integer): TForm;
 begin
   Result := AFormClass.Create(Application);
 
-  ShowFormInPage( Result, ImageIndex );
+  ShowFormInPage(Result, ImageIndex);
 end;
 
 destructor TTDICardPanel.Destroy;
 begin
-  //if Assigned( FCloseBitBtn )  then
-  //  FCloseBitBtn.Free ;
-
-  { // Don't Destroy Menu Items... They will be destroyed by MainMenu //
-
-  if Assigned( FCloseMenuItem )  then
-    FCloseMenuItem.Free ;
-
-  if Assigned( FTabsMenuItem )  then
-  begin
-    FTabsMenuItem.Free ;
-    FCloseMenuItem2.Free;
-    FCloseAllTabsMenuItem.Free;
-  end ;
-  }
-
-  FTDIActions.Free;
-
-  FTimerRestoreLastControl.Free;
-
   inherited Destroy;
 end;
 
 procedure TTDICardPanel.DoChange;
+var
+  OldIdx: Integer;
 begin
-  //inherited DoChange;
+  OldIdx := PageIndex;
 
-  if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then exit ;
+  if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then
+    Exit;
 
-  // Emulate FormInPage.OnActivate //
+  // Emulate FormInPage.OnActivate
   if tdiRestoreLastActiveControl in FTDIOptions then
   begin
     if (not FIsRemovingAPage) and (ActivePageComponent is TTDIPage) then
     begin
       with TTDIPage(ActivePageComponent) do
       begin
-        if Assigned( FormInPage ) then
-          if ([csDesigning, csDestroying, csFreeNotification] * FormInPage.ComponentState = []) then
-            if Assigned( FormInPage.OnActivate ) then
-              if FormInPage.Visible then
-                FormInPage.OnActivate( Self );
+        if Assigned(FormInPage) and ([csDesigning, csDestroying, csFreeNotification] * FormInPage.ComponentState = []) then
+          if Assigned(FormInPage.OnActivate) and FormInPage.Visible then
+            FormInPage.OnActivate(Self);
       end;
     end ;
   end;
@@ -651,117 +482,58 @@ begin
       TTDIPage( ActivePage ).RestoreLastFocusedControl;
   }
 
-  // This is a ugly workaround.. but it works :) //
+  // This is a ugly workaround.. but it works :)
   if tdiRestoreLastActiveControl in FTDIOptions then
     RestoreLastFocusedControl;
-end;
 
-procedure TTDICardPanel.DoCloseTabClicked(APage: TPage);
-var
-  LastPageCount: Integer;
-begin
-  LastPageCount := PageCount;
-
-  //inherited DoCloseTabClicked(APage);
-
-  if Assigned( APage ) and (LastPageCount = PageCount) then  // If Page was not closed...
-  begin
-    PageIndex := APage.PageIndex;
-
-    if PageIndex >= FixedPages then
-      RemovePage( APage.PageIndex );
-  end;
-end;
-
-procedure TTDICardPanel.DrawBackgroundImage;
-begin
-  if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then exit ;
-
-  if not Assigned( FBackgroundImage ) then exit ;
-
-  if not Assigned( ActivePageComponent ) then exit ;
-
-  FBackgroundImage.Parent  := ActivePageComponent;
-  FBackgroundImage.Anchors := [];
-  FBackgroundImage.AnchorSideBottom.Control := nil;
-  FBackgroundImage.AnchorSideTop.Control    := nil;
-  FBackgroundImage.AnchorSideRight.Control  := nil;
-  FBackgroundImage.AnchorSideLeft.Control   := nil;
-
-  if FBackgroundCorner in [coBottomRight, coBottomLeft] then
-  begin
-     FBackgroundImage.AnchorSideBottom.Control := ActivePageComponent;
-     FBackgroundImage.AnchorSideBottom.Side    := asrBottom;
-     FBackgroundImage.Anchors := FBackgroundImage.Anchors + [akBottom];
-  end
-  else
-  begin
-     FBackgroundImage.AnchorSideTop.Control := ActivePageComponent;
-     FBackgroundImage.AnchorSideTop.Side    := asrTop;
-     FBackgroundImage.Anchors := FBackgroundImage.Anchors + [akTop];
-  end ;
-
-  if FBackgroundCorner in [coBottomRight, coTopRight] then
-  begin
-     FBackgroundImage.AnchorSideRight.Control := ActivePageComponent;
-     FBackgroundImage.AnchorSideRight.Side    := asrBottom;
-     FBackgroundImage.Anchors := FBackgroundImage.Anchors + [akRight];
-  end
-  else
-  begin
-     FBackgroundImage.AnchorSideLeft.Control := ActivePageComponent;
-     FBackgroundImage.AnchorSideLeft.Side    := asrTop;
-     FBackgroundImage.Anchors := FBackgroundImage.Anchors + [akLeft];
-  end ;
-
-  FBackgroundImage.Visible := True ;
+  if Assigned(FOnPageChange) then
+    FOnPageChange(Self, OldIdx, PageIndex);
 end;
 
 function TTDICardPanel.FindFormInPages(AForm: TForm): Integer;
 var
-  I : Integer ;
+  I: Integer ;
 begin
   Result := -1;
 
   I := 0;
   while (Result < 0) and (I < PageCount) do
   begin
-     if Page[I] is TTDIPage then
-       with TTDIPage( Page[I] ) do
-       begin
-         if AForm = FormInPage then
-           Result := I;
-       end ;
+    if Page[I] is TTDIPage then
+      if AForm = TTDIPage(Page[I]).FormInPage then
+        Result := I;
 
-     Inc( I ) ;
+    Inc(I);
   end ;
+end;
+
+function TTDICardPanel.GetFormByClass(AFormClass: TFormClass): TForm;
+var
+  I: Integer;
+begin
+  Result := nil;
+
+  for I := 0 to PageCount - 1 do
+  begin
+    if Page[I] is TTDIPage then
+    begin
+      if TTDIPage(Page[I]).FormInPage is AFormClass then
+        Exit(TTDIPage(Page[I]).FormInPage);
+    end;
+  end;
 end;
 
 procedure TTDICardPanel.KeyDown(var Key: Word; Shift: TShiftState);
 begin
-  //if (FTabsMenuItem = nil) then  // Is already Handled by TabsMenu itens?
-  //begin
-  //  if (PageIndex >= FFixedPages) and
-  //     (ShortCut(Key, Shift) = FShortCutClosePage) then
-  //  begin
-  //    Key := 0;
-  //    RemovePage( PageIndex );
-  //    exit;
-  //  end;
-  //end
-  //else
-  if (Key = VK_TAB) and (ssCtrl in Shift) then   // TabsMenu will do it...
-    exit ;
+  if (Key = VK_TAB) and (ssCtrl in Shift) then
+    Exit;
 
   if ActivePageComponent is TTDIPage then
   begin
-    with TTDIPage( ActivePageComponent ) do
-    begin
-      RestoreLastFocusedControl;
+    TTDIPage(ActivePageComponent).RestoreLastFocusedControl;
 
       // TODO: Propagate Key Pressed to FormInPage //
       //FormInPage.OnKeyDown(Self,Key,Shift);
-    end ;
   end
   else
     inherited KeyDown(Key, Shift);
@@ -771,22 +543,15 @@ procedure TTDICardPanel.Loaded;
 begin
   //inherited Loaded ;
 
-  if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then exit ;
-
-  //if Assigned( FMainMenu ) then
-  //   CreateTabsMenuItem;
+  if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then
+    Exit;
 
   CheckInterface;
 end;
 
 procedure TTDICardPanel.msg_ClosePage(var Msg: TLMessage);
 begin
-  RemovePage( Msg.lParam );
-end;
-
-procedure TTDICardPanel.NextPageClicked(Sender: TObject);
-begin
-  ScrollPage( True );
+  RemovePage(Msg.lParam);
 end;
 
 procedure TTDICardPanel.Notification(AComponent: TComponent; Operation: TOperation);
@@ -795,59 +560,51 @@ begin
 
   if (Operation = opRemove) then
   begin
-     if (AComponent = FBackgroundImage) then
-       FBackgroundImage := nil
-
-     //else if (AComponent = FMainMenu) then
-     //  FMainMenu := nil
-
-     else if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then
+     if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then
 
      else if (AComponent is TForm) then
        RemoveInvalidPages ;
   end ;
 end;
 
-procedure TTDICardPanel.PreviousPageClicked(Sender: TObject);
-begin
-  ScrollPage( False );
-end;
-
 procedure TTDICardPanel.RemoveInvalidPages;
 var
-  I : Integer ;
+  I: Integer ;
 begin
-  // Remove all TTDIPage with FormInPage not assigned //;
+  // Remove all TTDIPage with FormInPage not assigned
   I := 0 ;
   while I < PageCount do
   begin
     if Page[I] is TTDIPage then
     begin
-      with TTDIPage( Page[I] ) do
+      if TTDIPage(Page[I]).FormInPage = nil then
       begin
-        if FormInPage = nil then
-        begin
-          RemovePage( I );
-          Dec( I ) ;
-        end ;
-      end ;
-    end ;
-
-    Inc( I ) ;
-  end ;
+        RemovePage(I);
+        Dec(I);
+      end;
+    end;
+    Inc(I);
+  end;
 end;
 
 procedure TTDICardPanel.RemovePage(Index: Integer);
 var
-  CanRemovePage: Boolean ;
+  CanRemovePage: Boolean;
   APage: TPage;
 begin
   if (Index >= PageCount) or (Index < 0) then
     Exit;
 
-  CanRemovePage    := True;
+  CanRemovePage := True;
+
+  if Assigned(FOnBeforeClosePage) then
+    FOnBeforeClosePage(Self, Index, CanRemovePage);
+
+  if not CanRemovePage then
+    Exit;
+
   FIsRemovingAPage := True;
-  APage            := Page[Index] ;
+  APage := Page[Index];
   try
     if ([csDesigning, csDestroying, csFreeNotification] * ComponentState = []) then
     begin
@@ -855,36 +612,36 @@ begin
       begin
         with TTDIPage(APage) do
         begin
-          if Assigned( FormInPage ) then
+          if Assigned(FormInPage) then
           begin
             CanRemovePage := False;
             FormInPage.Close;
-          end ;
-        end ;
-      end ;
-    end ;
+          end;
+        end;
+      end;
+    end;
 
     if CanRemovePage then
     begin
-      //{$if (lcl_major > 0) or (lcl_release > 30)}
-      //  inherited RemovePage(APage.PageIndex) ;
-      //{$else}
-        APage.Free;
-      //{$endif}
+      APage.Free;
 
-      if (PageCount <= 1) then  // In this situation... DoChange is not fired //
+      if (PageCount <= 1) then  // In this situation... DoChange is not fired
         CheckInterface;
-    end ;
+
+      if Assigned(FOnAfterClosePage) then
+        FOnAfterClosePage(Self, Index);
+    end;
   finally
     FIsRemovingAPage := False;
-  end ;
+  end;
 end;
 
 procedure TTDICardPanel.RestoreLastFocusedControl;
 begin
-  if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then exit ;
+  if ([csDesigning, csDestroying, csFreeNotification] * ComponentState <> []) then
+    Exit;
 
-  FTimerRestoreLastControl.Enabled := True;
+  Application.QueueAsyncCall(@AsyncRestoreFocus, 0);
 end;
 
 procedure TTDICardPanel.ScrollPage(ToForward: Boolean);
@@ -893,100 +650,87 @@ var
 begin
   if ToForward then
   begin
-    NewPage := PageIndex + 1 ;
+    NewPage := PageIndex + 1;
     if NewPage >= PageCount then
       NewPage := 0;
   end
   else
   begin
-    NewPage := PageIndex - 1 ;
+    NewPage := PageIndex - 1;
     if NewPage < 0 then
-      NewPage := PageCount-1 ;
-  end ;
+      NewPage := PageCount - 1;
+  end;
 
   PageIndex := NewPage;
 end;
 
-procedure TTDICardPanel.SetBackgroundCorner(AValue: TTDIBackgroundCorner);
+function TTDICardPanel.SelectForm(AForm: TForm): Boolean;
+var
+  Idx: Integer;
 begin
-  if FBackgroundCorner = AValue then Exit ;
-  FBackgroundCorner := AValue ;
-
-  if Visible then
-    DrawBackgroundImage;
+  Idx := FindFormInPages(AForm);
+  Result := (Idx >= 0);
+  if Result then
+    PageIndex := Idx;
 end;
 
-procedure TTDICardPanel.SetBackgroundImage(AValue: TImage);
+function TTDICardPanel.SelectFormByClass(AFormClass: TFormClass): Boolean;
+var
+  F: TForm;
 begin
-  if FBackgroundImage = AValue then Exit ;
-  FBackgroundImage := AValue ;
-
-  if Visible then
-    DrawBackgroundImage;
+  F := GetFormByClass(AFormClass);
+  Result := Assigned(F) and SelectForm(F);
 end;
 
 procedure TTDICardPanel.SetFixedPages(AValue: Integer);
 begin
-  if FFixedPages = AValue then Exit ;
-  FFixedPages := AValue ;
+  if FFixedPages = AValue then
+    Exit;
+  FFixedPages := AValue;
 
   CheckInterface;
 end;
 
 procedure TTDICardPanel.ShowFormInPage(AForm: TForm; ImageIndex: Integer);
 var
-  NewPage : TTDIPage ;
-  AlreadyExistingPage : Integer ;
+  NewPage: TTDIPage;
+  AlreadyExistingPage: Integer;
   DoCheckInterface: Boolean;
 begin
-  if not Assigned( AForm ) then
-    raise ETDIError.Create( sFormNotAssigned ) ;
+  if not Assigned(AForm) then
+    raise ETDIError.Create(sFormNotAssigned);
 
-  // Looking for a Page with same AForm Object //
-  AlreadyExistingPage := FindFormInPages( AForm );
+  // Looking for a Page with same AForm Object
+  AlreadyExistingPage := FindFormInPages(AForm);
   if AlreadyExistingPage >= 0 then
   begin
     PageIndex := AlreadyExistingPage;
-    exit ;
-  end ;
+    Exit;
+  end;
 
   DoCheckInterface := (PageCount <= 1);
 
   // Create a new Page
   NewPage := TTDIPage.Create(Self);
-  //NewPage.ImageIndex := ImageIndex;
-
   Visible := True;
 
-  // This will call TTDIPage.SetFormInPage, who does the magic //
+  // This will call TTDIPage.SetFormInPage, who does the magic
   NewPage.FormInPage := AForm;
-
   // Activate the new Page
   PageIndex := NewPage.PageIndex;
+  AForm.Visible := True;
 
-  // Show the Form //
-  AForm.Visible := True ;
-
-  // Saving the current ActiveControl in the Form //
+  // Saving the current ActiveControl in the Form
   NewPage.LastActiveControl := AForm.ActiveControl;
 
-  // Checking Form alignment //
-  if (AForm.Constraints.MaxHeight <= 0) or
-     (AForm.Constraints.MaxWidth <= 0) then
-    AForm.Align := alClient;                   // Try to expand the Form
-  NewPage.CheckFormAlign ;
+  // Checking Form alignment
+  if (AForm.Constraints.MaxHeight <= 0) or (AForm.Constraints.MaxWidth <= 0) then
+    AForm.Align := alClient; // Try to expand the Form
+
+  NewPage.CheckFormAlign;
 
   if DoCheckInterface then
     CheckInterface;
-end;
-
-procedure TTDICardPanel.TimerRestoreLastFocus(Sender: TObject);
-begin
-  FTimerRestoreLastControl.Enabled := False;
-
-  if Assigned( ActivePageComponent ) then
-    if ActivePageComponent is TTDIPage then
-      TTDIPage( ActivePageComponent ).RestoreLastFocusedControl;
 end;
 
 end.

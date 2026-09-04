@@ -1486,7 +1486,7 @@ begin
       //tbSamplePreps: ;
       //tbPermanentNets: ;
     end;
-    PGW.DoCloseTabClicked(PGW.Page[ATabIndex]);
+    PGW.CloseTab(ATabIndex);
   end;
 
   if (PGW.PageCount > 0) and not (isClosing) then

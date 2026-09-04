@@ -5,34 +5,49 @@ unit dbimagegallery;
 interface
 
 uses
-  Classes, SysUtils, Controls, Forms, StdCtrls, ExtCtrls, DB, DBCtrls, Graphics;
+  Classes, SysUtils, Controls, Forms, StdCtrls, ExtCtrls, DB, DBCtrls, Graphics, LCLType;
 
 type
+  { TGalleryDataLink }
+  TGalleryDataLink = class(TDataLink)
+  private
+    FGallery: TObject;
+  protected
+    procedure ActiveChanged; override;
+    procedure DataSetChanged; override;
+  public
+    constructor Create(AGallery: TObject);
+  end;
+
+  { TDBImageGallery }
   TDBImageGallery = class(TScrollBox)
   private
-    FDataSource: TDataSource;
+    FDataLink: TGalleryDataLink;
     FImageField: string;
     FCaptionField: string;
     FZoom: Integer;
     FSelectedIndex: Integer;
     FOnChange: TNotifyEvent;
+
+    function GetDataSource: TDataSource;
     procedure SetDataSource(AValue: TDataSource);
     procedure SetImageField(AValue: string);
     procedure SetCaptionField(AValue: string);
     procedure SetZoom(AValue: Integer);
-    procedure DataChange(Sender: TObject; Field: TField);
-    procedure DrawGallery;
+    procedure DataChanged;
   protected
     procedure Paint; override;
-    procedure Click; override;
+    procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    procedure RefreshGallery;
   published
-    property DataSource: TDataSource read FDataSource write SetDataSource;
+    property DataSource: TDataSource read GetDataSource write SetDataSource;
     property ImageField: string read FImageField write SetImageField;
     property CaptionField: string read FCaptionField write SetCaptionField;
     property Zoom: Integer read FZoom write SetZoom default 100;
+    property SelectedIndex: Integer read FSelectedIndex;
     property OnChange: TNotifyEvent read FOnChange write FOnChange;
     property Align;
     property Anchors;
@@ -49,31 +64,55 @@ begin
   RegisterComponents('CBS', [TDBImageGallery]);
 end;
 
+{ TGalleryDataLink }
+
+constructor TGalleryDataLink.Create(AGallery: TObject);
+begin
+  inherited Create;
+  FGallery := AGallery;
+  VisualControl := True;
+end;
+
+procedure TGalleryDataLink.ActiveChanged;
+begin
+  TDBImageGallery(FGallery).DataChanged;
+end;
+
+procedure TGalleryDataLink.DataSetChanged;
+begin
+  TDBImageGallery(FGallery).DataChanged;
+end;
+
 { TDBImageGallery }
 
 constructor TDBImageGallery.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  FDataLink := TGalleryDataLink.Create(Self);
   FZoom := 100;
   FSelectedIndex := -1;
-  Width := 200;
+  Width := 300;
   Height := 200;
+  HorzScrollBar.Tracking := True;
+  VertScrollBar.Tracking := True;
 end;
 
 destructor TDBImageGallery.Destroy;
 begin
-  if Assigned(FDataSource) then
-    FDataSource.OnDataChange := nil;
+  FreeAndNil(FDataLink);
   inherited Destroy;
+end;
+
+function TDBImageGallery.GetDataSource: TDataSource;
+begin
+  Result := FDataLink.DataSource;
 end;
 
 procedure TDBImageGallery.SetDataSource(AValue: TDataSource);
 begin
-  if FDataSource <> AValue then
+  if FDataLink.DataSource <> AValue then
   begin
-    FDataSource := AValue;
-    if Assigned(FDataSource) then
-      FDataSource.OnDataChange := @DataChange;
+    FDataLink.DataSource := AValue;
     Invalidate;
   end;
 end;
@@ -98,92 +137,177 @@ end;
 
 procedure TDBImageGallery.SetZoom(AValue: Integer);
 begin
-  if (FZoom <> AValue) and (AValue <= 100) then
+  if (FZoom <> AValue) and (AValue > 0) and (AValue <= 200) then
   begin
     FZoom := AValue;
     Invalidate;
   end;
 end;
 
-procedure TDBImageGallery.DataChange(Sender: TObject; Field: TField);
+procedure TDBImageGallery.DataChanged;
 begin
   Invalidate;
 end;
 
-procedure TDBImageGallery.DrawGallery;
-var
-  Bitmap: TBitmap;
-  BlobStream: TStream;
-  sCaption: string;
-  Field: TField;
-  X, Y, W, H: Integer;
+procedure TDBImageGallery.RefreshGallery;
 begin
-  if not Assigned(FDataSource) or not Assigned(FDataSource.DataSet) then
-    Exit;
-
-  Canvas.Brush.Color := clWhite;
-  Canvas.FillRect(ClientRect);
-
-  FDataSource.DataSet.First;
-  X := 10;
-  Y := 10;
-  while not FDataSource.DataSet.EOF do
-  begin
-    Field := FDataSource.DataSet.FieldByName(FImageField);
-    if Field is TBlobField then
-    begin
-      BlobStream := FDataSource.DataSet.CreateBlobStream(TBlobField(Field), bmRead);
-      try
-        Bitmap := TBitmap.Create;
-        try
-          Bitmap.LoadFromStream(BlobStream);
-          W := (Bitmap.Width * FZoom) div 100;
-          H := (Bitmap.Height * FZoom) div 100;
-          Canvas.StretchDraw(Rect(X, Y, X + W, Y + H), Bitmap);
-        finally
-          Bitmap.Free;
-        end;
-      finally
-        BlobStream.Free;
-      end;
-    end;
-
-    if FCaptionField <> '' then
-    begin
-      sCaption := FDataSource.DataSet.FieldByName(FCaptionField).AsString;
-      Canvas.TextOut(X, Y + H + 5, sCaption);
-    end;
-
-    if FSelectedIndex = FDataSource.DataSet.RecNo - 1 then
-    begin
-      Canvas.Pen.Color := clRed;
-      Canvas.Pen.Width := 2;
-      Canvas.Rectangle(X - 2, Y - 2, X + W + 2, Y + H + 2);
-    end;
-
-    Inc(X, W + 20);
-    if X + W > ClientWidth then
-    begin
-      X := 10;
-      Inc(Y, H + 40);
-    end;
-
-    FDataSource.DataSet.Next;
-  end;
+  Invalidate;
 end;
 
 procedure TDBImageGallery.Paint;
+var
+  Picture: TPicture;
+  BlobStream: TStream;
+  sCaption: string;
+  ImgField, CapField: TField;
+  X, Y, W, H, ItemIndex: Integer;
+  Bookmark: TBookmark;
+  DataSet: TDataSet;
 begin
   inherited Paint;
-  DrawGallery;
+
+  if not FDataLink.Active or (FImageField = '') then
+    Exit;
+
+  DataSet := FDataLink.DataSet;
+  if not Assigned(DataSet) or DataSet.IsEmpty then
+    Exit;
+
+  { Desabilita controles do dataset para não disparar eventos de interface durante a varredura }
+  DataSet.DisableControls;
+  Bookmark := DataSet.Bookmark;
+  Picture := TPicture.Create;
+  try
+    X := 10 - HorzScrollBar.Position;
+    Y := 10 - VertScrollBar.Position;
+    ItemIndex := 0;
+
+    DataSet.First;
+    while not DataSet.EOF do
+    begin
+      ImgField := DataSet.FindField(FImageField);
+
+      { Define um tamanho base padrão ajustado pelo Zoom }
+      W := (120 * FZoom) div 100;
+      H := (120 * FZoom) div 100;
+
+      { Carrega a Imagem caso exista no campo BLOB }
+      if (ImgField is TBlobField) and not ImgField.IsNull then
+      begin
+        BlobStream := DataSet.CreateBlobStream(ImgField, bmRead);
+        try
+          try
+            Picture.LoadFromStream(BlobStream);
+            { Desenha mantendo o aspecto ou esticando na área pré-definida }
+            Canvas.StretchDraw(Rect(X, Y, X + W, Y + H), Picture.Graphic);
+          except
+            { Caso o formato do Blob não seja reconhecido }
+            Canvas.TextOut(X + 5, Y + (H div 2), '[Erro Imagem]');
+          end;
+        finally
+          BlobStream.Free;
+        end;
+      end
+      else
+      begin
+        { Quadro vazio se o campo for nulo }
+        Canvas.Brush.Color := clBtnFace;
+        Canvas.FillRect(Rect(X, Y, X + W, Y + H));
+      end;
+
+      { Desenha o Moldura do Item Selecionado }
+      if ItemIndex = FSelectedIndex then
+      begin
+        Canvas.Pen.Color := clHighlight;
+        Canvas.Pen.Width := 3;
+        Canvas.Brush.Style := bsClear;
+        Canvas.Rectangle(X - 2, Y - 2, X + W + 2, Y + H + 2);
+        Canvas.Brush.Style := bsSolid;
+      end;
+
+      { Desenha a Legenda }
+      if FCaptionField <> '' then
+      begin
+        CapField := DataSet.FindField(FCaptionField);
+        if Assigned(CapField) then
+        begin
+          sCaption := CapField.AsString;
+          Canvas.TextOut(X, Y + H + 4, sCaption);
+        end;
+      end;
+
+      { Incrementa Posições na Grid }
+      Inc(X, W + 15);
+      if X + W > ClientWidth then
+      begin
+        X := 10 - HorzScrollBar.Position;
+        Inc(Y, H + 35);
+      end;
+
+      Inc(ItemIndex);
+      DataSet.Next;
+    end;
+  finally
+    { Restaura o estado e posição original do DataSet }
+    if DataSet.BookmarkValid(Bookmark) then
+      DataSet.Bookmark := Bookmark;
+    DataSet.EnableControls;
+    Picture.Free;
+  end;
 end;
 
-procedure TDBImageGallery.Click;
+procedure TDBImageGallery.MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  CurX, CurY, W, H, ItemIndex: Integer;
+  DataSet: TDataSet;
+  ClickFound: Boolean;
 begin
-  inherited Click;
-  if Assigned(FDataSource) and Assigned(FDataSource.DataSet) then
+  inherited MouseDown(Button, Shift, X, Y);
+
+  if (Button <> mbLeft) or not FDataLink.Active then
+    Exit;
+
+  DataSet := FDataLink.DataSet;
+  if not Assigned(DataSet) or DataSet.IsEmpty then
+    Exit;
+
+  CurX := 10 - HorzScrollBar.Position;
+  CurY := 10 - VertScrollBar.Position;
+  ItemIndex := 0;
+  ClickFound := False;
+
+  W := (120 * FZoom) div 100;
+  H := (120 * FZoom) div 100;
+
+  DataSet.DisableControls;
+  try
+    DataSet.First;
+    while not DataSet.EOF do
+    begin
+      { Verifica se o clique do mouse ocorreu dentro do retângulo da imagem }
+      if (X >= CurX) and (X <= CurX + W) and (Y >= CurY) and (Y <= CurY + H) then
+      begin
+        FSelectedIndex := ItemIndex;
+        ClickFound := True;
+        Break;
+      end;
+
+      Inc(CurX, W + 15);
+      if CurX + W > ClientWidth then
+      begin
+        CurX := 10 - HorzScrollBar.Position;
+        Inc(CurY, H + 35);
+      end;
+
+      Inc(ItemIndex);
+      DataSet.Next;
+    end;
+  finally
+    DataSet.EnableControls;
+  end;
+
+  if ClickFound then
   begin
-    FSelectedIndex := FDataSource.DataSet.RecNo - 1;
     Invalidate;
     if Assigned(FOnChange) then
       FOnChange(Self);

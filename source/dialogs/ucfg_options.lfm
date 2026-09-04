@@ -28,7 +28,7 @@ object cfgOptions: TcfgOptions
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 42
     ClientWidth = 857
-    TabOrder = 1
+    TabOrder = 2
     object sbClose: TButton
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = pBottom
@@ -75,7 +75,7 @@ object cfgOptions: TcfgOptions
     Width = 657
     PageIndex = 0
     Align = alClient
-    TabOrder = 2
+    TabOrder = 1
     object pgGeneral: TPage
       object scrollGeneral: TScrollBox
         Left = 0
@@ -147,7 +147,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
-            TabOrder = 0
+            TabOrder = 1
             object icoEnterAsTab: TImage
               AnchorSideLeft.Control = pEnterAsTab
               AnchorSideTop.Control = pEnterAsTab
@@ -237,7 +237,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
-            TabOrder = 1
+            TabOrder = 2
             object icoConfirmCancel: TImage
               AnchorSideLeft.Control = pConfirmCancel
               AnchorSideTop.Control = pConfirmCancel
@@ -327,7 +327,7 @@ object cfgOptions: TcfgOptions
             ParentBackground = True
             Rounding.RoundX = 8
             Rounding.RoundY = 8
-            TabOrder = 2
+            TabOrder = 3
             object icoClearDeleted: TImage
               AnchorSideLeft.Control = pClearDeleted
               AnchorSideTop.Control = pClearDeleted
@@ -423,7 +423,7 @@ object cfgOptions: TcfgOptions
             ParentBackground = True
             Rounding.RoundX = 8
             Rounding.RoundY = 8
-            TabOrder = 3
+            TabOrder = 4
             object icoCheckUpdates: TImage
               AnchorSideLeft.Control = pCheckUpdates
               AnchorSideTop.Control = pCheckUpdates
@@ -532,7 +532,7 @@ object cfgOptions: TcfgOptions
             ParentBackground = True
             Rounding.RoundX = 8
             Rounding.RoundY = 8
-            TabOrder = 4
+            TabOrder = 0
             object icoStartPage: TImage
               AnchorSideLeft.Control = pStartPage
               AnchorSideTop.Control = pStartPage
@@ -683,7 +683,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
-            TabOrder = 0
+            TabOrder = 3
             object icoUseConditionalFormatting: TImage
               AnchorSideLeft.Control = pUseConditionalFormatting
               AnchorSideTop.Control = pUseConditionalFormatting
@@ -773,7 +773,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
-            TabOrder = 1
+            TabOrder = 4
             object icoShowOutliers: TImage
               AnchorSideLeft.Control = pShowOutliers
               AnchorSideTop.Control = pShowOutliers
@@ -863,7 +863,7 @@ object cfgOptions: TcfgOptions
             ParentBackground = True
             Rounding.RoundX = 8
             Rounding.RoundY = 8
-            TabOrder = 2
+            TabOrder = 0
             object icoSelectedTheme: TImage
               AnchorSideLeft.Control = pSelectedTheme
               AnchorSideTop.Control = pSelectedTheme
@@ -974,7 +974,7 @@ object cfgOptions: TcfgOptions
             ParentBackground = True
             Rounding.RoundX = 8
             Rounding.RoundY = 8
-            TabOrder = 3
+            TabOrder = 2
             object icoRowHeight: TImage
               AnchorSideLeft.Control = pRowHeight
               AnchorSideTop.Control = pRowHeight
@@ -1074,7 +1074,7 @@ object cfgOptions: TcfgOptions
             ParentBackground = True
             Rounding.RoundX = 8
             Rounding.RoundY = 8
-            TabOrder = 4
+            TabOrder = 1
             object icoAutoSizeColumns: TImage
               AnchorSideLeft.Control = pAutoSizeColumns
               AnchorSideTop.Control = pAutoSizeColumns
@@ -1949,7 +1949,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
-            TabOrder = 2
+            TabOrder = 3
             object icoDocumentsPath: TImage
               AnchorSideLeft.Control = pAttachmentsPath
               AnchorSideTop.Control = pAttachmentsPath
@@ -2047,7 +2047,7 @@ object cfgOptions: TcfgOptions
             ParentBackground = True
             Rounding.RoundX = 8
             Rounding.RoundY = 8
-            TabOrder = 3
+            TabOrder = 4
             object icoOpenAfterExport: TImage
               AnchorSideLeft.Control = pOpenAfterExport
               AnchorSideTop.Control = pOpenAfterExport
@@ -2137,7 +2137,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
-            TabOrder = 4
+            TabOrder = 2
             object icoVideosPath: TImage
               AnchorSideLeft.Control = pVideosPath
               AnchorSideTop.Control = pVideosPath
@@ -2565,7 +2565,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
-            TabOrder = 3
+            TabOrder = 4
             Visible = False
             object icoAllowUsageData: TImage
               AnchorSideLeft.Control = pAllowUsageData
@@ -2669,7 +2669,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
-            TabOrder = 4
+            TabOrder = 5
             OnClick = lblPrivacyTermsClick
             object lblPrivacyTerms: TLabel
               AnchorSideLeft.Control = pPrivacyTerms
@@ -2747,7 +2747,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
-            TabOrder = 5
+            TabOrder = 3
             object icoWriteDetailedLogs: TImage
               AnchorSideLeft.Control = pWriteDetailedLogs
               AnchorSideTop.Control = pWriteDetailedLogs
