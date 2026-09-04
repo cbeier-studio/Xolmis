@@ -1405,6 +1405,10 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsPrecipitationMist = 'Mist';
     rsPrecipitationDrizzle = 'Drizzle';
     rsPrecipitationRain = 'Rain';
+    rsPrecipitationShowers = 'Showers';
+    rsPrecipitationSnow = 'Snow';
+    rsPrecipitationHail = 'Hail';
+    rsPrecipitationFrost = 'Frost';
 
     { Permits }
     rsPermitBanding = 'Banding Permit';

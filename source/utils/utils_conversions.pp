@@ -1175,6 +1175,18 @@ begin
   if (AValue = rsPrecipitationRain) then
     Result := wpRain
   else
+  if (AValue = rsPrecipitationShowers) then
+    Result := wpShowers
+  else
+  if (AValue = rsPrecipitationSnow) then
+    Result := wpSnow
+  else
+  if (AValue = rsPrecipitationHail) then
+    Result := wpHail
+  else
+  if (AValue = rsPrecipitationFrost) then
+    Result := wpFrost
+  else
     Result := wpEmpty;
 end;
 

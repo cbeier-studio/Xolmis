@@ -188,7 +188,11 @@ begin
                                      rsPrecipitationFog + ',' +
                                      rsPrecipitationMist + ',' +
                                      rsPrecipitationDrizzle + ',' +
-                                     rsPrecipitationRain;
+                                     rsPrecipitationRain + ',' +
+                                     rsPrecipitationShowers + ',' +
+                                     rsPrecipitationSnow + ',' +
+                                     rsPrecipitationHail + ',' +
+                                     rsPrecipitationFrost;
 
   if FIsNew then
   begin
@@ -225,6 +229,10 @@ begin
     wpMist:    cbPrecipitation.ItemIndex := 2;
     wpDrizzle: cbPrecipitation.ItemIndex := 3;
     wpRain:    cbPrecipitation.ItemIndex := 4;
+    wpShowers: cbPrecipitation.ItemIndex := 5;
+    wpSnow:    cbPrecipitation.ItemIndex := 6;
+    wpHail:    cbPrecipitation.ItemIndex := 7;
+    wpFrost:   cbPrecipitation.ItemIndex := 8;
   else
     cbPrecipitation.ItemIndex := -1;
   end;

@@ -18639,6 +18639,14 @@ msgctxt "utils_locale.rsprecipitationfog"
 msgid "Fog"
 msgstr ""
 
+#: utils_locale.rsprecipitationfrost
+msgid "Frost"
+msgstr ""
+
+#: utils_locale.rsprecipitationhail
+msgid "Hail"
+msgstr ""
+
 #: utils_locale.rsprecipitationmist
 msgctxt "utils_locale.rsprecipitationmist"
 msgid "Mist"
@@ -18652,6 +18660,14 @@ msgstr ""
 #: utils_locale.rsprecipitationrain
 msgctxt "utils_locale.rsprecipitationrain"
 msgid "Rain"
+msgstr ""
+
+#: utils_locale.rsprecipitationshowers
+msgid "Showers"
+msgstr ""
+
+#: utils_locale.rsprecipitationsnow
+msgid "Snow"
 msgstr ""
 
 #: utils_locale.rspreparingbackup

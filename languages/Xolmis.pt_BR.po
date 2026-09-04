@@ -18798,6 +18798,14 @@ msgctxt "utils_locale.rsprecipitationfog"
 msgid "Fog"
 msgstr "Neblina"
 
+#: utils_locale.rsprecipitationfrost
+msgid "Frost"
+msgstr "Geada"
+
+#: utils_locale.rsprecipitationhail
+msgid "Hail"
+msgstr "Granizo"
+
 #: utils_locale.rsprecipitationmist
 msgctxt "utils_locale.rsprecipitationmist"
 msgid "Mist"
@@ -18812,6 +18820,14 @@ msgstr "Nenhum"
 msgctxt "utils_locale.rsprecipitationrain"
 msgid "Rain"
 msgstr "Chuva"
+
+#: utils_locale.rsprecipitationshowers
+msgid "Showers"
+msgstr "Pancadas"
+
+#: utils_locale.rsprecipitationsnow
+msgid "Snow"
+msgstr "Neve"
 
 #: utils_locale.rspreparingbackup
 msgctxt "utils_locale.rspreparingbackup"

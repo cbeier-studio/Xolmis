@@ -293,7 +293,7 @@ type
 
   // Weather
   TWeatherSampleMoment = (wmNone, wmStart, wmMiddle, wmEnd);
-  TPrecipitation = (wpEmpty = -1, wpNone, wpFog, wpMist, wpDrizzle, wpRain);
+  TPrecipitation = (wpEmpty = -1, wpNone, wpFog, wpMist, wpDrizzle, wpRain, wpShowers, wpSnow, wpHail, wpFrost);
 
   // Vegetation
   TStratumDistribution = (
@@ -509,7 +509,7 @@ const
 
   // Weather
   SAMPLE_MOMENTS: array [TWeatherSampleMoment] of String = ('', 'S', 'M', 'E');
-  PRECIPITATION_VALUES: array [TPrecipitation] of String = ('', 'N', 'F', 'M', 'D', 'R');
+  PRECIPITATION_VALUES: array [TPrecipitation] of String = ('', 'N', 'F', 'M', 'D', 'R', 'S', 'W', 'H', 'G');
 
   // Specimens
   SPECIMEN_TYPES: array [0..12] of String = ('WS', 'PS', 'N', 'B', 'E', 'P', 'F', 'BS', 'C', 'S', 'T', 'D', 'R');

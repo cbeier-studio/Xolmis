@@ -1604,6 +1604,10 @@ begin
     'M': aText := rsPrecipitationMist;
     'D': aText := rsPrecipitationDrizzle;
     'R': aText := rsPrecipitationRain;
+    'S': aText := rsPrecipitationShowers;
+    'W': aText := rsPrecipitationSnow;
+    'H': aText := rsPrecipitationHail;
+    'G': aText := rsPrecipitationFrost;
   end;
 
   DisplayText := True;
@@ -1627,7 +1631,19 @@ begin
     Sender.AsString := 'D'
   else
   if aText = rsPrecipitationRain then
-    Sender.AsString := 'R';
+    Sender.AsString := 'R'
+  else
+  if aText = rsPrecipitationShowers then
+    Sender.AsString := 'S'
+  else
+  if aText = rsPrecipitationSnow then
+    Sender.AsString := 'W'
+  else
+  if aText = rsPrecipitationHail then
+    Sender.AsString := 'H'
+  else
+  if aText = rsPrecipitationFrost then
+    Sender.AsString := 'G';
 end;
 
 procedure TDMS.qWeatherLogssample_momentGetText(Sender: TField; var aText: string; DisplayText: Boolean);
