@@ -26,7 +26,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra, BCPanel, bctypes,
-  DBControlGrid, Types, ImgList, ToggleSwitch, mvMapViewer, mvDE_BGRA, ColorSpeedButton,
+  DBControlGrid, Types, ImgList, ToggleSwitch, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
   mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class,
   data_types, data_filters, models_media, modules_core;
 
@@ -93,9 +93,12 @@ type
     qAudiosauthor_name: TStringField;
     qAudioscoordinate_precision: TStringField;
     qAudiosfile_path: TStringField;
+    qAudiosinactivated_by: TStringField;
     qDocsauthor_id: TLongintField;
     qDocsfile_path: TStringField;
+    qDocsinactivated_by: TStringField;
     qImagesfile_path: TStringField;
+    qImagesinactivated_by: TStringField;
     qVideos: TSQLQuery;
     qVideosactive_status: TBooleanField;
     qVideosauthor_id: TLongintField;
@@ -107,6 +110,7 @@ type
     qVideosfile_path: TStringField;
     qVideosfull_name: TStringField;
     qVideoshabitat: TStringField;
+    qVideosinactivated_by: TStringField;
     qVideosindividual_id: TLongintField;
     qVideosinsert_date: TDateTimeField;
     qVideoslatitude: TFloatField;
@@ -2389,6 +2393,7 @@ begin
   pmAddChild.Images := DMM.iAddMenuDark;
   pmMore.Images := iButtonsDark;
   icoRecycleWarning.Images := iIconsDark;
+  icoImageError.Images := iIconsDark;
   // Set buttons images
   sbInsertRecord.Images := iButtonsDark;
   sbQuickEntry.Images := iButtonsDark;

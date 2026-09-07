@@ -22,13 +22,16 @@ interface
 
 uses
   Classes, SysUtils, DB, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, ComCtrls, StdCtrls, BCButton,
-  BCFluentSlider, LCLIntf, ExtDlgs, Menus, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types, Math;
+  BCFluentSlider, BCPanel, LCLIntf, ExtDlgs, Menus, LazFileUtils, BGRABitmap, BGRABitmapTypes, Types, Math;
 
 type
 
   { TfrmImageViewer }
 
   TfrmImageViewer = class(TForm)
+    pSnackbar: TBCPanel;
+    icoSnackbar: TImage;
+    lblSnackbar: TLabel;
     tbZoom: TBCFluentSlider;
     btnPrior: TBCButton;
     btnNext: TBCButton;
@@ -114,7 +117,7 @@ var
 implementation
 
 uses
-  Clipbrd, data_consts, utils_global, utils_locale, uDarkStyleParams, FPImage, FPCanvas,
+  Clipbrd, data_consts, utils_global, utils_locale, utils_themes, uDarkStyleParams, FPImage, FPCanvas,
   fpeMetadata, fpeGlobal, fpeExifData;
 
 {$R *.lfm}
@@ -138,8 +141,11 @@ begin
   sbZoomOut.Images := iButtonsDark;
   sbZoomIn.Images := iButtonsDark;
   sbClose.Images := iButtonsDark;
+  icoSnackbar.Images := iButtonsDark;
 
   pmImage.Images := iButtonsDark;
+
+  //pSnackbar.Color := ActiveTheme.System.AttentionBG;
 end;
 
 procedure TfrmImageViewer.SetImageActionsEnabled(const AEnabled: Boolean);
@@ -181,9 +187,12 @@ begin
   imgView.Picture.Clear;
   imgView.Width := 0;
   imgView.Height := 0;
-  lblSize.Caption := AMessage;
+  //lblSize.Caption := AMessage;
 
   SetImageActionsEnabled(False);
+
+  lblSnackbar.Caption := AMessage;
+  pSnackbar.Visible := True;
 end;
 
 procedure TfrmImageViewer.btnNextClick(Sender: TObject);
@@ -241,6 +250,7 @@ procedure TfrmImageViewer.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+  pSnackbar.Background.Color := ActiveTheme.System.CriticalBG;
 
   LoadImage;
   if FOrigHeight > 0 then
@@ -255,6 +265,8 @@ var
   imgExif: TImgInfo;
   imgOrientation: TExifOrientation;
 begin
+  pSnackbar.Visible := False;
+
   if (dsLink.DataSet = nil) or (not dsLink.DataSet.Active) or dsLink.DataSet.IsEmpty then
   begin
     SetImageUnavailable('0 × 0 px');
