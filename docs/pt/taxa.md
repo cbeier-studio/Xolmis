@@ -22,8 +22,8 @@ Quando um táxon é selecionado, o módulo exibe informações detalhadas, inclu
 
 - **Nome científico** e **autoridade**  
 - **Categoria taxonômica** (espécie, gênero, família etc.)  
-- **Categoria da Lista Vermelha da IUCN** (status de conservação)  
-- **Nomes comuns** em inglês, espanhol e português  
+- **Estado de conservação** 
+- **Nomes vernaculares** (inglês, espanhol, português etc.) 
 - **Distribuição geográfica**  
 - **Hierarquia taxonômica** (táxons superiores e subordinados)  
 - **Sinônimos** (nomes alternativos usados na literatura)  

@@ -32,6 +32,6 @@ This workflow ensures that field data is **traceable, standardized, and integrat
 ## Relation to Xolmis Desktop
 
 - **[Surveys](surveys.md)** – Mobile records feed directly into survey modules.  
-- **[Captures](captures.md)** – Mist net captures can be logged in real time.  
+- **[Captures](captures.md)** – Mist net captures can be logged.  
 - **[Sightings](sightings.md)** – Opportunistic observations are quickly recorded.  
 - **[Nests](nests.md) and [Eggs](eggs.md)** – Breeding data can be documented on-site.  

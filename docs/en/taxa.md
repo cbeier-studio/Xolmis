@@ -22,8 +22,8 @@ When a taxon is selected, the module displays detailed information, including:
 
 - **Scientific name** and **authority**  
 - **Taxonomic rank** (species, genus, family, etc.)  
-- **IUCN Red List category** (conservation status)  
-- **Common names** in English, Spanish, and Portuguese  
+- **Conservation status**  
+- **Vernacular names** (English, Spanish, Portuguese, etc.)  
 - **Geographical distribution**  
 - **Taxonomic hierarchy** (parent and subordinate taxa)  
 - **Synonyms** (alternative names used in literature)  

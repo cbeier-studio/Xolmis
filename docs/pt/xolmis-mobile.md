@@ -32,6 +32,6 @@ Esse fluxo garante que os dados de campo sejam **rastreáveis, padronizados e in
 ## Relação com o Xolmis Desktop
 
 - **[Amostragens](surveys.md)** – Registros do Mobile alimentam diretamente os módulos de amostragens.  
-- **[Capturas](captures.md)** – Capturas com redes de neblina podem ser registradas em tempo real.  
-- **[Avistamentos](sightings.md)** – Observações oportunísticas são registradas rapidamente.  
+- **[Capturas](captures.md)** – Capturas com redes de neblina podem ser registradas.  
+- **[Observações](sightings.md)** – Observações oportunísticas são registradas rapidamente.  
 - **[Ninhos](nests.md) e [Ovos](eggs.md)** – Dados de reprodução podem ser documentados no local.  

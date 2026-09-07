@@ -57,8 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated **[Clements taxonomy](https://www.birds.cornell.edu/clementschecklist/)** to v2025, ensuring alignment with the latest ornithological classification.
-- Updated **Lazarus** to v4.6 (development environment).  
-- Updated **SQLite** to v3.53.1 (database engine).
+- Updated **Lazarus** to v4.8 (development environment).  
+- Updated **SQLite** to v3.53.4 (database engine).
 - Replaced `DCPcrypt` for `HashLib` package and updated password hash to Argon2id.
 - Replaced `TurboPowerIPro` for `Pixie` package.
 
