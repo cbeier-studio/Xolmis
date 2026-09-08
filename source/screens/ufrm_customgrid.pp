@@ -27,8 +27,8 @@ uses
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra, BCPanel, bctypes,
   DBControlGrid, Types, ImgList, ToggleSwitch, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
-  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class,
-  data_types, data_filters, models_media, modules_core;
+  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class, BGRABitmap, Math,
+  data_types, data_filters, data_blobs, models_media, modules_core;
 
 type
   { TStringMemoEditor }
@@ -52,6 +52,7 @@ type
   TfrmCustomGrid = class(TForm)
     cbCategoryFilter: TComboBox;
     cbMapProvider: TComboBox;
+    gridImages: TDrawGrid;
     dsLink7: TDataSource;
     dsVideos: TDataSource;
     eSearch: TEdit;
@@ -242,7 +243,6 @@ type
     cbNestStageFilter: TComboBox;
     dsAudios: TDataSource;
     gridAudios: TDBGrid;
-    dbImg: TDBImage;
     dsChart: TDataSource;
     dsImages: TDataSource;
     pAudiosToolbar: TBCPanel;
@@ -268,7 +268,6 @@ type
     iHeadersDark: TImageList;
     iIcons: TImageList;
     iIconsDark: TImageList;
-    lblImageID: TDBText;
     lblReportedFilter: TLabel;
     lblEscapedFilter: TLabel;
     lblNeedsReviewFilter: TLabel;
@@ -659,13 +658,8 @@ type
     pTaxonRanksFilters: TBCPanel;
     pTitleSiteFilter: TPanel;
     bvSpacerFilters: TBevel;
-    dbgImages: TDBControlGrid;
-    lblImageDate: TDBText;
-    lblImageTime: TDBText;
-    lblImageType: TDBText;
     lineRight: TShapeLineBGRA;
     pSideToolbar: TPanel;
-    pImageItem: TPanel;
     pChild: TPanel;
     pClient: TPanel;
     pTitleTaxonFilter: TPanel;
@@ -1034,6 +1028,8 @@ type
     procedure gridDocsDblClick(Sender: TObject);
     procedure gridDocsDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure gridImagesDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
+    procedure gridImagesSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
     procedure gridRecordDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
     procedure gridRecordPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
     procedure gridVideosDblClick(Sender: TObject);
@@ -1248,6 +1244,7 @@ type
     FSidePanelFactor: Double;
     FChildPanelFactor: Double;
     FDragging: Boolean;
+    FImageList: TAttachedImageList;
     cellMemo: TMemo;
 
     panelTabs: specialize TFPGList<TCustomPanelTab>;
@@ -1280,6 +1277,8 @@ type
     procedure LoadColumnsConfigGrid;
     procedure LoadRecordColumns;
     procedure LoadRecordRow;
+    procedure LoadImagesMetadataFromDB;
+    procedure LoadThumbnailsForVisibleRows;
 
     procedure OnAutoAdjustColumnsChanged;
     procedure OnDatesFilterChanged;
@@ -1395,7 +1394,7 @@ implementation
 uses
   utils_locale, utils_global, utils_system, utils_themes, utils_editdialogs, utils_dialogs, utils_math,
   utils_finddialogs, utils_print, utils_gis, utils_taxonomy,
-  data_management, data_getvalue, data_columns, data_blobs, data_setparam, data_consts,
+  data_management, data_getvalue, data_columns, data_setparam, data_consts,
   models_access_control, models_taxonomy, models_users, models_record_types,
   modules_bands, modules_birds, modules_botany, modules_breeding, modules_gazetteer, modules_institutions,
   modules_methods, modules_people, modules_permits, modules_projects, modules_sampling, modules_sampling_plots,
@@ -2393,7 +2392,6 @@ begin
   pmAddChild.Images := DMM.iAddMenuDark;
   pmMore.Images := iButtonsDark;
   icoRecycleWarning.Images := iIconsDark;
-  icoImageError.Images := iIconsDark;
   // Set buttons images
   sbInsertRecord.Images := iButtonsDark;
   sbQuickEntry.Images := iButtonsDark;
@@ -4060,6 +4058,11 @@ begin
   UpdateChildRightPanel;
 
   TimerRecordUpdate.Enabled := False;
+
+  FImageList.Clear;
+  gridImages.RowCount := 0;
+  gridImages.Invalidate;
+
   TimerRecordUpdate.Enabled := True;
 end;
 
@@ -4661,6 +4664,9 @@ begin
   tvSiteFilter.NodeDataSize := SizeOf(PSiteNodeData);
   tvDateFilter.NodeDataSize := SizeOf(PDateNodeData);
 
+  // Initialize the attached images list
+  FImageList := TAttachedImageList.Create(True);
+
   // Initialize the child tabs
   panelTabs := specialize TFPGList<TCustomPanelTab>.Create;
 
@@ -4696,6 +4702,8 @@ begin
   for PanelTab in panelTabs do
     PanelTab.Free;
   panelTabs.Free;
+
+  FImageList.Free;
 
   FreeAndNil(FSearch);
 
@@ -5231,6 +5239,158 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.gridImagesDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
+const
+  CellPadding = 6;
+  ThumbTextGap = 10;
+  LineHeight = 20;
+
+  // Truncate text with a trailing ellipsis if it doesn't fit in AMaxWidth
+  function EllipsisText(ACanvas: TCanvas; const AText: String; AMaxWidth: Integer): String;
+  begin
+    Result := AText;
+    if ACanvas.TextWidth(Result) <= AMaxWidth then
+      Exit;
+    while (Length(Result) > 0) and (ACanvas.TextWidth(Result + '...') > AMaxWidth) do
+      Delete(Result, Length(Result), 1);
+    Result := Result + '...';
+  end;
+
+var
+  Grid: TDrawGrid;
+  Item: TAttachedImageItem;
+  RThumb, RText, SrcRect, ErrRect: TRect;
+  ThumbSize, TextTop, SrcSize, ErrHeight: Integer;
+  ScaleFactor: Single;
+  IconSize: Integer;
+begin
+  Grid := TDrawGrid(Sender);
+
+  if (aRow < 0) or (aRow >= FImageList.Count) then
+    Exit;
+  Item := FImageList[aRow];
+  ScaleFactor := Screen.PixelsPerInch / 96;
+  IconSize := Round(20 * ScaleFactor);
+
+  // Background (highlight for selected row)
+  if gdSelected in aState then
+  begin
+    Grid.Canvas.Brush.Color := clHighlight;
+    Grid.Canvas.Font.Color := clHighlightText;
+  end
+  else
+  begin
+    Grid.Canvas.Brush.Color := clWindow;
+    Grid.Canvas.Font.Color := clWindowText;
+  end;
+  Grid.Canvas.FillRect(aRect);
+
+  // Square thumbnail filling the row height on the left, metadata on the right
+  ThumbSize := aRect.Height - (CellPadding * 2);
+  RThumb := Rect(aRect.Left + CellPadding, aRect.Top + CellPadding,
+    aRect.Left + CellPadding + ThumbSize, aRect.Top + CellPadding + ThumbSize);
+  RText := Rect(RThumb.Right + ThumbTextGap, aRect.Top + CellPadding, aRect.Right - CellPadding, aRect.Bottom - CellPadding);
+
+  // Draw the thumbnail, an error badge, or a placeholder
+  if (Item.Thumbnail.Width > 0) then
+  begin
+    // Center-crop the source to a square so it fills RThumb without distortion
+    SrcSize := Min(Item.Thumbnail.Width, Item.Thumbnail.Height);
+    SrcRect := Rect((Item.Thumbnail.Width - SrcSize) div 2, (Item.Thumbnail.Height - SrcSize) div 2,
+      (Item.Thumbnail.Width - SrcSize) div 2 + SrcSize, (Item.Thumbnail.Height - SrcSize) div 2 + SrcSize);
+    Grid.Canvas.CopyRect(RThumb, Item.Thumbnail.Bitmap.Canvas, SrcRect);
+    Grid.Canvas.Pen.Color := clMedGray;
+    Grid.Canvas.FrameRect(RThumb);
+  end
+  //else if Item.HasError then
+  //begin
+  //  Grid.Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+  //  Grid.Canvas.Pen.Color := ActiveTheme.System.CriticalFG;
+  //  Grid.Canvas.Rectangle(RThumb);
+  //  if IsDarkModeEnabled then
+  //    iIconsDark.DrawForPPI(Grid.Canvas, (RThumb.Right - RThumb.Width div 2) - (IconSize div 2),
+        //(RThumb.Bottom - RThumb.Height div 2) - (IconSize div 2), 41, 20,
+  //      Screen.PixelsPerInch, ScaleFactor)
+  //  else
+  //    iIcons.DrawForPPI(Grid.Canvas, (RThumb.Right - RThumb.Width div 2) - (IconSize div 2),
+        //(RThumb.Bottom - RThumb.Height div 2) - (IconSize div 2), 41, 20,
+  //      Screen.PixelsPerInch, ScaleFactor);
+  //end
+  else
+  begin
+    Grid.Canvas.Brush.Color := ActiveTheme.Background.CardDefault;
+    Grid.Canvas.Pen.Color := ActiveTheme.Border.Default;
+    Grid.Canvas.Rectangle(RThumb);
+    if IsDarkModeEnabled then
+      iIconsDark.DrawForPPI(Grid.Canvas, (RThumb.Right - RThumb.Width div 2) - (IconSize div 2),
+        (RThumb.Bottom - RThumb.Height div 2) - (IconSize div 2), 42, 20,
+        Screen.PixelsPerInch, ScaleFactor)
+    else
+      iIcons.DrawForPPI(Grid.Canvas, (RThumb.Right - RThumb.Width div 2) - (IconSize div 2),
+        (RThumb.Bottom - RThumb.Height div 2) - (IconSize div 2), 42, 20,
+        Screen.PixelsPerInch, ScaleFactor);
+  end;
+
+  // Overlay the error icon when the thumbnail is shown but the original file is missing
+  if Item.HasError then
+  begin
+    if IsDarkModeEnabled then
+      iIconsDark.DrawForPPI(Grid.Canvas, RText.Right - IconSize - 2, RText.Bottom - IconSize - 2, 41, 20,
+        Screen.PixelsPerInch, ScaleFactor)
+    else
+      iIcons.DrawForPPI(Grid.Canvas, RText.Right - IconSize - 2, RText.Bottom - IconSize - 2, 41, 20,
+        Screen.PixelsPerInch, ScaleFactor);
+  end;
+
+  // Metadata (everything except Subtitle), drawn to the right of the thumbnail
+  if gdSelected in aState then
+  begin
+    Grid.Canvas.Brush.Color := clHighlight;
+    Grid.Canvas.Font.Color := clHighlightText;
+  end
+  else
+  begin
+    Grid.Canvas.Brush.Color := clWindow;
+    Grid.Canvas.Font.Color := clWindowText;
+  end;
+
+  Grid.Canvas.Font.Bold := True;
+  Grid.Canvas.TextOut(RText.Left, RText.Top, EllipsisText(Grid.Canvas, ExtractFileName(Item.FileName), RText.Width));
+  Grid.Canvas.Font.Bold := False;
+  TextTop := RText.Top + LineHeight;
+
+  Grid.Canvas.TextOut(RText.Left, TextTop, EllipsisText(Grid.Canvas, Trim(Item.ImageDate + ' ' + Item.ImageTime), RText.Width));
+  Inc(TextTop, LineHeight);
+  Grid.Canvas.TextOut(RText.Left, TextTop, EllipsisText(Grid.Canvas, Item.ImageType, RText.Width));
+  Inc(TextTop, LineHeight);
+  Grid.Canvas.TextOut(RText.Left, TextTop, EllipsisText(Grid.Canvas, Item.AuthorName, RText.Width));
+  Inc(TextTop, LineHeight);
+
+  if Item.HasError then
+  begin
+    Grid.Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    // Word-wrap the error message, capped to two lines within the remaining space
+    ErrRect := Rect(RText.Left, TextTop, RText.Right, RText.Bottom);
+    DrawText(Grid.Canvas.Handle, PChar(Item.ErrorMessage), Length(Item.ErrorMessage), ErrRect,
+      DT_WORDBREAK or DT_LEFT or DT_NOPREFIX or DT_CALCRECT);
+    ErrHeight := Max(ErrRect.Bottom - TextTop, LineHeight * 2);
+    ErrRect := Rect(RText.Left, TextTop, RText.Right, TextTop + ErrHeight);
+    DrawText(Grid.Canvas.Handle, PChar(Item.ErrorMessage), Length(Item.ErrorMessage), ErrRect,
+      DT_WORDBREAK or DT_LEFT or DT_NOPREFIX);
+    Inc(TextTop, ErrHeight);
+    if gdSelected in aState then
+      Grid.Canvas.Font.Color := clHighlightText
+    else
+      Grid.Canvas.Font.Color := clWindowText;
+  end;
+end;
+
+procedure TfrmCustomGrid.gridImagesSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
+begin
+  if (gridImages.RowCount > 0) then
+    qImages.RecNo := aRow + 1;
+end;
+
 procedure TfrmCustomGrid.gridRecordDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect;
   aState: TGridDrawState);
 var
@@ -5408,6 +5568,51 @@ begin
   {$ENDIF}
 end;
 
+procedure TfrmCustomGrid.LoadImagesMetadataFromDB;
+var
+  Item: TAttachedImageItem;
+  FullFilePath: String;
+begin
+  FImageList.Clear;
+
+  if not qImages.Active then
+    Exit;
+
+  // Avoid re-entrant DataChange events while scrolling through qImages
+  qImages.DisableControls;
+  try
+    qImages.First;
+    while not qImages.EOF do
+    begin
+      Item := TAttachedImageItem.Create;
+      Item.ImageID := qImages.FieldByName('image_id').AsInteger;
+      Item.FileName := qImages.FieldByName('file_path').AsString;
+      Item.ImageDate := qImages.FieldByName('image_date').DisplayText;
+      Item.ImageTime := qImages.FieldByName('image_time').DisplayText;
+      Item.ImageType := qImages.FieldByName('image_type').DisplayText;
+      Item.Subtitle := qImages.FieldByName('subtitle').AsString;
+      Item.AuthorName := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, qImages.FieldByName('author_id').AsInteger);
+
+      FullFilePath := CreateAbsolutePath(Item.FileName, xSettings.ImagesFolder);
+      if not FileExists(FullFilePath) then
+      begin
+        Item.HasError := True;
+        Item.ErrorMessage := Format(rsImageNotFound, [FullFilePath]);
+      end;
+
+      FImageList.Add(Item);
+      qImages.Next;
+    end;
+  finally
+    qImages.EnableControls;
+  end;
+
+  gridImages.RowCount := FImageList.Count;
+
+  LoadThumbnailsForVisibleRows;
+  gridImages.Invalidate;
+end;
+
 procedure TfrmCustomGrid.LoadRecordColumns;
 var
   i, RowIndex: Integer;
@@ -5465,6 +5670,59 @@ begin
     end;
   finally
     gridRecord.EndUpdate;
+  end;
+end;
+
+procedure TfrmCustomGrid.LoadThumbnailsForVisibleRows;
+var
+  i, StartRow, EndRow: Integer;
+  Item: TAttachedImageItem;
+  Thumb: TBGRABitmap;
+  Stream: TMemoryStream;
+begin
+  if FImageList.Count = 0 then
+    Exit;
+
+  // Calculate which rows are visible
+  StartRow := gridImages.TopRow;
+  EndRow := StartRow + gridImages.VisibleRowCount;
+  if EndRow >= FImageList.Count then
+    EndRow := FImageList.Count - 1;
+
+  for i := 0 to FImageList.Count - 1 do
+  begin
+    Item := FImageList[i];
+
+    // Load the thumbnail even if the original file is missing (HasError), since it comes from the BLOB
+    if Item.Thumbnail.Width = 0 then
+    begin
+      // Locate the matching record to read its thumbnail BLOB
+      if qImages.Locate(COL_IMAGE_ID, Item.ImageID, []) and not qImagesimage_thumbnail.IsNull then
+      begin
+        Stream := TMemoryStream.Create;
+        try
+          qImagesimage_thumbnail.SaveToStream(Stream);
+          Stream.Position := OFFSET_MEMORY_STREAM;
+          try
+            Thumb := TBGRABitmap.Create(Stream);
+            try
+              Item.Thumbnail.Bitmap.SetSize(Thumb.Width, Thumb.Height);
+              Thumb.Draw(Item.Thumbnail.Bitmap.Canvas, 0, 0, True);
+            finally
+              Thumb.Free;
+            end;
+          except
+            on E: Exception do
+            begin
+              Item.HasError := True;
+              Item.ErrorMessage := rsErrorLoadingImageThumbnail;
+            end;
+          end;
+        finally
+          Stream.Free;
+        end;
+      end;
+    end;
   end;
 end;
 
@@ -6811,13 +7069,6 @@ end;
 procedure TfrmCustomGrid.qImagesBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
-
-  { Load hierarchies }
-  //if not DataSet.FieldByName('taxon_id').IsNull then
-  //  GetTaxonHierarchy(DataSet, DataSet.FieldByName('taxon_id').AsInteger);
-  //
-  //if not DataSet.FieldByName('locality_id').IsNull then
-  //  GetSiteHierarchy(DataSet, DataSet.FieldByName('locality_id').AsInteger);
 end;
 
 procedure TfrmCustomGrid.qImagesimage_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
@@ -7891,8 +8142,16 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbImageInfoClick(Sender: TObject);
+var
+  needsRefresh: Boolean;
 begin
-  EditImageInfo(qImages, dsLink.DataSet, FTableType);
+  needsRefresh := EditImageInfo(qImages, dsLink.DataSet, FTableType);
+
+  if needsRefresh then
+  begin
+    UpdateImageButtons(qImages);
+    TimerRecordUpdate.Enabled := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbInsertBatchClick(Sender: TObject);
@@ -8515,6 +8774,8 @@ begin
         xSettings.FirstMediaAdded := False;
         xSettings.SaveOnboarding('/ONBOARDING/FirstMediaAdded', False);
       end;
+      if (cpSide.ActivePageComponent = cardImages) then
+        gridImages.Invalidate;
     end
     else
     if (cpSide.ActivePageComponent = cardSummary) then
@@ -9263,6 +9524,8 @@ begin
 
   DS := dsLink.DataSet;
   aId := DS.FieldByName(GetPrimaryKey(DS)).AsInteger;
+
+  LoadImagesMetadataFromDB;
 
   aStatus := GetRecordVerification(TABLE_NAMES[FTableType], aId, aTotalProblems);
 

@@ -21,7 +21,7 @@ unit data_blobs;
 interface
 
 uses
-  Classes, SysUtils, Forms, Dialogs, LazFileUtils, DB, SQLDB, Graphics, ExtCtrls,
+  Classes, SysUtils, Forms, Dialogs, LazFileUtils, DB, SQLDB, Graphics, ExtCtrls, Generics.Collections,
   BGRABitmap, BGRABitmapTypes, fpeMetadata, FPImage,
   data_types, models_media;
 
@@ -29,6 +29,28 @@ const
   OFFSET_MEMORY_STREAM: Int64 = 0;
   THUMB_SIZE: Integer = 360;    // pixels
   THUMB_QUALITY: Integer = 75;  // percent
+
+type
+
+  { TAttachedImageItem }
+
+  TAttachedImageItem = class
+  public
+    ImageID: Integer;
+    FileName: String;
+    ImageDate: String;
+    ImageTime: String;
+    ImageType: String;
+    Subtitle: String;
+    AuthorName: String;
+    Thumbnail: TPicture;
+    HasError: Boolean;
+    ErrorMessage: String;
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+  TAttachedImageList = specialize TObjectList<TAttachedImageItem>;
 
   { Image (BLOB field) manipulation }
   function AddImage(aDataset: TDataset; aPathField: String;
@@ -39,7 +61,8 @@ const
   procedure ExcluiFoto(DataSet: TDataset; aBlobField: String);
   procedure ExportaFoto(DataSet: TDataset; aBlobField, FileName: String);
 
-  procedure CreateImageThumbnail(aFileName: String; aDataSet: TDataSet);
+  procedure CreateImageThumbnail(aFileName: String; aDataSet: TDataSet); overload;
+  procedure CreateImageThumbnail(aFileName: String; aParam: TParam); overload;
   procedure RecreateThumbnails;
 
   procedure ViewImage(aDataSet: TDataSet);
@@ -281,6 +304,133 @@ var
   imgOrientation: TExifOrientation;
   sthumb: TStream;
   imgThumb: TBGRABitmap;
+  aTag: TTag;
+  CreationDate: TDateTime;
+  long, lat: Double;
+begin
+  long := 500;
+  lat := 500;
+
+  if not (FileExists(aFileName)) then
+  begin
+    LogError(Format(rsImageNotFound, [aFileName]));
+    Exit;
+  end;
+
+  { Initialize with default value to prevent undefined behavior }
+  imgOrientation := eoNormal;
+
+  { Load image EXIF data }
+  imgExif := TImgInfo.Create;
+  with imgExif do
+  try
+    LoadFromFile(aFileName);
+    if HasEXIF then
+    begin
+      aTag := ExifData.TagByName['DateTimeOriginal'];
+      CreationDate := (aTag as TDateTimeTag).AsDateTime;
+      if not IsNaN(ExifData.GPSLongitude) then
+        long := ExifData.GPSLongitude;
+      if not IsNaN(ExifData.GPSLatitude) then
+        lat := ExifData.GPSLatitude;
+      try
+        imgOrientation := ExifData.ImgOrientation;
+      except
+        on E: Exception do
+        begin
+          {$IFDEF DEBUG}
+          LogDebug(Format('Error reading EXIF orientation from %s: %s', [aFileName, E.Message]));
+          {$ENDIF}
+          imgOrientation := eoNormal;
+        end;
+      end;
+    end;
+  finally
+    FreeAndNil(imgExif);
+  end;
+
+  imgThumb := TBGRABitmap.Create(aFileName);
+  try
+    { Validate image dimensions to prevent division by zero }
+    if (imgThumb.Width = 0) or (imgThumb.Height = 0) then
+    begin
+      LogError(Format('Invalid image dimensions (zero size): %s', [aFileName]));
+      Exit;
+    end;
+
+    // Get the scale factor for thumbnail image using the larger side
+    if imgThumb.Height > imgThumb.Width then
+      bmpFactor := THUMB_SIZE / imgThumb.Height
+    else
+      bmpFactor := THUMB_SIZE / imgThumb.Width;
+
+    BGRAReplace(imgThumb, imgThumb.Resample(Round(imgThumb.Width * bmpFactor), Round(imgThumb.Height * bmpFactor), rmSimpleStretch));
+
+    { Correct image orientation }
+    case imgOrientation of
+      eoUnknown: ;                          // Unknown - do nothing
+      eoNormal: ;                           // Horizontal - No rotation required
+      eoMirrorHor:                          // Flip horizontal
+        imgThumb.HorizontalFlip;
+      eoRotate180:                          // Rotate 180 CW
+        begin
+          imgThumb.HorizontalFlip;
+          imgThumb.VerticalFlip;
+        end;
+      eoMirrorVert:                         // Flip vertical
+        imgThumb.VerticalFlip;
+      eoMirrorHorRot270:                    // Rotate 270 CW and flip horizontal
+        begin
+          imgThumb.HorizontalFlip;
+          BGRAReplace(imgThumb, imgThumb.RotateCCW);
+        end;
+      eoRotate90:                           // Rotate 90 CW
+        BGRAReplace(imgThumb, imgThumb.RotateCW);
+      eoMirrorHorRot90:                     // Rotate 90 CW and flip horizontal
+        begin
+          imgThumb.HorizontalFlip;
+          BGRAReplace(imgThumb, imgThumb.RotateCW);
+        end;
+      eoRotate270:                          // Rotate 270 CW
+        BGRAReplace(imgThumb, imgThumb.RotateCCW);
+    end;
+
+    { Encode image as JPEG }
+    sthumb := TMemoryStream.Create;
+    try
+      sthumb.Position := OFFSET_MEMORY_STREAM;
+
+      imgThumb.SaveToStreamAs(sthumb, TBGRAImageFormat.ifJpeg);
+
+      sthumb.Position := OFFSET_MEMORY_STREAM;
+      TBlobField(aDataSet.FieldByName(COL_IMAGE_THUMBNAIL)).LoadFromStream(sthumb);
+
+      if aDataSet.FieldByName('image_date').IsNull then
+        aDataSet.FieldByName('image_date').AsDateTime := CreationDate;
+      if aDataSet.FieldByName('image_time').IsNull then
+        aDataSet.FieldByName('image_time').AsDateTime := CreationDate;
+      if (long < 200) and (lat < 200) then
+      begin
+        if aDataSet.FieldByName('longitude').IsNull then
+          aDataSet.FieldByName('longitude').AsFloat := long;
+        if aDataSet.FieldByName('latitude').IsNull then
+          aDataSet.FieldByName('latitude').AsFloat := lat;
+      end;
+    finally
+      sthumb.Free;
+    end;
+  finally
+    FreeAndNil(imgThumb);
+  end;
+end;
+
+procedure CreateImageThumbnail(aFileName: String; aParam: TParam);
+var
+  bmpFactor: Single;
+  imgExif: TImgInfo;
+  imgOrientation: TExifOrientation;
+  sthumb: TStream;
+  imgThumb: TBGRABitmap;
 begin
   if not (FileExists(aFileName)) then
   begin
@@ -368,7 +518,9 @@ begin
       imgThumb.SaveToStreamAs(sthumb, TBGRAImageFormat.ifJpeg);
 
       sthumb.Position := OFFSET_MEMORY_STREAM;
-      TBlobField(aDataSet.FieldByName(COL_IMAGE_THUMBNAIL)).LoadFromStream(sthumb);
+
+      aParam.DataType := ftBlob;
+      aParam.LoadFromStream(sthumb, ftBlob);
     finally
       sthumb.Free;
     end;
@@ -506,6 +658,21 @@ begin
     FreeAndNil(frmImageViewer);
     LogEvent(leaClose, 'Image viewer');
   end;
+end;
+
+{ TAttachedImageItem }
+
+constructor TAttachedImageItem.Create;
+begin
+  inherited Create;
+  Thumbnail := TPicture.Create;
+  HasError := False;
+end;
+
+destructor TAttachedImageItem.Destroy;
+begin
+  Thumbnail.Free;
+  inherited Destroy;
 end;
 
 end.

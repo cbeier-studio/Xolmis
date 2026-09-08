@@ -91,6 +91,7 @@ type
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAuthorButtonClick(Sender: TObject);
     procedure eAuthorKeyPress(Sender: TObject; var Key: char);
+    procedure eFilePathChange(Sender: TObject);
     procedure eImageDateButtonClick(Sender: TObject);
     procedure eImageDateEditingDone(Sender: TObject);
     procedure eFilePathButtonClick(Sender: TObject);
@@ -120,6 +121,8 @@ type
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
+    procedure MediaFileExists;
+    function ValidateMediaFile: TModalResult;
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Image: TImageData read FImage write SetImage;
@@ -142,7 +145,7 @@ implementation
 
 uses
   utils_global, utils_locale, utils_dialogs, utils_finddialogs, utils_conversions, utils_editdialogs, utils_gis,
-  utils_validations,
+  utils_validations, utils_themes,
   data_types, data_consts, data_getvalue, data_columns, models_record_types, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -253,6 +256,11 @@ begin
   DMM.OpenImgs.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenImgs.Execute then
     eFilePath.Text := DMM.OpenImgs.FileName;
+end;
+
+procedure TedtImageInfo.eFilePathChange(Sender: TObject);
+begin
+  MediaFileExists;
 end;
 
 procedure TedtImageInfo.eImageTimeKeyPress(Sender: TObject; var Key: char);
@@ -505,7 +513,11 @@ begin
     Add(rsLicenseCommercial);
   end;
   if not FIsNew then
+  begin
     GetRecord;
+    MediaFileExists;
+    sbSave.Enabled := IsRequiredFilled;
+  end;
 end;
 
 procedure TedtImageInfo.GetRecord;
@@ -514,7 +526,8 @@ begin
   FAuthorId := FImage.AuthorId;
   eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   eImageDate.Text := DateToStr(FImage.ImageDate);
-  eImageTime.Text := TimeToStr(FImage.ImageTime);
+  if FImage.ImageTime <> NullTime then
+    eImageTime.Text := FormatDateTime('hh:nn', FImage.ImageTime);
   case FImage.ImageType of
     itBirdInHandFlank: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdInHandFlank);
     itBirdInHandBelly: cbImageType.ItemIndex := cbImageType.Items.IndexOf(rsBirdInHandBelly);
@@ -559,12 +572,16 @@ begin
   else
     cbCoordinatePrecision.ItemIndex := -1;
   end;
-  eLongitude.Text := FloatToStr(FImage.Longitude);
-  eLatitude.Text := FloatToStr(FImage.Latitude);
+  if (FImage.Longitude <> 0) and (FImage.Latitude <> 0) then
+  begin
+    eLongitude.Text := FloatToStr(FImage.Longitude);
+    eLatitude.Text := FloatToStr(FImage.Latitude);
+  end;
   FTaxonId := FImage.TaxonId;
   eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
   cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FImage.LicenseType);
-  eLicenseYear.Text := IntToStr(FImage.LicenseYear);
+  if (FImage.LicenseYear > 0) then
+    eLicenseYear.Text := IntToStr(FImage.LicenseYear);
   eLicenseOwner.Text := FImage.LicenseOwner;
   eLicenseNotes.Text := FImage.LicenseNotes;
   eLicenseUri.Text := FImage.LicenseUri;
@@ -577,6 +594,20 @@ begin
   if (eImageDate.Text <> EmptyStr) and
     (eFilePath.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtImageInfo.MediaFileExists;
+begin
+  if not FileExists(eFilePath.Text) then
+  begin
+    eFilePath.Color := ActiveTheme.System.CriticalBG;
+    eFilePath.Font.Color := ActiveTheme.System.CriticalFG;
+  end
+  else
+  begin
+    eFilePath.Color := clWindow;
+    eFilePath.Font.Color := clDefault;
+  end;
 end;
 
 procedure TedtImageInfo.pmnNewLocalityClick(Sender: TObject);
@@ -594,6 +625,11 @@ begin
   // Validate data
   if not ValidateFields then
     Exit;
+
+  case ValidateMediaFile of
+    mrIgnore: ;
+    mrCancel: Exit;
+  end;
 
   SetRecord;
 
@@ -625,6 +661,43 @@ begin
   FImage.LicenseOwner := eLicenseOwner.Text;
   FImage.LicenseNotes := eLicenseNotes.Text;
   FImage.LicenseUri   := eLicenseUri.Text;
+end;
+
+function TedtImageInfo.ValidateMediaFile: TModalResult;
+var
+  dlgTask: TTaskDialog;
+  btnCustom: TTaskDialogBaseButtonItem;
+begin
+  Result := mrNone;
+
+  if (eFilePath.Text = EmptyStr) then
+    Exit;
+
+  if not FileExists(eFilePath.Text) then
+  begin
+    dlgTask := TTaskDialog.Create(nil);
+    try
+      dlgTask.Title := rsTitleFileNotFound;
+      dlgTask.Caption := APP_NAME;
+      dlgTask.Text := Format(rsPromptMediaFileNotFound, [eFilePath.Text]);
+      dlgTask.MainIcon := tdiQuestion;
+      dlgTask.Flags := dlgTask.Flags + [tfUseCommandLinks];
+      dlgTask.CommonButtons := [];
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsIgnoreAction;
+      btnCustom.ModalResult := mrIgnore;
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsCancelAction;
+      btnCustom.ModalResult := mrCancel;
+
+      if dlgTask.Execute then
+        Result := dlgTask.ModalResult;
+    finally
+      dlgTask.Free;
+    end;
+  end;
 end;
 
 function TedtImageInfo.ValidateFields: Boolean;
@@ -663,9 +736,9 @@ begin
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   // Files
-  if (eFilePath.Text <> EmptyStr) then
-    if not FileExists(eFilePath.Text) then
-      Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
+  //if (eFilePath.Text <> EmptyStr) then
+  //  if not FileExists(eFilePath.Text) then
+  //    Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
 
   if Msgs.Count > 0 then
   begin

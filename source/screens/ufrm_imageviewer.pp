@@ -269,7 +269,7 @@ begin
 
   if (dsLink.DataSet = nil) or (not dsLink.DataSet.Active) or dsLink.DataSet.IsEmpty then
   begin
-    SetImageUnavailable('0 × 0 px');
+    SetImageUnavailable(rsNoRecordsFound);
     Exit;
   end;
 

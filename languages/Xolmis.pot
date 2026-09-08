@@ -14504,6 +14504,11 @@ msgctxt "utils_locale.rscalculatingbandbalance"
 msgid "Calculating band balance..."
 msgstr ""
 
+#: utils_locale.rscancelaction
+msgctxt "utils_locale.rscancelaction"
+msgid "Cancel"
+msgstr ""
+
 #: utils_locale.rscanceleditingprompt
 msgctxt "utils_locale.rscanceleditingprompt"
 msgid ""
@@ -16087,6 +16092,10 @@ msgstr ""
 
 #: utils_locale.rserrorloadingfieldschema
 msgid "The field schema was not loaded."
+msgstr ""
+
+#: utils_locale.rserrorloadingimagethumbnail
+msgid "Error loading image thumbnail."
 msgstr ""
 
 #: utils_locale.rserrorloadingreport
@@ -18876,6 +18885,11 @@ msgctxt "utils_locale.rspromptbackupnow"
 msgid "The automatic backup will start now and may take several minutes. Do you want to proceed with the backup?"
 msgstr ""
 
+#: utils_locale.rspromptmediafilenotfound
+#, object-pascal-format
+msgid "The media file \"%s\" was not found. How do you want to proceed?"
+msgstr ""
+
 #: utils_locale.rspromptmigratemediapath
 #, object-pascal-format
 msgid ""
@@ -19929,6 +19943,10 @@ msgstr ""
 #: utils_locale.rstitlefeathersandmolt
 msgctxt "utils_locale.rstitlefeathersandmolt"
 msgid "Feathers and molt"
+msgstr ""
+
+#: utils_locale.rstitlefilenotfound
+msgid "File not found"
 msgstr ""
 
 #: utils_locale.rstitlegazetteer

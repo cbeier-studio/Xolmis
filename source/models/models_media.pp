@@ -21,7 +21,8 @@ unit models_media;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, models_record_types, utils_global, io_core;
+  Classes, SysUtils, DB, SQLDB, fpjson, DateUtils, LazFileUtils,
+  models_record_types, utils_global, io_core;
 
 type
   TAttachMediaType = (amtImages, amtAudios, amtVideos, amtDocuments);
@@ -422,7 +423,7 @@ implementation
 
 uses
   utils_locale, utils_validations, utils_conversions,
-  data_columns, data_setparam, data_consts, data_getvalue, data_providers,
+  data_columns, data_setparam, data_consts, data_getvalue, data_providers, data_blobs,
   models_users;
 
 { TImageData }
@@ -851,6 +852,7 @@ begin
     R.ImageDate := FieldByName('image_date').AsDateTime;
     R.ImageTime := FieldByName('image_time').AsDateTime;
     R.ImageType := StrtoImageType(FieldByName('image_type').AsString);
+    R.Subtitle := FieldByName('subtitle').AsString;
     R.FilePath := FieldByName('file_path').AsString;
     R.AuthorId := FieldByName('author_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
@@ -906,7 +908,8 @@ begin
     ParamByName('file_path').AsString := R.FilePath;
     if R.FilePath <> EmptyStr then
     begin
-      { #todo : Insert image thumbnail using Params }
+      if FileExists(CreateAbsolutePath(R.FilePath, xSettings.ImagesFolder)) then
+        CreateImageThumbnail(CreateAbsolutePath(R.FilePath, xSettings.ImagesFolder), ParamByName('image_thumbnail'));
     end
     else
       ParamByName('image_thumbnail').Clear;
@@ -974,7 +977,8 @@ begin
     ParamByName('file_path').AsString := R.FilePath;
     if R.FilePath <> EmptyStr then
     begin
-      { #todo : Insert image thumbnail using Params }
+      if FileExists(CreateAbsolutePath(R.FilePath, xSettings.ImagesFolder)) then
+        CreateImageThumbnail(CreateAbsolutePath(R.FilePath, xSettings.ImagesFolder), ParamByName('image_thumbnail'));
     end
     else
       ParamByName('image_thumbnail').Clear;

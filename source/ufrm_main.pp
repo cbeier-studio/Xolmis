@@ -1363,14 +1363,14 @@ begin
     //  AddTip(sbInsertRecord, 2, 'Use the New button to insert records without the need to open the modules.', olBottom);
     //  NextTip;
     //end;
-  end
-  else
-  begin
-    LogEvent(leaEnd, '-----------------------------------------');
-    if Assigned(xSettings) then
-      xSettings.Free;
-    if Assigned(ActiveUser) then
-      FreeAndNil(ActiveUser);
+  //end
+  //else
+  //begin
+  //  LogEvent(leaEnd, '-----------------------------------------');
+    //if Assigned(xSettings) then
+    //  xSettings.Free;
+    //if Assigned(ActiveUser) then
+    //  FreeAndNil(ActiveUser);
   end;
 end;
 

@@ -343,7 +343,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM sightings ';
 
   case aWhere of
@@ -512,7 +513,8 @@ begin
       'datetime(so.update_date, ''localtime'') AS update_date, ' +
       'so.exported_status, ' +
       'so.marked_status, ' +
-      'so.active_status ' +
+      'so.active_status, ' +
+      'so.inactivated_by ' +
     'FROM sighting_observers AS so ' +
     'LEFT JOIN people AS p ON so.person_id = p.person_id ';
 

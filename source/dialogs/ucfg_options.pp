@@ -198,7 +198,8 @@ type
     procedure eBackupPathChange(Sender: TObject);
     procedure eBandSupplierButtonClick(Sender: TObject);
     procedure eBandSupplierKeyPress(Sender: TObject; var Key: char);
-    procedure eImagesPathChange(Sender: TObject);
+    procedure eImagesPathAcceptDirectory(Sender: TObject; var Value: String);
+    procedure eImagesPathEditingDone(Sender: TObject);
     procedure eVideosPathChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -533,7 +534,24 @@ begin
   //end;
 end;
 
-procedure TcfgOptions.eImagesPathChange(Sender: TObject);
+procedure TcfgOptions.eImagesPathAcceptDirectory(Sender: TObject; var Value: String);
+begin
+  if Value = EmptyStr then
+  begin
+    Value := xSettings.ImagesFolder;
+    Exit;
+  end;
+
+  {$IFNDEF DEBUG}
+  if not DirectoryExists(Value) then
+  begin
+    Value := xSettings.ImagesFolder;
+    Exit;
+  end;
+  {$ENDIF}
+end;
+
+procedure TcfgOptions.eImagesPathEditingDone(Sender: TObject);
 var
   OldPath, NewPath: String;
 begin
@@ -638,8 +656,9 @@ begin
         OldRelPath := Trim(QrySel.FieldByName(COL_FILE_PATH).AsString);
         if (OldRelPath <> EmptyStr) and (not (aSkipUrls and IsLikelyUrl(OldRelPath))) then
         begin
-          OldAbsPath := CreateAbsolutePath(OldRelPath, aOldBaseFolder);
-          NewRelPath := ExtractRelativePath(aNewBaseFolder, OldAbsPath);
+          //OldAbsPath := CreateAbsolutePath(OldRelPath, aOldBaseFolder);
+          NewRelPath := StringReplace(OldRelPath, aOldBaseFolder, aNewBaseFolder, [rfIgnoreCase]);
+          //ExtractRelativePath(aNewBaseFolder, OldAbsPath);
 
           if not SameText(OldRelPath, NewRelPath) then
           begin

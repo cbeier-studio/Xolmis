@@ -261,7 +261,8 @@ begin
       'exported_status, ' +
       'queued_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM individuals ';
 
   //  dbPostgres:
@@ -879,7 +880,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM captures ';
 
   case aWhere of
@@ -1228,7 +1230,8 @@ begin
       'update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM feathers ';
 
   case aWhere of

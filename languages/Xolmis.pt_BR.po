@@ -14498,6 +14498,11 @@ msgctxt "utils_locale.rscalculatingbandbalance"
 msgid "Calculating band balance..."
 msgstr "Calculando o saldo das anilhas..."
 
+#: utils_locale.rscancelaction
+msgctxt "utils_locale.rscancelaction"
+msgid "Cancel"
+msgstr "Cancelar"
+
 #: utils_locale.rscanceleditingprompt
 msgctxt "utils_locale.rscanceleditingprompt"
 msgid ""
@@ -16086,6 +16091,10 @@ msgstr "Erro carregando dados do arquivo JSON: %s"
 #: utils_locale.rserrorloadingfieldschema
 msgid "The field schema was not loaded."
 msgstr "O esquema do campo não foi carregado."
+
+#: utils_locale.rserrorloadingimagethumbnail
+msgid "Error loading image thumbnail."
+msgstr "Erro ao carregar miniatura da imagem."
 
 #: utils_locale.rserrorloadingreport
 msgid "Error loading report."
@@ -19039,6 +19048,11 @@ msgctxt "utils_locale.rspromptbackupnow"
 msgid "The automatic backup will start now and may take several minutes. Do you want to proceed with the backup?"
 msgstr "O backup automático irá iniciar agora e pode demorar vários minutos. Você deseja continuar com o backup?"
 
+#: utils_locale.rspromptmediafilenotfound
+#, object-pascal-format
+msgid "The media file \"%s\" was not found. How do you want to proceed?"
+msgstr "O arquivo de mídia \"%s\" não foi encontrado. Como deseja proceder?"
+
 #: utils_locale.rspromptmigratemediapath
 #, object-pascal-format
 msgid ""
@@ -20106,6 +20120,10 @@ msgctxt "utils_locale.rstitlefeathersandmolt"
 msgid "Feathers and molt"
 msgstr "Penas e muda"
 
+#: utils_locale.rstitlefilenotfound
+msgid "File not found"
+msgstr "Arquivo não encontrado"
+
 #: utils_locale.rstitlegazetteer
 msgctxt "utils_locale.rstitlegazetteer"
 msgid "Gazetteer"
@@ -20766,4 +20784,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-

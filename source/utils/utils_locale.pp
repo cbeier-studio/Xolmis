@@ -139,6 +139,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsTitleProfilePicture = 'Profile picture';
     rsTitleValidateSchema = 'Validate schema';
     rsTitleImportProfiles = 'Import profiles';
+    rsTitleFileNotFound = 'File not found';
     rsClosing = 'Closing...';
 
     { Input messages }
@@ -238,6 +239,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorLoadingFieldSchema = 'The field schema was not loaded.';
     rsErrorLoadingDataFromJSONFile = 'Error loading data from the JSON file: %s';
     rsErrorLoadingReport = 'Error loading report.';
+    rsErrorLoadingImageThumbnail = 'Error loading image thumbnail.';
     rsErrorExportingEbird = 'Error exporting eBird data: %s';
     rsErrorValidationFailed = 'Data validation found issues.';
     rsErrorSavingPDF = 'Error saving PDF.';
@@ -378,7 +380,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsImageNotSupported = 'Image type not supported: %s';
     rsImageNotFound = 'Image file not found: %s';
     rsImagePathIsEmpty = 'No image file path';
-
+    rsPromptMediaFileNotFound = 'The media file "%s" was not found. How do you want to proceed?';
 
     { Preparation messages }
     rsPreparingBackup = 'Preparing backup...';
@@ -457,6 +459,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsViewAlertAction = 'View alert';
     rsViewReportAction = 'View report';
     rsIgnoreAction = 'Ignore';
+    rsCancelAction = 'Cancel';
     rsBandExhaustedNotification = 'Band stock exhausted';
     rsBandExhaustedMessage = 'Band stock is exhausted for %d size(s).' + LineEnding + 'Affected sizes: %s.';
     rsBandRunningLowNotification = 'Band stock running low';
