@@ -22,7 +22,7 @@ unit data_types;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, DB, SQLDB, RegExpr, StrUtils, fgl;
+  Classes, SysUtils, Dialogs, DB, SQLDB, RegExpr, StrUtils, fgl, Generics.Collections;
 
 type
   TDatabaseBackend = (dbSqlite, dbFirebird, dbPostgre, dbMaria);
@@ -511,6 +511,16 @@ type
     property ShowFilter: Boolean read FShowFilter write FShowFilter;
     property Fields: TTableFields read FFields write FFields;
   end;
+
+type
+  TRecycleItem = class
+  public
+    RecordID: Integer;
+    RecordName: String;
+    RecordDate: String;
+  end;
+
+  TRecycleList = specialize TObjectList<TRecycleItem>;
 
 var
   UID: TGUID;

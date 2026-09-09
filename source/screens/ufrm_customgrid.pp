@@ -52,6 +52,7 @@ type
   TfrmCustomGrid = class(TForm)
     cbCategoryFilter: TComboBox;
     cbMapProvider: TComboBox;
+    dbgRecycle: TDrawGrid;
     gridImages: TDrawGrid;
     dsLink7: TDataSource;
     dsVideos: TDataSource;
@@ -63,6 +64,7 @@ type
     iSearch: TImageList;
     iSearchDark: TImageList;
     lblCategoryFilter: TLabel;
+    lblRecycleStatus: TLabel;
     lblProjectBalance: TLabel;
     lblRubricBalance: TLabel;
     pmcNewOccurrencePoint: TMenuItem;
@@ -83,6 +85,7 @@ type
     pmvPlayVideo: TMenuItem;
     pmvRefreshVideos: TMenuItem;
     pmVideos: TPopupMenu;
+    pRecycleStatus: TBCPanel;
     pSearch: TBCPanel;
     pVideosToolbar: TBCPanel;
     pmpBandsBalance: TMenuItem;
@@ -257,7 +260,6 @@ type
     gridSummary: TDBGrid;
     dsRecycle: TDataSource;
     DBG: TDBGrid;
-    dbgRecycle: TDBControlGrid;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     icoReportedFilter: TImage;
@@ -272,7 +274,6 @@ type
     lblEscapedFilter: TLabel;
     lblNeedsReviewFilter: TLabel;
     lblRecycleWarning: TLabel;
-    lblRecycleId: TDBText;
     dsLink: TDataSource;
     dsLink1: TDataSource;
     dsLink2: TDataSource;
@@ -346,8 +347,6 @@ type
     lblInstitutionFilter: TLabel;
     lblRecordStatus: TLabel;
     lblChildStatus: TLabel;
-    lblRecycleModifiedDate: TDBText;
-    lblRecycleName: TDBText;
     lblProjectFilter: TLabel;
     cardMap: TPage;
     mapGeo: TMapView;
@@ -569,7 +568,6 @@ type
     pRecordToolbar: TBCPanel;
     pColumnsToolbar: TBCPanel;
     pImagesToolbar: TBCPanel;
-    pRecycleContent: TPanel;
     pSkullOssificationFilter: TBCPanel;
     pStartTimeFilter: TBCPanel;
     cbBroodPatchFilter: TComboBox;
@@ -950,6 +948,8 @@ type
       var Handled: Boolean);
     procedure DBGPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn;
       AState: TGridDrawState);
+    procedure dbgRecycleDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
+    procedure dbgRecycleSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
     procedure DBGSelectEditor(Sender: TObject; Column: TColumn; var Editor: TWinControl);
     procedure dsAudiosDataChange(Sender: TObject; Field: TField);
     procedure dsAudiosStateChange(Sender: TObject);
@@ -1245,6 +1245,7 @@ type
     FChildPanelFactor: Double;
     FDragging: Boolean;
     FImageList: TAttachedImageList;
+    FRecycleList: TRecycleList;
     cellMemo: TMemo;
 
     panelTabs: specialize TFPGList<TCustomPanelTab>;
@@ -1279,6 +1280,7 @@ type
     procedure LoadRecordRow;
     procedure LoadImagesMetadataFromDB;
     procedure LoadThumbnailsForVisibleRows;
+    procedure LoadRecycleMetadataFromDB;
 
     procedure OnAutoAdjustColumnsChanged;
     procedure OnDatesFilterChanged;
@@ -2337,6 +2339,8 @@ begin
   pColumnsToolbar.Border.Color := ActiveTheme.Background.CardSecondary;
   pRecycleToolbar.Background.Color := ActiveTheme.Background.CardDefault;
   pRecycleToolbar.Border.Color := ActiveTheme.Background.CardSecondary;
+  pRecycleStatus.Background.Color := ActiveTheme.Background.CardDefault;
+  pRecycleStatus.Border.Color := ActiveTheme.Background.CardSecondary;
   pRecycleWarning.Background.Color := ActiveTheme.System.AttentionBG;
   pRecycleWarning.Border.Color := ActiveTheme.System.AttentionFG;
   pMsgSummary.Background.Color := ActiveTheme.Background.CardDefault;
@@ -3905,6 +3909,66 @@ begin
   //end;
 end;
 
+procedure TfrmCustomGrid.dbgRecycleDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
+const
+  CellPadding = 6;
+  LineHeight = 20;
+
+  // Truncate text with a trailing ellipsis if it doesn't fit in AMaxWidth
+  function EllipsisText(ACanvas: TCanvas; const AText: String; AMaxWidth: Integer): String;
+  begin
+    Result := AText;
+    if ACanvas.TextWidth(Result) <= AMaxWidth then
+      Exit;
+    while (Length(Result) > 0) and (ACanvas.TextWidth(Result + '...') > AMaxWidth) do
+      Delete(Result, Length(Result), 1);
+    Result := Result + '...';
+  end;
+
+var
+  Grid: TDrawGrid;
+  RText: TRect;
+  TextTop: Integer;
+  Item: TRecycleItem;
+begin
+  Grid := TDrawGrid(Sender);
+
+  if (aRow < 0) or (aRow >= FRecycleList.Count) then
+    Exit;
+  Item := FRecycleList[aRow];
+
+  // Background (highlight for selected row)
+  if gdSelected in aState then
+  begin
+    Grid.Canvas.Brush.Color := clHighlight;
+    Grid.Canvas.Font.Color := clHighlightText;
+  end
+  else
+  begin
+    Grid.Canvas.Brush.Color := clWindow;
+    Grid.Canvas.Font.Color := clWindowText;
+  end;
+  Grid.Canvas.FillRect(aRect);
+
+  // Square thumbnail filling the row height on the left, metadata on the right
+  RText := Rect(aRect.Left + CellPadding, aRect.Top + CellPadding, aRect.Right - CellPadding, aRect.Bottom - CellPadding);
+
+  // Metadata (everything except Subtitle), drawn to the right of the thumbnail
+  Grid.Canvas.Font.Bold := True;
+  Grid.Canvas.TextOut(RText.Left, RText.Top, EllipsisText(Grid.Canvas, Item.RecordName, RText.Width));
+  Grid.Canvas.Font.Bold := False;
+  TextTop := RText.Top + LineHeight;
+
+  Grid.Canvas.TextOut(RText.Left, TextTop, EllipsisText(Grid.Canvas,
+    Trim(Item.RecordDate) + ' • ID # ' + IntToStr(Item.RecordID), RText.Width));
+end;
+
+procedure TfrmCustomGrid.dbgRecycleSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
+begin
+  if (dbgRecycle.RowCount > 0) then
+    qRecycle.RecNo := aRow + 1;
+end;
+
 procedure TfrmCustomGrid.DBGSelectEditor(Sender: TObject; Column: TColumn; var Editor: TWinControl);
 begin
   if isOpening or isClosing then
@@ -4666,6 +4730,7 @@ begin
 
   // Initialize the attached images list
   FImageList := TAttachedImageList.Create(True);
+  FRecycleList := TRecycleList.Create(True);
 
   // Initialize the child tabs
   panelTabs := specialize TFPGList<TCustomPanelTab>.Create;
@@ -4704,6 +4769,7 @@ begin
   panelTabs.Free;
 
   FImageList.Free;
+  FRecycleList.Free;
 
   FreeAndNil(FSearch);
 
@@ -5387,7 +5453,7 @@ end;
 
 procedure TfrmCustomGrid.gridImagesSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
 begin
-  if (gridImages.RowCount > 0) then
+  if (FImageList.Count > 0) then
     qImages.RecNo := aRow + 1;
 end;
 
@@ -5671,6 +5737,46 @@ begin
   finally
     gridRecord.EndUpdate;
   end;
+end;
+
+procedure TfrmCustomGrid.LoadRecycleMetadataFromDB;
+var
+  Item: TRecycleItem;
+begin
+  FRecycleList.Clear;
+
+  if not qRecycle.Active then
+    Exit;
+
+  // Avoid re-entrant DataChange events while scrolling through qRecycle
+  qRecycle.DisableControls;
+  try
+    qRecycle.First;
+    while not qRecycle.EOF do
+    begin
+      Item := TRecycleItem.Create;
+      Item.RecordID := qRecycle.FieldByName('record_id').AsInteger;
+      Item.RecordName := qRecycle.FieldByName('record_name').AsString;
+      Item.RecordDate := qRecycle.FieldByName('update_date').AsString;
+
+      FRecycleList.Add(Item);
+      qRecycle.Next;
+    end;
+  finally
+    qRecycle.EnableControls;
+  end;
+
+  dbgRecycle.RowCount := FRecycleList.Count;
+
+  if FRecycleList.Count < 1 then
+    lblRecycleStatus.Caption := rsNoRecordsFound
+  else
+  if FRecycleList.Count = 1 then
+    lblRecycleStatus.Caption := Format(rsRecordsFound, [FRecycleList.Count])
+  else
+    lblRecycleStatus.Caption := Format(rsRecordsFoundPlural, [FRecycleList.Count]);
+
+  dbgRecycle.Invalidate;
 end;
 
 procedure TfrmCustomGrid.LoadThumbnailsForVisibleRows;
@@ -7962,6 +8068,8 @@ begin
     end;
   end;
   UpdateRecycleButtons(dsRecycle.DataSet);
+  dbgRecycle.RowCount := 0;
+  LoadRecycleMetadataFromDB;
   isWorking := False;
 end;
 
@@ -8016,6 +8124,8 @@ begin
     // Update the recycle bin
     dsRecycle.DataSet.Refresh;
     UpdateRecycleButtons(dsRecycle.DataSet);
+    dbgRecycle.RowCount := 0;
+    LoadRecycleMetadataFromDB;
   finally
     isWorking := False;
   end;
@@ -8632,7 +8742,8 @@ begin
     // Update the recycle bin
     dsRecycle.DataSet.Refresh;
     UpdateRecycleButtons(dsRecycle.DataSet);
-    dbgRecycle.Refresh;
+    dbgRecycle.RowCount := 0;
+    LoadRecycleMetadataFromDB;
   finally
     isWorking := False;
   end;
@@ -9309,13 +9420,15 @@ begin
     end;
   end;
   qRecycle.MacroByName('FTABLE').AsString := TABLE_NAMES[FTableType];
-  lblRecycleId.DataField := qRecycle.MacroByName('FID').AsString;
-  lblRecycleName.DataField := qRecycle.MacroByName('FNAME').AsString;
+  //lblRecycleId.DataField := qRecycle.MacroByName('FID').AsString;
+  //lblRecycleName.DataField := qRecycle.MacroByName('FNAME').AsString;
 
   qRecycle.Open;
 
   lblRecycleWarning.Caption := Format(rsRecycleAutoDeleteInfo, [xSettings.ClearDeletedPeriod * 30]);
   pRecycleWarning.Visible := xSettings.ClearDeletedPeriod > 0;
+
+  LoadRecycleMetadataFromDB;
 end;
 
 procedure TfrmCustomGrid.SetSidePanel(aValue: Boolean);

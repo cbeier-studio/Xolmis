@@ -10957,11 +10957,6 @@ msgctxt "tfrmcustomgrid.lblcategoryfilter.caption"
 msgid "Category"
 msgstr "Categoria"
 
-#: tfrmcustomgrid.lblchildstatus.caption
-msgctxt "tfrmcustomgrid.lblchildstatus.caption"
-msgid "Loading records..."
-msgstr "Carregando registros..."
-
 #: tfrmcustomgrid.lblclementsfilter.caption
 msgctxt "tfrmcustomgrid.lblclementsfilter.caption"
 msgid "Clements/eBird"

@@ -10968,11 +10968,6 @@ msgctxt "tfrmcustomgrid.lblcategoryfilter.caption"
 msgid "Category"
 msgstr ""
 
-#: tfrmcustomgrid.lblchildstatus.caption
-msgctxt "tfrmcustomgrid.lblchildstatus.caption"
-msgid "Loading records..."
-msgstr ""
-
 #: tfrmcustomgrid.lblclementsfilter.caption
 msgctxt "tfrmcustomgrid.lblclementsfilter.caption"
 msgid "Clements/eBird"

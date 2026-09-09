@@ -207,6 +207,7 @@
 {"hash":21385604,"name":"tfrmcustomgrid.sbrestorerecord.caption","sourcebytes":[82,101,115,116,111,114,101,32,115,101,108,101,99,116,101,100],"value":"Restore selected"},
 {"hash":93503657,"name":"tfrmcustomgrid.sbdelpermanently.caption","sourcebytes":[68,101,108,101,116,101,32,112,101,114,109,97,110,101,110,116,108,121],"value":"Delete permanently"},
 {"hash":161031582,"name":"tfrmcustomgrid.lblrecyclewarning.caption","sourcebytes":[84,104,101,32,114,101,99,111,114,100,115,32,116,104,97,116,32,115,116,97,121,101,100,32,109,111,114,101,32,116,104,97,110,32,88,88,32,100,97,121,115,32,105,110,32,116,104,101,32,114,101,99,121,99,108,101,32,98,105,110,32,119,105,108,108,32,98,101,32,100,101,108,101,116,101,100,32,97,117,116,111,109,97,116,105,99,97,108,121,46],"value":"The records that stayed more than XX days in the recycle bin will be deleted automaticaly."},
+{"hash":120172974,"name":"tfrmcustomgrid.lblrecyclestatus.caption","sourcebytes":[76,111,97,100,105,110,103,32,114,101,99,111,114,100,115,46,46,46],"value":"Loading records..."},
 {"hash":21376,"name":"tfrmcustomgrid.titlemap.caption","sourcebytes":[77,97,112],"value":"Map"},
 {"hash":241060595,"name":"tfrmcustomgrid.sbsharemappoints.hint","sourcebytes":[69,120,112,111,114,116,32,109,97,112,32,112,111,105,110,116,115],"value":"Export map points"},
 {"hash":116547620,"name":"tfrmcustomgrid.cbmapprovider.text","sourcebytes":[79,112,101,110,83,116,114,101,101,116,77,97,112,32,83,116,97,110,100,97,114,100],"value":"OpenStreetMap Standard"},
