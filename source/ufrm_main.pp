@@ -24,7 +24,7 @@ uses
   Classes, SysUtils, FileUtil, LCLIntf, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, DB, SQLDB, Buttons,
   ActnList, ExtCtrls, StdCtrls, atTabs, BCPanel, BCTypes, ColorSpeedButton, DateUtils, Types, ImgList,
   DefaultTranslator, ufrm_customgrid, TDICardPanel, udlg_rechistory,
-  data_types, utils_global;
+  data_types, utils_global, utils_media;
 
 type
 
@@ -338,6 +338,7 @@ type
     FNestNeedingRevisionCheckDone: Boolean;
     FNotificationCheckTimer: TTimer;
     FScheduledNotificationChecks: array of TScheduledNotificationCheck;
+    FThumbManager: TThumbnailManager;
     procedure OpenTab(Sender: TObject; aForm: TForm; aFormClass: TComponentClass; aCaption: String;
       Pinned: Boolean);
     procedure OpenForm(Sender: TObject; var aForm: TfrmCustomGrid; aTableType: TTableType;
@@ -364,7 +365,9 @@ type
     procedure RefreshNotifications;
     procedure UpdateStatusBar;
     procedure UpdateMenu(aTab: TPage = nil);
+    procedure DoPurgeCache;
 
+    procedure ScheduleCachePurge;
     procedure ScheduleNotificationCheck(const CheckName: String;
       CheckProc: TScheduledNotificationCheckProc; DelayMs: Integer = 3000);
     procedure CheckBandStockNotifications;
@@ -979,6 +982,16 @@ begin
   end;
 end;
 
+procedure TfrmMain.DoPurgeCache;
+begin
+  FThumbManager := TThumbnailManager.Create;
+  try
+    FThumbManager.PurgeCache;
+  finally
+    FThumbManager.Free;
+  end;
+end;
+
 // Discards tabs/datasets bound to the previous database content and reloads the UI after a restore
 procedure TfrmMain.OnDatabaseRestored;
 begin
@@ -1229,6 +1242,8 @@ begin
   // Load version in status bar
   SBar.Panels[6].Text := GetBuildInfoAsString;
   //lblSbarVersion.Caption := GetBuildInfoAsString;
+
+  ScheduleCachePurge;
 
   // Show splash screen
   pSplash.Top := 0;
@@ -1963,6 +1978,18 @@ begin
   begin
     RefreshNotifications;
     FNotificationsNeedUpdate := False;
+  end;
+end;
+
+procedure TfrmMain.ScheduleCachePurge;
+begin
+  if (Date - xSettings.LastCachePurgeDate) >= 1 then
+  begin
+    xSettings.LastCachePurgeDate := Now;
+    xSettings.SaveToFile;
+
+    // Executa em Thread desacoplada para não travar a UI
+    TThumbnailPurgeThread.Create(False);
   end;
 end;
 

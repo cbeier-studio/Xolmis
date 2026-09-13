@@ -4989,7 +4989,7 @@ begin
 
           // Import media by type
           if (sbShowImages.Visible) and (Ext in SUPPORTED_IMAGE_EXTENSIONS) then
-            AddImage(qImages, COL_IMAGE_FILENAME, FileNames[i], FAttachment)
+            AddImage(FileNames[i], FAttachment)
           else
           if (sbShowAudio.Visible) and (Ext in SUPPORTED_AUDIO_EXTENSIONS) then
             AddAudio(FileNames[i], FAttachment)
@@ -7801,7 +7801,7 @@ begin
         begin
           dlgProgress.Text := Format(rsProgressImportImages, [i + 1, DMM.OpenImgs.Files.Count]);
 
-          AddImage(qImages, COL_IMAGE_FILENAME, DMM.OpenImgs.Files[i], FAttachment);
+          AddImage(DMM.OpenImgs.Files[i], FAttachment);
 
           dlgProgress.Position := i + 1;
           Application.ProcessMessages;

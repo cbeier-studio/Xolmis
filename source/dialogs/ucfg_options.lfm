@@ -10,6 +10,7 @@ object cfgOptions: TcfgOptions
   PopupMode = pmAuto
   Position = poScreenCenter
   LCLVersion = '4.8.0.0'
+  OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
   object pBottom: TPanel
@@ -1693,7 +1694,7 @@ object cfgOptions: TcfgOptions
         Top = 48
         Width = 657
         HorzScrollBar.Page = 415
-        VertScrollBar.Page = 232
+        VertScrollBar.Page = 260
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 373
@@ -1702,7 +1703,7 @@ object cfgOptions: TcfgOptions
         TabOrder = 0
         object pContentMedia: TPanel
           Left = 0
-          Height = 232
+          Height = 260
           Top = 0
           Width = 657
           Align = alTop
@@ -1710,13 +1711,13 @@ object cfgOptions: TcfgOptions
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 8
-          ClientHeight = 232
+          ClientHeight = 260
           ClientWidth = 657
           ParentBackground = False
           TabOrder = 0
           object pMediaPath: TBCPanel
             Left = 16
-            Height = 65
+            Height = 93
             Top = 8
             Width = 625
             Align = alTop
@@ -1830,11 +1831,39 @@ object cfgOptions: TcfgOptions
               TabOrder = 1
               OnClick = btnForceMediaMigrationClick
             end
+            object lblThumbnailCache: TLabel
+              AnchorSideLeft.Control = icoMediaPath
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = txtMediaPath
+              AnchorSideTop.Side = asrBottom
+              Left = 44
+              Height = 15
+              Top = 61
+              Width = 154
+              Caption = 'Image thumbnail cache: 0 KB'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object btnClearThumbnailCache: TButton
+              AnchorSideTop.Control = lblThumbnailCache
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pMediaPath
+              AnchorSideRight.Side = asrBottom
+              Left = 522
+              Height = 25
+              Top = 56
+              Width = 87
+              Anchors = [akTop, akRight]
+              AutoSize = True
+              Caption = 'Clear cache'
+              TabOrder = 2
+              OnClick = btnClearThumbnailCacheClick
+            end
           end
           object pMoveMedia: TBCPanel
             Left = 16
             Height = 47
-            Top = 73
+            Top = 101
             Width = 625
             Align = alTop
             AutoSize = True
@@ -1926,7 +1955,7 @@ object cfgOptions: TcfgOptions
           object pOpenAfterExport: TBCPanel
             Left = 16
             Height = 47
-            Top = 177
+            Top = 205
             Width = 625
             Align = alTop
             BorderSpacing.Bottom = 8
@@ -2016,7 +2045,7 @@ object cfgOptions: TcfgOptions
           object pDeleteMedia: TBCPanel
             Left = 16
             Height = 49
-            Top = 120
+            Top = 148
             Width = 625
             Align = alTop
             AutoSize = True

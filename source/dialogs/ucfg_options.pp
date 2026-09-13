@@ -22,7 +22,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, ComCtrls, lclintf,
-  LazFileUtils, ToggleSwitch, atshapelinebgra, BCPanel, BCFluentSlider, Character, FileUtil, FileCtrl;
+  LazFileUtils, ToggleSwitch, atshapelinebgra, BCPanel, BCFluentSlider, Character, FileUtil, FileCtrl,
+  utils_media;
 
 type
 
@@ -30,6 +31,7 @@ type
 
   TcfgOptions = class(TForm)
     btnForceMediaMigration: TButton;
+    btnClearThumbnailCache: TButton;
     btnHelp: TSpeedButton;
     btnClearBandSupplier: TButton;
     btnChangeMediaPath: TButton;
@@ -44,6 +46,7 @@ type
     lblAutoSizeColumns: TLabel;
     lblAutoFillCoordinates: TLabel;
     lblBandSupplierInfo: TLabel;
+    lblThumbnailCache: TLabel;
     SelectDirDlg: TSelectDirectoryDialog;
     tsDeleteMediaFile: TToggleSwitch;
     txtMediaPath: TLabel;
@@ -185,6 +188,7 @@ type
     tvMenu: TTreeView;
     procedure btnChangeMediaPathClick(Sender: TObject);
     procedure btnClearBandSupplierClick(Sender: TObject);
+    procedure btnClearThumbnailCacheClick(Sender: TObject);
     procedure btnDefaultRowHeightClick(Sender: TObject);
     procedure btnForceMediaMigrationClick(Sender: TObject);
     procedure btnHelpClick(Sender: TObject);
@@ -198,6 +202,7 @@ type
     procedure eBackupPathChange(Sender: TObject);
     procedure eBandSupplierButtonClick(Sender: TObject);
     procedure eBandSupplierKeyPress(Sender: TObject; var Key: char);
+    procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure lblPrivacyTermsClick(Sender: TObject);
@@ -224,12 +229,14 @@ type
     procedure tvMenuSelectionChanged(Sender: TObject);
   private
     FLoadingConfig: Boolean;
+    FThumbManager: TThumbnailManager;
     procedure ApplyDarkMode;
     function IsLikelyUrl(const aValue: String): Boolean;
     function MigrateMediaPaths(const aTableName, aOldBaseFolder, aNewBaseFolder: String; MustMoveFiles: Boolean = True;
       aSkipUrls: Boolean = True): Integer;
     function ConfirmAndMigrateMediaPaths(aOldBaseFolder, aNewBaseFolder: String): Integer;
     procedure LoadConfig;
+    procedure RefreshCacheSizeDisplay;
   public
 
   end;
@@ -241,7 +248,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_backup, utils_autoupdate, utils_themes,
-  utils_finddialogs,
+  utils_finddialogs, utils_conversions,
   data_getvalue, data_types, data_consts, data_management,
   models_users, udm_main,
   uDarkStyleParams, SQLDB;
@@ -403,6 +410,21 @@ begin
   eBandSupplier.Clear;
 end;
 
+procedure TcfgOptions.btnClearThumbnailCacheClick(Sender: TObject);
+begin
+  if MsgDlg(rsClearThumbnailCache, rsClearThumbnailCachePrompt, mtConfirmation) then
+  begin
+    Screen.Cursor := crHourGlass;
+    try
+      FThumbManager.ClearAllCache;
+      RefreshCacheSizeDisplay;
+      ShowMessage(rsSuccessfulThumbnailCacheCleared);
+    finally
+      Screen.Cursor := crDefault;
+    end;
+  end;
+end;
+
 procedure TcfgOptions.btnDefaultRowHeightClick(Sender: TObject);
 begin
   //xSettings.DefaultRowHeight := DEFAULT_ROW_HEIGHT;
@@ -501,9 +523,16 @@ begin
   //end;
 end;
 
+procedure TcfgOptions.FormCreate(Sender: TObject);
+begin
+  FThumbManager := TThumbnailManager.Create;
+end;
+
 procedure TcfgOptions.FormDestroy(Sender: TObject);
 begin
   xSettings.SaveToFile;
+
+  FThumbManager.Free;
 end;
 
 function TcfgOptions.IsLikelyUrl(const aValue: String): Boolean;
@@ -567,6 +596,18 @@ begin
     QrySel.Close;
   finally
     QrySel.Free;
+  end;
+end;
+
+procedure TcfgOptions.RefreshCacheSizeDisplay;
+var
+  SizeBytes: Int64;
+begin
+  if Assigned(FThumbManager) then
+  begin
+    SizeBytes := FThumbManager.GetCacheSizeBytes;
+    lblThumbnailCache.Caption := Format(rsThumbnailCacheSize, [FormatBytes(SizeBytes)]);
+    btnClearThumbnailCache.Enabled := SizeBytes > 0;
   end;
 end;
 
@@ -697,6 +738,8 @@ begin
   tsShowOutliers.Enabled := tsUseConditionalFormatting.Checked;
   lblWriteDetailedLogs.Enabled := tsWriteLogs.Checked;
   tsWriteDetailedLogs.Enabled := tsWriteLogs.Checked;
+
+  RefreshCacheSizeDisplay;
 end;
 
 procedure TcfgOptions.lblPrivacyTermsClick(Sender: TObject);

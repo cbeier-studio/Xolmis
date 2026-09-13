@@ -255,6 +255,7 @@ type
     FDeleteMediaFile: Boolean;
     FMediaMigrated: Boolean;
     FOpenAfterExport: Boolean;
+    FLastCachePurge: TDateTime;
     { Security }
     FRememberUser, FRememberConnection: Boolean;
     FLastUser, FLastConnection: String;
@@ -335,6 +336,7 @@ type
     property DeleteMediaFile: Boolean read FDeleteMediaFile write FDeleteMediaFile;
     property MediaStorageMigrated: Boolean read FMediaMigrated write FMediaMigrated;
     property OpenFileAfterExport: Boolean read FOpenAfterExport write FOpenAfterExport;
+    property LastCachePurgeDate: TDateTime read FLastCachePurge write FLastCachePurge;
     { Security }
     property RememberUser: Boolean read FRememberUser write FRememberUser;
     property LastUser: String read FLastUser write FLastUser;
@@ -466,7 +468,6 @@ uses
   utils_locale, utils_conversions, data_management, models_users, udlg_connect, udlg_newdatabase;
 
 const
-  DBMETA_MEDIA_STORAGE_FOLDER = 'media_storage_folder';
   DBMETA_MEDIA_IMAGES_FOLDER = 'media_images_folder';
   DBMETA_MEDIA_AUDIOS_FOLDER = 'media_audios_folder';
   DBMETA_MEDIA_VIDEOS_FOLDER = 'media_videos_folder';
@@ -1375,6 +1376,7 @@ begin
   FDeleteMediaFile := FConfig.GetValue('/MEDIA/DeleteMediaFile', False);
   FMediaMigrated := FConfig.GetValue('/MEDIA/MediaStorageMigrated', False);
   FOpenAfterExport := FConfig.GetValue('/MEDIA/OpenAfterExport', True);
+  FLastCachePurge := FConfig.GetValue('/MEDIA/LastCachePurge', NullDateTime);
   { Security }
   FRememberUser := FConfig.GetValue('/SECURITY/RememberUser', False);
   FRememberConnection := FConfig.GetValue('/SECURITY/RememberConnection', True);
@@ -1480,6 +1482,7 @@ begin
   FConfig.SetValue('/MEDIA/DeleteMediaFile', FDeleteMediaFile);
   FConfig.SetValue('/MEDIA/MediaStorageMigrated', FMediaMigrated);
   FConfig.SetValue('/MEDIA/OpenAfterExport', FOpenAfterExport);
+  FConfig.SetValue('/MEDIA/LastCachePurge', FLastCachePurge);
   { Security }
   FConfig.SetValue('/SECURITY/RememberUser', FRememberUser);
   FConfig.SetValue('/SECURITY/RememberConnection', FRememberConnection);

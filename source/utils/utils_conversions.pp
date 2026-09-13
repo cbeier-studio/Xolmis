@@ -49,6 +49,8 @@ uses
   function StrToIntOrZero(aValue: String): Integer;
   function StrToFloatOrZero(aValue: String): Double;
 
+  function FormatBytes(const ABytes: Int64): String;
+
   // Convert to specific enum types
   function StrToAccessionType(const AValue: String): String;
   function StrToActivityStatus(const AValue: String): TActivityStatus;
@@ -366,6 +368,22 @@ begin
     Result := Fl
   else
     Result := 0.0;
+end;
+
+function FormatBytes(const ABytes: Int64): String;
+const
+  KB = 1024;         // 1 KB = 1024 bytes
+  MB = 1024 * KB;    // 1 MB = 1024 KB
+  GB = 1024 * MB;    // 1 GB = 1024 MB
+begin
+  if ABytes < KB then
+    Result := Format('%d B', [ABytes])
+  else if ABytes < MB then
+    Result := Format('%.1f KB', [ABytes / KB])
+  else if ABytes < GB then
+    Result := Format('%.2f MB', [ABytes / MB])
+  else
+    Result := Format('%.2f GB', [ABytes / GB]);
 end;
 
 { --------------------------------------------------------- }

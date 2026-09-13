@@ -21,9 +21,9 @@ unit utils_media;
 interface
 
 uses
-  SysUtils, Classes, Graphics, FileUtil, LazFileUtils, Math, HlpIHash, HlpHashFactory, Generics.Collections,
-  FPReadJPEG, FPWriteJPEG, FPReadPNG, FPWritePNG,
-  models_record_types;
+  SysUtils, Classes, Graphics, FileUtil, LazFileUtils, DB, Math, HlpIHash, HlpHashFactory, Generics.Collections,
+  FPReadJPEG, FPWriteJPEG, FPReadPNG, FPWritePNG, fpeMetadata,
+  models_record_types, models_media;
 
 const
   THUMBNAIL_SIZE: Integer = 300; // pixels
@@ -114,10 +114,14 @@ type
   public
     constructor Create;
 
+    // Retorna o tamanho total do cache em Bytes
+    function GetCacheSizeBytes: Int64;
     // Retorna a miniatura se já existir no cache.
     // Se não existir, dispara a geração em background e retorna False (usar placeholder).
     function GetThumbnailAsync(const AOriginalPath, AMediaHash: string; AItem: TAttachedImageItem): Boolean;
 
+    // Apaga 100% dos arquivos da pasta de cache (Limpeza Manual)
+    procedure ClearAllCache;
     procedure PurgeCache;
 
     property OnThumbnailReady: TOnThumbnailReady read FOnThumbnailReady write FOnThumbnailReady;
@@ -125,10 +129,141 @@ type
     property MaxDaysUnused: Integer read FMaxDaysUnused write FMaxDaysUnused default 60;
   end;
 
+  { TThumbnailPurgeThread }
+
+  TThumbnailPurgeThread = class(TThread)
+  private
+    FThumbManager: TThumbnailManager;
+  protected
+    procedure Execute; override;
+  public
+    constructor Create(CreateSuspended: Boolean);
+  end;
+
+  function AddImage(aFileName: String; aAttachment: TMediaAttachment): Boolean;
+  procedure ViewImage(aDataSet: TDataSet);
+
 implementation
 
 uses
-  utils_locale, utils_global;
+  utils_locale, utils_global, data_consts, udm_main, ufrm_imageviewer,
+  fpeGlobal, fpeTags, fpeExifData;
+
+function AddImage(aFileName: String; aAttachment: TMediaAttachment): Boolean;
+var
+  imgExif: TImgInfo;
+  aTag: TTag;
+  originalName, newPath, mediaHash: String;
+  CreationDate: TDateTime;
+  long, lat: Double;
+  Media: TImageData;
+  Repo: TImageRepository;
+  Manager: TMediaManager;
+begin
+  Result := False;
+
+  if not (FileExists(aFileName)) then
+  begin
+    raise EFileNotFoundException.CreateFmt(rsImageNotFound, [aFileName]);
+  end;
+
+  long := 500.0;
+  lat := 500.0;
+  Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+  try
+    newPath := Manager.ImportFile(aFileName, originalName, mediaHash, xSettings.MoveOriginalFile = mofAlwaysMove);
+  finally
+    Manager.Free;
+  end;
+
+  { Load image EXIF data }
+  imgExif := TImgInfo.Create;
+  with imgExif do
+  try
+    LoadFromFile(aFileName);
+    if HasEXIF then
+    begin
+      aTag := ExifData.TagByName['DateTimeOriginal'];
+      CreationDate := (aTag as TDateTimeTag).AsDateTime;
+      if not IsNaN(ExifData.GPSLongitude) then
+        long := ExifData.GPSLongitude;
+      if not IsNaN(ExifData.GPSLatitude) then
+        lat := ExifData.GPSLatitude;
+    end;
+  finally
+    FreeAndNil(imgExif);
+  end;
+
+  { Create image thumbnail as JPEG }
+  Repo := TImageRepository.Create(DMM.sqlCon);
+  Media := TImageData.Create();
+  try
+    Repo.FindBy(COL_ORIGINAL_FILENAME, originalName, Media);
+
+    if Media.IsNew then
+    begin
+      Media.FilePath := newPath;
+      Media.OriginalFilename := originalName;
+    end;
+    Media.FileHash := mediaHash;
+    Media.ImageDate := CreationDate;
+    Media.ImageTime := CreationDate;
+    if (long < 200) and (lat < 200) then
+    begin
+      Media.Longitude := long;
+      Media.Latitude := lat;
+    end;
+
+    if aAttachment.AuthorId > 0 then
+      Media.AuthorId := aAttachment.AuthorId;
+    if aAttachment.LocalityId > 0 then
+      Media.LocalityId := aAttachment.LocalityId;
+    if aAttachment.TaxonId > 0 then
+      Media.TaxonId := aAttachment.TaxonId;
+    if aAttachment.IndividualId > 0 then
+      Media.IndividualId := aAttachment.IndividualId;
+    if aAttachment.CaptureId > 0 then
+      Media.CaptureId := aAttachment.CaptureId;
+    if aAttachment.FeatherId > 0 then
+      Media.FeatherId := aAttachment.FeatherId;
+    if aAttachment.SurveyId > 0 then
+      Media.SurveyId := aAttachment.SurveyId;
+    if aAttachment.SightingId > 0 then
+      Media.SightingId := aAttachment.SightingId;
+    if aAttachment.NestId > 0 then
+      Media.NestId := aAttachment.NestId;
+    if aAttachment.NestRevisionId > 0 then
+      Media.NestRevisionId := aAttachment.NestRevisionId;
+    if aAttachment.EggId > 0 then
+      Media.EggId := aAttachment.EggId;
+    if aAttachment.SpecimenId > 0 then
+      Media.SpecimenId := aAttachment.SpecimenId;
+
+    if Media.IsNew then
+      Repo.Insert(Media)
+    else
+      Repo.Update(Media);
+
+    Result := True;
+  finally
+    Media.Free;
+    Repo.Free;
+  end;
+end;
+
+procedure ViewImage(aDataSet: TDataSet);
+begin
+  LogEvent(leaOpen, 'Image viewer');
+  frmImageViewer := TfrmImageViewer.Create(nil);
+  with frmImageViewer do
+  try
+    dsLink.DataSet := aDataSet;
+    ShowModal;
+  finally
+    FreeAndNil(frmImageViewer);
+    LogEvent(leaClose, 'Image viewer');
+  end;
+end;
 
 { TAttachedImageItem }
 
@@ -393,6 +528,66 @@ begin
   FMaxDaysUnused := 60;
 end;
 
+procedure TThumbnailManager.ClearAllCache;
+
+  procedure EmptyDir(const ADir: string);
+  var
+    SR: TSearchRec;
+  begin
+    if FindFirst(ADir + '*', faAnyFile, SR) = 0 then
+    begin
+      try
+        repeat
+          if (SR.Name <> '.') and (SR.Name <> '..') then
+          begin
+            if (SR.Attr and faDirectory) <> 0 then
+            begin
+              EmptyDir(ADir + SR.Name + DirectorySeparator);
+              RemoveDir(ADir + SR.Name);
+            end
+            else
+              DeleteFile(ADir + SR.Name);
+          end;
+        until FindNext(SR) <> 0;
+      finally
+        FindClose(SR);
+      end;
+    end;
+  end;
+
+begin
+  EmptyDir(FCacheDirectory);
+end;
+
+function TThumbnailManager.GetCacheSizeBytes: Int64;
+
+  procedure ScanDir(const ADir: string; var ATotal: Int64);
+  var
+    SR: TSearchRec;
+  begin
+    if FindFirst(ADir + '*', faAnyFile, SR) = 0 then
+    begin
+      try
+        repeat
+          if (SR.Name <> '.') and (SR.Name <> '..') then
+          begin
+            if (SR.Attr and faDirectory) <> 0 then
+              ScanDir(ADir + SR.Name + DirectorySeparator, ATotal)
+            else
+              Inc(ATotal, SR.Size);
+          end;
+        until FindNext(SR) <> 0;
+      finally
+        FindClose(SR);
+      end;
+    end;
+  end;
+
+begin
+  Result := 0;
+  ScanDir(FCacheDirectory, Result);
+end;
+
 function TThumbnailManager.GetThumbPath(const AMediaHash: string): string;
 var
   Sub1, Sub2: string;
@@ -441,7 +636,10 @@ end;
 
 procedure TThumbnailManager.PurgeCache;
 var
-  FileInfo: TSearchRec;
+  FileList: TStringList;
+  I: Integer;
+  TotalSizeBytes, MaxSizeBytes: Int64;
+  FilePath: string;
   FileDate: TDateTime;
   CutoffDate: TDateTime;
 
@@ -451,26 +649,86 @@ var
   begin
     if FindFirst(ADir + '*', faAnyFile, SR) = 0 then
     begin
-      repeat
-        if (SR.Name <> '.') and (SR.Name <> '..') then
-        begin
-          if (SR.Attr and faDirectory) <> 0 then
-            ScanDirectory(ADir + SR.Name + DirectorySeparator)
-          else
+      try
+        repeat
+          if (SR.Name <> '.') and (SR.Name <> '..') then
           begin
-            FileDate := FileDateToDateTime(SR.Time);
-            if FileDate < CutoffDate then
-              DeleteFile(ADir + SR.Name);
+            if (SR.Attr and faDirectory) <> 0 then
+              ScanDirectory(ADir + SR.Name + DirectorySeparator)
+            else
+            begin
+              // Guarda o caminho completo na lista para ordenação/análise
+              FileList.AddObject(ADir + SR.Name, TObject(IntPtr(SR.Size)));
+              Inc(TotalSizeBytes, SR.Size);
+            end;
           end;
-        end;
-      until FindNext(SR) <> 0;
-      FindClose(SR);
+        until FindNext(SR) <> 0;
+      finally
+        FindClose(SR);
+      end;
     end;
   end;
 
 begin
-  CutoffDate := Now - FMaxDaysUnused;
-  ScanDirectory(FCacheDirectory);
+  FileList := TStringList.Create;
+  try
+    TotalSizeBytes := 0;
+    CutoffDate := Now - FMaxDaysUnused;
+    MaxSizeBytes := Int64(FMaxCacheSizeMB) * 1024 * 1024;
+
+    // 1. Mapeia todos os arquivos do cache
+    ScanDirectory(FCacheDirectory);
+
+    // 2. Primeira passada: Remove arquivos mais antigos que MaxDaysUnused
+    for I := FileList.Count - 1 downto 0 do
+    begin
+      FilePath := FileList[I];
+      FileAge(FilePath, FileDate);
+      if FileDate < CutoffDate then
+      begin
+        Dec(TotalSizeBytes, Int64(IntPtr(FileList.Objects[I])));
+        DeleteFile(FilePath);
+        FileList.Delete(I);
+      end;
+    end;
+
+    // 3. Segunda passada: Se ainda ultrapassar MaxCacheSizeMB, apaga os mais antigos
+    if TotalSizeBytes > MaxSizeBytes then
+    begin
+      // Ordena por data de modificação (os menos acessados primeiro)
+      // E remove até TotalSizeBytes <= MaxSizeBytes
+      for I := 0 to FileList.Count - 1 do
+      begin
+        FilePath := FileList[I];
+        Dec(TotalSizeBytes, Int64(IntPtr(FileList.Objects[I])));
+        DeleteFile(FilePath);
+        if TotalSizeBytes <= MaxSizeBytes then
+          Break;
+      end;
+    end;
+  finally
+    FileList.Free;
+  end;
+end;
+
+{ TThumbnailPurgeThread }
+
+constructor TThumbnailPurgeThread.Create(CreateSuspended: Boolean);
+begin
+  inherited Create(CreateSuspended);
+
+  // Automatically clean up memory when the thread finishes execution
+  FreeOnTerminate := True;
+end;
+
+procedure TThumbnailPurgeThread.Execute;
+begin
+  FThumbManager := TThumbnailManager.Create;
+  try
+    FThumbManager.PurgeCache;
+  finally
+    FThumbManager.Free;
+  end;
 end;
 
 end.

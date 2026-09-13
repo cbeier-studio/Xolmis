@@ -331,6 +331,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsSuccessfulLoadImportProfile = 'Import profile loaded successfully.';
     rsSuccessfulSaveImportProfile = 'Import profile saved to database successfully.';
     rsSuccessfulExportImportProfile = 'Import profile exported successfully.';
+    rsSuccessfulThumbnailCacheCleared = 'Image thumbnail cache cleared successfully.';
 
     { Deletion messages }
     rsDeleteConnectionTitle = 'Delete connection';
@@ -995,6 +996,10 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsHintChangeFolderAndCopyFiles = 'Update the storage folder setting and create a copy all stored files in the new location.';
     rsMoveMediaFiles = 'Move media files';
     rsCopyMediaFiles = 'Copy media files';
+    rsClearThumbnailCache = 'Clear thumbnail cache';
+    rsClearThumbnailCachePrompt = 'Do you really want to delete all image thumbnails in cache?' + LineEnding +
+      'They will be created again automatically on demand.';
+    rsThumbnailCacheSize = 'Image thumbnails cache: %s';
 
     { Languages }
     rsEnglish = 'English';

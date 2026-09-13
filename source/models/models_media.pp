@@ -71,7 +71,6 @@ type
     FNestRevisionId: Integer;
     FEggId: Integer;
     FSpecimenId: Integer;
-    //FThumbnail: TBitmap;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
@@ -846,13 +845,6 @@ begin
     SetTimeParam(ParamByName('image_time'), R.ImageTime);
     ParamByName('image_type').AsString := IMAGE_TYPES[R.ImageType];
     ParamByName('file_path').AsString := R.FilePath;
-    if R.FilePath <> EmptyStr then
-    begin
-      if FileExists(CreateAbsolutePath(R.FilePath, xSettings.ImagesFolder)) then
-        CreateImageThumbnail(CreateAbsolutePath(R.FilePath, xSettings.ImagesFolder), ParamByName('image_thumbnail'));
-    end
-    else
-      ParamByName('image_thumbnail').Clear;
     ParamByName('original_filename').AsString := R.OriginalFilename;
     ParamByName('file_hash').AsString := R.FileHash;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
@@ -917,13 +909,6 @@ begin
     SetTimeParam(ParamByName('image_time'), R.ImageTime);
     ParamByName('image_type').AsString := IMAGE_TYPES[R.ImageType];
     ParamByName('file_path').AsString := R.FilePath;
-    if R.FilePath <> EmptyStr then
-    begin
-      if FileExists(CreateAbsolutePath(R.FilePath, xSettings.ImagesFolder)) then
-        CreateImageThumbnail(CreateAbsolutePath(R.FilePath, xSettings.ImagesFolder), ParamByName('image_thumbnail'));
-    end
-    else
-      ParamByName('image_thumbnail').Clear;
     ParamByName('original_filename').AsString := R.OriginalFilename;
     ParamByName('file_hash').AsString := R.FileHash;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);

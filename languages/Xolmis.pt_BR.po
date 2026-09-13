@@ -3396,6 +3396,10 @@ msgctxt "tcfgoptions.btnclearbandsupplier.caption"
 msgid "Clear"
 msgstr "Limpar"
 
+#: tcfgoptions.btnclearthumbnailcache.caption
+msgid "Clear cache"
+msgstr ""
+
 #: tcfgoptions.btndefaultrowheight.caption
 msgid "Set default"
 msgstr "Usar padrão"
@@ -3524,6 +3528,10 @@ msgstr "Página de início"
 msgctxt "tcfgoptions.lblstartupbackup.caption"
 msgid "Create backup when Xolmis closes"
 msgstr "Criar backup quando o Xolmis encerrar"
+
+#: tcfgoptions.lblthumbnailcache.caption
+msgid "Image thumbnail cache: 0 KB"
+msgstr ""
 
 #: tcfgoptions.lbltitleappearance.caption
 msgctxt "tcfgoptions.lbltitleappearance.caption"
@@ -14993,6 +15001,16 @@ msgctxt "utils_locale.rsclearlogsprompt"
 msgid "Do you really want to delete all log files?"
 msgstr "Deseja realmente apagar todos os arquivos de log?"
 
+#: utils_locale.rsclearthumbnailcache
+msgid "Clear thumbnail cache"
+msgstr ""
+
+#: utils_locale.rsclearthumbnailcacheprompt
+msgid ""
+"Do you really want to delete all image thumbnails in cache?\n"
+"They will be created again automatically on demand."
+msgstr ""
+
 #: utils_locale.rscloacalprotuberance
 msgctxt "utils_locale.rscloacalprotuberance"
 msgid "cloacal protuberance"
@@ -19887,6 +19905,10 @@ msgstr "Backup restaurado com sucesso: %s"
 msgid "Import profile saved to database successfully."
 msgstr "Perfil de importação salvo no banco de dados com sucesso."
 
+#: utils_locale.rssuccessfulthumbnailcachecleared
+msgid "Image thumbnail cache cleared successfully."
+msgstr ""
+
 #: utils_locale.rssuccessfultransferbands
 msgctxt "utils_locale.rssuccessfultransferbands"
 msgid "Bands transferred successfully!"
@@ -20015,6 +20037,11 @@ msgstr "Caixa de título"
 #: utils_locale.rstextcaseupper
 msgid "Upper case"
 msgstr "Caixa alta"
+
+#: utils_locale.rsthumbnailcachesize
+#, object-pascal-format
+msgid "Image thumbnails cache: %s"
+msgstr ""
 
 #: utils_locale.rstimecapture
 msgid "Capture time"
@@ -20836,3 +20863,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+

@@ -3419,6 +3419,10 @@ msgctxt "tcfgoptions.btnclearbandsupplier.caption"
 msgid "Clear"
 msgstr ""
 
+#: tcfgoptions.btnclearthumbnailcache.caption
+msgid "Clear cache"
+msgstr ""
+
 #: tcfgoptions.btndefaultrowheight.caption
 msgid "Set default"
 msgstr ""
@@ -3546,6 +3550,10 @@ msgstr ""
 #: tcfgoptions.lblstartupbackup.caption
 msgctxt "tcfgoptions.lblstartupbackup.caption"
 msgid "Create backup when Xolmis closes"
+msgstr ""
+
+#: tcfgoptions.lblthumbnailcache.caption
+msgid "Image thumbnail cache: 0 KB"
 msgstr ""
 
 #: tcfgoptions.lbltitleappearance.caption
@@ -14997,6 +15005,16 @@ msgctxt "utils_locale.rsclearlogsprompt"
 msgid "Do you really want to delete all log files?"
 msgstr ""
 
+#: utils_locale.rsclearthumbnailcache
+msgid "Clear thumbnail cache"
+msgstr ""
+
+#: utils_locale.rsclearthumbnailcacheprompt
+msgid ""
+"Do you really want to delete all image thumbnails in cache?\n"
+"They will be created again automatically on demand."
+msgstr ""
+
 #: utils_locale.rscloacalprotuberance
 msgctxt "utils_locale.rscloacalprotuberance"
 msgid "cloacal protuberance"
@@ -19704,6 +19722,10 @@ msgstr ""
 msgid "Import profile saved to database successfully."
 msgstr ""
 
+#: utils_locale.rssuccessfulthumbnailcachecleared
+msgid "Image thumbnail cache cleared successfully."
+msgstr ""
+
 #: utils_locale.rssuccessfultransferbands
 msgctxt "utils_locale.rssuccessfultransferbands"
 msgid "Bands transferred successfully!"
@@ -19831,6 +19853,11 @@ msgstr ""
 
 #: utils_locale.rstextcaseupper
 msgid "Upper case"
+msgstr ""
+
+#: utils_locale.rsthumbnailcachesize
+#, object-pascal-format
+msgid "Image thumbnails cache: %s"
 msgstr ""
 
 #: utils_locale.rstimecapture

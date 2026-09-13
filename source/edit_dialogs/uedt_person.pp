@@ -61,6 +61,7 @@ type
     eWebsite: TEdit;
     iButtons: TImageList;
     iButtonsDark: TImageList;
+    imgProfile: TImage;
     lblAbbreviation1: TLabel;
     lblCPF: TLabel;
     lblDeathDate: TLabel;
@@ -73,7 +74,6 @@ type
     pmnNewToponym: TMenuItem;
     mNotes: TMemo;
     pImageToolbar: TBCPanel;
-    imgProfile: TDBImage;
     dsLink: TDataSource;
     lblTreatment: TLabel;
     lblLattes: TLabel;
@@ -459,6 +459,9 @@ begin
     GetRecord;
     sbSave.Enabled := IsRequiredFilled;
   end;
+
+  // Temporarily disabled
+  pProfileImage.Visible := False;
 end;
 
 procedure TedtPerson.GetRecord;
@@ -511,12 +514,12 @@ end;
 
 procedure TedtPerson.mmCopyImageClick(Sender: TObject);
 begin
-  imgProfile.CopyToClipboard;
+  //imgProfile.CopyToClipboard;
 end;
 
 procedure TedtPerson.mmPasteImageClick(Sender: TObject);
 begin
-  imgProfile.PasteFromClipboard;
+  //imgProfile.PasteFromClipboard;
 end;
 
 procedure TedtPerson.pmnNewInstitutionClick(Sender: TObject);
@@ -533,7 +536,7 @@ procedure TedtPerson.sbAddImageClick(Sender: TObject);
 begin
   if DMM.OpenImgs.Execute then
   begin
-    dsLink.DataSet.Edit;
+    //dsLink.DataSet.Edit;
     imgProfile.Picture.LoadFromFile(DMM.OpenImgs.FileName);
     FPictureChanged := True;
   end;
@@ -543,7 +546,7 @@ procedure TedtPerson.sbRemoveImageClick(Sender: TObject);
 begin
   if MessageDlg(rsTitleProfilePicture, rsDeleteProfilePicture, mtConfirmation, mbYesNo, 0) = mrYes then
   begin
-    dsLink.DataSet.Edit;
+    //dsLink.DataSet.Edit;
     imgProfile.Picture.Clear;
     FPictureChanged := True;
   end;
@@ -557,8 +560,8 @@ begin
 
   SetRecord;
 
-  if FPictureChanged then
-    dsLink.DataSet.Post;
+  //if FPictureChanged then
+  //  dsLink.DataSet.Post;
 
   ModalResult := mrOk;
 end;

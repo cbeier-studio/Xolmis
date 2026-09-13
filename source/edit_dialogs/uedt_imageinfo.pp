@@ -122,7 +122,7 @@ type
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
-    procedure LoadThumbnail(aImageId: Integer);
+    procedure LoadThumbnail;
     procedure MediaFileExists;
     function ValidateMediaFile: TModalResult;
   public
@@ -589,7 +589,7 @@ begin
   eLicenseNotes.Text := FImage.LicenseNotes;
   eLicenseUri.Text := FImage.LicenseUri;
 
-
+  LoadThumbnail;
 end;
 
 function TedtImageInfo.IsRequiredFilled: Boolean;
@@ -600,50 +600,20 @@ begin
     Result := True;
 end;
 
-procedure TedtImageInfo.LoadThumbnail(aImageId: Integer);
+procedure TedtImageInfo.LoadThumbnail;
 var
-  Qry: TSQLQuery;
-  Stream: TMemoryStream;
-  Thumb: TBGRABitmap;
+  FullFilePath: String;
 begin
-  Qry := TSQLQuery.Create(nil);
-  with Qry, SQL do
-  try
-    SQLConnection := DMM.sqlCon;
+  FullFilePath := ConcatPaths([ThumbnailsDir, FImage.FilePath]);
 
-    Add('SELECT image_thumbnail FROM images');
-    Add('WHERE image_id = :image_id');
-    ParamByName('image_id').AsInteger := aImageId;
-    Open;
-    if not IsEmpty and not FieldByName(COL_IMAGE_THUMBNAIL).IsNull then
-    begin
-      Stream := TMemoryStream.Create;
-      try
-        TBlobField(FieldByName(COL_IMAGE_THUMBNAIL)).SaveToStream(Stream);
-        Stream.Position := 0;
-        try
-          Thumb := TBGRABitmap.Create(Stream);
-          try
-            imgThumbnail.Picture.Bitmap.SetSize(Thumb.Width, Thumb.Height);
-            Thumb.Draw(imgThumbnail.Picture.Bitmap.Canvas, 0, 0, True);
-          finally
-            Thumb.Free;
-          end;
-
-          imgThumbnail.Visible := imgThumbnail.Picture.Width > 0;
-        except
-          on E: Exception do
-          begin
-            icoFileError.Visible := True;
-            icoFileError.Hint := rsErrorLoadingImageThumbnail;
-          end;
-        end;
-      finally
-        Stream.Free;
-      end;
-    end;
-  finally
-    FreeAndNil(Qry);
+  if FileExists(FullFilePath) then
+  begin
+    imgThumbnail.Picture.LoadFromFile(FullFilePath);
+    imgThumbnail.Visible := True;
+  end
+  else
+  begin
+    imgThumbnail.Visible := False;
   end;
 end;
 

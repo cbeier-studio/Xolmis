@@ -21,9 +21,8 @@ unit data_blobs;
 interface
 
 uses
-  Classes, SysUtils, Forms, Dialogs, LazFileUtils, DB, SQLDB, Graphics, ExtCtrls, Generics.Collections,
-  BGRABitmap, BGRABitmapTypes, fpeMetadata, FPImage, FPWriteJPEG,
-  data_types, models_media;
+  Classes, SysUtils, Forms, Dialogs, LazFileUtils, DB, SQLDB, Graphics, ExtCtrls,
+  BGRABitmap, BGRABitmapTypes, fpeMetadata, FPImage, FPWriteJPEG;
 
 const
   OFFSET_MEMORY_STREAM: Int64 = 0;
@@ -31,142 +30,27 @@ const
   THUMB_QUALITY: Integer = 75;  // percent
 
   { Image (BLOB field) manipulation }
-  function AddImage(aDataset: TDataset; aPathField: String;
-    aFileName: String; aAttachment: TMediaAttachment): Boolean;
-  procedure ExibeFoto(DataSet: TDataset; aBlobField: String; TargetImage: TImage);
-  procedure GravaFoto(DataSet: TDataset; aBlobField, FileName: String);
-  procedure GravaJpeg(DataSet: TDataset; aBlobField: String; JpgImg: TJpegImage);
-  procedure ExcluiFoto(DataSet: TDataset; aBlobField: String);
-  procedure ExportaFoto(DataSet: TDataset; aBlobField, FileName: String);
+  procedure ExibeFoto(DataSet: TDataset; aBlobField: String; TargetImage: TImage); deprecated;
+  procedure GravaFoto(DataSet: TDataset; aBlobField, FileName: String); deprecated;
+  procedure GravaJpeg(DataSet: TDataset; aBlobField: String; JpgImg: TJpegImage); deprecated;
+  procedure ExcluiFoto(DataSet: TDataset; aBlobField: String); deprecated;
+  procedure ExportaFoto(DataSet: TDataset; aBlobField, FileName: String); deprecated;
 
-  procedure CreateImageThumbnail(aFileName: String; aDataSet: TDataSet); overload;
-  procedure CreateImageThumbnail(aFileName: String; aParam: TParam); overload;
-  procedure RecreateThumbnails;
-
-  procedure ViewImage(aDataSet: TDataSet);
+  procedure CreateImageThumbnail(aFileName: String; aDataSet: TDataSet); overload; deprecated;
+  procedure CreateImageThumbnail(aFileName: String; aParam: TParam); overload; deprecated;
+  procedure RecreateThumbnails; deprecated;
 
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_media, data_consts,
-  udm_main, udlg_progress, ufrm_imageviewer,
+  utils_locale, utils_global, utils_dialogs, data_consts,
+  udm_main, udlg_progress,
   {$IFDEF DEBUG}utils_debug,{$ENDIF}
   fpeGlobal, fpeTags, fpeExifData, Math, BGRAReadJpeg, BGRAWriteJpeg, BGRAThumbnail;
 
 { ----------------------------------------------------------------------------------------- }
 { Image (BLOB field) manipulation }
 { ----------------------------------------------------------------------------------------- }
-
-function AddImage(aDataset: TDataset; aPathField: String; aFileName: String; aAttachment: TMediaAttachment): Boolean;
-var
-  imgExif: TImgInfo;
-  aTag: TTag;
-  originalName, newPath, mediaHash: String;
-  CreationDate: TDateTime;
-  long, lat: Double;
-  Media: TImageData;
-  Repo: TImageRepository;
-  Manager: TMediaManager;
-begin
-  Result := False;
-
-  if not (FileExists(aFileName)) then
-  begin
-    raise EFileNotFoundException.CreateFmt(rsImageNotFound, [aFileName]);
-  end;
-
-  long := 500.0;
-  lat := 500.0;
-  Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
-  try
-    newPath := Manager.ImportFile(aFileName, originalName, mediaHash, xSettings.MoveOriginalFile = mofAlwaysMove);
-  finally
-    Manager.Free;
-  end;
-
-  { Load image EXIF data }
-  imgExif := TImgInfo.Create;
-  with imgExif do
-  try
-    LoadFromFile(aFileName);
-    if HasEXIF then
-    begin
-      aTag := ExifData.TagByName['DateTimeOriginal'];
-      CreationDate := (aTag as TDateTimeTag).AsDateTime;
-      if not IsNaN(ExifData.GPSLongitude) then
-        long := ExifData.GPSLongitude;
-      if not IsNaN(ExifData.GPSLatitude) then
-        lat := ExifData.GPSLatitude;
-    end;
-  finally
-    FreeAndNil(imgExif);
-  end;
-
-  { Create image thumbnail as JPEG }
-  Repo := TImageRepository.Create(DMM.sqlCon);
-  Media := TImageData.Create();
-  try
-    Repo.FindBy(COL_ORIGINAL_FILENAME, originalName, Media);
-
-    if Media.IsNew then
-    begin
-      Media.FilePath := newPath;
-      Media.OriginalFilename := originalName;
-    end;
-    Media.FileHash := mediaHash;
-    Media.ImageDate := CreationDate;
-    Media.ImageTime := CreationDate;
-    if (long < 200) and (lat < 200) then
-    begin
-      Media.Longitude := long;
-      Media.Latitude := lat;
-    end;
-
-    if aAttachment.AuthorId > 0 then
-      Media.AuthorId := aAttachment.AuthorId;
-    if aAttachment.LocalityId > 0 then
-      Media.LocalityId := aAttachment.LocalityId;
-    if aAttachment.TaxonId > 0 then
-      Media.TaxonId := aAttachment.TaxonId;
-    if aAttachment.IndividualId > 0 then
-      Media.IndividualId := aAttachment.IndividualId;
-    if aAttachment.CaptureId > 0 then
-      Media.CaptureId := aAttachment.CaptureId;
-    if aAttachment.FeatherId > 0 then
-      Media.FeatherId := aAttachment.FeatherId;
-    if aAttachment.SurveyId > 0 then
-      Media.SurveyId := aAttachment.SurveyId;
-    if aAttachment.SightingId > 0 then
-      Media.SightingId := aAttachment.SightingId;
-    if aAttachment.NestId > 0 then
-      Media.NestId := aAttachment.NestId;
-    if aAttachment.NestRevisionId > 0 then
-      Media.NestRevisionId := aAttachment.NestRevisionId;
-    if aAttachment.EggId > 0 then
-      Media.EggId := aAttachment.EggId;
-    if aAttachment.SpecimenId > 0 then
-      Media.SpecimenId := aAttachment.SpecimenId;
-
-    if Media.IsNew then
-      Repo.Insert(Media)
-    else
-      Repo.Update(Media);
-
-    with aDataset do
-    begin
-      Refresh;
-      Locate(aPathField, newPath, []);
-      Edit;
-      CreateImageThumbnail(aFileName, aDataSet);
-      Post;
-      TSQLQuery(aDataSet).ApplyUpdates;
-    end;
-    Result := True;
-  finally
-    Media.Free;
-    Repo.Free;
-  end;
-end;
 
 // Show image in a TImage
 procedure ExibeFoto(DataSet: TDataset; aBlobField: String; TargetImage: TImage);
@@ -638,20 +522,6 @@ begin
     dlgProgress.Close;
     FreeAndNil(dlgProgress);
     LogEvent(leaFinish, 'Recreate image thumbnails');
-  end;
-end;
-
-procedure ViewImage(aDataSet: TDataSet);
-begin
-  LogEvent(leaOpen, 'Image viewer');
-  frmImageViewer := TfrmImageViewer.Create(nil);
-  with frmImageViewer do
-  try
-    dsLink.DataSet := aDataSet;
-    ShowModal;
-  finally
-    FreeAndNil(frmImageViewer);
-    LogEvent(leaClose, 'Image viewer');
   end;
 end;
 
