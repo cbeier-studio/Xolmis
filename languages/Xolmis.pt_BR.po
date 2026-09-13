@@ -768,6 +768,10 @@ msgctxt "data_columns.rscfile"
 msgid "File"
 msgstr "Arquivo"
 
+#: data_columns.rscfilehash
+msgid "File hash"
+msgstr "Hash do arquivo"
+
 #: data_columns.rscfilename
 msgctxt "data_columns.rscfilename"
 msgid "File name"
@@ -1554,6 +1558,10 @@ msgstr "Ordem ID"
 msgctxt "data_columns.rscordernr"
 msgid "Order nº"
 msgstr "Nº do pedido"
+
+#: data_columns.rscoriginalfilename
+msgid "Original filename"
+msgstr "Nome do arquivo original"
 
 #: data_columns.rscotherportuguesenames
 msgctxt "data_columns.rscotherportuguesenames"
@@ -3379,6 +3387,10 @@ msgctxt "tcfgdelimiters.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
 
+#: tcfgoptions.btnchangemediapath.caption
+msgid "Change folder"
+msgstr "Trocar pasta"
+
 #: tcfgoptions.btnclearbandsupplier.caption
 msgctxt "tcfgoptions.btnclearbandsupplier.caption"
 msgid "Clear"
@@ -3387,6 +3399,10 @@ msgstr "Limpar"
 #: tcfgoptions.btndefaultrowheight.caption
 msgid "Set default"
 msgstr "Usar padrão"
+
+#: tcfgoptions.btnforcemediamigration.caption
+msgid "Force migration"
+msgstr "Forçar migração"
 
 #: tcfgoptions.caption
 msgid "Settings"
@@ -3403,14 +3419,6 @@ msgstr "Permitir que o Xolmis colete dados de uso anônimos"
 #: tcfgoptions.lblallowwritelog.caption
 msgid "Allow Xolmis to log events for technical support"
 msgstr "Permitir que o Xolmis crie um log de eventos para suporte técnico"
-
-#: tcfgoptions.lblattachmentspath.caption
-msgid "Documents location"
-msgstr "Local dos documentos"
-
-#: tcfgoptions.lblaudiospath.caption
-msgid "Audio files location"
-msgstr "Local dos arquivos de áudio"
 
 #: tcfgoptions.lblautofillcoordinates.caption
 msgid "Auto fill blank coordinates with gazetteer coordinates, if available"
@@ -3447,17 +3455,25 @@ msgstr "Limpar os registros apagados automaticamente (em dias)"
 msgid "Confirm data insert/edit cancelation"
 msgstr "Confirmar cancelamento de inserção/edição"
 
+#: tcfgoptions.lbldeletemedia.caption
+msgid "Delete media file when deleting media record"
+msgstr "Apagar arquivo de mídia ao apagar o registro da mídia"
+
 #: tcfgoptions.lblenterastab.caption
 msgid "Use <Enter/Return> keys to jump to the next control"
 msgstr "Usar tecla <Enter/Return> para ir para o próximo controle"
 
-#: tcfgoptions.lblimagespath.caption
-msgid "Images location"
-msgstr "Local das imagens"
-
 #: tcfgoptions.lblmanagebackups.caption
 msgid "Manage backups"
 msgstr "Gerenciar backups"
+
+#: tcfgoptions.lblmediapath.caption
+msgid "Media storage folder"
+msgstr "Pasta de armazenamento de mídias"
+
+#: tcfgoptions.lblmovemedia.caption
+msgid "When adding media records"
+msgstr "Quando adicionar registros de mídia"
 
 #: tcfgoptions.lblopenafterexport.caption
 msgid "Open files after export"
@@ -3546,10 +3562,6 @@ msgstr "Usar formatação condicional nas grades"
 #: tcfgoptions.lblvernacularnames.caption
 msgid "Language of vernacular names"
 msgstr "Idioma dos nomes vernaculares"
-
-#: tcfgoptions.lblvideospath.caption
-msgid "Video files location"
-msgstr "Local dos arquivos de vídeo"
 
 #: tcfgoptions.lblwritedetailedlogs.caption
 msgid "Enable detailed commands logging"
@@ -5931,11 +5943,6 @@ msgctxt "tedtaudioinfo.eauthor.buttonhint"
 msgid "Find author"
 msgstr "Buscar autor"
 
-#: tedtaudioinfo.efilepath.buttonhint
-msgctxt "tedtaudioinfo.efilepath.buttonhint"
-msgid "Choose file"
-msgstr "Selecionar arquivo"
-
 #: tedtaudioinfo.elatitude.buttonhint
 msgctxt "tedtaudioinfo.elatitude.buttonhint"
 msgid "Edit/import coordinate"
@@ -5970,11 +5977,6 @@ msgstr "HH:MM"
 msgctxt "tedtaudioinfo.etaxon.buttonhint"
 msgid "Find taxon"
 msgstr "Buscar táxon"
-
-#: tedtaudioinfo.lblaudiofile.caption
-msgctxt "tedtaudioinfo.lblaudiofile.caption"
-msgid "Recording file: *"
-msgstr "Arquivo da gravação: *"
 
 #: tedtaudioinfo.lblaudiotype.caption
 msgctxt "tedtaudioinfo.lblaudiotype.caption"
@@ -6817,11 +6819,6 @@ msgctxt "tedtdocumentinfo.edocumenttime.texthint"
 msgid "HH:MM"
 msgstr "HH:MM"
 
-#: tedtdocumentinfo.efilepath.buttonhint
-msgctxt "tedtdocumentinfo.efilepath.buttonhint"
-msgid "Choose file"
-msgstr "Selecionar arquivo"
-
 #: tedtdocumentinfo.lblauthor.caption
 msgctxt "tedtdocumentinfo.lblauthor.caption"
 msgid "Author:"
@@ -6830,10 +6827,6 @@ msgstr "Autor:"
 #: tedtdocumentinfo.lbldocumentdate.caption
 msgid "Document date: *"
 msgstr "Data do documento: *"
-
-#: tedtdocumentinfo.lbldocumentpath.caption
-msgid "Document file/URL: *"
-msgstr "Arquivo do documento/URL: *"
 
 #: tedtdocumentinfo.lbldocumenttime.caption
 msgid "Document time:"
@@ -7247,11 +7240,6 @@ msgctxt "tedtimageinfo.eauthor.buttonhint"
 msgid "Find author"
 msgstr "Buscar autor"
 
-#: tedtimageinfo.efilepath.buttonhint
-msgctxt "tedtimageinfo.efilepath.buttonhint"
-msgid "Choose file"
-msgstr "Selecionar arquivo"
-
 #: tedtimageinfo.eimagedate.buttonhint
 msgctxt "tedtimageinfo.eimagedate.buttonhint"
 msgid "Open calendar"
@@ -7301,11 +7289,6 @@ msgstr "Precisão da coordenada:"
 msgctxt "tedtimageinfo.lblimagedate.caption"
 msgid "Image date: *"
 msgstr "Data da imagem: *"
-
-#: tedtimageinfo.lblimagefilename.caption
-msgctxt "tedtimageinfo.lblimagefilename.caption"
-msgid "Image file: *"
-msgstr "Arquivo da imagem: *"
 
 #: tedtimageinfo.lblimagetime.caption
 msgctxt "tedtimageinfo.lblimagetime.caption"
@@ -10346,11 +10329,6 @@ msgctxt "tedtvideoinfo.eauthor.buttonhint"
 msgid "Find author"
 msgstr "Buscar autor"
 
-#: tedtvideoinfo.efilepath.buttonhint
-msgctxt "tedtvideoinfo.efilepath.buttonhint"
-msgid "Choose file"
-msgstr "Selecionar arquivo"
-
 #: tedtvideoinfo.elatitude.buttonhint
 msgctxt "tedtvideoinfo.elatitude.buttonhint"
 msgid "Edit/import coordinate"
@@ -10474,11 +10452,6 @@ msgstr "Hora da gravação:"
 msgctxt "tedtvideoinfo.lbltaxon.caption"
 msgid "Taxon:"
 msgstr "Táxon:"
-
-#: tedtvideoinfo.lblvideofile.caption
-msgctxt "tedtvideoinfo.lblvideofile.caption"
-msgid "Recording file: *"
-msgstr "Arquivo da gravação: *"
 
 #: tedtvideoinfo.lblvideotype.caption
 msgctxt "tedtvideoinfo.lblvideotype.caption"
@@ -10849,6 +10822,16 @@ msgctxt "tfrmcustomgrid.cbskullossificationfilter.texthint"
 msgid "None"
 msgstr "Nenhum"
 
+#: tfrmcustomgrid.dbgrecycle.columns[0].title.caption
+msgctxt "tfrmcustomgrid.dbgrecycle.columns[0].title.caption"
+msgid "Title"
+msgstr "Título"
+
+#: tfrmcustomgrid.dbgrecycle.columns[1].title.caption
+msgctxt "tfrmcustomgrid.dbgrecycle.columns[1].title.caption"
+msgid "Title"
+msgstr "Título"
+
 #: tfrmcustomgrid.eaddchild.texthint
 msgid "Quick add"
 msgstr "Adição rápida"
@@ -10893,8 +10876,9 @@ msgid "Type"
 msgstr "Tipo"
 
 #: tfrmcustomgrid.griddocs.columns[1].title.caption
-msgid "File path"
-msgstr "Caminho do arquivo"
+msgctxt "tfrmcustomgrid.griddocs.columns[1].title.caption"
+msgid "Name"
+msgstr "Nome"
 
 #: tfrmcustomgrid.gridvideos.columns[0].title.caption
 msgctxt "tfrmcustomgrid.gridvideos.columns[0].title.caption"
@@ -13993,6 +13977,10 @@ msgctxt "utils_locale.rsactivitytodo"
 msgid "To do"
 msgstr "A fazer"
 
+#: utils_locale.rsaddlink
+msgid "Add link"
+msgstr "Adicionar link"
+
 #: utils_locale.rsaddmediafiles
 msgid "Add media files"
 msgstr "Adicionar mídias"
@@ -14961,9 +14949,13 @@ msgctxt "utils_locale.rscaptureunbanded"
 msgid "Unbanded"
 msgstr "Não anilhado"
 
-#: utils_locale.rschangefolderandmigrate
-msgid "Change folder and migrate paths"
-msgstr "Modificar pasta e migrar caminhos"
+#: utils_locale.rschangefolderandcopyfiles
+msgid "Copy files"
+msgstr "Copiar arquivos"
+
+#: utils_locale.rschangefolderandmovefiles
+msgid "Move files"
+msgstr "Mover arquivos"
 
 #: utils_locale.rschangefolderonly
 msgid "Change folder only"
@@ -15159,6 +15151,10 @@ msgstr "Nomeie o conjunto de coordenadas:"
 msgctxt "utils_locale.rscoordinatesutm"
 msgid "UTM"
 msgstr "UTM"
+
+#: utils_locale.rscopymediafiles
+msgid "Copy media files"
+msgstr "Copiar arquivos de mídia"
 
 #: utils_locale.rscpfincnpj
 msgctxt "utils_locale.rscpfincnpj"
@@ -15803,6 +15799,11 @@ msgctxt "utils_locale.rsepithetonlyininfrasp"
 msgid "The Infraspecific epithet must be filled when an Infraspecific category was selected."
 msgstr "O epíteto infraespecífico deve ser preenchido quando a categoria infraespecífica foi selecionada."
 
+#: utils_locale.rserrorabsolutepathnotallowed
+#, object-pascal-format
+msgid "Absolute path not allowed in GetFullPath: %s"
+msgstr "Caminho absoluto não permitido em GetFullPath: %s"
+
 #: utils_locale.rserrorbackupfailed
 msgctxt "utils_locale.rserrorbackupfailed"
 msgid "Backup file creation failed."
@@ -15835,6 +15836,11 @@ msgstr "Não foi possível conectar ao banco de dados. Verifique se as opções 
 msgctxt "utils_locale.rserrorconnectionnotfound"
 msgid "Connection \"%s\" not found."
 msgstr "Conexão \"%s\" não encontrada."
+
+#: utils_locale.rserrorcopyingfile
+#, object-pascal-format
+msgid "Error copying file \"%s\" to \"%s\"."
+msgstr "Erro copiando arquivo \"%s\" para \"%s\"."
 
 #: utils_locale.rserrorcreatefolder
 msgctxt "utils_locale.rserrorcreatefolder"
@@ -16700,13 +16706,17 @@ msgctxt "utils_locale.rshintbackupenablednotdone"
 msgid "Automatic backup not done"
 msgstr "Backup automático não realizado"
 
-#: utils_locale.rshintchangefolderandmigrate
-msgid "Update the folder setting and rewrite all stored relative paths to match the new location."
-msgstr "Atualiza a opção da pasta e rescreve todos caminhos relativos armazenados para corresponder ao novo local."
+#: utils_locale.rshintchangefolderandcopyfiles
+msgid "Update the storage folder setting and create a copy all stored files in the new location."
+msgstr "Atualiza a pasta de armazenamento e cria uma cópia de todos arquivos armazenados para o novo local."
+
+#: utils_locale.rshintchangefolderandmovefiles
+msgid "Update the storage folder setting and move all stored files to the new location."
+msgstr "Atualiza a pasta de armazenamento e move todos arquivos armazenados para o novo local."
 
 #: utils_locale.rshintchangefolderonly
-msgid "Update the folder setting without modifying the existing paths stored in the database."
-msgstr "Atualiza a opção da pasta sem modificar os caminhos existentes armazenados no banco de dados."
+msgid "Update the storage folder setting without moving the files."
+msgstr "Atualiza a pasta de armazenamento sem mover os arquivos."
 
 #: utils_locale.rshintcheckuncheckall
 msgctxt "utils_locale.rshintcheckuncheckall"
@@ -17345,6 +17355,10 @@ msgstr "Outliers de morfometria"
 msgid "Media folder changed"
 msgstr "Pasta de mídia alterada"
 
+#: utils_locale.rsmediamanagement
+msgid "Media Management"
+msgstr "Gerenciamento de mídias"
+
 #: utils_locale.rsmediamigrationcompleted
 msgid "Migration completed"
 msgstr "Migração concluída"
@@ -17352,14 +17366,16 @@ msgstr "Migração concluída"
 #: utils_locale.rsmediamigrationerror
 #, object-pascal-format
 msgid ""
-"Could not migrate media paths:\n"
+"Could not move media files:\n"
 "%s"
-msgstr "Não conseguiu migrar os caminhos de mídia: %s"
+msgstr ""
+"Não conseguiu mover os arquivos de mídia:\n"
+"%s"
 
 #: utils_locale.rsmigratedmediapaths
 #, object-pascal-format
-msgid "%d %s path(s) were updated."
-msgstr "%d %s caminho(s) atualizado(s)."
+msgid "%d media files were moved."
+msgstr "%d arquivos de mídia foram movidos."
 
 #: utils_locale.rsminpasswordlength
 msgctxt "utils_locale.rsminpasswordlength"
@@ -17370,6 +17386,10 @@ msgstr "A senha deve ter 8 caracteres ou mais."
 msgctxt "utils_locale.rsmissingdata"
 msgid "Missing data"
 msgstr "Dados faltantes"
+
+#: utils_locale.rsmissingmediafile
+msgid "Missing media file"
+msgstr "Arquivo de mídia não encontrado"
 
 #: utils_locale.rsmobilebanding
 msgctxt "utils_locale.rsmobilebanding"
@@ -17613,6 +17633,10 @@ msgstr "%d selecionados"
 msgctxt "utils_locale.rsmoreselectedfemale"
 msgid "%d selected"
 msgstr "%d selecionados"
+
+#: utils_locale.rsmovemediafiles
+msgid "Move media files"
+msgstr "Mover arquivos de mídia"
 
 #: utils_locale.rsmustbeavalidboolean
 #, object-pascal-format
@@ -18168,6 +18192,22 @@ msgstr ""
 "A visualização do mapa permite você explorar a distribuição geográfica dos seus registros.\n"
 "\n"
 "Se você precisar exportar coordenadas, use o botão Exportar localizado no painel lateral acima do mapa. Isso permite que você salve dados geográficos para usar em outros aplicativos ou análises."
+
+#: utils_locale.rsonboardingmediastoragechange
+msgid ""
+"Xolmis changed the way media files are managed.\n"
+"Now all media files are stored in a single folder managed automatically.\n"
+"\n"
+"All media files will be copied to the new media storage folder.\n"
+"\n"
+"How do you want to proceed?"
+msgstr ""
+"O Xolmis mudou a forma que arquivos de mídia são gerenciados.\n"
+"Agora todos arquivos de mídia são armazenados em uma pasta única e gerenciada automaticamente.\n"
+"\n"
+"Todos arquivos de mídia serão copiados para a nova pasta de armazenamento de mídias.\n"
+"\n"
+"Como deseja proceder?"
 
 #: utils_locale.rsonboardingnewbatchbands
 msgid ""
@@ -18933,6 +18973,11 @@ msgctxt "utils_locale.rsprogressloadingcsvfile"
 msgid "Loading CSV file... %d%%"
 msgstr "Carregando arquivo CSV... %d%%"
 
+#: utils_locale.rsprogressmigrating
+#, object-pascal-format
+msgid "Migrating %s... This may take a few minutes."
+msgstr "Migrando %s... Isso pode levar alguns minutos."
+
 #: utils_locale.rsprogressnewbandsbatch
 msgctxt "utils_locale.rsprogressnewbandsbatch"
 msgid "Inserting new bands..."
@@ -19038,6 +19083,10 @@ msgstr ""
 msgid "Projects finishing soon"
 msgstr "Projetos finalizando em breve"
 
+#: utils_locale.rspromptaddlink
+msgid "Type or paste an URL:"
+msgstr "Digite ou cole uma URL:"
+
 #: utils_locale.rspromptbackupnow
 msgctxt "utils_locale.rspromptbackupnow"
 msgid "The automatic backup will start now and may take several minutes. Do you want to proceed with the backup?"
@@ -19051,19 +19100,19 @@ msgstr "O arquivo de mídia \"%s\" não foi encontrado. Como deseja proceder?"
 #: utils_locale.rspromptmigratemediapath
 #, object-pascal-format
 msgid ""
-"You changed the %s folder.\n"
+"You changed the media storage folder.\n"
 "\n"
 "Old: %s\n"
 "New: %s\n"
 "\n"
-"To keep existing links working, Xolmis can migrate the stored relative paths to the new location."
+"To keep existing links working, Xolmis can migrate the stored files to the new location."
 msgstr ""
-"Você alterou a pasta de %s.\n"
+"Você alterou a pasta de armazenamento de mídias.\n"
 "\n"
 "Anterior: %s\n"
-"Novo: %s\n"
+"Nova: %s\n"
 "\n"
-"Para manter os links existentes funcionando, o Xolmis pode migrar os caminhos relativos armazenados para o novo local."
+"Para manter os links existentes funcionando, o Xolmis pode mover os arquivos armazenados para o novo local."
 
 #: utils_locale.rspromptselectsurvey
 msgctxt "utils_locale.rspromptselectsurvey"
@@ -19510,6 +19559,10 @@ msgstr "Selecione uma opção para continuar:"
 msgctxt "utils_locale.rsselectcoordinatestypes"
 msgid "Select the origin and destination coordinate types."
 msgstr "Selecione o formato de coordenadas de origem e de destino."
+
+#: utils_locale.rsselectstoragelocation
+msgid "Select storage location"
+msgstr "Selecionar local de armazenamento"
 
 #: utils_locale.rssettingsappearance
 msgctxt "utils_locale.rssettingsappearance"
@@ -20597,6 +20650,10 @@ msgstr "A soma das novas capturas, recapturas e indivíduos não marcados difere
 #: utils_locale.rsupgradingdatabaseschema
 msgid "Upgrading database schema..."
 msgstr "Atualizando esquema do banco de dados..."
+
+#: utils_locale.rsusedefaultlocation
+msgid "Use default location"
+msgstr "Usar local padrão"
 
 #: utils_locale.rsusenewdatabaseoption
 msgctxt "utils_locale.rsusenewdatabaseoption"

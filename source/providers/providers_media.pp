@@ -120,6 +120,8 @@ begin
       'license_notes     VARCHAR (100),' +
       'license_owner     VARCHAR (150),' +
       'file_path         VARCHAR (250),' +
+      'original_filename VARCHAR (255),' +
+      'file_hash         VARCHAR (140),' +
       'subtitle          TEXT,' +
       'notes             TEXT,' +
       'user_inserted     INTEGER,' +
@@ -176,6 +178,8 @@ begin
       'license_notes, ' +
       'license_owner, ' +
       'file_path, ' +
+      'original_filename, ' +
+      'file_hash, ' +
       'subtitle, ' +
       'notes, ' +
       'user_inserted, ' +
@@ -213,6 +217,8 @@ begin
       ':license_notes, ' +
       ':license_owner, ' +
       ':file_path, ' +
+      ':original_filename, ' +
+      ':file_hash, ' +
       ':subtitle, ' +
       ':notes, ' +
       ':user_inserted, ' +
@@ -283,6 +289,8 @@ begin
       'license_notes, ' +
       'license_owner, ' +
       'file_path, ' +
+      'original_filename, ' +
+      'file_hash, ' +
       'subtitle, ' +
       'notes, ' +
       'user_inserted, ' +
@@ -351,6 +359,8 @@ begin
       'license_notes = :license_notes, ' +
       'license_owner = :license_owner, ' +
       'file_path = :file_path, ' +
+      'original_filename = :original_filename, ' +
+      'file_hash = :file_hash, ' +
       'subtitle = :subtitle, ' +
       'notes = :notes, ' +
       'user_updated = :user_updated, ' +
@@ -387,6 +397,8 @@ begin
       'document_type   CHAR (5)      NOT NULL,' +
       'document_name   VARCHAR (120),' +
       'file_path       VARCHAR (250) NOT NULL,' +
+      'original_filename VARCHAR (255),' +
+      'file_hash         VARCHAR (140),' +
       'document_date   DATE,' +
       'document_time   TIME,' +
       'license_type    VARCHAR (20),' +
@@ -432,6 +444,8 @@ begin
       'document_type, ' +
       'document_name, ' +
       'file_path, ' +
+      'original_filename, ' +
+      'file_hash, ' +
       'document_date, ' +
       'document_time, ' +
       'license_type, ' +
@@ -458,6 +472,8 @@ begin
       ':document_type, ' +
       ':document_name, ' +
       ':file_path, ' +
+      ':original_filename, ' +
+      ':file_hash, ' +
       'date(:document_date), ' +
       'time(:document_time), ' +
       ':license_type, ' +
@@ -516,6 +532,8 @@ begin
       'document_type, ' +
       'document_name, ' +
       'file_path, ' +
+      'original_filename, ' +
+      'file_hash, ' +
       'document_date, ' +
       'document_time, ' +
       'license_type, ' +
@@ -574,6 +592,8 @@ begin
       'document_type = :document_type, ' +
       'document_name = :document_name, ' +
       'file_path = :file_path, ' +
+      'original_filename = :original_filename, ' +
+      'file_hash = :file_hash, ' +
       'document_date = date(:document_date), ' +
       'document_time = time(:document_time), ' +
       'license_type = :license_type, ' +
@@ -615,6 +635,8 @@ begin
       'egg_id               INTEGER       REFERENCES eggs (egg_id) ON UPDATE CASCADE,' +
       'specimen_id          INTEGER       REFERENCES specimens (specimen_id) ON UPDATE CASCADE,' +
       'file_path            VARCHAR (300),' +
+      'original_filename VARCHAR (255),' +
+      'file_hash         VARCHAR (140),' +
       'coordinate_precision CHAR (1),' +
       'longitude            REAL,' +
       'latitude             REAL,' +
@@ -624,7 +646,7 @@ begin
       'license_notes        VARCHAR (100),' +
       'license_owner        VARCHAR (150),' +
       'subtitle             TEXT,' +
-      'image_thumbnail      BLOB,' +
+      //'image_thumbnail      BLOB,' +
       'user_inserted        INTEGER,' +
       'user_updated         INTEGER,' +
       'insert_date          DATETIME,' +
@@ -663,6 +685,8 @@ begin
       'egg_id, ' +
       'specimen_id, ' +
       'file_path, ' +
+      'original_filename, ' +
+      'file_hash, ' +
       'coordinate_precision, ' +
       'longitude, ' +
       'latitude, ' +
@@ -672,7 +696,7 @@ begin
       'license_notes, ' +
       'license_owner, ' +
       'subtitle, ' +
-      'image_thumbnail, ' +
+      //'image_thumbnail, ' +
       'user_inserted, ' +
       'insert_date) ' +
     'VALUES (' +
@@ -692,6 +716,8 @@ begin
       ':egg_id, ' +
       ':specimen_id, ' +
       ':file_path, ' +
+      ':original_filename, ' +
+      ':file_hash, ' +
       ':coordinate_precision, ' +
       ':longitude, ' +
       ':latitude, ' +
@@ -701,7 +727,7 @@ begin
       ':license_notes, ' +
       ':license_owner, ' +
       ':subtitle, ' +
-      ':image_thumbnail, ' +
+      //':image_thumbnail, ' +
       ':user_inserted, ' +
       'datetime(''now'', ''subsec''))';
 end;
@@ -752,6 +778,8 @@ begin
       'egg_id, ' +
       'specimen_id, ' +
       'file_path, ' +
+      'original_filename, ' +
+      'file_hash, ' +
       'coordinate_precision, ' +
       'longitude, ' +
       'latitude, ' +
@@ -761,7 +789,7 @@ begin
       'license_notes, ' +
       'license_owner, ' +
       'subtitle, ' +
-      'image_thumbnail, ' +
+      //'image_thumbnail, ' +
       'user_inserted, ' +
       'user_updated, ' +
       'datetime(insert_date, ''localtime'') AS insert_date, ' +
@@ -813,6 +841,8 @@ begin
       'egg_id = :egg_id, ' +
       'specimen_id = :specimen_id, ' +
       'file_path = :file_path, ' +
+      'original_filename = :original_filename, ' +
+      'file_hash = :file_hash, ' +
       'coordinate_precision = :coordinate_precision, ' +
       'longitude = :longitude, ' +
       'latitude = :latitude, ' +
@@ -822,7 +852,7 @@ begin
       'license_notes = :license_notes, ' +
       'license_owner = :license_owner, ' +
       'subtitle = :subtitle, ' +
-      'image_thumbnail = :image_thumbnail, ' +
+      //'image_thumbnail = :image_thumbnail, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'', ''subsec'') ' +
     'WHERE (image_id = :image_id) ';
@@ -867,6 +897,8 @@ begin
       'license_notes     VARCHAR (100),' +
       'license_owner     VARCHAR (150),' +
       'file_path         VARCHAR (250),' +
+      'original_filename VARCHAR (255),' +
+      'file_hash         VARCHAR (140),' +
       'subtitle          TEXT,' +
       'notes             TEXT,' +
       'user_inserted     INTEGER,' +
@@ -917,6 +949,8 @@ begin
       'license_notes, ' +
       'license_owner, ' +
       'file_path, ' +
+      'original_filename, ' +
+      'file_hash, ' +
       'subtitle, ' +
       'notes, ' +
       'user_inserted, ' +
@@ -948,6 +982,8 @@ begin
       ':license_notes, ' +
       ':license_owner, ' +
       ':file_path, ' +
+      ':original_filename, ' +
+      ':file_hash, ' +
       ':subtitle, ' +
       ':notes, ' +
       ':user_inserted, ' +
@@ -1010,6 +1046,8 @@ begin
       'license_notes, ' +
       'license_owner, ' +
       'file_path, ' +
+      'original_filename, ' +
+      'file_hash, ' +
       'subtitle, ' +
       'notes, ' +
       'user_inserted, ' +
@@ -1073,6 +1111,8 @@ begin
       'license_notes = :license_notes, ' +
       'license_owner = :license_owner, ' +
       'file_path = :file_path, ' +
+      'original_filename = :original_filename, ' +
+      'file_hash = :file_hash, ' +
       'subtitle = :subtitle, ' +
       'notes = :notes, ' +
       'user_updated = :user_updated, ' +

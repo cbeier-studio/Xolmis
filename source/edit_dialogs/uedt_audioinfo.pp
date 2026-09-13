@@ -42,7 +42,6 @@ type
     eLongitude: TEditButton;
     eLatitude: TEditButton;
     eLocality: TEditButton;
-    eFilePath: TEditButton;
     eTaxon: TEditButton;
     eRecordingContext: TEdit;
     eFilterModel: TEdit;
@@ -57,6 +56,8 @@ type
     eRelativeHumidity: TFloatSpinEdit;
     eTemperature: TFloatSpinEdit;
     eDistance: TFloatSpinEdit;
+    icoFileError: TImage;
+    txtOriginalFilename: TLabel;
     lblCoordinatesPrecision: TLabel;
     lblHabitat: TLabel;
     lblLatitude: TLabel;
@@ -79,7 +80,6 @@ type
     lblAudioType: TLabel;
     lblRecordingTime: TLabel;
     lblNotes1: TLabel;
-    lblAudioFile: TLabel;
     lblAuthor: TLabel;
     lblTaxon: TLabel;
     lblRecorderModel: TLabel;
@@ -87,6 +87,7 @@ type
     lblFilterModel: TLabel;
     lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
+    pHeader: TPanel;
     pCoordinatesPrecision: TPanel;
     pmnNewPerson: TMenuItem;
     pmnNewLocality: TMenuItem;
@@ -106,7 +107,6 @@ type
     pRecordingContext: TPanel;
     pSubtitle: TPanel;
     pDateTime: TPanel;
-    pAudioFile: TPanel;
     pAuthor: TPanel;
     pTaxon: TPanel;
     pRecorderModel: TPanel;
@@ -154,6 +154,8 @@ type
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
+    procedure MediaFileExists;
+    function ValidateMediaFile: TModalResult;
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property AudioRecording: TAudioData read FAudio write SetAudio;
@@ -172,7 +174,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_conversions, utils_editdialogs, utils_gis,
-  utils_validations,
+  utils_validations, utils_themes,
   data_types, data_consts, data_getvalue, data_columns,
   models_record_types, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
@@ -183,9 +185,10 @@ uses
 
 procedure TedtAudioInfo.ApplyDarkMode;
 begin
+  icoFileError.Images := DMM.iEditsDark;
   eAuthor.Images := DMM.iEditsDark;
   eRecordingDate.Images := DMM.iEditsDark;
-  eFilePath.Images := DMM.iEditsDark;
+  //eFilePath.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
@@ -236,9 +239,9 @@ end;
 
 procedure TedtAudioInfo.eFilePathButtonClick(Sender: TObject);
 begin
-  DMM.OpenAudios.InitialDir := xSettings.LastPathUsed;
-  if DMM.OpenAudios.Execute then
-    eFilePath.Text := DMM.OpenAudios.FileName;
+  //DMM.OpenAudios.InitialDir := xSettings.LastPathUsed;
+  //if DMM.OpenAudios.Execute then
+  //  eFilePath.Text := DMM.OpenAudios.FileName;
 end;
 
 procedure TedtAudioInfo.eAuthorButtonClick(Sender: TObject);
@@ -540,16 +543,22 @@ begin
   end;
 
   if not FIsNew then
+  begin
     GetRecord;
+    MediaFileExists;
+    sbSave.Enabled := IsRequiredFilled;
+  end;
 end;
 
 procedure TedtAudioInfo.GetRecord;
 begin
+  txtOriginalFilename.Caption := FAudio.OriginalFilename;
   mSubtitle.Text := FAudio.Subtitle;
   FAuthorId := FAudio.AuthorId;
   eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   eRecordingDate.Text := DateToStr(FAudio.RecordingDate);
-  eRecordingTime.Text := TimeToStr(FAudio.RecordingTime);
+  if FAudio.RecordingTime <> NullTime then
+    eRecordingTime.Text := TimeToStr(FAudio.RecordingTime);
   case FAudio.AudioType of
     atUnknown:      cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioUnknown);
     atSong:         cbAudioType.ItemIndex := cbAudioType.Items.IndexOf(rsAudioSong);
@@ -569,11 +578,13 @@ begin
   else
     cbAudioType.ItemIndex := -1;
   end;
-  eFilePath.Text := CreateAbsolutePath(FAudio.FilePath, xSettings.AudiosFolder);
   FLocalityId := FAudio.LocalityId;
   eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
-  eLongitude.Text := FloatToStr(FAudio.Longitude);
-  eLatitude.Text := FloatToStr(FAudio.Latitude);
+  if (FAudio.Longitude <> 0) and (FAudio.Latitude <> 0) then
+  begin
+    eLongitude.Text := FloatToStr(FAudio.Longitude);
+    eLatitude.Text := FloatToStr(FAudio.Latitude);
+  end;
   case FAudio.CoordinatePrecision of
     cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
     cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
@@ -608,7 +619,8 @@ begin
   ckPlaybackUsed.Checked := FAudio.PlaybackUsed;
   eHabitat.Text := FAudio.Habitat;
   cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FAudio.LicenseType);
-  eLicenseYear.Text := IntToStr(FAudio.LicenseYear);
+  if FAudio.LicenseYear > 0 then
+    eLicenseYear.Text := IntToStr(FAudio.LicenseYear);
   eLicenseOwner.Text := FAudio.LicenseOwner;
   eLicenseNotes.Text := FAudio.LicenseNotes;
   eLicenseUri.Text := FAudio.LicenseUri;
@@ -618,9 +630,29 @@ function TedtAudioInfo.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (eRecordingDate.Text <> EmptyStr) and
-    (eFilePath.Text <> EmptyStr) then
+  if (eRecordingDate.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtAudioInfo.MediaFileExists;
+var
+  FullPath: String;
+begin
+  FullPath := CreateAbsolutePath(FAudio.FilePath, xSettings.MediaStorageFolder);
+  if not FileExists(FullPath) then
+  begin
+    pHeader.Color := ActiveTheme.System.CriticalBG;
+    txtOriginalFilename.Font.Color := ActiveTheme.System.CriticalFG;
+    icoFileError.Hint := rsTitleFileNotFound;
+    icoFileError.Visible := True;
+  end
+  else
+  begin
+    pHeader.Color := clDefault;
+    txtOriginalFilename.Font.Color := clDefault;
+    icoFileError.Hint := EmptyStr;
+    icoFileError.Visible := False;
+  end;
 end;
 
 procedure TedtAudioInfo.pmnNewLocalityClick(Sender: TObject);
@@ -638,6 +670,15 @@ begin
   // Validate data
   if not ValidateFields then
     Exit;
+
+  case ValidateMediaFile of
+    mrIgnore: ;
+    mrNo:
+    begin
+      ModalResult := mrNo;
+      Exit;
+    end;
+  end;
 
   SetRecord;
 
@@ -657,7 +698,7 @@ begin
   FAudio.RecordingDate := TextToDate(eRecordingDate.Text);
   FAudio.RecordingTime := TextToTime(eRecordingTime.Text);
   FAudio.AudioType     := StrToAudioType(cbAudioType.Text);
-  FAudio.FilePath      := ExtractRelativePath(xSettings.AudiosFolder, eFilePath.Text);
+  //FAudio.FilePath      := ExtractRelativePath(xSettings.AudiosFolder, eFilePath.Text);
   FAudio.LocalityId    := FLocalityId;
   FAudio.Longitude     := StrToFloatOrZero(eLongitude.Text);
   FAudio.Latitude      := StrToFloatOrZero(eLatitude.Text);
@@ -698,8 +739,8 @@ begin
   // Required fields
   if (eRecordingDate.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscDate]));
-  if (eFilePath.Text = EmptyStr) then
-    Msgs.Add(Format(rsRequiredField, [rscFileName]));
+  //if (eFilePath.Text = EmptyStr) then
+  //  Msgs.Add(Format(rsRequiredField, [rscFileName]));
   // Conditional required fields
   if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscLatitude]));
@@ -722,9 +763,9 @@ begin
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   // Files
-  if (eFilePath.Text <> EmptyStr) then
-    if not FileExists(eFilePath.Text) then
-      Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
+  //if (eFilePath.Text <> EmptyStr) then
+  //  if not FileExists(eFilePath.Text) then
+  //    Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
 
   if Msgs.Count > 0 then
   begin
@@ -732,6 +773,45 @@ begin
     ValidateDlg(Msgs);
   end;
   Msgs.Free;
+end;
+
+function TedtAudioInfo.ValidateMediaFile: TModalResult;
+var
+  dlgTask: TTaskDialog;
+  btnCustom: TTaskDialogBaseButtonItem;
+  FullPath: String;
+begin
+  Result := mrNone;
+
+  if (FAudio.FilePath = EmptyStr) then
+    Exit;
+
+  FullPath := ConcatPaths([xSettings.MediaStorageFolder, FAudio.FilePath]);
+  if not FileExists(FullPath) then
+  begin
+    dlgTask := TTaskDialog.Create(nil);
+    try
+      dlgTask.Title := rsTitleFileNotFound;
+      dlgTask.Caption := APP_NAME;
+      dlgTask.Text := Format(rsPromptMediaFileNotFound, [FullPath]);
+      dlgTask.MainIcon := tdiQuestion;
+      dlgTask.Flags := dlgTask.Flags + [tfUseCommandLinks];
+      dlgTask.CommonButtons := [];
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsIgnoreAction;
+      btnCustom.ModalResult := mrIgnore;
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsDeleteRecordTitle;
+      btnCustom.ModalResult := mrNo;
+
+      if dlgTask.Execute then
+        Result := dlgTask.ModalResult;
+    finally
+      dlgTask.Free;
+    end;
+  end;
 end;
 
 end.

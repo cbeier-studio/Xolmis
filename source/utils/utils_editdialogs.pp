@@ -2469,6 +2469,7 @@ function EditImageInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsN
 var
   FRepo: TImageRepository;
   FRecord, FOldRecord: TImageData;
+  EditResult: TModalResult;
 begin
   LogEvent(leaOpen, 'Image edit dialog');
   Application.CreateForm(TedtImageInfo, edtImageInfo);
@@ -2549,7 +2550,8 @@ begin
         SpecimenId := aMaster.FieldByName(COL_SPECIMEN_ID).AsInteger;
       end;
     end;
-    Result := ShowModal = mrOk;
+    EditResult := ShowModal;
+    Result := EditResult = mrOk;
     if Result then
     begin
       if not DMM.sqlTrans.Active then
@@ -2581,6 +2583,25 @@ begin
       finally
         aDataSet.EnableControls;
       end;
+    end
+    else
+    begin
+      if EditResult = mrNo then
+      begin
+        if not DMM.sqlTrans.Active then
+          DMM.sqlTrans.StartTransaction;
+        try
+          FRepo.Delete(Image);
+
+          { Save changes to the record history }
+          WriteRecHistory(tbImages, haDeleted, Image.Id, '', '', '', rsMissingMediaFile);
+
+          DMM.sqlTrans.CommitRetaining;
+        except
+          DMM.sqlTrans.RollbackRetaining;
+          raise;
+        end;
+      end;
     end;
   finally
     if Assigned(FOldRecord) then
@@ -2596,6 +2617,7 @@ function EditAudioInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsN
 var
   FRepo: TAudioRepository;
   FRecord, FOldRecord: TAudioData;
+  EditResult: TModalResult;
 begin
   LogEvent(leaOpen, 'Audio edit dialog');
   Application.CreateForm(TedtAudioInfo, edtAudioInfo);
@@ -2650,7 +2672,8 @@ begin
       end;
       //tbSamplePreps: ;
     end;
-    Result := ShowModal = mrOk;
+    EditResult := ShowModal;
+    Result := EditResult = mrOk;
     if Result then
     begin
       if not DMM.sqlTrans.Active then
@@ -2682,6 +2705,25 @@ begin
       finally
         aDataSet.EnableControls;
       end;
+    end
+    else
+    begin
+      if EditResult = mrNo then
+      begin
+        if not DMM.sqlTrans.Active then
+          DMM.sqlTrans.StartTransaction;
+        try
+          FRepo.Delete(AudioRecording);
+
+          { Save changes to the record history }
+          WriteRecHistory(tbAudioLibrary, haDeleted, AudioRecording.Id, '', '', '', rsMissingMediaFile);
+
+          DMM.sqlTrans.CommitRetaining;
+        except
+          DMM.sqlTrans.RollbackRetaining;
+          raise;
+        end;
+      end;
     end;
   finally
     if Assigned(FOldRecord) then
@@ -2697,6 +2739,7 @@ function EditDocInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsNew
 var
   FRepo: TDocumentRepository;
   FRecord, FOldRecord: TDocumentData;
+  EditResult: TModalResult;
 begin
   LogEvent(leaOpen, 'Document edit dialog');
   Application.CreateForm(TedtDocumentInfo, edtDocumentInfo);
@@ -2777,7 +2820,8 @@ begin
         SpecimenId := aMaster.FieldByName(COL_SPECIMEN_ID).AsInteger;
       end;
     end;
-    Result := ShowModal = mrOk;
+    EditResult := ShowModal;
+    Result := EditResult = mrOk;
     if Result then
     begin
       if not DMM.sqlTrans.Active then
@@ -2808,6 +2852,25 @@ begin
         aDataSet.Locate(COL_DOCUMENT_ID, Document.Id, []);
       finally
         aDataSet.EnableControls;
+      end;
+    end
+    else
+    begin
+      if EditResult = mrNo then
+      begin
+        if not DMM.sqlTrans.Active then
+          DMM.sqlTrans.StartTransaction;
+        try
+          FRepo.Delete(Document);
+
+          { Save changes to the record history }
+          WriteRecHistory(tbDocuments, haDeleted, Document.Id, '', '', '', rsMissingMediaFile);
+
+          DMM.sqlTrans.CommitRetaining;
+        except
+          DMM.sqlTrans.RollbackRetaining;
+          raise;
+        end;
       end;
     end;
   finally
@@ -3034,6 +3097,7 @@ function EditVideoInfo(aDataSet, aMaster: TDataSet; aMasterType: TTableType; IsN
 var
   FRepo: TVideoRepository;
   FRecord, FOldRecord: TVideoData;
+  EditResult: TModalResult;
 begin
   LogEvent(leaOpen, 'Video edit dialog');
   Application.CreateForm(TedtVideoInfo, edtVideoInfo);
@@ -3097,7 +3161,8 @@ begin
         NestRevisionId := aMaster.FieldByName(COL_NEST_REVISION_ID).AsInteger;
       end;
     end;
-    Result := ShowModal = mrOk;
+    EditResult := ShowModal;
+    Result := EditResult = mrOk;
     if Result then
     begin
       if not DMM.sqlTrans.Active then
@@ -3128,6 +3193,25 @@ begin
         aDataSet.Locate(COL_VIDEO_ID, Video.Id, []);
       finally
         aDataSet.EnableControls;
+      end;
+    end
+    else
+    begin
+      if EditResult = mrNo then
+      begin
+        if not DMM.sqlTrans.Active then
+          DMM.sqlTrans.StartTransaction;
+        try
+          FRepo.Delete(Video);
+
+          { Save changes to the record history }
+          WriteRecHistory(tbVideos, haDeleted, Video.Id, '', '', '', rsMissingMediaFile);
+
+          DMM.sqlTrans.CommitRetaining;
+        except
+          DMM.sqlTrans.RollbackRetaining;
+          raise;
+        end;
       end;
     end;
   finally

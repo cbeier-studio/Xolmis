@@ -162,6 +162,7 @@ begin
 
   pFormatInfo.Background.Color := clVioletBG1Dark;
   pFormatInfo.Border.Color := clCardBGSecondaryDark;
+  lblUseFormat.Font.Color := ActiveTheme.Interactive.WindowTitle;
 
   lblOptions.Font.Color := clVioletFG1Dark;
 

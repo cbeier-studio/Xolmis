@@ -281,7 +281,7 @@ begin
     Exit;
   end;
 
-  FPath := CreateAbsolutePath(relPath, xSettings.ImagesFolder);
+  FPath := CreateAbsolutePath(relPath, xSettings.MediaStorageFolder);
   if not FileExists(FPath) then
   begin
     SetImageUnavailable(Format(rsImageNotFound, [FPath]));
@@ -404,7 +404,7 @@ begin
   if not FHasImage then
     Exit;
 
-  FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName(COL_FILE_PATH).AsString, xSettings.ImagesFolder);
+  FPath := CreateAbsolutePath(dsLink.DataSet.FieldByName(COL_FILE_PATH).AsString, xSettings.MediaStorageFolder);
 
   OpenDocument(FPath);
   LogDebug('Image opened externally');

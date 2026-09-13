@@ -43,7 +43,7 @@ object frmCustomGrid: TfrmCustomGrid
       Height = 614
       Top = 0
       Width = 464
-      PageIndex = 7
+      PageIndex = 2
       Align = alClient
       TabOrder = 0
       object cardViewRecord: TPage
@@ -6846,7 +6846,7 @@ object frmCustomGrid: TfrmCustomGrid
           ScrollBars = ssAutoVertical
           TabOrder = 1
           TitleStyle = tsNative
-          OnDblClick = dbgImagesDblClick
+          OnDblClick = gridImagesDblClick
           OnDrawCell = gridImagesDrawCell
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
@@ -7245,9 +7245,9 @@ object frmCustomGrid: TfrmCustomGrid
               FieldName = 'document_type'
             end          
             item
-              Title.Caption = 'File path'
+              Title.Caption = 'Name'
               Width = 386
-              FieldName = 'file_path'
+              FieldName = 'document_name'
             end>
           DataSource = dsDocs
           Options = [dgTitles, dgIndicator, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgDisableDelete, dgTruncCellHints, dgCellEllipsis]
@@ -7861,11 +7861,25 @@ object frmCustomGrid: TfrmCustomGrid
           AutoFillColumns = True
           BorderSpacing.Left = 8
           BorderSpacing.Right = 8
-          ColCount = 1
+          ColCount = 2
+          Columns = <          
+            item
+              Alignment = taCenter
+              ButtonStyle = cbsCheckboxColumn
+              SizePriority = 0
+              Title.Caption = 'Title'
+              Width = 0
+              Visible = False
+            end          
+            item
+              ReadOnly = True
+              Title.Caption = 'Title'
+              Width = 448
+            end>
           DefaultRowHeight = 48
           FixedCols = 0
           FixedRows = 0
-          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRowSelect, goThumbTracking, goSmoothScroll]
+          Options = [goFixedVertLine, goFixedHorzLine, goHorzLine, goEditing, goRowSelect, goThumbTracking, goSmoothScroll]
           PopupMenu = pmRecycle
           RowCount = 1
           ScrollBars = ssAutoVertical
@@ -7876,7 +7890,8 @@ object frmCustomGrid: TfrmCustomGrid
           OnKeyPress = DBGKeyPress
           OnSelectCell = dbgRecycleSelectCell
           ColWidths = (
-            444
+            0
+            448
           )
         end
         object pRecycleStatus: TBCPanel
@@ -8606,11 +8621,11 @@ object frmCustomGrid: TfrmCustomGrid
         Height = 164
         Top = 40
         Width = 671
-        PageIndex = 0
+        PageIndex = 6
         Align = alClient
         TabOrder = 1
         object pgChild1: TPage
-          object gridChild1: TDBGrid
+          object gridChild1: TXolmisDBGrid
             Left = 0
             Height = 164
             Top = 0
@@ -8636,11 +8651,11 @@ object frmCustomGrid: TfrmCustomGrid
           end
         end
         object pgChild2: TPage
-          object gridChild2: TDBGrid
+          object gridChild2: TXolmisDBGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 504
+            Width = 671
             Align = alClient
             Color = clWindow
             Columns = <>
@@ -8662,11 +8677,11 @@ object frmCustomGrid: TfrmCustomGrid
           end
         end
         object pgChild3: TPage
-          object gridChild3: TDBGrid
+          object gridChild3: TXolmisDBGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 504
+            Width = 671
             Align = alClient
             Color = clWindow
             Columns = <>
@@ -8688,11 +8703,11 @@ object frmCustomGrid: TfrmCustomGrid
           end
         end
         object pgChild4: TPage
-          object gridChild4: TDBGrid
+          object gridChild4: TXolmisDBGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 504
+            Width = 671
             Align = alClient
             Color = clWindow
             Columns = <>
@@ -8714,11 +8729,11 @@ object frmCustomGrid: TfrmCustomGrid
           end
         end
         object pgChild5: TPage
-          object gridChild5: TDBGrid
+          object gridChild5: TXolmisDBGrid
             Left = 0
             Height = 164
             Top = 0
-            Width = 504
+            Width = 671
             Align = alClient
             Color = clWindow
             Columns = <>
@@ -8740,7 +8755,7 @@ object frmCustomGrid: TfrmCustomGrid
           end
         end
         object pgChild6: TPage
-          object gridChild6: TDBGrid
+          object gridChild6: TXolmisDBGrid
             Left = 0
             Height = 164
             Top = 0
@@ -8766,7 +8781,7 @@ object frmCustomGrid: TfrmCustomGrid
           end
         end
         object pgChild7: TPage
-          object gridChild7: TDBGrid
+          object gridChild7: TXolmisDBGrid
             Left = 0
             Height = 164
             Top = 0
@@ -9768,38 +9783,6 @@ object frmCustomGrid: TfrmCustomGrid
       Rounding.RoundX = 1
       Rounding.RoundY = 1
       TabOrder = 4
-      object DBG: TDBGrid
-        Left = 0
-        Height = 234
-        Top = 0
-        Width = 904
-        Align = alClient
-        Color = clWindow
-        Columns = <>
-        DataSource = dsLink
-        FixedColor = 15987699
-        FixedHotColor = 16448250
-        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgThumbTracking, dgDisplayMemoText]
-        OptionsExtra = [dgeCheckboxColumn]
-        PopupMenu = pmGrid
-        TabOrder = 0
-        TitleImageList = iHeaders
-        TitleStyle = tsNative
-        OnColEnter = DBGColEnter
-        OnColExit = DBGColExit
-        OnContextPopup = DBGContextPopup
-        OnDblClick = DBGDblClick
-        OnEditButtonClick = DBGEditButtonClick
-        OnEditingDone = DBGEditingDone
-        OnKeyDown = FormKeyDown
-        OnKeyPress = DBGKeyPress
-        OnMouseDown = DBGMouseDown
-        OnMouseMove = DBGMouseMove
-        OnMouseUp = DBGMouseUp
-        OnMouseWheel = DBGMouseWheel
-        OnPrepareCanvas = DBGPrepareCanvas
-        OnSelectEditor = DBGSelectEditor
-      end
       object pRecordStatus: TBCPanel
         AnchorSideTop.Side = asrBottom
         Left = 0
@@ -9843,7 +9826,7 @@ object frmCustomGrid: TfrmCustomGrid
         Rounding.RoundX = 8
         Rounding.RoundY = 8
         Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
-        TabOrder = 1
+        TabOrder = 0
         object lblRecordStatus: TLabel
           AnchorSideLeft.Control = pRecordStatus
           AnchorSideTop.Control = pRecordStatus
@@ -10013,9 +9996,7 @@ object frmCustomGrid: TfrmCustomGrid
         end
       end
       object pEmptyQuery: TBCPanel
-        AnchorSideLeft.Control = DBG
         AnchorSideLeft.Side = asrCenter
-        AnchorSideTop.Control = DBG
         AnchorSideTop.Side = asrCenter
         Left = 339
         Height = 187
@@ -10060,7 +10041,7 @@ object frmCustomGrid: TfrmCustomGrid
         ParentBackground = False
         Rounding.RoundX = 8
         Rounding.RoundY = 8
-        TabOrder = 2
+        TabOrder = 1
         object lblEmptyQuery: TLabel
           Left = 16
           Height = 15
@@ -10132,6 +10113,38 @@ object frmCustomGrid: TfrmCustomGrid
           ImageWidth = 20
           OnClick = sbQuickEntryClick
         end
+      end
+      object DBG: TXolmisDBGrid
+        Left = 0
+        Height = 234
+        Top = 0
+        Width = 904
+        Align = alClient
+        Color = clWindow
+        Columns = <>
+        DataSource = dsLink
+        FixedColor = 15987699
+        FixedHotColor = 16448250
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgHeaderHotTracking, dgHeaderPushedLook, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgThumbTracking, dgDisplayMemoText]
+        OptionsExtra = [dgeCheckboxColumn]
+        PopupMenu = pmGrid
+        TabOrder = 2
+        TitleImageList = iHeaders
+        TitleStyle = tsNative
+        OnColEnter = DBGColEnter
+        OnColExit = DBGColExit
+        OnContextPopup = DBGContextPopup
+        OnDblClick = DBGDblClick
+        OnEditButtonClick = DBGEditButtonClick
+        OnEditingDone = DBGEditingDone
+        OnKeyDown = FormKeyDown
+        OnKeyPress = DBGKeyPress
+        OnMouseDown = DBGMouseDown
+        OnMouseMove = DBGMouseMove
+        OnMouseUp = DBGMouseUp
+        OnMouseWheel = DBGMouseWheel
+        OnPrepareCanvas = DBGPrepareCanvas
+        OnSelectEditor = DBGSelectEditor
       end
     end
   end
@@ -26214,6 +26227,18 @@ object frmCustomGrid: TfrmCustomGrid
         Size = 5
       end    
       item
+        Name = 'original_filename'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'file_hash'
+        DataType = ftString
+        Precision = -1
+        Size = 140
+      end    
+      item
         Name = 'taxon_name'
         DataType = ftString
         Precision = -1
@@ -26393,6 +26418,8 @@ object frmCustomGrid: TfrmCustomGrid
       '  egg_id = :egg_id,'
       '  specimen_id = :specimen_id,'
       '  file_path = :file_path,'
+      '  original_filename = :original_filename,'
+      '  file_hash = :file_hash,'
       '  coordinate_precision = :coordinate_precision,'
       '  longitude = :longitude,'
       '  latitude = :latitude,'
@@ -26402,7 +26429,6 @@ object frmCustomGrid: TfrmCustomGrid
       '  license_notes = :license_notes,'
       '  license_owner = :license_owner,'
       '  subtitle = :subtitle,'
-      '  image_thumbnail = :image_thumbnail,'
       '  user_updated = :user_updated,'
       '  update_date = :update_date,'
       '  exported_status = :exported_status,'
@@ -26777,19 +26803,32 @@ object frmCustomGrid: TfrmCustomGrid
       Required = False
       Size = 300
     end
-    object qImagesimage_thumbnail: TBlobField
+    object qImagesoriginal_filename: TStringField
+      DisplayLabel = 'Original filename'
       FieldKind = fkData
-      FieldName = 'image_thumbnail'
+      FieldName = 'original_filename'
       Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
+      Size = 255
+    end
+    object qImagesfile_hash: TStringField
+      DisplayLabel = 'File hash'
+      FieldKind = fkData
+      FieldName = 'file_hash'
+      Index = 38
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 140
     end
     object qImagesuser_inserted: TLongintField
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 38
+      Index = 39
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26798,7 +26837,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesuser_updated: TLongintField
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 39
+      Index = 40
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26807,7 +26846,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesinsert_date: TDateTimeField
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 40
+      Index = 41
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26816,7 +26855,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesupdate_date: TDateTimeField
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 41
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26825,7 +26864,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesexported_status: TBooleanField
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 42
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26835,7 +26874,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesmarked_status: TBooleanField
       FieldKind = fkData
       FieldName = 'marked_status'
-      Index = 43
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26845,7 +26884,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesactive_status: TBooleanField
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 44
+      Index = 45
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26855,7 +26894,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qImagesinactivated_by: TStringField
       FieldKind = fkData
       FieldName = 'inactivated_by'
-      Index = 45
+      Index = 46
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -26903,7 +26942,6 @@ object frmCustomGrid: TfrmCustomGrid
     end
   end
   object PrintGrid: TFrPrintGrid
-    DBGrid = DBG
     Orientation = poLandscape
     Caption = 'Grid'
     PrinterIndex = -1
@@ -27485,6 +27523,18 @@ object frmCustomGrid: TfrmCustomGrid
         DataType = ftString
         Precision = -1
         Size = 5
+      end    
+      item
+        Name = 'original_filename'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'file_hash'
+        DataType = ftString
+        Precision = -1
+        Size = 140
       end    
       item
         Name = 'taxon_name'
@@ -28122,11 +28172,33 @@ object frmCustomGrid: TfrmCustomGrid
       Visible = False
       Size = 250
     end
+    object qAudiosoriginal_filename: TStringField
+      DisplayLabel = 'Original filename'
+      FieldKind = fkData
+      FieldName = 'original_filename'
+      Index = 41
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 255
+    end
+    object qAudiosfile_hash: TStringField
+      DisplayLabel = 'File hash'
+      FieldKind = fkData
+      FieldName = 'file_hash'
+      Index = 42
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 140
+    end
     object qAudiosuser_inserted: TLongintField
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 41
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28137,7 +28209,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 42
+      Index = 44
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28148,7 +28220,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 43
+      Index = 45
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28159,7 +28231,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 44
+      Index = 46
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28170,7 +28242,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 45
+      Index = 47
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28182,7 +28254,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Marked'
       FieldKind = fkData
       FieldName = 'marked_status'
-      Index = 46
+      Index = 48
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28194,7 +28266,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 47
+      Index = 49
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28205,7 +28277,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qAudiosinactivated_by: TStringField
       FieldKind = fkData
       FieldName = 'inactivated_by'
-      Index = 48
+      Index = 50
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28396,6 +28468,18 @@ object frmCustomGrid: TfrmCustomGrid
         DataType = ftString
         Precision = -1
         Size = 5
+      end    
+      item
+        Name = 'original_filename'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'file_hash'
+        DataType = ftString
+        Precision = -1
+        Size = 140
       end>
     BeforePost = qDocsBeforePost
     Database = DMM.sqlCon
@@ -28585,11 +28669,33 @@ object frmCustomGrid: TfrmCustomGrid
       Required = True
       Size = 250
     end
+    object qDocsoriginal_filename: TStringField
+      DisplayLabel = 'Original filename'
+      FieldKind = fkData
+      FieldName = 'original_filename'
+      Index = 16
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 255
+    end
+    object qDocsfile_hash: TStringField
+      DisplayLabel = 'File hash'
+      FieldKind = fkData
+      FieldName = 'file_hash'
+      Index = 17
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 140
+    end
     object qDocsdocument_date: TDateField
       DisplayLabel = 'Date'
       FieldKind = fkData
       FieldName = 'document_date'
-      Index = 16
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28599,7 +28705,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Time'
       FieldKind = fkData
       FieldName = 'document_time'
-      Index = 17
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28609,7 +28715,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Author ID'
       FieldKind = fkData
       FieldName = 'author_id'
-      Index = 18
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28619,7 +28725,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License type'
       FieldKind = fkData
       FieldName = 'license_type'
-      Index = 19
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28629,7 +28735,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License year'
       FieldKind = fkData
       FieldName = 'license_year'
-      Index = 20
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28639,7 +28745,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License URI'
       FieldKind = fkData
       FieldName = 'license_uri'
-      Index = 21
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28650,7 +28756,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License notes'
       FieldKind = fkData
       FieldName = 'license_notes'
-      Index = 22
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28661,7 +28767,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'License owner'
       FieldKind = fkData
       FieldName = 'license_owner'
-      Index = 23
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28672,7 +28778,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 24
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28683,7 +28789,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 25
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28694,7 +28800,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 26
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28705,7 +28811,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 27
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28716,7 +28822,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 28
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28728,7 +28834,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Marked'
       FieldKind = fkData
       FieldName = 'marked_status'
-      Index = 29
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28739,7 +28845,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 30
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28750,7 +28856,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qDocsinactivated_by: TStringField
       FieldKind = fkData
       FieldName = 'inactivated_by'
-      Index = 31
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -28883,7 +28989,7 @@ object frmCustomGrid: TfrmCustomGrid
   object MvPluginManager: TMvPluginManager
     Left = 488
     Top = 179
-    object MvPluginManagerMapScalePlugin1: TMapScalePlugin
+    object mvMapScalePlugin: TMapScalePlugin
       MapView = mapGeo
     end
     object mvLegalNoticePlugin: TLegalNoticePlugin
@@ -29098,6 +29204,18 @@ object frmCustomGrid: TfrmCustomGrid
         DataType = ftString
         Precision = -1
         Size = 5
+      end    
+      item
+        Name = 'original_filename'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'file_hash'
+        DataType = ftString
+        Precision = -1
+        Size = 140
       end>
     BeforePost = qVideosBeforePost
     Database = DMM.sqlCon
@@ -29393,11 +29511,33 @@ object frmCustomGrid: TfrmCustomGrid
       Required = False
       Size = 250
     end
+    object qVideosoriginal_filename: TStringField
+      DisplayLabel = 'Original filename'
+      FieldKind = fkData
+      FieldName = 'original_filename'
+      Index = 27
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 255
+    end
+    object qVideosfile_hash: TStringField
+      DisplayLabel = 'File hash'
+      FieldKind = fkData
+      FieldName = 'file_hash'
+      Index = 28
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 140
+    end
     object qVideossubtitle: TMemoField
       DisplayLabel = 'Subtitle'
       FieldKind = fkData
       FieldName = 'subtitle'
-      Index = 27
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29409,7 +29549,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Notes'
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 28
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29421,7 +29561,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 29
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29431,7 +29571,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 30
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29441,7 +29581,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 31
+      Index = 33
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29451,7 +29591,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 32
+      Index = 34
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29461,7 +29601,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 33
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29472,7 +29612,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Marked'
       FieldKind = fkData
       FieldName = 'marked_status'
-      Index = 34
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29483,7 +29623,7 @@ object frmCustomGrid: TfrmCustomGrid
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 35
+      Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -29493,7 +29633,7 @@ object frmCustomGrid: TfrmCustomGrid
     object qVideosinactivated_by: TStringField
       FieldKind = fkData
       FieldName = 'inactivated_by'
-      Index = 36
+      Index = 38
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

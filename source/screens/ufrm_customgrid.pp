@@ -26,9 +26,9 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra, BCPanel, bctypes,
-  DBControlGrid, Types, ImgList, ToggleSwitch, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
+  DBControlGrid, Types, ImgList, ToggleSwitch, XolmisDBGrid, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
   mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class, BGRABitmap, Math,
-  data_types, data_filters, data_blobs, models_media, modules_core;
+  data_types, data_filters, data_blobs, models_media, modules_core, utils_media;
 
 type
   { TStringMemoEditor }
@@ -52,12 +52,19 @@ type
   TfrmCustomGrid = class(TForm)
     cbCategoryFilter: TComboBox;
     cbMapProvider: TComboBox;
+    DBG: TXolmisDBGrid;
     dbgRecycle: TDrawGrid;
+    gridChild1: TXolmisDBGrid;
+    gridChild2: TXolmisDBGrid;
+    gridChild3: TXolmisDBGrid;
+    gridChild4: TXolmisDBGrid;
+    gridChild5: TXolmisDBGrid;
+    gridChild6: TXolmisDBGrid;
+    gridChild7: TXolmisDBGrid;
     gridImages: TDrawGrid;
     dsLink7: TDataSource;
     dsVideos: TDataSource;
     eSearch: TEdit;
-    gridChild7: TDBGrid;
     gridVideos: TDBGrid;
     icoCategoryFilter: TImage;
     iconSearch: TImage;
@@ -77,7 +84,7 @@ type
     pmcColumnAutoAdjustWidth: TMenuItem;
     MvPluginManager: TMvPluginManager;
     mvLegalNoticePlugin: TLegalNoticePlugin;
-    MvPluginManagerMapScalePlugin1: TMapScalePlugin;
+    mvMapScalePlugin: TMapScalePlugin;
     cardVideos: TPage;
     pmvAddVideo: TMenuItem;
     pmvVideoInfo: TMenuItem;
@@ -96,13 +103,19 @@ type
     qAudiosauthor_id: TLongintField;
     qAudiosauthor_name: TStringField;
     qAudioscoordinate_precision: TStringField;
+    qAudiosfile_hash: TStringField;
     qAudiosfile_path: TStringField;
     qAudiosinactivated_by: TStringField;
+    qAudiosoriginal_filename: TStringField;
     qDocsauthor_id: TLongintField;
+    qDocsfile_hash: TStringField;
     qDocsfile_path: TStringField;
     qDocsinactivated_by: TStringField;
+    qDocsoriginal_filename: TStringField;
+    qImagesfile_hash: TStringField;
     qImagesfile_path: TStringField;
     qImagesinactivated_by: TStringField;
+    qImagesoriginal_filename: TStringField;
     qVideos: TSQLQuery;
     qVideosactive_status: TBooleanField;
     qVideosauthor_id: TLongintField;
@@ -111,6 +124,7 @@ type
     qVideoscoordinate_precision: TStringField;
     qVideosdistance: TFloatField;
     qVideosexported_status: TBooleanField;
+    qVideosfile_hash: TStringField;
     qVideosfile_path: TStringField;
     qVideosfull_name: TStringField;
     qVideoshabitat: TStringField;
@@ -129,6 +143,7 @@ type
     qVideosnest_id: TLongintField;
     qVideosnest_revision_id: TLongintField;
     qVideosnotes: TMemoField;
+    qVideosoriginal_filename: TStringField;
     qVideosrecording_context: TStringField;
     qVideosrecording_date: TDateField;
     qVideosrecording_time: TTimeField;
@@ -171,7 +186,6 @@ type
     pChildRightPanel: TBCPanel;
     dsDocs: TDataSource;
     dsLink6: TDataSource;
-    gridChild6: TDBGrid;
     gridDocs: TDBGrid;
     pmdAddDocument: TMenuItem;
     pmdAddLink: TMenuItem;
@@ -259,7 +273,6 @@ type
     PrintGrid: TFrPrintGrid;
     gridSummary: TDBGrid;
     dsRecycle: TDataSource;
-    DBG: TDBGrid;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     icoReportedFilter: TImage;
@@ -500,11 +513,6 @@ type
     eHowAgedFilter: TEditButton;
     eMoltLimitsFilter: TEditButton;
     eStartTimeFilter: TTimeEdit;
-    gridChild1: TDBGrid;
-    gridChild2: TDBGrid;
-    gridChild4: TDBGrid;
-    gridChild3: TDBGrid;
-    gridChild5: TDBGrid;
     icoAgingFilter: TImage;
     icoSkullOssificationFilter: TImage;
     icoTaxonomyCbroFilter: TImage;
@@ -719,7 +727,6 @@ type
     qImagesexported_status: TBooleanField;
     qImagesimage_date: TDateField;
     qImagesimage_id: TLongintField;
-    qImagesimage_thumbnail: TBlobField;
     qImagesimage_time: TTimeField;
     qImagesimage_type: TStringField;
     qImagesindividual_id: TLongintField;
@@ -937,7 +944,6 @@ type
     procedure DBGDblClick(Sender: TObject);
     procedure DBGEditButtonClick(Sender: TObject);
     procedure DBGEditingDone(Sender: TObject);
-    procedure dbgImagesDblClick(Sender: TObject);
     procedure DBGKeyPress(Sender: TObject; var Key: char);
     procedure DBGMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure DBGMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
@@ -1028,6 +1034,7 @@ type
     procedure gridDocsDblClick(Sender: TObject);
     procedure gridDocsDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
       State: TGridDrawState);
+    procedure gridImagesDblClick(Sender: TObject);
     procedure gridImagesDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
     procedure gridImagesSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
     procedure gridRecordDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
@@ -1246,6 +1253,7 @@ type
     FDragging: Boolean;
     FImageList: TAttachedImageList;
     FRecycleList: TRecycleList;
+    FThumbManager: TThumbnailManager;
     cellMemo: TMemo;
 
     panelTabs: specialize TFPGList<TCustomPanelTab>;
@@ -1255,6 +1263,7 @@ type
     procedure AddAudio(aFileName: String; aAttachment: TMediaAttachment);
     procedure AddDocument(aFileName: String; aAttachment: TMediaAttachment);
     procedure AddGridColumns(aTable: TTableType; aGrid: TDBGrid);
+    procedure AddLink(aUrl: String; aAttachment: TMediaAttachment);
     procedure AddOrEditChild(const aTableType: TTableType; const isNew: Boolean);
     procedure AddSortedField(aFieldName: String; aDirection: TSortDirection; aCollation: String = '';
       aUseTablePrefix: Boolean = False);
@@ -1279,7 +1288,6 @@ type
     procedure LoadRecordColumns;
     procedure LoadRecordRow;
     procedure LoadImagesMetadataFromDB;
-    procedure LoadThumbnailsForVisibleRows;
     procedure LoadRecycleMetadataFromDB;
 
     procedure OnAutoAdjustColumnsChanged;
@@ -1287,6 +1295,7 @@ type
     procedure OnDefaultRowHeightChanged;
     procedure OnGazetteerFilterChanged;
     procedure OnMethodCategoryFilterChanged;
+    procedure OnThumbnailReadyEvent(Sender: TObject; const AMediaHash: string; const ABitmap: TBitmap);
 
     procedure OpenAsync;
     procedure OpenExpeditionChilds;
@@ -1395,7 +1404,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_system, utils_themes, utils_editdialogs, utils_dialogs, utils_math,
-  utils_finddialogs, utils_print, utils_gis, utils_taxonomy,
+  utils_finddialogs, utils_print, utils_gis, utils_taxonomy, utils_validations, utils_web,
   data_management, data_getvalue, data_columns, data_setparam, data_consts,
   models_access_control, models_taxonomy, models_users, models_record_types,
   modules_bands, modules_birds, modules_botany, modules_breeding, modules_gazetteer, modules_institutions,
@@ -1977,11 +1986,12 @@ end;
 
 procedure TfrmCustomGrid.AddAudio(aFileName: String; aAttachment: TMediaAttachment);
 var
-  relPath: String;
+  originalName, newPath, mediaHash: String;
   SearchRec: TSearchRec;
   CreationDate: TDateTime;
   Media: TAudioData;
   Repo: TAudioRepository;
+  Manager: TMediaManager;
 begin
   if not (FileExists(aFileName)) then
   begin
@@ -1996,16 +2006,25 @@ begin
     FindClose(SearchRec);
   end;
 
-  relPath := ExtractRelativePath(xSettings.AudiosFolder, aFileName);
+  Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+  try
+    newPath := Manager.ImportFile(aFileName, originalName, mediaHash, xSettings.MoveOriginalFile = mofAlwaysMove);
+  finally
+    Manager.Free;
+  end;
 
   Repo := TAudioRepository.Create(DMM.sqlCon);
   Media := TAudioData.Create();
   try
     // Check if the audio is in the dataset
-    Repo.FindBy(COL_AUDIO_FILE, relPath, Media);
+    Repo.FindBy(COL_ORIGINAL_FILENAME, originalName, Media);
 
     if Media.IsNew then
-      Media.FilePath := relPath;
+    begin
+      Media.FilePath := newPath;
+      Media.OriginalFilename := originalName;
+    end;
+    Media.FileHash := mediaHash;
     Media.RecordingDate := CreationDate;
     Media.RecordingTime := CreationDate;
 
@@ -2034,11 +2053,12 @@ end;
 
 procedure TfrmCustomGrid.AddDocument(aFileName: String; aAttachment: TMediaAttachment);
 var
-  relPath: String;
+  originalName, newPath, mediaHash: String;
   SearchRec: TSearchRec;
   CreationDate: TDateTime;
   Media: TDocumentData;
   Repo: TDocumentRepository;
+  Manager: TMediaManager;
 begin
   if not (FileExists(aFileName)) then
   begin
@@ -2053,7 +2073,12 @@ begin
     FindClose(SearchRec);
   end;
 
-  relPath := ExtractRelativePath(xSettings.DocumentsFolder, aFileName);
+  Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+  try
+    newPath := Manager.ImportFile(aFileName, originalName, mediaHash, xSettings.MoveOriginalFile = mofAlwaysMove);
+  finally
+    Manager.Free;
+  end;
 
   Repo := TDocumentRepository.Create(DMM.sqlCon);
   Media := TDocumentData.Create();
@@ -2073,14 +2098,18 @@ begin
     //else
     //  raise Exception.Create(rsErrorTableNotSupportedInDocuments);
     //end;
-    Repo.FindBy(COL_DOCUMENT_PATH, relPath, Media);
+    Repo.FindBy(COL_ORIGINAL_FILENAME, originalName, Media);
 
     if Media.IsNew then
-      Media.FilePath := relPath;
+    begin
+      Media.FilePath := newPath;
+      Media.OriginalFilename := originalName;
+    end;
+    Media.FileHash := mediaHash;
     Media.DocumentDate := CreationDate;
     Media.DocumentTime := CreationDate;
     Media.DocumentType := GetFileCategoryFromExt(ExtractFileExt(aFileName));
-    Media.Name := StringReplace(ExtractFileName(relPath), ExtractFileExt(relPath), '', []);
+    Media.Name := ExtractFileNameOnly(aFileName);
 
     if aAttachment.AuthorId > 0 then
       Media.PersonId := aAttachment.AuthorId;
@@ -2152,6 +2181,78 @@ begin
   finally
     //aGrid.Columns.LinkFields;
     aGrid.EndUpdate;
+  end;
+end;
+
+procedure TfrmCustomGrid.AddLink(aUrl: String; aAttachment: TMediaAttachment);
+var
+  originalName, newPath, mediaHash, DocName: String;
+  SearchRec: TSearchRec;
+  CreationDate: TDateTime;
+  Media: TDocumentData;
+  Repo: TDocumentRepository;
+begin
+  if not (IsValidURL(aUrl)) then
+    raise Exception.CreateFmt(rsErrorInvalidURL, [aUrl]);
+
+  if HasInternetConnection(aUrl) then
+  begin
+    DocName := GetPageTitle(aUrl);
+    if Trim(DocName) = EmptyStr then
+      DocName := aUrl;
+  end
+  else
+    DocName := aUrl;
+
+  Repo := TDocumentRepository.Create(DMM.sqlCon);
+  Media := TDocumentData.Create();
+  try
+    Repo.FindBy(COL_ORIGINAL_FILENAME, aUrl, Media);
+
+    if Media.IsNew then
+    begin
+      Media.FilePath := aUrl;
+      Media.OriginalFilename := aUrl;
+    end;
+    Media.FileHash := '';
+    Media.DocumentDate := Now;
+    Media.DocumentTime := Now;
+    Media.DocumentType := fcUrl;
+    Media.Name := DocName;
+
+    if aAttachment.AuthorId > 0 then
+      Media.PersonId := aAttachment.AuthorId;
+    if aAttachment.MethodId > 0 then
+      Media.MethodId := aAttachment.MethodId;
+    if aAttachment.IndividualId > 0 then
+      Media.IndividualId := aAttachment.IndividualId;
+    if aAttachment.CaptureId > 0 then
+      Media.CaptureId := aAttachment.CaptureId;
+    if aAttachment.ExpeditionId > 0 then
+      Media.ExpeditionId := aAttachment.ExpeditionId;
+    if aAttachment.SurveyId > 0 then
+      Media.SurveyId := aAttachment.SurveyId;
+    if aAttachment.SightingId > 0 then
+      Media.SightingId := aAttachment.SightingId;
+    if aAttachment.NestId > 0 then
+      Media.NestId := aAttachment.NestId;
+    if aAttachment.SpecimenId > 0 then
+      Media.SpecimenId := aAttachment.SpecimenId;
+    if aAttachment.SamplingPlotId > 0 then
+      Media.SamplingPlotId := aAttachment.SamplingPlotId;
+    if aAttachment.ProjectId > 0 then
+      Media.ProjectId := aAttachment.ProjectId;
+    if aAttachment.PermitId > 0 then
+      Media.PermitId := aAttachment.PermitId;
+
+    if Media.IsNew then
+      Repo.Insert(Media)
+    else
+      Repo.Update(Media);
+
+  finally
+    Media.Free;
+    Repo.Free;
   end;
 end;
 
@@ -2256,11 +2357,12 @@ end;
 
 procedure TfrmCustomGrid.AddVideo(aFileName: String; aAttachment: TMediaAttachment);
 var
-  relPath: String;
+  originalName, newPath, mediaHash: String;
   SearchRec: TSearchRec;
   CreationDate: TDateTime;
   Media: TVideoData;
   Repo: TVideoRepository;
+  Manager: TMediaManager;
 begin
   if not (FileExists(aFileName)) then
   begin
@@ -2275,15 +2377,24 @@ begin
     FindClose(SearchRec);
   end;
 
-  relPath := ExtractRelativePath(xSettings.VideosFolder, aFileName);
+  Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+  try
+    newPath := Manager.ImportFile(aFileName, originalName, mediaHash, xSettings.MoveOriginalFile = mofAlwaysMove);
+  finally
+    Manager.Free;
+  end;
 
   Repo := TVideoRepository.Create(DMM.sqlCon);
   Media := TVideoData.Create();
   try
-    Repo.FindBy(COL_FILE_PATH, relPath, Media);
+    Repo.FindBy(COL_ORIGINAL_FILENAME, originalName, Media);
 
     if Media.IsNew then
-      Media.FilePath := relPath;
+    begin
+      Media.FilePath := newPath;
+      Media.OriginalFilename := originalName;
+    end;
+    Media.FileHash := mediaHash;
     Media.RecordingDate := CreationDate;
     Media.RecordingTime := CreationDate;
 
@@ -3418,12 +3529,6 @@ begin
   //{$ENDIF}
 end;
 
-procedure TfrmCustomGrid.dbgImagesDblClick(Sender: TObject);
-begin
-  if sbViewImage.Enabled then
-    sbViewImageClick(nil);
-end;
-
 procedure TfrmCustomGrid.DBGKeyPress(Sender: TObject; var Key: char);
 const
   FPress: array of String = (COL_TAXON_NAME, COL_NIDOPARASITE_NAME, COL_PARENT_TAXON_NAME, COL_VALID_NAME,
@@ -3933,6 +4038,8 @@ var
 begin
   Grid := TDrawGrid(Sender);
 
+  if (aCol < 1) then
+    Exit;
   if (aRow < 0) or (aRow >= FRecycleList.Count) then
     Exit;
   Item := FRecycleList[aRow];
@@ -4735,6 +4842,9 @@ begin
   // Initialize the child tabs
   panelTabs := specialize TFPGList<TCustomPanelTab>.Create;
 
+  FThumbManager := TThumbnailManager.Create;
+  FThumbManager.OnThumbnailReady := @OnThumbnailReadyEvent;
+
   //cellMemo.Tag := -1;
 
   // Open reports data module
@@ -4770,6 +4880,7 @@ begin
 
   FImageList.Free;
   FRecycleList.Free;
+  FThumbManager.Free;
 
   FreeAndNil(FSearch);
 
@@ -5305,6 +5416,12 @@ begin
   end;
 end;
 
+procedure TfrmCustomGrid.gridImagesDblClick(Sender: TObject);
+begin
+  if sbViewImage.Enabled then
+    sbViewImageClick(nil);
+end;
+
 procedure TfrmCustomGrid.gridImagesDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
 const
   CellPadding = 6;
@@ -5329,6 +5446,7 @@ var
   ThumbSize, TextTop, SrcSize, ErrHeight: Integer;
   ScaleFactor: Single;
   IconSize: Integer;
+  FullFilePath: String;
 begin
   Grid := TDrawGrid(Sender);
 
@@ -5357,8 +5475,13 @@ begin
     aRect.Left + CellPadding + ThumbSize, aRect.Top + CellPadding + ThumbSize);
   RText := Rect(RThumb.Right + ThumbTextGap, aRect.Top + CellPadding, aRect.Right - CellPadding, aRect.Bottom - CellPadding);
 
+  FullFilePath := CreateAbsolutePath(Item.FileName, xSettings.MediaStorageFolder);
+
+  if (not Item.HasError) and (not Item.ThumbReady) and (not Item.ThumbLoading) then
+    FThumbManager.GetThumbnailAsync(FullFilePath, Item.FileHash, Item);
+
   // Draw the thumbnail, an error badge, or a placeholder
-  if (Item.Thumbnail.Width > 0) then
+  if Item.ThumbReady and (Item.Thumbnail <> nil) then
   begin
     // Center-crop the source to a square so it fills RThumb without distortion
     SrcSize := Min(Item.Thumbnail.Width, Item.Thumbnail.Height);
@@ -5368,20 +5491,6 @@ begin
     Grid.Canvas.Pen.Color := clMedGray;
     Grid.Canvas.FrameRect(RThumb);
   end
-  //else if Item.HasError then
-  //begin
-  //  Grid.Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
-  //  Grid.Canvas.Pen.Color := ActiveTheme.System.CriticalFG;
-  //  Grid.Canvas.Rectangle(RThumb);
-  //  if IsDarkModeEnabled then
-  //    iIconsDark.DrawForPPI(Grid.Canvas, (RThumb.Right - RThumb.Width div 2) - (IconSize div 2),
-        //(RThumb.Bottom - RThumb.Height div 2) - (IconSize div 2), 41, 20,
-  //      Screen.PixelsPerInch, ScaleFactor)
-  //  else
-  //    iIcons.DrawForPPI(Grid.Canvas, (RThumb.Right - RThumb.Width div 2) - (IconSize div 2),
-        //(RThumb.Bottom - RThumb.Height div 2) - (IconSize div 2), 41, 20,
-  //      Screen.PixelsPerInch, ScaleFactor);
-  //end
   else
   begin
     Grid.Canvas.Brush.Color := ActiveTheme.Background.CardDefault;
@@ -5421,7 +5530,7 @@ begin
   end;
 
   Grid.Canvas.Font.Bold := True;
-  Grid.Canvas.TextOut(RText.Left, RText.Top, EllipsisText(Grid.Canvas, ExtractFileName(Item.FileName), RText.Width));
+  Grid.Canvas.TextOut(RText.Left, RText.Top, EllipsisText(Grid.Canvas, Item.OriginalName, RText.Width));
   Grid.Canvas.Font.Bold := False;
   TextTop := RText.Top + LineHeight;
 
@@ -5653,18 +5762,26 @@ begin
       Item := TAttachedImageItem.Create;
       Item.ImageID := qImages.FieldByName('image_id').AsInteger;
       Item.FileName := qImages.FieldByName('file_path').AsString;
+      Item.OriginalName := qImages.FieldByName('original_filename').AsString;
+      if qImages.FindField('file_hash') <> nil then
+        Item.FileHash := qImages.FieldByName('file_hash').AsString
+      else
+        Item.FileHash := ExtractFileNameOnly(Item.FileName);
       Item.ImageDate := qImages.FieldByName('image_date').DisplayText;
       Item.ImageTime := qImages.FieldByName('image_time').DisplayText;
       Item.ImageType := qImages.FieldByName('image_type').DisplayText;
       Item.Subtitle := qImages.FieldByName('subtitle').AsString;
       Item.AuthorName := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, qImages.FieldByName('author_id').AsInteger);
 
-      FullFilePath := CreateAbsolutePath(Item.FileName, xSettings.ImagesFolder);
+      FullFilePath := CreateAbsolutePath(Item.FileName, xSettings.MediaStorageFolder);
       if not FileExists(FullFilePath) then
       begin
         Item.HasError := True;
-        Item.ErrorMessage := Format(rsImageNotFound, [FullFilePath]);
+        Item.ErrorMessage := rsTitleFileNotFound;
       end;
+
+      Item.ThumbReady := False;
+      Item.ThumbLoading := False;
 
       FImageList.Add(Item);
       qImages.Next;
@@ -5674,8 +5791,6 @@ begin
   end;
 
   gridImages.RowCount := FImageList.Count;
-
-  LoadThumbnailsForVisibleRows;
   gridImages.Invalidate;
 end;
 
@@ -5779,59 +5894,6 @@ begin
   dbgRecycle.Invalidate;
 end;
 
-procedure TfrmCustomGrid.LoadThumbnailsForVisibleRows;
-var
-  i, StartRow, EndRow: Integer;
-  Item: TAttachedImageItem;
-  Thumb: TBGRABitmap;
-  Stream: TMemoryStream;
-begin
-  if FImageList.Count = 0 then
-    Exit;
-
-  // Calculate which rows are visible
-  StartRow := gridImages.TopRow;
-  EndRow := StartRow + gridImages.VisibleRowCount;
-  if EndRow >= FImageList.Count then
-    EndRow := FImageList.Count - 1;
-
-  for i := 0 to FImageList.Count - 1 do
-  begin
-    Item := FImageList[i];
-
-    // Load the thumbnail even if the original file is missing (HasError), since it comes from the BLOB
-    if Item.Thumbnail.Width = 0 then
-    begin
-      // Locate the matching record to read its thumbnail BLOB
-      if qImages.Locate(COL_IMAGE_ID, Item.ImageID, []) and not qImagesimage_thumbnail.IsNull then
-      begin
-        Stream := TMemoryStream.Create;
-        try
-          qImagesimage_thumbnail.SaveToStream(Stream);
-          Stream.Position := OFFSET_MEMORY_STREAM;
-          try
-            Thumb := TBGRABitmap.Create(Stream);
-            try
-              Item.Thumbnail.Bitmap.SetSize(Thumb.Width, Thumb.Height);
-              Thumb.Draw(Item.Thumbnail.Bitmap.Canvas, 0, 0, True);
-            finally
-              Thumb.Free;
-            end;
-          except
-            on E: Exception do
-            begin
-              Item.HasError := True;
-              Item.ErrorMessage := rsErrorLoadingImageThumbnail;
-            end;
-          end;
-        finally
-          Stream.Free;
-        end;
-      end;
-    end;
-  end;
-end;
-
 procedure TfrmCustomGrid.mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
 const
   R = 8;
@@ -5904,6 +5966,11 @@ begin
     else
       cbCategoryFilter.ItemIndex := 0;
   end;
+end;
+
+procedure TfrmCustomGrid.OnThumbnailReadyEvent(Sender: TObject; const AMediaHash: string; const ABitmap: TBitmap);
+begin
+  gridImages.Invalidate;
 end;
 
 procedure TfrmCustomGrid.OpenAsync;
@@ -6122,7 +6189,7 @@ var
   i: Integer;
   FAttachment: TMediaAttachment;
 begin
-  DMM.OpenDocs.InitialDir := xSettings.DocumentsFolder;
+  DMM.OpenDocs.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenDocs.Execute then
   begin
     FAttachment := AttachMediaDlg(FTableType, [amtDocuments]);
@@ -6172,8 +6239,17 @@ begin
 end;
 
 procedure TfrmCustomGrid.pmAddLinkClick(Sender: TObject);
+var
+  FAttachment: TMediaAttachment;
+  aUrl: String;
 begin
-  EditDocInfo(qDocs, dsLink.DataSet, FTableType, True);
+  aUrl := InputBox(rsAddLink, rsPromptAddLink, '');
+  if Trim(aUrl) = EmptyStr then
+    Exit;
+
+  FAttachment := AttachMediaDlg(FTableType, [amtDocuments]);
+
+  AddLink(aUrl, FAttachment);
 end;
 
 procedure TfrmCustomGrid.pmaRefreshAudiosClick(Sender: TObject);
@@ -6465,6 +6541,7 @@ begin
     Exit;
 
   qImages.Refresh;
+  LoadImagesMetadataFromDB;
 end;
 
 procedure TfrmCustomGrid.pmmInvertMarkedClick(Sender: TObject);
@@ -6944,6 +7021,7 @@ begin
     if not dsRecycle.DataSet.Active then
       dsRecycle.DataSet.Open;
     dsRecycle.DataSet.Refresh;
+    LoadRecycleMetadataFromDB;
     UpdateRecycleButtons(dsRecycle.DataSet);
     UpdateButtons(dsLink.DataSet);
   finally
@@ -7598,7 +7676,7 @@ var
   i: Integer;
   FAttachment: TMediaAttachment;
 begin
-  DMM.OpenAudios.InitialDir := xSettings.AudiosFolder;
+  DMM.OpenAudios.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenAudios.Execute then
   begin
     FAttachment := AttachMediaDlg(FTableType, [amtAudios]);
@@ -7700,7 +7778,7 @@ var
   i: Integer;
   FAttachment: TMediaAttachment;
 begin
-  DMM.OpenImgs.InitialDir := xSettings.ImagesFolder;
+  DMM.OpenImgs.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenImgs.Execute then
   begin
     FAttachment := AttachMediaDlg(FTableType, [amtImages]);
@@ -7746,6 +7824,7 @@ begin
       dlgProgress.Close;
       FreeAndNil(dlgProgress);
     end;
+    LoadImagesMetadataFromDB;
   end;
 end;
 
@@ -7775,7 +7854,7 @@ var
   i: Integer;
   FAttachment: TMediaAttachment;
 begin
-  DMM.OpenVideos.InitialDir := xSettings.VideosFolder;
+  DMM.OpenVideos.InitialDir := xSettings.LastPathUsed;
   if DMM.OpenVideos.Execute then
   begin
     FAttachment := AttachMediaDlg(FTableType, [amtVideos]);
@@ -7924,12 +8003,23 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbDelAudioClick(Sender: TObject);
+var
+  Manager: TMediaManager;
 begin
   if isWorking then
     Exit;
 
   isWorking := True;
   try
+    if xSettings.DeleteMediaFile then
+    begin
+      Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+      try
+        Manager.RemoveFile(qAudios.FieldByName(COL_FILE_PATH).AsString);
+      finally
+        Manager.Free;
+      end;
+    end;
     DeleteRecord(tbAudioLibrary, qAudios);
     UpdateAudioButtons(qAudios);
   finally
@@ -8017,12 +8107,23 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbDelDocClick(Sender: TObject);
+var
+  Manager: TMediaManager;
 begin
   if isWorking then
     Exit;
 
   isWorking := True;
   try
+    if xSettings.DeleteMediaFile then
+    begin
+      Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+      try
+        Manager.RemoveFile(qDocs.FieldByName(COL_FILE_PATH).AsString);
+      finally
+        Manager.Free;
+      end;
+    end;
     DeleteRecord(tbDocuments, qDocs);
     UpdateDocButtons(qDocs);
   finally
@@ -8031,13 +8132,25 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbDelImageClick(Sender: TObject);
+var
+  Manager: TMediaManager;
 begin
   if isWorking then
     Exit;
 
   isWorking := True;
   try
+    if xSettings.DeleteMediaFile then
+    begin
+      Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+      try
+        Manager.RemoveFile(qImages.FieldByName(COL_FILE_PATH).AsString);
+      finally
+        Manager.Free;
+      end;
+    end;
     DeleteRecord(tbImages, qImages);
+    LoadImagesMetadataFromDB;
     UpdateImageButtons(qImages);
   finally
     isWorking := False;
@@ -8132,12 +8245,23 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbDelVideoClick(Sender: TObject);
+var
+  Manager: TMediaManager;
 begin
   if isWorking then
     Exit;
 
   isWorking := True;
   try
+    if xSettings.DeleteMediaFile then
+    begin
+      Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+      try
+        Manager.RemoveFile(qVideos.FieldByName(COL_FILE_PATH).AsString);
+      finally
+        Manager.Free;
+      end;
+    end;
     DeleteRecord(tbVideos, qVideos);
     UpdateVideoButtons(qVideos);
   finally
@@ -8260,6 +8384,7 @@ begin
   if needsRefresh then
   begin
     UpdateImageButtons(qImages);
+    LoadImagesMetadataFromDB;
     TimerRecordUpdate.Enabled := True;
   end;
 end;
@@ -8924,6 +9049,7 @@ end;
 procedure TfrmCustomGrid.sbViewImageClick(Sender: TObject);
 begin
   ViewImage(qImages);
+  LoadImagesMetadataFromDB;
 end;
 
 function TfrmCustomGrid.Search(aValue: String): Boolean;

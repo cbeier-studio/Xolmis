@@ -737,6 +737,8 @@ const
   COL_VIDEO_TYPE = 'video_type';
   COL_CAMERA_MODEL = 'camera_model';
   COL_FILE_PATH = 'file_path';
+  COL_ORIGINAL_FILENAME = 'original_filename';
+  COL_FILE_HASH = 'file_hash';
 
 
 implementation

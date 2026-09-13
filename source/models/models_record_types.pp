@@ -165,6 +165,37 @@ type
 
 type
 
+  { TCustomMedia }
+
+  TCustomMedia = class(TXolmisRecord)
+  protected
+    FFilePath: String;
+    FOriginalFilename: String;
+    FFileHash: String;
+    FAuthorId: Integer;
+    FLicenseType: String;
+    FLicenseYear: Integer;
+    FLicenseOwner: String;
+    FLicenseNotes: String;
+    FLicenseUri: String;
+  public
+    procedure Clear; override;
+    procedure Assign(Source: TPersistent); override;
+    function Clone: TXolmisRecord; reintroduce; virtual;
+  published
+    property FilePath: String read FFilePath write FFilePath;
+    property OriginalFilename: String read FOriginalFilename write FOriginalFilename;
+    property FileHash: String read FFileHash write FFileHash;
+    property AuthorId: Integer read FAuthorId write FAuthorId;
+    property LicenseType: String read FLicenseType write FLicenseType;
+    property LicenseYear: Integer read FLicenseYear write FLicenseYear;
+    property LicenseOwner: String read FLicenseOwner write FLicenseOwner;
+    property LicenseNotes: String read FLicenseNotes write FLicenseNotes;
+    property LicenseUri: String read FLicenseUri write FLicenseUri;
+  end;
+
+type
+
   { TXolmisRepository }
 
   TXolmisRepository = class
@@ -625,7 +656,7 @@ begin
     FParentTaxonId  := TCustomTaxon(Source).ParentTaxonId;
     FValidId        := TCustomTaxon(Source).ValidId;
     FOrderId        := TCustomTaxon(Source).OrderId;
-    FamilyId        := TCustomTaxon(Source).FamilyId;
+    FFamilyId       := TCustomTaxon(Source).FamilyId;
     FGenusId        := TCustomTaxon(Source).GenusId;
     FSpeciesId      := TCustomTaxon(Source).SpeciesId;
   end;
@@ -650,6 +681,45 @@ end;
 function TCustomTaxon.Clone: TXolmisRecord;
 begin
   Result := TCustomTaxon.Create;
+  Result.Assign(Self);
+end;
+
+{ TCustomMedia }
+
+procedure TCustomMedia.Assign(Source: TPersistent);
+begin
+  inherited Assign(Source);
+  if Source is TCustomMedia then
+  begin
+    FFilePath         := TCustomMedia(Source).FilePath;
+    FOriginalFilename := TCustomMedia(Source).OriginalFilename;
+    FFileHash         := TCustomMedia(Source).FileHash;
+    FAuthorId         := TCustomMedia(Source).AuthorId;
+    FLicenseType      := TCustomMedia(Source).LicenseType;
+    FLicenseOwner     := TCustomMedia(Source).LicenseOwner;
+    FLicenseYear      := TCustomMedia(Source).LicenseYear;
+    FLicenseUri       := TCustomMedia(Source).LicenseUri;
+    FLicenseNotes     := TCustomMedia(Source).LicenseNotes;
+  end;
+end;
+
+procedure TCustomMedia.Clear;
+begin
+  inherited Clear;
+  FFilePath := EmptyStr;
+  FOriginalFilename := EmptyStr;
+  FFileHash := EmptyStr;
+  FAuthorId := 0;
+  FLicenseType := EmptyStr;
+  FLicenseOwner := EmptyStr;
+  FLicenseYear := 0;
+  FLicenseUri := EmptyStr;
+  FLicenseNotes := EmptyStr;
+end;
+
+function TCustomMedia.Clone: TXolmisRecord;
+begin
+  Result := TCustomMedia.Create;
   Result.Assign(Self);
 end;
 

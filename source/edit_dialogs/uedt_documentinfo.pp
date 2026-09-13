@@ -41,9 +41,8 @@ type
     eDocumentTitle: TEdit;
     eDocumentTime: TEdit;
     eDocumentDate: TEditButton;
-    eFilePath: TEditButton;
+    icoFileError: TImage;
     lblAuthor: TLabel;
-    lblDocumentPath: TLabel;
     lblDocumentType: TLabel;
     lblLicenseYear: TLabel;
     lblLicenseNotes: TLabel;
@@ -55,11 +54,11 @@ type
     lblLicenseType: TLabel;
     lineBottom: TShapeLineBGRA;
     pAuthor: TPanel;
-    pDocumentPath: TPanel;
     pDocumentType: TPanel;
     pBottom: TPanel;
     pClient: TPanel;
     pDateTime: TPanel;
+    pHeader: TPanel;
     pLicenseNotes: TPanel;
     pLicenseOwner: TPanel;
     pDocumentTitle: TPanel;
@@ -68,6 +67,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    txtOriginalFilename: TLabel;
     procedure btnHelpClick(Sender: TObject);
     procedure cbDocumentTypeKeyPress(Sender: TObject; var Key: char);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -92,6 +92,8 @@ type
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
+    procedure MediaFileExists;
+    function ValidateMediaFile: TModalResult;
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Document: TDocumentData read FDocument write SetDocument;
@@ -115,7 +117,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_conversions, utils_validations,
+  utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_conversions, utils_validations, utils_themes,
   data_types, data_consts, data_getvalue, data_columns,
   models_record_types, models_taxonomy,
   udm_main, uDarkStyleParams;
@@ -126,8 +128,9 @@ uses
 
 procedure TedtDocumentInfo.ApplyDarkMode;
 begin
+  icoFileError.Images := DMM.iEditsDark;
   eDocumentDate.Images := DMM.iEditsDark;
-  eFilePath.Images := DMM.iEditsDark;
+  //eFilePath.Images := DMM.iEditsDark;
   eAuthor.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
 end;
@@ -207,9 +210,9 @@ end;
 
 procedure TedtDocumentInfo.eFilePathButtonClick(Sender: TObject);
 begin
-  DMM.OpenDocs.InitialDir := xSettings.LastPathUsed;
-  if DMM.OpenDocs.Execute then
-    eFilePath.Text := DMM.OpenDocs.FileName;
+  //DMM.OpenDocs.InitialDir := xSettings.LastPathUsed;
+  //if DMM.OpenDocs.Execute then
+  //  eFilePath.Text := DMM.OpenDocs.FileName;
 end;
 
 procedure TedtDocumentInfo.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -280,11 +283,16 @@ begin
   end;
 
   if not FIsNew then
+  begin
     GetRecord;
+    MediaFileExists;
+    sbSave.Enabled := IsRequiredFilled;
+  end;
 end;
 
 procedure TedtDocumentInfo.GetRecord;
 begin
+  txtOriginalFilename.Caption := FDocument.OriginalFilename;
   case FDocument.DocumentType of
     fcUrl:            cbDocumentType.Text := rsDocUrl;
     fcText:           cbDocumentType.Text := rsDocDocument;
@@ -314,10 +322,11 @@ begin
   eDocumentTitle.Text := FDocument.Name;
   eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FDocument.AuthorId);
   eDocumentDate.Text := DateToStr(FDocument.DocumentDate);
-  eDocumentTime.Text := TimeToStr(FDocument.DocumentTime);
-  eFilePath.Text := CreateAbsolutePath(FDocument.FilePath, xSettings.DocumentsFolder);
+  if FDocument.DocumentTime <> NullTime then
+    eDocumentTime.Text := TimeToStr(FDocument.DocumentTime);
   cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FDocument.LicenseType);
-  eLicenseYear.Text := IntToStr(FDocument.LicenseYear);
+  if FDocument.LicenseYear <> NullTime then
+    eLicenseYear.Text := IntToStr(FDocument.LicenseYear);
   eLicenseOwner.Text := FDocument.LicenseOwner;
   eLicenseNotes.Text := FDocument.LicenseNotes;
   eLicenseUri.Text := FDocument.LicenseUri;
@@ -327,9 +336,40 @@ function TedtDocumentInfo.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (eDocumentDate.Text <> EmptyStr) and
-    (eFilePath.Text <> EmptyStr) then
+  if (eDocumentDate.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtDocumentInfo.MediaFileExists;
+var
+  FullPath: String;
+  Found: Boolean;
+begin
+  if FDocument.DocumentType = fcUrl then
+  begin
+    FullPath := FDocument.FilePath;
+    Found := HasInternetConnection(FullPath);
+  end
+  else
+  begin
+    FullPath := CreateAbsolutePath(FDocument.FilePath, xSettings.MediaStorageFolder);
+    Found := FileExists(FullPath);
+  end;
+
+  if not Found then
+  begin
+    pHeader.Color := ActiveTheme.System.CriticalBG;
+    txtOriginalFilename.Font.Color := ActiveTheme.System.CriticalFG;
+    icoFileError.Hint := rsTitleFileNotFound;
+    icoFileError.Visible := True;
+  end
+  else
+  begin
+    pHeader.Color := clDefault;
+    txtOriginalFilename.Font.Color := clDefault;
+    icoFileError.Hint := EmptyStr;
+    icoFileError.Visible := False;
+  end;
 end;
 
 procedure TedtDocumentInfo.sbSaveClick(Sender: TObject);
@@ -337,6 +377,16 @@ begin
   // Validate data
   if not ValidateFields then
     Exit;
+
+  if FDocument.DocumentType <> fcUrl then
+    case ValidateMediaFile of
+      mrIgnore: ;
+      mrNo:
+      begin
+        ModalResult := mrNo;
+        Exit;
+      end;
+    end;
 
   SetRecord;
 
@@ -356,7 +406,7 @@ begin
   FDocument.AuthorId     := FAuthorId;
   FDocument.DocumentDate := TextToDate(eDocumentDate.Text);
   FDocument.DocumentTime := TextToTime(eDocumentTime.Text);
-  FDocument.FilePath     := ExtractRelativePath(xSettings.DocumentsFolder, eFilePath.Text);
+  //FDocument.FilePath     := ExtractRelativePath(xSettings.DocumentsFolder, eFilePath.Text);
   FDocument.LicenseType  := cbLicenseType.Text;
   FDocument.LicenseYear  := StrToIntOrZero(eLicenseYear.Text);
   FDocument.LicenseOwner := eLicenseOwner.Text;
@@ -374,8 +424,8 @@ begin
   // Required fields
   if (eDocumentDate.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscDate]));
-  if (eFilePath.Text = EmptyStr) then
-    Msgs.Add(Format(rsRequiredField, [rscFileName]));
+  //if (eFilePath.Text = EmptyStr) then
+  //  Msgs.Add(Format(rsRequiredField, [rscFileName]));
 
   // Dates
   if (eDocumentDate.Text <> EmptyStr) then
@@ -387,19 +437,19 @@ begin
     ValidTime(eDocumentTime.Text, rscTime, Msgs);
 
   // Files
-  if (eFilePath.Text <> EmptyStr) then
-  begin
-    if (cbDocumentType.Text = rsDocUrl) then
-    begin
-      if not IsValidURL(eFilePath.Text) then
-        Msgs.Add(Format(rsErrorInvalidURL, [eFilePath.Text]));
-    end
-    else
-    begin
-      if not FileExists(eFilePath.Text) then
-        Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
-    end;
-  end;
+  //if (eFilePath.Text <> EmptyStr) then
+  //begin
+  //  if (cbDocumentType.Text = rsDocUrl) then
+  //  begin
+  //    if not IsValidURL(eFilePath.Text) then
+  //      Msgs.Add(Format(rsErrorInvalidURL, [eFilePath.Text]));
+  //  end
+  //  else
+  //  begin
+  //    if not FileExists(eFilePath.Text) then
+  //      Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
+  //  end;
+  //end;
 
   if Msgs.Count > 0 then
   begin
@@ -407,6 +457,45 @@ begin
     ValidateDlg(Msgs);
   end;
   Msgs.Free;
+end;
+
+function TedtDocumentInfo.ValidateMediaFile: TModalResult;
+var
+  dlgTask: TTaskDialog;
+  btnCustom: TTaskDialogBaseButtonItem;
+  FullPath: String;
+begin
+  Result := mrNone;
+
+  if (FDocument.FilePath = EmptyStr) then
+    Exit;
+
+  FullPath := ConcatPaths([xSettings.MediaStorageFolder, FDocument.FilePath]);
+  if not FileExists(FullPath) then
+  begin
+    dlgTask := TTaskDialog.Create(nil);
+    try
+      dlgTask.Title := rsTitleFileNotFound;
+      dlgTask.Caption := APP_NAME;
+      dlgTask.Text := Format(rsPromptMediaFileNotFound, [FullPath]);
+      dlgTask.MainIcon := tdiQuestion;
+      dlgTask.Flags := dlgTask.Flags + [tfUseCommandLinks];
+      dlgTask.CommonButtons := [];
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsIgnoreAction;
+      btnCustom.ModalResult := mrIgnore;
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsDeleteRecordTitle;
+      btnCustom.ModalResult := mrNo;
+
+      if dlgTask.Execute then
+        Result := dlgTask.ModalResult;
+    finally
+      dlgTask.Free;
+    end;
+  end;
 end;
 
 end.

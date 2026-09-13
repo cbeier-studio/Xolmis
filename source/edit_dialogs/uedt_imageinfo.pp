@@ -21,8 +21,8 @@ unit uedt_imageinfo;
 interface
 
 uses
-  Classes, EditBtn, SysUtils, DB, Forms, Controls, Graphics, Dialogs, StdCtrls, DateUtils, LazFileUtils,
-  ExtCtrls, Buttons, Menus, Character, atshapelinebgra, models_media;
+  Classes, EditBtn, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, StdCtrls, DateUtils, LazFileUtils,
+  ExtCtrls, Buttons, Menus, Character, BGRABitmap, atshapelinebgra, models_media;
 
 type
 
@@ -41,12 +41,13 @@ type
     eImageTime: TEdit;
     eAuthor: TEditButton;
     eImageDate: TEditButton;
-    eFilePath: TEditButton;
     eTaxon: TEditButton;
     eLicenseYear: TEdit;
     eLicenseOwner: TEdit;
     eLicenseNotes: TEdit;
     eLicenseUri: TEdit;
+    icoFileError: TImage;
+    imgThumbnail: TImage;
     lblLatitude: TLabel;
     lblImageDate: TLabel;
     lblLicenseNotes: TLabel;
@@ -59,11 +60,11 @@ type
     lblCoordinatesPrecision: TLabel;
     lblImageTime: TLabel;
     lblSubtitle: TLabel;
-    lblImageFilename: TLabel;
     lblAuthor: TLabel;
     lblTaxon: TLabel;
     lblLocality: TLabel;
     lineBottom: TShapeLineBGRA;
+    pHeader: TPanel;
     pmnNewPerson: TMenuItem;
     pmnNewLocality: TMenuItem;
     mSubtitle: TMemo;
@@ -76,7 +77,6 @@ type
     pmNew: TPopupMenu;
     pSubtitle: TPanel;
     pDateTime: TPanel;
-    pImageFilename: TPanel;
     pAuthor: TPanel;
     pTaxon: TPanel;
     pLongitudeLatitude: TPanel;
@@ -86,6 +86,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    txtOriginalFilename: TLabel;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
@@ -121,6 +122,7 @@ type
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
+    procedure LoadThumbnail(aImageId: Integer);
     procedure MediaFileExists;
     function ValidateMediaFile: TModalResult;
   public
@@ -155,9 +157,10 @@ uses
 
 procedure TedtImageInfo.ApplyDarkMode;
 begin
+  icoFileError.Images := DMM.iEditsDark;
   eAuthor.Images := DMM.iEditsDark;
   eImageDate.Images := DMM.iEditsDark;
-  eFilePath.Images := DMM.iEditsDark;
+  //eFilePath.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
@@ -253,9 +256,9 @@ end;
 
 procedure TedtImageInfo.eFilePathButtonClick(Sender: TObject);
 begin
-  DMM.OpenImgs.InitialDir := xSettings.LastPathUsed;
-  if DMM.OpenImgs.Execute then
-    eFilePath.Text := DMM.OpenImgs.FileName;
+  //DMM.OpenImgs.InitialDir := xSettings.LastPathUsed;
+  //if DMM.OpenImgs.Execute then
+  //  eFilePath.Text := DMM.OpenImgs.FileName;
 end;
 
 procedure TedtImageInfo.eFilePathChange(Sender: TObject);
@@ -522,6 +525,7 @@ end;
 
 procedure TedtImageInfo.GetRecord;
 begin
+  txtOriginalFilename.Caption := FImage.OriginalFilename;
   mSubtitle.Text := FImage.Subtitle;
   FAuthorId := FImage.AuthorId;
   eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
@@ -562,7 +566,6 @@ begin
   else
     cbImageType.ItemIndex := -1;
   end;
-  eFilePath.Text := CreateAbsolutePath(FImage.FilePath, xSettings.ImagesFolder);
   FLocalityId := FImage.LocalityId;
   eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
   case FImage.CoordinatePrecision of
@@ -585,28 +588,83 @@ begin
   eLicenseOwner.Text := FImage.LicenseOwner;
   eLicenseNotes.Text := FImage.LicenseNotes;
   eLicenseUri.Text := FImage.LicenseUri;
+
+
 end;
 
 function TedtImageInfo.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (eImageDate.Text <> EmptyStr) and
-    (eFilePath.Text <> EmptyStr) then
+  if (eImageDate.Text <> EmptyStr) then
     Result := True;
 end;
 
-procedure TedtImageInfo.MediaFileExists;
+procedure TedtImageInfo.LoadThumbnail(aImageId: Integer);
+var
+  Qry: TSQLQuery;
+  Stream: TMemoryStream;
+  Thumb: TBGRABitmap;
 begin
-  if not FileExists(eFilePath.Text) then
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+
+    Add('SELECT image_thumbnail FROM images');
+    Add('WHERE image_id = :image_id');
+    ParamByName('image_id').AsInteger := aImageId;
+    Open;
+    if not IsEmpty and not FieldByName(COL_IMAGE_THUMBNAIL).IsNull then
+    begin
+      Stream := TMemoryStream.Create;
+      try
+        TBlobField(FieldByName(COL_IMAGE_THUMBNAIL)).SaveToStream(Stream);
+        Stream.Position := 0;
+        try
+          Thumb := TBGRABitmap.Create(Stream);
+          try
+            imgThumbnail.Picture.Bitmap.SetSize(Thumb.Width, Thumb.Height);
+            Thumb.Draw(imgThumbnail.Picture.Bitmap.Canvas, 0, 0, True);
+          finally
+            Thumb.Free;
+          end;
+
+          imgThumbnail.Visible := imgThumbnail.Picture.Width > 0;
+        except
+          on E: Exception do
+          begin
+            icoFileError.Visible := True;
+            icoFileError.Hint := rsErrorLoadingImageThumbnail;
+          end;
+        end;
+      finally
+        Stream.Free;
+      end;
+    end;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TedtImageInfo.MediaFileExists;
+var
+  FullPath: String;
+begin
+  FullPath := CreateAbsolutePath(FImage.FilePath, xSettings.MediaStorageFolder);
+  if not FileExists(FullPath) then
   begin
-    eFilePath.Color := ActiveTheme.System.CriticalBG;
-    eFilePath.Font.Color := ActiveTheme.System.CriticalFG;
+    pHeader.Color := ActiveTheme.System.CriticalBG;
+    txtOriginalFilename.Font.Color := ActiveTheme.System.CriticalFG;
+    icoFileError.Hint := rsTitleFileNotFound;
+    icoFileError.Visible := True;
   end
   else
   begin
-    eFilePath.Color := clWindow;
-    eFilePath.Font.Color := clDefault;
+    pHeader.Color := clDefault;
+    txtOriginalFilename.Font.Color := clDefault;
+    icoFileError.Hint := EmptyStr;
+    icoFileError.Visible := False;
   end;
 end;
 
@@ -628,7 +686,11 @@ begin
 
   case ValidateMediaFile of
     mrIgnore: ;
-    mrCancel: Exit;
+    mrNo:
+    begin
+      ModalResult := mrNo;
+      Exit;
+    end;
   end;
 
   SetRecord;
@@ -649,7 +711,7 @@ begin
   FImage.ImageDate := TextToDate(eImageDate.Text);
   FImage.ImageTime := TextToTime(eImageTime.Text);
   FImage.ImageType := StrToImageType(cbImageType.Text);
-  FImage.FilePath   := ExtractRelativePath(xSettings.ImagesFolder, eFilePath.Text);
+  //FImage.FilePath   := ExtractRelativePath(xSettings.ImagesFolder, eFilePath.Text);
   FImage.LocalityId := FLocalityId;
   FImage.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FImage.Longitude := StrToFloatOrZero(eLongitude.Text);
@@ -667,19 +729,21 @@ function TedtImageInfo.ValidateMediaFile: TModalResult;
 var
   dlgTask: TTaskDialog;
   btnCustom: TTaskDialogBaseButtonItem;
+  FullPath: String;
 begin
   Result := mrNone;
 
-  if (eFilePath.Text = EmptyStr) then
+  if (FImage.FilePath = EmptyStr) then
     Exit;
 
-  if not FileExists(eFilePath.Text) then
+  FullPath := ConcatPaths([xSettings.MediaStorageFolder, FImage.FilePath]);
+  if not FileExists(FullPath) then
   begin
     dlgTask := TTaskDialog.Create(nil);
     try
       dlgTask.Title := rsTitleFileNotFound;
       dlgTask.Caption := APP_NAME;
-      dlgTask.Text := Format(rsPromptMediaFileNotFound, [eFilePath.Text]);
+      dlgTask.Text := Format(rsPromptMediaFileNotFound, [FullPath]);
       dlgTask.MainIcon := tdiQuestion;
       dlgTask.Flags := dlgTask.Flags + [tfUseCommandLinks];
       dlgTask.CommonButtons := [];
@@ -689,8 +753,8 @@ begin
       btnCustom.ModalResult := mrIgnore;
 
       btnCustom := dlgTask.Buttons.Add;
-      btnCustom.Caption := rsCancelAction;
-      btnCustom.ModalResult := mrCancel;
+      btnCustom.Caption := rsDeleteRecordTitle;
+      btnCustom.ModalResult := mrNo;
 
       if dlgTask.Execute then
         Result := dlgTask.ModalResult;
@@ -712,8 +776,8 @@ begin
   // Required fields
   if (eImageDate.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscDate]));
-  if (eFilePath.Text = EmptyStr) then
-    Msgs.Add(Format(rsRequiredField, [rscFileName]));
+  //if (eFilePath.Text = EmptyStr) then
+  //  Msgs.Add(Format(rsRequiredField, [rscFileName]));
   // Conditional required fields
   if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscLatitude]));

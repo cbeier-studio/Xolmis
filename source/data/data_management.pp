@@ -22,7 +22,7 @@ interface
 
 uses
   { System }
-  Classes, SysUtils, Variants, DateUtils, RegExpr, fileutil, fpjson, jsonparser, LCLIntf, Translations,
+  Classes, SysUtils, Variants, DateUtils, RegExpr, fileutil, fpjson, jsonparser, LCLIntf, Translations, LazFileUtils,
   { VCL }
   Controls, ExtCtrls, Forms, Dialogs, StdCtrls, DBCtrls, ComCtrls,
   { Data }
@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 14;
+  SCHEMA_VERSION: Integer = 16;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -124,6 +124,7 @@ const
   procedure PopulateZooTaxaTable(Connection: TSQLConnector; var aProgressBar: TProgressBar);
 
   procedure MigrateSightingObservers(Connection: TSQLConnector);
+  procedure MigrateMediaToManagedFolder;
 
   { Database information and management }
   function GetTableType(aTableName: String): TTableType;
@@ -164,9 +165,10 @@ const
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_conversions, utils_count, {$IFDEF DEBUG}utils_debug,{$ENDIF}
+  utils_locale, utils_global, utils_dialogs, utils_conversions, utils_count, utils_media,
+  {$IFDEF DEBUG}utils_debug,{$ENDIF}
   data_consts, data_schema, data_providers, data_getvalue,
-  models_access_control, models_record_types, models_users, models_methods, models_taxonomy,
+  models_access_control, models_record_types, models_users, models_methods, models_taxonomy, models_media,
   udm_main, udm_grid, udm_sampling, udm_individuals, udm_breeding, udlg_progress, udlg_loading;
 
   {
@@ -1251,6 +1253,33 @@ begin
         CreateSightingObserversTable(DMM.sqlCon);
 
         MigrateSightingObservers(DMM.sqlCon);
+
+        Result := True;
+      end;
+
+      if OldVersion < 15 then
+      begin
+        LogDebug('Upgrading database schema to version 15');
+
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE audio_library ADD COLUMN original_filename VARCHAR(255);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE audio_library ADD COLUMN file_hash VARCHAR(140);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE documents ADD COLUMN original_filename VARCHAR(255);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE documents ADD COLUMN file_hash VARCHAR(140);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE images ADD COLUMN original_filename VARCHAR(255);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE images ADD COLUMN file_hash VARCHAR(140);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE videos ADD COLUMN original_filename VARCHAR(255);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE videos ADD COLUMN file_hash VARCHAR(140);');
+
+        MigrateMediaToManagedFolder;
+
+        Result := True;
+      end;
+
+      if OldVersion < 16 then
+      begin
+        LogDebug('Upgrading database schema to version 16');
+
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE images DROP COLUMN image_thumbnail;');
 
         Result := True;
       end;
@@ -3404,6 +3433,265 @@ begin
     ExecSQL;
   finally
     FreeAndNil(Qry);
+  end;
+end;
+
+procedure MigrateMediaToManagedFolder;
+var
+  Qry: TSQLQuery;
+  Manager: TMediaManager;
+  OldPath, NewPath, OriginalName, MediaHash: String;
+  FImage: TImageData;
+  FImageRepo: TImageRepository;
+  FAudio: TAudioData;
+  FAudioRepo: TAudioRepository;
+  FVideo: TVideoData;
+  FVideoRepo: TVideoRepository;
+  FDocument: TDocumentData;
+  FDocRepo: TDocumentRepository;
+  dlgTask: TTaskDialog;
+  btnCustom: TTaskDialogBaseButtonItem;
+  dlgFolder: TSelectDirectoryDialog;
+begin
+  if not xSettings.MediaStorageMigrated then
+  begin
+    dlgTask := TTaskDialog.Create(nil);
+    try
+      dlgTask.Title := rsMediaManagement;
+      dlgTask.Caption := APP_NAME;
+      dlgTask.Text := rsOnboardingMediaStorageChange;
+      dlgTask.MainIcon := tdiQuestion;
+      dlgTask.Flags := dlgTask.Flags + [tfUseCommandLinks];
+      dlgTask.CommonButtons := [];
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsSelectStorageLocation;
+      btnCustom.ModalResult := 101;
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsUseDefaultLocation;
+      btnCustom.ModalResult := 102;
+
+      if dlgTask.Execute then
+        if dlgTask.ModalResult = 101 then
+        begin
+          dlgFolder := TSelectDirectoryDialog.Create(nil);
+          try
+            dlgFolder.Title := rsSelectStorageLocation;
+            dlgFolder.InitialDir := xSettings.LastPathUsed;
+            dlgFolder.Options := [ofPathMustExist, ofEnableSizing];
+            if dlgFolder.Execute then
+            begin
+              xSettings.MediaStorageFolder := dlgFolder.FileName;
+              xSettings.SaveToFile;
+            end;
+          finally
+            dlgFolder.Free;
+          end;
+        end
+        else
+        begin
+          xSettings.MediaStorageFolder := ConcatPaths([AppDataDir, 'storage']);
+          xSettings.SaveToFile;
+        end;
+    finally
+      dlgTask.Free;
+    end;
+  end;
+
+  dlgProgress := TdlgProgress.Create(nil);
+  Qry := TSQLQuery.Create(nil);
+  Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+  with Qry, SQL do
+  try
+    DataBase := DMM.sqlCon;
+    PacketRecords := -1;
+
+    dlgProgress.Title := rsMediaManagement;
+    dlgProgress.AllowCancel := False;
+    dlgProgress.Show;
+
+    // Migrate image files
+    dlgProgress.Position := 0;
+    dlgProgress.Text := Format(rsProgressMigrating, [AnsiLowerCase(rsTitleImages)]);
+    Add('SELECT file_path FROM images');
+    Open;
+    if not Qry.IsEmpty then
+    begin
+      FImageRepo := TImageRepository.Create(DMM.sqlCon);
+      FImage := TImageData.Create();
+      try
+        dlgProgress.Max := Qry.RecordCount;
+        Qry.First;
+        while not Qry.EOF do
+        begin
+          FImage.Clear;
+
+          OldPath := CreateAbsolutePath(FieldByName(COL_FILE_PATH).AsString, xSettings.ImagesFolder);
+          if FileExists(OldPath) then
+          begin
+            NewPath := Manager.ImportFile(OldPath, OriginalName, MediaHash, False);
+
+            FImageRepo.FindBy(COL_FILE_PATH, FieldByName(COL_FILE_PATH).AsString, FImage);
+            if not FImage.IsNew then
+            begin
+              FImage.FilePath := NewPath;
+              FImage.OriginalFilename := OriginalName;
+              FImage.FileHash := MediaHash;
+
+              FImageRepo.Update(FImage);
+            end;
+          end
+          else
+            LogInfo('File not found: ' + OldPath);
+
+          dlgProgress.Position := Qry.RecNo;
+          Qry.Next;
+        end;
+      finally
+        FImage.Free;
+        FImageRepo.Free;
+      end;
+    end;
+    Qry.Close;
+
+    // Migrate audio files
+    dlgProgress.Text := Format(rsProgressMigrating, [AnsiLowerCase(rsTitleAudioLibrary)]);
+    dlgProgress.Position := 0;
+    Clear;
+    Add('SELECT file_path FROM audio_library');
+    Open;
+    if not IsEmpty then
+    begin
+      FAudioRepo := TAudioRepository.Create(DMM.sqlCon);
+      FAudio := TAudioData.Create();
+      try
+        dlgProgress.Max := RecordCount;
+        First;
+        while not EOF do
+        begin
+          FAudio.Clear;
+
+          OldPath := CreateAbsolutePath(FieldByName(COL_FILE_PATH).AsString, xSettings.AudiosFolder);
+          if FileExists(OldPath) then
+          begin
+            NewPath := Manager.ImportFile(OldPath, OriginalName, MediaHash, False);
+
+            FAudioRepo.FindBy(COL_FILE_PATH, FieldByName(COL_FILE_PATH).AsString, FAudio);
+            if not FAudio.IsNew then
+            begin
+              FAudio.FilePath := NewPath;
+              FAudio.OriginalFilename := OriginalName;
+              FAudio.FileHash := MediaHash;
+
+              FAudioRepo.Update(FAudio);
+            end;
+          end;
+          dlgProgress.Position := RecNo;
+          Next;
+        end;
+
+      finally
+        FAudio.Free;
+        FAudioRepo.Free;
+      end;
+    end;
+    Close;
+
+    // Migrate video files
+    dlgProgress.Text := Format(rsProgressMigrating, [AnsiLowerCase(rsTitleVideos)]);
+    dlgProgress.Position := 0;
+    Clear;
+    Add('SELECT file_path FROM videos');
+    Open;
+    if not IsEmpty then
+    begin
+      FVideoRepo := TVideoRepository.Create(DMM.sqlCon);
+      FVideo := TVideoData.Create();
+      try
+        dlgProgress.Max := RecordCount;
+        First;
+        while not EOF do
+        begin
+          FVideo.Clear;
+
+          OldPath := CreateAbsolutePath(FieldByName(COL_FILE_PATH).AsString, xSettings.VideosFolder);
+          if FileExists(OldPath) then
+          begin
+            NewPath := Manager.ImportFile(OldPath, OriginalName, MediaHash, False);
+
+            FVideoRepo.FindBy(COL_FILE_PATH, FieldByName(COL_FILE_PATH).AsString, FVideo);
+            if not FVideo.IsNew then
+            begin
+              FVideo.FilePath := NewPath;
+              FVideo.OriginalFilename := OriginalName;
+              FVideo.FileHash := MediaHash;
+
+              FVideoRepo.Update(FVideo);
+            end;
+          end;
+          dlgProgress.Position := RecNo;
+          Next;
+        end;
+
+      finally
+        FVideo.Free;
+        FVideoRepo.Free;
+      end;
+    end;
+    Close;
+
+    // Migrate document files
+    dlgProgress.Text := Format(rsProgressMigrating, [AnsiLowerCase(rsTitleDocuments)]);
+    dlgProgress.Position := 0;
+    Clear;
+    Add('SELECT file_path FROM documents');
+    Add('WHERE document_type != ''url''');
+    Open;
+    if not IsEmpty then
+    begin
+      FDocRepo := TDocumentRepository.Create(DMM.sqlCon);
+      FDocument := TDocumentData.Create();
+      try
+        dlgProgress.Max := RecordCount;
+        First;
+        while not EOF do
+        begin
+          FDocument.Clear;
+
+          OldPath := CreateAbsolutePath(FieldByName(COL_FILE_PATH).AsString, xSettings.DocumentsFolder);
+          if FileExists(OldPath) then
+          begin
+            NewPath := Manager.ImportFile(OldPath, OriginalName, MediaHash, False);
+
+            FDocRepo.FindBy(COL_FILE_PATH, FieldByName(COL_FILE_PATH).AsString, FDocument);
+            if not FDocument.IsNew then
+            begin
+              FDocument.FilePath := NewPath;
+              FDocument.OriginalFilename := OriginalName;
+              FDocument.FileHash := MediaHash;
+
+              FDocRepo.Update(FDocument);
+            end;
+          end;
+
+          dlgProgress.Position := RecNo;
+          Next;
+        end;
+      finally
+        FDocument.Free;
+        FDocRepo.Free;
+      end;
+    end;
+    Close;
+
+    xSettings.MediaStorageMigrated := True;
+    xSettings.SaveToFile;
+  finally
+    Manager.Free;
+    FreeAndNil(Qry);
+    dlgProgress.Close;
+    FreeAndNil(dlgProgress);
   end;
 end;
 

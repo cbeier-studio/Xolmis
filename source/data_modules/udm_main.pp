@@ -141,6 +141,7 @@ type
     procedure qUsersBeforePost(DataSet: TDataSet);
     procedure qUsersuser_rankGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qUsersuser_rankSetText(Sender: TField; const aText: string);
+    procedure sqlConAfterConnect(Sender: TObject);
     procedure sqlConAfterDisconnect(Sender: TObject);
     procedure sqlConBeforeConnect(Sender: TObject);
     procedure sqlConLog(Sender: TSQLConnection; EventType: TDBEventType;
@@ -396,6 +397,11 @@ begin
     Exit;
 
   Sender.AsString := aText;
+end;
+
+procedure TDMM.sqlConAfterConnect(Sender: TObject);
+begin
+  xSettings.LoadMediaFoldersFromDatabase;
 end;
 
 procedure TDMM.sqlConAfterDisconnect(Sender: TObject);

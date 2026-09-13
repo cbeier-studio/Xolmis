@@ -35,7 +35,6 @@ type
     cbVideoType: TComboBox;
     cbLicenseType: TComboBox;
     dsLink: TDataSource;
-    eFilePath: TEditButton;
     eAuthor: TEditButton;
     eDistance: TFloatSpinEdit;
     eHabitat: TEdit;
@@ -51,8 +50,8 @@ type
     eRecordingDate: TEditButton;
     eRecordingTime: TEdit;
     eTaxon: TEditButton;
+    icoFileError: TImage;
     lblCoordinatesPrecision: TLabel;
-    lblVideoFile: TLabel;
     lblVideoType: TLabel;
     lblAuthor: TLabel;
     lblDistance1: TLabel;
@@ -75,7 +74,7 @@ type
     lineBottom: TShapeLineBGRA;
     mSubtitle: TMemo;
     pCoordinatesPrecision: TPanel;
-    pVideoFile: TPanel;
+    pHeader: TPanel;
     pVideoType: TPanel;
     pAuthor: TPanel;
     pBottom: TPanel;
@@ -99,6 +98,7 @@ type
     sbCancel: TButton;
     SBox: TScrollBox;
     sbSave: TButton;
+    txtOriginalFilename: TLabel;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure eAuthorButtonClick(Sender: TObject);
@@ -131,6 +131,8 @@ type
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
+    procedure MediaFileExists;
+    function ValidateMediaFile: TModalResult;
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Video: TVideoData read FVideo write SetVideo;
@@ -151,7 +153,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_conversions, utils_editdialogs, utils_gis,
-  utils_validations,
+  utils_validations, utils_themes,
   data_types, data_consts, data_getvalue, data_columns,
   models_record_types, models_taxonomy,
   udm_main, udm_grid, uDarkStyleParams;
@@ -162,9 +164,10 @@ uses
 
 procedure TedtVideoInfo.ApplyDarkMode;
 begin
+  icoFileError.Images := DMM.iEditsDark;
   eAuthor.Images := DMM.iEditsDark;
   eRecordingDate.Images := DMM.iEditsDark;
-  eFilePath.Images := DMM.iEditsDark;
+  //eFilePath.Images := DMM.iEditsDark;
   eLocality.Images := DMM.iEditsDark;
   eLongitude.Images := DMM.iEditsDark;
   eLatitude.Images := DMM.iEditsDark;
@@ -421,9 +424,9 @@ end;
 
 procedure TedtVideoInfo.eFilePathButtonClick(Sender: TObject);
 begin
-  DMM.OpenVideos.InitialDir := xSettings.LastPathUsed;
-  if DMM.OpenVideos.Execute then
-    eFilePath.Text := DMM.OpenVideos.FileName;
+  //DMM.OpenVideos.InitialDir := xSettings.LastPathUsed;
+  //if DMM.OpenVideos.Execute then
+  //  eFilePath.Text := DMM.OpenVideos.FileName;
 end;
 
 procedure TedtVideoInfo.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -510,16 +513,22 @@ begin
   end;
 
   if not FIsNew then
+  begin
     GetRecord;
+    MediaFileExists;
+    sbSave.Enabled := IsRequiredFilled;
+  end;
 end;
 
 procedure TedtVideoInfo.GetRecord;
 begin
+  txtOriginalFilename.Caption := FVideo.OriginalFilename;
   mSubtitle.Text := FVideo.Subtitle;
   FAuthorId := FVideo.AuthorId;
   eAuthor.Text := GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FAuthorId);
   eRecordingDate.Text := DateToStr(FVideo.RecordingDate);
-  eRecordingTime.Text := TimeToStr(FVideo.RecordingTime);
+  if FVideo.RecordingTime <> NullTime then
+    eRecordingTime.Text := TimeToStr(FVideo.RecordingTime);
   case FVideo.VideoType of
     vtUnknown:      cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoUnknown);
     vtGeneral:      cbVideoType.ItemIndex := cbVideoType.Items.IndexOf(rsVideoGeneral);
@@ -543,11 +552,13 @@ begin
   else
     cbVideoType.ItemIndex := -1;
   end;
-  eFilePath.Text := CreateAbsolutePath(FVideo.FilePath, xSettings.VideosFolder);
   FLocalityId := FVideo.LocalityId;
   eLocality.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FLocalityId);
-  eLongitude.Text := FloatToStr(FVideo.Longitude);
-  eLatitude.Text := FloatToStr(FVideo.Latitude);
+  if (FVideo.Longitude <> 0) and (FVideo.Latitude <> 0) then
+  begin
+    eLongitude.Text := FloatToStr(FVideo.Longitude);
+    eLatitude.Text := FloatToStr(FVideo.Latitude);
+  end;
   case FVideo.CoordinatePrecision of
     cpExact:        cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsExactCoordinate);
     cpApproximated: cbCoordinatePrecision.ItemIndex := cbCoordinatePrecision.Items.IndexOf(rsApproximatedCoordinate);
@@ -568,7 +579,8 @@ begin
   eDistance.Value := FVideo.Distance;
   eHabitat.Text := FVideo.Habitat;
   cbLicenseType.ItemIndex := cbLicenseType.Items.IndexOf(FVideo.LicenseType);
-  eLicenseYear.Text := IntToStr(FVideo.LicenseYear);
+  if FVideo.LicenseYear > 0 then
+    eLicenseYear.Text := IntToStr(FVideo.LicenseYear);
   eLicenseOwner.Text := FVideo.LicenseOwner;
   eLicenseNotes.Text := FVideo.LicenseNotes;
   eLicenseUri.Text := FVideo.LicenseUri;
@@ -578,9 +590,29 @@ function TedtVideoInfo.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  if (eRecordingDate.Text <> EmptyStr) and
-    (eFilePath.Text <> EmptyStr) then
+  if (eRecordingDate.Text <> EmptyStr) then
     Result := True;
+end;
+
+procedure TedtVideoInfo.MediaFileExists;
+var
+  FullPath: String;
+begin
+  FullPath := CreateAbsolutePath(FVideo.FilePath, xSettings.MediaStorageFolder);
+  if not FileExists(FullPath) then
+  begin
+    pHeader.Color := ActiveTheme.System.CriticalBG;
+    txtOriginalFilename.Font.Color := ActiveTheme.System.CriticalFG;
+    icoFileError.Hint := rsTitleFileNotFound;
+    icoFileError.Visible := True;
+  end
+  else
+  begin
+    pHeader.Color := clDefault;
+    txtOriginalFilename.Font.Color := clDefault;
+    icoFileError.Hint := EmptyStr;
+    icoFileError.Visible := False;
+  end;
 end;
 
 procedure TedtVideoInfo.pmnNewLocalityClick(Sender: TObject);
@@ -599,6 +631,15 @@ begin
   if not ValidateFields then
     Exit;
 
+  case ValidateMediaFile of
+    mrIgnore: ;
+    mrNo:
+    begin
+      ModalResult := mrNo;
+      Exit;
+    end;
+  end;
+
   SetRecord;
 
   ModalResult := mrOk;
@@ -611,7 +652,7 @@ begin
   FVideo.RecordingDate  := TextToDate(eRecordingDate.Text);
   FVideo.RecordingTime  := TextToTime(eRecordingTime.Text);
   FVideo.VideoType      := StrToVideoType(cbVideoType.Text);
-  FVideo.FilePath       := ExtractRelativePath(xSettings.VideosFolder, eFilePath.Text);
+  //FVideo.FilePath       := ExtractRelativePath(xSettings.VideosFolder, eFilePath.Text);
   FVideo.LocalityId     := FLocalityId;
   FVideo.Longitude      := StrToFloatOrZero(eLongitude.Text);
   FVideo.Latitude       := StrToFloatOrZero(eLatitude.Text);
@@ -652,8 +693,8 @@ begin
   // Required fields
   if (eRecordingDate.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscDate]));
-  if (eFilePath.Text = EmptyStr) then
-    Msgs.Add(Format(rsRequiredField, [rscFileName]));
+  //if (eFilePath.Text = EmptyStr) then
+  //  Msgs.Add(Format(rsRequiredField, [rscFileName]));
   // Conditional required fields
   if (eLongitude.Text <> EmptyStr) and (eLatitude.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscLatitude]));
@@ -676,9 +717,9 @@ begin
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rsLatitude, Msgs, Msg);
 
   // Files
-  if (eFilePath.Text <> EmptyStr) then
-    if not FileExists(eFilePath.Text) then
-      Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
+  //if (eFilePath.Text <> EmptyStr) then
+  //  if not FileExists(eFilePath.Text) then
+  //    Msgs.Add(Format(rsErrorFileNotFound, [eFilePath.Text]));
 
   if Msgs.Count > 0 then
   begin
@@ -686,6 +727,45 @@ begin
     ValidateDlg(Msgs);
   end;
   Msgs.Free;
+end;
+
+function TedtVideoInfo.ValidateMediaFile: TModalResult;
+var
+  dlgTask: TTaskDialog;
+  btnCustom: TTaskDialogBaseButtonItem;
+  FullPath: String;
+begin
+  Result := mrNone;
+
+  if (FVideo.FilePath = EmptyStr) then
+    Exit;
+
+  FullPath := ConcatPaths([xSettings.MediaStorageFolder, FVideo.FilePath]);
+  if not FileExists(FullPath) then
+  begin
+    dlgTask := TTaskDialog.Create(nil);
+    try
+      dlgTask.Title := rsTitleFileNotFound;
+      dlgTask.Caption := APP_NAME;
+      dlgTask.Text := Format(rsPromptMediaFileNotFound, [FullPath]);
+      dlgTask.MainIcon := tdiQuestion;
+      dlgTask.Flags := dlgTask.Flags + [tfUseCommandLinks];
+      dlgTask.CommonButtons := [];
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsIgnoreAction;
+      btnCustom.ModalResult := mrIgnore;
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsDeleteRecordTitle;
+      btnCustom.ModalResult := mrNo;
+
+      if dlgTask.Execute then
+        Result := dlgTask.ModalResult;
+    finally
+      dlgTask.Free;
+    end;
+  end;
 end;
 
 end.

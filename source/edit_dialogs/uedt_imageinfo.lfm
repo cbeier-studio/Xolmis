@@ -1,12 +1,12 @@
 object edtImageInfo: TedtImageInfo
   Left = 352
-  Height = 681
+  Height = 679
   Top = 33
-  Width = 413
+  Width = 416
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'Image info'
-  ClientHeight = 681
+  ClientHeight = 679
   ClientWidth = 416
   Constraints.MinWidth = 416
   Font.Height = -12
@@ -19,7 +19,7 @@ object edtImageInfo: TedtImageInfo
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 638
+    Top = 614
     Width = 416
     Align = alTop
     LineColor = 9276813
@@ -29,7 +29,7 @@ object edtImageInfo: TedtImageInfo
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 640
+    Top = 616
     Width = 416
     Align = alTop
     AutoSize = True
@@ -111,21 +111,21 @@ object edtImageInfo: TedtImageInfo
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 638
-    Top = 0
+    Height = 479
+    Top = 135
     Width = 416
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 638
+    VertScrollBar.Page = 479
     Align = alTop
     BorderStyle = bsNone
-    ClientHeight = 638
+    ClientHeight = 479
     ClientWidth = 399
     Constraints.MinWidth = 176
     TabOrder = 1
     object pClient: TPanel
       Left = 0
-      Height = 707
+      Height = 662
       Top = 0
       Width = 399
       Align = alTop
@@ -133,13 +133,13 @@ object edtImageInfo: TedtImageInfo
       BorderSpacing.InnerBorder = 8
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 707
+      ClientHeight = 662
       ClientWidth = 399
       TabOrder = 0
       object pLocality: TPanel
         Left = 0
         Height = 45
-        Top = 289
+        Top = 244
         Width = 399
         Align = alTop
         AutoSize = True
@@ -155,7 +155,7 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 4
         object lblLocality: TLabel
           Left = 16
           Height = 15
@@ -399,7 +399,7 @@ object edtImageInfo: TedtImageInfo
       object pCoordinatesPrecision: TPanel
         Left = 0
         Height = 45
-        Top = 334
+        Top = 289
         Width = 399
         Align = alTop
         AutoSize = True
@@ -414,7 +414,7 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 5
         object lblCoordinatesPrecision: TLabel
           Left = 16
           Height = 15
@@ -441,7 +441,7 @@ object edtImageInfo: TedtImageInfo
       object pLongitudeLatitude: TPanel
         Left = 0
         Height = 45
-        Top = 379
+        Top = 334
         Width = 399
         Align = alTop
         AutoSize = True
@@ -456,7 +456,7 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 6
         object lblLongitude: TLabel
           Left = 16
           Height = 15
@@ -523,7 +523,7 @@ object edtImageInfo: TedtImageInfo
       object pTaxon: TPanel
         Left = 0
         Height = 45
-        Top = 437
+        Top = 392
         Width = 399
         Align = alTop
         AutoSize = True
@@ -539,7 +539,7 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 7
         object lblTaxon: TLabel
           Left = 16
           Height = 15
@@ -572,63 +572,10 @@ object edtImageInfo: TedtImageInfo
           OnKeyPress = eTaxonKeyPress
         end
       end
-      object pImageFilename: TPanel
-        Left = 0
-        Height = 45
-        Top = 231
-        Width = 399
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 399
-        ParentBackground = False
-        TabOrder = 4
-        object lblImageFilename: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 367
-          BorderSpacing.Top = 3
-          Caption = 'Image file: *'
-          ParentColor = False
-          ParentFont = False
-        end
-        object eFilePath: TEditButton
-          Left = 16
-          Height = 23
-          Top = 22
-          Width = 367
-          ButtonHint = 'Choose file'
-          ButtonWidth = 23
-          Images = DMM.iEdits
-          ImageIndex = 6
-          MaxLength = 0
-          NumGlyphs = 1
-          ParentShowHint = False
-          PasswordChar = #0
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eFilePathButtonClick
-          OnChange = eFilePathChange
-          OnEditingDone = eImageDateEditingDone
-          OnEnter = ControlEnter
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eImageTimeKeyPress
-        end
-      end
       object pLicenseTypeYear: TPanel
         Left = 0
         Height = 45
-        Top = 495
+        Top = 450
         Width = 399
         Align = alTop
         AutoSize = True
@@ -644,7 +591,7 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 9
+        TabOrder = 8
         object lblLicenseType: TLabel
           Left = 16
           Height = 15
@@ -691,7 +638,7 @@ object edtImageInfo: TedtImageInfo
       object pLicenseOwner: TPanel
         Left = 0
         Height = 45
-        Top = 540
+        Top = 495
         Width = 399
         Align = alTop
         AutoSize = True
@@ -706,7 +653,7 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 10
+        TabOrder = 9
         object lblLicenseOwner: TLabel
           Left = 16
           Height = 15
@@ -731,7 +678,7 @@ object edtImageInfo: TedtImageInfo
       object pLicenseNotes: TPanel
         Left = 0
         Height = 45
-        Top = 585
+        Top = 540
         Width = 399
         Align = alTop
         AutoSize = True
@@ -746,7 +693,7 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 11
+        TabOrder = 10
         object lblLicenseNotes: TLabel
           Left = 16
           Height = 15
@@ -771,7 +718,7 @@ object edtImageInfo: TedtImageInfo
       object pLicenseUri: TPanel
         Left = 0
         Height = 45
-        Top = 630
+        Top = 585
         Width = 399
         Align = alTop
         AutoSize = True
@@ -786,7 +733,7 @@ object edtImageInfo: TedtImageInfo
         ClientHeight = 45
         ClientWidth = 399
         ParentBackground = False
-        TabOrder = 12
+        TabOrder = 11
         object lblLicenseUri: TLabel
           Left = 16
           Height = 15
@@ -808,6 +755,69 @@ object edtImageInfo: TedtImageInfo
           OnKeyPress = eImageTimeKeyPress
         end
       end
+    end
+  end
+  object pHeader: TPanel
+    Left = 0
+    Height = 135
+    Top = 0
+    Width = 416
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.VerticalSpacing = 8
+    ClientHeight = 135
+    ClientWidth = 416
+    TabOrder = 2
+    object txtOriginalFilename: TLabel
+      AnchorSideLeft.Control = pHeader
+      AnchorSideTop.Control = pHeader
+      AnchorSideRight.Control = icoFileError
+      Left = 16
+      Height = 21
+      Top = 8
+      Width = 356
+      Anchors = [akTop, akLeft, akRight]
+      Caption = 'OriginalFilename.jpg'
+      Font.Height = -16
+      ParentFont = False
+      WordWrap = True
+    end
+    object icoFileError: TImage
+      AnchorSideTop.Control = txtOriginalFilename
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pHeader
+      AnchorSideRight.Side = asrBottom
+      Left = 380
+      Height = 20
+      Top = 8
+      Width = 20
+      Anchors = [akTop, akRight]
+      AutoSize = True
+      ImageIndex = 10
+      ImageWidth = 20
+      Images = DMM.iEdits
+      ParentShowHint = False
+      ShowHint = True
+      Visible = False
+    end
+    object imgThumbnail: TImage
+      AnchorSideLeft.Control = pHeader
+      AnchorSideTop.Control = txtOriginalFilename
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = pHeader
+      AnchorSideRight.Side = asrBottom
+      Left = 16
+      Height = 90
+      Top = 37
+      Width = 384
+      Anchors = [akTop, akLeft, akRight]
+      Center = True
+      Proportional = True
+      Visible = False
     end
   end
   object dsLink: TDataSource

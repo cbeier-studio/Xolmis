@@ -252,6 +252,8 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorNestNotFound = 'Nest "%s" not found.';
     rsErrorSamplingPlotNotFound = 'Sampling plot "%s" not found.';
     rsErrorSurveyNotFound = 'Survey "%s" not found.';
+    rsErrorCopyingFile = 'Error copying file "%s" to "%s".';
+    rsErrorAbsolutePathNotAllowed = 'Absolute path not allowed in GetFullPath: %s';
 
     { Warning messages }
     rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';
@@ -289,6 +291,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsUpgradingDatabaseSchema = 'Upgrading database schema...';
     rsInsertingRecords = 'Inserting records in database...';
     rsOptimizingDatabase = 'Optimizing database...';
+    rsProgressMigrating = 'Migrating %s... This may take a few minutes.';
 
     { Splash screen messages }
     rsStartingXolmis = 'Starting Xolmis...';
@@ -376,11 +379,14 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsExportingXLSX = 'Exporting XLSX';
     rsExportingXML = 'Exporting XML';
 
-    { Image messages }
+    { Media messages }
     rsImageNotSupported = 'Image type not supported: %s';
     rsImageNotFound = 'Image file not found: %s';
     rsImagePathIsEmpty = 'No image file path';
     rsPromptMediaFileNotFound = 'The media file "%s" was not found. How do you want to proceed?';
+    rsMissingMediaFile = 'Missing media file';
+    rsAddLink = 'Add link';
+    rsPromptAddLink = 'Type or paste an URL:';
 
     { Preparation messages }
     rsPreparingBackup = 'Preparing backup...';
@@ -639,6 +645,13 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsCleaningDeletedRecords = 'Cleaning Deleted Records';
     rsSearch = 'Search';
     rsFeedback = 'Feedback';
+    rsMediaManagement = 'Media Management';
+    rsSelectStorageLocation = 'Select storage location';
+    rsUseDefaultLocation = 'Use default location';
+    rsOnboardingMediaStorageChange = 'Xolmis changed the way media files are managed.' + LineEnding +
+      'Now all media files are stored in a single folder managed automatically.' + LineEnding + LineEnding +
+      'All media files will be copied to the new media storage folder.' + LineEnding + LineEnding +
+      'How do you want to proceed?';
     rsOnboardingDeleteRecord = 'When you delete a record in Xolmis, it is not removed immediately. ' +
         'Instead, the record is moved to a temporary "recycle bin" area, where it can be restored if needed.' + LineEnding + LineEnding +
         'Please note that records in the recycle bin are periodically cleared to free up space. ' +
@@ -966,18 +979,22 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsAuto = 'Auto';
     rsDark = 'Dark';
     rsLight = 'Light';
-    rsPromptMigrateMediaPath = 'You changed the %s folder.' + LineEnding + LineEnding +
+    rsPromptMigrateMediaPath = 'You changed the media storage folder.' + LineEnding + LineEnding +
       'Old: %s' + LineEnding +
       'New: %s' + LineEnding + LineEnding +
-      'To keep existing links working, Xolmis can migrate the stored relative paths to the new location.';
+      'To keep existing links working, Xolmis can migrate the stored files to the new location.';
     rsMediaFolderChanged = 'Media folder changed';
     rsMediaMigrationCompleted = 'Migration completed';
-    rsMigratedMediaPaths = '%d %s path(s) were updated.';
-    rsMediaMigrationError = 'Could not migrate media paths:' + LineEnding + '%s';
+    rsMigratedMediaPaths = '%d media files were moved.';
+    rsMediaMigrationError = 'Could not move media files:' + LineEnding + '%s';
     rsChangeFolderOnly = 'Change folder only';
-    rsHintChangeFolderOnly = 'Update the folder setting without modifying the existing paths stored in the database.';
-    rsChangeFolderAndMigrate = 'Change folder and migrate paths';
-    rsHintChangeFolderAndMigrate = 'Update the folder setting and rewrite all stored relative paths to match the new location.';
+    rsHintChangeFolderOnly = 'Update the storage folder setting without moving the files.';
+    rsChangeFolderAndMoveFiles = 'Move files';
+    rsHintChangeFolderAndMoveFiles = 'Update the storage folder setting and move all stored files to the new location.';
+    rsChangeFolderAndCopyFiles = 'Copy files';
+    rsHintChangeFolderAndCopyFiles = 'Update the storage folder setting and create a copy all stored files in the new location.';
+    rsMoveMediaFiles = 'Move media files';
+    rsCopyMediaFiles = 'Copy media files';
 
     { Languages }
     rsEnglish = 'English';

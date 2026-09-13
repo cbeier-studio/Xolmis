@@ -220,6 +220,7 @@ type
   end;
 
 type
+  TMoveMediaType = (mofAlwaysMove, mofAlwaysCopy, mofAlwaysAsk);
 
   { TXolmisSettings }
 
@@ -248,7 +249,11 @@ type
     FLastLocalityId, FLastObserverId, FLastMethodId: Integer;
     FDefaultBandSupplier: Integer;
     { Media }
+    FMediaFolder: String;
     FImagesFolder, FAudiosFolder, FVideosFolder, FDocumentsFolder: String;
+    FMoveOriginalFile: TMoveMediaType;
+    FDeleteMediaFile: Boolean;
+    FMediaMigrated: Boolean;
     FOpenAfterExport: Boolean;
     { Security }
     FRememberUser, FRememberConnection: Boolean;
@@ -321,10 +326,14 @@ type
     property LastMethodId: Integer read FLastMethodId write FLastMethodId;
     property DefaultBandSupplier: Integer read FDefaultBandSupplier write FDefaultBandSupplier;
     { Media }
+    property MediaStorageFolder: String read FMediaFolder write FMediaFolder;
     property ImagesFolder: String read FImagesFolder write SetImagesFolder;
     property AudiosFolder: String read FAudiosFolder write SetAudiosFolder;
     property VideosFolder: String read FVideosFolder write SetVideosFolder;
     property DocumentsFolder: String read FDocumentsFolder write SetDocumentsFolder;
+    property MoveOriginalFile: TMoveMediaType read FMoveOriginalFile write FMoveOriginalFile;
+    property DeleteMediaFile: Boolean read FDeleteMediaFile write FDeleteMediaFile;
+    property MediaStorageMigrated: Boolean read FMediaMigrated write FMediaMigrated;
     property OpenFileAfterExport: Boolean read FOpenAfterExport write FOpenAfterExport;
     { Security }
     property RememberUser: Boolean read FRememberUser write FRememberUser;
@@ -419,6 +428,7 @@ var
   { System variables }
   function InstallDir: String;
   function AppDataDir: String;
+  function ThumbnailsDir: String;
   function TempDir: String;
   function HelpDir: String;
   function NullDate: TDate;
@@ -456,6 +466,7 @@ uses
   utils_locale, utils_conversions, data_management, models_users, udlg_connect, udlg_newdatabase;
 
 const
+  DBMETA_MEDIA_STORAGE_FOLDER = 'media_storage_folder';
   DBMETA_MEDIA_IMAGES_FOLDER = 'media_images_folder';
   DBMETA_MEDIA_AUDIOS_FOLDER = 'media_audios_folder';
   DBMETA_MEDIA_VIDEOS_FOLDER = 'media_videos_folder';
@@ -463,7 +474,7 @@ const
 
 function DefaultMediaFolder(const aSubFolder: String): String;
 begin
-  Result := IncludeTrailingPathDelimiter(ConcatPaths([InstallDir, aSubFolder]));
+  Result := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, aSubFolder]));
 end;
 
 procedure WriteMetadataValue(const aKey, aValue: String);
@@ -784,7 +795,19 @@ begin
 
   Result:= s;
   if not DirectoryExists(Result) then
-    CreateDir(Result);
+    ForceDirectory(Result);
+end;
+
+function ThumbnailsDir: String;
+var
+  s: String;
+begin
+  s := ConcatPaths([GetAppConfigDir(False), 'thumbs']);
+  s := IncludeTrailingPathDelimiter(s);
+
+  Result:= s;
+  if not DirectoryExists(Result) then
+    ForceDirectory(Result);
 end;
 
 // Get the Xolmis' Temp path
@@ -797,7 +820,7 @@ begin
 
   Result := s;
   if not DirectoryExists(Result) then
-    CreateDir(Result);
+    ForceDirectory(Result);
 end;
 
 function HelpDir: String;
@@ -1342,10 +1365,15 @@ begin
   FLastMethodId := FConfig.GetValue('/COLLECTION/LastMethodId', 0);
   FDefaultBandSupplier := FConfig.GetValue('/COLLECTION/DefaultBandSupplier', 0);
   { Media }
-  FImagesFolder := FConfig.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));
-  FAudiosFolder := FConfig.GetValue('/MEDIA/AudiosFolder', ConcatPaths([InstallDir, 'sounds']));
-  FVideosFolder := FConfig.GetValue('/MEDIA/VideosFolder', ConcatPaths([InstallDir, 'videos']));
-  FDocumentsFolder := FConfig.GetValue('/MEDIA/DocumentsFolder', ConcatPaths([InstallDir, 'documents']));
+  FMediaFolder := FConfig.GetValue('/MEDIA/MediaStorageFolder', ConcatPaths([AppDataDir, 'storage']));
+  LoadMediaFoldersFromDatabase;
+  //FImagesFolder := FConfig.GetValue('/MEDIA/ImagesFolder', ConcatPaths([InstallDir, 'images']));
+  //FAudiosFolder := FConfig.GetValue('/MEDIA/AudiosFolder', ConcatPaths([InstallDir, 'sounds']));
+  //FVideosFolder := FConfig.GetValue('/MEDIA/VideosFolder', ConcatPaths([InstallDir, 'videos']));
+  //FDocumentsFolder := FConfig.GetValue('/MEDIA/DocumentsFolder', ConcatPaths([InstallDir, 'documents']));
+  FMoveOriginalFile := TMoveMediaType(FConfig.GetValue('/MEDIA/MoveOriginalFile', 1));
+  FDeleteMediaFile := FConfig.GetValue('/MEDIA/DeleteMediaFile', False);
+  FMediaMigrated := FConfig.GetValue('/MEDIA/MediaStorageMigrated', False);
   FOpenAfterExport := FConfig.GetValue('/MEDIA/OpenAfterExport', True);
   { Security }
   FRememberUser := FConfig.GetValue('/SECURITY/RememberUser', False);
@@ -1443,10 +1471,14 @@ begin
   FConfig.SetValue('/COLLECTION/LastMethodId', FLastMethodId);
   FConfig.SetValue('/COLLECTION/DefaultBandSupplier', FDefaultBandSupplier);
   { Media }
+  FConfig.SetValue('/MEDIA/MediaStorageFolder', FMediaFolder);
   FConfig.SetValue('/MEDIA/ImagesFolder', FImagesFolder);
   FConfig.SetValue('/MEDIA/AudiosFolder', FAudiosFolder);
   FConfig.SetValue('/MEDIA/VideosFolder', FVideosFolder);
   FConfig.SetValue('/MEDIA/DocumentsFolder', FDocumentsFolder);
+  FConfig.SetValue('/MEDIA/MoveOriginalFile', Ord(FMoveOriginalFile));
+  FConfig.SetValue('/MEDIA/DeleteMediaFile', FDeleteMediaFile);
+  FConfig.SetValue('/MEDIA/MediaStorageMigrated', FMediaMigrated);
   FConfig.SetValue('/MEDIA/OpenAfterExport', FOpenAfterExport);
   { Security }
   FConfig.SetValue('/SECURITY/RememberUser', FRememberUser);

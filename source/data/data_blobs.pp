@@ -22,35 +22,13 @@ interface
 
 uses
   Classes, SysUtils, Forms, Dialogs, LazFileUtils, DB, SQLDB, Graphics, ExtCtrls, Generics.Collections,
-  BGRABitmap, BGRABitmapTypes, fpeMetadata, FPImage,
+  BGRABitmap, BGRABitmapTypes, fpeMetadata, FPImage, FPWriteJPEG,
   data_types, models_media;
 
 const
   OFFSET_MEMORY_STREAM: Int64 = 0;
-  THUMB_SIZE: Integer = 360;    // pixels
+  THUMB_SIZE: Integer = 300;    // pixels
   THUMB_QUALITY: Integer = 75;  // percent
-
-type
-
-  { TAttachedImageItem }
-
-  TAttachedImageItem = class
-  public
-    ImageID: Integer;
-    FileName: String;
-    ImageDate: String;
-    ImageTime: String;
-    ImageType: String;
-    Subtitle: String;
-    AuthorName: String;
-    Thumbnail: TPicture;
-    HasError: Boolean;
-    ErrorMessage: String;
-    constructor Create;
-    destructor Destroy; override;
-  end;
-
-  TAttachedImageList = specialize TObjectList<TAttachedImageItem>;
 
   { Image (BLOB field) manipulation }
   function AddImage(aDataset: TDataset; aPathField: String;
@@ -70,7 +48,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, data_consts,
+  utils_locale, utils_global, utils_dialogs, utils_media, data_consts,
   udm_main, udlg_progress, ufrm_imageviewer,
   {$IFDEF DEBUG}utils_debug,{$ENDIF}
   fpeGlobal, fpeTags, fpeExifData, Math, BGRAReadJpeg, BGRAWriteJpeg, BGRAThumbnail;
@@ -83,11 +61,12 @@ function AddImage(aDataset: TDataset; aPathField: String; aFileName: String; aAt
 var
   imgExif: TImgInfo;
   aTag: TTag;
-  relPath: String;
+  originalName, newPath, mediaHash: String;
   CreationDate: TDateTime;
   long, lat: Double;
   Media: TImageData;
   Repo: TImageRepository;
+  Manager: TMediaManager;
 begin
   Result := False;
 
@@ -98,7 +77,12 @@ begin
 
   long := 500.0;
   lat := 500.0;
-  relPath := ExtractRelativePath(xSettings.ImagesFolder, aFileName);
+  Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+  try
+    newPath := Manager.ImportFile(aFileName, originalName, mediaHash, xSettings.MoveOriginalFile = mofAlwaysMove);
+  finally
+    Manager.Free;
+  end;
 
   { Load image EXIF data }
   imgExif := TImgInfo.Create;
@@ -122,10 +106,14 @@ begin
   Repo := TImageRepository.Create(DMM.sqlCon);
   Media := TImageData.Create();
   try
-    Repo.FindBy(COL_IMAGE_FILENAME, relPath, Media);
+    Repo.FindBy(COL_ORIGINAL_FILENAME, originalName, Media);
 
     if Media.IsNew then
-      Media.FilePath := relPath;
+    begin
+      Media.FilePath := newPath;
+      Media.OriginalFilename := originalName;
+    end;
+    Media.FileHash := mediaHash;
     Media.ImageDate := CreationDate;
     Media.ImageTime := CreationDate;
     if (long < 200) and (lat < 200) then
@@ -167,7 +155,7 @@ begin
     with aDataset do
     begin
       Refresh;
-      Locate(aPathField, relPath, []);
+      Locate(aPathField, newPath, []);
       Edit;
       CreateImageThumbnail(aFileName, aDataSet);
       Post;
@@ -304,6 +292,7 @@ var
   imgOrientation: TExifOrientation;
   sthumb: TStream;
   imgThumb: TBGRABitmap;
+  //JpgWriter: TFPWriterJPEG;
   aTag: TTag;
   CreationDate: TDateTime;
   long, lat: Double;
@@ -364,7 +353,7 @@ begin
     else
       bmpFactor := THUMB_SIZE / imgThumb.Width;
 
-    BGRAReplace(imgThumb, imgThumb.Resample(Round(imgThumb.Width * bmpFactor), Round(imgThumb.Height * bmpFactor), rmSimpleStretch));
+    BGRAReplace(imgThumb, imgThumb.Resample(Round(imgThumb.Width * bmpFactor), Round(imgThumb.Height * bmpFactor), rmFineResample));
 
     { Correct image orientation }
     case imgOrientation of
@@ -397,12 +386,16 @@ begin
 
     { Encode image as JPEG }
     sthumb := TMemoryStream.Create;
+    //JpgWriter := TFPWriterJPEG.Create;
     try
-      sthumb.Position := OFFSET_MEMORY_STREAM;
+      //sthumb.Position := OFFSET_MEMORY_STREAM;
+      //JpgWriter.CompressionQuality := 75;
+      //JpgWriter.ImageWrite(sthumb, imgThumb);
 
       imgThumb.SaveToStreamAs(sthumb, TBGRAImageFormat.ifJpeg);
+      //imgThumb.SaveToStream(sthumb, JpgWriter);
 
-      sthumb.Position := OFFSET_MEMORY_STREAM;
+      sthumb.Position := 0;
       TBlobField(aDataSet.FieldByName(COL_IMAGE_THUMBNAIL)).LoadFromStream(sthumb);
 
       if aDataSet.FieldByName('image_date').IsNull then
@@ -417,6 +410,7 @@ begin
           aDataSet.FieldByName('latitude').AsFloat := lat;
       end;
     finally
+      //JpgWriter.Free;
       sthumb.Free;
     end;
   finally
@@ -551,9 +545,10 @@ begin
   try
     Database := DMM.sqlCon;
     Transaction := DMM.sqlTrans;
-    Qry.Options := Qry.Options + [sqoKeepOpenOnCommit];
+    PacketRecords := -1;
+    //Qry.Options := Qry.Options + [sqoKeepOpenOnCommit];
     { OPTIMIZATION: Removed unused image_id column, fixed WHERE clause }
-    Add('SELECT file_path, image_thumbnail FROM images');
+    Add('SELECT image_id, file_path, image_thumbnail, image_date, image_time, longitude, latitude FROM images');
     Add('WHERE file_path IS NOT NULL');
     Open;
     {$IFDEF DEBUG}
@@ -569,7 +564,7 @@ begin
         { OPTIMIZATION: Process without long-lived transaction }
         repeat
           dlgProgress.Text := Format(rsProgressImportImages, [Qry.RecNo, Qry.RecordCount]);
-          imgPath := CreateAbsolutePath(Qry.FieldByName(COL_FILE_PATH).AsString, xSettings.ImagesFolder);
+          imgPath := ConcatPaths([xSettings.MediaStorageFolder, Qry.FieldByName(COL_FILE_PATH).AsString]);
 
           if (FileExists(imgPath)) then
           begin
@@ -658,21 +653,6 @@ begin
     FreeAndNil(frmImageViewer);
     LogEvent(leaClose, 'Image viewer');
   end;
-end;
-
-{ TAttachedImageItem }
-
-constructor TAttachedImageItem.Create;
-begin
-  inherited Create;
-  Thumbnail := TPicture.Create;
-  HasError := False;
-end;
-
-destructor TAttachedImageItem.Destroy;
-begin
-  Thumbnail.Free;
-  inherited Destroy;
 end;
 
 end.

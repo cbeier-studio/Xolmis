@@ -51,14 +51,12 @@ type
 
   { TImageData }
 
-  TImageData = class(TXolmisRecord)
+  TImageData = class(TCustomMedia)
   protected
     FImageDate: TDate;
     FImageTime: TTime;
     FImageType: TImageType;
-    FFilePath: String;
     FSubtitle: String;
-    FAuthorId: Integer;
     FCoordinatePrecision: TCoordinatePrecision;
     FLongitude: Double;
     FLatitude: Double;
@@ -73,11 +71,6 @@ type
     FNestRevisionId: Integer;
     FEggId: Integer;
     FSpecimenId: Integer;
-    FLicenseType: String;
-    FLicenseYear: Integer;
-    FLicenseOwner: String;
-    FLicenseNotes: String;
-    FLicenseUri: String;
     //FThumbnail: TBitmap;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
@@ -94,9 +87,7 @@ type
     property ImageDate: TDate read FImageDate write FImageDate;
     property ImageTime: TTime read FImageTime write FImageTime;
     property ImageType: TImageType read FImageType write FImageType;
-    property FilePath: String read FFilePath write FFilePath;
     property Subtitle: String read FSubtitle write FSubtitle;
-    property AuthorId: Integer read FAuthorId write FAuthorId;
     property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
@@ -111,11 +102,6 @@ type
     property NestRevisionId: Integer read FNestRevisionId write FNestRevisionId;
     property EggId: Integer read FEggId write FEggId;
     property SpecimenId: Integer read FSpecimenId write FSpecimenId;
-    property LicenseType: String read FLicenseType write FLicenseType;
-    property LicenseYear: Integer read FLicenseYear write FLicenseYear;
-    property LicenseOwner: String read FLicenseOwner write FLicenseOwner;
-    property LicenseNotes: String read FLicenseNotes write FLicenseNotes;
-    property LicenseUri: String read FLicenseUri write FLicenseUri;
   end;
 
   { TImageRepository }
@@ -136,14 +122,12 @@ type
 
   { TAudioData }
 
-  TAudioData = class(TXolmisRecord)
+  TAudioData = class(TCustomMedia)
   protected
     FRecordingDate: TDate;
     FRecordingTime: TTime;
     FAudioType: TAudioType;
-    FFilePath: String;
     FSubtitle: String;
-    FAuthorId: Integer;
     FCoordinatePrecision: TCoordinatePrecision;
     FLongitude: Double;
     FLatitude: Double;
@@ -166,11 +150,6 @@ type
     FRecorderModel: String;
     FMicModel: String;
     FFilterModel: String;
-    FLicenseType: String;
-    FLicenseYear: Integer;
-    FLicenseOwner: String;
-    FLicenseNotes: String;
-    FLicenseUri: String;
     FFullName: String;
     FNotes: String;
   public
@@ -188,9 +167,7 @@ type
     property RecordingDate: TDate read FRecordingDate write FRecordingDate;
     property RecordingTime: TTime read FRecordingTime write FRecordingTime;
     property AudioType: TAudioType read FAudioType write FAudioType;
-    property FilePath: String read FFilePath write FFilePath;
     property Subtitle: String read FSubtitle write FSubtitle;
-    property AuthorId: Integer read FAuthorId write FAuthorId;
     property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
@@ -213,11 +190,6 @@ type
     property RecorderModel: String read FRecorderModel write FRecorderModel;
     property MicModel: String read FMicModel write FMicModel;
     property FilterModel: String read FFilterModel write FFilterModel;
-    property LicenseType: String read FLicenseType write FLicenseType;
-    property LicenseYear: Integer read FLicenseYear write FLicenseYear;
-    property LicenseOwner: String read FLicenseOwner write FLicenseOwner;
-    property LicenseNotes: String read FLicenseNotes write FLicenseNotes;
-    property LicenseUri: String read FLicenseUri write FLicenseUri;
     property FullName: String read FFullName write FFullName;
     property Notes: String read FNotes write FNotes;
   end;
@@ -240,14 +212,12 @@ type
 
   { TDocumentData }
 
-  TDocumentData = class(TXolmisRecord)
+  TDocumentData = class(TCustomMedia)
   protected
     FName: String;
     FDocumentDate: TDate;
     FDocumentTime: TTime;
     FDocumentType: TFileCategory;
-    FFilePath: String;
-    FAuthorId: Integer;
     FPermitId: Integer;
     FProjectId: Integer;
     FPersonId: Integer;
@@ -260,11 +230,6 @@ type
     FSpecimenId: Integer;
     FSamplingPlotId: Integer;
     FMethodId: Integer;
-    FLicenseType: String;
-    FLicenseYear: Integer;
-    FLicenseOwner: String;
-    FLicenseNotes: String;
-    FLicenseUri: String;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
@@ -281,8 +246,6 @@ type
     property DocumentDate: TDate read FDocumentDate write FDocumentDate;
     property DocumentTime: TTime read FDocumentTime write FDocumentTime;
     property DocumentType: TFileCategory read FDocumentType write FDocumentType;
-    property FilePath: String read FFilePath write FFilePath;
-    property AuthorId: Integer read FAuthorId write FAuthorId;
     property PermitId: Integer read FPermitId write FPermitId;
     property ProjectId: Integer read FProjectId write FProjectId;
     property PersonId: Integer read FPersonId write FPersonId;
@@ -295,11 +258,6 @@ type
     property SpecimenId: Integer read FSpecimenId write FSpecimenId;
     property SamplingPlotId: Integer read FSamplingPlotId write FSamplingPlotId;
     property MethodId: Integer read FMethodId write FMethodId;
-    property LicenseType: String read FLicenseType write FLicenseType;
-    property LicenseYear: Integer read FLicenseYear write FLicenseYear;
-    property LicenseOwner: String read FLicenseOwner write FLicenseOwner;
-    property LicenseNotes: String read FLicenseNotes write FLicenseNotes;
-    property LicenseUri: String read FLicenseUri write FLicenseUri;
   end;
 
   { TDocumentRepository }
@@ -331,14 +289,12 @@ type
 
   { TVideoData }
 
-  TVideoData = class(TXolmisRecord)
+  TVideoData = class(TCustomMedia)
   protected
     FRecordingDate: TDate;
     FRecordingTime: TTime;
     FVideoType: TVideoType;
-    FFilePath: String;
     FSubtitle: String;
-    FAuthorId: Integer;
     FLongitude: Double;
     FLatitude: Double;
     FCoordinatePrecision: TCoordinatePrecision;
@@ -354,11 +310,6 @@ type
     FContext: String;
     FHabitat: String;
     FCameraModel: String;
-    FLicenseType: String;
-    FLicenseYear: Integer;
-    FLicenseOwner: String;
-    FLicenseNotes: String;
-    FLicenseUri: String;
     FFullName: String;
     FNotes: String;
   public
@@ -376,9 +327,7 @@ type
     property RecordingDate: TDate read FRecordingDate write FRecordingDate;
     property RecordingTime: TTime read FRecordingTime write FRecordingTime;
     property VideoType: TVideoType read FVideoType write FVideoType;
-    property FilePath: String read FFilePath write FFilePath;
     property Subtitle: String read FSubtitle write FSubtitle;
-    property AuthorId: Integer read FAuthorId write FAuthorId;
     property Longitude: Extended read FLongitude write FLongitude;
     property Latitude: Extended read FLatitude write FLatitude;
     property CoordinatePrecision: TCoordinatePrecision read FCoordinatePrecision write FCoordinatePrecision;
@@ -394,11 +343,6 @@ type
     property Context: String read FContext write FContext;
     property Habitat: String read FHabitat write FHabitat;
     property CameraModel: String read FCameraModel write FCameraModel;
-    property LicenseType: String read FLicenseType write FLicenseType;
-    property LicenseYear: Integer read FLicenseYear write FLicenseYear;
-    property LicenseOwner: String read FLicenseOwner write FLicenseOwner;
-    property LicenseNotes: String read FLicenseNotes write FLicenseNotes;
-    property LicenseUri: String read FLicenseUri write FLicenseUri;
     property FullName: String read FFullName write FFullName;
     property Notes: String read FNotes write FNotes;
   end;
@@ -443,9 +387,7 @@ begin
     FImageDate := TImageData(Source).ImageDate;
     FImageTime := TImageData(Source).ImageTime;
     FImageType := TImageData(Source).ImageType;
-    FFilePath := TImageData(Source).FilePath;
     FSubtitle := TImageData(Source).Subtitle;
-    FAuthorId := TImageData(Source).AuthorId;
     FCoordinatePrecision := TImageData(Source).CoordinatePrecision;
     FLongitude := TImageData(Source).Longitude;
     FLatitude := TImageData(Source).Latitude;
@@ -459,11 +401,6 @@ begin
     FNestRevisionId := TImageData(Source).NestRevisionId;
     FEggId := TImageData(Source).EggId;
     FSpecimenId := TImageData(Source).SpecimenId;
-    FLicenseType := TImageData(Source).LicenseType;
-    FLicenseYear := TImageData(Source).LicenseYear;
-    FLicenseOwner := TImageData(Source).LicenseOwner;
-    FLicenseNotes := TImageData(Source).LicenseNotes;
-    FLicenseUri := TImageData(Source).LicenseUri;
   end;
 end;
 
@@ -473,9 +410,7 @@ begin
   FImageDate := NullDate;
   FImageTime := NullTime;
   FImageType := itEmpty;
-  FFilePath := EmptyStr;
   FSubtitle := EmptyStr;
-  FAuthorId := 0;
   FCoordinatePrecision := cpEmpty;
   FLongitude := 0.0;
   FLatitude := 0.0;
@@ -490,11 +425,6 @@ begin
   FNestRevisionId := 0;
   FEggId := 0;
   FSpecimenId := 0;
-  FLicenseType := EmptyStr;
-  FLicenseYear := 0;
-  FLicenseOwner := EmptyStr;
-  FLicenseNotes := EmptyStr;
-  FLicenseUri := EmptyStr;
 end;
 
 function TImageData.Clone: TXolmisRecord;
@@ -527,6 +457,10 @@ begin
   if FieldValuesDiff(rscType, aOld.ImageType, FImageType, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscFilename, aOld.FilePath, FFilePath, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOriginalFilename, aOld.OriginalFilename, FOriginalFilename, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFileHash, aOld.FileHash, FFileHash, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
     Changes.Add(R);
@@ -589,6 +523,8 @@ begin
     FImageTime      := Obj.Get('image_time', NullTime);
     FImageType      := StrtoImageType(Obj.Get('image_type', ''));
     FFilePath       := Obj.Get('file_path', '');
+    FOriginalFilename := Obj.Get('original_filename', '');
+    FFileHash       := Obj.Get('file_hash', '');
     FSubtitle       := Obj.Get('subtitle', '');
     FAuthorId       := Obj.Get('author_id', 0);
     FLocalityId     := Obj.Get('locality_id', 0);
@@ -617,50 +553,52 @@ end;
 
 function TImageData.ToJSON: String;
 var
-  JSONObject: TJSONObject;
+  Obj: TJSONObject;
 begin
-  JSONObject := TJSONObject.Create;
+  Obj := TJSONObject.Create;
   try
-    JSONObject.Add('image_date', FImageDate);
-    JSONObject.Add('image_time', FImageTime);
-    JSONObject.Add('image_type', IMAGE_TYPES[FImageType]);
-    JSONObject.Add('file_path', FFilePath);
-    JSONObject.Add('subtitle', FSubtitle);
-    JSONObject.Add('author_id', FAuthorId);
-    JSONObject.Add('locality_id', FLocalityId);
-    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
-    JSONObject.Add('longitude', FLongitude);
-    JSONObject.Add('latitude', FLatitude);
-    JSONObject.Add('taxon_id', FTaxonId);
-    JSONObject.Add('individual_id', FIndividualId);
-    JSONObject.Add('capture_id', FCaptureId);
-    JSONObject.Add('feather_id', FFeatherId);
-    JSONObject.Add('sighting_id', FSightingId);
-    JSONObject.Add('specimen_id', FSpecimenId);
-    JSONObject.Add('survey_id', FSurveyId);
-    JSONObject.Add('nest_id', FNestId);
-    JSONObject.Add('nest_revision_id', FNestRevisionId);
-    JSONObject.Add('egg_id', FEggId);
-    JSONObject.Add('license_type', FLicenseType);
-    JSONObject.Add('license_year', FLicenseYear);
-    JSONObject.Add('license_owner', FLicenseOwner);
-    JSONObject.Add('license_notes', FLicenseNotes);
-    JSONObject.Add('license_url', FLicenseUri);
+    Obj.Add('image_date', FImageDate);
+    Obj.Add('image_time', FImageTime);
+    Obj.Add('image_type', IMAGE_TYPES[FImageType]);
+    Obj.Add('file_path', FFilePath);
+    Obj.Add('original_filename', FOriginalFilename);
+    Obj.Add('file_hash', FFileHash);
+    Obj.Add('subtitle', FSubtitle);
+    Obj.Add('author_id', FAuthorId);
+    Obj.Add('locality_id', FLocalityId);
+    Obj.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
+    Obj.Add('longitude', FLongitude);
+    Obj.Add('latitude', FLatitude);
+    Obj.Add('taxon_id', FTaxonId);
+    Obj.Add('individual_id', FIndividualId);
+    Obj.Add('capture_id', FCaptureId);
+    Obj.Add('feather_id', FFeatherId);
+    Obj.Add('sighting_id', FSightingId);
+    Obj.Add('specimen_id', FSpecimenId);
+    Obj.Add('survey_id', FSurveyId);
+    Obj.Add('nest_id', FNestId);
+    Obj.Add('nest_revision_id', FNestRevisionId);
+    Obj.Add('egg_id', FEggId);
+    Obj.Add('license_type', FLicenseType);
+    Obj.Add('license_year', FLicenseYear);
+    Obj.Add('license_owner', FLicenseOwner);
+    Obj.Add('license_notes', FLicenseNotes);
+    Obj.Add('license_url', FLicenseUri);
 
-    Result := JSONObject.AsJSON;
+    Result := Obj.AsJSON;
   finally
-    JSONObject.Free;
+    Obj.Free;
   end;
 end;
 
 function TImageData.ToString: String;
 begin
-  Result := Format('ImageData(Id=%d, ImageDate=%s, ImageTime=%s, ImageType=%s, FilePath=%s, Subtitle=%s, AuthorId=%d, ' +
+  Result := Format('ImageData(Id=%d, ImageDate=%s, ImageTime=%s, ImageType=%s, FilePath=%s, OriginalFilename=%s, FileHash=%s, Subtitle=%s, AuthorId=%d, ' +
     'LocalityId=%d, CoordinatePrecision=%s, Longitude=%f, Latitude=%f, TaxonId=%d, IndividualId=%d, CaptureId=%d, ' +
     'FeatherId=%d, SightingId=%d, SpecimenId=%d, SurveyId=%d, NestId=%d, NestRevisionId=%d, EggId=%d, LicenseType=%s, ' +
     'LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, DateToStr(FImageDate), TimeToStr(FImageTime), IMAGE_TYPES[FImageType], FFilePath, FSubtitle, FAuthorId,
+    [FId, DateToStr(FImageDate), TimeToStr(FImageTime), IMAGE_TYPES[FImageType], FFilePath, FOriginalFilename, FFileHash, FSubtitle, FAuthorId,
     FLocalityId, COORDINATE_PRECISIONS[FCoordinatePrecision], FLongitude, FLatitude, FTaxonId, FIndividualId,
     FCaptureId, FFeatherId, FSightingId, FSpecimenId, FSurveyId, FNestId, FNestRevisionId, FEggId, FLicenseType,
     FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
@@ -743,7 +681,7 @@ end;
 
 procedure TImageRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
 const
-  ALLOWED: array[0..2] of string = (COL_IMAGE_ID, COL_SUBTITLE, COL_IMAGE_FILENAME); // whitelist
+  ALLOWED: array[0..3] of string = (COL_IMAGE_ID, COL_SUBTITLE, COL_FILE_PATH, COL_ORIGINAL_FILENAME); // whitelist
 var
   Qry: TSQLQuery;
   I: Integer;
@@ -854,6 +792,8 @@ begin
     R.ImageType := StrtoImageType(FieldByName('image_type').AsString);
     R.Subtitle := FieldByName('subtitle').AsString;
     R.FilePath := FieldByName('file_path').AsString;
+    R.OriginalFilename := FieldByName('original_filename').AsString;
+    R.FileHash := FieldByName('file_hash').AsString;
     R.AuthorId := FieldByName('author_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
@@ -913,6 +853,8 @@ begin
     end
     else
       ParamByName('image_thumbnail').Clear;
+    ParamByName('original_filename').AsString := R.OriginalFilename;
+    ParamByName('file_hash').AsString := R.FileHash;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
     SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
@@ -982,6 +924,8 @@ begin
     end
     else
       ParamByName('image_thumbnail').Clear;
+    ParamByName('original_filename').AsString := R.OriginalFilename;
+    ParamByName('file_hash').AsString := R.FileHash;
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
     SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
@@ -1028,9 +972,7 @@ begin
     FRecordingDate := TAudioData(Source).RecordingDate;
     FRecordingTime := TAudioData(Source).RecordingTime;
     FAudioType := TAudioData(Source).AudioType;
-    FFilePath := TAudioData(Source).FilePath;
     FSubtitle := TAudioData(Source).Subtitle;
-    FAuthorId := TAudioData(Source).AuthorId;
     FCoordinatePrecision := TAudioData(Source).CoordinatePrecision;
     FLongitude := TAudioData(Source).Longitude;
     FLatitude := TAudioData(Source).Latitude;
@@ -1053,11 +995,6 @@ begin
     FRecorderModel := TAudioData(Source).RecorderModel;
     FMicModel := TAudioData(Source).MicModel;
     FFilterModel := TAudioData(Source).FilterModel;
-    FLicenseType := TAudioData(Source).LicenseType;
-    FLicenseYear := TAudioData(Source).LicenseYear;
-    FLicenseOwner := TAudioData(Source).LicenseOwner;
-    FLicenseNotes := TAudioData(Source).LicenseNotes;
-    FLicenseUri := TAudioData(Source).LicenseUri;
     FFullName := TAudioData(Source).FullName;
     FNotes := TAudioData(Source).Notes;
   end;
@@ -1069,9 +1006,7 @@ begin
   FRecordingDate := NullDate;
   FRecordingTime := NullTime;
   FAudioType := atUnknown;
-  FFilePath := EmptyStr;
   FSubtitle := EmptyStr;
-  FAuthorId := 0;
   FCoordinatePrecision := cpEmpty;
   FLongitude := 0.0;
   FLatitude := 0.0;
@@ -1094,11 +1029,6 @@ begin
   FRecorderModel := EmptyStr;
   FMicModel := EmptyStr;
   FFilterModel := EmptyStr;
-  FLicenseType := EmptyStr;
-  FLicenseYear := 0;
-  FLicenseOwner := EmptyStr;
-  FLicenseNotes := EmptyStr;
-  FLicenseUri := EmptyStr;
   FFullName := EmptyStr;
   FNotes := EmptyStr;
 end;
@@ -1133,6 +1063,10 @@ begin
   if FieldValuesDiff(rscType, aOld.AudioType, FAudioType, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscFilename, aOld.FilePath, FFilePath, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOriginalFilename, aOld.OriginalFilename, FOriginalFilename, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFileHash, aOld.FileHash, FFileHash, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
     Changes.Add(R);
@@ -1216,6 +1150,8 @@ begin
     FRecordingTime    := Obj.Get('recording_time', NullTime);
     FAudioType        := StrToAudioType(Obj.Get('audio_type', ''));
     FFilePath         := Obj.Get('file_path', '');
+    FOriginalFilename := Obj.Get('original_filename', '');
+    FFileHash         := Obj.Get('file_hash', '');
     FSubtitle         := Obj.Get('subtitle', '');
     FAuthorId         := Obj.Get('author_id', 0);
     FLocalityId       := Obj.Get('locality_id', 0);
@@ -1253,62 +1189,64 @@ end;
 
 function TAudioData.ToJSON: String;
 var
-  JSONObject: TJSONObject;
+  Obj: TJSONObject;
 begin
-  JSONObject := TJSONObject.Create;
+  Obj := TJSONObject.Create;
   try
-    JSONObject.Add('full_name', FFullName);
-    JSONObject.Add('recording_date', FRecordingDate);
-    JSONObject.Add('recording_time', FRecordingTime);
-    JSONObject.Add('audio_type', AUDIO_TYPES[FAudioType]);
-    JSONObject.Add('file_path', FFilePath);
-    JSONObject.Add('subtitle', FSubtitle);
-    JSONObject.Add('author_id', FAuthorId);
-    JSONObject.Add('locality_id', FLocalityId);
-    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
-    JSONObject.Add('longitude', FLongitude);
-    JSONObject.Add('latitude', FLatitude);
-    JSONObject.Add('taxon_id', FTaxonId);
-    JSONObject.Add('individual_id', FIndividualId);
-    JSONObject.Add('sighting_id', FSightingId);
-    JSONObject.Add('specimen_id', FSpecimenId);
-    JSONObject.Add('survey_id', FSurveyId);
-    JSONObject.Add('temperature', FTemperature);
-    JSONObject.Add('cloud_cover', FCloudCover);
-    JSONObject.Add('precipitation', PRECIPITATION_VALUES[FPrecipitation]);
-    JSONObject.Add('relative_humidity', FRelativeHumidity);
-    JSONObject.Add('wind_speed', FWindSpeedBft);
-    JSONObject.Add('individuals_tally', FSubjectsTally);
-    JSONObject.Add('distance', FDistance);
-    JSONObject.Add('context', FContext);
-    JSONObject.Add('habitat', FHabitat);
-    JSONObject.Add('playback_used', FPlaybackUsed);
-    JSONObject.Add('recorder_model', FRecorderModel);
-    JSONObject.Add('microphone_model', FMicModel);
-    JSONObject.Add('filter_model', FFilterModel);
-    JSONObject.Add('license_type', FLicenseType);
-    JSONObject.Add('license_year', FLicenseYear);
-    JSONObject.Add('license_owner', FLicenseOwner);
-    JSONObject.Add('license_notes', FLicenseNotes);
-    JSONObject.Add('license_url', FLicenseUri);
-    JSONObject.Add('notes', FNotes);
+    Obj.Add('full_name', FFullName);
+    Obj.Add('recording_date', FRecordingDate);
+    Obj.Add('recording_time', FRecordingTime);
+    Obj.Add('audio_type', AUDIO_TYPES[FAudioType]);
+    Obj.Add('file_path', FFilePath);
+    Obj.Add('original_filename', FOriginalFilename);
+    Obj.Add('file_hash', FFileHash);
+    Obj.Add('subtitle', FSubtitle);
+    Obj.Add('author_id', FAuthorId);
+    Obj.Add('locality_id', FLocalityId);
+    Obj.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
+    Obj.Add('longitude', FLongitude);
+    Obj.Add('latitude', FLatitude);
+    Obj.Add('taxon_id', FTaxonId);
+    Obj.Add('individual_id', FIndividualId);
+    Obj.Add('sighting_id', FSightingId);
+    Obj.Add('specimen_id', FSpecimenId);
+    Obj.Add('survey_id', FSurveyId);
+    Obj.Add('temperature', FTemperature);
+    Obj.Add('cloud_cover', FCloudCover);
+    Obj.Add('precipitation', PRECIPITATION_VALUES[FPrecipitation]);
+    Obj.Add('relative_humidity', FRelativeHumidity);
+    Obj.Add('wind_speed', FWindSpeedBft);
+    Obj.Add('individuals_tally', FSubjectsTally);
+    Obj.Add('distance', FDistance);
+    Obj.Add('context', FContext);
+    Obj.Add('habitat', FHabitat);
+    Obj.Add('playback_used', FPlaybackUsed);
+    Obj.Add('recorder_model', FRecorderModel);
+    Obj.Add('microphone_model', FMicModel);
+    Obj.Add('filter_model', FFilterModel);
+    Obj.Add('license_type', FLicenseType);
+    Obj.Add('license_year', FLicenseYear);
+    Obj.Add('license_owner', FLicenseOwner);
+    Obj.Add('license_notes', FLicenseNotes);
+    Obj.Add('license_url', FLicenseUri);
+    Obj.Add('notes', FNotes);
 
-    Result := JSONObject.AsJSON;
+    Result := Obj.AsJSON;
   finally
-    JSONObject.Free;
+    Obj.Free;
   end;
 end;
 
 function TAudioData.ToString: String;
 begin
-  Result := Format('AudioData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, AudioType=%s, FilePath=%s, Subtitle=%s, ' +
+  Result := Format('AudioData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, AudioType=%s, FilePath=%s, OriginalFilename=%s, FileHash=%s, Subtitle=%s, ' +
     'AuthorId=%d, LocalityId=%d, CoordinatePrecision=%s, Longitude=%f, Latitude=%f, TaxonId=%d, IndividualId=%d, ' +
     'SightingId=%d, SpecimenId=%d, SurveyId=%d, Temperature=%f, CloudCover=%d, Precipitation=%s, RelativeHumidity=%f, ' +
     'WindSpeedBft=%d, SubjectsTally=%d, Distance=%f, Context=%s, Habitat=%s, PlaybackUsed=%s, RecorderModel=%s, ' +
     'MicModel=%s, FilterModel=%s, LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
     'Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), AUDIO_TYPES[FAudioType], FFilePath, FSubtitle,
+    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), AUDIO_TYPES[FAudioType], FFilePath, FOriginalFilename, FFileHash, FSubtitle,
     FAuthorId, FLocalityId, COORDINATE_PRECISIONS[FCoordinatePrecision], FLongitude, FLatitude, FTaxonId, FIndividualId,
     FSightingId, FSpecimenId, FSurveyId, FTemperature, FCloudCover, PRECIPITATION_VALUES[FPrecipitation],
     FRelativeHumidity, FWindSpeedBft, FSubjectsTally, FDistance, FContext, FHabitat, BoolToStr(FPlaybackUsed, 'True', 'False'),
@@ -1393,7 +1331,7 @@ end;
 
 procedure TAudioRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
 const
-  ALLOWED: array[0..2] of string = (COL_AUDIO_ID, COL_FULL_NAME, COL_AUDIO_FILE); // whitelist
+  ALLOWED: array[0..3] of string = (COL_AUDIO_ID, COL_FULL_NAME, COL_FILE_PATH, COL_ORIGINAL_FILENAME); // whitelist
 var
   Qry: TSQLQuery;
   I: Integer;
@@ -1505,6 +1443,8 @@ begin
     R.AudioType := StrToAudioType(FieldByName('audio_type').AsString);
     R.Subtitle := FieldByName('subtitle').AsString;
     R.FilePath := FieldByName('file_path').AsString;
+    R.OriginalFilename := FieldByName('original_filename').AsString;
+    R.FileHash := FieldByName('file_hash').AsString;
     R.AuthorId := FieldByName('author_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
@@ -1567,6 +1507,8 @@ begin
     ParamByName('audio_type').AsString := AUDIO_TYPES[R.AudioType];
 
     ParamByName('file_path').AsString := R.FilePath;
+    SetStrParam(ParamByName('original_filename'), R.OriginalFilename);
+    SetStrParam(ParamByName('file_hash'), R.FileHash);
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
     SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
@@ -1639,6 +1581,8 @@ begin
     ParamByName('audio_type').AsString := AUDIO_TYPES[R.AudioType];
 
     ParamByName('file_path').AsString := R.FilePath;
+    SetStrParam(ParamByName('original_filename'), R.OriginalFilename);
+    SetStrParam(ParamByName('file_hash'), R.FileHash);
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
     SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
@@ -1695,8 +1639,6 @@ begin
     FDocumentDate := TDocumentData(Source).DocumentDate;
     FDocumentTime := TDocumentData(Source).DocumentTime;
     FDocumentType := TDocumentData(Source).DocumentType;
-    FFilePath := TDocumentData(Source).FilePath;
-    FAuthorId := TDocumentData(Source).AuthorId;
     FPermitId := TDocumentData(Source).PermitId;
     FProjectId := TDocumentData(Source).ProjectId;
     FPersonId := TDocumentData(Source).PersonId;
@@ -1709,11 +1651,6 @@ begin
     FSpecimenId := TDocumentData(Source).SpecimenId;
     FSamplingPlotId := TDocumentData(Source).SamplingPlotId;
     FMethodId := TDocumentData(Source).MethodId;
-    FLicenseType := TDocumentData(Source).LicenseType;
-    FLicenseYear := TDocumentData(Source).LicenseYear;
-    FLicenseOwner := TDocumentData(Source).LicenseOwner;
-    FLicenseNotes := TDocumentData(Source).LicenseNotes;
-    FLicenseUri := TDocumentData(Source).LicenseUri;
   end;
 end;
 
@@ -1724,8 +1661,6 @@ begin
   FDocumentDate := NullDate;
   FDocumentTime := NullTime;
   FDocumentType := fcOther;
-  FFilePath := EmptyStr;
-  FAuthorId := 0;
   FPermitId := 0;
   FProjectId := 0;
   FPersonId := 0;
@@ -1738,11 +1673,6 @@ begin
   FSpecimenId := 0;
   FSamplingPlotId := 0;
   FMethodId := 0;
-  FLicenseType := EmptyStr;
-  FLicenseYear := 0;
-  FLicenseOwner := EmptyStr;
-  FLicenseNotes := EmptyStr;
-  FLicenseUri := EmptyStr;
 end;
 
 function TDocumentData.Clone: TXolmisRecord;
@@ -1777,6 +1707,10 @@ begin
   if FieldValuesDiff(rscType, aOld.DocumentType, FDocumentType, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscFilename, aOld.FilePath, FFilePath, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOriginalFilename, aOld.OriginalFilename, FOriginalFilename, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFileHash, aOld.FileHash, FFileHash, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscAuthorID, aOld.AuthorId, FAuthorId, R) then
     Changes.Add(R);
@@ -1834,6 +1768,8 @@ begin
     FName           := Obj.Get('name', '');
     FDocumentType   := StrToDocumentType(Obj.Get('document_type', ''));
     FFilePath       := Obj.Get('file_path', '');
+    FOriginalFilename := Obj.Get('original_filename', '');
+    FFileHash       := Obj.Get('file_hash', '');
     FAuthorId       := Obj.Get('author_id', 0);
     FPermitId       := Obj.Get('permit_id', 0);
     FProjectId      := Obj.Get('project_id', 0);
@@ -1859,48 +1795,51 @@ end;
 
 function TDocumentData.ToJSON: String;
 var
-  JSONObject: TJSONObject;
+  Obj: TJSONObject;
 begin
-  JSONObject := TJSONObject.Create;
+  Obj := TJSONObject.Create;
   try
-    JSONObject.Add('document_date', FDocumentDate);
-    JSONObject.Add('document_time', FDocumentTime);
-    JSONObject.Add('name', FName);
-    JSONObject.Add('document_type', FILE_CATEGORIES[FDocumentType]);
-    JSONObject.Add('file_path', FFilePath);
-    JSONObject.Add('author_id', FAuthorId);
-    JSONObject.Add('permit_id', FPermitId);
-    JSONObject.Add('project_id', FProjectId);
-    JSONObject.Add('person_id', FPersonId);
-    JSONObject.Add('individual_id', FIndividualId);
-    JSONObject.Add('capture_id', FCaptureId);
-    JSONObject.Add('sighting_id', FSightingId);
-    JSONObject.Add('specimen_id', FSpecimenId);
-    JSONObject.Add('expedition_id', FExpeditionId);
-    JSONObject.Add('survey_id', FSurveyId);
-    JSONObject.Add('nest_id', FNestId);
-    JSONObject.Add('sampling_plot_id', FSamplingPlotId);
-    JSONObject.Add('method_id', FMethodId);
-    JSONObject.Add('license_type', FLicenseType);
-    JSONObject.Add('license_year', FLicenseYear);
-    JSONObject.Add('license_owner', FLicenseOwner);
-    JSONObject.Add('license_notes', FLicenseNotes);
-    JSONObject.Add('license_url', FLicenseUri);
+    Obj.Add('document_date', FDocumentDate);
+    Obj.Add('document_time', FDocumentTime);
+    Obj.Add('name', FName);
+    Obj.Add('document_type', FILE_CATEGORIES[FDocumentType]);
+    Obj.Add('file_path', FFilePath);
+    Obj.Add('original_filename', FOriginalFilename);
+    Obj.Add('file_hash', FFileHash);
+    Obj.Add('author_id', FAuthorId);
+    Obj.Add('permit_id', FPermitId);
+    Obj.Add('project_id', FProjectId);
+    Obj.Add('person_id', FPersonId);
+    Obj.Add('individual_id', FIndividualId);
+    Obj.Add('capture_id', FCaptureId);
+    Obj.Add('sighting_id', FSightingId);
+    Obj.Add('specimen_id', FSpecimenId);
+    Obj.Add('expedition_id', FExpeditionId);
+    Obj.Add('survey_id', FSurveyId);
+    Obj.Add('nest_id', FNestId);
+    Obj.Add('sampling_plot_id', FSamplingPlotId);
+    Obj.Add('method_id', FMethodId);
+    Obj.Add('license_type', FLicenseType);
+    Obj.Add('license_year', FLicenseYear);
+    Obj.Add('license_owner', FLicenseOwner);
+    Obj.Add('license_notes', FLicenseNotes);
+    Obj.Add('license_url', FLicenseUri);
 
-    Result := JSONObject.AsJSON;
+    Result := Obj.AsJSON;
   finally
-    JSONObject.Free;
+    Obj.Free;
   end;
 end;
 
 function TDocumentData.ToString: String;
 begin
-  Result := Format('Band(Id=%d, DocumentDate=%s, DocumentTime=%s, Name=%s, DocumentType=%s, FilePath=%s, AuthorId=%d, PermitId=%d, ' +
+  Result := Format('Band(Id=%d, DocumentDate=%s, DocumentTime=%s, Name=%s, DocumentType=%s, FilePath=%s, OriginalFilename=%s, FileHash=%s, AuthorId=%d, PermitId=%d, ' +
     'ProjectId=%d, PersonId=%d, IndividualId=%d, CaptureId=%d, SightingId=%d, SpecimenId=%d, ExpeditionId=%d, ' +
     'SurveyId=%d, NestId=%d, SamplingPlotId=%d, MethodId=%d, LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, ' +
     'LicenseNotes=%s, LicenseUri=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, DateToStr(FDocumentDate), TimeToStr(FDocumentTime), FName, FILE_CATEGORIES[FDocumentType], FFilePath, FAuthorId, FPermitId, FProjectId,
+    [FId, DateToStr(FDocumentDate), TimeToStr(FDocumentTime), FName, FILE_CATEGORIES[FDocumentType], FFilePath,
+    FOriginalFilename, FFileHash, FAuthorId, FPermitId, FProjectId,
     FPersonId, FIndividualId, FCaptureId, FSightingId, FSpecimenId, FExpeditionId, FSurveyId, FNestId,
     FSamplingPlotId, FMethodId, FLicenseType, FLicenseYear, FLicenseOwner, FLicenseNotes, FLicenseUri,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
@@ -1982,7 +1921,7 @@ end;
 
 procedure TDocumentRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
 const
-  ALLOWED: array[0..2] of string = (COL_DOCUMENT_ID, COL_DOCUMENT_NAME, COL_DOCUMENT_PATH); // whitelist
+  ALLOWED: array[0..3] of string = (COL_DOCUMENT_ID, COL_DOCUMENT_NAME, COL_FILE_PATH, COL_ORIGINAL_FILENAME); // whitelist
 var
   Qry: TSQLQuery;
   I: Integer;
@@ -2375,6 +2314,8 @@ begin
     R.DocumentTime := FieldByName('document_time').AsDateTime;
     R.DocumentType := StrToDocumentType(FieldByName('document_type').AsString);
     R.FilePath := FieldByName('file_path').AsString;
+    R.OriginalFilename := FieldByName('original_filename').AsString;
+    R.FileHash := FieldByName('file_hash').AsString;
     R.AuthorId := FieldByName('author_id').AsInteger;
     R.PermitId := FieldByName('permit_id').AsInteger;
     R.ProjectId := FieldByName('project_id').AsInteger;
@@ -2426,6 +2367,8 @@ begin
     ParamByName('document_name').AsString := R.Name;
     ParamByName('document_type').AsString := FILE_CATEGORIES[R.DocumentType];
     ParamByName('file_path').AsString := R.FilePath;
+    SetStrParam(ParamByName('original_filename'), R.OriginalFilename);
+    SetStrParam(ParamByName('file_hash'), R.FileHash);
     SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('permit_id'), R.PermitId);
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
@@ -2487,6 +2430,8 @@ begin
     ParamByName('document_name').AsString := R.Name;
     ParamByName('document_type').AsString := FILE_CATEGORIES[R.DocumentType];
     ParamByName('file_path').AsString := R.FilePath;
+    SetStrParam(ParamByName('original_filename'), R.OriginalFilename);
+    SetStrParam(ParamByName('file_hash'), R.FileHash);
     SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('permit_id'), R.PermitId);
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
@@ -2531,9 +2476,7 @@ begin
     FRecordingDate := TVideoData(Source).RecordingDate;
     FRecordingTime := TVideoData(Source).RecordingTime;
     FVideoType := TVideoData(Source).VideoType;
-    FFilePath := TVideoData(Source).FilePath;
     FSubtitle := TVideoData(Source).Subtitle;
-    FAuthorId := TVideoData(Source).AuthorId;
     FLongitude := TVideoData(Source).Longitude;
     FLatitude := TVideoData(Source).Latitude;
     FCoordinatePrecision := TVideoData(Source).CoordinatePrecision;
@@ -2549,11 +2492,6 @@ begin
     FContext := TVideoData(Source).Context;
     FHabitat := TVideoData(Source).Habitat;
     FCameraModel := TVideoData(Source).CameraModel;
-    FLicenseType := TVideoData(Source).LicenseType;
-    FLicenseYear := TVideoData(Source).LicenseYear;
-    FLicenseOwner := TVideoData(Source).LicenseOwner;
-    FLicenseNotes := TVideoData(Source).LicenseNotes;
-    FLicenseUri := TVideoData(Source).LicenseUri;
     FFullName := TVideoData(Source).FullName;
     FNotes := TVideoData(Source).Notes;
   end;
@@ -2565,9 +2503,7 @@ begin
   FRecordingDate := NullDate;
   FRecordingTime := NullTime;
   FVideoType := vtUnknown;
-  FFilePath := EmptyStr;
   FSubtitle := EmptyStr;
-  FAuthorId := 0;
   FLongitude := 0.0;
   FLatitude := 0.0;
   FCoordinatePrecision := cpEmpty;
@@ -2583,11 +2519,6 @@ begin
   FContext := EmptyStr;
   FHabitat := EmptyStr;
   FCameraModel := EmptyStr;
-  FLicenseType := EmptyStr;
-  FLicenseYear := 0;
-  FLicenseOwner := EmptyStr;
-  FLicenseNotes := EmptyStr;
-  FLicenseUri := EmptyStr;
   FFullName := EmptyStr;
   FNotes := EmptyStr;
 end;
@@ -2622,6 +2553,10 @@ begin
   if FieldValuesDiff(rscType, aOld.VideoType, FVideoType, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscFilename, aOld.FilePath, FFilePath, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscOriginalFilename, aOld.OriginalFilename, FOriginalFilename, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscFileHash, aOld.FileHash, FFileHash, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscSubtitle, aOld.Subtitle, FSubtitle, R) then
     Changes.Add(R);
@@ -2691,6 +2626,8 @@ begin
     FRecordingTime  := Obj.Get('recording_time', NullTime);
     FVideoType      := StrToVideoType(Obj.Get('video_type', ''));
     FFilePath       := Obj.Get('file_path', '');
+    FOriginalFilename := Obj.Get('original_filename', '');
+    FFileHash       := Obj.Get('file_hash', '');
     FSubtitle       := Obj.Get('subtitle', '');
     FAuthorId       := Obj.Get('author_id', 0);
     FLocalityId     := Obj.Get('locality_id', 0);
@@ -2721,55 +2658,57 @@ end;
 
 function TVideoData.ToJSON: String;
 var
-  JSONObject: TJSONObject;
+  Obj: TJSONObject;
 begin
-  JSONObject := TJSONObject.Create;
+  Obj := TJSONObject.Create;
   try
-    JSONObject.Add('full_name', FFullName);
-    JSONObject.Add('recording_date', FRecordingDate);
-    JSONObject.Add('recording_time', FRecordingTime);
-    JSONObject.Add('video_type', VIDEO_TYPES[FVideoType]);
-    JSONObject.Add('file_path', FFilePath);
-    JSONObject.Add('subtitle', FSubtitle);
-    JSONObject.Add('author_id', FAuthorId);
-    JSONObject.Add('locality_id', FLocalityId);
-    JSONObject.Add('longitude', FLongitude);
-    JSONObject.Add('latitude', FLatitude);
-    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
-    JSONObject.Add('taxon_id', FTaxonId);
-    JSONObject.Add('individual_id', FIndividualId);
-    JSONObject.Add('capture_id', FCaptureId);
-    JSONObject.Add('sighting_id', FSightingId);
-    JSONObject.Add('nest_id', FNestId);
-    JSONObject.Add('nest_revision_id', FNestRevisionId);
-    JSONObject.Add('survey_id', FSurveyId);
-    JSONObject.Add('distance', FDistance);
-    JSONObject.Add('context', FContext);
-    JSONObject.Add('habitat', FHabitat);
-    JSONObject.Add('camera_model', FCameraModel);
-    JSONObject.Add('license_type', FLicenseType);
-    JSONObject.Add('license_year', FLicenseYear);
-    JSONObject.Add('license_owner', FLicenseOwner);
-    JSONObject.Add('license_notes', FLicenseNotes);
-    JSONObject.Add('license_url', FLicenseUri);
-    JSONObject.Add('notes', FNotes);
+    Obj.Add('full_name', FFullName);
+    Obj.Add('recording_date', FRecordingDate);
+    Obj.Add('recording_time', FRecordingTime);
+    Obj.Add('video_type', VIDEO_TYPES[FVideoType]);
+    Obj.Add('file_path', FFilePath);
+    Obj.Add('original_filename', FOriginalFilename);
+    Obj.Add('file_hash', FFileHash);
+    Obj.Add('subtitle', FSubtitle);
+    Obj.Add('author_id', FAuthorId);
+    Obj.Add('locality_id', FLocalityId);
+    Obj.Add('longitude', FLongitude);
+    Obj.Add('latitude', FLatitude);
+    Obj.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
+    Obj.Add('taxon_id', FTaxonId);
+    Obj.Add('individual_id', FIndividualId);
+    Obj.Add('capture_id', FCaptureId);
+    Obj.Add('sighting_id', FSightingId);
+    Obj.Add('nest_id', FNestId);
+    Obj.Add('nest_revision_id', FNestRevisionId);
+    Obj.Add('survey_id', FSurveyId);
+    Obj.Add('distance', FDistance);
+    Obj.Add('context', FContext);
+    Obj.Add('habitat', FHabitat);
+    Obj.Add('camera_model', FCameraModel);
+    Obj.Add('license_type', FLicenseType);
+    Obj.Add('license_year', FLicenseYear);
+    Obj.Add('license_owner', FLicenseOwner);
+    Obj.Add('license_notes', FLicenseNotes);
+    Obj.Add('license_url', FLicenseUri);
+    Obj.Add('notes', FNotes);
 
-    Result := JSONObject.AsJSON;
+    Result := Obj.AsJSON;
   finally
-    JSONObject.Free;
+    Obj.Free;
   end;
 end;
 
 function TVideoData.ToString: String;
 begin
-  Result := Format('VideoData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, VideoType=%s, FilePath=%s, Subtitle=%s, ' +
+  Result := Format('VideoData(Id=%d, FullName=%s, RecordingDate=%s, RecordingTime=%s, VideoType=%s, FilePath=%s, OriginalFilename=%s, FileHash=%s, Subtitle=%s, ' +
     'AuthorId=%d, LocalityId=%d, Longitude=%f, Latitude=%f, CoordinatePrecision=%s, TaxonId=%d, IndividualId=%d, CaptureId=%d, ' +
     'SightingId=%d, NestId=%d, NestRevisionId=%d, SurveyId=%d, ' +
     'Distance=%f, Context=%s, Habitat=%s, CameraModel=%s, ' +
     'LicenseType=%s, LicenseYear=%d, LicenseOwner=%s, LicenseNotes=%s, LicenseUri=%s, ' +
     'Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), VIDEO_TYPES[FVideoType], FFilePath, FSubtitle,
+    [FId, FFullName, DateToStr(FRecordingDate), TimeToStr(FRecordingTime), VIDEO_TYPES[FVideoType], FFilePath, FOriginalFilename, FFileHash, FSubtitle,
     FAuthorId, FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FTaxonId, FIndividualId, FCaptureId,
     FSightingId, FNestId, FNestRevisionId, FSurveyId,
     FDistance, FContext, FHabitat,
@@ -2854,7 +2793,7 @@ end;
 
 procedure TVideoRepository.FindBy(const FieldName: String; const Value: Variant; E: TXolmisRecord);
 const
-  ALLOWED: array[0..2] of string = (COL_VIDEO_ID, COL_FULL_NAME, COL_FILE_PATH); // whitelist
+  ALLOWED: array[0..3] of string = (COL_VIDEO_ID, COL_FULL_NAME, COL_FILE_PATH, COL_ORIGINAL_FILENAME); // whitelist
 var
   Qry: TSQLQuery;
   I: Integer;
@@ -2966,6 +2905,8 @@ begin
     R.VideoType := StrToVideoType(FieldByName('video_type').AsString);
     R.Subtitle := FieldByName('subtitle').AsString;
     R.FilePath := FieldByName('file_path').AsString;
+    R.OriginalFilename := FieldByName('original_filename').AsString;
+    R.FileHash := FieldByName('file_hash').AsString;
     R.AuthorId := FieldByName('author_id').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
@@ -3021,6 +2962,8 @@ begin
     ParamByName('video_type').AsString := VIDEO_TYPES[R.VideoType];
 
     ParamByName('file_path').AsString := R.FilePath;
+    SetStrParam(ParamByName('original_filename'), R.OriginalFilename);
+    SetStrParam(ParamByName('file_hash'), R.FileHash);
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
     SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);
@@ -3086,6 +3029,8 @@ begin
     ParamByName('video_type').AsString := VIDEO_TYPES[R.VideoType];
 
     ParamByName('file_path').AsString := R.FilePath;
+    SetStrParam(ParamByName('original_filename'), R.OriginalFilename);
+    SetStrParam(ParamByName('file_hash'), R.FileHash);
     SetStrParam(ParamByName('subtitle'), R.Subtitle);
     SetForeignParam(ParamByName('author_id'), R.AuthorId);
     SetForeignParam(ParamByName('locality_id'), R.LocalityId);

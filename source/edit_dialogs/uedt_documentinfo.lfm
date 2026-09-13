@@ -1,23 +1,23 @@
 object edtDocumentInfo: TedtDocumentInfo
   Left = 361
-  Height = 504
+  Height = 564
   Top = 250
   Width = 397
   AutoSize = True
   BorderIcons = [biSystemMenu]
   Caption = 'Document info'
-  ClientHeight = 504
+  ClientHeight = 564
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 450
+    Top = 442
     Width = 397
     Align = alTop
     LineColor = 9276813
@@ -27,7 +27,7 @@ object edtDocumentInfo: TedtDocumentInfo
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 452
+    Top = 444
     Width = 397
     Align = alTop
     AutoSize = True
@@ -93,29 +93,29 @@ object edtDocumentInfo: TedtDocumentInfo
   end
   object SBox: TScrollBox
     Left = 0
-    Height = 450
-    Top = 0
+    Height = 405
+    Top = 37
     Width = 397
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 450
+    VertScrollBar.Page = 405
     Align = alTop
     AutoSize = True
     BorderStyle = bsNone
-    ClientHeight = 450
+    ClientHeight = 405
     ClientWidth = 397
     Constraints.MinWidth = 176
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 450
+      Height = 405
       Top = 0
       Width = 397
       Align = alTop
       AutoSize = True
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 16
-      ClientHeight = 450
+      ClientHeight = 405
       ClientWidth = 397
       TabOrder = 0
       object pDateTime: TPanel
@@ -231,57 +231,6 @@ object edtDocumentInfo: TedtDocumentInfo
           OnKeyPress = cbDocumentTypeKeyPress
         end
       end
-      object pDocumentPath: TPanel
-        Left = 0
-        Height = 45
-        Top = 196
-        Width = 397
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 1
-        ClientHeight = 45
-        ClientWidth = 397
-        ParentBackground = False
-        TabOrder = 4
-        object lblDocumentPath: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 365
-          BorderSpacing.Top = 3
-          Caption = 'Document file/URL: *'
-          ParentColor = False
-          ParentFont = False
-        end
-        object eFilePath: TEditButton
-          Left = 16
-          Height = 23
-          Top = 22
-          Width = 365
-          ButtonHint = 'Choose file'
-          ButtonWidth = 23
-          Images = DMM.iEdits
-          ImageIndex = 6
-          MaxLength = 0
-          NumGlyphs = 1
-          ParentShowHint = False
-          PasswordChar = #0
-          ShowHint = True
-          Spacing = 0
-          TabOrder = 0
-          OnButtonClick = eFilePathButtonClick
-          OnEditingDone = eDocumentDateEditingDone
-          OnKeyDown = FormKeyDown
-          OnKeyPress = cbDocumentTypeKeyPress
-        end
-      end
       object pDocumentTitle: TPanel
         Left = 0
         Height = 45
@@ -325,7 +274,7 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseOwner: TPanel
         Left = 0
         Height = 45
-        Top = 299
+        Top = 254
         Width = 397
         Align = alTop
         AutoSize = True
@@ -340,7 +289,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 5
         object lblLicenseOwner: TLabel
           Left = 16
           Height = 15
@@ -364,7 +313,7 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseNotes: TPanel
         Left = 0
         Height = 45
-        Top = 344
+        Top = 299
         Width = 397
         Align = alTop
         AutoSize = True
@@ -379,7 +328,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 6
         object lblLicenseNotes: TLabel
           Left = 16
           Height = 15
@@ -403,7 +352,7 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseTypeYear: TPanel
         Left = 0
         Height = 45
-        Top = 254
+        Top = 209
         Width = 397
         Align = alTop
         AutoSize = True
@@ -419,7 +368,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 4
         object lblLicenseType: TLabel
           Left = 16
           Height = 15
@@ -465,7 +414,7 @@ object edtDocumentInfo: TedtDocumentInfo
       object pLicenseUri: TPanel
         Left = 0
         Height = 45
-        Top = 389
+        Top = 344
         Width = 397
         Align = alTop
         AutoSize = True
@@ -480,7 +429,7 @@ object edtDocumentInfo: TedtDocumentInfo
         ClientHeight = 45
         ClientWidth = 397
         ParentBackground = False
-        TabOrder = 8
+        TabOrder = 7
         object lblLicenseUri: TLabel
           Left = 16
           Height = 15
@@ -551,6 +500,53 @@ object edtDocumentInfo: TedtDocumentInfo
           OnKeyPress = eAuthorKeyPress
         end
       end
+    end
+  end
+  object pHeader: TPanel
+    Left = 0
+    Height = 37
+    Top = 0
+    Width = 397
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ClientHeight = 37
+    ClientWidth = 397
+    TabOrder = 2
+    object txtOriginalFilename: TLabel
+      AnchorSideLeft.Control = pHeader
+      AnchorSideTop.Control = pHeader
+      AnchorSideRight.Control = icoFileError
+      Left = 16
+      Height = 21
+      Top = 8
+      Width = 337
+      Anchors = [akTop, akLeft, akRight]
+      Caption = 'OriginalFilename.docx'
+      Font.Height = -16
+      ParentFont = False
+      WordWrap = True
+    end
+    object icoFileError: TImage
+      AnchorSideTop.Control = pHeader
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pHeader
+      AnchorSideRight.Side = asrBottom
+      Left = 361
+      Height = 20
+      Top = 8
+      Width = 20
+      Anchors = [akTop, akRight]
+      AutoSize = True
+      ImageIndex = 10
+      ImageWidth = 20
+      Images = DMM.iEdits
+      ParentShowHint = False
+      ShowHint = True
+      Visible = False
     end
   end
   object dsLink: TDataSource

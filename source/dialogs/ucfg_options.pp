@@ -22,26 +22,31 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, EditBtn, Buttons, ComCtrls, lclintf,
-  LazFileUtils, ToggleSwitch, atshapelinebgra, BCPanel, BCFluentSlider, Character;
+  LazFileUtils, ToggleSwitch, atshapelinebgra, BCPanel, BCFluentSlider, Character, FileUtil, FileCtrl;
 
 type
 
   { TcfgOptions }
 
   TcfgOptions = class(TForm)
+    btnForceMediaMigration: TButton;
     btnHelp: TSpeedButton;
     btnClearBandSupplier: TButton;
+    btnChangeMediaPath: TButton;
+    cbMoveMediaFile: TComboBox;
     eBandSupplier: TEditButton;
-    eVideosPath: TDirectoryEdit;
     icoAutoSizeColumns: TImage;
     icoAutoFillCoordinates: TImage;
     icoRememberCollectionInfo: TImage;
     icoBandSupplier: TImage;
     icoWriteDetailedLogs: TImage;
-    icoVideosPath: TImage;
+    icoDeleteMedia: TImage;
     lblAutoSizeColumns: TLabel;
     lblAutoFillCoordinates: TLabel;
     lblBandSupplierInfo: TLabel;
+    SelectDirDlg: TSelectDirectoryDialog;
+    tsDeleteMediaFile: TToggleSwitch;
+    txtMediaPath: TLabel;
     lblRememberCollectionInfo: TLabel;
     lblBandSupplier: TLabel;
     lblWriteDetailedLogs: TLabel;
@@ -51,13 +56,13 @@ type
     lblTitleInterface: TLabel;
     lblTitleMedia: TLabel;
     lblTitleSecurity: TLabel;
-    lblVideosPath: TLabel;
+    lblDeleteMedia: TLabel;
     pAutoSizeColumns: TBCPanel;
     pAutoFillCoordinates: TBCPanel;
     pRememberCollectionInfo: TBCPanel;
     pBandSupplier: TBCPanel;
     pWriteDetailedLogs: TBCPanel;
-    pVideosPath: TBCPanel;
+    pDeleteMedia: TBCPanel;
     sliderRowHeight: TBCFluentSlider;
     btnDefaultRowHeight: TButton;
     cbCheckUpdates: TComboBox;
@@ -66,10 +71,7 @@ type
     cbSelectedTheme: TComboBox;
     cbVernacularNames: TComboBox;
     cbStartupBackup: TComboBox;
-    eAttachmentsPath: TDirectoryEdit;
-    eAudiosPath: TDirectoryEdit;
     eBackupPath: TDirectoryEdit;
-    eImagesPath: TDirectoryEdit;
     icoSelectedTheme: TImage;
     icoRowHeight: TImage;
     iIconsDark: TImageList;
@@ -90,9 +92,8 @@ type
     icoEnterAsTab: TImage;
     icoVernacularNames: TImage;
     icoShowSynonyms: TImage;
-    icoImagesPath: TImage;
-    icoAudiosPath: TImage;
-    icoDocumentsPath: TImage;
+    icoMediaPath: TImage;
+    icoMoveMedia: TImage;
     iIcons: TImageList;
     lblAllowUsageData: TLabel;
     lblRowHeight: TLabel;
@@ -100,8 +101,7 @@ type
     lblOpenAfterExport: TLabel;
     lblPrivacyTerms: TLabel;
     lblAllowWriteLog: TLabel;
-    lblAttachmentsPath: TLabel;
-    lblAudiosPath: TLabel;
+    lblMoveMedia: TLabel;
     lblBackupPath: TLabel;
     lblCheckUpdates: TLabel;
     lblClearDeleted: TLabel;
@@ -109,7 +109,7 @@ type
     lblUseConditionalFormatting: TLabel;
     lblConfirmCancel: TLabel;
     lblEnterAsTab: TLabel;
-    lblImagesPath: TLabel;
+    lblMediaPath: TLabel;
     lblManageBackups: TLabel;
     lblRememberConnection: TLabel;
     lblRememberUser: TLabel;
@@ -135,8 +135,7 @@ type
     pgBackup: TPage;
     pContentSecurity: TPanel;
     pContentBackup: TPanel;
-    pAttachmentsPath: TBCPanel;
-    pAudiosPath: TBCPanel;
+    pMoveMedia: TBCPanel;
     pContentGeneral: TPanel;
     pContentCollection: TPanel;
     pContentMedia: TPanel;
@@ -146,7 +145,7 @@ type
     pgGeneral: TPage;
     pgCollection: TPage;
     pgMedia: TPage;
-    pImagesPath: TBCPanel;
+    pMediaPath: TBCPanel;
     pManageBackups: TBCPanel;
     pRememberConnection: TBCPanel;
     pRememberUser: TBCPanel;
@@ -184,23 +183,21 @@ type
     tsEnterAsTab: TToggleSwitch;
     tsConfirmCancel: TToggleSwitch;
     tvMenu: TTreeView;
+    procedure btnChangeMediaPathClick(Sender: TObject);
     procedure btnClearBandSupplierClick(Sender: TObject);
     procedure btnDefaultRowHeightClick(Sender: TObject);
+    procedure btnForceMediaMigrationClick(Sender: TObject);
     procedure btnHelpClick(Sender: TObject);
     procedure cbCheckUpdatesChange(Sender: TObject);
     procedure cbClearDeletedChange(Sender: TObject);
+    procedure cbMoveMediaFileChange(Sender: TObject);
     procedure cbSelectedThemeChange(Sender: TObject);
     procedure cbStartPageChange(Sender: TObject);
     procedure cbStartupBackupSelect(Sender: TObject);
     procedure cbVernacularNamesChange(Sender: TObject);
-    procedure eAttachmentsPathChange(Sender: TObject);
-    procedure eAudiosPathChange(Sender: TObject);
     procedure eBackupPathChange(Sender: TObject);
     procedure eBandSupplierButtonClick(Sender: TObject);
     procedure eBandSupplierKeyPress(Sender: TObject; var Key: char);
-    procedure eImagesPathAcceptDirectory(Sender: TObject; var Value: String);
-    procedure eImagesPathEditingDone(Sender: TObject);
-    procedure eVideosPathChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure lblPrivacyTermsClick(Sender: TObject);
@@ -213,6 +210,7 @@ type
     procedure tsAutoFillCoordinatesChange(Sender: TObject);
     procedure tsAutoSizeColumnsChange(Sender: TObject);
     procedure tsConfirmCancelChange(Sender: TObject);
+    procedure tsDeleteMediaFileChange(Sender: TObject);
     procedure tsEnterAsTabChange(Sender: TObject);
     procedure tsOpenAfterExportChange(Sender: TObject);
     procedure tsRememberCollectionInfoChange(Sender: TObject);
@@ -226,13 +224,11 @@ type
     procedure tvMenuSelectionChanged(Sender: TObject);
   private
     FLoadingConfig: Boolean;
-    FChangingMediaPath: Boolean;
     procedure ApplyDarkMode;
     function IsLikelyUrl(const aValue: String): Boolean;
-    function MigrateMediaPaths(const aTableName, aIdField, aOldBaseFolder, aNewBaseFolder: String;
-      aSkipUrls: Boolean = False): Integer;
-    function ConfirmAndMigrateMediaPaths(const aMediaLabel, aOldBaseFolder, aNewBaseFolder,
-      aTableName, aIdField: String; aSkipUrls: Boolean = False): Integer;
+    function MigrateMediaPaths(const aTableName, aOldBaseFolder, aNewBaseFolder: String; MustMoveFiles: Boolean = True;
+      aSkipUrls: Boolean = True): Integer;
+    function ConfirmAndMigrateMediaPaths(aOldBaseFolder, aNewBaseFolder: String): Integer;
     procedure LoadConfig;
   public
 
@@ -246,7 +242,7 @@ implementation
 uses
   utils_locale, utils_global, utils_dialogs, utils_backup, utils_autoupdate, utils_themes,
   utils_finddialogs,
-  data_getvalue, data_types, data_consts,
+  data_getvalue, data_types, data_consts, data_management,
   models_users, udm_main,
   uDarkStyleParams, SQLDB;
 
@@ -273,10 +269,9 @@ begin
   icoBandSupplier.Images := iIconsDark;
   icoRememberCollectionInfo.Images := iIconsDark;
   icoAutoFillCoordinates.Images := iIconsDark;
-  icoImagesPath.Images := iIconsDark;
-  icoAudiosPath.Images := iIconsDark;
-  icoVideosPath.Images := iIconsDark;
-  icoDocumentsPath.Images := iIconsDark;
+  icoMediaPath.Images := iIconsDark;
+  icoMoveMedia.Images := iIconsDark;
+  icoDeleteMedia.Images := iIconsDark;
   icoRememberConnection.Images := iIconsDark;
   icoRememberUser.Images := iIconsDark;
   icoAllowWriteLog.Images := iIconsDark;
@@ -319,14 +314,12 @@ begin
   pRememberCollectionInfo.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pAutoFillCoordinates.Background.Color := ActiveTheme.Background.SolidSecondary;
   pAutoFillCoordinates.Border.Color := ActiveTheme.System.SolidNeutralFG;
-  pImagesPath.Background.Color := ActiveTheme.Background.SolidSecondary;
-  pImagesPath.Border.Color := ActiveTheme.System.SolidNeutralFG;
-  pAudiosPath.Background.Color := ActiveTheme.Background.SolidSecondary;
-  pAudiosPath.Border.Color := ActiveTheme.System.SolidNeutralFG;
-  pVideosPath.Background.Color := ActiveTheme.Background.SolidSecondary;
-  pVideosPath.Border.Color := ActiveTheme.System.SolidNeutralFG;
-  pAttachmentsPath.Background.Color := ActiveTheme.Background.SolidSecondary;
-  pAttachmentsPath.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pMediaPath.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pMediaPath.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pMoveMedia.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pMoveMedia.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pDeleteMedia.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pDeleteMedia.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pOpenAfterExport.Background.Color := ActiveTheme.Background.SolidSecondary;
   pOpenAfterExport.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pRememberConnection.Background.Color := ActiveTheme.Background.SolidSecondary;
@@ -363,6 +356,7 @@ begin
   tsShowSynonyms.Color := pConfirmCancel.Background.Color;
   tsRememberCollectionInfo.Color := pConfirmCancel.Background.Color;
   tsAutoFillCoordinates.Color := pConfirmCancel.Background.Color;
+  tsDeleteMediaFile.Color := pConfirmCancel.Background.Color;
   tsOpenAfterExport.Color := pConfirmCancel.Background.Color;
   tsRememberConnection.Color := pConfirmCancel.Background.Color;
   tsRememberUser.Color := pConfirmCancel.Background.Color;
@@ -371,11 +365,36 @@ begin
   tsAllowUsageData.Color := pConfirmCancel.Background.Color;
 
   eBandSupplier.Images := DMM.iEditsDark;
-  eImagesPath.Images := DMM.iEditsDark;
-  eAudiosPath.Images := DMM.iEditsDark;
-  eVideosPath.Images := DMM.iEditsDark;
-  eAttachmentsPath.Images := DMM.iEditsDark;
   eBackupPath.Images := DMM.iEditsDark;
+
+  tvMenu.SelectionColor := clVioletBrand1Dark;
+end;
+
+procedure TcfgOptions.btnChangeMediaPathClick(Sender: TObject);
+var
+  OldPath, NewPath: String;
+begin
+  OldPath := xSettings.MediaStorageFolder;
+  SelectDirDlg.InitialDir := OldPath;
+  if SelectDirDlg.Execute then
+  begin
+    NewPath := SelectDirDlg.FileName;
+  end;
+
+  if SameText(ExcludeTrailingPathDelimiter(OldPath), ExcludeTrailingPathDelimiter(NewPath)) then
+    Exit;
+
+  case ConfirmAndMigrateMediaPaths(OldPath, NewPath) of
+    101, 102, 103:
+    begin
+      xSettings.MediaStorageFolder := NewPath;
+    end
+    else
+    begin
+      xSettings.MediaStorageFolder := OldPath;
+    end;
+  end;
+  txtMediaPath.Caption := MinimizeName(xSettings.MediaStorageFolder, txtMediaPath.Canvas, txtMediaPath.Width);
 end;
 
 procedure TcfgOptions.btnClearBandSupplierClick(Sender: TObject);
@@ -388,6 +407,11 @@ procedure TcfgOptions.btnDefaultRowHeightClick(Sender: TObject);
 begin
   //xSettings.DefaultRowHeight := DEFAULT_ROW_HEIGHT;
   sliderRowHeight.Value := (DEFAULT_ROW_HEIGHT - MIN_ROW_HEIGHT) div 2;
+end;
+
+procedure TcfgOptions.btnForceMediaMigrationClick(Sender: TObject);
+begin
+  MigrateMediaToManagedFolder;
 end;
 
 procedure TcfgOptions.btnHelpClick(Sender: TObject);
@@ -416,6 +440,11 @@ begin
   xSettings.ClearDeletedPeriod := cbClearDeleted.ItemIndex;
 end;
 
+procedure TcfgOptions.cbMoveMediaFileChange(Sender: TObject);
+begin
+  xSettings.MoveOriginalFile := TMoveMediaType(cbMoveMediaFile.ItemIndex);
+end;
+
 procedure TcfgOptions.cbCheckUpdatesChange(Sender: TObject);
 begin
   xSettings.AutoUpdates := cbCheckUpdates.ItemIndex;
@@ -424,68 +453,6 @@ end;
 procedure TcfgOptions.cbVernacularNamesChange(Sender: TObject);
 begin
   xSettings.VernacularNamesLanguage := cbVernacularNames.ItemIndex;
-end;
-
-procedure TcfgOptions.eAttachmentsPathChange(Sender: TObject);
-var
-  OldPath, NewPath: String;
-begin
-  if FChangingMediaPath then
-    Exit;
-
-  OldPath := xSettings.DocumentsFolder;
-  NewPath := eAttachmentsPath.Text;
-
-  if FLoadingConfig or SameText(ExcludeTrailingPathDelimiter(OldPath), ExcludeTrailingPathDelimiter(NewPath)) then
-  begin
-    xSettings.DocumentsFolder := NewPath;
-    Exit;
-  end;
-
-  case ConfirmAndMigrateMediaPaths(LowerCase(rsTitleDocuments), OldPath, NewPath, TBL_DOCUMENTS, COL_DOCUMENT_ID, True) of
-    mrYes, mrNo:
-      xSettings.DocumentsFolder := NewPath;
-    else
-    begin
-      FChangingMediaPath := True;
-      try
-        eAttachmentsPath.Text := OldPath;
-      finally
-        FChangingMediaPath := False;
-      end;
-    end;
-  end;
-end;
-
-procedure TcfgOptions.eAudiosPathChange(Sender: TObject);
-var
-  OldPath, NewPath: String;
-begin
-  if FChangingMediaPath then
-    Exit;
-
-  OldPath := xSettings.AudiosFolder;
-  NewPath := eAudiosPath.Text;
-
-  if FLoadingConfig or SameText(ExcludeTrailingPathDelimiter(OldPath), ExcludeTrailingPathDelimiter(NewPath)) then
-  begin
-    xSettings.AudiosFolder := NewPath;
-    Exit;
-  end;
-
-  case ConfirmAndMigrateMediaPaths(LowerCase(rsTitleAudioLibrary), OldPath, NewPath, TBL_AUDIO_LIBRARY, COL_AUDIO_ID) of
-    mrYes, mrNo:
-      xSettings.AudiosFolder := NewPath;
-    else
-    begin
-      FChangingMediaPath := True;
-      try
-        eAudiosPath.Text := OldPath;
-      finally
-        FChangingMediaPath := False;
-      end;
-    end;
-  end;
 end;
 
 procedure TcfgOptions.eBackupPathChange(Sender: TObject);
@@ -534,85 +501,6 @@ begin
   //end;
 end;
 
-procedure TcfgOptions.eImagesPathAcceptDirectory(Sender: TObject; var Value: String);
-begin
-  if Value = EmptyStr then
-  begin
-    Value := xSettings.ImagesFolder;
-    Exit;
-  end;
-
-  {$IFNDEF DEBUG}
-  if not DirectoryExists(Value) then
-  begin
-    Value := xSettings.ImagesFolder;
-    Exit;
-  end;
-  {$ENDIF}
-end;
-
-procedure TcfgOptions.eImagesPathEditingDone(Sender: TObject);
-var
-  OldPath, NewPath: String;
-begin
-  if FChangingMediaPath then
-    Exit;
-
-  OldPath := xSettings.ImagesFolder;
-  NewPath := eImagesPath.Text;
-
-  if FLoadingConfig or SameText(ExcludeTrailingPathDelimiter(OldPath), ExcludeTrailingPathDelimiter(NewPath)) then
-  begin
-    xSettings.ImagesFolder := NewPath;
-    Exit;
-  end;
-
-  case ConfirmAndMigrateMediaPaths(LowerCase(rsTitleImages), OldPath, NewPath, TBL_IMAGES, COL_IMAGE_ID) of
-    mrYes, mrNo:
-      xSettings.ImagesFolder := NewPath;
-    else
-    begin
-      FChangingMediaPath := True;
-      try
-        eImagesPath.Text := OldPath;
-      finally
-        FChangingMediaPath := False;
-      end;
-    end;
-  end;
-end;
-
-procedure TcfgOptions.eVideosPathChange(Sender: TObject);
-var
-  OldPath, NewPath: String;
-begin
-  if FChangingMediaPath then
-    Exit;
-
-  OldPath := xSettings.VideosFolder;
-  NewPath := eVideosPath.Text;
-
-  if FLoadingConfig or SameText(ExcludeTrailingPathDelimiter(OldPath), ExcludeTrailingPathDelimiter(NewPath)) then
-  begin
-    xSettings.VideosFolder := NewPath;
-    Exit;
-  end;
-
-  case ConfirmAndMigrateMediaPaths(LowerCase(rsTitleVideos), OldPath, NewPath, TBL_VIDEOS, COL_VIDEO_ID) of
-    mrYes, mrNo:
-      xSettings.VideosFolder := NewPath;
-    else
-    begin
-      FChangingMediaPath := True;
-      try
-        eVideosPath.Text := OldPath;
-      finally
-        FChangingMediaPath := False;
-      end;
-    end;
-  end;
-end;
-
 procedure TcfgOptions.FormDestroy(Sender: TObject);
 begin
   xSettings.SaveToFile;
@@ -626,75 +514,72 @@ begin
   Result := (Pos('://', S) > 0) or (Pos('mailto:', S) = 1) or (Pos('www.', S) = 1);
 end;
 
-function TcfgOptions.MigrateMediaPaths(const aTableName, aIdField, aOldBaseFolder, aNewBaseFolder: String;
-  aSkipUrls: Boolean): Integer;
+function TcfgOptions.MigrateMediaPaths(const aTableName, aOldBaseFolder, aNewBaseFolder: String;
+  MustMoveFiles: Boolean; aSkipUrls: Boolean): Integer;
 var
-  QrySel, QryUpd: TSQLQuery;
-  PrevTransActive: Boolean;
-  OldRelPath, OldAbsPath, NewRelPath: String;
+  QrySel: TSQLQuery;
+  PrevTransActive, WasMoved: Boolean;
+  OldRelPath, OldAbsPath, NewAbsPath: String;
 begin
   Result := 0;
 
-  PrevTransActive := DMM.sqlTrans.Active;
-  if not PrevTransActive then
-    DMM.sqlTrans.StartTransaction;
-
   QrySel := TSQLQuery.Create(nil);
-  QryUpd := TSQLQuery.Create(nil);
+  QrySel.SQLConnection := DMM.sqlCon;
+  QrySel.MacroCheck := True;
+
   try
-    QrySel.SQLConnection := DMM.sqlCon;
-    QryUpd.SQLConnection := DMM.sqlCon;
+    QrySel.SQL.Text := 'SELECT file_path FROM %atable';
+    //if (aTableName = TBL_DOCUMENTS) and (aSkipUrls) then
+    //  QrySel.SQL.Add('WHERE document_type != ''url''');
+    QrySel.MacroByName('atable').Value := aTableName;
+    QrySel.Open;
 
-    try
-      QrySel.SQL.Text := 'SELECT ' + aIdField + ', ' + COL_FILE_PATH + ' FROM ' + aTableName;
-      QrySel.Open;
-
-      QryUpd.SQL.Text := 'UPDATE ' + aTableName + ' SET ' + COL_FILE_PATH + ' = :new_path WHERE ' + aIdField + ' = :id';
-
-      while not QrySel.EOF do
+    while not QrySel.EOF do
+    begin
+      OldRelPath := Trim(QrySel.FieldByName(COL_FILE_PATH).AsString);
+      if (OldRelPath <> EmptyStr) and (not (aSkipUrls and IsLikelyUrl(OldRelPath))) then
       begin
-        OldRelPath := Trim(QrySel.FieldByName(COL_FILE_PATH).AsString);
-        if (OldRelPath <> EmptyStr) and (not (aSkipUrls and IsLikelyUrl(OldRelPath))) then
+        OldAbsPath := CreateAbsolutePath(OldRelPath, aOldBaseFolder);
+        NewAbsPath := CreateAbsolutePath(OldRelPath, aNewBaseFolder);
+
+        if not FileExists(OldAbsPath) then
+          raise Exception.CreateFmt(rsErrorFileNotFound, [OldAbsPath]);
+
+        if not SameText(OldAbsPath, NewAbsPath) then
         begin
-          //OldAbsPath := CreateAbsolutePath(OldRelPath, aOldBaseFolder);
-          NewRelPath := StringReplace(OldRelPath, aOldBaseFolder, aNewBaseFolder, [rfIgnoreCase]);
-          //ExtractRelativePath(aNewBaseFolder, OldAbsPath);
+          if not ForceDirectory(ExtractFileDir(NewAbsPath)) then
+            raise Exception.Create(rsErrorCreateFolder + ' ' + NewAbsPath);
+          if not CopyFile(OldAbsPath, NewAbsPath, True) then
+            raise Exception.CreateFmt(rsErrorCopyingFile, [OldAbsPath, NewAbsPath]);
 
-          if not SameText(OldRelPath, NewRelPath) then
+          WasMoved := FileExists(NewAbsPath);
+          if WasMoved and MustMoveFiles then
           begin
-            QryUpd.ParamByName('new_path').AsString := NewRelPath;
-            QryUpd.ParamByName('id').AsInteger := QrySel.FieldByName(aIdField).AsInteger;
-            QryUpd.ExecSQL;
-            Inc(Result);
+            DeleteFile(OldAbsPath);
           end;
+
+          Inc(Result);
         end;
-
-        QrySel.Next;
       end;
-    finally
-      QrySel.Free;
-      QryUpd.Free;
-    end;
 
-    if not PrevTransActive then
-      DMM.sqlTrans.CommitRetaining;
-  except
-    if not PrevTransActive then
-      DMM.sqlTrans.RollbackRetaining;
-    raise;
+      QrySel.Next;
+    end;
+    QrySel.Close;
+  finally
+    QrySel.Free;
   end;
 end;
 
-function TcfgOptions.ConfirmAndMigrateMediaPaths(const aMediaLabel, aOldBaseFolder, aNewBaseFolder,
-  aTableName, aIdField: String; aSkipUrls: Boolean): Integer;
+function TcfgOptions.ConfirmAndMigrateMediaPaths(aOldBaseFolder, aNewBaseFolder: String): Integer;
 var
-  UpdatedCount: Integer;
+  ImgMovedCount, AudMovedCount, VidMovedCount, DocMovedCount, TotalMovedCount: Integer;
   Msg: String;
   Dlg: TTaskDialog;
+  MustMoveFiles: Boolean;
 begin
   Result := mrCancel;
 
-  Msg := Format(rsPromptMigrateMediaPath, [aMediaLabel, aOldBaseFolder, aNewBaseFolder]);
+  Msg := Format(rsPromptMigrateMediaPath, [aOldBaseFolder, aNewBaseFolder]);
 
   Dlg := TTaskDialog.Create(Self);
   try
@@ -705,15 +590,21 @@ begin
     Dlg.Flags := Dlg.Flags + [tfUseCommandLinks];
     with TTaskDialogButtonItem(Dlg.Buttons.Add) do
     begin
-      Caption := rsChangeFolderAndMigrate;
-      CommandLinkHint := rsHintChangeFolderAndMigrate;
-      ModalResult := mrYes;
+      Caption := rsChangeFolderAndMoveFiles;
+      CommandLinkHint := rsHintChangeFolderAndMoveFiles;
+      ModalResult := 101;
+    end;
+    with TTaskDialogButtonItem(Dlg.Buttons.Add) do
+    begin
+      Caption := rsChangeFolderAndCopyFiles;
+      CommandLinkHint := rsHintChangeFolderAndCopyFiles;
+      ModalResult := 102;
     end;
     with TTaskDialogButtonItem(Dlg.Buttons.Add) do
     begin
       Caption := rsChangeFolderOnly;
       CommandLinkHint := rsHintChangeFolderOnly;
-      ModalResult := mrNo;
+      ModalResult := 103;
     end;
     if not Dlg.Execute then
       Exit(mrCancel);
@@ -722,11 +613,16 @@ begin
     Dlg.Free;
   end;
 
-  if Result = mrYes then
+  if not Result = 103 then
   begin
+    MustMoveFiles := Result = 101;
     try
-      UpdatedCount := MigrateMediaPaths(aTableName, aIdField, aOldBaseFolder, aNewBaseFolder, aSkipUrls);
-      MsgDlg(rsMediaMigrationCompleted, Format(rsMigratedMediaPaths, [UpdatedCount, aMediaLabel]), mtInformation);
+      ImgMovedCount := MigrateMediaPaths(TBL_IMAGES, aOldBaseFolder, aNewBaseFolder, MustMoveFiles, False);
+      AudMovedCount := MigrateMediaPaths(TBL_AUDIO_LIBRARY, aOldBaseFolder, aNewBaseFolder, MustMoveFiles, False);
+      VidMovedCount := MigrateMediaPaths(TBL_VIDEOS, aOldBaseFolder, aNewBaseFolder, MustMoveFiles, False);
+      DocMovedCount := MigrateMediaPaths(TBL_DOCUMENTS, aOldBaseFolder, aNewBaseFolder, MustMoveFiles, True);
+      TotalMovedCount := ImgMovedCount + AudMovedCount + VidMovedCount + DocMovedCount;
+      MsgDlg(rsMediaMigrationCompleted, Format(rsMigratedMediaPaths, [TotalMovedCount]), mtInformation);
     except
       on E: Exception do
       begin
@@ -741,6 +637,8 @@ procedure TcfgOptions.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  btnForceMediaMigration.Visible := ActiveUser.IsAdmin;
 
   //SBox.VertScrollBar.Position := 0;
   tvMenu.Selected := tvMenu.Items.GetFirstNode;
@@ -784,6 +682,10 @@ begin
   cbVernacularNames.Items.Add(rsEnglish);
   cbVernacularNames.Items.Add(rsPortuguese);
   cbVernacularNames.Items.Add(rsSpanish);
+
+  cbMoveMediaFile.Items.Clear;
+  cbMoveMediaFile.Items.Add(rsMoveMediaFiles);
+  cbMoveMediaFile.Items.Add(rsCopyMediaFiles);
 
   cbStartupBackup.Items.Assign(cbCheckUpdates.Items);
 
@@ -829,10 +731,10 @@ begin
   tsAutoFillCoordinates.Checked := xSettings.AutoFillCoordinates;
 
   { MEDIA }
-  eImagesPath.Text := xSettings.ImagesFolder;
-  eAudiosPath.Text := xSettings.AudiosFolder;
-  eVideosPath.Text := xSettings.VideosFolder;
-  eAttachmentsPath.Text := xSettings.DocumentsFolder;
+  txtMediaPath.Caption := MinimizeName(xSettings.MediaStorageFolder, txtMediaPath.Canvas, txtMediaPath.Width);
+  cbMoveMediaFile.ItemIndex := Ord(xSettings.MoveOriginalFile);
+  tsDeleteMediaFile.Checked := xSettings.DeleteMediaFile;
+  tsOpenAfterExport.Checked := xSettings.OpenFileAfterExport;
 
   { SECURITY }
   tsRememberUser.Checked := xSettings.RememberUser;
@@ -922,6 +824,11 @@ end;
 procedure TcfgOptions.tsConfirmCancelChange(Sender: TObject);
 begin
   xSettings.ConfirmCancel := tsConfirmCancel.Checked;
+end;
+
+procedure TcfgOptions.tsDeleteMediaFileChange(Sender: TObject);
+begin
+  xSettings.DeleteMediaFile := tsDeleteMediaFile.Checked;
 end;
 
 procedure TcfgOptions.tsEnterAsTabChange(Sender: TObject);

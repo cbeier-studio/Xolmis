@@ -24,7 +24,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="138">
+      <ExcludedIdentifiers Count="143">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -124,52 +124,57 @@
         <Item97 Value="tedtProjectRubric.Caption"/>
         <Item98 Value="tedtProjectExpense.Caption"/>
         <Item99 Value="tedtFeather.Caption"/>
-        <Item100 Value="tfrmMaintenance.lblDatabaseBackup.Caption"/>
-        <Item101 Value="tfrmMaintenance.lblManageLogs.Caption"/>
-        <Item102 Value="tfrmMaintenance.lblClearTemporaryFiles.Caption"/>
-        <Item103 Value="tfrmMaintenance.lblRecreateImageThumbnails.Caption"/>
-        <Item104 Value="tfrmTaxa.txtNestProductivity.Caption"/>
-        <Item105 Value="tdlgLoading.Caption"/>
-        <Item106 Value="tdlgLoading.lblLoading.Caption"/>
-        <Item107 Value="tdlgSplash.lblAppName.Caption"/>
-        <Item108 Value="tdlgSplash.lblProgress.Caption"/>
-        <Item109 Value="tdlgSelectRecord.lblSelectInfo.Caption"/>
-        <Item110 Value="tbatchBandsTransfer.txtSender.Caption"/>
-        <Item111 Value="tdlgAbout.linkClements.Hint"/>
-        <Item112 Value="tfrmMain.SBar.Panels[3].Text"/>
-        <Item113 Value="tfrmMain.SBar.Panels[4].Text"/>
-        <Item114 Value="tfrmMain.SBar.Panels[5].Text"/>
-        <Item115 Value="tdlgTourTip.Caption"/>
-        <Item116 Value="tdlgTourTip.lblText.Caption"/>
-        <Item117 Value="tdlgBigTip.Caption"/>
-        <Item118 Value="tdlgBigTip.lblText.Caption"/>
-        <Item119 Value="tdlgBigTip.lblTitle.Caption"/>
-        <Item120 Value="tdlgGazetteerAutofill.lblHint.Caption"/>
-        <Item121 Value="tdlgGazetteerAutofill.lblState.Caption"/>
-        <Item122 Value="tdlgExport.cbquotechar.Text"/>
-        <Item123 Value="tdlgExport.cbTimeFormat.Text"/>
-        <Item124 Value="tdlgExport.cbIndentation.Text"/>
-        <Item125 Value="tdlgExport.cbDateFormat.Text"/>
-        <Item126 Value="tdlgExport.cbDelimiter.Text"/>
-        <Item127 Value="tdlgExport.cbDecimalSeparator.Text"/>
-        <Item128 Value="tedtPoi.Caption"/>
-        <Item129 Value="tdlgImport.cbDecimalSeparator.Text"/>
-        <Item130 Value="tdlgImport.cbDelimiter.Text"/>
-        <Item131 Value="tdlgImport.cbEncoding.Text"/>
-        <Item132 Value="tdlgImport.cbExistingRecordPolicy.Text"/>
-        <Item133 Value="tdlgImport.cbErrorHandling.Text"/>
-        <Item134 Value="tdlgImport.cbDateFormat.Text"/>
-        <Item135 Value="tdlgImport.lblFieldsTargetTable.Caption"/>
-        <Item136 Value="tdlgTaxonNotFound.txtTaxonName.Caption"/>
-        <Item137 Value="tfrmQuickEntry.cbExistingRecordPolicy.Text"/>
-        <Item138 Value="tfrmQuickEntry.cbErrorHandling.Text"/>
+        <Item100 Value="tedtAudioInfo.txtOriginalFilename.Caption"/>
+        <Item101 Value="tedtDocumentInfo.txtOriginalFilename.Caption"/>
+        <Item102 Value="tedtImageInfo.txtOriginalFilename.Caption"/>
+        <Item103 Value="tedtVideoInfo.txtOriginalFilename.Caption"/>
+        <Item104 Value="tfrmMaintenance.lblDatabaseBackup.Caption"/>
+        <Item105 Value="tfrmMaintenance.lblManageLogs.Caption"/>
+        <Item106 Value="tfrmMaintenance.lblClearTemporaryFiles.Caption"/>
+        <Item107 Value="tfrmMaintenance.lblRecreateImageThumbnails.Caption"/>
+        <Item108 Value="tfrmTaxa.txtNestProductivity.Caption"/>
+        <Item109 Value="tdlgLoading.Caption"/>
+        <Item110 Value="tdlgLoading.lblLoading.Caption"/>
+        <Item111 Value="tdlgSplash.lblAppName.Caption"/>
+        <Item112 Value="tdlgSplash.lblProgress.Caption"/>
+        <Item113 Value="tdlgSelectRecord.lblSelectInfo.Caption"/>
+        <Item114 Value="tbatchBandsTransfer.txtSender.Caption"/>
+        <Item115 Value="tdlgAbout.linkClements.Hint"/>
+        <Item116 Value="tfrmMain.SBar.Panels[3].Text"/>
+        <Item117 Value="tfrmMain.SBar.Panels[4].Text"/>
+        <Item118 Value="tfrmMain.SBar.Panels[5].Text"/>
+        <Item119 Value="tdlgTourTip.Caption"/>
+        <Item120 Value="tdlgTourTip.lblText.Caption"/>
+        <Item121 Value="tdlgBigTip.Caption"/>
+        <Item122 Value="tdlgBigTip.lblText.Caption"/>
+        <Item123 Value="tdlgBigTip.lblTitle.Caption"/>
+        <Item124 Value="tdlgGazetteerAutofill.lblHint.Caption"/>
+        <Item125 Value="tdlgGazetteerAutofill.lblState.Caption"/>
+        <Item126 Value="tdlgExport.cbquotechar.Text"/>
+        <Item127 Value="tdlgExport.cbTimeFormat.Text"/>
+        <Item128 Value="tdlgExport.cbIndentation.Text"/>
+        <Item129 Value="tdlgExport.cbDateFormat.Text"/>
+        <Item130 Value="tdlgExport.cbDelimiter.Text"/>
+        <Item131 Value="tdlgExport.cbDecimalSeparator.Text"/>
+        <Item132 Value="tedtPoi.Caption"/>
+        <Item133 Value="tdlgImport.cbDecimalSeparator.Text"/>
+        <Item134 Value="tdlgImport.cbDelimiter.Text"/>
+        <Item135 Value="tdlgImport.cbEncoding.Text"/>
+        <Item136 Value="tdlgImport.cbExistingRecordPolicy.Text"/>
+        <Item137 Value="tdlgImport.cbErrorHandling.Text"/>
+        <Item138 Value="tdlgImport.cbDateFormat.Text"/>
+        <Item139 Value="tdlgImport.lblFieldsTargetTable.Caption"/>
+        <Item140 Value="tdlgTaxonNotFound.txtTaxonName.Caption"/>
+        <Item141 Value="tfrmQuickEntry.cbExistingRecordPolicy.Text"/>
+        <Item142 Value="tfrmQuickEntry.cbErrorHandling.Text"/>
+        <Item143 Value="tcfgOptions.txtMediaPath.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="522"/>
+      <BuildNr Value="523"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1672,6 +1677,14 @@
         <ComponentName Value="dlgTaxonNotFound"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\utils_media.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utils\utils_web.pp"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
     <Debugger>

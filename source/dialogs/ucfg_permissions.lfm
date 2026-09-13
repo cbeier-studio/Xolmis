@@ -399,7 +399,8 @@ object cfgPermissions: TcfgPermissions
     Left = 0
     Height = 2
     Top = 624
-    Width = 980
+    Width = 705
+    Anchors = [akTop, akLeft, akRight]
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1

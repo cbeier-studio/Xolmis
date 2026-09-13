@@ -530,6 +530,8 @@ resourcestring
   rscTaxonConceptId = 'Taxon concept ID';
   rscAccepted = 'Accepted';
   rscMacrolanguage = 'Macrolanguage';
+  rscOriginalFilename = 'Original filename';
+  rscFileHash = 'File hash';
 
   rscValue = 'Value';
   rscTally = 'Count';
