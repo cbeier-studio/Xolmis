@@ -964,6 +964,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsFileExtDBF = 'dBase Format (DBF)';
     rsFileExtGeoJSON = 'GeoJSON';
     rsFileExtPDF = 'Portable Document Format (PDF)';
+    rsFileXolmisDatabasesFilter = 'Xolmis databases (SQLite)';
 
     { Settings }
     rsSettingsGeneral = 'General';

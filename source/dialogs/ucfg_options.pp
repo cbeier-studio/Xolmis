@@ -30,8 +30,8 @@ type
   { TcfgOptions }
 
   TcfgOptions = class(TForm)
-    btnForceMediaMigration: TButton;
     btnClearThumbnailCache: TButton;
+    btnForceMediaMigration: TButton;
     btnHelp: TSpeedButton;
     btnClearBandSupplier: TButton;
     btnChangeMediaPath: TButton;
@@ -39,16 +39,19 @@ type
     eBandSupplier: TEditButton;
     icoAutoSizeColumns: TImage;
     icoAutoFillCoordinates: TImage;
+    icoThumbCache: TImage;
     icoRememberCollectionInfo: TImage;
     icoBandSupplier: TImage;
     icoSettingsBackup: TImage;
     icoWriteDetailedLogs: TImage;
     icoDeleteMedia: TImage;
+    txtThumbnailCacheSize: TLabel;
     lblAutoSizeColumns: TLabel;
     lblAutoFillCoordinates: TLabel;
     lblBandSupplierInfo: TLabel;
     lblSettingsBackup: TLabel;
     lblThumbnailCache: TLabel;
+    pThumbnailCache: TBCPanel;
     pSettingsBackup: TBCPanel;
     btnNewSettingsBackup: TBitBtn;
     btnRestoreSettingsBackup: TBitBtn;
@@ -331,6 +334,8 @@ begin
   pAutoFillCoordinates.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pMediaPath.Background.Color := ActiveTheme.Background.SolidSecondary;
   pMediaPath.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pThumbnailCache.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pThumbnailCache.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pMoveMedia.Background.Color := ActiveTheme.Background.SolidSecondary;
   pMoveMedia.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pDeleteMedia.Background.Color := ActiveTheme.Background.SolidSecondary;
@@ -364,6 +369,9 @@ begin
   lblTitleMedia.Font.Color := ActiveTheme.Interactive.WindowTitle;
   lblTitleSecurity.Font.Color := ActiveTheme.Interactive.WindowTitle;
   lblTitleBackup.Font.Color := ActiveTheme.Interactive.WindowTitle;
+
+  txtMediaPath.Font.Color := ActiveTheme.Foreground.TextDisabled;
+  txtThumbnailCacheSize.Font.Color := ActiveTheme.Foreground.TextDisabled;
 
   tsEnterAsTab.Color := pEnterAsTab.Background.Color;
   tsConfirmCancel.Color := pConfirmCancel.Background.Color;
@@ -633,7 +641,7 @@ begin
   if Assigned(FThumbManager) then
   begin
     SizeBytes := FThumbManager.GetCacheSizeBytes;
-    lblThumbnailCache.Caption := Format(rsThumbnailCacheSize, [FormatBytes(SizeBytes)]);
+    txtThumbnailCacheSize.Caption := FormatBytes(SizeBytes);
     btnClearThumbnailCache.Enabled := SizeBytes > 0;
   end;
 end;
@@ -706,7 +714,8 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  btnForceMediaMigration.Visible := ActiveUser.IsAdmin;
+  // Show button to force media folder migration
+  //btnForceMediaMigration.Visible := ActiveUser.IsAdmin;
 
   //SBox.VertScrollBar.Position := 0;
   tvMenu.Selected := tvMenu.Items.GetFirstNode;

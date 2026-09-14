@@ -13,15 +13,14 @@ object edtDatabase: TedtDatabase
   PopupMode = pmExplicit
   PopupParent = cfgDatabase.Owner
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
-  OnClose = FormClose
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 450
+    Top = 447
     Width = 390
     Align = alTop
     AutoSize = True
@@ -89,7 +88,7 @@ object edtDatabase: TedtDatabase
   end
   object pMain: TPanel
     Left = 0
-    Height = 448
+    Height = 445
     Top = 0
     Width = 390
     Align = alTop
@@ -97,14 +96,14 @@ object edtDatabase: TedtDatabase
     BevelOuter = bvNone
     ChildSizing.LeftRightSpacing = 16
     ChildSizing.TopBottomSpacing = 16
-    ClientHeight = 448
+    ClientHeight = 445
     ClientWidth = 390
     Constraints.MinWidth = 390
     TabOrder = 0
     object pTitleAuthentication: TPanel
       Left = 16
       Height = 28
-      Top = 304
+      Top = 301
       Width = 358
       Align = alTop
       Alignment = taLeftJustify
@@ -179,7 +178,7 @@ object edtDatabase: TedtDatabase
     object lblDBUser: TLabel
       Left = 16
       Height = 15
-      Top = 340
+      Top = 337
       Width = 358
       Align = alTop
       BorderSpacing.Bottom = 4
@@ -191,7 +190,7 @@ object edtDatabase: TedtDatabase
     object eDBPass: TEditButton
       Left = 16
       Height = 23
-      Top = 409
+      Top = 406
       Width = 358
       Align = alTop
       ButtonWidth = 24
@@ -211,7 +210,7 @@ object edtDatabase: TedtDatabase
     object lblDBPass: TLabel
       Left = 16
       Height = 15
-      Top = 390
+      Top = 387
       Width = 358
       Align = alTop
       BorderSpacing.Bottom = 4
@@ -278,7 +277,7 @@ object edtDatabase: TedtDatabase
     object eDBUser: TDBEdit
       Left = 16
       Height = 23
-      Top = 359
+      Top = 356
       Width = 358
       DataField = 'user_name'
       DataSource = dsConn
@@ -330,14 +329,13 @@ object edtDatabase: TedtDatabase
     object eDBFile: TDBEditButton
       Cursor = crDefault
       Left = 16
-      Height = 26
+      Height = 23
       Top = 262
       Width = 358
       Align = alTop
-      AutoSize = True
+      BorderStyle = bsSingle
       ButtonCursor = crDefault
       ButtonWidth = 24
-      CharCase = ecNormal
       Color = clDefault
       Constraints.MaxHeight = 28
       CustomEditMask = False
@@ -346,9 +344,6 @@ object edtDatabase: TedtDatabase
       DirectInput = False
       ImageIndex = 6
       Images = DMM.iEdits
-      MaxLength = 0
-      ShowHint = False
-      Spacing = 0
       TabOrder = 5
       OnButtonClick = eDBFileButtonClick
     end
@@ -356,7 +351,7 @@ object edtDatabase: TedtDatabase
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 448
+    Top = 445
     Width = 390
     Align = alTop
     LineColor = 9276813
@@ -373,7 +368,8 @@ object edtDatabase: TedtDatabase
   object OpenDlg: TOpenDialog
     Title = 'Select database file'
     DefaultExt = '.sqlite3'
-    Filter = 'SQLite 3 (*.sqlite3; *.db3; *.s3db; *.sl3)|*.sqlite3; *.db3; *.s3db; *.sl3'
+    Filter = 'Xolmis databases (SQLite)|*.sqlite3; *.db'
+    Options = [ofFileMustExist, ofEnableSizing]
     Left = 304
     Top = 144
   end

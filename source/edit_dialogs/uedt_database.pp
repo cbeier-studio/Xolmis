@@ -64,7 +64,6 @@ type
     procedure eDBFileButtonClick(Sender: TObject);
     procedure eDBPassButtonClick(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
@@ -216,6 +215,8 @@ end;
 procedure TedtDatabase.eDBFileButtonClick(Sender: TObject);
 begin
   GravaStat(Name, TComponent(Sender).Name, 'buttonclick');
+  OpenDlg.Filter := rsFileXolmisDatabasesFilter + '|*.sqlite3; *.db';
+  OpenDlg.InitialDir := xSettings.LastPathUsed;
   if OpenDlg.Execute then
   begin
     eDBFile.Field.AsString := OpenDlg.FileName;
@@ -238,11 +239,6 @@ begin
     SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtDatabase.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  // CloseAction := caFree;
 end;
 
 procedure TedtDatabase.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

@@ -3442,8 +3442,8 @@ msgstr "Ajustar largura das colunas ao conteúdo automaticamente"
 
 #: tcfgoptions.lblbackuppath.caption
 msgctxt "tcfgoptions.lblbackuppath.caption"
-msgid "Backup files folder"
-msgstr "Pasta dos arquivos de backup"
+msgid "Data backup folder"
+msgstr "Pasta dos backups de dados"
 
 #: tcfgoptions.lblbandsupplier.caption
 msgid "Default band supplier"
@@ -3476,8 +3476,8 @@ msgid "Use <Enter/Return> keys to jump to the next control"
 msgstr "Usar tecla <Enter/Return> para ir para o próximo controle"
 
 #: tcfgoptions.lblmanagebackups.caption
-msgid "Manage backups"
-msgstr "Gerenciar backups"
+msgid "Manage data backups"
+msgstr "Gerenciar backups de dados"
 
 #: tcfgoptions.lblmediapath.caption
 msgid "Media storage folder"
@@ -3539,12 +3539,12 @@ msgstr "Página de início"
 
 #: tcfgoptions.lblstartupbackup.caption
 msgctxt "tcfgoptions.lblstartupbackup.caption"
-msgid "Create backup when Xolmis closes"
-msgstr "Criar backup quando o Xolmis encerrar"
+msgid "Create data backup when Xolmis closes"
+msgstr "Criar backup de dados quando o Xolmis encerrar"
 
 #: tcfgoptions.lblthumbnailcache.caption
-msgid "Image thumbnail cache: 0 KB"
-msgstr "Cache de miniaturas de imagens: 0 KB"
+msgid "Image thumbnail cache"
+msgstr "Cache de miniaturas de imagens"
 
 #: tcfgoptions.lbltitleappearance.caption
 msgctxt "tcfgoptions.lbltitleappearance.caption"
@@ -16499,6 +16499,10 @@ msgstr "Microsoft Excel"
 #: utils_locale.rsfileextxml
 msgid "Extensible Markup Language (XML)"
 msgstr "Linguagem de marcação extensível (XML)"
+
+#: utils_locale.rsfilexolmisdatabasesfilter
+msgid "Xolmis databases (SQLite)"
+msgstr "Banco de dados do Xolmis (SQLite)"
 
 #: utils_locale.rsfillonemeasurement
 msgid "Fill at least one measurement."

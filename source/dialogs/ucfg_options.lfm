@@ -74,7 +74,7 @@ object cfgOptions: TcfgOptions
     Height = 421
     Top = 0
     Width = 657
-    PageIndex = 4
+    PageIndex = 3
     Align = alClient
     TabOrder = 1
     object pgGeneral: TPage
@@ -1694,7 +1694,7 @@ object cfgOptions: TcfgOptions
         Top = 48
         Width = 657
         HorzScrollBar.Page = 415
-        VertScrollBar.Page = 260
+        VertScrollBar.Page = 281
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 373
@@ -1703,7 +1703,7 @@ object cfgOptions: TcfgOptions
         TabOrder = 0
         object pContentMedia: TPanel
           Left = 0
-          Height = 260
+          Height = 281
           Top = 0
           Width = 657
           Align = alTop
@@ -1711,13 +1711,13 @@ object cfgOptions: TcfgOptions
           BevelOuter = bvNone
           ChildSizing.LeftRightSpacing = 16
           ChildSizing.TopBottomSpacing = 8
-          ClientHeight = 260
+          ClientHeight = 281
           ClientWidth = 657
           ParentBackground = False
           TabOrder = 0
           object pMediaPath: TBCPanel
             Left = 16
-            Height = 93
+            Height = 65
             Top = 8
             Width = 625
             Align = alTop
@@ -1829,41 +1829,14 @@ object cfgOptions: TcfgOptions
               AutoSize = True
               Caption = 'Force migration'
               TabOrder = 1
+              Visible = False
               OnClick = btnForceMediaMigrationClick
-            end
-            object lblThumbnailCache: TLabel
-              AnchorSideLeft.Control = icoMediaPath
-              AnchorSideLeft.Side = asrBottom
-              AnchorSideTop.Control = txtMediaPath
-              AnchorSideTop.Side = asrBottom
-              Left = 44
-              Height = 15
-              Top = 61
-              Width = 154
-              Caption = 'Image thumbnail cache: 0 KB'
-              Layout = tlCenter
-              ParentColor = False
-            end
-            object btnClearThumbnailCache: TButton
-              AnchorSideTop.Control = lblThumbnailCache
-              AnchorSideTop.Side = asrCenter
-              AnchorSideRight.Control = pMediaPath
-              AnchorSideRight.Side = asrBottom
-              Left = 522
-              Height = 25
-              Top = 56
-              Width = 87
-              Anchors = [akTop, akRight]
-              AutoSize = True
-              Caption = 'Clear cache'
-              TabOrder = 2
-              OnClick = btnClearThumbnailCacheClick
             end
           end
           object pMoveMedia: TBCPanel
             Left = 16
             Height = 47
-            Top = 101
+            Top = 122
             Width = 625
             Align = alTop
             AutoSize = True
@@ -1904,7 +1877,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
-            TabOrder = 1
+            TabOrder = 2
             object icoMoveMedia: TImage
               AnchorSideLeft.Control = pMoveMedia
               AnchorSideTop.Control = pMoveMedia
@@ -1955,7 +1928,7 @@ object cfgOptions: TcfgOptions
           object pOpenAfterExport: TBCPanel
             Left = 16
             Height = 47
-            Top = 205
+            Top = 226
             Width = 625
             Align = alTop
             BorderSpacing.Bottom = 8
@@ -1995,7 +1968,7 @@ object cfgOptions: TcfgOptions
             ParentBackground = True
             Rounding.RoundX = 8
             Rounding.RoundY = 8
-            TabOrder = 3
+            TabOrder = 4
             object icoOpenAfterExport: TImage
               AnchorSideLeft.Control = pOpenAfterExport
               AnchorSideTop.Control = pOpenAfterExport
@@ -2045,7 +2018,7 @@ object cfgOptions: TcfgOptions
           object pDeleteMedia: TBCPanel
             Left = 16
             Height = 49
-            Top = 148
+            Top = 169
             Width = 625
             Align = alTop
             AutoSize = True
@@ -2087,7 +2060,7 @@ object cfgOptions: TcfgOptions
             Rounding.RoundX = 8
             Rounding.RoundY = 8
             Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
-            TabOrder = 2
+            TabOrder = 3
             object icoDeleteMedia: TImage
               AnchorSideLeft.Control = pDeleteMedia
               AnchorSideTop.Control = pDeleteMedia
@@ -2130,6 +2103,105 @@ object cfgOptions: TcfgOptions
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
               TabOrder = 0
+            end
+          end
+          object pThumbnailCache: TBCPanel
+            Left = 16
+            Height = 49
+            Top = 73
+            Width = 625
+            Align = alTop
+            AutoSize = True
+            ChildSizing.LeftRightSpacing = 16
+            ChildSizing.TopBottomSpacing = 12
+            ChildSizing.HorizontalSpacing = 8
+            Background.Color = 16448250
+            Background.Gradient1.StartColor = clWhite
+            Background.Gradient1.EndColor = clBlack
+            Background.Gradient1.GradientType = gtLinear
+            Background.Gradient1.Point1XPercent = 0
+            Background.Gradient1.Point1YPercent = 0
+            Background.Gradient1.Point2XPercent = 0
+            Background.Gradient1.Point2YPercent = 100
+            Background.Gradient2.StartColor = clWhite
+            Background.Gradient2.EndColor = clBlack
+            Background.Gradient2.GradientType = gtLinear
+            Background.Gradient2.Point1XPercent = 0
+            Background.Gradient2.Point1YPercent = 0
+            Background.Gradient2.Point2XPercent = 0
+            Background.Gradient2.Point2YPercent = 100
+            Background.Gradient1EndPercent = 35
+            Background.Style = bbsColor
+            BevelInner = bvNone
+            BevelOuter = bvNone
+            BevelWidth = 1
+            Border.Color = 13750737
+            Border.Style = bboSolid
+            BorderBCStyle = bpsBorder
+            FontEx.Color = clDefault
+            FontEx.FontQuality = fqSystemClearType
+            FontEx.Shadow = False
+            FontEx.ShadowRadius = 5
+            FontEx.ShadowOffsetX = 5
+            FontEx.ShadowOffsetY = 5
+            FontEx.Style = []
+            ParentBackground = True
+            Rounding.RoundX = 8
+            Rounding.RoundY = 8
+            Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare, rrBottomRightSquare, rrBottomLeftSquare]
+            TabOrder = 1
+            object icoThumbCache: TImage
+              AnchorSideLeft.Control = pThumbnailCache
+              AnchorSideTop.Control = pThumbnailCache
+              AnchorSideTop.Side = asrCenter
+              Left = 16
+              Height = 20
+              Top = 14
+              Width = 20
+              Center = True
+              ImageIndex = -1
+              Proportional = True
+            end
+            object lblThumbnailCache: TLabel
+              AnchorSideLeft.Control = icoThumbCache
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pThumbnailCache
+              AnchorSideTop.Side = asrCenter
+              Left = 44
+              Height = 15
+              Top = 17
+              Width = 125
+              Caption = 'Image thumbnail cache'
+              Layout = tlCenter
+              ParentColor = False
+            end
+            object btnClearThumbnailCache: TButton
+              AnchorSideTop.Control = pThumbnailCache
+              AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pThumbnailCache
+              AnchorSideRight.Side = asrBottom
+              Left = 522
+              Height = 25
+              Top = 12
+              Width = 87
+              Anchors = [akTop, akRight]
+              AutoSize = True
+              Caption = 'Clear cache'
+              TabOrder = 0
+              OnClick = btnClearThumbnailCacheClick
+            end
+            object txtThumbnailCacheSize: TLabel
+              AnchorSideLeft.Control = lblThumbnailCache
+              AnchorSideLeft.Side = asrBottom
+              AnchorSideTop.Control = pThumbnailCache
+              AnchorSideTop.Side = asrCenter
+              Left = 177
+              Height = 15
+              Top = 17
+              Width = 23
+              Caption = '0 KB'
+              Font.Color = 6579300
+              ParentFont = False
             end
           end
         end
@@ -2763,7 +2835,7 @@ object cfgOptions: TcfgOptions
         Height = 373
         Top = 48
         Width = 657
-        HorzScrollBar.Page = 308
+        HorzScrollBar.Page = 311
         VertScrollBar.Page = 222
         Align = alClient
         BorderStyle = bsNone
@@ -2852,8 +2924,8 @@ object cfgOptions: TcfgOptions
               Left = 44
               Height = 15
               Top = 16
-              Width = 97
-              Caption = 'Backup files folder'
+              Width = 100
+              Caption = 'Data backup folder'
               Layout = tlCenter
               ParentColor = False
             end
@@ -2864,10 +2936,10 @@ object cfgOptions: TcfgOptions
               AnchorSideTop.Side = asrCenter
               AnchorSideRight.Control = pBackupPath
               AnchorSideRight.Side = asrBottom
-              Left = 157
+              Left = 160
               Height = 23
               Top = 12
-              Width = 452
+              Width = 449
               DialogOptions = [ofPathMustExist, ofEnableSizing]
               ShowHidden = False
               ButtonWidth = 24
@@ -2950,8 +3022,8 @@ object cfgOptions: TcfgOptions
               Left = 44
               Height = 15
               Top = 16
-              Width = 182
-              Caption = 'Create backup when Xolmis closes'
+              Width = 208
+              Caption = 'Create data backup when Xolmis closes'
               Layout = tlCenter
               ParentColor = False
             end
@@ -3031,8 +3103,8 @@ object cfgOptions: TcfgOptions
               Left = 16
               Height = 15
               Top = 17
-              Width = 90
-              Caption = 'Manage backups'
+              Width = 116
+              Caption = 'Manage data backups'
               Layout = tlCenter
               ParentColor = False
             end
@@ -3190,13 +3262,13 @@ object cfgOptions: TcfgOptions
   end
   object tvMenu: TTreeView
     Left = 8
-    Height = 389
-    Top = 16
+    Height = 405
+    Top = 8
     Width = 192
     Align = alLeft
     BorderSpacing.Left = 8
-    BorderSpacing.Top = 16
-    BorderSpacing.Bottom = 16
+    BorderSpacing.Top = 8
+    BorderSpacing.Bottom = 8
     BackgroundColor = clBtnFace
     BorderStyle = bsNone
     Color = clBtnFace

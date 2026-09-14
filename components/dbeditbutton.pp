@@ -39,6 +39,7 @@ type
     FButtonOnlyWhenFocused: Boolean;
     FDBEdit: TDBEdit;
     FButton: TSpeedButton;
+    FEditHeight: Integer;
     FButtonWidth: Integer;
     FDirectInput: Boolean;
     FFocusOnButtonClick: Boolean;
@@ -83,6 +84,7 @@ type
     procedure SetButtonOnlyWhenFocused(AValue: Boolean);
     procedure SetButtonWidth(AValue: Integer);
     procedure SetCharCase(AValue: TEditCharCase);
+    procedure SetColor(AValue: TColor);
     procedure SetCustomEditMask(AValue: Boolean);
     procedure SetDataField(AValue: String);
     procedure SetDataSource(AValue: TDataSource);
@@ -91,6 +93,7 @@ type
     procedure SetEditMask(AValue: String);
     procedure SetFlat(AValue: Boolean);
     procedure SetFocusOnButtonClick(AValue: Boolean);
+    procedure SetHint(AValue: TTranslateString);
     procedure SetHotImageIndex(AValue: Integer);
     procedure SetImageIndex(AValue: Integer);
     procedure SetImages(AValue: TCustomImageList);
@@ -129,7 +132,10 @@ type
     procedure FDBEditKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   protected
     procedure FDBEditChange(Sender: TObject);
-    procedure DoOnChangeBounds; override;
+    procedure CalculatePreferredSize(var PreferredWidth, PreferredHeight: Integer;
+      WithThemeSpace: Boolean); override;
+    procedure SetBounds(ALeft, ATop, AWidth, AHeight: Integer); override;
+    procedure FontChanged(Sender: TObject); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -144,7 +150,7 @@ type
     property Alignment: TAlignment read GetAlignment write SetAlignment default taLeftJustify;
     property Anchors;
     property AutoSelect: Boolean read GetAutoSelect write SetAutoSelect default True;
-    property AutoSize;
+    property AutoSize default True;
     property BiDiMode;
     property BorderSpacing;
     property BorderStyle: TBorderStyle read GetBorderStyle write SetBorderStyle default bsNone;
@@ -233,12 +239,16 @@ constructor TDBEditButton.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  ControlStyle := ControlStyle + [csFixedHeight];
+
   FDirectInput := True;
   FButtonWidth := 25;
 
   FDBEdit := TDBEdit.Create(Self);
   FDBEdit.SetSubComponent(True);
   FDBEdit.Name := 'SubEdit';
+  FDBEdit.Text := '';
+  FEditHeight := FDBEdit.Height;
   FDBEdit.Parent := Self;
   FDBEdit.Align := alClient;
   FDBEdit.OnChange := @FDBEditChange;
@@ -269,13 +279,14 @@ begin
   FButton.SetSubComponent(True);
   FButton.Name := 'SubButton';
   FButton.Parent := Self;
-  FButton.Caption := '...';
+  FButton.Caption := '';
   FButton.OnClick := @ButtonClick;
   FButton.Align := alRight;
   FButton.Width := FButtonWidth;
 
-  Height := FDBEdit.Height;
   Width := 150;
+  AutoSize := True;
+  SetBounds(Left, Top, Width, Height);
 end;
 
 destructor TDBEditButton.Destroy;
@@ -283,11 +294,26 @@ begin
   inherited Destroy;
 end;
 
-procedure TDBEditButton.DoOnChangeBounds;
+procedure TDBEditButton.CalculatePreferredSize(var PreferredWidth, PreferredHeight: Integer;
+  WithThemeSpace: Boolean);
 begin
-  inherited DoOnChangeBounds;
-  if Assigned(FDBEdit) and AutoSize then
-    Height := FDBEdit.Height;
+  inherited CalculatePreferredSize(PreferredWidth, PreferredHeight, WithThemeSpace);
+  if FEditHeight > 0 then
+    PreferredHeight := FEditHeight;
+end;
+
+procedure TDBEditButton.SetBounds(ALeft, ATop, AWidth, AHeight: Integer);
+begin
+  if AutoSize and (FEditHeight > 0) then
+    AHeight := FEditHeight;
+  inherited SetBounds(ALeft, ATop, AWidth, AHeight);
+end;
+
+procedure TDBEditButton.FontChanged(Sender: TObject);
+begin
+  inherited FontChanged(Sender);
+  if Assigned(FDBEdit) then
+    SetBounds(Left, Top, Width, Height);
 end;
 
 function TDBEditButton.ExecuteAction(AAction: TBasicAction): Boolean;
@@ -607,6 +633,9 @@ end;
 procedure TDBEditButton.SetButtonCaption(AValue: TTranslateString);
 begin
   FButton.Caption := AValue;
+  FButton.AutoSize := AValue <> '';
+  if not FButton.AutoSize then
+    FButton.Width := FButtonWidth;
 end;
 
 procedure TDBEditButton.SetButtonCursor(AValue: TCursor);
@@ -636,13 +665,19 @@ begin
   if FButtonWidth <> AValue then
   begin
     FButtonWidth := AValue;
-    FButton.Width := AValue;
+    if not FButton.AutoSize then
+      FButton.Width := AValue;
   end;
 end;
 
 procedure TDBEditButton.SetCharCase(AValue: TEditCharCase);
 begin
   FDBEdit.CharCase := AValue;
+end;
+
+procedure TDBEditButton.SetColor(AValue: TColor);
+begin
+  FDBEdit.Color := AValue;
 end;
 
 procedure TDBEditButton.SetCustomEditMask(AValue: Boolean);
@@ -684,6 +719,11 @@ end;
 procedure TDBEditButton.SetFocusOnButtonClick(AValue: Boolean);
 begin
   FFocusOnButtonClick := AValue;
+end;
+
+procedure TDBEditButton.SetHint(AValue: TTranslateString);
+begin
+  FDBEdit.Hint := AValue;
 end;
 
 procedure TDBEditButton.SetHotImageIndex(AValue: Integer);

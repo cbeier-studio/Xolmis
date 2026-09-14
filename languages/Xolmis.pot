@@ -3465,7 +3465,7 @@ msgstr ""
 
 #: tcfgoptions.lblbackuppath.caption
 msgctxt "tcfgoptions.lblbackuppath.caption"
-msgid "Backup files folder"
+msgid "Data backup folder"
 msgstr ""
 
 #: tcfgoptions.lblbandsupplier.caption
@@ -3499,7 +3499,7 @@ msgid "Use <Enter/Return> keys to jump to the next control"
 msgstr ""
 
 #: tcfgoptions.lblmanagebackups.caption
-msgid "Manage backups"
+msgid "Manage data backups"
 msgstr ""
 
 #: tcfgoptions.lblmediapath.caption
@@ -3562,11 +3562,11 @@ msgstr ""
 
 #: tcfgoptions.lblstartupbackup.caption
 msgctxt "tcfgoptions.lblstartupbackup.caption"
-msgid "Create backup when Xolmis closes"
+msgid "Create data backup when Xolmis closes"
 msgstr ""
 
 #: tcfgoptions.lblthumbnailcache.caption
-msgid "Image thumbnail cache: 0 KB"
+msgid "Image thumbnail cache"
 msgstr ""
 
 #: tcfgoptions.lbltitleappearance.caption
@@ -16498,6 +16498,10 @@ msgstr ""
 
 #: utils_locale.rsfileextxml
 msgid "Extensible Markup Language (XML)"
+msgstr ""
+
+#: utils_locale.rsfilexolmisdatabasesfilter
+msgid "Xolmis databases (SQLite)"
 msgstr ""
 
 #: utils_locale.rsfillonemeasurement
