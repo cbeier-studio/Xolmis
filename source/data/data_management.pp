@@ -883,7 +883,52 @@ begin
       begin
         LogDebug('Upgrading database schema to version 4');
 
-        CreateVideosTable(DMM.sqlCon);
+        LogDebug('Creating videos table');
+        DMM.sqlCon.ExecuteDirect('CREATE TABLE IF NOT EXISTS videos (' +
+          'video_id          INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
+          'full_name         VARCHAR (100),' +
+          'taxon_id          INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
+          'individual_id     INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
+          'capture_id        INTEGER       REFERENCES captures (capture_id) ON UPDATE CASCADE,' +
+          'survey_id         INTEGER       REFERENCES surveys (survey_id) ON UPDATE CASCADE,' +
+          'sighting_id       INTEGER       REFERENCES sightings (sighting_id) ON UPDATE CASCADE,' +
+          'nest_id           INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
+          'nest_revision_id  INTEGER       REFERENCES nest_revisions (nest_revision_id) ON UPDATE CASCADE,' +
+          'video_type        VARCHAR (15),' +
+          'locality_id       INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
+          'recording_date    DATE,' +
+          'recording_time    TIME,' +
+          'recorder_id       INTEGER       REFERENCES people (person_id) ON UPDATE CASCADE,' +
+          'longitude         REAL,' +
+          'latitude          REAL,' +
+          'recording_context VARCHAR (60),' +
+          'habitat           VARCHAR (60),' +
+          'camera_model      VARCHAR (60),' +
+          'distance          REAL,' +
+          'license_type      VARCHAR (20),' +
+          'license_year      INTEGER,' +
+          'license_uri       VARCHAR (200),' +
+          'license_notes     VARCHAR (100),' +
+          'license_owner     VARCHAR (150),' +
+          'file_path         VARCHAR (250),' +
+          'subtitle          TEXT,' +
+          'notes             TEXT,' +
+          'user_inserted     INTEGER,' +
+          'user_updated      INTEGER,' +
+          'insert_date       DATETIME,' +
+          'update_date       DATETIME,' +
+          'exported_status   BOOLEAN       DEFAULT (0),' +
+          'marked_status     BOOLEAN       DEFAULT (0),' +
+          'active_status     BOOLEAN       DEFAULT (1)' +
+        ');');
+
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_videos_date ON videos (' +
+          'recording_date COLLATE BINARY' +
+        ');');
+
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_videos_file_path ON videos (' +
+          'file_path COLLATE NOCASE' +
+        ');');
 
         Result := True;
       end;

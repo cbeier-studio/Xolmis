@@ -2270,9 +2270,15 @@ begin
       'FROM get_bands_running_out';
     Qry.Open;
 
-    TotalRunningOut := Qry.FieldByName('total_running_out').AsInteger;
-    TotalOutOfStock := Qry.FieldByName('total_out_of_stock').AsInteger;
-    TotalLowStock := TotalRunningOut - TotalOutOfStock;
+    if not Qry.IsEmpty then
+    begin
+      TotalRunningOut := Qry.FieldByName('total_running_out').AsInteger;
+      if not Qry.FieldByName('total_out_of_stock').IsNull then
+        TotalOutOfStock := Qry.FieldByName('total_out_of_stock').AsInteger
+      else
+        TotalOutOfStock := 0;
+      TotalLowStock := TotalRunningOut - TotalOutOfStock;
+    end;
     Qry.Close;
 
     if TotalRunningOut > 0 then
