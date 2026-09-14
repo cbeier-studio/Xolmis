@@ -34,7 +34,6 @@ type
     cbLicenseType: TComboBox;
     cbImageType: TComboBox;
     cbCoordinatePrecision: TComboBox;
-    dsLink: TDataSource;
     eLocality: TEditButton;
     eLongitude: TEditButton;
     eLatitude: TEditButton;
@@ -89,12 +88,11 @@ type
     txtOriginalFilename: TLabel;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAuthorButtonClick(Sender: TObject);
     procedure eAuthorKeyPress(Sender: TObject; var Key: char);
     procedure eFilePathChange(Sender: TObject);
     procedure eImageDateButtonClick(Sender: TObject);
-    procedure eImageDateEditingDone(Sender: TObject);
+    procedure eImageDateChange(Sender: TObject);
     procedure eFilePathButtonClick(Sender: TObject);
     procedure eImageTimeKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
@@ -201,14 +199,6 @@ begin
     SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblLongitude.Height;
 end;
 
-procedure TedtImageInfo.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtImageInfo.eAuthorButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eAuthor, FAuthorId);
@@ -249,7 +239,7 @@ begin
   CalendarDlg(eImageDate.Text, eImageDate, Dt);
 end;
 
-procedure TedtImageInfo.eImageDateEditingDone(Sender: TObject);
+procedure TedtImageInfo.eImageDateChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

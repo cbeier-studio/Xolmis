@@ -31,7 +31,6 @@ type
   TedtCollector = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
-    dsLink: TDataSource;
     eCollector: TEditButton;
     lblCollector: TLabel;
     lineBottom: TShapeLineBGRA;
@@ -44,7 +43,6 @@ type
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eCollectorButtonClick(Sender: TObject);
     procedure eCollectorChange(Sender: TObject);
     procedure eCollectorKeyPress(Sender: TObject; var Key: char);
@@ -99,14 +97,6 @@ procedure TedtCollector.btnNewClick(Sender: TObject);
 begin
   with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
     pmNew.Popup(X, Y);
-end;
-
-procedure TedtCollector.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtCollector.eCollectorButtonClick(Sender: TObject);

@@ -37,7 +37,6 @@ type
     cbBandType: TComboBox;
     cbBandColor: TComboBox;
     cbBandStatus: TComboBox;
-    dsLink: TDataSource;
     eBandNumber: TEdit;
     eRequester: TEditButton;
     ePrefix: TEdit;
@@ -84,10 +83,9 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbBandColorDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
-    procedure cbBandSizeEditingDone(Sender: TObject);
+    procedure cbBandSizeChange(Sender: TObject);
     procedure cbBandSizeKeyPress(Sender: TObject; var Key: char);
     procedure cbBandTypeDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eCarrierButtonClick(Sender: TObject);
     procedure eCarrierKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
@@ -187,7 +185,7 @@ begin
   end;
 end;
 
-procedure TedtBands.cbBandSizeEditingDone(Sender: TObject);
+procedure TedtBands.cbBandSizeChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -221,14 +219,6 @@ begin
       DMM.iBandTypesDark.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 16, cbBandType)
     else
       DMM.iBandTypes.DrawForControl(cbBandType.Canvas, ARect.Left + 1, ARect.Top + 1, Index, 16, cbBandType);
-end;
-
-procedure TedtBands.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtBands.eCarrierButtonClick(Sender: TObject);
@@ -434,6 +424,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionBand)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 

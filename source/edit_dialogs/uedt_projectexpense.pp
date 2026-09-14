@@ -31,7 +31,6 @@ type
   TedtProjectExpense = class(TForm)
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
-    dsLink: TDataSource;
     eRubric: TEditButton;
     eDate: TEditButton;
     eItem: TEdit;
@@ -52,11 +51,10 @@ type
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
     procedure eItemKeyPress(Sender: TObject; var Key: char);
     procedure eRubricButtonClick(Sender: TObject);
-    procedure eRubricEditingDone(Sender: TObject);
+    procedure eRubricChange(Sender: TObject);
     procedure eRubricKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -113,14 +111,6 @@ begin
     pmNew.Popup(X, Y);
 end;
 
-procedure TedtProjectExpense.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtProjectExpense.eDateButtonClick(Sender: TObject);
 var
   Dt: TDate;
@@ -148,7 +138,7 @@ begin
   FindDlg(tbProjectBudgets, eRubric, FRubricId);
 end;
 
-procedure TedtProjectExpense.eRubricEditingDone(Sender: TObject);
+procedure TedtProjectExpense.eRubricChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

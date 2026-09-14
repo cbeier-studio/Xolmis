@@ -96,7 +96,7 @@ begin
   FRepo := TMethodRepository.Create(DMM.sqlCon);
   with edtMethod do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -168,7 +168,7 @@ begin
   FRepo := TSiteRepository.Create(DMM.sqlCon);
   with edtSite do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -240,7 +240,7 @@ begin
   FOldRecord := nil;
   with edtSamplingPlot do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -312,7 +312,7 @@ begin
   FOldRecord := nil;
   with edtPermanentNet do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -382,7 +382,7 @@ begin
   FRepo := TInstitutionRepository.Create(DMM.sqlCon);
   with edtInstitution do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -451,7 +451,7 @@ begin
   FRepo := TPersonRepository.Create(DMM.sqlCon);
   with edtPerson do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -520,7 +520,7 @@ begin
   FOldRecord := nil;
   with edtProject do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -592,7 +592,7 @@ begin
   FOldRecord := nil;
   with edtProjectMember do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -663,7 +663,7 @@ begin
   FOldRecord := nil;
   with edtProjectGoal do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -734,7 +734,7 @@ begin
   FOldRecord := nil;
   with edtProjectActivity do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -809,7 +809,7 @@ begin
   FOldRecord := nil;
   with edtProjectRubric do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -880,7 +880,7 @@ begin
   FOldRecord := nil;
   with edtProjectExpense do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -953,7 +953,7 @@ begin
   FRepo := TPermitRepository.Create(DMM.sqlCon);
   with edtPermit do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1026,7 +1026,7 @@ begin
   FRepo := TBotanicalTaxonRepository.Create(DMM.sqlCon);
   with edtBotanicTaxon do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1095,7 +1095,7 @@ begin
   FOldRecord := nil;
   with edtBands do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1174,7 +1174,7 @@ begin
   MoveBand := TBandMovementService.Create(FRepoBand);
   with edtIndividual do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1278,7 +1278,7 @@ begin
   FOldRecord := nil;
   with edtCapture do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1422,7 +1422,7 @@ begin
   FOldRecord := nil;
   with edtNest do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1510,7 +1510,7 @@ begin
   FOldRecord := nil;
   with edtNestOwner do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1580,7 +1580,7 @@ begin
   FOldRecord := nil;
   with edtNestRevision do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1653,7 +1653,7 @@ begin
   FOldRecord := nil;
   with edtEgg do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1729,7 +1729,7 @@ begin
   FOldRecord := nil;
   with edtExpedition do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1801,7 +1801,7 @@ begin
   FOldRecord := nil;
   with edtSurvey do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1876,7 +1876,7 @@ begin
   FOldRecord := nil;
   with edtSurveyMember do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -1947,7 +1947,7 @@ begin
   FOldRecord := nil;
   with edtNetEffort do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -2021,7 +2021,7 @@ begin
   FOldRecord := nil;
   with edtWeatherLog do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -2094,7 +2094,7 @@ begin
   FRepo := TSightingRepository.Create(DMM.sqlCon);
   with edtSighting do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if aDataSet <> DMG.qSightings then
       pSurvey.Visible := True;
@@ -2189,7 +2189,7 @@ begin
   FOldRecord := nil;
   with edtSpecimen do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -2266,7 +2266,7 @@ begin
   FOldRecord := nil;
   with edtCollector do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -2337,7 +2337,7 @@ begin
   FOldRecord := nil;
   with edtSamplePrep do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -2477,7 +2477,7 @@ begin
   FOldRecord := nil;
   with edtImageInfo do
   try
-    edtImageInfo.dsLink.DataSet := aDataSet;
+    //edtImageInfo.dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -2625,7 +2625,7 @@ begin
   FOldRecord := nil;
   with edtAudioInfo do
   try
-    edtAudioInfo.dsLink.DataSet := aDataSet;
+    //edtAudioInfo.dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -2747,7 +2747,7 @@ begin
   FOldRecord := nil;
   with edtDocumentInfo do
   try
-    edtDocumentInfo.dsLink.DataSet := aDataSet;
+    //edtDocumentInfo.dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -2894,7 +2894,7 @@ begin
   FOldRecord := nil;
   with edtVegetation do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -3010,7 +3010,7 @@ begin
   FOldRecord := nil;
   with edtFeather do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -3105,7 +3105,7 @@ begin
   FOldRecord := nil;
   with edtVideoInfo do
   try
-    edtVideoInfo.dsLink.DataSet := aDataSet;
+    //edtVideoInfo.dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin
@@ -3237,7 +3237,7 @@ begin
   FOldRecord := nil;
   with edtPoi do
   try
-    dsLink.DataSet := aDataSet;
+    //dsLink.DataSet := aDataSet;
     IsNewRecord := IsNew;
     if IsNew then
     begin

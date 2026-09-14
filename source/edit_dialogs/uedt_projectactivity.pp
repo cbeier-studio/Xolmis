@@ -32,7 +32,6 @@ type
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
     cbStatus: TComboBox;
-    dsLink: TDataSource;
     eEndDate: TEditButton;
     eGoal: TEditButton;
     eStartDate: TEditButton;
@@ -58,7 +57,6 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbStatusKeyPress(Sender: TObject; var Key: char);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEndDateButtonClick(Sender: TObject);
     procedure eGoalButtonClick(Sender: TObject);
     procedure eGoalKeyPress(Sender: TObject; var Key: char);
@@ -67,7 +65,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
-    procedure mDescriptionEditingDone(Sender: TObject);
+    procedure mDescriptionChange(Sender: TObject);
     procedure pmnNewGoalClick(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
@@ -135,14 +133,6 @@ begin
       SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtProjectActivity.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtProjectActivity.eEndDateButtonClick(Sender: TObject);
@@ -284,7 +274,7 @@ begin
     Result := True;
 end;
 
-procedure TedtProjectActivity.mDescriptionEditingDone(Sender: TObject);
+procedure TedtProjectActivity.mDescriptionChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

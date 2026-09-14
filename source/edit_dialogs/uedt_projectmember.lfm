@@ -12,7 +12,7 @@ object edtProjectMember: TedtProjectMember
   Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -85,7 +85,7 @@ object edtProjectMember: TedtProjectMember
         Spacing = 0
         TabOrder = 0
         OnButtonClick = ePersonButtonClick
-        OnEditingDone = ePersonEditingDone
+        OnChange = ePersonChange
         OnKeyDown = FormKeyDown
         OnKeyPress = ePersonKeyPress
       end
@@ -252,12 +252,6 @@ object edtProjectMember: TedtProjectMember
       TabOrder = 2
       OnClick = btnNewClick
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMS.qSurveyTeam
-    OnDataChange = dsLinkDataChange
-    Left = 296
-    Top = 24
   end
   object pmNew: TPopupMenu
     Left = 128

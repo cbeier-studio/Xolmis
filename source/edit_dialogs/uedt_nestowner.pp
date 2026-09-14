@@ -32,7 +32,6 @@ type
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
     cbRole: TComboBox;
-    dsLink: TDataSource;
     eIndividual: TEditButton;
     lblRole: TLabel;
     lblIndividual: TLabel;
@@ -49,7 +48,6 @@ type
     procedure btnNewClick(Sender: TObject);
     procedure cbRoleChange(Sender: TObject);
     procedure cbRoleKeyPress(Sender: TObject; var Key: char);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eIndividualButtonClick(Sender: TObject);
     procedure eIndividualDBEditKeyPress(Sender: TObject; var Key: char);
     procedure FormCreate(Sender: TObject);
@@ -128,14 +126,6 @@ begin
       SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtNestOwner.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtNestOwner.eIndividualButtonClick(Sender: TObject);

@@ -63,7 +63,6 @@ type
     eLatitude: TEditButton;
     eDate: TEditButton;
     eSurvey: TEditButton;
-    dsLink: TDataSource;
     eDistance: TFloatSpinEdit;
     lblCoordinatesPrecision: TLabel;
     lblDistance: TLabel;
@@ -137,7 +136,6 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure eDateKeyPress(Sender: TObject; var Key: char);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eBreedingStatusButtonClick(Sender: TObject);
     procedure eDateButtonClick(Sender: TObject);
     procedure eDetectionTypeButtonClick(Sender: TObject);
@@ -150,7 +148,7 @@ type
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eMalesTallyKeyPress(Sender: TObject; var Key: char);
     procedure eMethodButtonClick(Sender: TObject);
-    procedure eMethodEditingDone(Sender: TObject);
+    procedure eMethodChange(Sender: TObject);
     procedure eMethodKeyPress(Sender: TObject; var Key: char);
     procedure eNewCapturesTallyEditingDone(Sender: TObject);
     procedure eSurveyButtonClick(Sender: TObject);
@@ -266,14 +264,6 @@ begin
   else
   if R.Top < 0 then
     SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblLongitude.Height;
-end;
-
-procedure TedtSighting.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSighting.eBreedingStatusButtonClick(Sender: TObject);
@@ -537,7 +527,7 @@ begin
     xSettings.LastMethodId := FMethodId;
 end;
 
-procedure TedtSighting.eMethodEditingDone(Sender: TObject);
+procedure TedtSighting.eMethodChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

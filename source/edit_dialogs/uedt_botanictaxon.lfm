@@ -10,7 +10,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -211,7 +211,7 @@ object edtBotanicTaxon: TedtBotanicTaxon
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eNameButtonClick
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eAuthorshipKeyPress
         end
@@ -380,17 +380,11 @@ object edtBotanicTaxon: TedtBotanicTaxon
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eAuthorshipKeyPress
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qBotany
-    OnDataChange = dsLinkDataChange
-    Left = 256
-    Top = 16
   end
 end

@@ -1178,31 +1178,31 @@ end;
 
 function StrToPrecipitation(const AValue: String): TPrecipitation;
 begin
-  if (AValue = rsPrecipitationNone) then
+  if (AValue = rsPrecipitationNone) or (AValue = 'N') then
     Result := wpNone
   else
-  if (AValue = rsPrecipitationFog) then
+  if (AValue = rsPrecipitationFog) or (AValue = 'F') then
     Result := wpFog
   else
-  if (AValue = rsPrecipitationMist) then
+  if (AValue = rsPrecipitationMist) or (AValue = 'M') then
     Result := wpMist
   else
-  if (AValue = rsPrecipitationDrizzle) then
+  if (AValue = rsPrecipitationDrizzle) or (AValue = 'D') then
     Result := wpDrizzle
   else
-  if (AValue = rsPrecipitationRain) then
+  if (AValue = rsPrecipitationRain) or (AValue = 'R') then
     Result := wpRain
   else
-  if (AValue = rsPrecipitationShowers) then
+  if (AValue = rsPrecipitationShowers) or (AValue = 'S') then
     Result := wpShowers
   else
-  if (AValue = rsPrecipitationSnow) then
+  if (AValue = rsPrecipitationSnow) or (AValue = 'W') then
     Result := wpSnow
   else
-  if (AValue = rsPrecipitationHail) then
+  if (AValue = rsPrecipitationHail) or (AValue = 'H') then
     Result := wpHail
   else
-  if (AValue = rsPrecipitationFrost) then
+  if (AValue = rsPrecipitationFrost) or (AValue = 'G') then
     Result := wpFrost
   else
     Result := wpEmpty;
@@ -1229,13 +1229,13 @@ end;
 
 function StrToSampleMoment(const AValue: String): TWeatherSampleMoment;
 begin
-  if (AValue = rsMomentStart) then
+  if (AValue = rsMomentStart) or (AValue = 'S') then
     Result := wmStart
   else
-  if (AValue = rsMomentMiddle) then
+  if (AValue = rsMomentMiddle) or (AValue = 'M') then
     Result := wmMiddle
   else
-  if (AValue = rsMomentEnd) then
+  if (AValue = rsMomentEnd) or (AValue = 'E') then
     Result := wmEnd
   else
     Result := wmNone;

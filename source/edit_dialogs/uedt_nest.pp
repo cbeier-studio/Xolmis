@@ -49,7 +49,6 @@ type
     eLocality: TEditButton;
     eLongitude: TEditButton;
     eLatitude: TEditButton;
-    dsLink: TDataSource;
     ePlantHeight: TFloatSpinEdit;
     ePlantDbh: TFloatSpinEdit;
     ePlantMaxDiameter: TFloatSpinEdit;
@@ -150,7 +149,6 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbSupportTypeSelect(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eFieldNumberKeyPress(Sender: TObject; var Key: char);
     procedure eFoundDateButtonClick(Sender: TObject);
     procedure eLastDateButtonClick(Sender: TObject);
@@ -167,7 +165,7 @@ type
     procedure eSupportPlant2ButtonClick(Sender: TObject);
     procedure eSupportPlant2KeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
-    procedure eTaxonEditingDone(Sender: TObject);
+    procedure eTaxonChange(Sender: TObject);
     procedure eTaxonKeyPress(Sender: TObject; var Key: char);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -268,14 +266,6 @@ begin
   else
   if R.Top < 0 then
     SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblLongitude.Height;
-end;
-
-procedure TedtNest.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtNest.eFieldNumberKeyPress(Sender: TObject; var Key: char);
@@ -576,7 +566,7 @@ begin
   UpdateTaxonField;
 end;
 
-procedure TedtNest.eTaxonEditingDone(Sender: TObject);
+procedure TedtNest.eTaxonChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

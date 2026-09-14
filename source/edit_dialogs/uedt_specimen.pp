@@ -34,7 +34,6 @@ type
     btnNew: TBitBtn;
     cbCoordinatePrecision: TComboBox;
     cbSampleType: TComboBox;
-    dsLink: TDataSource;
     eCollectionYear: TEdit;
     eCollectionMonth: TEdit;
     eCollectionDay: TEdit;
@@ -89,10 +88,9 @@ type
     scrollContent: TScrollBox;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEggButtonClick(Sender: TObject);
     procedure eEggKeyPress(Sender: TObject; var Key: char);
-    procedure eFieldNumberEditingDone(Sender: TObject);
+    procedure eFieldNumberChange(Sender: TObject);
     procedure eFieldNumberKeyPress(Sender: TObject; var Key: char);
     procedure eIndividualButtonClick(Sender: TObject);
     procedure eIndividualKeyPress(Sender: TObject; var Key: char);
@@ -174,14 +172,6 @@ begin
     pmNew.Popup(X, Y);
 end;
 
-procedure TedtSpecimen.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtSpecimen.eEggButtonClick(Sender: TObject);
 begin
   FindDlg(tbEggs, eEgg, FEggId);
@@ -215,7 +205,7 @@ begin
   end;
 end;
 
-procedure TedtSpecimen.eFieldNumberEditingDone(Sender: TObject);
+procedure TedtSpecimen.eFieldNumberChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -578,6 +568,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSpecimen)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 

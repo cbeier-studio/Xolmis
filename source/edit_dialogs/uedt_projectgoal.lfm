@@ -10,7 +10,7 @@ object edtProjectGoal: TedtProjectGoal
   ClientWidth = 397
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -140,7 +140,7 @@ object edtProjectGoal: TedtProjectGoal
         Constraints.MinWidth = 365
         ScrollBars = ssAutoVertical
         TabOrder = 0
-        OnEditingDone = mDescriptionEditingDone
+        OnChange = mDescriptionChange
         OnKeyDown = FormKeyDown
         OnKeyPress = FormKeyPress
       end
@@ -194,16 +194,10 @@ object edtProjectGoal: TedtProjectGoal
         ItemHeight = 15
         Style = csDropDownList
         TabOrder = 0
-        OnEditingDone = mDescriptionEditingDone
+        OnChange = mDescriptionChange
         OnKeyDown = FormKeyDown
         OnKeyPress = cbStatusKeyPress
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qProjectGoals
-    OnDataChange = dsLinkDataChange
-    Left = 324
-    Top = 52
   end
 end

@@ -11,7 +11,7 @@ object edtWeatherLog: TedtWeatherLog
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -216,6 +216,7 @@ object edtWeatherLog: TedtWeatherLog
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eSampleDateButtonClick
+          OnChange = eSampleDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end
@@ -409,6 +410,7 @@ object edtWeatherLog: TedtWeatherLog
           )
           Style = csDropDownList
           TabOrder = 0
+          OnChange = eSampleDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end
@@ -599,11 +601,5 @@ object edtWeatherLog: TedtWeatherLog
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMS.qWeatherLogs
-    OnDataChange = dsLinkDataChange
-    Left = 314
-    Top = 70
   end
 end

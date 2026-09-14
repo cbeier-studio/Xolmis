@@ -32,7 +32,6 @@ type
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
     cbCoordinatePrecision: TComboBox;
-    dsLink: TDataSource;
     eDate: TEditButton;
     eSurvey: TEditButton;
     eName: TEdit;
@@ -81,7 +80,7 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure eDateButtonClick(Sender: TObject);
-    procedure eDateEditingDone(Sender: TObject);
+    procedure eDateChange(Sender: TObject);
     procedure eIndividualButtonClick(Sender: TObject);
     procedure eIndividualKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
@@ -167,7 +166,7 @@ begin
   CalendarDlg(eDate.Text, eDate, Dt);
 end;
 
-procedure TedtPoi.eDateEditingDone(Sender: TObject);
+procedure TedtPoi.eDateChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

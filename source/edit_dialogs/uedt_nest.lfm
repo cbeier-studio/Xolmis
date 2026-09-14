@@ -11,7 +11,7 @@ object edtNest: TedtNest
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -178,7 +178,7 @@ object edtNest: TedtNest
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
-          OnEditingDone = eTaxonEditingDone
+          OnChange = eTaxonChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
@@ -229,7 +229,7 @@ object edtNest: TedtNest
           Top = 22
           Width = 176
           TabOrder = 0
-          OnEditingDone = eTaxonEditingDone
+          OnChange = eTaxonChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
@@ -301,7 +301,7 @@ object edtNest: TedtNest
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
-          OnEditingDone = eTaxonEditingDone
+          OnChange = eTaxonChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
@@ -457,7 +457,7 @@ object edtNest: TedtNest
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eObserverButtonClick
-          OnEditingDone = eTaxonEditingDone
+          OnChange = eTaxonChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eObserverKeyPress
@@ -1598,12 +1598,6 @@ object edtNest: TedtNest
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qNests
-    OnDataChange = dsLinkDataChange
-    Left = 301
-    Top = 32
   end
   object pmNew: TPopupMenu
     Left = 128

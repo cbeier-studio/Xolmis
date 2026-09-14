@@ -12,7 +12,7 @@ object edtCapture: TedtCapture
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -425,7 +425,7 @@ object edtCapture: TedtCapture
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eCaptureDateButtonClick
-          OnEditingDone = eIndividualEditingDone
+          OnChange = eIndividualChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eCaptureTimeKeyPress
@@ -458,7 +458,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 2
           OnButtonClick = eBanderButtonClick
-          OnEditingDone = eIndividualEditingDone
+          OnChange = eIndividualChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eBanderKeyPress
@@ -480,7 +480,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 3
           OnButtonClick = eAnnotatorButtonClick
-          OnEditingDone = eIndividualEditingDone
+          OnChange = eIndividualChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eAnnotatorKeyPress
@@ -564,7 +564,7 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 1
           OnButtonClick = eLocalityButtonClick
-          OnEditingDone = eIndividualEditingDone
+          OnChange = eIndividualChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
@@ -1221,7 +1221,7 @@ object edtCapture: TedtCapture
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
-          OnEditingDone = eIndividualEditingDone
+          OnChange = eIndividualChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = cbCaptureTypeKeyPress
@@ -2394,19 +2394,13 @@ object edtCapture: TedtCapture
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eIndividualButtonClick
-          OnEditingDone = eIndividualEditingDone
+          OnChange = eIndividualChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eIndividualKeyPress
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qCaptures
-    OnDataChange = dsLinkDataChange
-    Left = 673
-    Top = 24
   end
   object pmNew: TPopupMenu
     Left = 202

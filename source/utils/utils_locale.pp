@@ -1000,6 +1000,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsClearThumbnailCachePrompt = 'Do you really want to delete all image thumbnails in cache?' + LineEnding +
       'They will be created again automatically on demand.';
     rsThumbnailCacheSize = 'Image thumbnails cache: %s';
+    rsOpenBackupFile = 'Open backup file';
 
     { Languages }
     rsEnglish = 'English';

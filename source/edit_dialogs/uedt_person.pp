@@ -74,7 +74,6 @@ type
     pmnNewToponym: TMenuItem;
     mNotes: TMemo;
     pImageToolbar: TBCPanel;
-    dsLink: TDataSource;
     lblTreatment: TLabel;
     lblLattes: TLabel;
     lblTwitter: TLabel;
@@ -139,12 +138,11 @@ type
     sbRemoveImage: TSpeedButton;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eBirthDateButtonClick(Sender: TObject);
     procedure eCountryButtonClick(Sender: TObject);
     procedure eCountryKeyPress(Sender: TObject; var Key: char);
     procedure eDeathDateButtonClick(Sender: TObject);
-    procedure eFullnameEditingDone(Sender: TObject);
+    procedure eFullnameChange(Sender: TObject);
     procedure eFullnameKeyPress(Sender: TObject; var Key: char);
     procedure eInstitutionButtonClick(Sender: TObject);
     procedure eInstitutionKeyPress(Sender: TObject; var Key: char);
@@ -240,14 +238,6 @@ begin
     SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblMunicipality.Height;
 end;
 
-procedure TedtPerson.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtPerson.eBirthDateButtonClick(Sender: TObject);
 var
   Dt: TDate;
@@ -295,7 +285,7 @@ begin
   CalendarDlg(eDeathDate.Text, eDeathDate, Dt);
 end;
 
-procedure TedtPerson.eFullnameEditingDone(Sender: TObject);
+procedure TedtPerson.eFullnameChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

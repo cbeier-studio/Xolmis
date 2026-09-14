@@ -12,7 +12,7 @@ object edtProjectExpense: TedtProjectExpense
   Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -86,7 +86,7 @@ object edtProjectExpense: TedtProjectExpense
         Spacing = 0
         TabOrder = 0
         OnButtonClick = eRubricButtonClick
-        OnEditingDone = eRubricEditingDone
+        OnChange = eRubricChange
         OnKeyDown = FormKeyDown
         OnKeyPress = eRubricKeyPress
       end
@@ -158,6 +158,7 @@ object edtProjectExpense: TedtProjectExpense
         Width = 184
         MaxValue = 999999999
         TabOrder = 1
+        OnChange = eRubricChange
         OnKeyDown = FormKeyDown
         OnKeyPress = eItemKeyPress
       end
@@ -284,12 +285,6 @@ object edtProjectExpense: TedtProjectExpense
       TabOrder = 2
       OnClick = btnNewClick
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qProjectExpenses
-    OnDataChange = dsLinkDataChange
-    Left = 312
-    Top = 40
   end
   object pmNew: TPopupMenu
     Left = 127

@@ -11,7 +11,7 @@ object edtBands: TedtBands
   ParentFont = True
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -248,7 +248,7 @@ object edtBands: TedtBands
           )
           Style = csDropDownList
           TabOrder = 0
-          OnEditingDone = cbBandSizeEditingDone
+          OnChange = cbBandSizeChange
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
@@ -260,7 +260,7 @@ object edtBands: TedtBands
           MaxLength = 6
           NumbersOnly = True
           TabOrder = 1
-          OnEditingDone = cbBandSizeEditingDone
+          OnChange = cbBandSizeChange
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
@@ -370,8 +370,8 @@ object edtBands: TedtBands
           ItemHeight = 17
           Style = csOwnerDrawFixed
           TabOrder = 0
+          OnChange = cbBandSizeChange
           OnDrawItem = cbBandTypeDrawItem
-          OnEditingDone = cbBandSizeEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
@@ -435,7 +435,7 @@ object edtBands: TedtBands
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
-          OnEditingDone = cbBandSizeEditingDone
+          OnChange = cbBandSizeChange
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
@@ -487,7 +487,7 @@ object edtBands: TedtBands
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
-          OnEditingDone = cbBandSizeEditingDone
+          OnChange = cbBandSizeChange
           OnKeyDown = FormKeyDown
           OnKeyPress = cbBandSizeKeyPress
         end
@@ -537,7 +537,7 @@ object edtBands: TedtBands
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eSupplierButtonClick
-          OnEditingDone = cbBandSizeEditingDone
+          OnChange = cbBandSizeChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eSupplierKeyPress
         end
@@ -685,18 +685,12 @@ object edtBands: TedtBands
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eRequesterButtonClick
-          OnEditingDone = cbBandSizeEditingDone
+          OnChange = cbBandSizeChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eRequesterKeyPress
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qBands
-    OnDataChange = dsLinkDataChange
-    Left = 336
-    Top = 208
   end
   object pmNew: TPopupMenu
     Left = 138

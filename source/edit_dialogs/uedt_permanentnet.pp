@@ -34,7 +34,6 @@ type
     eLongitude: TEditButton;
     eLatitude: TEditButton;
     eNetNumber: TEdit;
-    dsLink: TDataSource;
     lblCoordinatesPrecision: TLabel;
     lblNetNumber: TLabel;
     lblLatitude: TLabel;
@@ -52,10 +51,9 @@ type
     sbCancel: TButton;
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
-    procedure eNetNumberEditingDone(Sender: TObject);
+    procedure eNetNumberChange(Sender: TObject);
     procedure eNetNumberKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -102,14 +100,6 @@ end;
 procedure TedtPermanentNet.btnHelpClick(Sender: TObject);
 begin
   OpenHelp(HELP_SAMPLING_PLOTS);
-end;
-
-procedure TedtPermanentNet.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtPermanentNet.eLongitudeButtonClick(Sender: TObject);
@@ -202,7 +192,7 @@ begin
   end;
 end;
 
-procedure TedtPermanentNet.eNetNumberEditingDone(Sender: TObject);
+procedure TedtPermanentNet.eNetNumberChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -267,6 +257,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionPermanentNet)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 

@@ -32,7 +32,6 @@ type
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
     ckManager: TCheckBox;
-    dsLink: TDataSource;
     ePerson: TEditButton;
     eInstitution: TEditButton;
     lblPerson: TLabel;
@@ -51,11 +50,10 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure ckManagerKeyPress(Sender: TObject; var Key: char);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eInstitutionButtonClick(Sender: TObject);
     procedure eInstitutionKeyPress(Sender: TObject; var Key: char);
     procedure ePersonButtonClick(Sender: TObject);
-    procedure ePersonEditingDone(Sender: TObject);
+    procedure ePersonChange(Sender: TObject);
     procedure ePersonKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -127,14 +125,6 @@ begin
   end;
 end;
 
-procedure TedtProjectMember.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtProjectMember.eInstitutionButtonClick(Sender: TObject);
 begin
   FindDlg(tbInstitutions, eInstitution, FInstitutionId);
@@ -173,7 +163,7 @@ begin
   FindDlg(tbPeople, ePerson, FMemberId);
 end;
 
-procedure TedtProjectMember.ePersonEditingDone(Sender: TObject);
+procedure TedtProjectMember.ePersonChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

@@ -20,7 +20,6 @@ type
     cbFeatherTrait: TComboBox;
     cbBodySide: TComboBox;
     cbFeatherAge: TComboBox;
-    dsLink: TDataSource;
     eMass: TFloatSpinEdit;
     eDate: TEditButton;
     eRachisWidth: TFloatSpinEdit;
@@ -78,9 +77,8 @@ type
     eFeatherNumber: TSpinEdit;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
-    procedure eDateEditingDone(Sender: TObject);
+    procedure eDateChange(Sender: TObject);
     procedure eDateKeyPress(Sender: TObject; var Key: char);
     procedure eLocalityButtonClick(Sender: TObject);
     procedure eLocalityKeyPress(Sender: TObject; var Key: char);
@@ -148,14 +146,6 @@ begin
     pmNew.Popup(X, Y);
 end;
 
-procedure TedtFeather.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtFeather.eDateButtonClick(Sender: TObject);
 var
   Dt: TDate;
@@ -163,7 +153,7 @@ begin
   CalendarDlg(eDate.Text, eDate, Dt);
 end;
 
-procedure TedtFeather.eDateEditingDone(Sender: TObject);
+procedure TedtFeather.eDateChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

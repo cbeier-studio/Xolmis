@@ -95,6 +95,8 @@ begin
 
   dsUser.DataSet.FieldByName('role_id').AsInteger := PtrInt(cbUserRank.Items.Objects[cbUserRank.ItemIndex]);
   dsUser.DataSet.FieldByName('user_rank').AsString := cbUserRank.Items[cbUserRank.ItemIndex];
+
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtUser.dsUserDataChange(Sender: TObject; Field: TField);

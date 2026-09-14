@@ -8,7 +8,7 @@ object frmQuickEntry: TfrmQuickEntry
   ClientHeight = 620
   ClientWidth = 1098
   Position = poDefaultPosOnly
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate

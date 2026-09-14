@@ -32,7 +32,6 @@ type
     btnHelp: TSpeedButton;
     cbDocumentType: TComboBox;
     cbLicenseType: TComboBox;
-    dsLink: TDataSource;
     eAuthor: TEditButton;
     eLicenseYear: TEdit;
     eLicenseUri: TEdit;
@@ -70,11 +69,10 @@ type
     txtOriginalFilename: TLabel;
     procedure btnHelpClick(Sender: TObject);
     procedure cbDocumentTypeKeyPress(Sender: TObject; var Key: char);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAuthorButtonClick(Sender: TObject);
     procedure eAuthorKeyPress(Sender: TObject; var Key: char);
     procedure eDocumentDateButtonClick(Sender: TObject);
-    procedure eDocumentDateEditingDone(Sender: TObject);
+    procedure eDocumentDateChange(Sender: TObject);
     procedure eFilePathButtonClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -155,14 +153,6 @@ begin
   end;
 end;
 
-procedure TedtDocumentInfo.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtDocumentInfo.eAuthorButtonClick(Sender: TObject);
 begin
   FindDlg(tbPeople, eAuthor, FAuthorId);
@@ -203,7 +193,7 @@ begin
   CalendarDlg(eDocumentDate.Text, eDocumentDate, Dt);
 end;
 
-procedure TedtDocumentInfo.eDocumentDateEditingDone(Sender: TObject);
+procedure TedtDocumentInfo.eDocumentDateChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

@@ -36,7 +36,6 @@ type
     eStartDate: TEditButton;
     eEndDate: TEditButton;
     eProject: TEditButton;
-    dsLink: TDataSource;
     lblStartDate: TLabel;
     lblEndDate: TLabel;
     lblDescription: TLabel;
@@ -57,9 +56,8 @@ type
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEndDateButtonClick(Sender: TObject);
-    procedure eNameEditingDone(Sender: TObject);
+    procedure eNameChange(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
     procedure eProjectKeyPress(Sender: TObject; var Key: char);
@@ -119,14 +117,6 @@ begin
     pmNew.Popup(X, Y);
 end;
 
-procedure TedtExpedition.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtExpedition.eEndDateButtonClick(Sender: TObject);
 var
   Dt: TDate;
@@ -134,7 +124,7 @@ begin
   CalendarDlg(eEndDate.Text, eEndDate, Dt);
 end;
 
-procedure TedtExpedition.eNameEditingDone(Sender: TObject);
+procedure TedtExpedition.eNameChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -232,6 +222,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionExpedition)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 

@@ -37,7 +37,6 @@ type
     eLocality: TEditButton;
     eLongitude: TEditButton;
     eLatitude: TEditButton;
-    dsLink: TDataSource;
     lblAcronym: TLabel;
     lblAcronym1: TLabel;
     lblCoordinatesPrecision: TLabel;
@@ -66,12 +65,11 @@ type
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eLocalityButtonClick(Sender: TObject);
     procedure eLocalityKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
-    procedure eNameEditingDone(Sender: TObject);
+    procedure eNameChange(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -127,14 +125,6 @@ procedure TedtSamplingPlot.btnNewClick(Sender: TObject);
 begin
   with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
     pmNew.Popup(X, Y);
-end;
-
-procedure TedtSamplingPlot.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSamplingPlot.eLocalityButtonClick(Sender: TObject);
@@ -267,7 +257,7 @@ begin
   end;
 end;
 
-procedure TedtSamplingPlot.eNameEditingDone(Sender: TObject);
+procedure TedtSamplingPlot.eNameChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

@@ -335,7 +335,7 @@ object edtVideoInfo: TedtVideoInfo
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eRecordingDateButtonClick
-          OnEditingDone = eRecordingDateEditingDone
+          OnChange = eRecordingDateChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
         end
@@ -983,10 +983,5 @@ object edtVideoInfo: TedtVideoInfo
       Caption = 'New locality'
       OnClick = pmnNewLocalityClick
     end
-  end
-  object dsLink: TDataSource
-    DataSet = frmCustomGrid.qAudios
-    Left = 348
-    Top = 82
   end
 end

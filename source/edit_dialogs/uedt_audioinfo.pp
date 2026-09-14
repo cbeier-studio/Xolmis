@@ -52,7 +52,6 @@ type
     eLicenseUri: TEdit;
     eLicenseYear: TEdit;
     eLicenseOwner: TEdit;
-    dsLink: TDataSource;
     eRelativeHumidity: TFloatSpinEdit;
     eTemperature: TFloatSpinEdit;
     eDistance: TFloatSpinEdit;
@@ -123,7 +122,6 @@ type
     eSubjectsTally: TSpinEdit;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eFilePathButtonClick(Sender: TObject);
     procedure eAuthorButtonClick(Sender: TObject);
     procedure eAuthorKeyPress(Sender: TObject; var Key: char);
@@ -132,7 +130,7 @@ type
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eRecordingDateButtonClick(Sender: TObject);
-    procedure eRecordingDateEditingDone(Sender: TObject);
+    procedure eRecordingDateChange(Sender: TObject);
     procedure eRecordingTimeKeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
     procedure eTaxonKeyPress(Sender: TObject; var Key: char);
@@ -229,14 +227,6 @@ begin
     SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblLongitude.Height;
 end;
 
-procedure TedtAudioInfo.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtAudioInfo.eFilePathButtonClick(Sender: TObject);
 begin
   //DMM.OpenAudios.InitialDir := xSettings.LastPathUsed;
@@ -312,7 +302,7 @@ end;
 
 procedure TedtAudioInfo.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoAssistDlg(TControl(Sender), dsLink.DataSet, COL_LONGITUDE, COL_LATITUDE);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtAudioInfo.eLongitudeKeyPress(Sender: TObject; var Key: char);
@@ -405,7 +395,7 @@ begin
   CalendarDlg(eRecordingDate.Text, eRecordingDate, Dt);
 end;
 
-procedure TedtAudioInfo.eRecordingDateEditingDone(Sender: TObject);
+procedure TedtAudioInfo.eRecordingDateChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

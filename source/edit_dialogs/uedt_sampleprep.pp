@@ -33,9 +33,8 @@ type
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
     cbSampleType: TComboBox;
-    dsLink: TDataSource;
     eAccessionNumber: TEdit;
-    eAccessionSeq: TEdit;
+    eDuplicateSeq: TEdit;
     eInstitution: TEditButton;
     ePreparationDate: TEditButton;
     ePreparer: TEditButton;
@@ -65,8 +64,7 @@ type
     scrollContent: TScrollBox;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
-    procedure eAccessionNumberEditingDone(Sender: TObject);
+    procedure eAccessionNumberChange(Sender: TObject);
     procedure eAccessionNumberKeyPress(Sender: TObject; var Key: char);
     procedure eInstitutionButtonClick(Sender: TObject);
     procedure eInstitutionKeyPress(Sender: TObject; var Key: char);
@@ -129,15 +127,7 @@ begin
     pmNew.Popup(X, Y);
 end;
 
-procedure TedtSamplePrep.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
-procedure TedtSamplePrep.eAccessionNumberEditingDone(Sender: TObject);
+procedure TedtSamplePrep.eAccessionNumberChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -306,13 +296,14 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionEgg)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 
 procedure TedtSamplePrep.GetRecord;
 begin
   eAccessionNumber.Text := FSamplePrep.AccessionNum;
-  eAccessionSeq.Text := IntToStr(FSamplePrep.AccessionSeq);
+  eDuplicateSeq.Text := IntToStr(FSamplePrep.DuplicateSeq);
   case FSamplePrep.AccessionType of
     'NS':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleSkinStandard);
     'SS':  cbSampleType.ItemIndex := cbSampleType.Items.IndexOf(rsSampleSkinShmoo);
@@ -353,7 +344,7 @@ begin
   //if (dsLink.DataSet.FieldByName('accession_num').AsString <> EmptyStr) and
   //  (dsLink.DataSet.FieldByName('accession_type').AsString <> EmptyStr) then
   if (eAccessionNumber.Text <> EmptyStr) and
-    (eAccessionSeq.Text <> EmptyStr) then
+    (eDuplicateSeq.Text <> EmptyStr) then
     Result := True;
 end;
 
@@ -380,10 +371,10 @@ end;
 procedure TedtSamplePrep.SetRecord;
 begin
   FSamplePrep.AccessionNum := eAccessionNumber.Text;
-  if (eAccessionSeq.Text <> EmptyStr) then
-    FSamplePrep.AccessionSeq := StrToInt(eAccessionSeq.Text)
+  if (eDuplicateSeq.Text <> EmptyStr) then
+    FSamplePrep.DuplicateSeq := StrToInt(eDuplicateSeq.Text)
   else
-    FSamplePrep.AccessionSeq := 0;
+    FSamplePrep.DuplicateSeq := 0;
   FSamplePrep.AccessionType := StrToAccessionType(cbSampleType.Text);
   if (ePreparationDate.Text <> EmptyStr) then
     FSamplePrep.PreparationDate := StrToDate(ePreparationDate.Text);
@@ -431,10 +422,10 @@ begin
       IsFutureDate(StrToDate(ePreparationDate.Text), Today, rsDatePreparation, rsDateToday, Msgs);
 
   // Unique fields
-  if (eAccessionNumber.Text <> EmptyStr) and (eAccessionSeq.Text <> EmptyStr) then
+  if (eAccessionNumber.Text <> EmptyStr) and (eDuplicateSeq.Text <> EmptyStr) then
     RecordDuplicated(tbSamplePreps,
       [COL_ACCESSION_NUMBER, COL_ACCESSION_DUPLICATE],
-      [eAccessionNumber.Text, StrToInt(eAccessionSeq.Text)],
+      [eAccessionNumber.Text, StrToInt(eDuplicateSeq.Text)],
       COL_SAMPLE_PREP_ID, FSamplePrep.Id, Msgs);
 
   if Msgs.Count > 0 then

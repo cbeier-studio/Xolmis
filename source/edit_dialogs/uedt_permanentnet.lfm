@@ -10,7 +10,7 @@ object edtPermanentNet: TedtPermanentNet
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -191,7 +191,7 @@ object edtPermanentNet: TedtPermanentNet
         Width = 174
         NumbersOnly = True
         TabOrder = 0
-        OnEditingDone = eNetNumberEditingDone
+        OnChange = eNetNumberChange
         OnKeyDown = FormKeyDown
         OnKeyPress = eNetNumberKeyPress
       end
@@ -252,7 +252,7 @@ object edtPermanentNet: TedtPermanentNet
         Spacing = 0
         TabOrder = 0
         OnButtonClick = eLongitudeButtonClick
-        OnEditingDone = eNetNumberEditingDone
+        OnChange = eNetNumberChange
         OnKeyDown = FormKeyDown
         OnKeyPress = eLongitudeKeyPress
       end
@@ -273,7 +273,7 @@ object edtPermanentNet: TedtPermanentNet
         Spacing = 0
         TabOrder = 1
         OnButtonClick = eLongitudeButtonClick
-        OnEditingDone = eNetNumberEditingDone
+        OnChange = eNetNumberChange
         OnKeyDown = FormKeyDown
         OnKeyPress = eLongitudeKeyPress
       end
@@ -318,11 +318,5 @@ object edtPermanentNet: TedtPermanentNet
         OnKeyDown = FormKeyDown
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qPermanentNets
-    OnDataChange = dsLinkDataChange
-    Left = 320
-    Top = 8
   end
 end

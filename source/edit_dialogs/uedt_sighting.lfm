@@ -12,7 +12,7 @@ object edtSighting: TedtSighting
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -320,7 +320,7 @@ object edtSighting: TedtSighting
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eDateButtonClick
-          OnEditingDone = eMethodEditingDone
+          OnChange = eMethodChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
@@ -663,7 +663,7 @@ object edtSighting: TedtSighting
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
-          OnEditingDone = eMethodEditingDone
+          OnChange = eMethodChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
@@ -784,7 +784,7 @@ object edtSighting: TedtSighting
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eMethodButtonClick
-          OnEditingDone = eMethodEditingDone
+          OnChange = eMethodChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMethodKeyPress
@@ -842,7 +842,7 @@ object edtSighting: TedtSighting
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
-          OnEditingDone = eMethodEditingDone
+          OnChange = eMethodChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
@@ -1421,12 +1421,6 @@ object edtSighting: TedtSighting
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qSightings
-    OnDataChange = dsLinkDataChange
-    Left = 301
-    Top = 19
   end
   object pmNew: TPopupMenu
     Left = 144

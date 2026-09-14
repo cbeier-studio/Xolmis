@@ -12,7 +12,7 @@ object edtFeather: TedtFeather
   Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -99,7 +99,7 @@ object edtFeather: TedtFeather
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
-          OnEditingDone = eDateEditingDone
+          OnChange = eDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
         end
@@ -254,7 +254,7 @@ object edtFeather: TedtFeather
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
-          OnEditingDone = eDateEditingDone
+          OnChange = eDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
@@ -316,7 +316,7 @@ object edtFeather: TedtFeather
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eDateButtonClick
-          OnEditingDone = eDateEditingDone
+          OnChange = eDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
@@ -825,12 +825,6 @@ object edtFeather: TedtFeather
       TabOrder = 2
       OnClick = btnNewClick
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qFeathers
-    OnDataChange = dsLinkDataChange
-    Left = 280
-    Top = 80
   end
   object pmNew: TPopupMenu
     Left = 128

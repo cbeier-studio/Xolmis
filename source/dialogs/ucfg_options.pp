@@ -41,12 +41,17 @@ type
     icoAutoFillCoordinates: TImage;
     icoRememberCollectionInfo: TImage;
     icoBandSupplier: TImage;
+    icoSettingsBackup: TImage;
     icoWriteDetailedLogs: TImage;
     icoDeleteMedia: TImage;
     lblAutoSizeColumns: TLabel;
     lblAutoFillCoordinates: TLabel;
     lblBandSupplierInfo: TLabel;
+    lblSettingsBackup: TLabel;
     lblThumbnailCache: TLabel;
+    pSettingsBackup: TBCPanel;
+    btnNewSettingsBackup: TBitBtn;
+    btnRestoreSettingsBackup: TBitBtn;
     SelectDirDlg: TSelectDirectoryDialog;
     tsDeleteMediaFile: TToggleSwitch;
     txtMediaPath: TLabel;
@@ -192,6 +197,8 @@ type
     procedure btnDefaultRowHeightClick(Sender: TObject);
     procedure btnForceMediaMigrationClick(Sender: TObject);
     procedure btnHelpClick(Sender: TObject);
+    procedure btnNewSettingsBackupClick(Sender: TObject);
+    procedure btnRestoreSettingsBackupClick(Sender: TObject);
     procedure cbCheckUpdatesChange(Sender: TObject);
     procedure cbClearDeletedChange(Sender: TObject);
     procedure cbMoveMediaFileChange(Sender: TObject);
@@ -287,6 +294,7 @@ begin
   imgPrivacyTerms.Images := iIconsDark;
   icoBackupPath.Images := iIconsDark;
   icoStartupBackup.Images := iIconsDark;
+  icoSettingsBackup.Images := iIconsDark;
   icoOpenAfterExport.Images := iIconsDark;
 
   pStartPage.Background.Color := ActiveTheme.Background.SolidSecondary;
@@ -347,6 +355,8 @@ begin
   pStartupBackup.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pManageBackups.Background.Color := ActiveTheme.Background.SolidSecondary;
   pManageBackups.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pSettingsBackup.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pSettingsBackup.Border.Color := ActiveTheme.System.SolidNeutralFG;
 
   lblTitleInterface.Font.Color := ActiveTheme.Interactive.WindowTitle;
   lblTitleAppearance.Font.Color := ActiveTheme.Interactive.WindowTitle;
@@ -439,6 +449,23 @@ end;
 procedure TcfgOptions.btnHelpClick(Sender: TObject);
 begin
   OpenHelp(HELP_SETTINGS);
+end;
+
+procedure TcfgOptions.btnNewSettingsBackupClick(Sender: TObject);
+begin
+  BackupSettings;
+end;
+
+procedure TcfgOptions.btnRestoreSettingsBackupClick(Sender: TObject);
+begin
+  OpenDlg.InitialDir := xSettings.BackupFolder;
+  OpenDlg.DefaultExt := '.zip';
+  OpenDlg.Filter := 'Backup files|*.zip';
+  OpenDlg.Options := [ofFileMustExist, ofEnableSizing];
+  OpenDlg.Title := rsOpenBackupFile;
+  if OpenDlg.Execute then
+    if RestoreSettings(OpenDlg.FileName) then
+      xSettings.LoadFromFile;
 end;
 
 procedure TcfgOptions.cbSelectedThemeChange(Sender: TObject);
@@ -836,6 +863,10 @@ begin
     Exit;
 
   OpenDlg.InitialDir:= xSettings.BackupFolder;
+  OpenDlg.DefaultExt := '.zip';
+  OpenDlg.Filter := 'Backup files|*.zip';
+  OpenDlg.Options := [ofFileMustExist, ofEnableSizing];
+  OpenDlg.Title := rsOpenBackupFile;
   if OpenDlg.Execute then
     RestoreBackup(OpenDlg.FileName);
 end;

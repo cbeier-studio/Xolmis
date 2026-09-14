@@ -11,7 +11,7 @@ object edtExpedition: TedtExpedition
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -169,7 +169,7 @@ object edtExpedition: TedtExpedition
           Top = 22
           Width = 384
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -323,7 +323,7 @@ object edtExpedition: TedtExpedition
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eStartDateButtonClick
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -345,18 +345,12 @@ object edtExpedition: TedtExpedition
           TabOrder = 1
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eEndDateButtonClick
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qExpeditions
-    OnDataChange = dsLinkDataChange
-    Left = 326
-    Top = 109
   end
   object pmNew: TPopupMenu
     Left = 126

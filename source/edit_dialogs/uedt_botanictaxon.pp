@@ -36,7 +36,6 @@ type
     eName: TEditButton;
     eParentTaxon: TEditButton;
     eValidName: TEditButton;
-    dsLink: TDataSource;
     lblAuthorship: TLabel;
     lblVernacularName: TLabel;
     lblValidName: TLabel;
@@ -56,10 +55,9 @@ type
     SBox: TScrollBox;
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAuthorshipKeyPress(Sender: TObject; var Key: char);
     procedure eNameButtonClick(Sender: TObject);
-    procedure eNameEditingDone(Sender: TObject);
+    procedure eNameChange(Sender: TObject);
     procedure eParentTaxonButtonClick(Sender: TObject);
     procedure eParentTaxonKeyPress(Sender: TObject; var Key: char);
     procedure eValidNameButtonClick(Sender: TObject);
@@ -110,14 +108,6 @@ begin
   OpenHelp(HELP_BOTANICAL_TAXA);
 end;
 
-procedure TedtBotanicTaxon.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtBotanicTaxon.eAuthorshipKeyPress(Sender: TObject; var Key: char);
 begin
   FormKeyPress(Sender, Key);
@@ -138,7 +128,7 @@ begin
   FindPlantminerDlg(eName.Text, eName, eAuthorship, eName);
 end;
 
-procedure TedtBotanicTaxon.eNameEditingDone(Sender: TObject);
+procedure TedtBotanicTaxon.eNameChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -315,14 +305,12 @@ end;
 function TedtBotanicTaxon.ValidateFields: Boolean;
 var
   Msgs: TStrings;
-  D: TDataSet;
   aRankId: Integer;
   aRankAbbrev: String;
   BotRank: TBotanicalRank;
 begin
   Result := True;
   Msgs := TStringList.Create;
-  D := dsLink.DataSet;
 
   // Required fields
   if (eName.Text = EmptyStr) then

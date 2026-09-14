@@ -34,7 +34,6 @@ type
     cbSampleMoment: TComboBox;
     cbPrecipitation: TComboBox;
     cbWindDirection: TComboBox;
-    dsLink: TDataSource;
     eSampleTime: TEdit;
     eSampleDate: TEditButton;
     eTemperature: TFloatSpinEdit;
@@ -75,8 +74,8 @@ type
     eRainfall: TSpinEdit;
     eWindSpeedBft: TSpinEdit;
     procedure btnHelpClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eSampleDateButtonClick(Sender: TObject);
+    procedure eSampleDateChange(Sender: TObject);
     procedure eSampleTimeKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -121,19 +120,16 @@ begin
   OpenHelp(HELP_SURVEYS);
 end;
 
-procedure TedtWeatherLog.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtWeatherLog.eSampleDateButtonClick(Sender: TObject);
 var
   Dt: TDateTime;
 begin
   CalendarDlg(eSampleDate.Text, eSampleDate, Dt);
+end;
+
+procedure TedtWeatherLog.eSampleDateChange(Sender: TObject);
+begin
+  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtWeatherLog.eSampleTimeKeyPress(Sender: TObject; var Key: char);
@@ -149,8 +145,6 @@ begin
       SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-
-  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtWeatherLog.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -250,10 +244,8 @@ function TedtWeatherLog.IsRequiredFilled: Boolean;
 begin
   Result := False;
 
-  //if (dsLink.DataSet.FieldByName('sample_date').IsNull = False) and
-  //  (dsLink.DataSet.FieldByName('sample_moment').AsString <> EmptyStr) then
   if (eSampleDate.Text <> EmptyStr) and
-    (eSampleTime.Text <> EmptyStr) then
+    (cbSampleMoment.ItemIndex >= 0) then
     Result := True;
 end;
 

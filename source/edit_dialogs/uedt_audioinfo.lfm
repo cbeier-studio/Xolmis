@@ -333,7 +333,7 @@ object edtAudioInfo: TedtAudioInfo
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eRecordingDateButtonClick
-          OnEditingDone = eRecordingDateEditingDone
+          OnChange = eRecordingDateChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eRecordingTimeKeyPress
@@ -1248,12 +1248,6 @@ object edtAudioInfo: TedtAudioInfo
       ShowHint = True
       Visible = False
     end
-  end
-  object dsLink: TDataSource
-    DataSet = frmCustomGrid.qAudios
-    OnDataChange = dsLinkDataChange
-    Left = 320
-    Top = 54
   end
   object pmNew: TPopupMenu
     Left = 127

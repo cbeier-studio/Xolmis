@@ -1116,7 +1116,7 @@ begin
       'record_id, ' +
       'verification_date, ' +
       'verification_status, ' +
-      'person_id ' +
+      'person_id, ' +
       'notes) ' +
     'VALUES (' +
       ':table_name, ' +

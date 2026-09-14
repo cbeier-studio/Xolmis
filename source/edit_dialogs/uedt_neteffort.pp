@@ -62,7 +62,6 @@ type
     mNotes: TMemo;
     pNetOpenClose4: TPanel;
     pSurvey: TBCPanel;
-    dsLink: TDataSource;
     lblNetNumber: TLabel;
     lblLatitude: TLabel;
     lblNetHeight: TLabel;
@@ -97,12 +96,11 @@ type
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eNetLengthEditingDone(Sender: TObject);
-    procedure eNetNumberEditingDone(Sender: TObject);
+    procedure eNetNumberChange(Sender: TObject);
     procedure eNetNumberKeyPress(Sender: TObject; var Key: char);
     procedure ePermanentNetButtonClick(Sender: TObject);
     procedure ePermanentNetKeyPress(Sender: TObject; var Key: char);
@@ -199,14 +197,6 @@ procedure TedtNetEffort.btnNewClick(Sender: TObject);
 begin
   with TBitBtn(Sender).ClientToScreen(point(0, TBitBtn(Sender).Height + 1)) do
     pmNew.Popup(X, Y);
-end;
-
-procedure TedtNetEffort.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtNetEffort.eDateButtonClick(Sender: TObject);
@@ -311,7 +301,7 @@ begin
   AutoCalcFields;
 end;
 
-procedure TedtNetEffort.eNetNumberEditingDone(Sender: TObject);
+procedure TedtNetEffort.eNetNumberChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

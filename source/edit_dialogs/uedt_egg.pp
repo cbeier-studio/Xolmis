@@ -62,7 +62,6 @@ type
     lblShellPattern: TLabel;
     lblShellTexture1: TLabel;
     lblStage: TLabel;
-    dsLink: TDataSource;
     lblFieldNumber: TLabel;
     lblVolume: TLabel;
     lblWeight: TLabel;
@@ -96,8 +95,7 @@ type
     sBox: TScrollBox;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
-    procedure eEggSeqEditingDone(Sender: TObject);
+    procedure eEggSeqChange(Sender: TObject);
     procedure eFieldNumberKeyPress(Sender: TObject; var Key: char);
     procedure eIndividualButtonClick(Sender: TObject);
     procedure eIndividualKeyPress(Sender: TObject; var Key: char);
@@ -178,15 +176,7 @@ begin
     pmNew.Popup(X, Y);
 end;
 
-procedure TedtEgg.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
-procedure TedtEgg.eEggSeqEditingDone(Sender: TObject);
+procedure TedtEgg.eEggSeqChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

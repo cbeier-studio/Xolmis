@@ -3398,7 +3398,7 @@ msgstr "Limpar"
 
 #: tcfgoptions.btnclearthumbnailcache.caption
 msgid "Clear cache"
-msgstr ""
+msgstr "Limpar cache"
 
 #: tcfgoptions.btndefaultrowheight.caption
 msgid "Set default"
@@ -3407,6 +3407,14 @@ msgstr "Usar padrão"
 #: tcfgoptions.btnforcemediamigration.caption
 msgid "Force migration"
 msgstr "Forçar migração"
+
+#: tcfgoptions.btnnewsettingsbackup.caption
+msgid "Backup settings"
+msgstr "Criar backup das configurações"
+
+#: tcfgoptions.btnrestoresettingsbackup.caption
+msgid "Restore settings"
+msgstr "Restaurar configurações"
 
 #: tcfgoptions.caption
 msgid "Settings"
@@ -3511,6 +3519,11 @@ msgstr "Tema"
 msgid "Xolmis need to be restarted to apply changes"
 msgstr "Xolmis precisa ser reiniciado para aplicar as mudanças"
 
+#: tcfgoptions.lblsettingsbackup.caption
+msgctxt "tcfgoptions.lblsettingsbackup.caption"
+msgid "Settings backup"
+msgstr "Backup das configurações"
+
 #: tcfgoptions.lblshowoutliers.caption
 msgid "Highlight outlier measurements in captures"
 msgstr "Destacar medidas atípicas nas capturas"
@@ -3531,7 +3544,7 @@ msgstr "Criar backup quando o Xolmis encerrar"
 
 #: tcfgoptions.lblthumbnailcache.caption
 msgid "Image thumbnail cache: 0 KB"
-msgstr ""
+msgstr "Cache de miniaturas de imagens: 0 KB"
 
 #: tcfgoptions.lbltitleappearance.caption
 msgctxt "tcfgoptions.lbltitleappearance.caption"
@@ -13306,6 +13319,7 @@ msgid "Create and restore settings backups."
 msgstr "Criar e restaurar backups das configurações."
 
 #: tfrmmaintenance.opendlg.title
+msgctxt "tfrmmaintenance.opendlg.title"
 msgid "Open backup file"
 msgstr "Abrir arquivo de backup"
 
@@ -13405,6 +13419,7 @@ msgid "Recreate thumbnails"
 msgstr "Recriar miniaturas"
 
 #: tfrmmaintenance.titlesettingsbackup.caption
+msgctxt "tfrmmaintenance.titlesettingsbackup.caption"
 msgid "Settings backup"
 msgstr "Backup das configurações"
 
@@ -15003,13 +15018,15 @@ msgstr "Deseja realmente apagar todos os arquivos de log?"
 
 #: utils_locale.rsclearthumbnailcache
 msgid "Clear thumbnail cache"
-msgstr ""
+msgstr "Limpar cache de miniaturas de imagens"
 
 #: utils_locale.rsclearthumbnailcacheprompt
 msgid ""
 "Do you really want to delete all image thumbnails in cache?\n"
 "They will be created again automatically on demand."
 msgstr ""
+"Você deseja realmente apagar todas as miniaturas de imagens em cache?\n"
+"Elas serão criadas novamente sob demanda."
 
 #: utils_locale.rscloacalprotuberance
 msgctxt "utils_locale.rscloacalprotuberance"
@@ -18417,6 +18434,11 @@ msgctxt "utils_locale.rsoneselectedfemale"
 msgid "%d selected"
 msgstr "%d selecionados"
 
+#: utils_locale.rsopenbackupfile
+msgctxt "utils_locale.rsopenbackupfile"
+msgid "Open backup file"
+msgstr "Abrir arquivo de backup"
+
 #: utils_locale.rsopendatabase
 msgctxt "utils_locale.rsopendatabase"
 msgid "Open database"
@@ -19907,7 +19929,7 @@ msgstr "Perfil de importação salvo no banco de dados com sucesso."
 
 #: utils_locale.rssuccessfulthumbnailcachecleared
 msgid "Image thumbnail cache cleared successfully."
-msgstr ""
+msgstr "Cache de miniaturas de imagens apagado com sucesso."
 
 #: utils_locale.rssuccessfultransferbands
 msgctxt "utils_locale.rssuccessfultransferbands"
@@ -20041,7 +20063,7 @@ msgstr "Caixa alta"
 #: utils_locale.rsthumbnailcachesize
 #, object-pascal-format
 msgid "Image thumbnails cache: %s"
-msgstr ""
+msgstr "Cache de miniaturas de imagens: %s"
 
 #: utils_locale.rstimecapture
 msgid "Capture time"
@@ -20863,4 +20885,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-

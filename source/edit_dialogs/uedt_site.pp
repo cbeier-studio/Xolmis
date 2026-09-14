@@ -39,7 +39,6 @@ type
     eLongitude: TEditButton;
     eLatitude: TEditButton;
     eName: TEdit;
-    dsLink: TDataSource;
     lblAltitude1: TLabel;
     lblLatitude: TLabel;
     lblLongitude: TLabel;
@@ -64,10 +63,9 @@ type
     SBox: TScrollBox;
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAltitudeKeyPress(Sender: TObject; var Key: char);
     procedure eLongitudeButtonClick(Sender: TObject);
-    procedure eNameEditingDone(Sender: TObject);
+    procedure eNameChange(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure eParentSiteButtonClick(Sender: TObject);
     procedure eParentSiteDBEditKeyPress(Sender: TObject; var Key: char);
@@ -119,14 +117,6 @@ begin
   OpenHelp(HELP_GAZETTEER);
 end;
 
-procedure TedtSite.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtSite.eAltitudeKeyPress(Sender: TObject; var Key: char);
 const
   AllowedChars = ['0'..'9', ',', '.', '+', '-', #8, #13, #27];
@@ -136,8 +126,6 @@ var
   DecimalValue: Extended;
 begin
   FormKeyPress(Sender, Key);
-
-  sbSave.Enabled := IsRequiredFilled;
 
   EditText := EmptyStr;
   PosDecimal := 0;
@@ -217,7 +205,7 @@ begin
   GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
-procedure TedtSite.eNameEditingDone(Sender: TObject);
+procedure TedtSite.eNameChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -232,8 +220,6 @@ begin
     SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-
-  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSite.eParentSiteButtonClick(Sender: TObject);
@@ -271,14 +257,11 @@ begin
       SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-
-  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSite.eParentSiteEditingDone(Sender: TObject);
 begin
   GetFullName;
-  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSite.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

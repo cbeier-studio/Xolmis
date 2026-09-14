@@ -11,7 +11,7 @@ object edtSurvey: TedtSurvey
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -181,7 +181,7 @@ object edtSurvey: TedtSurvey
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
-          OnEditingDone = eDateEditingDone
+          OnChange = eDateChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
@@ -442,7 +442,7 @@ object edtSurvey: TedtSurvey
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eMethodButtonClick
-          OnEditingDone = eDateEditingDone
+          OnChange = eDateChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eMethodKeyPress
@@ -505,7 +505,7 @@ object edtSurvey: TedtSurvey
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eDateButtonClick
-          OnEditingDone = eDateEditingDone
+          OnChange = eDateChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
@@ -1078,19 +1078,12 @@ object edtSurvey: TedtSurvey
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
-          OnEditingDone = eDateEditingDone
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDurationKeyPress
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qSurveys
-    OnDataChange = dsLinkDataChange
-    Left = 333
-    Top = 77
   end
   object pmNew: TPopupMenu
     Left = 127

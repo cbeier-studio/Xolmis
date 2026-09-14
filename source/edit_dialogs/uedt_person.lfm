@@ -223,7 +223,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 368
           TabOrder = 0
-          OnEditingDone = eFullnameEditingDone
+          OnChange = eFullnameChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -273,7 +273,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 176
           TabOrder = 0
-          OnEditingDone = eFullnameEditingDone
+          OnChange = eFullnameChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -769,7 +769,7 @@ object edtPerson: TedtPerson
           Top = 22
           Width = 368
           TabOrder = 0
-          OnEditingDone = eFullnameEditingDone
+          OnChange = eFullnameChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
@@ -1356,12 +1356,6 @@ object edtPerson: TedtPerson
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qPeople
-    OnDataChange = dsLinkDataChange
-    Left = 326
-    Top = 38
   end
   object pmImage: TPopupMenu
     ImagesWidth = 20

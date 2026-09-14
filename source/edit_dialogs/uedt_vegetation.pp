@@ -34,7 +34,6 @@ type
     cbShrubsDistribution: TComboBox;
     cbTreesDistribution: TComboBox;
     cbHerbsDistribution: TComboBox;
-    dsLink: TDataSource;
     eShrubsAvgHeight: TSpinEdit;
     eTreesAvgHeight: TSpinEdit;
     eShrubsProportion: TSpinEdit;
@@ -84,11 +83,10 @@ type
     eHerbsProportion: TSpinEdit;
     eHerbsAvgHeight: TSpinEdit;
     procedure btnHelpClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eSampleDateButtonClick(Sender: TObject);
-    procedure eSampleDateEditingDone(Sender: TObject);
+    procedure eSampleDateChange(Sender: TObject);
     procedure eSampleTimeKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -135,14 +133,6 @@ end;
 procedure TedtVegetation.btnHelpClick(Sender: TObject);
 begin
   OpenHelp(HELP_SURVEYS);
-end;
-
-procedure TedtVegetation.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtVegetation.eLongitudeButtonClick(Sender: TObject);
@@ -242,7 +232,7 @@ begin
   CalendarDlg(eSampleDate.Text, eSampleDate, Dt);
 end;
 
-procedure TedtVegetation.eSampleDateEditingDone(Sender: TObject);
+procedure TedtVegetation.eSampleDateChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

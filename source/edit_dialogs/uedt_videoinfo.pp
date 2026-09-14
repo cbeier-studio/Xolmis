@@ -34,7 +34,6 @@ type
     cbCoordinatePrecision: TComboBox;
     cbVideoType: TComboBox;
     cbLicenseType: TComboBox;
-    dsLink: TDataSource;
     eAuthor: TEditButton;
     eDistance: TFloatSpinEdit;
     eHabitat: TEdit;
@@ -108,7 +107,7 @@ type
     procedure eLongitudeButtonClick(Sender: TObject);
     procedure eLongitudeKeyPress(Sender: TObject; var Key: char);
     procedure eRecordingDateButtonClick(Sender: TObject);
-    procedure eRecordingDateEditingDone(Sender: TObject);
+    procedure eRecordingDateChange(Sender: TObject);
     procedure eRecordingTimeKeyPress(Sender: TObject; var Key: char);
     procedure eTaxonButtonClick(Sender: TObject);
     procedure eTaxonKeyPress(Sender: TObject; var Key: char);
@@ -276,7 +275,7 @@ end;
 
 procedure TedtVideoInfo.eLongitudeButtonClick(Sender: TObject);
 begin
-  GeoAssistDlg(TControl(Sender), dsLink.DataSet, COL_LONGITUDE, COL_LATITUDE);
+  GeoAssistDlg(TControl(Sender), eLongitude, eLatitude);
 end;
 
 procedure TedtVideoInfo.eLongitudeKeyPress(Sender: TObject; var Key: char);
@@ -369,7 +368,7 @@ begin
   CalendarDlg(eRecordingDate.Text, eRecordingDate, Dt);
 end;
 
-procedure TedtVideoInfo.eRecordingDateEditingDone(Sender: TObject);
+procedure TedtVideoInfo.eRecordingDateChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

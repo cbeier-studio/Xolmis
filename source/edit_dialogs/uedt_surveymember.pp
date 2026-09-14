@@ -32,7 +32,6 @@ type
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
     ckVisitor: TCheckBox;
-    dsLink: TDataSource;
     ePerson: TEditButton;
     lblPerson: TLabel;
     lineBottom: TShapeLineBGRA;
@@ -47,7 +46,6 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure ckVisitorKeyPress(Sender: TObject; var Key: char);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure ePersonButtonClick(Sender: TObject);
     procedure ePersonChange(Sender: TObject);
     procedure ePersonKeyPress(Sender: TObject; var Key: char);
@@ -117,14 +115,6 @@ begin
       SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtSurveyMember.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtSurveyMember.ePersonButtonClick(Sender: TObject);

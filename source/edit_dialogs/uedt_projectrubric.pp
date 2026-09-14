@@ -30,7 +30,6 @@ type
 
   TedtProjectRubric = class(TForm)
     btnHelp: TSpeedButton;
-    dsLink: TDataSource;
     eRubric: TEdit;
     eFundingSource: TEdit;
     eItem: TEdit;
@@ -50,8 +49,7 @@ type
     sbCancel: TButton;
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
-    procedure eFundingSourceEditingDone(Sender: TObject);
+    procedure eFundingSourceChange(Sender: TObject);
     procedure eFundingSourceKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -97,15 +95,7 @@ begin
   OpenHelp(HELP_PROJECTS);
 end;
 
-procedure TedtProjectRubric.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
-procedure TedtProjectRubric.eFundingSourceEditingDone(Sender: TObject);
+procedure TedtProjectRubric.eFundingSourceChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

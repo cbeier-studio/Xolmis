@@ -149,7 +149,7 @@ type
     FAccessionNum: String;
     FFullName: String;
     FAccessionType: String;
-    FAccessionSeq: Integer;
+    FDuplicateSeq: Integer;
     FTaxonId: Integer;
     FIndividualId: Integer;
     FNestId: Integer;
@@ -174,7 +174,7 @@ type
     property AccessionNum: String read FAccessionNum write FAccessionNum;
     property FullName: String read FFullName write FFullName;
     property AccessionType: String read FAccessionType write FAccessionType;
-    property AccessionSeq: Integer read FAccessionSeq write FAccessionSeq;
+    property DuplicateSeq: Integer read FDuplicateSeq write FDuplicateSeq;
     property TaxonId: Integer read FTaxonId write FTaxonId;
     property IndividualId: Integer read FIndividualId write FIndividualId;
     property NestId: Integer read FNestId write FNestId;
@@ -229,7 +229,7 @@ begin
     FFullName := TSamplePrep(Source).FullName;
     FAccessionNum := TSamplePrep(Source).AccessionNum;
     FAccessionType := TSamplePrep(Source).AccessionType;
-    FAccessionSeq := TSamplePrep(Source).AccessionSeq;
+    FDuplicateSeq := TSamplePrep(Source).DuplicateSeq;
     FTaxonId := TSamplePrep(Source).TaxonId;
     FIndividualId := TSamplePrep(Source).IndividualId;
     FNestId := TSamplePrep(Source).NestId;
@@ -248,7 +248,7 @@ begin
   FFullName := EmptyStr;
   FAccessionNum := EmptyStr;
   FAccessionType := EmptyStr;
-  FAccessionSeq := 0;
+  FDuplicateSeq := 0;
   FTaxonId := 0;
   FIndividualId := 0;
   FNestId := 0;
@@ -286,7 +286,7 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscType, aOld.AccessionType, FAccessionType, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscDuplicateNr, aOld.AccessionSeq, FAccessionSeq, R) then
+  if FieldValuesDiff(rscDuplicateNr, aOld.DuplicateSeq, FDuplicateSeq, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscFullName, aOld.FullName, FFullName, R) then
     Changes.Add(R);
@@ -325,7 +325,7 @@ begin
     FFullName         := Obj.Get('full_name', '');
     FAccessionType    := Obj.Get('accession_type', '');
     FAccessionNum     := Obj.Get('accession_number', '');
-    FAccessionSeq     := Obj.Get('accession_duplicate', 0);
+    FDuplicateSeq     := Obj.Get('duplicate_seq', 0);
     FTaxonId          := Obj.Get('taxon_id', 0);
     FIndividualId     := Obj.Get('individual_id', 0);
     FNestId           := Obj.Get('nest_id', 0);
@@ -349,7 +349,7 @@ begin
     JSONObject.Add('full_name', FFullName);
     JSONObject.Add('accession_type', FAccessionType);
     JSONObject.Add('accession_number', FAccessionNum);
-    JSONObject.Add('accession_duplicate', FAccessionSeq);
+    JSONObject.Add('duplicate_seq', FDuplicateSeq);
     JSONObject.Add('taxon_id', FTaxonId);
     JSONObject.Add('individual_id', FIndividualId);
     JSONObject.Add('nest_id', FNestId);
@@ -368,10 +368,10 @@ end;
 function TSamplePrep.ToString: String;
 begin
   Result := Format('SamplePrep(Id=%d, SpecimenId=%d, FullName=%s, AccessionType=%s, AccessionNum=%s, ' +
-    'AccessionSeq=%d, TaxonId=%d, IndividualId=%d, NestId=%d, EggId=%d, PreparationDate=%s, PreparerId=%d, ' +
+    'DuplicateSeq=%d, TaxonId=%d, IndividualId=%d, NestId=%d, EggId=%d, PreparationDate=%s, PreparerId=%d, ' +
     'InstitutionId=%d, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FSpecimenId, FFullName, FAccessionType, FAccessionNum, FAccessionSeq, FTaxonId, FIndividualId,
+    [FId, FSpecimenId, FFullName, FAccessionType, FAccessionNum, FDuplicateSeq, FTaxonId, FIndividualId,
     FNestId, FEggId, DateToStr(FPreparationDate), FPreparerId, FInstitutionId, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
@@ -609,7 +609,7 @@ begin
     R.FullName := FieldByName('full_name').AsString;
     R.AccessionNum := FieldByName('accession_num').AsString;
     R.AccessionType := FieldByName('accession_type').AsString;
-    R.AccessionSeq := FieldByName('accession_seq').AsInteger;
+    R.DuplicateSeq := FieldByName('duplicate_seq').AsInteger;
     R.TaxonId := FieldByName('taxon_id').AsInteger;
     R.IndividualId := FieldByName('individual_id').AsInteger;
     R.NestId := FieldByName('nest_id').AsInteger;
@@ -649,8 +649,8 @@ begin
     R.AccessionNum := ARow.Values['accession_num'];
   if ARow.IndexOfName('accession_type') >= 0 then
     R.AccessionType := ARow.Values['accession_type'];
-  if ARow.IndexOfName('accession_seq') >= 0 then
-    R.AccessionSeq := StrToIntDef(ARow.Values['accession_seq'], 0);
+  if ARow.IndexOfName('duplicate_seq') >= 0 then
+    R.DuplicateSeq := StrToIntDef(ARow.Values['duplicate_seq'], 0);
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
   if ARow.IndexOfName('individual_id') >= 0 then
@@ -688,7 +688,7 @@ begin
     SetStrParam(ParamByName('accession_num'), R.AccessionNum);
     SetStrParam(ParamByName('full_name'), R.FullName);
     SetStrParam(ParamByName('accession_type'), R.AccessionType);
-    SetIntParam(ParamByName('accession_seq'), R.AccessionSeq);
+    SetIntParam(ParamByName('duplicate_seq'), R.DuplicateSeq);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('nest_id'), R.NestId);
@@ -739,7 +739,7 @@ begin
     SetStrParam(ParamByName('accession_num'), R.AccessionNum);
     SetStrParam(ParamByName('full_name'), R.FullName);
     SetStrParam(ParamByName('accession_type'), R.AccessionType);
-    SetIntParam(ParamByName('accession_seq'), R.AccessionSeq);
+    SetIntParam(ParamByName('duplicate_seq'), R.DuplicateSeq);
     SetForeignParam(ParamByName('taxon_id'), R.TaxonId);
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('nest_id'), R.NestId);

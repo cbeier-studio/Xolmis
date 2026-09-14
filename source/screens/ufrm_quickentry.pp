@@ -3674,7 +3674,7 @@ begin
               // replace existing record
               Obj.SpecimenId := FMasterKey;
               Obj.AccessionNum := CellValue(COL_ACCESSION_NUMBER, r);
-              Obj.AccessionSeq := StrToIntDef(CellValue(COL_ACCESSION_DUPLICATE, r), 0);
+              Obj.DuplicateSeq := StrToIntDef(CellValue(COL_ACCESSION_DUPLICATE, r), 0);
               Obj.AccessionType := StrToAccessionType(CellValue(COL_ACCESSION_TYPE, r));
               Obj.PreparationDate := StrToDateDef(CellValue(COL_PREPARATION_DATE, r), NullDate);
               Obj.PreparerId := GetPersonKey(CellValue(COL_PREPARER_NAME, r));
@@ -3693,7 +3693,7 @@ begin
           // insert new record
           Obj.SpecimenId := FMasterKey;
           Obj.AccessionNum := CellValue(COL_ACCESSION_NUMBER, r);
-          Obj.AccessionSeq := StrToIntDef(CellValue(COL_ACCESSION_DUPLICATE, r), 0);
+          Obj.DuplicateSeq := StrToIntDef(CellValue(COL_ACCESSION_DUPLICATE, r), 0);
           Obj.AccessionType := StrToAccessionType(CellValue(COL_ACCESSION_TYPE, r));
           Obj.PreparationDate := StrToDateDef(CellValue(COL_PREPARATION_DATE, r), NullDate);
           Obj.PreparerId := GetPersonKey(CellValue(COL_PREPARER_NAME, r));

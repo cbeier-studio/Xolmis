@@ -470,7 +470,7 @@ begin
       'accession_num    VARCHAR (20),' +
       'full_name        VARCHAR (100),' +
       'accession_type   CHAR (5),' +
-      'accession_seq    INTEGER,' +
+      'duplicate_seq    INTEGER,' +
       'taxon_id         INTEGER       REFERENCES zoo_taxa (taxon_id) ON UPDATE CASCADE,' +
       'individual_id    INTEGER       REFERENCES individuals (individual_id) ON UPDATE CASCADE,' +
       'nest_id          INTEGER       REFERENCES nests (nest_id) ON UPDATE CASCADE,' +
@@ -526,7 +526,7 @@ begin
       'accession_num, ' +
       'full_name, ' +
       'accession_type, ' +
-      'accession_seq, ' +
+      'duplicate_seq, ' +
       'taxon_id, ' +
       'individual_id, ' +
       'nest_id, ' +
@@ -542,7 +542,7 @@ begin
       ':accession_num, ' +
       ':full_name, ' +
       ':accession_type, ' +
-      ':accession_seq, ' +
+      ':duplicate_seq, ' +
       ':taxon_id, ' +
       ':individual_id, ' +
       ':nest_id, ' +
@@ -590,7 +590,7 @@ begin
       'accession_num, ' +
       'full_name, ' +
       'accession_type, ' +
-      'accession_seq, ' +
+      'duplicate_seq, ' +
       'taxon_id, ' +
       'individual_id, ' +
       'nest_id, ' +
@@ -638,7 +638,7 @@ begin
       'accession_num = :accession_num, ' +
       'full_name = :full_name, ' +
       'accession_type = :accession_type, ' +
-      'accession_seq = :accession_seq, ' +
+      'duplicate_seq = :duplicate_seq, ' +
       'taxon_id = :taxon_id, ' +
       'individual_id = :individual_id, ' +
       'nest_id = :nest_id, ' +

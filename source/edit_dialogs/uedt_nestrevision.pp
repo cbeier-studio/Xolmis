@@ -41,7 +41,6 @@ type
     eObserver1: TEditButton;
     eObserver2: TEditButton;
     eNidoparasite: TEditButton;
-    dsLink: TDataSource;
     lblHostNestlingsTally: TLabel;
     lblNest: TLabel;
     lblNestStage: TLabel;
@@ -81,7 +80,6 @@ type
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure cbNestStageSelect(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eNestButtonClick(Sender: TObject);
     procedure eNestKeyPress(Sender: TObject; var Key: char);
     procedure eNidoparasiteButtonClick(Sender: TObject);
@@ -91,7 +89,7 @@ type
     procedure eObserver2ButtonClick(Sender: TObject);
     procedure eObserver2KeyPress(Sender: TObject; var Key: char);
     procedure eRevisionDateButtonClick(Sender: TObject);
-    procedure eRevisionDateEditingDone(Sender: TObject);
+    procedure eRevisionDateChange(Sender: TObject);
     procedure eRevisionTimeKeyPress(Sender: TObject; var Key: char);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -160,14 +158,6 @@ procedure TedtNestRevision.cbNestStageSelect(Sender: TObject);
 begin
   if cbNestStage.Text = rsNestInactive then
     cbNestStatus.ItemIndex := cbNestStatus.Items.IndexOf(rsNestInactive);
-end;
-
-procedure TedtNestRevision.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtNestRevision.eNestButtonClick(Sender: TObject);
@@ -313,7 +303,7 @@ begin
   CalendarDlg(eRevisionDate.Text, eRevisionDate, Dt);
 end;
 
-procedure TedtNestRevision.eRevisionDateEditingDone(Sender: TObject);
+procedure TedtNestRevision.eRevisionDateChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

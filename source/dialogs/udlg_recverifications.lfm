@@ -8,7 +8,7 @@ object dlgRecVerifications: TdlgRecVerifications
   ClientWidth = 771
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnClose = FormClose
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -212,17 +212,17 @@ object dlgRecVerifications: TdlgRecVerifications
       end    
       item
         Title.Caption = 'Status'
-        Width = 210
+        Width = 216
         FieldName = 'verification_status'
       end    
       item
         Title.Caption = 'Researcher'
-        Width = 210
+        Width = 216
         FieldName = 'person_name'
       end    
       item
         Title.Caption = 'Notes'
-        Width = 210
+        Width = 215
         FieldName = 'notes'
       end>
     DataSource = dsHistory
@@ -292,7 +292,6 @@ object dlgRecVerifications: TdlgRecVerifications
       end>
     Database = DMM.sqlCon
     Transaction = DMM.sqlTrans
-    ReadOnly = True
     SQL.Strings = (
       'SELECT h.verification_date, h.verification_status, h.table_name,'
       '  h.record_id, h.verification_id, h.notes, h.person_id,'

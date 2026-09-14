@@ -11,7 +11,7 @@ object frmMaintenance: TfrmMaintenance
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
@@ -1043,6 +1043,7 @@ object frmMaintenance: TfrmMaintenance
       Rounding.RoundY = 6
       ShowHint = True
       TabOrder = 0
+      Visible = False
       object icoRecreateImageThumbnails: TImage
         AnchorSideLeft.Control = pRecreateImageThumbnails
         AnchorSideTop.Control = pRecreateImageThumbnails

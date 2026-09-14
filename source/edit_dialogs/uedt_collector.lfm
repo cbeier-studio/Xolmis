@@ -11,7 +11,7 @@ object edtCollector: TedtCollector
   ClientWidth = 434
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -170,12 +170,6 @@ object edtCollector: TedtCollector
       TabOrder = 2
       OnClick = btnNewClick
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qSampleCollectors
-    OnDataChange = dsLinkDataChange
-    Left = 296
-    Top = 16
   end
   object pmNew: TPopupMenu
     Left = 133

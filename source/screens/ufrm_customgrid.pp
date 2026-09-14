@@ -9698,7 +9698,7 @@ var
   aStatus: TRecordReviewStatus;
 begin
   DS := nil;
-  TimerRecordUpdate.Enabled := False;
+  TimerChildUpdate.Enabled := False;
   aTotalProblems := 0;
 
   if (isClosing) then
@@ -9714,7 +9714,7 @@ begin
     6: DS := dsLink7.DataSet;
   end;
 
-  aId := DS.FieldByName(GetPrimaryKey(DS)).AsInteger;
+  aId := DS.FieldByName(GetPrimaryKey(FChildTable)).AsInteger;
 
   aStatus := GetRecordVerification(TABLE_NAMES[FChildTable], aId, aTotalProblems);
 
@@ -9762,7 +9762,7 @@ begin
     Exit;
 
   DS := dsLink.DataSet;
-  aId := DS.FieldByName(GetPrimaryKey(DS)).AsInteger;
+  aId := DS.FieldByName(GetPrimaryKey(FTableType)).AsInteger;
 
   LoadImagesMetadataFromDB;
 

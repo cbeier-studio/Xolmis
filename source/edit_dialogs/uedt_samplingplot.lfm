@@ -11,7 +11,7 @@ object edtSamplingPlot: TedtSamplingPlot
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -181,7 +181,7 @@ object edtSamplingPlot: TedtSamplingPlot
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
         end
@@ -263,7 +263,7 @@ object edtSamplingPlot: TedtSamplingPlot
           Top = 22
           Width = 384
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -313,7 +313,7 @@ object edtSamplingPlot: TedtSamplingPlot
           Top = 22
           Width = 184
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -480,12 +480,6 @@ object edtSamplingPlot: TedtSamplingPlot
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qSamplingPlots
-    OnDataChange = dsLinkDataChange
-    Left = 333
-    Top = 19
   end
   object pmNew: TPopupMenu
     Left = 127

@@ -12,7 +12,7 @@ object edtPermit: TedtPermit
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -212,7 +212,7 @@ object edtPermit: TedtPermit
           Top = 22
           Width = 389
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -252,7 +252,7 @@ object edtPermit: TedtPermit
           Top = 22
           Width = 389
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -313,7 +313,7 @@ object edtPermit: TedtPermit
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eDispatchDateButtonClick
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -394,7 +394,7 @@ object edtPermit: TedtPermit
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 1
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -482,12 +482,6 @@ object edtPermit: TedtPermit
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qPermits
-    OnDataChange = dsLinkDataChange
-    Left = 301
-    Top = 64
   end
   object pmNew: TPopupMenu
     Left = 127

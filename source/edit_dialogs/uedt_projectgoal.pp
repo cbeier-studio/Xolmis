@@ -31,7 +31,6 @@ type
   TedtProjectGoal = class(TForm)
     btnHelp: TSpeedButton;
     cbStatus: TComboBox;
-    dsLink: TDataSource;
     lblDescription: TLabel;
     lblStatus: TLabel;
     lblStatus1: TLabel;
@@ -45,11 +44,10 @@ type
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
     procedure cbStatusKeyPress(Sender: TObject; var Key: char);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
-    procedure mDescriptionEditingDone(Sender: TObject);
+    procedure mDescriptionChange(Sender: TObject);
     procedure sbSaveClick(Sender: TObject);
   private
     FIsNew: Boolean;
@@ -104,14 +102,6 @@ begin
       SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtProjectGoal.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
 end;
 
 procedure TedtProjectGoal.FormKeyDown(Sender: TObject;
@@ -180,7 +170,7 @@ begin
     Result := True;
 end;
 
-procedure TedtProjectGoal.mDescriptionEditingDone(Sender: TObject);
+procedure TedtProjectGoal.mDescriptionChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

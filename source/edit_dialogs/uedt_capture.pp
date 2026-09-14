@@ -78,7 +78,6 @@ type
     eFieldNumber: TEdit;
     ePhotographer1: TEditButton;
     ePhotographer2: TEditButton;
-    dsLink: TDataSource;
     eHemoglobin: TFloatSpinEdit;
     eHematocrit: TFloatSpinEdit;
     eGlucose: TFloatSpinEdit;
@@ -217,7 +216,6 @@ type
     procedure cbCaptureTypeSelect(Sender: TObject);
     procedure cbSexKeyPress(Sender: TObject; var Key: char);
     procedure cbStatusKeyPress(Sender: TObject; var Key: char);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eAnnotatorButtonClick(Sender: TObject);
     procedure eAnnotatorKeyPress(Sender: TObject; var Key: char);
     procedure eBandButtonClick(Sender: TObject);
@@ -230,7 +228,7 @@ type
     procedure eHowAgedButtonClick(Sender: TObject);
     procedure eHowSexedButtonClick(Sender: TObject);
     procedure eIndividualButtonClick(Sender: TObject);
-    procedure eIndividualEditingDone(Sender: TObject);
+    procedure eIndividualChange(Sender: TObject);
     procedure eIndividualKeyPress(Sender: TObject; var Key: char);
     procedure eLeftTarsusButtonClick(Sender: TObject);
     procedure eLocalityButtonClick(Sender: TObject);
@@ -476,14 +474,6 @@ begin
   end;
 end;
 
-procedure TedtCapture.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtCapture.eBandButtonClick(Sender: TObject);
 begin
   FindDlg(tbBands, eBand, FBandId);
@@ -592,7 +582,7 @@ begin
     GetIndividualData;
 end;
 
-procedure TedtCapture.eIndividualEditingDone(Sender: TObject);
+procedure TedtCapture.eIndividualChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -674,20 +664,17 @@ end;
 procedure TedtCapture.eLongitudeExit(Sender: TObject);
 var
   Ax: TMapAxis;
-  aField: String;
   C: Extended;
   Opt: TCoordinateFormatOptions;
   FDecCoord, FDmsCoord: IMapCoordinate;
 begin
   if Sender = eLongitude then
   begin
-    aField := COL_LONGITUDE;
     Ax := maLongitude;
   end
   else
   if Sender = eLatitude then
   begin
-    aField := COL_LATITUDE;
     Ax := maLatitude;
   end
   else
@@ -696,11 +683,11 @@ begin
   Opt := DefaultCoordinateOptions;
   Opt.Axis := Ax;
 
-  C := dsLink.DataSet.FieldByName(aField).AsFloat;
   case Ax of
     maBoth: ;
     maLongitude:
     begin
+      C := StrToFloatDef(eLongitude.Text, 0);
       if C <> 0.0 then
       begin
         FDecCoord := TCoordinateRegistry.CreateInstance(mcDecimal);
@@ -715,6 +702,7 @@ begin
     end;
     maLatitude:
     begin
+      C := StrToFloatDef(eLatitude.Text, 0);
       if C <> 0.0 then
       begin
         FDecCoord := TCoordinateRegistry.CreateInstance(mcDecimal);

@@ -175,7 +175,7 @@ object edtDocumentInfo: TedtDocumentInfo
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eDocumentDateButtonClick
-          OnEditingDone = eDocumentDateEditingDone
+          OnChange = eDocumentDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = cbDocumentTypeKeyPress
         end
@@ -548,11 +548,5 @@ object edtDocumentInfo: TedtDocumentInfo
       ShowHint = True
       Visible = False
     end
-  end
-  object dsLink: TDataSource
-    DataSet = frmCustomGrid.qDocs
-    OnDataChange = dsLinkDataChange
-    Left = 336
-    Top = 48
   end
 end

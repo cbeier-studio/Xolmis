@@ -45,7 +45,6 @@ type
     eLocality: TEditButton;
     eNetStation: TEditButton;
     eProject: TEditButton;
-    dsLink: TDataSource;
     eArea: TFloatSpinEdit;
     eDistance: TFloatSpinEdit;
     lblCoordinatesPrecision: TLabel;
@@ -108,9 +107,8 @@ type
     eTotalNets: TSpinEdit;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDateButtonClick(Sender: TObject);
-    procedure eDateEditingDone(Sender: TObject);
+    procedure eDateChange(Sender: TObject);
     procedure eDurationKeyPress(Sender: TObject; var Key: char);
     procedure eEndLongitudeButtonClick(Sender: TObject);
     procedure eExpeditionButtonClick(Sender: TObject);
@@ -251,14 +249,6 @@ begin
     SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblStartLongitude.Height;
 end;
 
-procedure TedtSurvey.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtSurvey.eDateButtonClick(Sender: TObject);
 var
   Dt: TDate;
@@ -266,7 +256,7 @@ begin
   CalendarDlg(eDate.Text, eDate, Dt);
 end;
 
-procedure TedtSurvey.eDateEditingDone(Sender: TObject);
+procedure TedtSurvey.eDateChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

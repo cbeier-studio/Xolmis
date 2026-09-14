@@ -11,7 +11,7 @@ object edtEgg: TedtEgg
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -227,7 +227,7 @@ object edtEgg: TedtEgg
           Width = 184
           MaxValue = 999999
           TabOrder = 0
-          OnEditingDone = eEggSeqEditingDone
+          OnChange = eEggSeqChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
@@ -300,7 +300,7 @@ object edtEgg: TedtEgg
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
-          OnEditingDone = eEggSeqEditingDone
+          OnChange = eEggSeqChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
@@ -363,7 +363,7 @@ object edtEgg: TedtEgg
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eObserverButtonClick
-          OnEditingDone = eEggSeqEditingDone
+          OnChange = eEggSeqChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eObserverKeyPress
         end
@@ -859,12 +859,6 @@ object edtEgg: TedtEgg
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qEggs
-    OnDataChange = dsLinkDataChange
-    Left = 344
-    Top = 32
   end
   object pmNew: TPopupMenu
     Left = 128

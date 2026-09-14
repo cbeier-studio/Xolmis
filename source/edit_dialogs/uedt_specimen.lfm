@@ -12,7 +12,7 @@ object edtSpecimen: TedtSpecimen
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -223,7 +223,7 @@ object edtSpecimen: TedtSpecimen
           Top = 22
           Width = 184
           TabOrder = 0
-          OnEditingDone = eFieldNumberEditingDone
+          OnChange = eFieldNumberChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
@@ -250,7 +250,7 @@ object edtSpecimen: TedtSpecimen
           )
           Style = csDropDownList
           TabOrder = 1
-          OnEditingDone = eFieldNumberEditingDone
+          OnChange = eFieldNumberChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eFieldNumberKeyPress
         end
@@ -370,7 +370,7 @@ object edtSpecimen: TedtSpecimen
             NumbersOnly = True
             TabOrder = 0
             TextHint = 'YYYY'
-            OnEditingDone = eFieldNumberEditingDone
+            OnChange = eFieldNumberChange
             OnKeyDown = FormKeyDown
             OnKeyPress = eFieldNumberKeyPress
           end
@@ -383,7 +383,6 @@ object edtSpecimen: TedtSpecimen
             NumbersOnly = True
             TabOrder = 1
             TextHint = 'MM'
-            OnEditingDone = eFieldNumberEditingDone
             OnKeyDown = FormKeyDown
             OnKeyPress = eFieldNumberKeyPress
           end
@@ -396,7 +395,6 @@ object edtSpecimen: TedtSpecimen
             NumbersOnly = True
             TabOrder = 2
             TextHint = 'DD'
-            OnEditingDone = eFieldNumberEditingDone
             OnKeyDown = FormKeyDown
             OnKeyPress = eFieldNumberKeyPress
           end
@@ -453,7 +451,7 @@ object edtSpecimen: TedtSpecimen
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
-          OnEditingDone = eFieldNumberEditingDone
+          OnChange = eFieldNumberChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
         end
@@ -616,7 +614,7 @@ object edtSpecimen: TedtSpecimen
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eLocalityButtonClick
-          OnEditingDone = eFieldNumberEditingDone
+          OnChange = eFieldNumberChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eLocalityKeyPress
         end
@@ -794,12 +792,6 @@ object edtSpecimen: TedtSpecimen
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qSpecimens
-    OnDataChange = dsLinkDataChange
-    Left = 314
-    Top = 64
   end
   object pmNew: TPopupMenu
     Left = 131

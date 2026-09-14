@@ -11,7 +11,7 @@ object edtVegetation: TedtVegetation
   Constraints.MinWidth = 416
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -217,7 +217,7 @@ object edtVegetation: TedtVegetation
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eSampleDateButtonClick
-          OnEditingDone = eSampleDateEditingDone
+          OnChange = eSampleDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end
@@ -270,7 +270,7 @@ object edtVegetation: TedtVegetation
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
-          OnEditingDone = eSampleDateEditingDone
+          OnChange = eSampleDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end
@@ -521,7 +521,7 @@ object edtVegetation: TedtVegetation
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
-          OnEditingDone = eSampleDateEditingDone
+          OnChange = eSampleDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end
@@ -657,7 +657,7 @@ object edtVegetation: TedtVegetation
           ItemHeight = 15
           Style = csDropDownList
           TabOrder = 0
-          OnEditingDone = eSampleDateEditingDone
+          OnChange = eSampleDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
         end
@@ -765,11 +765,5 @@ object edtVegetation: TedtVegetation
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMS.qVegetation
-    OnDataChange = dsLinkDataChange
-    Left = 342
-    Top = 96
   end
 end

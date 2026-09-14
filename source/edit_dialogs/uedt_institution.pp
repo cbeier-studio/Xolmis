@@ -43,7 +43,6 @@ type
     eAddress: TEdit;
     eComplement: TEdit;
     eNeighborhood: TEdit;
-    dsLink: TDataSource;
     lblAbbreviation1: TLabel;
     lblPhone: TLabel;
     lblAbbreviation: TLabel;
@@ -84,10 +83,9 @@ type
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eCountryButtonClick(Sender: TObject);
     procedure eCountryKeyPress(Sender: TObject; var Key: char);
-    procedure eFullnameEditingDone(Sender: TObject);
+    procedure eFullnameChange(Sender: TObject);
     procedure eFullnameKeyPress(Sender: TObject; var Key: char);
     procedure eMunicipalityButtonClick(Sender: TObject);
     procedure eMunicipalityKeyPress(Sender: TObject; var Key: char);
@@ -169,14 +167,6 @@ begin
     SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblMunicipality.Height;
 end;
 
-procedure TedtInstitution.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtInstitution.eCountryButtonClick(Sender: TObject);
 begin
   FindSiteDlg([gfCountries], eCountry, FCountryId);
@@ -210,7 +200,7 @@ begin
   end;
 end;
 
-procedure TedtInstitution.eFullnameEditingDone(Sender: TObject);
+procedure TedtInstitution.eFullnameChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -333,6 +323,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionInstitution)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 

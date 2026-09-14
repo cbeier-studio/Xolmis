@@ -11,7 +11,7 @@ object edtMethod: TedtMethod
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -153,7 +153,7 @@ object edtMethod: TedtMethod
           Constraints.MinWidth = 372
           MaxLength = 100
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -193,7 +193,6 @@ object edtMethod: TedtMethod
           Constraints.MinWidth = 372
           MaxLength = 60
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -244,7 +243,7 @@ object edtMethod: TedtMethod
           Width = 178
           MaxLength = 20
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -256,7 +255,6 @@ object edtMethod: TedtMethod
           ItemHeight = 15
           MaxLength = 30
           TabOrder = 1
-          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -296,7 +294,6 @@ object edtMethod: TedtMethod
           Align = alTop
           ScrollBars = ssAutoVertical
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
@@ -336,7 +333,6 @@ object edtMethod: TedtMethod
           Align = alTop
           ScrollBars = ssAutoVertical
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
@@ -376,17 +372,10 @@ object edtMethod: TedtMethod
           Align = alTop
           ScrollBars = ssAutoVertical
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
           OnKeyDown = FormKeyDown
           OnKeyPress = FormKeyPress
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qMethods
-    OnDataChange = dsLinkDataChange
-    Left = 426
-    Top = 74
   end
 end

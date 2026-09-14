@@ -10,7 +10,7 @@ object edtIndividual: TedtIndividual
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
@@ -307,7 +307,7 @@ object edtIndividual: TedtIndividual
           Spacing = 0
           TabOrder = 0
           OnButtonClick = eTaxonButtonClick
-          OnEditingDone = eTaxonEditingDone
+          OnChange = eTaxonChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eTaxonKeyPress
@@ -1023,12 +1023,6 @@ object edtIndividual: TedtIndividual
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qIndividuals
-    OnDataChange = dsLinkDataChange
-    Left = 314
-    Top = 26
   end
   object pmNew: TPopupMenu
     Left = 128

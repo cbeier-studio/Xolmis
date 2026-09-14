@@ -31,7 +31,6 @@ type
 
   TedtProject = class(TForm)
     btnHelp: TSpeedButton;
-    dsLink: TDataSource;
     eProtocolNumber: TEdit;
     eTitle: TEdit;
     eShortTitle: TEdit;
@@ -75,10 +74,9 @@ type
     SBox: TScrollBox;
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eEndDateButtonClick(Sender: TObject);
     procedure eStartDateButtonClick(Sender: TObject);
-    procedure eTitleEditingDone(Sender: TObject);
+    procedure eTitleChange(Sender: TObject);
     procedure eTitleKeyPress(Sender: TObject; var Key: char);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
@@ -143,14 +141,6 @@ begin
     SBox.VertScrollBar.Position := SBox.VertScrollBar.Position + R.Top - 8 - lblContactName.Height;
 end;
 
-procedure TedtProject.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtProject.eEndDateButtonClick(Sender: TObject);
 var
   Dt: TDate;
@@ -165,7 +155,7 @@ begin
   CalendarDlg(eStartDate.Text, eStartDate, Dt);
 end;
 
-procedure TedtProject.eTitleEditingDone(Sender: TObject);
+procedure TedtProject.eTitleChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;

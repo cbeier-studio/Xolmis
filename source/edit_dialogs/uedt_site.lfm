@@ -11,7 +11,7 @@ object edtSite: TedtSite
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -209,7 +209,7 @@ object edtSite: TedtSite
           Width = 350
           Constraints.MinWidth = 350
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -278,7 +278,7 @@ object edtSite: TedtSite
           )
           Style = csDropDownList
           TabOrder = 1
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -357,7 +357,7 @@ object edtSite: TedtSite
           Top = 22
           Width = 350
           TabOrder = 0
-          OnEditingDone = eNameEditingDone
+          OnChange = eNameChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eNameKeyPress
         end
@@ -495,11 +495,5 @@ object edtSite: TedtSite
         end
       end
     end
-  end
-  object dsLink: TDataSource
-    DataSet = DMG.qGazetteer
-    OnDataChange = dsLinkDataChange
-    Left = 288
-    Top = 16
   end
 end

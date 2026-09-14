@@ -33,7 +33,6 @@ type
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
     cbPermitType: TComboBox;
-    dsLink: TDataSource;
     eName: TEdit;
     ePermitNumber: TEdit;
     eDispatcher: TEdit;
@@ -65,10 +64,9 @@ type
     sbSave: TButton;
     procedure btnHelpClick(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
-    procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure eDispatchDateButtonClick(Sender: TObject);
     procedure eExpireDateButtonClick(Sender: TObject);
-    procedure eNameEditingDone(Sender: TObject);
+    procedure eNameChange(Sender: TObject);
     procedure eNameKeyPress(Sender: TObject; var Key: char);
     procedure eProjectButtonClick(Sender: TObject);
     procedure eProjectKeyPress(Sender: TObject; var Key: char);
@@ -130,14 +128,6 @@ begin
     pmNew.Popup(X, Y);
 end;
 
-procedure TedtPermit.dsLinkDataChange(Sender: TObject; Field: TField);
-begin
-  //if dsLink.State = dsEdit then
-  //  sbSave.Enabled := IsRequiredFilled and dsLink.DataSet.Modified
-  //else
-  //  sbSave.Enabled := IsRequiredFilled;
-end;
-
 procedure TedtPermit.eDispatchDateButtonClick(Sender: TObject);
 var
   Dt: TDate;
@@ -152,7 +142,7 @@ begin
   CalendarDlg(eExpireDate.Text, eExpireDate, Dt);
 end;
 
-procedure TedtPermit.eNameEditingDone(Sender: TObject);
+procedure TedtPermit.eNameChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
 end;
@@ -253,6 +243,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionPermit)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 

@@ -337,7 +337,7 @@ object edtImageInfo: TedtImageInfo
           TabOrder = 0
           TextHint = 'DD/MM/YYYY'
           OnButtonClick = eImageDateButtonClick
-          OnEditingDone = eImageDateEditingDone
+          OnChange = eImageDateChange
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eImageTimeKeyPress
@@ -819,12 +819,6 @@ object edtImageInfo: TedtImageInfo
       Proportional = True
       Visible = False
     end
-  end
-  object dsLink: TDataSource
-    DataSet = frmCustomGrid.qImages
-    OnDataChange = dsLinkDataChange
-    Left = 352
-    Top = 26
   end
   object pmNew: TPopupMenu
     Left = 129
