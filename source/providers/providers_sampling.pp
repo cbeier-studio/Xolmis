@@ -260,7 +260,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM expeditions';
 
   case aWhere of
@@ -537,7 +538,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM surveys ';
 
   case aWhere of
@@ -694,7 +696,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM survey_team ';
 
   case aWhere of
@@ -921,7 +924,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM nets_effort ';
 
   case aWhere of
@@ -1125,7 +1129,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM vegetation ';
 
   case aWhere of
@@ -1317,7 +1322,8 @@ begin
       'update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM weather_logs ';
 
   case aWhere of

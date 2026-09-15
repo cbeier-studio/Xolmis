@@ -390,7 +390,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM nests ';
 
   case aWhere of
@@ -558,7 +559,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM nest_owners ';
 
   case aWhere of
@@ -784,7 +786,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM nest_revisions ';
 
   case aWhere of
@@ -1053,7 +1056,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM eggs ';
 
   case aWhere of

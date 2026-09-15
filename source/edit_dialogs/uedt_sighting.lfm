@@ -707,7 +707,7 @@ object edtSighting: TedtSighting
           BevelOuter = bvNone
           ClientHeight = 26
           ClientWidth = 404
-          TabOrder = 1
+          TabOrder = 0
           Visible = False
           object btnAddObserver: TBitBtn
             AnchorSideLeft.Control = pObserversToolbar
@@ -735,7 +735,7 @@ object edtSighting: TedtSighting
           ControlList = <>
           FlowLayout = tlTop
           FlowStyle = fsLeftRightTopBottom
-          TabOrder = 0
+          TabOrder = 1
           MultiSelect = True
         end
       end

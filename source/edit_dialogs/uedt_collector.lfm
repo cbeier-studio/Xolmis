@@ -1,13 +1,13 @@
 object edtCollector: TedtCollector
   Left = 414
-  Height = 120
+  Height = 142
   Top = 250
   Width = 434
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Add collector'
-  ClientHeight = 120
+  ClientHeight = 142
   ClientWidth = 434
   PopupMode = pmAuto
   Position = poScreenCenter

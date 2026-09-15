@@ -195,7 +195,8 @@ begin
       'update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM sampling_plots ';
 
   case aWhere of
@@ -367,7 +368,8 @@ begin
       'update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM permanent_nets ';
 
   case aWhere of

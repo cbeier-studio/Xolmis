@@ -166,7 +166,7 @@ object edtNestOwner: TedtNestOwner
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = sbSaveClick
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
@@ -185,7 +185,7 @@ object edtNestOwner: TedtNestOwner
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
-      TabOrder = 1
+      TabOrder = 2
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
@@ -215,7 +215,7 @@ object edtNestOwner: TedtNestOwner
       Caption = 'New'
       Images = DMM.iEdits
       ImageIndex = 8
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnNewClick
     end
   end

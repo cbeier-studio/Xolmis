@@ -586,11 +586,11 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsValueNotInSet = 'The value of %s must be one of the following: %s.';
     rsPartialDateEmpty = 'At least the year of %s must be entered.';
     rsFutureDate = '%s must be after %s (%s).';
+    rsFutureDateFromToday = 'The date must be today or earlier.';
     rsFuturePartialDate = '%s must be before or equal to %s (%s).';
     rsFromNumberLessThanZero = 'The start number must be greater than zero.';
     rsToNumberLessThanZero = 'The final number must be greater than zero.';
     rsToNumberLessThanFromNumber = 'The final number must be greater than the start number.';
-    rsFutureDateFromToday = 'The date must be today or earlier.';
     rsPlantminerGenusSpeciesOnly = 'Plantminer query works only for Genera and Species.';
     rsMaxCollectorsReached = 'The maximum number of authors (%d) was reached!';
     rsListCheckedNone = 'No list items were checked!';

@@ -10,7 +10,7 @@ object batchBandsTransfer: TbatchBandsTransfer
   ClientWidth = 416
   Constraints.MinWidth = 416
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -282,7 +282,7 @@ object batchBandsTransfer: TbatchBandsTransfer
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = sbSaveClick
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
@@ -301,7 +301,7 @@ object batchBandsTransfer: TbatchBandsTransfer
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
-      TabOrder = 1
+      TabOrder = 2
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
@@ -331,7 +331,7 @@ object batchBandsTransfer: TbatchBandsTransfer
       Caption = 'New'
       Images = DMM.iEdits
       ImageIndex = 8
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnNewClick
     end
   end

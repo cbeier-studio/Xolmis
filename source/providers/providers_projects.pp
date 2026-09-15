@@ -286,7 +286,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM projects ';
 
   case aWhere of
@@ -435,7 +436,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM project_team ';
 
   case aWhere of
@@ -585,7 +587,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM project_goals ';
 
   case aWhere of
@@ -729,7 +732,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM project_chronograms ';
 
   case aWhere of
@@ -896,7 +900,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM project_budgets ';
 
   case aWhere of
@@ -1034,7 +1039,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM project_expenses ';
 
   case aWhere of

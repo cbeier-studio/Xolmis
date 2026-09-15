@@ -940,7 +940,6 @@ type
     txtRubricBalance: TLabel;
     procedure cbMapProviderChange(Sender: TObject);
     procedure DBGColEnter(Sender: TObject);
-    procedure DBGColExit(Sender: TObject);
     procedure DBGContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure DBGDblClick(Sender: TObject);
     procedure DBGEditButtonClick(Sender: TObject);
@@ -1310,6 +1309,7 @@ type
 
     procedure QuickAddChild(aInitialValue: String = '');
 
+    procedure RefreshAutoSizeColumns;
     procedure RefreshMap;
     procedure RefreshMapSurvey;
 
@@ -2311,6 +2311,8 @@ begin
         1: EditSamplePrep(DMG.qSamplePreps, dsLink.DataSet.FieldByName(COL_SPECIMEN_ID).AsInteger, isNew);
       end;
   end;
+
+  RefreshAutoSizeColumns;
 end;
 
 procedure TfrmCustomGrid.AddSortedField(aFieldName: String; aDirection: TSortDirection;
@@ -3324,17 +3326,6 @@ begin
 
   if sbShowSummary.Visible then
     Summary;
-end;
-
-procedure TfrmCustomGrid.DBGColExit(Sender: TObject);
-begin
-  { #todo : Return row height to default when exit the cell }
-  {$IFNDEF DEBUG}
-  TDBGrid(Sender).BeginUpdate;
-  TDBGrid(Sender).DefaultRowHeight := TDBGrid(Sender).DefaultRowHeight + 1;
-  TDBGrid(Sender).DefaultRowHeight := TDBGrid(Sender).DefaultRowHeight - 1;
-  TDBGrid(Sender).EndUpdate;
-  {$ENDIF}
 end;
 
 procedure TfrmCustomGrid.DBGContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
@@ -7427,6 +7418,7 @@ begin
 
               eAddChild.Clear;
               dsLink1.DataSet.Refresh;
+              RefreshAutoSizeColumns;
               DMM.sqlTrans.CommitRetaining;
             except
               DMM.sqlTrans.RollbackRetaining;
@@ -7467,6 +7459,7 @@ begin
 
               eAddChild.Clear;
               dsLink1.DataSet.Refresh;
+              RefreshAutoSizeColumns;
               DMM.sqlTrans.CommitRetaining;
             except
               DMM.sqlTrans.RollbackRetaining;
@@ -7513,6 +7506,7 @@ begin
 
               eAddChild.Clear;
               dsLink1.DataSet.Refresh;
+              RefreshAutoSizeColumns;
               DMM.sqlTrans.CommitRetaining;
             except
               DMM.sqlTrans.RollbackRetaining;
@@ -7557,6 +7551,7 @@ begin
 
               eAddChild.Clear;
               dsLink1.DataSet.Refresh;
+              RefreshAutoSizeColumns;
               DMM.sqlTrans.CommitRetaining;
             except
               DMM.sqlTrans.RollbackRetaining;
@@ -7573,6 +7568,21 @@ end;
 procedure TfrmCustomGrid.qVideosBeforePost(DataSet: TDataSet);
 begin
   SetRecordDateUser(DataSet);
+end;
+
+procedure TfrmCustomGrid.RefreshAutoSizeColumns;
+begin
+  if xSettings.AutoAdjustColumns then
+  begin
+    DBG.AutoAdjustColumns;
+    gridChild1.AutoAdjustColumns;
+    gridChild2.AutoAdjustColumns;
+    gridChild3.AutoAdjustColumns;
+    gridChild4.AutoAdjustColumns;
+    gridChild5.AutoAdjustColumns;
+    gridChild6.AutoAdjustColumns;
+    gridChild7.AutoAdjustColumns;
+  end
 end;
 
 procedure TfrmCustomGrid.RefreshMap;
@@ -7785,7 +7795,8 @@ begin
     FreeAndNil(batchFeathers);
   end;
 
-  GetChildDataSet.Refresh;
+  //GetChildDataSet.Refresh;
+  sbRefreshChildClick(nil);
 end;
 
 procedure TfrmCustomGrid.sbAddImageClick(Sender: TObject);
@@ -7861,7 +7872,8 @@ begin
     FreeAndNil(batchNetEffort);
   end;
 
-  GetChildDataSet.Refresh;
+  //GetChildDataSet.Refresh;
+  sbRefreshChildClick(nil);
 end;
 
 procedure TfrmCustomGrid.sbAddVideoClick(Sender: TObject);
@@ -7984,6 +7996,8 @@ begin
     6: DS := dsLink7.DataSet;
   end;
   ShowVerifications(FTableType, FChildTable, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
+
+  TimerChildUpdate.Enabled := True;
 end;
 
 procedure TfrmCustomGrid.sbClearFiltersClick(Sender: TObject);
@@ -8254,6 +8268,7 @@ begin
     UpdateRecycleButtons(dsRecycle.DataSet);
     dbgRecycle.RowCount := 0;
     LoadRecycleMetadataFromDB;
+    RefreshAutoSizeColumns;
   finally
     isWorking := False;
   end;
@@ -8342,6 +8357,7 @@ begin
       //UpdateFilterPanels;
       OnDatesFilterChanged;
       UpdateChildRightPanel;
+      RefreshAutoSizeColumns;
     end;
   finally
     isWorking := False;
@@ -8446,10 +8462,13 @@ begin
 
     if needsRefresh then
     begin
+      dsLink.DataSet.Refresh;
       UpdateButtons(dsLink.DataSet);
       //UpdateFilterPanels;
       OnDatesFilterChanged;
       UpdateChildRightPanel;
+      RefreshAutoSizeColumns;
+      pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
     end;
   finally
     isWorking := False;
@@ -8494,6 +8513,7 @@ begin
       //UpdateFilterPanels;
       OnDatesFilterChanged;
       UpdateChildRightPanel;
+      RefreshAutoSizeColumns;
       pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
     end;
   finally
@@ -8794,6 +8814,7 @@ begin
 
   DS := dsLink.DataSet;
   ShowVerifications(FTableType, tbNone, DS.FieldByName(GetPrimaryKey(DS)).AsInteger);
+  TimerRecordUpdate.Enabled := True;
 end;
 
 procedure TfrmCustomGrid.sbRefreshChildClick(Sender: TObject);
@@ -8844,8 +8865,8 @@ begin
       dsLink.DataSet.Open;
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
-    if xSettings.AutoAdjustColumns then
-      DBG.AutoAdjustColumns;
+    RefreshAutoSizeColumns;
+    pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
   finally
     isWorking := False;
   end;
@@ -9090,6 +9111,7 @@ begin
 
     LoadRecordRow;
     UpdateButtons(dsLink.DataSet);
+    //RefreshAutoSizeColumns;
   finally
     isFiltered := FSearch.QuickFilters.Count > 0;
     isWorking := False;
@@ -9780,6 +9802,7 @@ begin
   aId := DS.FieldByName(GetPrimaryKey(FTableType)).AsInteger;
 
   LoadImagesMetadataFromDB;
+  RefreshAutoSizeColumns;
 
   aStatus := GetRecordVerification(TABLE_NAMES[FTableType], aId, aTotalProblems);
 

@@ -316,7 +316,7 @@ begin
   FPermit.PermitType := StrToPermitType(cbPermitType.Text);
   FPermit.Dispatcher   := eDispatcher.Text;
   FPermit.DispatchDate := StrToDate(eDispatchDate.Text);
-  FPermit.ExpireDate   := StrToDate(eExpireDate.Text);
+  FPermit.ExpireDate   := StrToDateDef(eExpireDate.Text, NullDate);
   FPermit.Notes        := mNotes.Text;
 end;
 

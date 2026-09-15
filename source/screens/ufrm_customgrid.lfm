@@ -106,7 +106,7 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 447
+          ClientWidth = 464
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel
@@ -7874,7 +7874,7 @@ object frmCustomGrid: TfrmCustomGrid
             item
               ReadOnly = True
               Title.Caption = 'Title'
-              Width = 448
+              Width = 444
             end>
           DefaultRowHeight = 48
           FixedCols = 0
@@ -7891,7 +7891,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnSelectCell = dbgRecycleSelectCell
           ColWidths = (
             0
-            448
+            444
           )
         end
         object pRecycleStatus: TBCPanel
@@ -10013,7 +10013,6 @@ object frmCustomGrid: TfrmCustomGrid
         TitleImageList = iHeaders
         TitleStyle = tsNative
         OnColEnter = DBGColEnter
-        OnColExit = DBGColExit
         OnContextPopup = DBGContextPopup
         OnDblClick = DBGDblClick
         OnEditButtonClick = DBGEditButtonClick

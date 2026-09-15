@@ -42,7 +42,7 @@ object edtPermit: TedtPermit
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 42
     ClientWidth = 421
-    TabOrder = 0
+    TabOrder = 1
     object sbSave: TButton
       AnchorSideTop.Control = pBottom
       AnchorSideTop.Side = asrCenter
@@ -56,7 +56,7 @@ object edtPermit: TedtPermit
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = sbSaveClick
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
@@ -75,7 +75,7 @@ object edtPermit: TedtPermit
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
-      TabOrder = 1
+      TabOrder = 2
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
@@ -105,7 +105,7 @@ object edtPermit: TedtPermit
       Caption = 'New'
       Images = DMM.iEdits
       ImageIndex = 8
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnNewClick
     end
   end
@@ -123,7 +123,7 @@ object edtPermit: TedtPermit
     ClientHeight = 409
     ClientWidth = 421
     Constraints.MinWidth = 176
-    TabOrder = 1
+    TabOrder = 0
     object pClient: TPanel
       Left = 0
       Height = 409
@@ -152,7 +152,7 @@ object edtPermit: TedtPermit
         ClientHeight = 112
         ClientWidth = 421
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 5
         object lblNotes: TLabel
           Left = 16
           Height = 15
@@ -195,7 +195,7 @@ object edtPermit: TedtPermit
         ClientHeight = 45
         ClientWidth = 421
         ParentBackground = False
-        TabOrder = 0
+        TabOrder = 1
         object lblName: TLabel
           Left = 16
           Height = 15
@@ -235,7 +235,7 @@ object edtPermit: TedtPermit
         ClientHeight = 45
         ClientWidth = 421
         ParentBackground = False
-        TabOrder = 2
+        TabOrder = 3
         object lblDispatcher: TLabel
           Left = 16
           Height = 15
@@ -275,7 +275,7 @@ object edtPermit: TedtPermit
         ClientHeight = 45
         ClientWidth = 421
         ParentBackground = False
-        TabOrder = 3
+        TabOrder = 4
         object lblDispatchDate: TLabel
           Left = 16
           Height = 15
@@ -356,7 +356,7 @@ object edtPermit: TedtPermit
         ClientHeight = 45
         ClientWidth = 421
         ParentBackground = False
-        TabOrder = 1
+        TabOrder = 2
         object lblPermitNumber: TLabel
           Left = 16
           Height = 15
@@ -448,7 +448,7 @@ object edtPermit: TedtPermit
         ParentBackground = True
         Rounding.RoundX = 8
         Rounding.RoundY = 8
-        TabOrder = 5
+        TabOrder = 0
         Visible = False
         object lblProject: TLabel
           Left = 17

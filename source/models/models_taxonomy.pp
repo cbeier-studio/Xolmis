@@ -3243,13 +3243,13 @@ begin
     FId             := Obj.Get('rank_id', 0);
     FName           := Obj.Get('rank_name', '');
     FAbbreviation   := Obj.Get('abbreviation', '');
-    FRankIndex      := Obj.Get('rank_index', 0);
+    FRankIndex      := Obj.Get('rank_seq', 0);
     FMainRank       := Obj.Get('main_rank', False);
     FSubrank        := Obj.Get('subrank', False);
     FInfrarank      := Obj.Get('infrarank', False);
     FInfraspecific  := Obj.Get('infraspecific', False);
-    FZoologicalCode := Obj.Get('zoological_code', True);
-    FBotanicalCode  := Obj.Get('botanical_code', False);
+    FZoologicalCode := Obj.Get('iczn', True);
+    FBotanicalCode  := Obj.Get('icbn', False);
   finally
     Obj.Free;
   end;
@@ -3264,13 +3264,13 @@ begin
     Obj.Add('rank_id', FId);
     Obj.Add('rank_name', FName);
     Obj.Add('abbreviation', FAbbreviation);
-    Obj.Add('rank_index', FRankIndex);
+    Obj.Add('rank_seq', FRankIndex);
     Obj.Add('main_rank', FMainRank);
     Obj.Add('subrank', FSubrank);
     Obj.Add('infrarank', FInfrarank);
     Obj.Add('infraspecific', FInfraspecific);
-    Obj.Add('zoological_code', FZoologicalCode);
-    Obj.Add('botanical_code', FBotanicalCode);
+    Obj.Add('iczn', FZoologicalCode);
+    Obj.Add('icbn', FBotanicalCode);
 
     Result := Obj.AsJSON;
   finally

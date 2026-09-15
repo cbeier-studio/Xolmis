@@ -11,7 +11,7 @@ object batchNetEffort: TbatchNetEffort
   Font.Height = -12
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -122,7 +122,7 @@ object batchNetEffort: TbatchNetEffort
       ClientHeight = 45
       ClientWidth = 400
       ParentBackground = False
-      TabOrder = 4
+      TabOrder = 6
       object lblNetLength: TLabel
         Left = 16
         Height = 15
@@ -186,7 +186,7 @@ object batchNetEffort: TbatchNetEffort
       ClientHeight = 45
       ClientWidth = 400
       ParentBackground = False
-      TabOrder = 0
+      TabOrder = 1
       object lblStartNumber: TLabel
         Left = 16
         Height = 15
@@ -253,7 +253,7 @@ object batchNetEffort: TbatchNetEffort
       ClientHeight = 45
       ClientWidth = 400
       ParentBackground = False
-      TabOrder = 5
+      TabOrder = 7
       object lblNetMesh: TLabel
         Left = 16
         Height = 15
@@ -300,7 +300,7 @@ object batchNetEffort: TbatchNetEffort
       ClientHeight = 45
       ClientWidth = 400
       ParentBackground = False
-      TabOrder = 1
+      TabOrder = 2
       object lblOpenTime1: TLabel
         Left = 16
         Height = 15
@@ -380,7 +380,7 @@ object batchNetEffort: TbatchNetEffort
       ClientHeight = 45
       ClientWidth = 400
       ParentBackground = False
-      TabOrder = 2
+      TabOrder = 3
       object lblOpenTime2: TLabel
         Left = 16
         Height = 15
@@ -458,7 +458,7 @@ object batchNetEffort: TbatchNetEffort
       ClientHeight = 45
       ClientWidth = 400
       ParentBackground = False
-      TabOrder = 3
+      TabOrder = 4
       object lblOpenTime3: TLabel
         Left = 16
         Height = 15
@@ -563,7 +563,7 @@ object batchNetEffort: TbatchNetEffort
       ParentBackground = True
       Rounding.RoundX = 8
       Rounding.RoundY = 8
-      TabOrder = 6
+      TabOrder = 0
       object lblSurvey: TLabel
         Left = 17
         Height = 15
@@ -630,7 +630,7 @@ object batchNetEffort: TbatchNetEffort
       ClientHeight = 45
       ClientWidth = 400
       ParentBackground = False
-      TabOrder = 7
+      TabOrder = 5
       object lblOpenTime4: TLabel
         Left = 16
         Height = 15

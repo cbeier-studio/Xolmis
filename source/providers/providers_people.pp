@@ -281,7 +281,8 @@ begin
       'datetime(p.update_date, ''localtime'') AS update_date, ' +
       'p.exported_status, ' +
       'p.marked_status, ' +
-      'p.active_status ' +
+      'p.active_status, ' +
+      'p.inactivated_by ' +
     'FROM people AS p ' +
     'LEFT JOIN institutions AS i ON p.institution_id = i.institution_id ';
 

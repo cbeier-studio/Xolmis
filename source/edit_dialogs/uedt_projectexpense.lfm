@@ -233,7 +233,7 @@ object edtProjectExpense: TedtProjectExpense
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = sbSaveClick
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
@@ -252,7 +252,7 @@ object edtProjectExpense: TedtProjectExpense
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
-      TabOrder = 1
+      TabOrder = 2
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
@@ -282,7 +282,7 @@ object edtProjectExpense: TedtProjectExpense
       Caption = 'New'
       Images = DMM.iEdits
       ImageIndex = 8
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnNewClick
     end
   end

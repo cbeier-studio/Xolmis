@@ -1,13 +1,13 @@
 object edtDatabase: TedtDatabase
   Left = 352
-  Height = 491
+  Height = 510
   Top = 33
   Width = 390
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Connection settings'
-  ClientHeight = 491
+  ClientHeight = 510
   ClientWidth = 390
   Font.Height = -12
   PopupMode = pmExplicit

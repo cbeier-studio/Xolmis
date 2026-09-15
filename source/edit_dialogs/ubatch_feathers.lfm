@@ -11,7 +11,7 @@ object batchFeathers: TbatchFeathers
   Constraints.MinWidth = 424
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
@@ -40,7 +40,7 @@ object batchFeathers: TbatchFeathers
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 40
     ClientWidth = 424
-    TabOrder = 0
+    TabOrder = 1
     object sbSave: TButton
       AnchorSideTop.Control = pBottom
       AnchorSideTop.Side = asrCenter
@@ -54,7 +54,7 @@ object batchFeathers: TbatchFeathers
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = sbSaveClick
     end
     object sbCancel: TButton
@@ -71,7 +71,7 @@ object batchFeathers: TbatchFeathers
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
-      TabOrder = 1
+      TabOrder = 2
     end
     object btnHelp: TSpeedButton
       AnchorSideLeft.Control = pBottom
@@ -99,7 +99,7 @@ object batchFeathers: TbatchFeathers
       Caption = 'New'
       Images = DMM.iEdits
       ImageIndex = 8
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnNewClick
     end
   end
@@ -115,7 +115,7 @@ object batchFeathers: TbatchFeathers
     BorderStyle = bsNone
     ClientHeight = 566
     ClientWidth = 407
-    TabOrder = 1
+    TabOrder = 0
     object pClient: TPanel
       Left = 0
       Height = 776
@@ -146,7 +146,7 @@ object batchFeathers: TbatchFeathers
         ClientHeight = 45
         ClientWidth = 407
         ParentBackground = False
-        TabOrder = 2
+        TabOrder = 5
         object lblLocality: TLabel
           Left = 16
           Height = 15
@@ -197,7 +197,7 @@ object batchFeathers: TbatchFeathers
         ClientHeight = 45
         ClientWidth = 407
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 7
         object lblSource: TLabel
           Left = 16
           Height = 15
@@ -259,7 +259,7 @@ object batchFeathers: TbatchFeathers
         ClientHeight = 45
         ClientWidth = 407
         ParentBackground = False
-        TabOrder = 1
+        TabOrder = 4
         object lblTaxon: TLabel
           Left = 16
           Height = 15
@@ -382,7 +382,7 @@ object batchFeathers: TbatchFeathers
         ClientHeight = 45
         ClientWidth = 407
         ParentBackground = False
-        TabOrder = 3
+        TabOrder = 6
         object lblObserver: TLabel
           Left = 16
           Height = 15
@@ -432,7 +432,7 @@ object batchFeathers: TbatchFeathers
         ClientHeight = 91
         ClientWidth = 407
         ParentBackground = False
-        TabOrder = 5
+        TabOrder = 9
         object lblP1: TLabel
           Left = 16
           Height = 15
@@ -682,7 +682,7 @@ object batchFeathers: TbatchFeathers
         ClientHeight = 91
         ClientWidth = 407
         ParentBackground = False
-        TabOrder = 6
+        TabOrder = 11
         object lblS1: TLabel
           Left = 16
           Height = 15
@@ -919,7 +919,7 @@ object batchFeathers: TbatchFeathers
         ClientHeight = 91
         ClientWidth = 407
         ParentBackground = False
-        TabOrder = 7
+        TabOrder = 13
         object lblR1: TLabel
           Left = 16
           Height = 15
@@ -1142,7 +1142,7 @@ object batchFeathers: TbatchFeathers
         Font.Height = -16
         ParentBackground = False
         ParentFont = False
-        TabOrder = 9
+        TabOrder = 10
         object lblTitleSecondaries: TLabel
           Left = 16
           Height = 24
@@ -1169,7 +1169,7 @@ object batchFeathers: TbatchFeathers
         Font.Height = -16
         ParentBackground = False
         ParentFont = False
-        TabOrder = 10
+        TabOrder = 12
         object lblTitleRectrices: TLabel
           Left = 16
           Height = 24
@@ -1198,7 +1198,7 @@ object batchFeathers: TbatchFeathers
         ClientHeight = 45
         ClientWidth = 407
         ParentBackground = False
-        TabOrder = 11
+        TabOrder = 3
         object lblIndividual: TLabel
           Left = 16
           Height = 15
@@ -1248,7 +1248,7 @@ object batchFeathers: TbatchFeathers
         ClientHeight = 45
         ClientWidth = 407
         ParentBackground = False
-        TabOrder = 12
+        TabOrder = 2
         object lblSighting: TLabel
           Left = 16
           Height = 15
@@ -1298,7 +1298,7 @@ object batchFeathers: TbatchFeathers
         ClientHeight = 45
         ClientWidth = 407
         ParentBackground = False
-        TabOrder = 13
+        TabOrder = 1
         object lblCapture: TLabel
           Left = 16
           Height = 15

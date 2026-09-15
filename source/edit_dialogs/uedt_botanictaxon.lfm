@@ -1,11 +1,11 @@
 object edtBotanicTaxon: TedtBotanicTaxon
   Left = 352
-  Height = 367
+  Height = 380
   Top = 33
   Width = 365
   AutoSize = True
   Caption = 'New taxon'
-  ClientHeight = 367
+  ClientHeight = 380
   ClientWidth = 365
   Font.Height = -12
   PopupMode = pmAuto

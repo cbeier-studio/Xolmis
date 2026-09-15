@@ -221,7 +221,9 @@ var
 begin
   C := DMM.qsConn;
   if not C.Active then
-    C.Open;
+    C.Open
+  else
+    C.Refresh;
 
   cbConnection.Items.BeginUpdate;
   try

@@ -1,11 +1,11 @@
 object edtEgg: TedtEgg
   Left = 352
-  Height = 771
+  Height = 779
   Top = 33
   Width = 417
   AutoSize = True
   Caption = 'New egg'
-  ClientHeight = 771
+  ClientHeight = 779
   ClientWidth = 417
   Constraints.MinWidth = 416
   Font.Height = -12
@@ -55,7 +55,7 @@ object edtEgg: TedtEgg
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = sbSaveClick
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
@@ -74,7 +74,7 @@ object edtEgg: TedtEgg
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
-      TabOrder = 1
+      TabOrder = 2
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
@@ -104,7 +104,7 @@ object edtEgg: TedtEgg
       Caption = 'New'
       Images = DMM.iEdits
       ImageIndex = 8
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnNewClick
     end
   end

@@ -43,7 +43,7 @@ object edtSpecimen: TedtSpecimen
     ClientHeight = 42
     ClientWidth = 416
     ParentBackground = False
-    TabOrder = 0
+    TabOrder = 1
     object sbSave: TButton
       AnchorSideTop.Control = pBottom
       AnchorSideTop.Side = asrCenter
@@ -57,7 +57,7 @@ object edtSpecimen: TedtSpecimen
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = sbSaveClick
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
@@ -76,7 +76,7 @@ object edtSpecimen: TedtSpecimen
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
-      TabOrder = 1
+      TabOrder = 2
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
@@ -106,7 +106,7 @@ object edtSpecimen: TedtSpecimen
       Caption = 'New'
       Images = DMM.iEdits
       ImageIndex = 8
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnNewClick
     end
   end
@@ -123,7 +123,7 @@ object edtSpecimen: TedtSpecimen
     ClientHeight = 633
     ClientWidth = 416
     Constraints.MinWidth = 176
-    TabOrder = 1
+    TabOrder = 0
     object pContent: TPanel
       Left = 0
       Height = 633

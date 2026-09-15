@@ -130,7 +130,7 @@ begin
   if (Column.FieldName = COL_EXPIRE_DATE) then
   begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
-    if (Column.Field.AsDateTime < Today) then
+    if (not Column.Field.IsNull) and (Column.Field.AsDateTime < Today) then
     begin
       if IsDarkModeEnabled then
       begin

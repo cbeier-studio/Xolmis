@@ -2831,10 +2831,8 @@ begin
             try
               FLang.Clear;
               FLang.FromJSON(JData.AsJSON);
-              if GetLanguageKey(FLang.LanguageName) > 0 then
-                FRepo.Update(FLang)
-              else
-                FRepo.Insert(FLang);
+
+              FRepo.Insert(FLang)
             finally
               FreeAndNil(JData);
             end;
@@ -3063,10 +3061,8 @@ begin
         begin
           FRank.Clear;
           FRank.FromJSON(JArray.Items[i].AsJSON);
-          if GetRankKey(FRank.Abbreviation, ncZoological) > 0 then
-            FRepo.Update(FRank)
-          else
-            FRepo.Insert(FRank);
+
+          FRepo.Insert(FRank);
 
           aProgressBar.Position := i + 1;
         end;

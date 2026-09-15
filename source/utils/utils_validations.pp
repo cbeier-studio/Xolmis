@@ -550,7 +550,10 @@ begin
 
   if Result then
   begin
-    FMsg := Format(rsFutureDate, [aReferenceName, aDisplayName, DateToStr(aDate)]);
+    if aReferenceDate = Today then
+      FMsg := rsFutureDateFromToday
+    else
+      FMsg := Format(rsFutureDate, [aReferenceName, aDisplayName, DateToStr(aDate)]);
     if (Assigned(aMessageList)) then
     begin
       LogError(FMsg);

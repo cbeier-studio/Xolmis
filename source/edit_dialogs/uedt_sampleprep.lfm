@@ -42,7 +42,7 @@ object edtSamplePrep: TedtSamplePrep
     ChildSizing.ControlsPerLine = 2
     ClientHeight = 42
     ClientWidth = 416
-    TabOrder = 0
+    TabOrder = 1
     object sbSave: TButton
       AnchorSideTop.Control = pBottom
       AnchorSideTop.Side = asrCenter
@@ -56,7 +56,7 @@ object edtSamplePrep: TedtSamplePrep
       Caption = 'Save'
       Constraints.MinWidth = 120
       Enabled = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = sbSaveClick
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
@@ -75,7 +75,7 @@ object edtSamplePrep: TedtSamplePrep
       Caption = 'Cancel'
       Constraints.MinWidth = 120
       ModalResult = 2
-      TabOrder = 1
+      TabOrder = 2
       OnKeyDown = FormKeyDown
       OnKeyPress = FormKeyPress
     end
@@ -105,7 +105,7 @@ object edtSamplePrep: TedtSamplePrep
       Caption = 'New'
       Images = DMM.iEdits
       ImageIndex = 8
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnNewClick
     end
   end
@@ -123,7 +123,7 @@ object edtSamplePrep: TedtSamplePrep
     ClientHeight = 351
     ClientWidth = 416
     Constraints.MinWidth = 176
-    TabOrder = 1
+    TabOrder = 0
     object pContent: TPanel
       Left = 0
       Height = 351
@@ -197,7 +197,7 @@ object edtSamplePrep: TedtSamplePrep
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 1
+        TabOrder = 0
         object lblAccessionNumber: TLabel
           Left = 16
           Height = 15
@@ -257,7 +257,7 @@ object edtSamplePrep: TedtSamplePrep
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 4
+        TabOrder = 1
         object lblSampleType: TLabel
           Left = 16
           Height = 15
@@ -349,7 +349,7 @@ object edtSamplePrep: TedtSamplePrep
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
         ParentBackground = False
-        TabOrder = 0
+        TabOrder = 2
       end
       object pPreparer: TPanel
         Left = 0
@@ -368,7 +368,7 @@ object edtSamplePrep: TedtSamplePrep
         ClientHeight = 45
         ClientWidth = 416
         ParentBackground = False
-        TabOrder = 2
+        TabOrder = 4
         object lblPreparer: TLabel
           Left = 16
           Height = 15
