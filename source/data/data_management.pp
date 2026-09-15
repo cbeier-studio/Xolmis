@@ -2980,10 +2980,11 @@ begin
         begin
           FMethod.Clear;
           FMethod.FromJSON(JArray.Items[i].AsJSON);
-          if GetMethodKey(FMethod.Name) > 0 then
-            FRepo.Update(FMethod)
+          FMethod.Id := GetMethodKey(FMethod.Name);
+          if FMethod.IsNew then
+            FRepo.Insert(FMethod)
           else
-            FRepo.Insert(FMethod);
+            FRepo.Update(FMethod);
 
           aProgressBar.Position := i + 1;
         end;

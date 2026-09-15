@@ -3011,10 +3011,11 @@ begin
   case Sender.AsString of
     'P': aText := rsCaptionCountry;
     'E': aText := rsCaptionState;
-    'R': aText := rsCaptionRegion;
+    //'R': aText := rsCaptionRegion;
     'M': aText := rsCaptionMunicipality;
     'D': aText := rsCaptionDistrict;
     'L': aText := rsCaptionLocality;
+    'I': aText := rsCaptionProperty;
   end;
 
   DisplayText := True;
@@ -3031,9 +3032,9 @@ begin
   if aText = rsCaptionState then
     Sender.AsString := 'E'
   else
-  if aText = rsCaptionRegion then
-    Sender.AsString := 'R'
-  else
+  //if aText = rsCaptionRegion then
+  //  Sender.AsString := 'R'
+  //else
   if aText = rsCaptionMunicipality then
     Sender.AsString := 'M'
   else
@@ -3041,7 +3042,10 @@ begin
     Sender.AsString := 'D'
   else
   if aText = rsCaptionLocality then
-    Sender.AsString := 'L';
+    Sender.AsString := 'L'
+  else
+  if aText = rsCaptionProperty then
+    Sender.AsString := 'I';
 end;
 
 procedure TDMG.qImagesBeforePost(DataSet: TDataSet);

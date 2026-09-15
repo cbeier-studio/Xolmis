@@ -123,14 +123,16 @@ begin
               strFiltro := strOr + '(site_rank = ''P'') ';
             gfStates:
               strFiltro := strOr + '(site_rank = ''E'') ';
-            gfRegions:
-              strFiltro := strOr + '(site_rank = ''R'') ';
+            //gfRegions:
+            //  strFiltro := strOr + '(site_rank = ''R'') ';
             gfCities:
               strFiltro := strOr + '(site_rank = ''M'') ';
             gfDistricts:
               strFiltro := strOr + '(site_rank = ''D'') ';
             gfLocalities:
               strFiltro := strOr + '(site_rank = ''L'') ';
+            gfProperties:
+              strFiltro := strOr + '(site_rank = ''I'') ';
           end;
           Result := Result + strFiltro;
           strOr := 'OR ';
@@ -257,7 +259,8 @@ begin
       'datetime(update_date, ''localtime'') AS update_date, ' +
       'exported_status, ' +
       'marked_status, ' +
-      'active_status ' +
+      'active_status, ' +
+      'inactivated_by ' +
     'FROM gazetteer ';
 
   case aWhere of

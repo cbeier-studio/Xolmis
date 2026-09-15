@@ -10,14 +10,14 @@ object dlgNewDatabase: TdlgNewDatabase
   ClientWidth = 390
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 355
+    Top = 340
     Width = 390
     Align = alTop
     LineColor = 9276813
@@ -26,7 +26,7 @@ object dlgNewDatabase: TdlgNewDatabase
   end
   object nbPages: TNotebook
     Left = 0
-    Height = 355
+    Height = 340
     Top = 0
     Width = 390
     PageIndex = 0
@@ -781,7 +781,7 @@ object dlgNewDatabase: TdlgNewDatabase
   object pBottom: TPanel
     Left = 0
     Height = 42
-    Top = 357
+    Top = 342
     Width = 390
     Align = alTop
     AutoSize = True
@@ -1160,7 +1160,7 @@ object dlgNewDatabase: TdlgNewDatabase
   object SaveDlg: TSaveDialog
     Title = 'Create database file'
     DefaultExt = '.sqlite3'
-    Filter = 'SQLite 3 (*.sqlite3; *.db3; *.s3db; *.sl3)|*.sqlite3; *.db3; *.s3db; *.sl3'
+    Filter = 'Xolmis database (SQLite)|*.sqlite3; *.db'
     Options = [ofEnableSizing]
     Left = 288
     Top = 80

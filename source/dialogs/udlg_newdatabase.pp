@@ -136,7 +136,7 @@ implementation
 
 uses
   utils_global, utils_locale, data_types, data_management, utils_graphics, utils_dialogs, utils_themes,
-  udm_main, uDarkStyleParams, utils_passwords;
+  udm_main, uDarkStyleParams, utils_passwords, models_access_control;
 
 {$R *.lfm}
 
@@ -173,6 +173,11 @@ procedure TdlgNewDatabase.eDBFileButtonClick(Sender: TObject);
 begin
   if SaveDlg.Execute then
   begin
+    if FileExists(SaveDlg.FileName) then
+    begin
+      MsgDlg(rsTitleError, Format(rsErrorDatabaseFileAlreadyExists, [SaveDlg.FileName]), mtError);
+      Exit;
+    end;
     eDBFile.Text := SaveDlg.FileName;
   end;
 end;
@@ -444,16 +449,18 @@ begin
         uTrans.StartTransaction;
 
       Clear;
-      Add('INSERT INTO users ( user_name, full_name, user_rank, user_password )');
-      Add('VALUES ( :username, :fullname, :rank, :pass );');
+      Add('INSERT INTO users ( user_name, full_name, role_id, user_rank, user_password )');
+      Add('VALUES ( :username, :fullname, :role, :rank, :pass );');
       ParamByName('USERNAME').AsString := eUserName.Text;
       ParamByName('FULLNAME').AsString := eUserFullName.Text;
-      ParamByName('RANK').AsString := 'S';
+      ParamByName('ROLE').AsInteger := ROLE_STANDARD_ID;
+      ParamByName('RANK').AsString := 'Standard';
       ParamByName('PASS').AsString := aPass;
       ExecSQL;
 
       uTrans.CommitRetaining;
-      nbPages.PageIndex := nbPages.PageIndex + 1;
+      //nbPages.PageIndex := nbPages.PageIndex + 1;
+      Self.ModalResult := mrOK;
     except
       on E: Exception do
       begin

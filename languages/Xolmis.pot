@@ -14832,6 +14832,11 @@ msgctxt "utils_locale.rscaptionprojectrubric"
 msgid "Rubric"
 msgstr ""
 
+#: utils_locale.rscaptionproperty
+msgctxt "utils_locale.rscaptionproperty"
+msgid "Property"
+msgstr ""
+
 #: utils_locale.rscaptionrank
 msgctxt "utils_locale.rscaptionrank"
 msgid "Rank"
@@ -15912,6 +15917,11 @@ msgstr ""
 #: utils_locale.rserrordatabasecreation
 msgctxt "utils_locale.rserrordatabasecreation"
 msgid "The database file was not created."
+msgstr ""
+
+#: utils_locale.rserrordatabasefilealreadyexists
+#, object-pascal-format
+msgid "The database file %s already exists. You must create a database using a new file name."
 msgstr ""
 
 #: utils_locale.rserrordatabasenotfound
@@ -20503,6 +20513,19 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rsupdatednewversion"
 msgid "New version: %s"
+msgstr ""
+
+#: utils_locale.rsupdatefullname
+msgid "Update full name"
+msgstr ""
+
+#: utils_locale.rsupdatefullnameprompt
+#, object-pascal-format
+msgid ""
+"The site definitions changed. Do you want to update and replace the full name?\n"
+"\n"
+"Current: %s\n"
+"New: %s"
 msgstr ""
 
 #: utils_locale.rsupdatenowaction

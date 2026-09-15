@@ -1260,17 +1260,17 @@ begin
   if (AValue = rsCaptionState) or (AValue = 'E') or (AValue = '1') then
     Result := srState
   else
-  if (AValue = rsCaptionRegion) or (AValue = 'R') or (AValue = '2') then
-    Result := srRegion
-  else
-  if (AValue = rsCaptionMunicipality) or (AValue = 'M') or (AValue = '3') then
+  if (AValue = rsCaptionMunicipality) or (AValue = 'M') or (AValue = '2') then
     Result := srMunicipality
   else
-  if (AValue = rsCaptionDistrict) or (AValue = 'D') or (AValue = '4') then
+  if (AValue = rsCaptionDistrict) or (AValue = 'D') or (AValue = '3') then
     Result := srDistrict
   else
-  if (AValue = rsCaptionLocality) or (AValue = 'L') or (AValue = '5') then
+  if (AValue = rsCaptionLocality) or (AValue = 'L') or (AValue = '4') then
     Result := srLocality
+  else
+  if (AValue = rsCaptionProperty) or (AValue = 'I') or (AValue = '5') then
+    Result := srProperty
   else
     Result := srNone;
 end;

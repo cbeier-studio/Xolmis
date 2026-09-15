@@ -9779,6 +9779,9 @@ begin
         sbRecordVerifications.Caption := Format(rsTotalProblems, [aTotalProblems]);
     end;
   end;
+
+  if FTableType = tbGazetteer then
+    pmpAddMunicipalities.Enabled := dsLink.DataSet.FieldByName(COL_SITE_RANK).AsString = SITE_RANKS[srState];
 end;
 
 procedure TfrmCustomGrid.TimerUpdateTimer(Sender: TObject);

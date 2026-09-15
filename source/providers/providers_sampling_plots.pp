@@ -251,7 +251,7 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS permanent_nets (' +
       'permanent_net_id INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
-      'net_station_id   INTEGER       NOT NULL REFERENCES sampling_plots (sampling_plot_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
+      'sampling_plot_id   INTEGER       NOT NULL REFERENCES sampling_plots (sampling_plot_id) ON DELETE CASCADE ON UPDATE CASCADE,' +
       'net_number       INTEGER       NOT NULL,' +
       'longitude        REAL,' +
       'latitude         REAL,' +

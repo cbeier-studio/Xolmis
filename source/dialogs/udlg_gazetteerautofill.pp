@@ -209,10 +209,25 @@ var
   SiteRepo: TSiteRepository;
   CountryKey, StateKey: Integer;
   i, j, k, idx: Integer;
-  CityName: String;
+  CityName, StateAbbrev: String;
   FileName: String;
+  EnglishFS: TFormatSettings;
 begin
   LogEvent(leaStart, 'Insert cities from state');
+
+  EnglishFS := DefaultFormatSettings;
+  // Get English format for date, time and numbers
+  {$IFDEF WINDOWS}
+  GetLocaleFormatSettings(1033, EnglishFS);
+  {$ENDIF}
+  {$IFDEF DARWIN}
+  GetMacFormatSettings(EnglishFS);
+  EnglishFS.DecimalSeparator := '.';
+  EnglishFS.ThousandSeparator := ',';
+  EnglishFS.DateSeparator := '/';
+  EnglishFS.ShortDateFormat := 'MM/DD/YYYY';
+  {$ENDIF}
+
   FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
   FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
@@ -239,6 +254,7 @@ begin
             if SameText(StateObj.Get('name', ''), StateName) then
             begin
               StateKey := GetStateKey(StateName, CountryKey);
+              StateAbbrev := StateObj.Get('iso2', '');
               CitiesArray := StateObj.Arrays['cities'];
 
               // Iterate items in CKL
@@ -258,8 +274,12 @@ begin
                       Site.Name := CityObj.Get('name', '');
                       Site.Rank := srMunicipality;
                       Site.ParentSiteId := StateKey;
-                      Site.Longitude := StrToFloatDef(CityObj.Get('longitude', '0'), 0);
-                      Site.Latitude := StrToFloatDef(CityObj.Get('latitude', '0'), 0);
+                      Site.Longitude := StrToFloatDef(CityObj.Get('longitude', '0.0'), 0, EnglishFS);
+                      Site.Latitude := StrToFloatDef(CityObj.Get('latitude', '0.0'), 0, EnglishFS);
+                      if StateAbbrev <> EmptyStr then
+                        Site.FullName := Format('%s, %s, %s', [Site.Name, StateAbbrev, CountryName])
+                      else
+                        Site.FullName := Format('%s, %s, %s', [Site.Name, StateName, CountryName]);
 
                       SiteRepo.Insert(Site);
                       LogInfo(Format('Site record inserted with ID=%d', [Site.Id]));
@@ -276,6 +296,7 @@ begin
         end;
       end;
     finally
+      JSONData.Free;
       Parser.Free;
     end;
   finally
@@ -300,8 +321,23 @@ var
   sCountryName: String;
   FileName: String;
   currentLang: TLanguageID;
+  EnglishFS: TFormatSettings;
 begin
   LogEvent(leaStart, 'Insert countries and states');
+
+  EnglishFS := DefaultFormatSettings;
+  // Get English format for date, time and numbers
+  {$IFDEF WINDOWS}
+  GetLocaleFormatSettings(1033, EnglishFS);
+  {$ENDIF}
+  {$IFDEF DARWIN}
+  GetMacFormatSettings(EnglishFS);
+  EnglishFS.DecimalSeparator := '.';
+  EnglishFS.ThousandSeparator := ',';
+  EnglishFS.DateSeparator := '/';
+  EnglishFS.ShortDateFormat := 'MM/DD/YYYY';
+  {$ENDIF}
+
   FileName := ConcatPaths([AppDataDir, GAZETTEER_AUTOFILL_SOURCE_FILE]);
   FS := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
   SiteRepo := TSiteRepository.Create(DMM.sqlCon);
@@ -348,9 +384,10 @@ begin
                 Country.Language := 'en';
               end;
               Country.Rank := srCountry;
-              Country.Longitude := StrToFloatDef(CountryObj.Get('longitude', '0'), 0);
-              Country.Latitude := StrToFloatDef(CountryObj.Get('latitude', '0'), 0);
-              Country.Abbreviation := CountryObj.Get('iso2', '');
+              Country.Longitude := StrToFloatDef(CountryObj.Get('longitude', '0'), 0, EnglishFS);
+              Country.Latitude := StrToFloatDef(CountryObj.Get('latitude', '0'), 0, EnglishFS);
+              Country.Abbreviation := CountryObj.Get('iso3', '');
+              Country.FullName := Country.Name;
 
               SiteRepo.Insert(Country);
               LogInfo(Format('Country record inserted with ID=%d', [Country.Id]));
@@ -364,9 +401,11 @@ begin
                 Site.Clear;
                 Site.Name := StateObj.Get('name', '');
                 Site.Rank := srState;
+                Site.Abbreviation := StateObj.Get('ios2', '');
                 Site.ParentSiteId := Country.Id;
-                Site.Longitude := StrToFloatDef(StateObj.Get('longitude', '0'), 0);
-                Site.Latitude := StrToFloatDef(StateObj.Get('latitude', '0'), 0);
+                Site.Longitude := StrToFloatDef(StateObj.Get('longitude', '0'), 0, EnglishFS);
+                Site.Latitude := StrToFloatDef(StateObj.Get('latitude', '0'), 0, EnglishFS);
+                Site.FullName := Format('%s, %s', [Site.Name, Country.Name]);
 
                 SiteRepo.Insert(Site);
                 LogInfo(Format('State record inserted with ID=%d', [Site.Id]));
@@ -379,6 +418,7 @@ begin
         end;
       end;
     finally
+      JSONData.Free;
       Parser.Free;
     end;
   finally

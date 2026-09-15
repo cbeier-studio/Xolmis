@@ -270,9 +270,10 @@ begin
   if (ssCtrl in Shift) and (Key = Ord('S')) then
   begin
     Key := 0;
-    //if not (dsLink.State in [dsInsert, dsEdit]) then
     if not (sbSave.Enabled) then
       Exit;
+    if sbSave.CanFocus then
+      sbSave.SetFocus;
 
     sbSaveClick(nil);
   end;
@@ -299,10 +300,10 @@ begin
   cbRank.Items.Clear;
   cbRank.Items.Add(rsCaptionCountry);
   cbRank.Items.Add(rsCaptionState);
-  cbRank.Items.Add(rsCaptionRegion);
   cbRank.Items.Add(rsCaptionMunicipality);
   cbRank.Items.Add(rsCaptionDistrict);
   cbRank.Items.Add(rsCaptionLocality);
+  cbRank.Items.Add(rsCaptionProperty);
 
   if FIsNew then
   begin
@@ -318,18 +319,58 @@ end;
 
 procedure TedtSite.GetFullName;
 var
-  S: String;
+  S, aState, aCountry: String;
+  FParent: TSite;
+  FRepo: TSiteRepository;
 begin
-  if (Length(eParentSite.Text) > 0) then
+  S := '';
+  aState := '';
+  aCountry := '';
+
+  if (Trim(eName.Text) = EmptyStr) or (cbRank.ItemIndex < 0) then
+    Exit;
+
+  S := eName.Text;
+  if (FSite.ParentSiteId > 0) then
   begin
-    S := eName.Text + ', ';
-    S := S + GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FSite.ParentSiteId);
+    FRepo := TSiteRepository.Create(DMM.sqlCon);
+    FParent := TSite.Create();
+    try
+      FRepo.GetById(FSite.ParentSiteId, FParent);
+      if not FParent.IsNew then
+      begin
+        case FParent.Rank of
+          srNone: ;
+          srCountry:
+          begin
+            aCountry := FParent.Name;
+            S := Format('%s, %s', [S, aCountry]);
+          end;
+          srState:
+          begin
+            aState := FParent.Abbreviation;
+            aCountry := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FParent.ParentSiteId);
+            S := Format('%s, %s, %s', [S, aState, aCountry]);
+          end;
+          srMunicipality,
+          srDistrict,
+          srLocality: S := Format('%s, %s', [S, FParent.FullName]);
+          srProperty: ;
+        end;
+      end;
+    finally
+      FParent.Free;
+      FRepo.Free;
+    end;
+  end;
+
+  if (Trim(eFullname.Text) <> EmptyStr) and not SameText(eFullname.Text, S) then
+  begin
+    if MsgDlg(rsUpdateFullName, Format(rsUpdateFullNamePrompt, [eFullname.Text, S]), mtConfirmation) then
+      eFullname.Text := S;
   end
   else
-    S := eName.Text;
-
-  //FSite.FullName := S;
-  eFullname.Text := S;
+    eFullname.Text := S;
 end;
 
 procedure TedtSite.GetRecord;
@@ -339,10 +380,10 @@ begin
   case FSite.Rank of
     srCountry:      cbRank.ItemIndex := 0;
     srState:        cbRank.ItemIndex := 1;
-    srRegion:       cbRank.ItemIndex := 2;
-    srMunicipality: cbRank.ItemIndex := 3;
-    srDistrict:     cbRank.ItemIndex := 4;
-    srLocality:     cbRank.ItemIndex := 5;
+    srMunicipality: cbRank.ItemIndex := 2;
+    srDistrict:     cbRank.ItemIndex := 3;
+    srLocality:     cbRank.ItemIndex := 4;
+    srProperty:     cbRank.ItemIndex := 5;
   end;
   if (FSite.Longitude <> 0.0) or (FSite.Latitude <> 0.0) then
   begin

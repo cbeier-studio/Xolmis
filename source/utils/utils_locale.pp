@@ -254,6 +254,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorSurveyNotFound = 'Survey "%s" not found.';
     rsErrorCopyingFile = 'Error copying file "%s" to "%s".';
     rsErrorAbsolutePathNotAllowed = 'Absolute path not allowed in GetFullPath: %s';
+    rsErrorDatabaseFileAlreadyExists = 'The database file %s already exists. You must create a database using a new file name.';
 
     { Warning messages }
     rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';
@@ -533,6 +534,10 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsInsertingToponyms = 'Inserting toponyms in Gazetteer...';
     rsToponymMustBeState = 'The selected toponym must be a state or province.';
     rsAtLeastOneItemMustBeChecked = 'At least one item must be selected to proceed.';
+    rsUpdateFullName = 'Update full name';
+    rsUpdateFullNamePrompt = 'The site definitions changed. Do you want to update and replace the full name?' + LineEnding + LineEnding +
+      'Current: %s' + LineEnding +
+      'New: %s';
 
     { Validation messages }
     rsCPFTooShort = 'CPF number must have 11 digits.';
@@ -1579,6 +1584,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsCaptionMunicipality = 'Municipality';
     rsCaptionState = 'State';
     rsCaptionCountry = 'Country';
+    rsCaptionProperty = 'Property';
 
     { Button captions }
     rsLoginButton = 'Sign in';

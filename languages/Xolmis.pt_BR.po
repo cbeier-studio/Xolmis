@@ -14828,6 +14828,11 @@ msgctxt "utils_locale.rscaptionprojectrubric"
 msgid "Rubric"
 msgstr "Rubrica"
 
+#: utils_locale.rscaptionproperty
+msgctxt "utils_locale.rscaptionproperty"
+msgid "Property"
+msgstr "Propriedade"
+
 #: utils_locale.rscaptionrank
 msgctxt "utils_locale.rscaptionrank"
 msgid "Rank"
@@ -15913,6 +15918,11 @@ msgstr "O banco de dados parece estar corrompido. É recomendado restaurar um ba
 msgctxt "utils_locale.rserrordatabasecreation"
 msgid "The database file was not created."
 msgstr "O arquivo de banco de dados não foi criado."
+
+#: utils_locale.rserrordatabasefilealreadyexists
+#, object-pascal-format
+msgid "The database file %s already exists. You must create a database using a new file name."
+msgstr "O arquivo de banco de dados %s já existe. Você deve criar um banco de dados usando um novo nome de arquivo."
 
 #: utils_locale.rserrordatabasenotfound
 #, object-pascal-format
@@ -20689,6 +20699,23 @@ msgstr "Há %d amostragens iniciando em breve."
 msgctxt "utils_locale.rsupdatednewversion"
 msgid "New version: %s"
 msgstr "Nova versão: %s"
+
+#: utils_locale.rsupdatefullname
+msgid "Update full name"
+msgstr "Atualizar nome completo"
+
+#: utils_locale.rsupdatefullnameprompt
+#, object-pascal-format
+msgid ""
+"The site definitions changed. Do you want to update and replace the full name?\n"
+"\n"
+"Current: %s\n"
+"New: %s"
+msgstr ""
+"As definições do topônimo mudaram. Deseja atualizar e substituir o nome completo?\n"
+"\n"
+"Atual: %s\n"
+"Novo: %s"
 
 #: utils_locale.rsupdatenowaction
 msgctxt "utils_locale.rsupdatenowaction"

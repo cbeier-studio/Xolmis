@@ -386,7 +386,13 @@ begin
   if Sender.AsString = EmptyStr then
     Exit;
 
-  aText := Sender.AsString;
+  case Sender.AsString of
+    'A','Administrator': aText := rsAdminUser;
+    'Supervisor': aText := rsSupervisorUser;
+    'S','Standard': aText := rsStandardUser;
+    'R','Reader': aText := rsReaderUser;
+    'V','Visitor','G','Guest': aText := rsGuestUser;
+  end;
 
   DisplayText := True;
 end;
