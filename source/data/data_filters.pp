@@ -490,10 +490,10 @@ end;
 
 procedure LoadSiteTreeData(aTable: TTableType; aVirtualTree: TBaseVirtualTree; FirstIconIndex: Integer = -1);
 var
-  Mun, Est, Pais: String;
+  Mun, Con, Est, Pais: String;
   Qry: TSQLQuery;
   Data: TSiteNodeData;
-  xNode, stateParent, countryParent: PVirtualNode;
+  xNode, countyParent, stateParent, countryParent: PVirtualNode;
 begin
   // Set database query for site hierarchy
   Qry := TSQLQuery.Create(nil);
@@ -515,11 +515,13 @@ begin
         aVirtualTree.Clear;
       Pais := EmptyStr;
       Est := EmptyStr;
+      Con :=  EmptyStr;
       Mun := EmptyStr;
       Data := nil;
       XNode := nil;
       countryParent := nil;
       stateParent := nil;
+      countyParent := nil;
 
       // Add sites for the tree
       Qry.First;
@@ -554,6 +556,22 @@ begin
           xNode := aVirtualTree.AddChild(countryParent, Data);
           stateParent := xNode;
         end;
+        // County
+        if (Qry.FieldByName('county_name').AsString <> Con) and
+          (Qry.FieldByName('county_name').AsString <> EmptyStr) then
+        begin
+          Con := Qry.FieldByName('county_name').AsString;
+          Data := TSiteNodeData.Create;
+          Data.Caption := Con;
+          Data.Id := Qry.FieldByName('county_id').AsInteger;
+          Data.ImageIndex := FirstIconIndex;
+          if FirstIconIndex > -1 then
+            Data.ImageIndex := Data.ImageIndex + 2;
+          Data.Checked := False;
+          Data.Rank := srCounty;
+          xNode := aVirtualTree.AddChild(stateParent, Data);
+          countyParent := xNode;
+        end;
         // Municipality
         if (Qry.FieldByName('municipality_name').AsString <> Mun) and
           (Qry.FieldByName('municipality_name').AsString <> EmptyStr) then
@@ -564,10 +582,13 @@ begin
           Data.Id := Qry.FieldByName('municipality_id').AsInteger;
           Data.ImageIndex := FirstIconIndex;
           if FirstIconIndex > -1 then
-            Data.ImageIndex := Data.ImageIndex + 2;
+            Data.ImageIndex := Data.ImageIndex + 3;
           Data.Checked := False;
           Data.Rank := srMunicipality;
-          xNode := aVirtualTree.AddChild(stateParent, Data);
+          if Assigned(countyParent) and (Qry.FieldByName('county_name').AsString <> EmptyStr) then
+            xNode := aVirtualTree.AddChild(countyParent, Data)
+          else
+            xNode := aVirtualTree.AddChild(stateParent, Data);
         end;
 
         Qry.Next;
@@ -1112,6 +1133,9 @@ begin
           aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_COUNTRY_ID, rscCountryID, sdtInteger,
             crEqual, False, IntToStr(Data^.Id)));
         srState:
+          aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_STATE_ID, rscStateID, sdtInteger,
+            crEqual, False, IntToStr(Data^.Id)));
+        srCounty:
           aSearchGroup.Items[sf].Fields.Add(TSearchField.Create(aPrefix + COL_STATE_ID, rscStateID, sdtInteger,
             crEqual, False, IntToStr(Data^.Id)));
         srMunicipality:

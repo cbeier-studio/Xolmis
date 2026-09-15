@@ -405,6 +405,7 @@ type
     qGazetteeraltitude: TFloatField;
     qGazetteercountry_id: TLongintField;
     qGazetteercountry_name: TStringField;
+    qGazetteercounty_id: TLongintField;
     qGazetteerdescription: TMemoField;
     qGazetteerebird_name: TStringField;
     qGazetteerexported_status: TBooleanField;
@@ -413,6 +414,7 @@ type
     qGazetteerinsert_date: TDateTimeField;
     qGazetteerlanguage: TStringField;
     qGazetteerlatitude: TFloatField;
+    qGazetteerlocality_id: TLongintField;
     qGazetteerlongitude: TFloatField;
     qGazetteermarked_status: TBooleanField;
     qGazetteermunicipality_id: TLongintField;
@@ -513,6 +515,7 @@ type
     qIndividualsuser_inserted: TLongintField;
     qIndividualsuser_updated: TLongintField;
     qInstitutionsabbreviation: TStringField;
+    qInstitutionscounty_id: TLongintField;
     qInstitutionsinactivated_by: TStringField;
     qInstitutionspostal_code: TStringField;
     qInstitutionsstate_name: TStringField;
@@ -692,6 +695,7 @@ type
     qNestsspecies_id: TLongintField;
     qNeststaxon_formatted_name: TStringField;
     qPeopleabbreviation: TStringField;
+    qPeoplecounty_id: TLongintField;
     qPeoplegender: TStringField;
     qPeopleid_document_1: TStringField;
     qPeopleid_document_2: TStringField;
@@ -3009,13 +3013,12 @@ begin
     Exit;
 
   case Sender.AsString of
-    'P': aText := rsCaptionCountry;
-    'E': aText := rsCaptionState;
-    //'R': aText := rsCaptionRegion;
+    'C': aText := rsCaptionCountry;
+    'S': aText := rsCaptionState;
+    'O': aText := rsCaptionCounty;
     'M': aText := rsCaptionMunicipality;
-    'D': aText := rsCaptionDistrict;
     'L': aText := rsCaptionLocality;
-    'I': aText := rsCaptionProperty;
+    'P': aText := rsCaptionProperty;
   end;
 
   DisplayText := True;
@@ -3027,25 +3030,22 @@ begin
     Exit;
 
   if aText = rsCaptionCountry then
-    Sender.AsString := 'P'
+    Sender.AsString := 'C'
   else
   if aText = rsCaptionState then
-    Sender.AsString := 'E'
+    Sender.AsString := 'S'
   else
-  //if aText = rsCaptionRegion then
-  //  Sender.AsString := 'R'
-  //else
+  if aText = rsCaptionCounty then
+    Sender.AsString := 'O'
+  else
   if aText = rsCaptionMunicipality then
     Sender.AsString := 'M'
-  else
-  if aText = rsCaptionDistrict then
-    Sender.AsString := 'D'
   else
   if aText = rsCaptionLocality then
     Sender.AsString := 'L'
   else
   if aText = rsCaptionProperty then
-    Sender.AsString := 'I';
+    Sender.AsString := 'P';
 end;
 
 procedure TDMG.qImagesBeforePost(DataSet: TDataSet);

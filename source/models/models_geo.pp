@@ -35,7 +35,9 @@ type
     FAbbreviation: String;
     FRank: TSiteRank;
     FParentSiteId: Integer;
+    FLocalityId: Integer;
     FMunicipalityId: Integer;
+    FCountyId: Integer;
     FStateId: Integer;
     FCountryId: Integer;
     FFullName: String;
@@ -62,7 +64,9 @@ type
     property Abbreviation: String read FAbbreviation write FAbbreviation;
     property Rank: TSiteRank read FRank write FRank;
     property ParentSiteId: Integer read FParentSiteId write FParentSiteId;
+    property LocalityId: Integer read FLocalityId write FLocalityId;
     property MunicipalityId: Integer read FMunicipalityId write FMunicipalityId;
+    property CountyId: Integer read FCountyId write FCountyId;
     property StateId: Integer read FStateId write FStateId;
     property CountryId: Integer read FCountryId write FCountryId;
     property FullName: String read FFullName write FFullName;
@@ -153,62 +157,12 @@ type
     procedure Delete(E: TXolmisRecord); override;
   end;
 
-var
-  SitePropsDict: specialize TFPGMap<String, String>;
-  PoiPropsDict: specialize TFPGMap<String, String>;
-
-  { Classes helpers }
-  procedure InitSitePropsDict;
-  procedure InitPoiPropsDict;
-
 implementation
 
 uses
   utils_locale, utils_global, utils_validations, utils_conversions,
   data_consts, data_columns, data_setparam, data_getvalue, data_providers,
   models_users;
-
-procedure InitSitePropsDict;
-begin
-  if Assigned(SitePropsDict) then
-    Exit;
-
-  SitePropsDict := specialize TFPGMap<String, String>.Create;
-  SitePropsDict.Add('Name', rscName);
-  SitePropsDict.Add('Abbreviation', rscAbbreviation);
-  SitePropsDict.Add('Rank', rscType);
-  SitePropsDict.Add('ParentSiteId', rscParentSiteID);
-  SitePropsDict.Add('MunicipalityId', rscMunicipalityID);
-  SitePropsDict.Add('StateId', rscStateID);
-  SitePropsDict.Add('CountryId', rscCountryID);
-  SitePropsDict.Add('FullName', rscFullName);
-  SitePropsDict.Add('EbirdName', rscEBirdName);
-  SitePropsDict.Add('Longitude', rscLongitude);
-  SitePropsDict.Add('Latitude', rscLatitude);
-  SitePropsDict.Add('Altitude', rscAltitude);
-  SitePropsDict.Add('Language', rscLanguage);
-  SitePropsDict.Add('Description', rscDescription);
-  SitePropsDict.Add('Notes', rscNotes);
-end;
-
-procedure InitPoiPropsDict;
-begin
-  if Assigned(PoiPropsDict) then
-    Exit;
-
-  PoiPropsDict := specialize TFPGMap<String, String>.Create;
-  PoiPropsDict.Add('SampleDate', rscDate);
-  PoiPropsDict.Add('SampleTime', rscTime);
-  PoiPropsDict.Add('PoiName', rscName);
-  PoiPropsDict.Add('Longitude', rscLongitude);
-  PoiPropsDict.Add('Latitude', rscLatitude);
-  PoiPropsDict.Add('Altitude', rscAltitude);
-  PoiPropsDict.Add('ObserverId', rscObserverID);
-  PoiPropsDict.Add('TaxonId', rscTaxonID);
-  PoiPropsDict.Add('IndividualId', rscIndividualID);
-  PoiPropsDict.Add('SightingId', rscSightingID);
-  PoiPropsDict.Add('SurveyId', rscSurveyID);
-end;
 
 { TSite }
 
@@ -228,7 +182,9 @@ begin
     FAbbreviation := TSite(Source).Abbreviation;
     FRank := TSite(Source).Rank;
     FParentSiteId := TSite(Source).ParentSiteId;
+    FLocalityId := TSite(Source).LocalityId;
     FMunicipalityId := TSite(Source).MunicipalityId;
+    FCountyId := TSite(Source).CountyId;
     FStateId := TSite(Source).StateId;
     FCountryId := TSite(Source).CountryId;
     FFullName := TSite(Source).FullName;
@@ -249,7 +205,9 @@ begin
   FAbbreviation := EmptyStr;
   FRank := srNone;
   FParentSiteId := 0;
+  FLocalityId := 0;
   FMunicipalityId := 0;
+  FCountyId := 0;
   FStateId := 0;
   FCountryId := 0;
   FFullName := EmptyStr;
@@ -268,36 +226,6 @@ begin
 end;
 
 function TSite.Diff(const OldRec: TXolmisRecord; var Changes: TStrings): Boolean;
-//var
-//  PropList: PPropList;
-//  PropCount, I: Integer;
-//  PropInfo: PPropInfo;
-//  OldValue, NewValue, FriendlyName: string;
-//begin
-//  Result := False;
-//
-//  InitSitePropsDict;
-//
-//  PropCount := GetPropList(Self.ClassInfo, tkProperties, @PropList);
-//  try
-//    for I := 0 to PropCount - 1 do
-//    begin
-//      PropInfo := PropList^[I];
-//      OldValue := GetPropValue(aOld, PropInfo, True);
-//      NewValue := GetPropValue(Self, PropInfo, True);
-//      if OldValue <> NewValue then
-//      begin
-//        if not SitePropsDict.TryGetData(PropInfo^.Name, FriendlyName) then
-//          FriendlyName := PropInfo^.Name;
-//        aList.Add(Format('%s;%s;%s', [FriendlyName, OldValue, NewValue]));
-//        Result := True;
-//      end;
-//    end;
-//  finally
-//    if Assigned(SitePropsDict) then
-//      SitePropsDict.Free;
-//    FreeMem(PropList);
-//  end;
 var
   aOld: TSite;
   R: String;
@@ -333,7 +261,11 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscAltitude, aOld.Altitude, FAltitude, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscLocalityID, aOld.LocalityId, FLocalityId, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscMunicipalityID, aOld.MunicipalityId, FMunicipalityId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscCountyID, aOld.CountyId, FCountyId, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscStateID, aOld.StateId, FStateId, R) then
     Changes.Add(R);
@@ -364,7 +296,9 @@ begin
     FAbbreviation   := Obj.Get('abbreviation', '');
     FRank           := StrToSiteRank(Obj.Get('rank', ''));
     FParentSiteId   := Obj.Get('parent_site_id', 0);
+    FLocalityId     := Obj.Get('locality_id', 0);
     FMunicipalityId := Obj.Get('municipality_id', 0);
+    FCountyId       := Obj.Get('county_id', 0);
     FStateId        := Obj.Get('state_id', 0);
     FCountryId      := Obj.Get('country_id', 0);
     FFullName       := Obj.Get('full_name', '');
@@ -382,39 +316,41 @@ end;
 
 function TSite.ToJSON: String;
 var
-  JSONObject: TJSONObject;
+  Obj: TJSONObject;
 begin
-  JSONObject := TJSONObject.Create;
+  Obj := TJSONObject.Create;
   try
-    JSONObject.Add('site_name', FName);
-    JSONObject.Add('abbreviation', FAbbreviation);
-    JSONObject.Add('rank', SITE_RANKS[FRank]);
-    JSONObject.Add('parent_site_id', FParentSiteId);
-    JSONObject.Add('municipality_id', FMunicipalityId);
-    JSONObject.Add('state_id', FStateId);
-    JSONObject.Add('country_id', FCountryId);
-    JSONObject.Add('full_name', FFullName);
-    JSONObject.Add('ebird_name', FEbirdName);
-    JSONObject.Add('longitude', FLongitude);
-    JSONObject.Add('latitude', FLatitude);
-    JSONObject.Add('altitude', FAltitude);
-    JSONObject.Add('language', FLanguage);
-    JSONObject.Add('description', FDescription);
-    JSONObject.Add('notes', FNotes);
+    Obj.Add('site_name', FName);
+    Obj.Add('abbreviation', FAbbreviation);
+    Obj.Add('rank', SITE_RANKS[FRank]);
+    Obj.Add('parent_site_id', FParentSiteId);
+    Obj.Add('locality_id', FLocalityId);
+    Obj.Add('municipality_id', FMunicipalityId);
+    Obj.Add('county_id', FCountyId);
+    Obj.Add('state_id', FStateId);
+    Obj.Add('country_id', FCountryId);
+    Obj.Add('full_name', FFullName);
+    Obj.Add('ebird_name', FEbirdName);
+    Obj.Add('longitude', FLongitude);
+    Obj.Add('latitude', FLatitude);
+    Obj.Add('altitude', FAltitude);
+    Obj.Add('language', FLanguage);
+    Obj.Add('description', FDescription);
+    Obj.Add('notes', FNotes);
 
-    Result := JSONObject.AsJSON;
+    Result := Obj.AsJSON;
   finally
-    JSONObject.Free;
+    Obj.Free;
   end;
 end;
 
 function TSite.ToString: String;
 begin
-  Result := Format('Site(Id=%d, Name=%s, Abbreviation=%s, Rank=%s, ParentSiteId=%d, MunicipalityId=%d, StateId=%d, ' +
+  Result := Format('Site(Id=%d, Name=%s, Abbreviation=%s, Rank=%s, ParentSiteId=%d, LocalityId=%d, MunicipalityId=%d, CountyId=%d, StateId=%d, ' +
     'CountryId=%d, FullName=%s, EbirdName=%s, Longitude=%f, Latitude=%f, Altitude=%f, Language=%s, ' +
     'Description=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, FName, FAbbreviation, SITE_RANKS[FRank], FParentSiteId, FMunicipalityId, FStateId, FCountryId,
+    [FId, FName, FAbbreviation, SITE_RANKS[FRank], FParentSiteId, FLocalityId, FMunicipalityId, FCountyId, FStateId, FCountryId,
     FFullName, FEbirdName, FLongitude, FLatitude, FAltitude, FLanguage, FDescription, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
@@ -617,7 +553,9 @@ begin
     R.Abbreviation := FieldByName('abbreviation').AsString;
     R.Rank := StrToSiteRank(FieldByName('site_rank').AsString);
     R.ParentSiteId := FieldByName('parent_site_id').AsInteger;
+    R.LocalityId := FieldByName('locality_id').AsInteger;
     R.MunicipalityId := FieldByName('municipality_id').AsInteger;
+    R.CountyId := FieldByName('county_id').AsInteger;
     R.StateId := FieldByName('state_id').AsInteger;
     R.CountryId := FieldByName('country_id').AsInteger;
     R.Language := FieldByName('language').AsString;
@@ -659,8 +597,12 @@ begin
     R.Rank := StrToSiteRank(ARow.Values['site_rank']);
   if ARow.IndexOfName('parent_site_id') >= 0 then
     R.ParentSiteId := StrToIntDef(ARow.Values['parent_site_id'], 0);
+  if ARow.IndexOfName('locality_id') >= 0 then
+    R.LocalityId := StrToIntDef(ARow.Values['locality_id'], 0);
   if ARow.IndexOfName('municipality_id') >= 0 then
     R.MunicipalityId := StrToIntDef(ARow.Values['municipality_id'], 0);
+  if ARow.IndexOfName('county_id') >= 0 then
+    R.CountyId := StrToIntDef(ARow.Values['county_id'], 0);
   if ARow.IndexOfName('state_id') >= 0 then
     R.StateId := StrToIntDef(ARow.Values['state_id'], 0);
   if ARow.IndexOfName('country_id') >= 0 then
@@ -706,7 +648,9 @@ begin
     SetForeignParam(ParamByName('parent_site_id'), R.ParentSiteId);
     ParamByName('country_id').AsInteger := R.CountryId;
     SetForeignParam(ParamByName('state_id'), R.StateId);
+    SetForeignParam(ParamByName('county_id'), R.CountyId);
     SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetStrParam(ParamByName('ebird_name'), R.EbirdName);
     SetStrParam(ParamByName('full_name'), R.FullName);
     SetStrParam(ParamByName('language'), R.Language);
@@ -733,13 +677,17 @@ begin
       Open;
       R.CountryId := FieldByName('country_id').AsInteger;
       R.StateId := FieldByName('state_id').AsInteger;
+      R.CountyId := FieldByName('county_id').AsInteger;
       R.MunicipalityId := FieldByName('municipality_id').AsInteger;
+      R.LocalityId := FieldByName('locality_id').AsInteger;
       Close;
     end;
     case R.Rank of
       srCountry:      R.CountryId := R.Id;
       srState:        R.StateId := R.Id;
+      srCounty:       R.CountyId := R.Id;
       srMunicipality: R.MunicipalityId := R.Id;
+      srLocality:     R.LocalityId := R.Id;
     end;
     // Save the site hierarchy
     Clear;
@@ -747,7 +695,9 @@ begin
 
     ParamByName('country_id').AsInteger := R.CountryId;
     SetForeignParam(ParamByName('state_id'), R.StateId);
+    SetForeignParam(ParamByName('county_id'), R.CountyId);
     SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     ParamByName('aid').AsInteger := R.Id;
     ExecSQL;
   finally
@@ -786,7 +736,9 @@ begin
     SetForeignParam(ParamByName('parent_site_id'), R.ParentSiteId);
     ParamByName('country_id').AsInteger := R.CountryId;
     SetForeignParam(ParamByName('state_id'), R.StateId);
+    SetForeignParam(ParamByName('county_id'), R.CountyId);
     SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     SetStrParam(ParamByName('ebird_name'), R.EbirdName);
     SetStrParam(ParamByName('full_name'), R.FullName);
     SetStrParam(ParamByName('language'), R.Language);
@@ -809,13 +761,17 @@ begin
       Open;
       R.CountryId := FieldByName('country_id').AsInteger;
       R.StateId := FieldByName('state_id').AsInteger;
+      R.CountyId := FieldByName('county_id').AsInteger;
       R.MunicipalityId := FieldByName('municipality_id').AsInteger;
+      R.LocalityId := FieldByName('locality_id').AsInteger;
       Close;
     end;
     case R.Rank of
-      srCountry:      R.CountryId :=      R.Id;
-      srState:        R.StateId :=        R.Id;
+      srCountry:      R.CountryId := R.Id;
+      srState:        R.StateId := R.Id;
+      srCounty:       R.CountyId := R.Id;
       srMunicipality: R.MunicipalityId := R.Id;
+      srLocality:     R.LocalityId := R.Id;
     end;
     // Save the site hierarchy
     Clear;
@@ -823,7 +779,9 @@ begin
 
     ParamByName('country_id').AsInteger := R.CountryId;
     SetForeignParam(ParamByName('state_id'), R.StateId);
+    SetForeignParam(ParamByName('county_id'), R.CountyId);
     SetForeignParam(ParamByName('municipality_id'), R.MunicipalityId);
+    SetForeignParam(ParamByName('locality_id'), R.LocalityId);
     ParamByName('aid').AsInteger := R.Id;
     ExecSQL;
   finally

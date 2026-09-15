@@ -728,6 +728,7 @@ begin
       'g.site_name AS locality_name, ' +
       'g.country_id AS country_id, ' +
       'g.state_id AS state_id, ' +
+      'g.county_id AS county_id, ' +
       'g.municipality_id AS municipality_id, ' +
       'p1.abbreviation AS bander_name, ' +
       'p2.abbreviation AS annotator_name, ' +
@@ -1148,6 +1149,7 @@ begin
       'st.full_name AS sighting_name, ' +
       'g.country_id AS country_id, ' +
       'g.state_id AS state_id, ' +
+      'g.county_id AS county_id, ' +
       'g.municipality_id AS municipality_id, ' +
       'g.site_name AS locality_name ' +
     'FROM feathers AS ft ' +

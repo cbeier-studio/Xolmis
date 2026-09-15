@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 16;
+  SCHEMA_VERSION: Integer = 17;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -1325,6 +1325,18 @@ begin
         LogDebug('Upgrading database schema to version 16');
 
         DMM.sqlCon.ExecuteDirect('ALTER TABLE images DROP COLUMN image_thumbnail;');
+
+        Result := True;
+      end;
+
+      if OldVersion < 17 then
+      begin
+        LogDebug('Upgrading database schema to version 17');
+
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE gazetteer ADD COLUMN county_id INTEGER;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE gazetteer ADD COLUMN locality_id INTEGER;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE institutions ADD COLUMN county_id INTEGER REFERENCES gazetteer (site_id) ON UPDATE CASCADE;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE people ADD COLUMN county_id INTEGER REFERENCES gazetteer (site_id) ON UPDATE CASCADE;');
 
         Result := True;
       end;

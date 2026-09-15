@@ -193,6 +193,7 @@ begin
       'g.site_name AS locality_name, ' +
       'g.country_id AS country_id, ' +
       'g.state_id AS state_id, ' +
+      'g.county_id AS county_id, ' +
       'g.municipality_id AS municipality_id, ' +
       'i.full_name AS individual_name, ' +
       'n.full_name AS nest_name, ' +

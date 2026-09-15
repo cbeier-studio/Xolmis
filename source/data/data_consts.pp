@@ -97,6 +97,8 @@ const
   COL_COUNTRY_NAME = 'country_name';
   COL_STATE_ID = 'state_id';
   COL_STATE_NAME = 'state_name';
+  COL_COUNTY_ID = 'county_id';
+  COL_COUNTY_NAME = 'county_name';
   COL_MUNICIPALITY_ID = 'municipality_id';
   COL_MUNICIPALITY_NAME = 'municipality_name';
   COL_LOCALITY_ID = 'locality_id';

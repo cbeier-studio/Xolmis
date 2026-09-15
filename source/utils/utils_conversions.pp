@@ -1254,22 +1254,22 @@ end;
 
 function StrToSiteRank(const AValue: String): TSiteRank;
 begin
-  if (AValue = rsCaptionCountry) or (AValue = 'P') or (AValue = '0') then
+  if (AValue = rsCaptionCountry) or (AValue = 'C') or (AValue = '0') then
     Result := srCountry
   else
-  if (AValue = rsCaptionState) or (AValue = 'E') or (AValue = '1') then
+  if (AValue = rsCaptionState) or (AValue = 'S') or (AValue = '1') then
     Result := srState
   else
-  if (AValue = rsCaptionMunicipality) or (AValue = 'M') or (AValue = '2') then
-    Result := srMunicipality
+  if (AValue = rsCaptionCounty) or (AValue = 'O') or (AValue = '2') then
+    Result := srCounty
   else
-  if (AValue = rsCaptionDistrict) or (AValue = 'D') or (AValue = '3') then
-    Result := srDistrict
+  if (AValue = rsCaptionMunicipality) or (AValue = 'M') or (AValue = '3') then
+    Result := srMunicipality
   else
   if (AValue = rsCaptionLocality) or (AValue = 'L') or (AValue = '4') then
     Result := srLocality
   else
-  if (AValue = rsCaptionProperty) or (AValue = 'I') or (AValue = '5') then
+  if (AValue = rsCaptionProperty) or (AValue = 'P') or (AValue = '5') then
     Result := srProperty
   else
     Result := srNone;

@@ -440,6 +440,7 @@ begin
       'gl.full_name AS locality_name, ' +
       'gl.country_id AS country_id, ' +
       'gl.state_id AS state_id, ' +
+      'gl.county_id AS county_id, ' +
       'gl.municipality_id AS municipality_id, ' +
       'gm.site_name AS municipality_name, ' +
       'gs.site_name AS state_name, ' +

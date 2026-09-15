@@ -381,7 +381,7 @@ begin
   Result :=
     'CREATE TABLE IF NOT EXISTS documents (' +
       'document_id     INTEGER       PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,' +
-      'permit_id       INTEGER       REFERENCES legal (permit_id) ON DELETE CASCADE,' +
+      'permit_id       INTEGER       REFERENCES permits (permit_id) ON DELETE CASCADE,' +
       'project_id      INTEGER       REFERENCES projects (project_id) ON DELETE CASCADE,' +
       'person_id       INTEGER       REFERENCES people (person_id) ON DELETE CASCADE,' +
       'individual_id   INTEGER       REFERENCES individuals (individual_id) ON DELETE CASCADE,' +

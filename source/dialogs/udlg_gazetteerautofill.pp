@@ -194,7 +194,7 @@ begin
   begin
     Country := PCountry(FList.Items[i]);
     if SameText(aCountryName, Country^.Name) then
-      Exit(Country^.Iso2);
+      Exit(Country^.Iso3);
   end;
 end;
 
@@ -209,7 +209,7 @@ var
   SiteRepo: TSiteRepository;
   CountryKey, StateKey: Integer;
   i, j, k, idx: Integer;
-  CityName, StateAbbrev: String;
+  CityName, StateAbbrev, CountryAbbrev: String;
   FileName: String;
   EnglishFS: TFormatSettings;
 begin
@@ -245,6 +245,7 @@ begin
         if SameText(CountryObj.Get('name', ''), CountryName) then
         begin
           CountryKey := GetCountryKey(CountryName);
+          CountryAbbrev := CountryObj.Get('iso3', CountryName);
           StatesArray := CountryObj.Arrays['states'];
 
           // Iterate states
@@ -254,7 +255,7 @@ begin
             if SameText(StateObj.Get('name', ''), StateName) then
             begin
               StateKey := GetStateKey(StateName, CountryKey);
-              StateAbbrev := StateObj.Get('iso2', '');
+              StateAbbrev := StateObj.Get('iso2', StateName);
               CitiesArray := StateObj.Arrays['cities'];
 
               // Iterate items in CKL
@@ -276,10 +277,7 @@ begin
                       Site.ParentSiteId := StateKey;
                       Site.Longitude := StrToFloatDef(CityObj.Get('longitude', '0.0'), 0, EnglishFS);
                       Site.Latitude := StrToFloatDef(CityObj.Get('latitude', '0.0'), 0, EnglishFS);
-                      if StateAbbrev <> EmptyStr then
-                        Site.FullName := Format('%s, %s, %s', [Site.Name, StateAbbrev, CountryName])
-                      else
-                        Site.FullName := Format('%s, %s, %s', [Site.Name, StateName, CountryName]);
+                      Site.FullName := Format('%s, %s, %s', [Site.Name, StateAbbrev, CountryAbbrev]);
 
                       SiteRepo.Insert(Site);
                       LogInfo(Format('Site record inserted with ID=%d', [Site.Id]));
@@ -401,11 +399,11 @@ begin
                 Site.Clear;
                 Site.Name := StateObj.Get('name', '');
                 Site.Rank := srState;
-                Site.Abbreviation := StateObj.Get('ios2', '');
+                Site.Abbreviation := StateObj.Get('iso2', '');
                 Site.ParentSiteId := Country.Id;
                 Site.Longitude := StrToFloatDef(StateObj.Get('longitude', '0'), 0, EnglishFS);
                 Site.Latitude := StrToFloatDef(StateObj.Get('latitude', '0'), 0, EnglishFS);
-                Site.FullName := Format('%s, %s', [Site.Name, Country.Name]);
+                Site.FullName := Format('%s, %s', [Site.Name, Country.Abbreviation]);
 
                 SiteRepo.Insert(Site);
                 LogInfo(Format('State record inserted with ID=%d', [Site.Id]));

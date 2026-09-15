@@ -6981,6 +6981,11 @@ object DMG: TDMG
         Size = 5
       end    
       item
+        Name = 'county_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
         Name = 'municipality_name'
         DataType = ftString
         Precision = -1
@@ -7206,11 +7211,21 @@ object DMG: TDMG
       Required = False
       Size = 60
     end
+    object qInstitutionscounty_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'county_id'
+      Index = 11
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
     object qInstitutionsmunicipality_id: TLongintField
       DisplayLabel = 'Municipality (ID)'
       FieldKind = fkData
       FieldName = 'municipality_id'
-      Index = 11
+      Index = 12
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7222,7 +7237,7 @@ object DMG: TDMG
       DisplayWidth = 35
       FieldKind = fkData
       FieldName = 'municipality_name'
-      Index = 12
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -7234,7 +7249,7 @@ object DMG: TDMG
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'manager_name'
-      Index = 13
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7246,7 +7261,7 @@ object DMG: TDMG
       DisplayWidth = 35
       FieldKind = fkData
       FieldName = 'email_addr'
-      Index = 14
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7258,19 +7273,9 @@ object DMG: TDMG
       DisplayLabel = 'Phone'
       FieldKind = fkData
       FieldName = 'phone_num'
-      Index = 15
-      LookupCache = False
-      ProviderFlags = [pfInUpdate, pfInWhere]
-      ReadOnly = False
-      Required = False
-    end
-    object qInstitutionsinstitution_id: TAutoIncField
-      DisplayLabel = 'ID'
-      FieldKind = fkData
-      FieldName = 'institution_id'
       Index = 16
       LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
+      ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
     end
@@ -7287,11 +7292,21 @@ object DMG: TDMG
       BlobType = ftMemo
       Transliterate = False
     end
+    object qInstitutionsinstitution_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'institution_id'
+      Index = 18
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
     object qInstitutionsuser_inserted: TLongintField
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 18
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7302,7 +7317,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 19
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7314,7 +7329,7 @@ object DMG: TDMG
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 20
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7326,7 +7341,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 21
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7338,7 +7353,7 @@ object DMG: TDMG
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 22
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7351,7 +7366,7 @@ object DMG: TDMG
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 23
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7362,7 +7377,7 @@ object DMG: TDMG
     object qInstitutionsinactivated_by: TStringField
       FieldKind = fkData
       FieldName = 'inactivated_by'
-      Index = 24
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7591,6 +7606,11 @@ object DMG: TDMG
         DataType = ftString
         Precision = -1
         Size = 5
+      end    
+      item
+        Name = 'county_id'
+        DataType = ftInteger
+        Precision = -1
       end    
       item
         Name = 'municipality_name'
@@ -7965,11 +7985,21 @@ object DMG: TDMG
       Required = False
       Size = 60
     end
+    object qPeoplecounty_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'county_id'
+      Index = 19
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
     object qPeoplestate_id: TLongintField
       DisplayLabel = 'State (ID)'
       FieldKind = fkData
       FieldName = 'state_id'
-      Index = 19
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -7981,7 +8011,7 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'state_name'
-      Index = 20
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -7992,7 +8022,7 @@ object DMG: TDMG
       DisplayLabel = 'Country (ID)'
       FieldKind = fkData
       FieldName = 'country_id'
-      Index = 21
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8004,7 +8034,7 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'country_name'
-      Index = 22
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -8015,7 +8045,7 @@ object DMG: TDMG
       DisplayLabel = 'Institution (ID)'
       FieldKind = fkData
       FieldName = 'institution_id'
-      Index = 23
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8027,7 +8057,7 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'institution_name'
-      Index = 24
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -8039,7 +8069,7 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'department'
-      Index = 25
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8051,7 +8081,7 @@ object DMG: TDMG
       DisplayWidth = 20
       FieldKind = fkData
       FieldName = 'job_role'
-      Index = 26
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8062,7 +8092,7 @@ object DMG: TDMG
       DisplayLabel = 'Lattes'
       FieldKind = fkData
       FieldName = 'lattes_uri'
-      Index = 27
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8073,7 +8103,7 @@ object DMG: TDMG
       DisplayLabel = 'Orcid'
       FieldKind = fkData
       FieldName = 'orcid_uri'
-      Index = 28
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8085,7 +8115,7 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'twitter_uri'
-      Index = 29
+      Index = 30
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8097,7 +8127,7 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'instagram_uri'
-      Index = 30
+      Index = 31
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8109,22 +8139,12 @@ object DMG: TDMG
       DisplayWidth = 30
       FieldKind = fkData
       FieldName = 'website_uri'
-      Index = 31
+      Index = 32
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
       Required = False
       Size = 100
-    end
-    object qPeopleperson_id: TAutoIncField
-      DisplayLabel = 'ID'
-      FieldKind = fkData
-      FieldName = 'person_id'
-      Index = 32
-      LookupCache = False
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = False
-      Required = False
     end
     object qPeoplenotes: TMemoField
       DisplayLabel = 'Notes'
@@ -8139,11 +8159,21 @@ object DMG: TDMG
       BlobType = ftMemo
       Transliterate = False
     end
+    object qPeopleperson_id: TAutoIncField
+      DisplayLabel = 'ID'
+      FieldKind = fkData
+      FieldName = 'person_id'
+      Index = 34
+      LookupCache = False
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      Required = False
+    end
     object qPeopleprofile_image: TBlobField
       DisplayLabel = 'Profile image'
       FieldKind = fkData
       FieldName = 'profile_image'
-      Index = 34
+      Index = 35
       LookupCache = False
       ProviderFlags = [pfInUpdate]
       ReadOnly = False
@@ -8153,7 +8183,7 @@ object DMG: TDMG
       DisplayLabel = 'Profile color'
       FieldKind = fkData
       FieldName = 'profile_color'
-      Index = 35
+      Index = 36
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8165,7 +8195,7 @@ object DMG: TDMG
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 36
+      Index = 37
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8176,7 +8206,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 37
+      Index = 38
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8187,7 +8217,7 @@ object DMG: TDMG
       DisplayLabel = 'Created date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 38
+      Index = 39
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8198,7 +8228,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 39
+      Index = 40
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8209,7 +8239,7 @@ object DMG: TDMG
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 40
+      Index = 41
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8221,7 +8251,7 @@ object DMG: TDMG
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 41
+      Index = 42
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -8232,7 +8262,7 @@ object DMG: TDMG
     object qPeopleinactivated_by: TStringField
       FieldKind = fkData
       FieldName = 'inactivated_by'
-      Index = 42
+      Index = 43
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -10925,6 +10955,16 @@ object DMG: TDMG
         Size = 5
       end    
       item
+        Name = 'county_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'locality_id'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
         Name = 'parent_site_name'
         DataType = ftString
         Precision = -1
@@ -11149,11 +11189,21 @@ object DMG: TDMG
       Required = False
       Size = 60
     end
+    object qGazetteerlocality_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'locality_id'
+      Index = 9
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
     object qGazetteermunicipality_id: TLongintField
       DisplayLabel = 'Municipality ID'
       FieldKind = fkData
       FieldName = 'municipality_id'
-      Index = 9
+      Index = 10
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11164,18 +11214,28 @@ object DMG: TDMG
       DisplayLabel = 'Municipality'
       FieldKind = fkData
       FieldName = 'municipality_name'
-      Index = 10
+      Index = 11
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
       Required = False
       Size = 60
     end
+    object qGazetteercounty_id: TLongintField
+      FieldKind = fkData
+      FieldName = 'county_id'
+      Index = 12
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Visible = False
+    end
     object qGazetteerstate_id: TLongintField
       DisplayLabel = 'State ID'
       FieldKind = fkData
       FieldName = 'state_id'
-      Index = 11
+      Index = 13
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11186,7 +11246,7 @@ object DMG: TDMG
       DisplayLabel = 'State'
       FieldKind = fkData
       FieldName = 'state_name'
-      Index = 12
+      Index = 14
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -11197,7 +11257,7 @@ object DMG: TDMG
       DisplayLabel = 'Country ID'
       FieldKind = fkData
       FieldName = 'country_id'
-      Index = 13
+      Index = 15
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11208,7 +11268,7 @@ object DMG: TDMG
       DisplayLabel = 'Country'
       FieldKind = fkData
       FieldName = 'country_name'
-      Index = 14
+      Index = 16
       LookupCache = False
       ProviderFlags = [pfInWhere]
       ReadOnly = False
@@ -11220,7 +11280,7 @@ object DMG: TDMG
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'full_name'
-      Index = 15
+      Index = 17
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11232,7 +11292,7 @@ object DMG: TDMG
       DisplayWidth = 40
       FieldKind = fkData
       FieldName = 'ebird_name'
-      Index = 16
+      Index = 18
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11243,7 +11303,7 @@ object DMG: TDMG
       DisplayLabel = 'Language'
       FieldKind = fkData
       FieldName = 'language'
-      Index = 17
+      Index = 19
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11255,7 +11315,7 @@ object DMG: TDMG
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'description'
-      Index = 18
+      Index = 20
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11268,7 +11328,7 @@ object DMG: TDMG
       DisplayWidth = 50
       FieldKind = fkData
       FieldName = 'notes'
-      Index = 19
+      Index = 21
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11280,7 +11340,7 @@ object DMG: TDMG
       DisplayLabel = 'ID'
       FieldKind = fkData
       FieldName = 'site_id'
-      Index = 20
+      Index = 22
       LookupCache = False
       ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
@@ -11290,7 +11350,7 @@ object DMG: TDMG
       DisplayLabel = 'Created by'
       FieldKind = fkData
       FieldName = 'user_inserted'
-      Index = 21
+      Index = 23
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11301,7 +11361,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified by'
       FieldKind = fkData
       FieldName = 'user_updated'
-      Index = 22
+      Index = 24
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11313,7 +11373,7 @@ object DMG: TDMG
       DisplayLabel = 'Creation date'
       FieldKind = fkData
       FieldName = 'insert_date'
-      Index = 23
+      Index = 25
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11325,7 +11385,7 @@ object DMG: TDMG
       DisplayLabel = 'Last modified date'
       FieldKind = fkData
       FieldName = 'update_date'
-      Index = 24
+      Index = 26
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11336,7 +11396,7 @@ object DMG: TDMG
       DisplayLabel = 'Exported'
       FieldKind = fkData
       FieldName = 'exported_status'
-      Index = 25
+      Index = 27
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11348,7 +11408,7 @@ object DMG: TDMG
       DisplayLabel = 'Active'
       FieldKind = fkData
       FieldName = 'active_status'
-      Index = 26
+      Index = 28
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False
@@ -11359,7 +11419,7 @@ object DMG: TDMG
     object qGazetteerinactivated_by: TStringField
       FieldKind = fkData
       FieldName = 'inactivated_by'
-      Index = 27
+      Index = 29
       LookupCache = False
       ProviderFlags = [pfInUpdate, pfInWhere]
       ReadOnly = False

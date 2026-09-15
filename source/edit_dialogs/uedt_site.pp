@@ -300,8 +300,8 @@ begin
   cbRank.Items.Clear;
   cbRank.Items.Add(rsCaptionCountry);
   cbRank.Items.Add(rsCaptionState);
+  cbRank.Items.Add(rsCaptionCounty);
   cbRank.Items.Add(rsCaptionMunicipality);
-  cbRank.Items.Add(rsCaptionDistrict);
   cbRank.Items.Add(rsCaptionLocality);
   cbRank.Items.Add(rsCaptionProperty);
 
@@ -327,7 +327,8 @@ begin
   aState := '';
   aCountry := '';
 
-  if (Trim(eName.Text) = EmptyStr) or (cbRank.ItemIndex < 0) then
+  if (Trim(eName.Text) = EmptyStr) or (cbRank.ItemIndex < 0) or
+    ((cbRank.ItemIndex > 0) and (FParentSiteId = 0)) then
     Exit;
 
   S := eName.Text;
@@ -343,17 +344,17 @@ begin
           srNone: ;
           srCountry:
           begin
-            aCountry := FParent.Name;
+            aCountry := FParent.Abbreviation;
             S := Format('%s, %s', [S, aCountry]);
           end;
           srState:
           begin
             aState := FParent.Abbreviation;
-            aCountry := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FParent.ParentSiteId);
+            aCountry := GetName(TBL_GAZETTEER, COL_SITE_ABBREVIATION, COL_SITE_ID, FParent.ParentSiteId);
             S := Format('%s, %s, %s', [S, aState, aCountry]);
           end;
+          srCounty,
           srMunicipality,
-          srDistrict,
           srLocality: S := Format('%s, %s', [S, FParent.FullName]);
           srProperty: ;
         end;
@@ -380,8 +381,8 @@ begin
   case FSite.Rank of
     srCountry:      cbRank.ItemIndex := 0;
     srState:        cbRank.ItemIndex := 1;
-    srMunicipality: cbRank.ItemIndex := 2;
-    srDistrict:     cbRank.ItemIndex := 3;
+    srCounty:       cbRank.ItemIndex := 2;
+    srMunicipality: cbRank.ItemIndex := 3;
     srLocality:     cbRank.ItemIndex := 4;
     srProperty:     cbRank.ItemIndex := 5;
   end;
@@ -473,6 +474,8 @@ begin
     Msgs.Add(Format(rsRequiredField, [rscLatitude]));
   if (eLatitude.Text <> EmptyStr) and (eLongitude.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscLongitude]));
+  if ((cbRank.ItemIndex = 0) or (cbRank.ItemIndex = 1)) and (Trim(eAbbreviation.Text) = EmptyStr) then
+    Msgs.Add(Format(rsRequiredField, [rscAbbreviation]));
 
   // Geographical coordinates
   if eLongitude.Text <> EmptyStr then
@@ -481,8 +484,8 @@ begin
     ValueInRange(StrToFloat(eLatitude.Text), -90.0, 90.0, rscLatitude, Msgs, Msg);
 
   // Unique fields
-  if (eAbbreviation.Text <> EmptyStr) then
-    RecordDuplicated(tbGazetteer, COL_SITE_ID, COL_SITE_ABBREVIATION, eAbbreviation.Text, FSite.Id, Msgs);
+  if (eFullname.Text <> EmptyStr) then
+    RecordDuplicated(tbGazetteer, COL_SITE_ID, COL_FULL_NAME, eFullname.Text, FSite.Id, Msgs);
 
   if Msgs.Count > 0 then
   begin

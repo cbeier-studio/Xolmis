@@ -60,6 +60,7 @@ begin
       'postal_code            VARCHAR (15),' +
       'country_id             INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'state_id               INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
+      'county_id              INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'municipality_id        INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'institution_id         INTEGER       REFERENCES institutions (institution_id) ON UPDATE CASCADE,' +
       'department             VARCHAR (100),' +
@@ -135,6 +136,7 @@ begin
       'postal_code, ' +
       'country_id, ' +
       'state_id, ' +
+      'county_id, ' +
       'municipality_id, ' +
       'institution_id, ' +
       'department, ' +
@@ -167,6 +169,7 @@ begin
       ':postal_code, ' +
       ':country_id, ' +
       ':state_id, ' +
+      ':county_id, ' +
       ':municipality_id, ' +
       ':institution_id, ' +
       ':department, ' +
@@ -187,11 +190,13 @@ begin
   Result :=
     'SELECT p.*, ' +
       'gm.site_name AS municipality_name, ' +
+      'go.site_name AS county_name, ' +
       'gs.site_name AS state_name, ' +
       'gc.site_name AS country_name, ' +
       'it.full_name AS institution_name ' +
     'FROM people AS p ' +
     'LEFT JOIN gazetteer AS gm ON p.municipality_id = gm.site_id ' +
+    'LEFT JOIN gazetteer AS go ON p.county_id = go.site_id ' +
     'LEFT JOIN gazetteer AS gs ON p.state_id = gs.site_id ' +
     'LEFT JOIN gazetteer AS gc ON p.country_id = gc.site_id ' +
     'LEFT JOIN institutions AS it ON p.institution_id = it.institution_id ';
@@ -256,6 +261,7 @@ begin
       'p.postal_code, ' +
       'p.country_id, ' +
       'p.state_id, ' +
+      'p.county_id, ' +
       'p.municipality_id, ' +
       'p.institution_id, ' +
       'i.full_name AS institution_name' +
@@ -322,6 +328,7 @@ begin
       'postal_code = :postal_code, ' +
       'country_id = :country_id, ' +
       'state_id = :state_id, ' +
+      'county_id = :county_id, ' +
       'municipality_id = :municipality_id, ' +
       'institution_id = :institution_id, ' +
       'department = :department, ' +

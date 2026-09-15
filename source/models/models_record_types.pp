@@ -302,8 +302,8 @@ type
   end;
 
   // Gazetteer and geography
-  TSiteRank = (srNone, srCountry, srState, srMunicipality, srDistrict, srLocality, srProperty);
-  TGazetteerFilter = (gfAll, gfCountries, gfStates, gfCities, gfDistricts, gfLocalities, gfProperties);
+  TSiteRank = (srNone, srCountry, srState, srCounty, srMunicipality, srLocality, srProperty);
+  TGazetteerFilter = (gfAll, gfCountries, gfStates, gfCounties, gfCities, gfLocalities, gfProperties);
   TGazetteerFilters = set of TGazetteerFilter;
   TCoordinatePrecision = (cpEmpty = -1, cpExact, cpApproximated, cpReference);
 
@@ -527,7 +527,7 @@ const
     'intergrade', 'domest.', 'slash');
 
   // Gazetteer and geography
-  SITE_RANKS: array[TSiteRank] of String = ('', 'P', 'E', 'M', 'D', 'L', 'I');
+  SITE_RANKS: array[TSiteRank] of String = ('', 'C', 'S', 'O', 'M', 'L', 'P');
   COORDINATE_PRECISIONS: array[TCoordinatePrecision] of String = ('', 'E', 'A', 'R');
 
   // Projects

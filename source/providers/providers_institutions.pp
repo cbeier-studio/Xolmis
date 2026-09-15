@@ -42,12 +42,13 @@ begin
     'CREATE TABLE IF NOT EXISTS institutions (' +
       'institution_id  INTEGER       UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,' +
       'full_name       VARCHAR (100) NOT NULL UNIQUE,' +
-      'abbreviation         VARCHAR (15),' +
+      'abbreviation    VARCHAR (15),' +
       'address_1       VARCHAR (100),' +
       'address_2       VARCHAR (40),' +
       'neighborhood    VARCHAR (60),' +
-      'postal_code        VARCHAR (15),' +
+      'postal_code     VARCHAR (15),' +
       'municipality_id INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
+      'county_id       INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'state_id        INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'country_id      INTEGER       REFERENCES gazetteer (site_id) ON UPDATE CASCADE,' +
       'manager_name    VARCHAR (100),' +
@@ -105,6 +106,7 @@ begin
       'neighborhood, ' +
       'postal_code, ' +
       'municipality_id, ' +
+      'county_id, ' +
       'state_id, ' +
       'country_id, ' +
       'manager_name, ' +
@@ -121,6 +123,7 @@ begin
       ':neighborhood, ' +
       ':postal_code, ' +
       ':municipality_id, ' +
+      ':county_id, ' +
       ':state_id, ' +
       ':country_id, ' +
       ':manager_name, ' +
@@ -136,10 +139,12 @@ begin
   Result :=
     'SELECT it.*, ' +
       'gm.site_name AS municipality_name, ' +
+      'go.site_name AS county_name, ' +
       'gs.site_name AS state_name, ' +
       'gc.site_name AS country_name ' +
     'FROM institutions AS it ' +
     'LEFT JOIN gazetteer AS gm ON it.municipality_id = gm.site_id ' +
+    'LEFT JOIN gazetteer AS go ON it.county_id = go.site_id ' +
     'LEFT JOIN gazetteer AS gs ON it.state_id = gs.site_id ' +
     'LEFT JOIN gazetteer AS gc ON it.country_id = gc.site_id ';
 
@@ -176,6 +181,7 @@ begin
       'neighborhood, ' +
       'postal_code, ' +
       'municipality_id, ' +
+      'county_id, ' +
       'state_id, ' +
       'country_id, ' +
       'manager_name, ' +
@@ -223,6 +229,7 @@ begin
       'neighborhood = :neighborhood, ' +
       'postal_code = :postal_code, ' +
       'municipality_id = :municipality_id, ' +
+      'county_id = :county_id, ' +
       'state_id = :state_id, ' +
       'country_id = :country_id, ' +
       'manager_name = :manager_name, ' +

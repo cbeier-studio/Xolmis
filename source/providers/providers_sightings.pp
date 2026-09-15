@@ -241,6 +241,7 @@ begin
       'g.full_name AS locality_name, ' +
       'g.country_id AS country_id, ' +
       'g.state_id AS state_id, ' +
+      'g.county_id AS county_id, ' +
       'g.municipality_id AS municipality_id ' +
     'FROM sightings AS s ' +
     'LEFT JOIN zoo_taxa AS z ON s.taxon_id = z.taxon_id ' +

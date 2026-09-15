@@ -273,6 +273,7 @@ begin
       'g.site_name AS locality_name, ' +
       'g.country_id AS country_id, ' +
       'g.state_id AS state_id, ' +
+      'g.county_id AS county_id, ' +
       'g.municipality_id AS municipality_id, ' +
       'CASE ' +
         'WHEN n.custom_taxon_name IS NOT NULL AND n.custom_taxon_name <> '''' ' +

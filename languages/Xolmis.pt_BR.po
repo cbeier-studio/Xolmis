@@ -445,6 +445,15 @@ msgctxt "data_columns.rsccountryid"
 msgid "Country ID"
 msgstr "País ID"
 
+#: data_columns.rsccounty
+msgctxt "data_columns.rsccounty"
+msgid "County"
+msgstr "Condado"
+
+#: data_columns.rsccountyid
+msgid "County ID"
+msgstr "Condado ID"
+
 #: data_columns.rsccover
 msgctxt "data_columns.rsccover"
 msgid "Cover (%)"
@@ -11583,6 +11592,7 @@ msgid "&Unmark all"
 msgstr "&Desmarcar todos"
 
 #: tfrmcustomgrid.pmpaddcountriesandstates.caption
+msgctxt "tfrmcustomgrid.pmpaddcountriesandstates.caption"
 msgid "Add countries and states"
 msgstr "Adicionar países e estados"
 
@@ -12272,6 +12282,11 @@ msgstr "Editar registro selecionado"
 msgctxt "tfrmcustomgrid.sbeditrecord.hint"
 msgid "Edit selected record"
 msgstr "Editar registro selecionado"
+
+#: tfrmcustomgrid.sbemptyaddcountries.caption
+msgctxt "tfrmcustomgrid.sbemptyaddcountries.caption"
+msgid "Add countries and states"
+msgstr "Adicionar países e estados"
 
 #: tfrmcustomgrid.sbemptyclearall.caption
 msgctxt "tfrmcustomgrid.sbemptyclearall.caption"
@@ -14583,6 +14598,11 @@ msgstr "Conexão"
 msgctxt "utils_locale.rscaptioncountry"
 msgid "Country"
 msgstr "País"
+
+#: utils_locale.rscaptioncounty
+msgctxt "utils_locale.rscaptioncounty"
+msgid "County"
+msgstr "Condado"
 
 #: utils_locale.rscaptiondate
 msgctxt "utils_locale.rscaptiondate"

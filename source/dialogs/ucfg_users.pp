@@ -59,6 +59,7 @@ type
     Separator7: TShapeLineBGRA;
     Separator8: TShapeLineBGRA;
     TimerFind: TTimer;
+    procedure dsUsersDataChange(Sender: TObject; Field: TField);
     procedure dsUsersStateChange(Sender: TObject);
     procedure eSearchChange(Sender: TObject);
     procedure eSearchEnter(Sender: TObject);
@@ -86,7 +87,7 @@ var
 implementation
 
 uses
-  utils_global, models_users, data_types, data_management, utils_editdialogs, utils_themes, data_search,
+  utils_global, models_users, data_types, data_management, utils_editdialogs, utils_themes, data_search, data_consts,
   models_access_control, ucfg_permissions,
   udm_main, uDarkStyleParams;
 
@@ -119,9 +120,25 @@ begin
   sbClearSearch.StateNormal.Color := pSearch.Background.Color;
 end;
 
+procedure TcfgUsers.dsUsersDataChange(Sender: TObject; Field: TField);
+begin
+  if dsUsers.State = dsBrowse then
+  begin
+    sbChangePassword.Enabled := (dsUsers.DataSet.FieldByName(COL_USER_ID).AsInteger = ActiveUser.Id) and not (dsUsers.DataSet.IsEmpty);
+    sbPermissions.Enabled := not (dsUsers.DataSet.IsEmpty) and ActiveUser.HasPermission(PERM_ROLES_MANAGE);
+  end
+  else
+  begin
+    sbChangePassword.Enabled := False;
+    sbPermissions.Enabled := False;
+  end;
+
+  pmgChangePassword.Enabled := sbChangePassword.Enabled;
+end;
+
 procedure TcfgUsers.dsUsersStateChange(Sender: TObject);
 begin
-  case DMM.dsUsers.State of
+  case dsUsers.State of
     dsInactive:
       begin
         sbNew.Enabled := False;
@@ -136,11 +153,11 @@ begin
       end;
     dsBrowse:
       begin
-        sbNew.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly;
-        sbEdit.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and not (dsUsers.DataSet.IsEmpty);
-        sbChangePassword.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and not (dsUsers.DataSet.IsEmpty);
+        sbNew.Enabled := ActiveUser.HasPermission(PERM_USERS_MANAGE);
+        sbEdit.Enabled := ActiveUser.HasPermission(PERM_USERS_MANAGE) and not (dsUsers.DataSet.IsEmpty);
+        sbChangePassword.Enabled := (dsUsers.DataSet.FieldByName(COL_USER_ID).AsInteger = ActiveUser.Id) and not (dsUsers.DataSet.IsEmpty);
         sbPermissions.Enabled := not (dsUsers.DataSet.IsEmpty) and ActiveUser.HasPermission(PERM_ROLES_MANAGE);
-        sbDelete.Enabled := not (dsUsers.DataSet as TSQLQuery).ReadOnly and not (dsUsers.DataSet.IsEmpty);
+        sbDelete.Enabled := ActiveUser.HasPermission(PERM_USERS_MANAGE) and not (dsUsers.DataSet.IsEmpty);
         sbRefreshRecords.Enabled := True;
         sbClose.Enabled := True;
         eSearch.Enabled := True;

@@ -913,7 +913,7 @@ begin
   // Get user permissions
   actDBNew.Enabled := ActiveUser.HasPermission(PERM_DATABASE_CREATE);
   actMaintenance.Enabled := ActiveUser.HasPermission(PERM_SYSTEM_MAINTENANCE);
-  actManageUsers.Enabled := ActiveUser.HasPermission(PERM_USERS_MANAGE);
+  //actManageUsers.Enabled := ActiveUser.HasPermission(PERM_USERS_MANAGE);
 
   actImport.Enabled := ActiveUser.HasPermission(PERM_IMPORT_WIZARD) or
     ActiveUser.HasPermission(PERM_IMPORT_XOLMIS_MOBILE) or

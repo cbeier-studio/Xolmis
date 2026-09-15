@@ -100,13 +100,14 @@ type
   private
     FIsNew: Boolean;
     FInstitution: TInstitution;
-    FMunicipalityId, FStateId, FCountryId: Integer;
+    FMunicipalityId, FCountyId, FStateId, FCountryId: Integer;
     procedure SetInstitution(Value: TInstitution);
     procedure GetRecord;
     procedure SetRecord;
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
+    procedure GetStateCountry(Sender: TObject);
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
     property Institution: TInstitution read FInstitution write SetInstitution;
@@ -119,7 +120,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_editdialogs,
-  data_types, data_getvalue, data_consts, data_columns, models_record_types,
+  data_types, data_getvalue, data_consts, data_columns, models_record_types, models_geo,
   udm_main, udm_grid, uDarkStyleParams;
 
 {$R *.lfm}
@@ -169,7 +170,7 @@ end;
 
 procedure TedtInstitution.eCountryButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfCountries], eCountry, FCountryId);
+  FindSiteDlg([gfCountries], eCountry, FCountryId, '', COL_SITE_NAME);
 end;
 
 procedure TedtInstitution.eCountryKeyPress(Sender: TObject; var Key: char);
@@ -179,7 +180,7 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindSiteDlg([gfCountries], eCountry, FCountryId, Key);
+    FindSiteDlg([gfCountries], eCountry, FCountryId, Key, COL_SITE_NAME);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
@@ -222,7 +223,8 @@ end;
 
 procedure TedtInstitution.eMunicipalityButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfCities], eMunicipality, FMunicipalityId);
+  FindSiteDlg([gfCities], eMunicipality, FMunicipalityId, '', COL_SITE_NAME);
+  GetStateCountry(Sender);
 end;
 
 procedure TedtInstitution.eMunicipalityKeyPress(Sender: TObject; var Key: char);
@@ -232,7 +234,8 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindSiteDlg([gfCities], eMunicipality, FMunicipalityId, Key);
+    FindSiteDlg([gfCities], eMunicipality, FMunicipalityId, Key, COL_SITE_NAME);
+    GetStateCountry(Sender);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
@@ -255,7 +258,8 @@ end;
 
 procedure TedtInstitution.eStateButtonClick(Sender: TObject);
 begin
-  FindSiteDlg([gfStates], eState, FStateId);
+  FindSiteDlg([gfStates], eState, FStateId, '', COL_SITE_NAME);
+  GetStateCountry(Sender);
 end;
 
 procedure TedtInstitution.eStateKeyPress(Sender: TObject; var Key: char);
@@ -265,7 +269,8 @@ begin
   { Alphabetic search in numeric field }
   if (IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key)) then
   begin
-    FindSiteDlg([gfStates], eState, FStateId, Key);
+    FindSiteDlg([gfStates], eState, FStateId, Key, COL_SITE_NAME);
+    GetStateCountry(Sender);
     Key := #0;
   end;
   { CLEAR FIELD VALUE = Backspace }
@@ -345,6 +350,70 @@ begin
   eEmail.Text := FInstitution.Email;
   ePhone.Text := FInstitution.Phone;
   mNotes.Text := FInstitution.Notes;
+end;
+
+procedure TedtInstitution.GetStateCountry(Sender: TObject);
+var
+  FSiteRepo: TSiteRepository;
+  FSite: TSite;
+begin
+  if (Sender = eMunicipality) and (FMunicipalityId > 0) then
+  begin
+    FSiteRepo := TSiteRepository.Create(DMM.sqlCon);
+    FSite := TSite.Create();
+    try
+      FSiteRepo.GetById(FMunicipalityId, FSite);
+      if not FSite.IsNew then
+      begin
+        FCountyId := FSite.CountyId;
+        FStateId := FSite.StateId;
+        eState.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FStateId);
+        FCountryId := FSite.CountryId;
+        eCountry.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FCountryId);
+      end;
+    finally
+      FSite.Free;
+      FSiteRepo.Free;
+    end;
+  end
+  else
+  //if (Sender = eCounty) and (FCountyId > 0) then
+  //begin
+    //FMunicipalityId := 0;
+    //eMunicipality.Clear;
+  //  FSiteRepo := TSiteRepository.Create(DMM.sqlCon);
+  //  FSite := TSite.Create();
+  //  try
+  //    FSiteRepo.GetById(FCountyId, FSite);
+  //    if not FSite.IsNew then
+  //    begin
+  //      FStateId := FSite.StateId;
+  //      eState.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FStateId);
+  //      FCountryId := FSite.CountryId;
+  //      eCountry.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FCountryId);
+  //    end;
+  //  finally
+  //    FSite.Free;
+  //    FSiteRepo.Free;
+  //  end;
+  //end
+  //else
+  if (Sender = eState) and (FStateId > 0) and (FMunicipalityId = 0) then
+  begin
+    FSiteRepo := TSiteRepository.Create(DMM.sqlCon);
+    FSite := TSite.Create();
+    try
+      FSiteRepo.GetById(FStateId, FSite);
+      if not FSite.IsNew then
+      begin
+        FCountryId := FSite.CountryId;
+        eCountry.Text := GetName(TBL_GAZETTEER, COL_SITE_NAME, COL_SITE_ID, FCountryId);
+      end;
+    finally
+      FSite.Free;
+      FSiteRepo.Free;
+    end;
+  end;
 end;
 
 function TedtInstitution.IsRequiredFilled: Boolean;

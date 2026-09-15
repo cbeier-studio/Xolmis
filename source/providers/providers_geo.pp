@@ -69,7 +69,9 @@ begin
       'parent_site_id  INTEGER,' +
       'country_id      INTEGER,' +
       'state_id        INTEGER,' +
+      'county_id       INTEGER,' +
       'municipality_id INTEGER,' +
+      'locality_id     INTEGER,' +
       'full_name       VARCHAR (180),' +
       'ebird_name      VARCHAR (150),' +
       'language        VARCHAR (10),' +
@@ -120,19 +122,17 @@ begin
           case F of
             gfAll: ; // do nothing
             gfCountries:
-              strFiltro := strOr + '(site_rank = ''P'') ';
+              strFiltro := strOr + '(site_rank = ''C'') ';
             gfStates:
-              strFiltro := strOr + '(site_rank = ''E'') ';
-            //gfRegions:
-            //  strFiltro := strOr + '(site_rank = ''R'') ';
+              strFiltro := strOr + '(site_rank = ''S'') ';
+            gfCounties:
+              strFiltro := strOr + '(site_rank = ''O'') ';
             gfCities:
               strFiltro := strOr + '(site_rank = ''M'') ';
-            gfDistricts:
-              strFiltro := strOr + '(site_rank = ''D'') ';
             gfLocalities:
               strFiltro := strOr + '(site_rank = ''L'') ';
             gfProperties:
-              strFiltro := strOr + '(site_rank = ''I'') ';
+              strFiltro := strOr + '(site_rank = ''P'') ';
           end;
           Result := Result + strFiltro;
           strOr := 'OR ';
@@ -163,7 +163,9 @@ begin
       'parent_site_id, ' +
       'country_id, ' +
       'state_id, ' +
+      'county_id, ' +
       'municipality_id, ' +
+      'locality_id, ' +
       'full_name, ' +
       'ebird_name, ' +
       'language, ' +
@@ -181,7 +183,9 @@ begin
       ':parent_site_id, ' +
       ':country_id, ' +
       ':state_id, ' +
+      ':county_id, ' +
       ':municipality_id, ' +
+      ':locality_id, ' +
       ':full_name, ' +
       ':ebird_name, ' +
       ':language, ' +
@@ -196,12 +200,16 @@ begin
   Result :=
     'SELECT g.*, ' +
       'gp.site_name AS parent_site_name, ' +
+      'gl.site_name AS locality_name, ' +
       'gm.site_name AS municipality_name, ' +
+      'go.site_name AS county_name, ' +
       'gs.site_name AS state_name, ' +
       'gc.site_name AS country_name ' +
     'FROM gazetteer AS g ' +
     'LEFT JOIN gazetteer AS gp ON g.parent_site_id = gp.site_id ' +
+    'LEFT JOIN gazetteer AS gl ON g.locality_id = gl.site_id ' +
     'LEFT JOIN gazetteer AS gm ON g.municipality_id = gm.site_id ' +
+    'LEFT JOIN gazetteer AS go ON g.county_id = go.site_id ' +
     'LEFT JOIN gazetteer AS gs ON g.state_id = gs.site_id ' +
     'LEFT JOIN gazetteer AS gc ON g.country_id = gc.site_id ';
 
@@ -229,7 +237,7 @@ end;
 function TGazetteerSQL.SelectHierarchy: String;
 begin
   Result :=
-    'SELECT country_id, state_id, municipality_id FROM gazetteer ' +
+    'SELECT country_id, state_id, county_id, municipality_id, locality_id FROM gazetteer ' +
     'WHERE site_id = :asite ';
 end;
 
@@ -247,7 +255,9 @@ begin
       'parent_site_id, ' +
       'country_id, ' +
       'state_id, ' +
+      'county_id, ' +
       'municipality_id, ' +
+      'locality_id, ' +
       'full_name, ' +
       'ebird_name, ' +
       'language, ' +
@@ -286,38 +296,65 @@ end;
 
 function TGazetteerSQL.SelectTree(const aTableFilter: TTableType): String;
 begin
-  Result :=
-    'WITH SiteDetails AS (' +
-      'SELECT ' +
-        'site_id, ' +
-        'site_name, ' +
-        'municipality_id, ' +
-        'state_id, ' +
-        'country_id ' +
-      'FROM gazetteer' +
-    ') ';
+  if (aTableFilter = tbInstitutions) or (aTableFilter = tbPeople) then
+  begin
+    Result :=
+      'WITH SiteDetails AS (' +
+        'SELECT ' +
+          'site_id, ' +
+          'site_name, ' +
+          'municipality_id, ' +
+          'county_id, ' +
+          'state_id, ' +
+          'country_id ' +
+        'FROM gazetteer' +
+      ') ';
+  end
+  else
+  begin
+    Result :=
+      'WITH SiteDetails AS (' +
+        'SELECT ' +
+          'site_id, ' +
+          'site_name, ' +
+          //'locality_id, ' +
+          'municipality_id, ' +
+          'county_id, ' +
+          'state_id, ' +
+          'country_id ' +
+        'FROM gazetteer' +
+      ') ';
+  end;
 
   if (aTableFilter = tbGazetteer) then
     Result := Result +
-      'SELECT g.municipality_id, g.state_id, g.country_id, ' +
+      'SELECT g.municipality_id, g.county_id, g.state_id, g.country_id, ' +
+        //'l.site_name AS locality_name, ' +
         'm.site_name AS municipality_name, ' +
+        'o.site_name AS county_name, ' +
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM gazetteer AS g ' +
+      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
       'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
       'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (g.active_status = 1) ';
 
   if (aTableFilter = tbSurveys) or (aTableFilter = tbNone) then
     Result := Result +
-      'SELECT sv.locality_id, g.municipality_id, g.state_id, g.country_id, ' +
+      'SELECT sv.locality_id, g.municipality_id, g.county_id, g.state_id, g.country_id, ' +
+        //'l.site_name AS locality_name, ' +
         'm.site_name AS municipality_name, ' +
+        'o.site_name AS county_name, ' +
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM surveys AS sv ' +
       'JOIN SiteDetails AS g ON sv.locality_id = g.site_id ' +
+      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
       'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
       'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (sv.active_status = 1) ';
@@ -325,13 +362,17 @@ begin
     Result := Result + 'UNION ';
   if (aTableFilter = tbCaptures) or (aTableFilter = tbNone) then
     Result := Result +
-      'SELECT c.locality_id, g.municipality_id, g.state_id, g.country_id, ' +
+      'SELECT c.locality_id, g.municipality_id, g.county_id, g.state_id, g.country_id, ' +
+        //'l.site_name AS locality_name, ' +
         'm.site_name AS municipality_name, ' +
+        'o.site_name AS county_name, ' +
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM captures AS c ' +
       'JOIN SiteDetails AS g ON c.locality_id = g.site_id ' +
+      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
       'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
       'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (c.active_status = 1) ';
@@ -339,13 +380,17 @@ begin
     Result := Result + 'UNION ';
   if (aTableFilter = tbFeathers) or (aTableFilter = tbNone) then
     Result := Result +
-      'SELECT ft.locality_id, g.municipality_id, g.state_id, g.country_id, ' +
+      'SELECT ft.locality_id, g.municipality_id, g.county_id, g.state_id, g.country_id, ' +
+        //'l.site_name AS locality_name, ' +
         'm.site_name AS municipality_name, ' +
+        'o.site_name AS county_name, ' +
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM feathers AS ft ' +
       'JOIN SiteDetails AS g ON ft.locality_id = g.site_id ' +
+      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
       'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
       'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (ft.active_status = 1) ';
@@ -353,13 +398,17 @@ begin
     Result := Result + 'UNION ';
   if (aTableFilter = tbSightings) or (aTableFilter = tbNone) then
     Result := Result +
-      'SELECT st.locality_id, g.municipality_id, g.state_id, g.country_id, ' +
+      'SELECT st.locality_id, g.municipality_id, g.county_id, g.state_id, g.country_id, ' +
+        //'l.site_name AS locality_name, ' +
         'm.site_name AS municipality_name, ' +
+        'o.site_name AS county_name, ' +
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM sightings AS st ' +
       'JOIN SiteDetails AS g ON st.locality_id = g.site_id ' +
+      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
       'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
       'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (st.active_status = 1) ';
@@ -367,13 +416,17 @@ begin
     Result := Result + 'UNION ';
   if (aTableFilter = tbNests) or (aTableFilter = tbNone) then
     Result := Result +
-      'SELECT n.locality_id, g.municipality_id, g.state_id, g.country_id, ' +
+      'SELECT n.locality_id, g.municipality_id, g.county_id, g.state_id, g.country_id, ' +
+        //'l.site_name AS locality_name, ' +
         'm.site_name AS municipality_name, ' +
+        'o.site_name AS county_name, ' +
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM nests AS n ' +
       'JOIN SiteDetails AS g ON n.locality_id = g.site_id ' +
+      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
       'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
       'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (n.active_status = 1) ';
@@ -383,10 +436,12 @@ begin
     Result := Result +
       'SELECT it.municipality_id, it.state_id, it.country_id, ' +
         'm.site_name AS municipality_name, ' +
+        'o.site_name AS county_name, ' +
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM institutions AS it ' +
       'JOIN SiteDetails AS m ON it.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS o ON it.county_id = o.site_id ' +
       'JOIN SiteDetails AS s ON it.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON it.country_id = p.site_id ' +
       'WHERE (it.active_status = 1) ';
@@ -396,10 +451,12 @@ begin
     Result := Result +
       'SELECT pp.municipality_id, pp.state_id, pp.country_id, ' +
         'm.site_name AS municipality_name, ' +
+        'o.site_name AS county_name, ' +
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM people AS pp ' +
       'JOIN SiteDetails AS m ON pp.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS o ON pp.county_id = o.site_id ' +
       'JOIN SiteDetails AS s ON pp.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON pp.country_id = p.site_id ' +
       'WHERE (pp.active_status = 1) ';
@@ -407,13 +464,17 @@ begin
     Result := Result + 'UNION ';
   if (aTableFilter = tbSpecimens) or (aTableFilter = tbNone) then
     Result := Result +
-      'SELECT sp.locality_id, g.municipality_id, g.state_id, g.country_id, ' +
+      'SELECT sp.locality_id, g.municipality_id, g.county_id, g.state_id, g.country_id, ' +
+        //'l.site_name AS locality_name, ' +
         'm.site_name AS municipality_name, ' +
+        'o.site_name AS county_name, ' +
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM specimens AS sp ' +
       'JOIN SiteDetails AS g ON sp.locality_id = g.site_id ' +
+      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
       'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
       'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (sp.active_status = 1) ';
@@ -421,27 +482,40 @@ begin
     Result := Result + 'UNION ';
   if (aTableFilter = tbSamplingPlots) or (aTableFilter = tbNone) then
     Result := Result +
-      'SELECT pl.locality_id, g.municipality_id, g.state_id, g.country_id, ' +
+      'SELECT pl.locality_id, g.municipality_id, g.county_id, g.state_id, g.country_id, ' +
+        //'l.site_name AS locality_name, ' +
         'm.site_name AS municipality_name, ' +
+        'o.site_name AS county_name, ' +
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM sampling_plots AS pl ' +
       'JOIN SiteDetails AS g ON pl.locality_id = g.site_id ' +
+      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
       'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
       'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
       'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (pl.active_status = 1) ';
 
   if (aTableFilter = tbInstitutions) then
-    Result := Result + 'GROUP BY it.country_id, it.state_id, it.municipality_id '
+  begin
+    Result := Result + 'GROUP BY it.country_id, it.state_id, it.county_id, it.municipality_id ';
+    Result := Result +
+      'ORDER BY country_name ASC, state_name ASC, county_name ASC, municipality_name ASC ';
+  end
   else
   if (aTableFilter = tbPeople) then
-    Result := Result + 'GROUP BY pp.country_id, pp.state_id, pp.municipality_id '
+  begin
+    Result := Result + 'GROUP BY pp.country_id, pp.state_id, pp.county_id, pp.municipality_id ';
+    Result := Result +
+      'ORDER BY country_name ASC, state_name ASC, county_name ASC, municipality_name ASC ';
+  end
   else
-    Result := Result + 'GROUP BY g.country_id, g.state_id, g.municipality_id ';
-
-  Result := Result +
-    'ORDER BY country_name ASC, state_name ASC, municipality_name ASC ';
+  begin
+    Result := Result + 'GROUP BY g.country_id, g.state_id, g.county_id, g.municipality_id ';
+    Result := Result +
+      'ORDER BY country_name ASC, state_name ASC, county_name ASC, municipality_name ASC ';
+  end;
 end;
 
 function TGazetteerSQL.Update: String;
@@ -457,7 +531,9 @@ begin
       'parent_site_id = :parent_site_id, ' +
       'country_id = :country_id, ' +
       'state_id = :state_id, ' +
+      'county_id = :county_id, ' +
       'municipality_id = :municipality_id, ' +
+      'locality_id = :locality_id, ' +
       'full_name = :full_name, ' +
       'ebird_name = :ebird_name, ' +
       'language = :language, ' +
@@ -476,7 +552,9 @@ begin
     'UPDATE gazetteer SET ' +
       'country_id = :country_id, ' +
       'state_id = :state_id, ' +
-      'municipality_id = :municipality_id ' +
+      'county_id = :county_id, ' +
+      'municipality_id = :municipality_id, ' +
+      'locality_id = :locality_id ' +
     'WHERE site_id = :aid';
 end;
 

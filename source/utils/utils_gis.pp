@@ -1347,7 +1347,7 @@ begin
   for i := 0 to JSONArray.Count - 1 do
   begin
     CountryObj := JSONArray.Objects[i];
-    if SameText(CountryIso, CountryObj.Get('iso2', '')) then
+    if SameText(CountryIso, CountryObj.Get('iso3', '')) then
     begin
       // get name translations
       if CountryObj.Find('translations') <> nil then

@@ -1585,6 +1585,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsCaptionState = 'State';
     rsCaptionCountry = 'Country';
     rsCaptionProperty = 'Property';
+    rsCaptionCounty = 'County';
 
     { Button captions }
     rsLoginButton = 'Sign in';

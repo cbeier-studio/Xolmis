@@ -532,6 +532,8 @@ resourcestring
   rscMacrolanguage = 'Macrolanguage';
   rscOriginalFilename = 'Original filename';
   rscFileHash = 'File hash';
+  rscCountyID = 'County ID';
+  rscCounty = 'County';
 
   rscValue = 'Value';
   rscTally = 'Count';
@@ -1248,6 +1250,8 @@ begin
         'country_name':           Fields[i].DisplayLabel := rscCountry;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
         'state_name':             Fields[i].DisplayLabel := rscState;
+        'county_id':              Fields[i].DisplayLabel := rscCountyID;
+        'county_name':            Fields[i].DisplayLabel := rscCounty;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'municipality_name':      Fields[i].DisplayLabel := rscMunicipality;
         'manager_name':           Fields[i].DisplayLabel := rscManager;
@@ -1279,14 +1283,14 @@ begin
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'citation':               Fields[i].DisplayLabel := rscCitation;
-        'abbreviation':                Fields[i].DisplayLabel := rscAbbreviation;
+        'abbreviation':           Fields[i].DisplayLabel := rscAbbreviation;
         'title_treatment':        Fields[i].DisplayLabel := rscTreatment;
         'gender':                 Fields[i].DisplayLabel := rscGender;
-        'id_document_1':       Fields[i].DisplayLabel := rscRG;
-        'id_document_2': Fields[i].DisplayLabel := rscCPF;
+        'id_document_1':          Fields[i].DisplayLabel := rscRG;
+        'id_document_2':          Fields[i].DisplayLabel := rscCPF;
         'birth_date':             Fields[i].DisplayLabel := rscBirthDate;
         'death_date':             Fields[i].DisplayLabel := rscDeathDate;
-        'postal_code':               Fields[i].DisplayLabel := rscPostalCode;
+        'postal_code':            Fields[i].DisplayLabel := rscPostalCode;
         'address_1':              Fields[i].DisplayLabel := rscAddress1;
         'address_2':              Fields[i].DisplayLabel := rscAddress2;
         'neighborhood':           Fields[i].DisplayLabel := rscNeighborhood;
@@ -1294,6 +1298,8 @@ begin
         'country_name':           Fields[i].DisplayLabel := rscCountry;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
         'state_name':             Fields[i].DisplayLabel := rscState;
+        'county_id':              Fields[i].DisplayLabel := rscCountyID;
+        'county_name':            Fields[i].DisplayLabel := rscCounty;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'municipality_name':      Fields[i].DisplayLabel := rscMunicipality;
         'institution_id':         Fields[i].DisplayLabel := rscInstitutionID;
@@ -1557,7 +1563,9 @@ begin
         'parent_site_name':       Fields[i].DisplayLabel := rscParentSite;
         'country_id':             Fields[i].DisplayLabel := rscCountryID;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
+        'county_id':              Fields[i].DisplayLabel := rscCountyID;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
+        'locality_id':            Fields[i].DisplayLabel := rscLocalityID;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
         'ebird_name':             Fields[i].DisplayLabel := rscEBirdName;
         'language':               Fields[i].DisplayLabel := rscLanguage;
@@ -1587,13 +1595,15 @@ begin
       case Fields[i].FieldName of
         'marked_status':          Fields[i].DisplayLabel := rscMarkedStatus;
         'full_name':              Fields[i].DisplayLabel := rscFullName;
-        'abbreviation':                Fields[i].DisplayLabel := rscAbbreviation;
+        'abbreviation':           Fields[i].DisplayLabel := rscAbbreviation;
         'locality_id':            Fields[i].DisplayLabel := rscLocalityID;
         'locality_name':          Fields[i].DisplayLabel := rscLocality;
         'country_id':             Fields[i].DisplayLabel := rscCountryID;
         'country_name':           Fields[i].DisplayLabel := rscCountry;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
         'state_name':             Fields[i].DisplayLabel := rscState;
+        'county_id':              Fields[i].DisplayLabel := rscCountyID;
+        'county_name':            Fields[i].DisplayLabel := rscCounty;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'municipality_name':      Fields[i].DisplayLabel := rscMunicipality;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
@@ -1659,11 +1669,6 @@ begin
         'start_date':             Fields[i].DisplayLabel := rscStartDate;
         'end_date':               Fields[i].DisplayLabel := rscEndDate;
         'duration':               Fields[i].DisplayLabel := rscDurationDays;
-        'locality_id':            Fields[i].DisplayLabel := rscLocalityID;
-        'locality_name':          Fields[i].DisplayLabel := rscLocality;
-        'country_id':             Fields[i].DisplayLabel := rscCountryID;
-        'state_id':               Fields[i].DisplayLabel := rscStateID;
-        'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'project_id':             Fields[i].DisplayLabel := rscProjectID;
         'project_name':           Fields[i].DisplayLabel := rscProject;
         'description':            Fields[i].DisplayLabel := rscDescription;
@@ -1706,6 +1711,8 @@ begin
         'country_name':           Fields[i].DisplayLabel := rscCountry;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
         'state_name':             Fields[i].DisplayLabel := rscState;
+        'county_id':              Fields[i].DisplayLabel := rscCountyID;
+        'county_name':            Fields[i].DisplayLabel := rscCounty;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'municipality_name':      Fields[i].DisplayLabel := rscMunicipality;
         'sample_id':              Fields[i].DisplayLabel := rscSampleID;
@@ -1751,7 +1758,7 @@ begin
         'survey_id':              Fields[i].DisplayLabel := rscSurveyID;
         'person_id':              Fields[i].DisplayLabel := rscPersonID;
         'person_name':            Fields[i].DisplayLabel := rscPerson;
-        'person_abbrev':         Fields[i].DisplayLabel := rscAbbreviation;
+        'person_abbrev':          Fields[i].DisplayLabel := rscAbbreviation;
         'visitor':                Fields[i].DisplayLabel := rscVisitor;
         'person_color':           Fields[i].DisplayLabel := rscProfileColor;
         'survey_member_id':       Fields[i].DisplayLabel := rscId;
@@ -1915,6 +1922,7 @@ begin
         'species_id':             Fields[i].DisplayLabel := rscSpeciesID;
         'country_id':             Fields[i].DisplayLabel := rscCountryID;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
+        'county_id':              Fields[i].DisplayLabel := rscCountyID;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'sighting_id':            Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
@@ -2004,10 +2012,10 @@ begin
         'sender_name':            Fields[i].DisplayLabel := rscSender;
         'requester_id':           Fields[i].DisplayLabel := rscRequesterID;
         'requester_name':         Fields[i].DisplayLabel := rscRequester;
-        'individual_id':              Fields[i].DisplayLabel := rscIndividualID;
-        'capture_id':              Fields[i].DisplayLabel := rscCaptureID;
-        'reported':              Fields[i].DisplayLabel := rscReported;
-        'report_date':              Fields[i].DisplayLabel := rscReportDate;
+        'individual_id':          Fields[i].DisplayLabel := rscIndividualID;
+        'capture_id':             Fields[i].DisplayLabel := rscCaptureID;
+        'reported':               Fields[i].DisplayLabel := rscReported;
+        'report_date':            Fields[i].DisplayLabel := rscReportDate;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'event_id':               Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
@@ -2048,10 +2056,10 @@ begin
         'double_band_name':       Fields[i].DisplayLabel := rscDoubleBand;
         'removed_band_id':        Fields[i].DisplayLabel := rscRemovedBandID;
         'removed_band_name':      Fields[i].DisplayLabel := rscRemovedBand;
-        'right_tarsus':        Fields[i].DisplayLabel := rscRightTarsus;
-        'left_tarsus':         Fields[i].DisplayLabel := rscLeftTarsus;
-        'right_tibia':        Fields[i].DisplayLabel := rscRightTibia;
-        'left_tibia':         Fields[i].DisplayLabel := rscLeftTibia;
+        'right_tarsus':           Fields[i].DisplayLabel := rscRightTarsus;
+        'left_tarsus':            Fields[i].DisplayLabel := rscLeftTarsus;
+        'right_tibia':            Fields[i].DisplayLabel := rscRightTibia;
+        'left_tibia':             Fields[i].DisplayLabel := rscLeftTibia;
         'nest_id':                Fields[i].DisplayLabel := rscNestID;
         'nest_name':              Fields[i].DisplayLabel := rscNest;
         'father_id':              Fields[i].DisplayLabel := rscFatherID;
@@ -2120,10 +2128,10 @@ begin
         'band_name':              Fields[i].DisplayLabel := rscBand;
         'removed_band_id':        Fields[i].DisplayLabel := rscRemovedBandID;
         'removed_band_name':      Fields[i].DisplayLabel := rscRemovedBand;
-        'right_tarsus':        Fields[i].DisplayLabel := rscRightTarsus;
-        'left_tarsus':         Fields[i].DisplayLabel := rscLeftTarsus;
-        'right_tibia':        Fields[i].DisplayLabel := rscRightTibia;
-        'left_tibia':         Fields[i].DisplayLabel := rscLeftTibia;
+        'right_tarsus':           Fields[i].DisplayLabel := rscRightTarsus;
+        'left_tarsus':            Fields[i].DisplayLabel := rscLeftTarsus;
+        'right_tibia':            Fields[i].DisplayLabel := rscRightTibia;
+        'left_tibia':             Fields[i].DisplayLabel := rscLeftTibia;
         'longitude':              Fields[i].DisplayLabel := rscLongitude;
         'latitude':               Fields[i].DisplayLabel := rscLatitude;
         'coordinate_precision':   Fields[i].DisplayLabel := rscCoordinatePrecision;
@@ -2135,7 +2143,7 @@ begin
         'flight_feathers_wear':   Fields[i].DisplayLabel := rscFlightFeathersWear;
         'right_wing_chord':       Fields[i].DisplayLabel := rscRightWingChord;
         'first_secondary_chord':  Fields[i].DisplayLabel := rsc1stSecondaryChord;
-        'kipps_distance':            Fields[i].DisplayLabel := rscKippSDistance;
+        'kipps_distance':         Fields[i].DisplayLabel := rscKippSDistance;
         'tail_length':            Fields[i].DisplayLabel := rscTailLength;
         'tarsus_length':          Fields[i].DisplayLabel := rscTarsusLength;
         'tarsus_diameter':        Fields[i].DisplayLabel := rscTarsusDiameter;
@@ -2179,8 +2187,8 @@ begin
         'photographer_2_id':      Fields[i].DisplayLabel := rscPhotographer2ID;
         'photographer_2_name':    Fields[i].DisplayLabel := rscPhotographer2;
         'camera_name':            Fields[i].DisplayLabel := rscCamera;
-        'initial_photo_number':     Fields[i].DisplayLabel := rscInitialPhotoNr;
-        'final_photo_number':       Fields[i].DisplayLabel := rscFinalPhotoNr;
+        'initial_photo_number':   Fields[i].DisplayLabel := rscInitialPhotoNr;
+        'final_photo_number':     Fields[i].DisplayLabel := rscFinalPhotoNr;
         'escaped':                Fields[i].DisplayLabel := rscEscaped;
         'needs_review':           Fields[i].DisplayLabel := rscNeedsReview;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
@@ -2191,6 +2199,7 @@ begin
         'species_id':             Fields[i].DisplayLabel := rscSpeciesID;
         'country_id':             Fields[i].DisplayLabel := rscCountryID;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
+        'county_id':              Fields[i].DisplayLabel := rscCountyID;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'capture_id':             Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
@@ -2323,6 +2332,7 @@ begin
         'species_id':             Fields[i].DisplayLabel := rscSpeciesID;
         'country_id':             Fields[i].DisplayLabel := rscCountryID;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
+        'county_id':              Fields[i].DisplayLabel := rscCountyID;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'nest_id':                Fields[i].DisplayLabel := rscId;
         'user_inserted':          Fields[i].DisplayLabel := rscUserInserted;
@@ -2495,6 +2505,7 @@ begin
         'species_id':             Fields[i].DisplayLabel := rscSpeciesID;
         'country_id':             Fields[i].DisplayLabel := rscCountryID;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
+        'county_id':              Fields[i].DisplayLabel := rscCountyID;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'specimen_id':            Fields[i].DisplayLabel := rscId;
@@ -2568,6 +2579,7 @@ begin
         'species_name':           Fields[i].DisplayLabel := rscSpeciesID;
         'country_id':             Fields[i].DisplayLabel := rscCountryID;
         'state_id':               Fields[i].DisplayLabel := rscStateID;
+        'county_id':              Fields[i].DisplayLabel := rscCountyID;
         'municipality_id':        Fields[i].DisplayLabel := rscMunicipalityID;
         'notes':                  Fields[i].DisplayLabel := rscNotes;
         'sample_prep_id':         Fields[i].DisplayLabel := rscId;

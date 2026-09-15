@@ -160,6 +160,7 @@ type
     sbAddVideo: TSpeedButton;
     sbAddFeathersBatch: TSpeedButton;
     sbClearSearch: TColorSpeedButton;
+    sbEmptyAddCountries: TSpeedButton;
     sbVideoInfo: TSpeedButton;
     sbDelVideo: TSpeedButton;
     sbEmptyQuickEntry: TSpeedButton;
@@ -1404,7 +1405,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_system, utils_themes, utils_editdialogs, utils_dialogs, utils_math,
-  utils_finddialogs, utils_print, utils_gis, utils_taxonomy, utils_validations, utils_web,
+  utils_finddialogs, utils_print, utils_gis, utils_taxonomy, utils_validations, utils_web, utils_conversions,
   data_management, data_getvalue, data_columns, data_setparam, data_consts,
   models_access_control, models_taxonomy, models_users, models_record_types,
   modules_bands, modules_birds, modules_botany, modules_breeding, modules_gazetteer, modules_institutions,
@@ -2580,6 +2581,7 @@ begin
   sbDelPermanently.Images := iButtonsDark;
   sbEmptyNewRecord.Images := iButtonsDark;
   sbEmptyQuickEntry.Images := iButtonsDark;
+  sbEmptyAddCountries.Images := iButtonsDark;
   sbEmptyImport.Images := iButtonsDark;
   sbEmptyClearAll.Images := iButtonsDark;
   sbMoreOptions.Images := iButtonsDark;
@@ -4242,6 +4244,7 @@ begin
   if Assigned(dsLink.DataSet) then
     UpdateButtons(dsLink.DataSet);
 
+  sbEmptyAddCountries.Visible := FTableType = tbGazetteer;
   pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
 
   UpdateChildBar;
@@ -7611,6 +7614,18 @@ begin
   if (mapGeo.GPSItems.Count > 0) then
   begin
     mapGeo.ZoomOnArea(mapGeo.GPSItems.BoundingBox);
+    if FTableType = tbGazetteer then
+    begin
+      case StrToSiteRank(dsLink.DataSet.FieldByName(COL_SITE_RANK).AsString) of
+        srNone: ;
+        srCountry: mapGeo.Zoom := 4;
+        srState,
+        srCounty,
+        srMunicipality: mapGeo.Zoom := 6;
+        srLocality,
+        srProperty: ;
+      end;
+    end;
     if mapGeo.Zoom > 14 then
       mapGeo.Zoom := 14
     else
@@ -8336,9 +8351,9 @@ end;
 procedure TfrmCustomGrid.sbEmptyClearAllClick(Sender: TObject);
 begin
   ClearSearch;
-  if frmMain.eSearch.CanSetFocus then
+  if eSearch.CanSetFocus then
   begin
-    frmMain.sbClearSearchClick(nil);
+    sbClearSearchClick(nil);
   end;
 end;
 
