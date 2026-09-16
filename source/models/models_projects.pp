@@ -736,6 +736,7 @@ end;
 procedure TProjectRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TProject;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -744,9 +745,15 @@ begin
 
   R := TProject(E);
   if ARow.IndexOfName('start_date') >= 0 then
-    R.StartDate := StrToDateDef(ARow.Values['start_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['start_date'], Dt) then
+      R.StartDate := Dt;
+  end;
   if ARow.IndexOfName('end_date') >= 0 then
-    R.EndDate := StrToDateDef(ARow.Values['end_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['end_date'], Dt) then
+      R.EndDate := Dt;
+  end;
   if ARow.IndexOfName('project_title') >= 0 then
     R.Title := ARow.Values['project_title'];
   if ARow.IndexOfName('short_title') >= 0 then

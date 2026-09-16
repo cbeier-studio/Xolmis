@@ -364,7 +364,7 @@ var
   Root, N: TDOMNode;
   NodeList: TDOMNodeList;
   i: Integer;
-  Row: TXRow;
+  Row, Transformed: TXRow;
   RecNodeName: string;
 begin
   LogEvent(leaStart, 'Import XML file');
@@ -387,8 +387,15 @@ begin
           Row := TXRow.Create;
           try
             NodeToRow(N, '', Row);
-            if Assigned(RowOut) then RowOut(Row);
+
+            Transformed := Row;
+            if Assigned(FMapper) then
+              Transformed := FMapper.Apply(Row);
+
+            if Assigned(RowOut) then RowOut(Transformed);
           finally
+            if Transformed <> Row then
+              Transformed.Free;
             Row.Free;
           end;
         end;
@@ -408,8 +415,15 @@ begin
         Row := TXRow.Create;
         try
           NodeToRow(N, '', Row);
-          if Assigned(RowOut) then RowOut(Row);
+
+          Transformed := Row;
+          if Assigned(FMapper) then
+            Transformed := FMapper.Apply(Row);
+
+          if Assigned(RowOut) then RowOut(Transformed);
         finally
+          if Transformed <> Row then
+            Transformed.Free;
           Row.Free;
         end;
 

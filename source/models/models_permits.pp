@@ -450,6 +450,7 @@ end;
 procedure TPermitRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TPermit;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -468,9 +469,15 @@ begin
   if ARow.IndexOfName('dispatcher_name') >= 0 then
     R.Dispatcher := ARow.Values['dispatcher_name'];
   if ARow.IndexOfName('dispatch_date') >= 0 then
-    R.DispatchDate := StrToDateDef(ARow.Values['dispatch_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['dispatch_date'], Dt) then
+      R.DispatchDate := Dt;
+  end;
   if ARow.IndexOfName('expire_date') >= 0 then
-    R.ExpireDate := StrToDateDef(ARow.Values['expire_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['expire_date'], Dt) then
+      R.ExpireDate := Dt;
+  end;
   if ARow.IndexOfName('permit_status') >= 0 then
     R.PermitStatus := StrToPermitStatus(ARow.Values['permit_status']);
   if ARow.IndexOfName('notes') >= 0 then

@@ -634,6 +634,7 @@ end;
 procedure TSamplePrepRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TSamplePrep;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -660,7 +661,10 @@ begin
   if ARow.IndexOfName('egg_id') >= 0 then
     R.EggId := StrToIntDef(ARow.Values['egg_id'], 0);
   if ARow.IndexOfName('preparation_date') >= 0 then
-    R.PreparationDate := StrToDateDef(ARow.Values['preparation_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['preparation_date'], Dt) then
+      R.PreparationDate := Dt;
+  end;
   if ARow.IndexOfName('preparer_id') >= 0 then
     R.PreparerId := StrToIntDef(ARow.Values['preparer_id'], 0);
   if ARow.IndexOfName('institution_id') >= 0 then

@@ -269,10 +269,11 @@ begin
   end;
 end;
 
-procedure HandleRegularJSON(root: TJSONData; RowOut: TXRowConsumer; const Options: TImportOptions);
+procedure HandleRegularJSON(root: TJSONData; RowOut: TXRowConsumer; const Options: TImportOptions;
+  Mapper: TFieldMapper);
 var
   i: Integer;
-  row: TXRow;
+  row, Transformed: TXRow;
   arr: TJSONArray;
 begin
   if root.JSONType = jtArray then
@@ -282,6 +283,7 @@ begin
     begin
       if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then Break;
       row := TXRow.Create;
+      Transformed := row;
       try
         if arr.Items[i].JSONType = jtObject then
           AddJSONToRow('', arr.Items[i], row)
@@ -289,8 +291,12 @@ begin
         begin
           row.Values['value'] := arr.Items[i].AsString;
         end;
-        if Assigned(RowOut) then RowOut(row);
+        if Assigned(Mapper) then
+          Transformed := Mapper.Apply(row);
+        if Assigned(RowOut) then RowOut(Transformed);
       finally
+        if Transformed <> row then
+          Transformed.Free;
         row.Free;
       end;
       if Assigned(Options.OnProgress) then
@@ -303,10 +309,15 @@ begin
   else if root.JSONType = jtObject then
   begin
     row := TXRow.Create;
+    Transformed := row;
     try
       AddJSONToRow('', root, row);
-      if Assigned(RowOut) then RowOut(row);
+      if Assigned(Mapper) then
+        Transformed := Mapper.Apply(row);
+      if Assigned(RowOut) then RowOut(Transformed);
     finally
+      if Transformed <> row then
+        Transformed.Free;
       row.Free;
     end;
   end;
@@ -529,7 +540,7 @@ var
   root: TJSONData;
   Reader: TStreamReader;
   Line: string;
-  row: TXRow;
+  row, Transformed: TXRow;
   i, progress: Integer;
 begin
   Stream.Position := 0;
@@ -554,10 +565,15 @@ begin
           root := parser.Parse;
           try
             row := TXRow.Create;
+            Transformed := row;
             try
               AddJSONToRow('', root, row);
-              if Assigned(RowOut) then RowOut(row);
+              if Assigned(FMapper) then
+                Transformed := FMapper.Apply(row);
+              if Assigned(RowOut) then RowOut(Transformed);
             finally
+              if Transformed <> row then
+                Transformed.Free;
               row.Free;
             end;
           finally
@@ -589,7 +605,7 @@ begin
     try
       root := parser.Parse;
       try
-        HandleRegularJSON(root, RowOut, Options);
+        HandleRegularJSON(root, RowOut, Options, FMapper);
       finally
         root.Free;
       end;
@@ -667,6 +683,7 @@ begin
           Data := Parser.Parse;
           try
             Row := TXRow.Create;
+            Transformed := Row;
             try
               Transformed := Row;
 
@@ -1008,7 +1025,7 @@ var
   Parser: TJSONParser;
   Data: TJSONData;
   Obj: TJSONObject;
-  Row: TXRow;
+  Row, Transformed: TXRow;
   i, Count: Integer;
 begin
   Stream.Position := 0;
@@ -1037,10 +1054,19 @@ begin
           begin
             Obj := TJSONObject(Data);
             Row := TXRow.Create;
-            for i := 0 to Obj.Count - 1 do
-              Row.Values[Obj.Names[i]] := Obj.Items[i].AsString;
-            RowOut(Row);
-            Row.Free;
+            try
+              for i := 0 to Obj.Count - 1 do
+                Row.Values[Obj.Names[i]] := Obj.Items[i].AsString;
+
+              if Assigned(FMapper) then
+                Transformed := FMapper.Apply(Row);
+              if Assigned(RowOut) then
+                RowOut(Transformed);
+            finally
+              if Transformed <> Row then
+                Transformed.Free;
+              Row.Free;
+            end;
 
             Inc(Count);
 

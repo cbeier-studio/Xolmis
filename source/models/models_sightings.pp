@@ -787,6 +787,7 @@ end;
 procedure TSightingRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TSighting;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -797,9 +798,15 @@ begin
   if ARow.IndexOfName('survey_id') >= 0 then
     R.SurveyId := StrToIntDef(ARow.Values['survey_id'], 0);
   if ARow.IndexOfName('sighting_date') >= 0 then
-    R.SightingDate := StrToDateDef(ARow.Values['sighting_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['sighting_date'], Dt) then
+      R.SightingDate := Dt;
+  end;
   if ARow.IndexOfName('sighting_time') >= 0 then
-    R.SightingTime := StrToTimeDef(ARow.Values['sighting_time'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['sighting_time'], Dt) then
+      R.SightingTime := Dt;
+  end;
   if ARow.IndexOfName('locality_id') >= 0 then
     R.LocalityId := StrToIntDef(ARow.Values['locality_id'], 0);
   if ARow.IndexOfName('longitude') >= 0 then

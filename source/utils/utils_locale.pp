@@ -234,6 +234,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsErrorValueExceededMaxLength = 'The value "%s" exceeds the allowed maximum length (%d) for the field "%s".';
     rsErrorValueNotAllowedForField = 'The value "%s" is not allowed for the field "%s". Valid values: %s';
     rsErrorLookupValueNotFoundForField = 'The value "%s" does not match any valid record in the lookup table "%s".';
+    rsErrorDuplicateValueForField = 'The value "%s" is already in use for the field "%s" and must be unique.';
     rsErrorLoadingDatabaseSchema = 'The database schema was not loaded.';
     rsErrorLoadingTableSchema = 'The table schema was not loaded.';
     rsErrorLoadingFieldSchema = 'The field schema was not loaded.';
@@ -354,6 +355,8 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
 
     rsCantDeleteRecord = 'This record cannot be deleted as it is associated with other records.';
     rsCantDeleteUser = 'User %s should not be deleted as it might affect the proper functioning of Xolmis.';
+    rsCannotDelete = 'Cannot delete record';
+    rsCannotDeleteMethod = 'The selected method cannot be deleted because some Xolmis'' features depend on it.';
 
     rsRecycleAutoDeleteInfo = 'Records that remain in the recycle bin for more than %d days will be automatically deleted.';
     rsRecycleDeleteTitle = 'Delete permanently';

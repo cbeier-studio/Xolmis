@@ -43,9 +43,11 @@ uses
   function GetSightingFullName(aTaxon: Integer; aCustomTaxon: String; aDate: TDate; aTime: TTime; aLocality: Integer): String;
   function GetEggFullName(aTaxon: Integer; aCustomTaxon, aFieldNumber: String; aDate: TDate): String;
 
+  function GetUniquePersonInitials(const AFullName: string): string;
+
 implementation
 
-uses utils_locale, utils_global, data_getvalue, data_consts, udm_main;
+uses utils_locale, utils_global, utils_conversions, data_getvalue, data_consts, udm_main;
 
 // ---------------------------------------------------------
 // String and list treatment
@@ -305,11 +307,11 @@ begin
   //DecodeDate(aDate, aYear, aMonth, aDay);
   if (aTime <> NullTime) then
   begin
-    Result := Trim(Format('%s %s %s %s %s', [TaxonName, FormatDateTime('yyyy-mm-dd', aDate), FormatDateTime('hh:nn:ss', aTime),
+    Result := Trim(Format('%s %s %s %s', [TaxonName, FormatDateTime('yyyy-mm-dd', aDate), FormatDateTime('hh:nn:ss', aTime),
       LocalityName]));
   end
   else
-    Result := Trim(Format('%s %s %s %s', [TaxonName, FormatDateTime('yyyy-mm-dd', aDate), LocalityName]));
+    Result := Trim(Format('%s %s %s', [TaxonName, FormatDateTime('yyyy-mm-dd', aDate), LocalityName]));
 end;
 
 function GetEggFullName(aTaxon: Integer; aCustomTaxon, aFieldNumber: String; aDate: TDate): String;
@@ -324,6 +326,73 @@ begin
     TaxonName := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, aTaxon);
 
   Result := Trim(Format('%s %s %s', [TaxonName, aFieldNumber, FormatDateTime('yyyy-mm-dd', aDate)]));
+end;
+
+function GetUniquePersonInitials(const AFullName: string): string;
+var
+  Qry: TSQLQuery;
+  Initials: String;
+  IsUnique: Boolean;
+  i: Integer;
+begin
+  Result := '';
+  Initials := '';
+  IsUnique := True;
+  i := 1;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+
+    Initials := GenerateAbbreviation(AFullName, False, ablBasicInitials);
+
+    Add('SELECT 1 FROM people WHERE abbreviation = :abbreviation LIMIT 1');
+    ParamByName('abbreviation').AsString := Initials;
+    Open;
+    IsUnique := IsEmpty;
+    Close;
+
+    if not IsUnique then
+    begin
+      Initials := GenerateAbbreviation(AFullName, False, ablSecondLetterFirst);
+
+      ParamByName('abbreviation').AsString := Initials;
+      Open;
+      IsUnique := IsEmpty;
+      Close;
+
+      if not IsUnique then
+      begin
+        Initials := GenerateAbbreviation(AFullName, False, ablSecondLetterBoth);
+
+        ParamByName('abbreviation').AsString := Initials;
+        Open;
+        IsUnique := IsEmpty;
+        Close;
+
+        if not IsUnique then
+        begin
+          Initials := GenerateAbbreviation(AFullName, False, ablInitialsSequence);
+
+          while not IsUnique do
+          begin
+            Inc(i);
+            Initials := Initials + IntToStr(i);
+
+            ParamByName('abbreviation').AsString := Initials;
+            Open;
+            IsUnique := IsEmpty;
+            Close;
+          end;
+        end;
+      end;
+    end;
+
+    Result := Initials;
+  finally
+    Qry.Free;
+  end;
 end;
 
 end.

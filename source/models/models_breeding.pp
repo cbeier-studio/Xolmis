@@ -784,6 +784,7 @@ end;
 procedure TNestRevisionRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TNestRevision;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -796,9 +797,15 @@ begin
   if ARow.IndexOfName('nest_id') >= 0 then
     R.NestId := StrToIntDef(ARow.Values['nest_id'], 0);
   if ARow.IndexOfName('revision_date') >= 0 then
-    R.RevisionDate := StrToDateDef(ARow.Values['revision_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['revision_date'], Dt) then
+      R.RevisionDate := Dt;
+  end;
   if ARow.IndexOfName('revision_time') >= 0 then
-    R.RevisionTime := StrToTimeDef(ARow.Values['revision_time'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['revision_time'], Dt) then
+      R.RevisionTime := Dt;
+  end;
   if ARow.IndexOfName('observer_1_id') >= 0 then
     R.Observer1Id := StrToIntDef(ARow.Values['observer_1_id'], 0);
   if ARow.IndexOfName('observer_2_id') >= 0 then
@@ -1396,6 +1403,7 @@ end;
 procedure TEggRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TEgg;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -1434,7 +1442,10 @@ begin
   if ARow.IndexOfName('observer_id') >= 0 then
     R.ObserverId := StrToIntDef(ARow.Values['observer_id'], 0);
   if ARow.IndexOfName('measure_date') >= 0 then
-    R.MeasureDate := StrToDateDef(ARow.Values['measure_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['measure_date'], Dt) then
+      R.MeasureDate := Dt;
+  end;
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
   if ARow.IndexOfName('custom_taxon_name') >= 0 then
@@ -2183,6 +2194,7 @@ end;
 procedure TNestRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TNest;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -2263,9 +2275,15 @@ begin
   if ARow.IndexOfName('nest_productivity') >= 0 then
     R.NestProductivity := StrToIntDef(ARow.Values['nest_productivity'], 0);
   if ARow.IndexOfName('found_date') >= 0 then
-    R.FoundDate := StrToDateDef(ARow.Values['found_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['found_date'], Dt) then
+      R.FoundDate := Dt;
+  end;
   if ARow.IndexOfName('last_date') >= 0 then
-    R.LastDate := StrToDateDef(ARow.Values['last_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['last_date'], Dt) then
+      R.LastDate := Dt;
+  end;
   if ARow.IndexOfName('description') >= 0 then
     R.Description := ARow.Values['description'];
   if ARow.IndexOfName('notes') >= 0 then

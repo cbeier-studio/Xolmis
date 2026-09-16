@@ -31,6 +31,7 @@ type
 
   TedtProject = class(TForm)
     btnHelp: TSpeedButton;
+    cbStatus: TComboBox;
     eProtocolNumber: TEdit;
     eTitle: TEdit;
     eShortTitle: TEdit;
@@ -41,7 +42,7 @@ type
     eEndDate: TEditButton;
     lblRisks: TLabel;
     lblMainGoal: TLabel;
-    lblProtocolNumber1: TLabel;
+    lblStatus: TLabel;
     lblStartDate: TLabel;
     lblEndDate: TLabel;
     lblShortTitle: TLabel;
@@ -103,8 +104,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_validations,
-  data_types, data_consts, data_columns,
+  utils_locale, utils_global, utils_dialogs, utils_validations, utils_conversions,
+  data_types, data_consts, data_columns, models_record_types,
   udm_main, uDarkStyleParams;
 
 { TedtProject }
@@ -204,9 +205,16 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  cbStatus.Items.Add(rsProjectPlanned);
+  cbStatus.Items.Add(rsProjectActive);
+  cbStatus.Items.Add(rsProjectPaused);
+  cbStatus.Items.Add(rsProjectFinished);
+  cbStatus.Items.Add(rsProjectCancelled);
+
   if FIsNew then
   begin
     Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionProject)]);
+    cbStatus.ItemIndex := 0;
   end
   else
   begin
@@ -228,6 +236,13 @@ begin
   eEmail.Text := FProject.EmailAddress;
   eContactName.Text := FProject.ContactName;
   eProtocolNumber.Text := FProject.ProtocolNumber;
+  case FProject.ProjectStatus of
+    prtPlanned:   cbStatus.ItemIndex := cbStatus.Items.IndexOf(rsProjectPlanned);
+    prtActive:    cbStatus.ItemIndex := cbStatus.Items.IndexOf(rsProjectActive);
+    prtPaused:    cbStatus.ItemIndex := cbStatus.Items.IndexOf(rsProjectPaused);
+    prtFinished:  cbStatus.ItemIndex := cbStatus.Items.IndexOf(rsProjectFinished);
+    prtCancelled: cbStatus.ItemIndex := cbStatus.Items.IndexOf(rsProjectCancelled);
+  end;
   mMainGoal.Text := FProject.MainGoal;
   mRisks.Text := FProject.Risks;
   mAbstract.Text := FProject.ProjectAbstract;
@@ -270,6 +285,7 @@ begin
   FProject.EmailAddress    := eEmail.Text;
   FProject.ContactName     := eContactName.Text;
   FProject.ProtocolNumber  := eProtocolNumber.Text;
+  FProject.ProjectStatus := StrToProjectStatus(cbStatus.Text);
   FProject.MainGoal        := mMainGoal.Text;
   FProject.Risks           := mRisks.Text;
   FProject.ProjectAbstract := mAbstract.Text;
@@ -289,6 +305,8 @@ begin
     Msgs.Add(Format(rsRequiredField, [rscTitle]));
   if (eShortTitle.Text = EmptyStr) then
     Msgs.Add(Format(rsRequiredField, [rscShortTitle]));
+  if (cbStatus.ItemIndex < 0) then
+    Msgs.Add(Format(rsRequiredField, [rscProjectStatus]));
 
   // Dates
   vsd1 := False;

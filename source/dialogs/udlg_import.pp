@@ -411,22 +411,32 @@ end;
 
 procedure TdlgImport.AddPreviewRow(const XRow: TXRow);
 var
-  i, r, c: Integer;
+  i, j, r: Integer;
   col: TGridColumn;
   key: String;
+  DisplayName: String;
 begin
   r := gridPreview.RowCount;
   gridPreview.RowCount := r + 1;
 
-  c := 0;
   for i := 0 to XRow.Count - 1 do
   begin
     key := XRow.Names[i];
-    col := gridPreview.Columns.ColumnByTitle(key);
-    if Assigned(col) then
+    DisplayName := EmptyStr;
+    for j := 0 to FFieldMap.Map.Count - 1 do
+      if FFieldMap.Map[j].Import and SameText(FFieldMap.Map[j].TargetField, key) then
+      begin
+        DisplayName := FFieldMap.Map[j].DisplayTargetField;
+        if DisplayName = EmptyStr then
+          DisplayName := FFieldMap.Map[j].TargetField;
+        Break;
+      end;
+
+    if DisplayName <> EmptyStr then
     begin
-      c := col.Index;
-      gridPreview.Cells[c, r] := XRow.Values[key];
+      col := gridPreview.Columns.ColumnByTitle(DisplayName);
+      if Assigned(col) then
+        gridPreview.Cells[col.Index, r] := XRow.Values[key];
     end;
   end;
 end;
@@ -1470,10 +1480,12 @@ var
   FileStream: TFileStream;
   Importer: TImporter;
   Ext: String;
+  ImportFailed: Boolean;
 begin
   if Assigned(FImportSettings.Cancel) and FImportSettings.Cancel.IsCancellationRequested then
     Exit;
 
+  ImportFailed := False;
   PBar.Position := 0;
   PBar.Max := 100;
   mProgress.Lines.Clear;
@@ -1523,6 +1535,7 @@ begin
     except
       on E: Exception do
       begin
+        ImportFailed := True;
         AppendLog(Format(rsErrorImporting, [E.Message]));
         DMM.sqlTrans.RollbackRetaining;
         lblProgressInstruction.Caption := rsErrorImportFinished;
@@ -1542,6 +1555,13 @@ begin
       lblTitleProgress.Caption := rsImportCanceled;
       lblProgressInstruction.Caption := rsImportCanceledByUser;
       icoImportFinished.ImageIndex := 1;
+      sbCancel.Caption := rsCaptionClose;
+    end
+    else if ImportFailed then
+    begin
+      lblTitleProgress.Caption := rsErrorImportFinished;
+      lblProgressInstruction.Caption := rsErrorImportFinished;
+      icoImportFinished.ImageIndex := 1;
     end
     else
     begin
@@ -1553,6 +1573,7 @@ begin
       lblTitleProgress.Caption := rsFinishedImporting;
       lblProgressInstruction.Caption := rsSuccessfulImport;
       icoImportFinished.ImageIndex := 0;
+      sbCancel.Caption := rsCaptionClose;
     end;
     sbRetry.Visible := True;
     sbSaveLog.Visible := True;
@@ -1837,21 +1858,36 @@ begin
         for F in T.Fields do
         begin
           if SameText(Source, F.Name) then
-            Mapping.TargetField := F.DisplayName
+          begin
+            Mapping.TargetField := F.Name;
+            Mapping.DisplayTargetField := F.DisplayName;
+          end
           else
           if SameText(Source, F.DisplayName) then
-            Mapping.TargetField := F.DisplayName
+          begin
+            Mapping.TargetField := F.Name;
+            Mapping.DisplayTargetField := F.DisplayName;
+          end
           else
           if SameText(Source, F.DarwinCoreName) then
-            Mapping.TargetField := F.DisplayName
+          begin
+            Mapping.TargetField := F.Name;
+            Mapping.DisplayTargetField := F.DisplayName;
+          end
           else
           if SameText(Source, F.ExportName) then
-            Mapping.TargetField := F.DisplayName
+          begin
+            Mapping.TargetField := F.Name;
+            Mapping.DisplayTargetField := F.DisplayName;
+          end
           else
           if F.Aliases.Count > 0 then
             for A in F.Aliases do
               if SameText(Source, A) then
-                Mapping.TargetField := F.DisplayName;
+              begin
+                Mapping.TargetField := F.Name;
+                Mapping.DisplayTargetField := F.DisplayName;
+              end;
         end;
 
         Mapping.Import := Length(Mapping.TargetField) > 0;
@@ -1882,7 +1918,7 @@ begin
     begin
       gridFields.Cells[1, i+1] := FFieldMap.Map[i].SourceField;
       gridFields.Cells[2, i+1] := BoolToStr(FFieldMap.Map[i].Import, '1', '0');
-      gridFields.Cells[3, i+1] := FFieldMap.Map[i].TargetField;
+      gridFields.Cells[3, i+1] := FFieldMap.Map[i].DisplayTargetField;
     end;
 
     // Target field picklist
@@ -2148,7 +2184,10 @@ begin
     if FFieldMap.Map[i].Import then
     begin
       col := gridPreview.Columns.Add;
-      col.Title.Caption := FFieldMap.Map[i].TargetField;
+      if FFieldMap.Map[i].DisplayTargetField <> EmptyStr then
+        col.Title.Caption := FFieldMap.Map[i].DisplayTargetField
+      else
+        col.Title.Caption := FFieldMap.Map[i].TargetField;
     end;
   end;
   //gridPreview.ColCount := FieldNames.Count;
@@ -2211,6 +2250,11 @@ end;
 
 procedure TdlgImport.sbCancelClick(Sender: TObject);
 begin
+  if sbCancel.Caption = rsCaptionClose then
+  begin
+    ModalResult := mrCancel;
+  end
+  else
   if (nbPages.PageIndex = 4) and (FImportSettings.Cancel.IsCancellationRequested = False) then
   begin
     FImportSettings.Cancel.RequestCancel;
@@ -2555,7 +2599,7 @@ var
   i: Integer;
 begin
   ProfileName := FSavedSettings;
-  if not QueryDlg(rsSaveImportProfile, rsLabelProfileName, ProfileName, ProfileName) then
+  if not InputQuery(rsSaveImportProfile, rsLabelProfileName, False, ProfileName) then
     Exit;
 
   if ProfileName = EmptyStr then
@@ -2697,8 +2741,12 @@ begin
   for i := 1 to gridFields.RowCount - 1 do
   begin
     FFieldMap.Map[i - 1].Import := StrToBool(gridFields.Cells[2, i]);
-    FFieldMap.Map[i - 1].TargetField := gridFields.Cells[3, i];
+    FFieldMap.Map[i - 1].TargetField := FTargetFields.KeyData[gridFields.Cells[3, i]];
+    FFieldMap.Map[i - 1].DisplayTargetField := gridFields.Cells[3, i];
   end;
+  {$IFDEF DEBUG}
+  LogDebug(FFieldMap.ToJSON);
+  {$ENDIF}
 end;
 
 procedure TdlgImport.tsBooleanValueChange(Sender: TObject);
@@ -2887,7 +2935,7 @@ begin
     if Assigned(col) then
     begin
       try
-        col.ValidateValue(XRow.Values[key]);
+        col.ValidateValue(XRow.Values[key], FTableType, FImportSettings.ExistingRecordPolicy = erpIgnoreExisting);
       except
         on E: Exception do
         begin
@@ -2895,7 +2943,9 @@ begin
           mProgress.Lines.Append(AnsiUpperCase(rsTitleError) + ': ' + E.Message);
         end;
       end;
-    end;
+    end
+    else
+      raise Exception.CreateFmt('ValidateFields: schema of field "%s" not found.', [key]);
   end;
 end;
 

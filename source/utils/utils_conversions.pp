@@ -23,6 +23,14 @@ interface
 uses
   Classes, SysUtils, StrUtils, Forms, RegExpr, DateUtils, models_record_types;
 
+type
+  TAbbreviationLevel = (
+    ablBasicInitials,   // Nível 1: Ex: JCS ou J.C.S.
+    ablSecondLetterFirst, // Nível 2: Ex: JoCS ou JO.C.S.
+    ablSecondLetterBoth,  // Nível 3: Ex: JoCSi ou JO.C.SI.
+    ablInitialsSequence   // Nível 4: Ex: JCS2
+  );
+
   // Text treatment
   function WildcardWords(aText: String; aWildcard: String = '%'): String;
   function WildcardSyllables(aText: String; aWildcard: String = '%'): String;
@@ -37,7 +45,8 @@ uses
   function SentenceCase(aText: String): String;
 
   function GenerateCitation(const AFullName: string; JustInitials: Boolean = True): string;
-  function GenerateAbbreviation(const AFullName: string; KeepPeriods: Boolean = False): string;
+  function GenerateAbbreviation(const AFullName: string; KeepPeriods: Boolean = False;
+    ALevel: TAbbreviationLevel = ablBasicInitials): string;
 
   // Boolean treatment
   function TextToBool(aValue, aTrue, aFalse: String): Boolean;
@@ -382,54 +391,71 @@ begin
   end;
 end;
 
-function GenerateAbbreviation(const AFullName: string; KeepPeriods: Boolean): string;
-const
-  CONNECTORS: array[0..12] of string = (
-    'de', 'da', 'do', 'das', 'dos', 'e',
-    'del', 'd''', 'van', 'von', 'der', 'di', 'la'
-  );
-
-  function IsConnector(const AWord: string): Boolean;
-  var
-    P, Connector: string;
-  begin
-    P := AnsiLowerCase(AWord);
-    for Connector in CONNECTORS do
-      if P = Connector then
-        Exit(True);
-    Result := False;
-  end;
-
+function GenerateAbbreviation(const AFullName: string; KeepPeriods: Boolean; ALevel: TAbbreviationLevel): string;
 var
   Words: TStringList;
+  CleanWords: TStringList;
   I: Integer;
-  AWord, FirstLetter: string;
+  FirstWord, LastWord: string;
+  Initials, First2, Last2, MidInitials: string;
+  Base: string;
 begin
   Result := '';
+
   Words := TStringList.Create;
+  CleanWords := TStringList.Create;
   try
     Words.Delimiter := ' ';
     Words.StrictDelimiter := True;
     Words.DelimitedText := Trim(AFullName);
 
+    // Remove conectores
     for I := 0 to Words.Count - 1 do
-    begin
-      AWord := Trim(Words[I]);
+      if (Trim(Words[I]) <> '') and (not IsConnector(Words[I])) then
+        CleanWords.Add(Words[I]);
 
-      // Jump empty words and CONNECTORS
-      if (AWord = '') or IsConnector(AWord) then
-        Continue;
+    if CleanWords.Count = 0 then Exit('');
 
-      // Safe extract the first character (supports accents)
-      FirstLetter := AnsiUpperCase(Copy(AWord, 1, 1));
+    FirstWord := CleanWords[0];
+    LastWord := CleanWords[CleanWords.Count - 1];
 
-      if KeepPeriods then
-        Result := Result + FirstLetter + '.'
-      else
-        Result := Result + FirstLetter;
+    // Iniciais
+    Initials := '';
+    for I := 0 to CleanWords.Count - 1 do
+      Initials += AnsiUpperCase(Copy(CleanWords[I], 1, 1));
+
+    // Duas letras do primeiro e último nome
+    First2 := AnsiUpperCase(Copy(FirstWord, 1, 2));
+    Last2 := AnsiUpperCase(Copy(LastWord, 1, 2));
+
+    // Iniciais intermediárias
+    MidInitials := '';
+    for I := 1 to CleanWords.Count - 2 do
+      MidInitials += AnsiUpperCase(Copy(CleanWords[I], 1, 1));
+
+    case ALevel of
+      ablBasicInitials:
+        Base := Initials;
+
+      ablSecondLetterFirst:
+        Base := First2 + Copy(Initials, 2, MaxInt);
+
+      ablSecondLetterBoth:
+        Base := First2 + MidInitials + Last2;
+
+      ablInitialsSequence:
+        // Aqui apenas gera o padrão base; o número será adicionado por outro método
+        Base := Initials;
     end;
+
+    if KeepPeriods then
+      Result := StringReplace(Base, '', '.', [rfReplaceAll])
+    else
+      Result := Base;
+
   finally
     Words.Free;
+    CleanWords.Free;
   end;
 end;
 

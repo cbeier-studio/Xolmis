@@ -810,6 +810,7 @@ end;
 procedure TExpeditionRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TExpedition;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -820,9 +821,15 @@ begin
   if ARow.IndexOfName('expedition_name') >= 0 then
     R.Name := ARow.Values['expedition_name'];
   if ARow.IndexOfName('start_date') >= 0 then
-    R.StartDate := StrToDateDef(ARow.Values['start_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['start_date'], Dt) then
+      R.StartDate := Dt;
+  end;
   if ARow.IndexOfName('end_date') >= 0 then
-    R.EndDate := StrToDateDef(ARow.Values['end_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['end_date'], Dt) then
+      R.EndDate := Dt;
+  end;
   if ARow.IndexOfName('project_id') >= 0 then
     R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
   if ARow.IndexOfName('description') >= 0 then
@@ -1380,6 +1387,7 @@ end;
 procedure TNetEffortRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TNetEffort;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -1404,23 +1412,50 @@ begin
   if ARow.IndexOfName('coordinate_precision') >= 0 then
     R.CoordinatePrecision := StrToCoordinatePrecision(ARow.Values['coordinate_precision']);
   if ARow.IndexOfName('sample_date') >= 0 then
-    R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['sample_date'], Dt) then
+      R.SampleDate := Dt;
+  end;
   if ARow.IndexOfName('net_open_1') >= 0 then
-    R.NetOpen1 := StrToTimeDef(ARow.Values['net_open_1'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['net_open_1'], Dt) then
+      R.NetOpen1 := Dt;
+  end;
   if ARow.IndexOfName('net_close_1') >= 0 then
-    R.NetClose1 := StrToTimeDef(ARow.Values['net_close_1'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['net_close_1'], Dt) then
+      R.NetClose1 := Dt;
+  end;
   if ARow.IndexOfName('net_open_2') >= 0 then
-    R.NetOpen2 := StrToTimeDef(ARow.Values['net_open_2'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['net_open_2'], Dt) then
+      R.NetOpen2 := Dt;
+  end;
   if ARow.IndexOfName('net_close_2') >= 0 then
-    R.NetClose2 := StrToTimeDef(ARow.Values['net_close_2'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['net_close_2'], Dt) then
+      R.NetClose2 := Dt;
+  end;
   if ARow.IndexOfName('net_open_3') >= 0 then
-    R.NetOpen3 := StrToTimeDef(ARow.Values['net_open_3'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['net_open_3'], Dt) then
+      R.NetOpen3 := Dt;
+  end;
   if ARow.IndexOfName('net_close_3') >= 0 then
-    R.NetClose3 := StrToTimeDef(ARow.Values['net_close_3'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['net_close_3'], Dt) then
+      R.NetClose3 := Dt;
+  end;
   if ARow.IndexOfName('net_open_4') >= 0 then
-    R.NetOpen4 := StrToTimeDef(ARow.Values['net_open_4'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['net_open_4'], Dt) then
+      R.NetOpen4 := Dt;
+  end;
   if ARow.IndexOfName('net_close_4') >= 0 then
-    R.NetClose4 := StrToTimeDef(ARow.Values['net_close_4'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['net_close_4'], Dt) then
+      R.NetClose4 := Dt;
+  end;
   if ARow.IndexOfName('net_length') >= 0 then
     R.NetLength := StrToFloatDef(ARow.Values['net_length'], 0);
   if ARow.IndexOfName('net_height') >= 0 then
@@ -1990,6 +2025,7 @@ end;
 procedure TVegetationRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TVegetation;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -2000,9 +2036,15 @@ begin
   if ARow.IndexOfName('survey_id') >= 0 then
     R.SurveyId := StrToIntDef(ARow.Values['survey_id'], 0);
   if ARow.IndexOfName('sample_date') >= 0 then
-    R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['sample_date'], Dt) then
+      R.SampleDate := Dt;
+  end;
   if ARow.IndexOfName('sample_time') >= 0 then
-    R.SampleTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['sample_time'], Dt) then
+      R.SampleTime := Dt;
+  end;
   if ARow.IndexOfName('longitude') >= 0 then
     R.Longitude := StrToFloatDef(ARow.Values['longitude'], 0);
   if ARow.IndexOfName('latitude') >= 0 then
@@ -3051,6 +3093,7 @@ end;
 procedure TSurveyRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TSurvey;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -3059,11 +3102,20 @@ begin
 
   R := TSurvey(E);
   if ARow.IndexOfName('survey_date') >= 0 then
-    R.SurveyDate := StrToDateDef(ARow.Values['survey_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['survey_date'], Dt) then
+      R.SurveyDate := Dt;
+  end;
   if ARow.IndexOfName('start_time') >= 0 then
-    R.StartTime := StrToTimeDef(ARow.Values['start_time'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['start_time'], Dt) then
+      R.StartTime := Dt;
+  end;
   if ARow.IndexOfName('end_time') >= 0 then
-    R.EndTime := StrToTimeDef(ARow.Values['end_time'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['end_time'], Dt) then
+      R.EndTime := Dt;
+  end;
   if ARow.IndexOfName('duration') >= 0 then
     R.Duration := StrToIntDef(ARow.Values['duration'], 0);
   if ARow.IndexOfName('method_id') >= 0 then
@@ -3643,6 +3695,7 @@ end;
 procedure TWeatherLogRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TWeatherLog;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -3653,9 +3706,15 @@ begin
   if ARow.IndexOfName('survey_id') >= 0 then
     R.SurveyId := StrToIntDef(ARow.Values['survey_id'], 0);
   if ARow.IndexOfName('sample_date') >= 0 then
-    R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['sample_date'], Dt) then
+      R.SampleDate := Dt;
+  end;
   if ARow.IndexOfName('sample_time') >= 0 then
-    R.SampleTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['sample_time'], Dt) then
+      R.SampleTime := Dt;
+  end;
   if ARow.IndexOfName('sample_moment') >= 0 then
     R.SampleMoment := StrToSampleMoment(ARow.Values['sample_moment']);
   if ARow.IndexOfName('atmospheric_pressure') >= 0 then

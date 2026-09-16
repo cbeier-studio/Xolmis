@@ -8224,6 +8224,15 @@ begin
   if isWorking then
     Exit;
 
+  if FTableType = tbMethods then
+  begin
+    if dsLink.DataSet.FieldByName(COL_CAN_DELETE).AsBoolean = False then
+    begin
+      MsgDlg(rsCannotDelete, rsCannotDeleteMethod, mtInformation);
+      Exit;
+    end;
+  end;
+
   isWorking := True;
   if xSettings.FirstDeletedRecord then
   begin
@@ -8883,7 +8892,7 @@ begin
 
   isWorking := True;
   try
-    aKeyField := GetPrimaryKey(dsRecycle.DataSet);
+    aKeyField := 'record_id';
     aKeyValue := dsRecycle.DataSet.FieldByName(aKeyField).AsInteger;
 
     // Restore the selected record

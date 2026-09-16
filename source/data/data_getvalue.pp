@@ -32,6 +32,7 @@ type
   function GetNameConcat(aTable, aNameField1, aNameField2, aKeyField: String; aKeyValue: Integer): String;
   function GetVernacularName(const aTaxonId, aLanguageId: Integer): String;
   function GetFieldValue(aTable, aField, aKeyField: String; aKeyValue: Integer): Variant;
+  function GetDateTimeValue(aTable, aField, aKeyField: String; aKeyValue: Integer): TDateTime;
   function GetLatLong(aTable, aLongField, aLatField, aNameField, aKeyField: String;
     aKeyValue: Integer; var aMapPoint: TMapPoint): Boolean;
   function TryAutoFillCoordinates(ARecord: TXolmisRecord): Boolean;
@@ -74,7 +75,7 @@ type
 implementation
 
 uses
-  utils_taxonomy, data_consts, udm_main,
+  utils_taxonomy, data_consts, udm_main, utils_global,
   models_birds, models_breeding, models_sampling_plots, models_sightings, models_specimens;
 
 function GetKey(aTable, aKeyField, aNameField, aNameValue: String): Integer;
@@ -226,6 +227,37 @@ begin
 
     if not IsEmpty then
       Result := FieldByName(aField).Value;
+
+    Close;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function GetDateTimeValue(aTable, aField, aKeyField: String; aKeyValue: Integer): TDateTime;
+var
+  Qry: TSQLQuery;
+begin
+  Result := NullDateTime;
+  if (aKeyValue = 0) then
+    Exit;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    MacroCheck := True;
+    DataBase := DMM.sqlCon;
+    Add('SELECT %afield FROM %atable WHERE %akeyfield = :keyv');
+
+    MacroByName('afield').Value := aField;
+    MacroByName('atable').Value := aTable;
+    MacroByName('akeyfield').Value := aKeyField;
+
+    ParamByName('keyv').AsInteger := aKeyValue;
+    Open;
+
+    if not IsEmpty then
+      Result := FieldByName(aField).AsDateTime;
 
     Close;
   finally

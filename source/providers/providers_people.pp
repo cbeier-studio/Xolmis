@@ -264,7 +264,7 @@ begin
       'p.county_id, ' +
       'p.municipality_id, ' +
       'p.institution_id, ' +
-      'i.full_name AS institution_name' +
+      'i.full_name AS institution_name, ' +
       'p.department, ' +
       'p.job_role, ' +
       'p.lattes_uri, ' +

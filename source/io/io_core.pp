@@ -47,8 +47,9 @@ type
 
   TFieldMapping = class
   public
-    SourceField: String;
-    TargetField: String;
+    SourceField: String;        // key read from the imported TXRow
+    TargetField: String;        // schema key emitted to the mapped TXRow
+    DisplayTargetField: String; // friendly label used only by the UI
     DataType: TSearchDataType;
     Import: Boolean;
     LookupTable: TTableType;
@@ -386,6 +387,7 @@ begin
 
   SourceField := Obj.Get('SourceField', '');
   TargetField := Obj.Get('TargetField', '');
+  DisplayTargetField := Obj.Get('DisplayTargetField', '');
   DataType := TSearchDataType(Obj.Get('DataType', 0));
   Import := Obj.Get('Import', False);
   LookupTable := TTableType(Obj.Get('LookupTable', 0));
@@ -449,6 +451,7 @@ begin
     SourceField := '';
   end;
   TargetField := '';
+  DisplayTargetField := '';
   DataType := sdtText;
   Import := False;
   LookupTable := tbNone;
@@ -475,6 +478,7 @@ begin
   try
     Obj.Add('SourceField', SourceField);
     Obj.Add('TargetField', TargetField);
+    Obj.Add('DisplayTargetField', DisplayTargetField);
     Obj.Add('DataType', Ord(DataType));
     Obj.Add('Import', Import);
     Obj.Add('LookupTable', Ord(LookupTable));
@@ -705,7 +709,7 @@ begin
       if DestValue = '0' then
       begin
         case FOptions.ErrorHandling of
-          iehAbort: raise Exception.CreateFmt(rsErrorLookupValueNotFoundForField, [SourceValue, Mapping.LookupTable]);
+          iehAbort: raise Exception.CreateFmt(rsErrorLookupValueNotFoundForField, [SourceValue, TABLE_NAMES[Mapping.LookupTable]]);
           iehIgnore: ;
         end;
       end;
@@ -814,7 +818,7 @@ begin
 
     // 6. Check data type compatibility
     try
-      FSchema := DBSchema.GetTable(FTableType).GetFieldByDisplayName(Mapping.TargetField);
+      FSchema := DBSchema.GetTable(FTableType).GetField(Mapping.TargetField);
       if FSchema = nil then
         raise Exception.CreateFmt(rsErrorFieldNotFoundInSchema, [Mapping.TargetField, TABLE_NAMES[FTableType]]);
 
@@ -940,7 +944,7 @@ begin
 
     DestValue := VarToStr(ConvertedValue);
 
-    // 7. Set result
+    // 7. Set result using the target schema field name
     Result.Values[Mapping.TargetField] := DestValue;
   end;
 end;

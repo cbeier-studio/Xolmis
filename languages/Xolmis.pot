@@ -8977,6 +8977,10 @@ msgctxt "tedtproject.lblstartdate.caption"
 msgid "Start date:"
 msgstr ""
 
+#: tedtproject.lblstatus.caption
+msgid "Project status: *"
+msgstr ""
+
 #: tedtproject.lbltitle.caption
 msgid "Title: *"
 msgstr ""
@@ -14547,6 +14551,14 @@ msgid ""
 "Do you really want to discard it?"
 msgstr ""
 
+#: utils_locale.rscannotdelete
+msgid "Cannot delete record"
+msgstr ""
+
+#: utils_locale.rscannotdeletemethod
+msgid "The selected method cannot be deleted because some Xolmis' features depend on it."
+msgstr ""
+
 #: utils_locale.rscantdeleterecord
 msgctxt "utils_locale.rscantdeleterecord"
 msgid "This record cannot be deleted as it is associated with other records."
@@ -15969,6 +15981,11 @@ msgstr ""
 #, object-pascal-format
 msgctxt "utils_locale.rserrordeletingfile"
 msgid "Error deleting file %s."
+msgstr ""
+
+#: utils_locale.rserrorduplicatevalueforfield
+#, object-pascal-format
+msgid "The value \"%s\" is already in use for the field \"%s\" and must be unique."
 msgstr ""
 
 #: utils_locale.rserroremptyfieldname

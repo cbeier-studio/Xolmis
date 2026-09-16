@@ -15992,7 +15992,7 @@ object DMM: TDMM
   object QTaskDlg: TTaskDialog
     Buttons = <>
     DefaultButton = tcbCancel
-    Flags = [tfAllowDialogCancellation, tfSimpleQuery, tfQueryFocused]
+    Flags = [tfAllowDialogCancellation, tfSimpleQuery]
     MainIcon = tdiNone
     RadioButtons = <>
     QueryItemIndex = 0

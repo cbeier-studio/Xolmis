@@ -124,7 +124,7 @@ type
 implementation
 
 uses
-  utils_locale, utils_global, utils_validations,
+  utils_locale, utils_global, utils_validations, utils_conversions, utils_fullnames,
   data_consts, data_columns, data_setparam, data_getvalue, data_providers,
   models_users;
 
@@ -535,8 +535,8 @@ begin
   try
     Clear;
     Add(xProvider.People.SelectTable(swcNone));
-    Add('WHERE (full_name = :aname)');
-    Add('AND (abbreviation = :aabbrev)');
+    Add('WHERE (p.full_name = :aname)');
+    Add('AND (p.abbreviation = :aabbrev)');
 
     ParamByName('aname').AsString := ARow.Values['full_name'];
     ParamByName('aabbrev').AsString := ARow.Values['abbreviation'];
@@ -641,6 +641,7 @@ end;
 procedure TPersonRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TPerson;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -651,17 +652,27 @@ begin
   if ARow.IndexOfName('full_name') >= 0 then
     R.FullName := ARow.Values['full_name'];
   if ARow.IndexOfName('abbreviation') >= 0 then
-    R.Abbreviation := ARow.Values['abbreviation'];
+    R.Abbreviation := ARow.Values['abbreviation']
+  else
+    R.Abbreviation := GetUniquePersonInitials(R.FullName);
   if ARow.IndexOfName('citation') >= 0 then
-    R.Citation := ARow.Values['citation'];
+    R.Citation := ARow.Values['citation']
+  else
+    R.Citation := GenerateCitation(R.FullName);
   if ARow.IndexOfName('title_treatment') >= 0 then
     R.TitleTreatment := ARow.Values['title_treatment'];
   if ARow.IndexOfName('gender') >= 0 then
     R.Gender := ARow.Values['gender'];
   if ARow.IndexOfName('birth_date') >= 0 then
-    R.BirthDate := StrToDateDef(ARow.Values['birth_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['birth_date'], Dt) then
+      R.BirthDate := Dt;
+  end;
   if ARow.IndexOfName('death_date') >= 0 then
-    R.DeathDate := StrToDateDef(ARow.Values['death_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['death_date'], Dt) then
+      R.DeathDate := Dt;
+  end;
   if ARow.IndexOfName('id_document_1') >= 0 then
     R.IdDocument1 := ARow.Values['id_document_1'];
   if ARow.IndexOfName('id_document_2') >= 0 then

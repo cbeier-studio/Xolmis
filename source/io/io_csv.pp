@@ -395,6 +395,7 @@ begin
       if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then Break;
 
       row := TXRow.Create;
+      finalRow := row;
       try
         for i := 0 to ds.FieldCount - 1 do
           row.Values[ds.Fields[i].FieldName] := ds.Fields[i].AsString;
@@ -405,7 +406,7 @@ begin
           finalRow := row;
 
         if Assigned(RowOut) then
-          RowOut(row);
+          RowOut(finalRow);
       finally
         if finalRow <> row then
           finalRow.Free;

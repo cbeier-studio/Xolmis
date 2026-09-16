@@ -496,10 +496,12 @@ begin
       FSightingId := FPoi.SightingId;
       eSighting.Text := GetName(TBL_SIGHTINGS, COL_FULL_NAME, COL_SIGHTING_ID, FSightingId);
     end;
-    if FPoi.SurveyId > 0 then
+    if FSurveyId > 0 then
     begin
-      FSurveyId := FPoi.SurveyId;
+      FPoi.SurveyId := FSurveyId;
       eSurvey.Text := GetName(TBL_SURVEYS, COL_FULL_NAME, COL_SURVEY_ID, FSurveyId);
+      if not DateIsNull(FPoi.SampleDate) then
+        eDate.Text := DateToStr(FPoi.SampleDate);
     end;
   end
   else

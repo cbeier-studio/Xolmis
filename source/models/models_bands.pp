@@ -1150,6 +1150,7 @@ end;
 procedure TBandHistoryRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TBandHistory;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -1160,7 +1161,10 @@ begin
   if ARow.IndexOfName('band_id') >= 0 then
     R.BandId := StrToIntDef(ARow.Values['band_id'], 0);
   if ARow.IndexOfName('event_date') >= 0 then
-    R.EventDate := StrToDateDef(ARow.Values['event_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['event_date'], Dt) then
+      R.EventDate := Dt;
+  end;
   if ARow.IndexOfName('order_number') >= 0 then
     R.OrderNumber := StrToIntDef(ARow.Values['order_number'], 0);
   if ARow.IndexOfName('event_type') >= 0 then
@@ -1189,7 +1193,10 @@ begin
   if ARow.IndexOfName('reported') >= 0 then
     R.Reported := StrToBoolDef(ARow.Values['reported'], False);
   if ARow.IndexOfName('report_date') >= 0 then
-    R.ReportDate := StrToDateDef(ARow.Values['report_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['report_date'], Dt) then
+      R.ReportDate := Dt;
+  end;
   if ARow.IndexOfName('notes') >= 0 then
     R.Notes := ARow.Values['notes'];
 end;

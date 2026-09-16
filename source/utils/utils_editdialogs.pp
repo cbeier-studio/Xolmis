@@ -3229,7 +3229,8 @@ function EditPoi(aDataSet: TDataSet; aSurvey: Integer; aSighting: Integer; aIndi
 var
   FRecord, FOldRecord: TPoi;
   FRepo: TPoiRepository;
-  aTime, aTaxonId, aObserverId: Variant;
+  aTaxonId, aObserverId: Variant;
+  aTime: TDateTime;
 begin
   LogEvent(leaOpen, 'Occurrence point edit dialog');
   Application.CreateForm(TedtPoi, edtPoi);
@@ -3246,20 +3247,18 @@ begin
         FRecord.TaxonId := GetFieldValue(TBL_INDIVIDUALS, COL_TAXON_ID, COL_INDIVIDUAL_ID, aIndividual);
       if aSurvey > 0 then
       begin
-        FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_CAPTURES, COL_CAPTURE_DATE, COL_CAPTURE_ID, aSurvey));
-        aTime := GetFieldValue(TBL_CAPTURES, COL_CAPTURE_TIME, COL_CAPTURE_ID, aSurvey);
-        if not VarIsNull(aTime) then
-          FRecord.SampleTime := VarToDateTime(aTime);
+        FRecord.SampleDate := GetDateTimeValue(TBL_SURVEYS, COL_SURVEY_DATE, COL_SURVEY_ID, aSurvey);
+        FRecord.SampleTime := GetDateTimeValue(TBL_SURVEYS, COL_START_TIME, COL_SURVEY_ID, aSurvey);
       end;
       if aSighting > 0 then
       begin
         aTaxonId := GetFieldValue(TBL_SIGHTINGS, COL_TAXON_ID, COL_SIGHTING_ID, aSighting);
         if not VarIsNull(aTaxonId) then
           FRecord.TaxonId := aTaxonId;
-        FRecord.SampleDate := VarToDateTime(GetFieldValue(TBL_SIGHTINGS, COL_SIGHTING_DATE, COL_SIGHTING_ID, aSighting));
-        aTime := GetFieldValue(TBL_SIGHTINGS, COL_SIGHTING_TIME, COL_SIGHTING_ID, aSighting);
-        if not VarIsNull(aTime) then
-          FRecord.SampleTime := VarToDateTime(aTime);
+        FRecord.SampleDate := GetDateTimeValue(TBL_SIGHTINGS, COL_SIGHTING_DATE, COL_SIGHTING_ID, aSighting);
+        aTime := GetDateTimeValue(TBL_SIGHTINGS, COL_SIGHTING_TIME, COL_SIGHTING_ID, aSighting);
+        if not (aTime = NullTime) then
+          FRecord.SampleTime := aTime;
         aObserverId := GetFieldValue(TBL_SIGHTINGS, COL_OBSERVER_ID, COL_SIGHTING_ID, aSighting);
         if not VarIsNull(aObserverId) then
           FRecord.ObserverId := aObserverId;

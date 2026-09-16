@@ -910,6 +910,7 @@ end;
 procedure TFeatherRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TFeather;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -918,9 +919,15 @@ begin
 
   R := TFeather(E);
   if ARow.IndexOfName('sample_date') >= 0 then
-    R.SampleDate := StrToDateDef(ARow.Values['sample_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['sample_date'], Dt) then
+      R.SampleDate := Dt;
+  end;
   if ARow.IndexOfName('sample_time') >= 0 then
-    R.SampleTime := StrToTimeDef(ARow.Values['sample_time'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['sample_time'], Dt) then
+      R.SampleTime := Dt;
+  end;
   if ARow.IndexOfName('taxon_id') >= 0 then
     R.TaxonId := StrToIntDef(ARow.Values['taxon_id'], 0);
   if ARow.IndexOfName('locality_id') >= 0 then
@@ -1937,6 +1944,7 @@ end;
 procedure TCaptureRepository.HydrateFromRow(const ARow: TXRow; E: TXolmisRecord);
 var
   R: TCapture;
+  Dt: TDateTime;
 begin
   if (ARow = nil) or (E = nil) then
     Exit;
@@ -1955,9 +1963,15 @@ begin
   if ARow.IndexOfName('project_id') >= 0 then
     R.ProjectId := StrToIntDef(ARow.Values['project_id'], 0);
   if ARow.IndexOfName('capture_date') >= 0 then
-    R.CaptureDate := StrToDateDef(ARow.Values['capture_date'], NullDate);
+  begin
+    if TryParseDateFlexible(ARow.Values['capture_date'], Dt) then
+      R.CaptureDate := Dt;
+  end;
   if ARow.IndexOfName('capture_time') >= 0 then
-    R.CaptureTime := StrToTimeDef(ARow.Values['capture_time'], NullTime);
+  begin
+    if TryParseTimeFlexible(ARow.Values['capture_time'], Dt) then
+      R.CaptureTime := Dt;
+  end;
   if ARow.IndexOfName('locality_id') >= 0 then
     R.LocalityId := StrToIntDef(ARow.Values['locality_id'], 0);
   if ARow.IndexOfName('net_station_id') >= 0 then

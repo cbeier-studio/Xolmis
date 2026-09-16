@@ -520,12 +520,13 @@ object edtProject: TedtProject
           ParentColor = False
           ParentFont = False
         end
-        object lblProtocolNumber1: TLabel
+        object lblStatus: TLabel
           Left = 210
           Height = 15
           Top = 3
           Width = 178
           BorderSpacing.Top = 3
+          Caption = 'Project status: *'
           ParentColor = False
           ParentFont = False
         end
@@ -538,6 +539,15 @@ object edtProject: TedtProject
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eTitleKeyPress
+        end
+        object cbStatus: TComboBox
+          Left = 210
+          Height = 23
+          Top = 22
+          Width = 178
+          ItemHeight = 15
+          Style = csDropDownList
+          TabOrder = 1
         end
       end
       object pMainGoal: TPanel

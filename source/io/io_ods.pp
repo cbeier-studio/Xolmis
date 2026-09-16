@@ -287,7 +287,8 @@ var
   wb: TsWorkbook;
   ws: TsWorksheet;
   r, c, lastRow, lastCol, headerRow: Cardinal;
-  row: TXRow;
+  Cell: PCell;
+  row, Transformed: TXRow;
   headers: array of string;
   tmp: TFileStream;
   i: Integer;
@@ -306,34 +307,61 @@ begin
 
   wb := TsWorkbook.Create;
   try
-    wb.ReadFromFile(fname);
+    // The temporary file has a .tmp extension, so the format must be explicit.
+    wb.ReadFromFile(fname, sfOpenDocument);
     if wb.GetWorksheetCount = 0 then Exit;
-    ws := wb.GetWorksheetByIndex(0); // ou Options.Params['sheetName']
+    if Options.SheetName <> '' then
+      ws := wb.GetWorksheetByName(Options.SheetName)
+    else if Options.SheetIndex >= 0 then
+      ws := wb.GetWorksheetByIndex(Options.SheetIndex)
+    else
+      ws := wb.GetFirstWorksheet;
+    if ws = nil then Exit;
 
     lastRow := ws.GetLastOccupiedRowIndex;
     lastCol := ws.GetLastOccupiedColIndex;
-    if lastRow = 0 then
+    if (lastRow = 0) and Options.HasHeader then
       Exit;
 
     headerRow := 0; // zero-based
     SetLength(headers, lastCol+1);
     for c := 0 to lastCol do
-      headers[c] := ws.ReadAsText(headerRow, c);
+    begin
+      if Options.HasHeader then
+      begin
+        Cell := ws.FindCell(headerRow, c);
+        if Assigned(Cell) then
+          headers[c] := ws.ReadAsText(Cell)
+        else
+          headers[c] := 'Col' + IntToStr(c + 1);
+      end
+      else
+        headers[c] := 'Col' + IntToStr(c + 1);
+    end;
 
-    for r := headerRow+1 to lastRow do
+    for r := Ord(Options.HasHeader) to lastRow do
     begin
       if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
         Break;
 
       row := TXRow.Create;
+      Transformed := row;
       try
         for c := 0 to lastCol do
         begin
           i := row.Add(headers[c]);
-          row.ValueFromIndex[i] := ws.ReadAsText(r, c);
+          Cell := ws.FindCell(r, c);
+          if Assigned(Cell) then
+            row.ValueFromIndex[i] := ws.ReadAsText(Cell)
+          else
+            row.ValueFromIndex[i] := '';
         end;
-        if Assigned(RowOut) then RowOut(row);
+        if Assigned(FMapper) then
+          Transformed := FMapper.Apply(row);
+        if Assigned(RowOut) then RowOut(Transformed);
       finally
+        if Transformed <> row then
+          Transformed.Free;
         row.Free;
       end;
 

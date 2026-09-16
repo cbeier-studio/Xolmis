@@ -60,7 +60,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure ValidateValue(const V: Variant);
+    procedure ValidateValue(const V: Variant; ATableType: TTableType = tbNone; CheckUnique: Boolean = True);
     function ConvertValue(const S: String): Variant;
     function LookupTableName: string;
     function LookupValueExists(const V: Variant): Boolean;
@@ -141,12 +141,12 @@ const
   LEFT_TARSUS_ALIASES: String = 'left tarsus,left leg,tarso esquerdo,perna esquerda';
   RIGHT_TIBIA_ALIASES: String = 'right tibia,tíbia direita';
   LEFT_TIBIA_ALIASES: String = 'left tibia,tíbia esquerda';
-  ABBREVIATION_ALIASES: String = 'abbreviation,abreviação,abbr,abrev,sigla,código curto';
+  ABBREVIATION_ALIASES: String = 'abbreviation,abreviação,abbr,abrev,sigla,código curto,acronym,acrônimo';
   FIELD_NUMBER_ALIASES: String = 'field number,field nr,número de campo,nº de campo';
   ADDRESS1_ALIASES: String = 'address,address 1,endereço,endereço 1,logradouro';
   ADDRESS2_ALIASES: String = 'address 2,endereço 2,complemento';
   NEIGHBORHOOD_ALIASES: String = 'neighborhood,bairro,vizinhança';
-  POSTAL_CODE_ALIASES: String = 'postal code,zip code,código postal,cep';
+  POSTAL_CODE_ALIASES: String = 'postal code,zip code,zip_code,código postal,cep';
   EMAIL_ALIASES: String = 'email,e-mail,correio eletrônico,email address';
   PHONE1_ALIASES: String = 'phone,telephone,fone,telefone,phone 1,fone 1,telefone fixo';
   PHONE2_ALIASES: String = 'phone 2,fone 2,mobile phone,celular';
@@ -4312,6 +4312,7 @@ begin
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, True, 100);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES + ',name,nome';
+  T.Fields.Last.Rules.RequiredField := True;
   T.Fields.Last.DisplayWidth := 230;
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.SummaryEnabled := False;
@@ -7964,13 +7965,22 @@ begin
   Result := LookupID;
 end;
 
-procedure TFieldSchema.ValidateValue(const V: Variant);
+procedure TFieldSchema.ValidateValue(const V: Variant; ATableType: TTableType; CheckUnique: Boolean);
 var
   AllowedValues: TStringList;
 begin
   // Required field
   if (Rules.RequiredField) and (VarIsEmpty(V) or VarIsNull(V)) then
     raise Exception.CreateFmt(rsErrorRequiredField, [Name]);
+
+  // Unique field: value must not already exist in the target table
+  //if CheckUnique then
+  //  if (Rules.UniqueField) and (ATableType <> tbNone) and (not IsVirtual) and
+  //    (not VarIsEmpty(V)) and (not VarIsNull(V)) then
+  //  begin
+  //    if RecordExists(ATableType, Name, VarToStr(V)) then
+  //      raise Exception.CreateFmt(rsErrorDuplicateValueForField, [VarToStr(V), Name]);
+  //  end;
 
   // Maximum length (for text)
   if (DataType = sdtText) and (Rules.MaxLength > 0) then

@@ -1241,6 +1241,8 @@ var
   Qry: TSQLQuery;
 begin
   Result := False;
+  i := 0;
+
   Qry := TSQLQuery.Create(nil);
   with Qry, SQL do
   try
@@ -1248,19 +1250,22 @@ begin
     DataBase := DMM.sqlCon;
     Clear;
     Add('SELECT count(%afield) FROM %tabname');
+    // Compare both as text and as integer: a text column may store zero-padded
+    // numeric-looking values (e.g. "007"), which would not match an integer-only
+    // comparison and would otherwise cause a false negative (duplicate missed).
     if TryStrToInt(aValue, dummyI) then
-      Add('WHERE %afield = :keyv')
+      Add('WHERE (%afield = :keyint) OR (lower(%afield) = lower(:keystr))')
     else
-      Add('WHERE lower(%afield) = lower(:keyv)');
+      Add('WHERE lower(%afield) = lower(:keystr)');
     MacroByName('AFIELD').Value := aFieldName;
     MacroByName('TABNAME').Value := TABLE_NAMES[aTable];
     if TryStrToInt(aValue, dummyI) then
-      ParamByName('KEYV').AsInteger := dummyI
-    else
-      ParamByName('KEYV').AsString := aValue;
+      ParamByName('KEYINT').AsInteger := dummyI;
+    ParamByName('KEYSTR').AsString := aValue;
     // GravaLogSQL(SQL);
     Open;
-    i := Fields[0].AsInteger;
+    if not IsEmpty then
+      i := Fields[0].AsInteger;
     Close;
   finally
     FreeAndNil(Qry);

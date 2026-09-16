@@ -93,7 +93,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_graphics, utils_themes, utils_validations, utils_system,
-  data_consts, data_columns, data_filters, models_media,
+  data_consts, data_columns, data_filters, models_media, models_record_types,
   uDarkStyleParams,
   udm_grid, ufrm_customgrid;
 
@@ -160,8 +160,9 @@ begin
   else
   if (Column.FieldName = COL_END_DATE) then
   begin
-    if not (Column.Field.IsNull) and (Column.Field.AsDateTime < Today) then
-      //(TDBGrid(Sender).Columns.ColumnByFieldname(COL_PROJECT_STATUS).Field.AsString = 'R') then
+    if not (Column.Field.IsNull) and (Column.Field.AsDateTime < Today) and
+      (TDBGrid(Sender).Columns.ColumnByFieldname(COL_PROJECT_STATUS).Field.AsString <> PROJECT_STATUSES[prtFinished]) and
+      (TDBGrid(Sender).Columns.ColumnByFieldname(COL_PROJECT_STATUS).Field.AsString <> PROJECT_STATUSES[prtCancelled]) then
     begin
       if IsDarkModeEnabled then
       begin

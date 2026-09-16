@@ -287,65 +287,90 @@ var
   wb: TsWorkbook;
   ws: TsWorksheet;
   r, c, lastRow, lastCol, headerRow: Cardinal;
-  row: TXRow;
-  headers: array of string;
-  tmp: TFileStream;
+  Cell: PCell;
+  row, Transformed: TXRow;
+  headers: TStringList;
+  //tmp: TFileStream;
   i: Integer;
   fname: string;
 begin
   LogEvent(leaStart, 'Import XLSX file');
 
+  Stream.Position := 0;
+
   // fpspreadsheet lê de arquivo; salve stream para temp
-  fname := GetTempFileName;
-  tmp := TFileStream.Create(fname, fmCreate);
-  try
-    tmp.CopyFrom(Stream, 0);
-  finally
-    tmp.Free;
-  end;
+  //fname := GetTempFileName;
+  //tmp := TFileStream.Create(fname, fmCreate);
+  //try
+  //  tmp.CopyFrom(Stream, 0);
+  //finally
+  //  tmp.Free;
+  //end;
 
   wb := TsWorkbook.Create;
   try
-    wb.ReadFromFile(fname);
+    // The temporary file has a .tmp extension, so the format must be explicit.
+    wb.ReadFromStream(Stream, sfidOOXML);
     if wb.GetWorksheetCount = 0 then Exit;
-    ws := wb.GetWorksheetByIndex(0); // ou Options.Params['sheetName']
+    if Options.SheetName <> '' then
+      ws := wb.GetWorksheetByName(Options.SheetName)
+    else if Options.SheetIndex >= 0 then
+      ws := wb.GetWorksheetByIndex(Options.SheetIndex)
+    else
+      ws := wb.GetFirstWorksheet;
+    if ws = nil then Exit;
 
-    lastRow := ws.GetLastOccupiedRowIndex;
-    lastCol := ws.GetLastOccupiedColIndex;
-    if lastRow = 0 then
+    lastRow := ws.GetLastRowIndex;
+    lastCol := ws.GetLastColIndex;
+    if (lastRow = 0) and Options.HasHeader then
       Exit;
 
-    headerRow := 0; // zero-based
-    SetLength(headers, lastCol+1);
-    for c := 0 to lastCol do
-      headers[c] := ws.ReadAsText(headerRow, c);
+    Stream.Position := 0;
+    headers := GetFieldNames(Stream, Options);
+    try
+      for r := Ord(Options.HasHeader) to lastRow do
+      begin
+        if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+          Break;
 
-    for r := headerRow+1 to lastRow do
-    begin
-      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
-        Break;
+        row := TXRow.Create;
+        Transformed := row;
+        try
+          for c := 0 to lastCol do
+          begin
+            Cell := ws.FindCell(r, c);
+            if Assigned(Cell) then
+              row.Values[headers[c]] := ws.ReadAsText(Cell)
+            else
+              row.Values[headers[c]] := '';
+          end;
 
-      row := TXRow.Create;
-      try
-        for c := 0 to lastCol do
-        begin
-          i := row.Add(headers[c]);
-          row.ValueFromIndex[i] := ws.ReadAsText(r, c);
+          if Assigned(FMapper) then
+            Transformed := FMapper.Apply(row)
+          else
+            Transformed := row;
+
+          if Assigned(RowOut) then
+            RowOut(Transformed);
+        finally
+          if Transformed <> row then
+            Transformed.Free;
+          row.Free;
         end;
-        if Assigned(RowOut) then RowOut(row);
-      finally
-        row.Free;
+
+        if Assigned(Options.OnProgress) then
+          Options.OnProgress(Trunc((r * 100.0) / Max(1, lastRow)), rsImportingXLSX);
+
+        if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+          Break;
       end;
 
-      if Assigned(Options.OnProgress) then
-        Options.OnProgress(Trunc((r * 100.0) / Max(1, lastRow)), rsImportingXLSX);
-
-      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
-        Break;
+    finally
+      headers.Free;
     end;
   finally
     wb.Free;
-    DeleteFile(fname);
+    //DeleteFile(fname);
     LogEvent(leaFinish, 'Import XLSX file');
   end;
 end;

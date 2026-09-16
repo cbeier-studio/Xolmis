@@ -4356,7 +4356,7 @@ begin
   if not MsgDlg(rsRestoreRecordTitle, rsRestoreRecordPrompt, mtConfirmation) then
     Exit;
 
-  aKeyField := GetPrimaryKey(aDataSet);
+  aKeyField := 'record_id';
   aKeyValue := aDataSet.FieldByName(aKeyField).AsInteger;
 
   Qry := TSQLQuery.Create(nil);
@@ -4379,7 +4379,7 @@ begin
       Add('  user_updated = :auser');
       Add('WHERE %keyf = :cod');
       MacroByName('TABNAME').Value := TABLE_NAMES[aTable];
-      MacroByName('KEYF').Value := aKeyField;
+      MacroByName('KEYF').Value := GetPrimaryKey(aTable);
       ParamByName('AUSER').AsInteger := ActiveUser.Id;
       ParamByName('COD').AsInteger := aKeyValue;
       //{$IFDEF DEBUG}

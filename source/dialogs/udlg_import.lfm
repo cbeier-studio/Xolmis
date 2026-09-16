@@ -12,7 +12,7 @@ object dlgImport: TdlgImport
   Constraints.MinWidth = 900
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -111,7 +111,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 920
-    PageIndex = 0
+    PageIndex = 3
     Align = alTop
     Constraints.MinHeight = 430
     Constraints.MinWidth = 560
@@ -553,7 +553,7 @@ object dlgImport: TdlgImport
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderStyle = bsNone
         ClientHeight = 347
-        ClientWidth = 903
+        ClientWidth = 920
         TabOrder = 1
         object pHaveHeader: TBCPanel
           Left = 16
@@ -631,6 +631,7 @@ object dlgImport: TdlgImport
             Color = 16448250
             Constraints.MaxHeight = 25
             Constraints.MaxWidth = 50
+            TabOrder = 0
           end
         end
         object pDelimiter: TBCPanel
@@ -1450,7 +1451,7 @@ object dlgImport: TdlgImport
             item
               ReadOnly = True
               Title.Caption = 'Source field'
-              Width = 216
+              Width = 214
             end          
             item
               Alignment = taCenter
@@ -1462,7 +1463,7 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 216
+              Width = 214
             end>
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
           RowCount = 2
@@ -1473,9 +1474,9 @@ object dlgImport: TdlgImport
           OnSelectCell = gridFieldsSelectCell
           ColWidths = (
             64
-            216
+            214
             60
-            216
+            214
           )
           Cells = (
             2
@@ -1504,8 +1505,8 @@ object dlgImport: TdlgImport
           Anchors = [akTop, akRight, akBottom]
           ChildSizing.LeftRightSpacing = 8
           ChildSizing.TopBottomSpacing = 8
-          ClientHeight = 331
-          ClientWidth = 328
+          ClientHeight = 327
+          ClientWidth = 307
           TabOrder = 2
           object pLookupTable: TBCPanel
             Left = 8
@@ -1734,6 +1735,7 @@ object dlgImport: TdlgImport
               Color = 16448250
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
+              TabOrder = 0
             end
           end
           object pNullHandling: TBCPanel
@@ -1908,6 +1910,7 @@ object dlgImport: TdlgImport
               Color = 16448250
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
+              TabOrder = 0
             end
           end
           object pBooleanValue: TBCPanel
@@ -1982,6 +1985,7 @@ object dlgImport: TdlgImport
               Color = 16448250
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
+              TabOrder = 0
             end
           end
           object pTextCase: TBCPanel
@@ -2135,6 +2139,7 @@ object dlgImport: TdlgImport
               Color = 16448250
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
+              TabOrder = 0
             end
           end
           object pNormalizeWhitespace: TBCPanel
@@ -2210,6 +2215,7 @@ object dlgImport: TdlgImport
               Color = 16448250
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
+              TabOrder = 0
             end
           end
           object pReplaceChars: TBCPanel
@@ -2284,6 +2290,7 @@ object dlgImport: TdlgImport
               Color = 16448250
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
+              TabOrder = 0
             end
             object eReplaceCharFrom: TEdit
               AnchorSideTop.Control = tsReplaceChars
@@ -2403,6 +2410,7 @@ object dlgImport: TdlgImport
               Color = 16448250
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
+              TabOrder = 0
             end
             object eRoundPrecision: TSpinEdit
               AnchorSideTop.Control = tsRoundValue
@@ -2493,6 +2501,7 @@ object dlgImport: TdlgImport
               Color = 16448250
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
+              TabOrder = 0
             end
             object cbScaleOperation: TComboBox
               AnchorSideTop.Control = eScale
@@ -2604,6 +2613,7 @@ object dlgImport: TdlgImport
               Color = 16448250
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
+              TabOrder = 0
             end
             object cbSourceCoordinatesFormat: TComboBox
               AnchorSideTop.Control = tsConvertCoordinates
@@ -2702,6 +2712,7 @@ object dlgImport: TdlgImport
               Color = 16448250
               Constraints.MaxHeight = 25
               Constraints.MaxWidth = 50
+              TabOrder = 0
             end
             object cbExtractDatePart: TComboBox
               AnchorSideTop.Control = tsExtractDatePart

@@ -8967,6 +8967,10 @@ msgctxt "tedtproject.lblstartdate.caption"
 msgid "Start date:"
 msgstr "Data inicial:"
 
+#: tedtproject.lblstatus.caption
+msgid "Project status: *"
+msgstr "Status do projeto: *"
+
 #: tedtproject.lbltitle.caption
 msgid "Title: *"
 msgstr "Título: *"
@@ -14543,6 +14547,14 @@ msgstr ""
 "Existem alterações não salvas.\n"
 "Deseja realmente descarta-las?"
 
+#: utils_locale.rscannotdelete
+msgid "Cannot delete record"
+msgstr "Registro não pode ser apagado"
+
+#: utils_locale.rscannotdeletemethod
+msgid "The selected method cannot be deleted because some Xolmis' features depend on it."
+msgstr "O método selecionado não pode ser apagado, pois algumas funcionalidades do Xolmis dependem dele."
+
 #: utils_locale.rscantdeleterecord
 msgctxt "utils_locale.rscantdeleterecord"
 msgid "This record cannot be deleted as it is associated with other records."
@@ -15970,6 +15982,11 @@ msgstr "Erro executando Sweep e Analyze do banco de dados"
 msgctxt "utils_locale.rserrordeletingfile"
 msgid "Error deleting file %s."
 msgstr "Erro apagando o arquivo %s."
+
+#: utils_locale.rserrorduplicatevalueforfield
+#, object-pascal-format
+msgid "The value \"%s\" is already in use for the field \"%s\" and must be unique."
+msgstr "O valor \"%s\" já está em uso no campo \"%s\" e deve ser único."
 
 #: utils_locale.rserroremptyfieldname
 msgctxt "utils_locale.rserroremptyfieldname"

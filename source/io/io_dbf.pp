@@ -137,7 +137,7 @@ end;
 procedure TDBFImporter.Import(Stream: TStream; const Options: TImportOptions; RowOut: TXRowConsumer);
 var
   db: TDbf;
-  row: TXRow;
+  row, Transformed: TXRow;
   i, total: Integer;
   fname: string;
   tmp: TFileStream;
@@ -166,14 +166,19 @@ begin
       if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then Break;
 
       row := TXRow.Create;
+      Transformed := row;
       try
         for i := 0 to db.FieldDefs.Count - 1 do
         begin
           row.Add(db.FieldDefs[i].Name);
           row.Values[db.FieldDefs[i].Name] := db.FieldByName(db.FieldDefs[i].Name).AsString;
         end;
-        if Assigned(RowOut) then RowOut(row);
+        if Assigned(FMapper) then
+          Transformed := FMapper.Apply(row);
+        if Assigned(RowOut) then RowOut(Transformed);
       finally
+        if Transformed <> row then
+          Transformed.Free;
         row.Free;
       end;
 
