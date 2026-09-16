@@ -500,8 +500,7 @@ end;
 procedure TedtFeather.SetRecord;
 begin
   FFeather.SampleDate := TextToDate(eDate.Text);
-  if eTime.Text <> EmptyStr then
-    FFeather.SampleTime := TextToTime(eTime.Text);
+  FFeather.SampleTime := TextToTime(eTime.Text);
   FFeather.TaxonId        := FTaxonId;
   FFeather.LocalityId     := FLocalityId;
   FFeather.ObserverId     := FObserverId;

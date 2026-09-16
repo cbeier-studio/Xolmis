@@ -10519,6 +10519,11 @@ msgctxt "tedtvideoinfo.sbsave.caption"
 msgid "Save"
 msgstr ""
 
+#: tedtweatherlog.eobserver.buttonhint
+msgctxt "tedtweatherlog.eobserver.buttonhint"
+msgid "Find observer"
+msgstr ""
+
 #: tedtweatherlog.esampledate.buttonhint
 msgctxt "tedtweatherlog.esampledate.buttonhint"
 msgid "Open calendar"
@@ -10546,6 +10551,11 @@ msgstr ""
 #: tedtweatherlog.lblnotes.caption
 msgctxt "tedtweatherlog.lblnotes.caption"
 msgid "Notes:"
+msgstr ""
+
+#: tedtweatherlog.lblobserver.caption
+msgctxt "tedtweatherlog.lblobserver.caption"
+msgid "Observer:"
 msgstr ""
 
 #: tedtweatherlog.lblprecipitation.caption

@@ -653,8 +653,8 @@ begin
   FVideo.VideoType      := StrToVideoType(cbVideoType.Text);
   //FVideo.FilePath       := ExtractRelativePath(xSettings.VideosFolder, eFilePath.Text);
   FVideo.LocalityId     := FLocalityId;
-  FVideo.Longitude      := StrToFloatOrZero(eLongitude.Text);
-  FVideo.Latitude       := StrToFloatOrZero(eLatitude.Text);
+  FVideo.Longitude      := StrToFloatDef(eLongitude.Text, 0);
+  FVideo.Latitude       := StrToFloatDef(eLatitude.Text, 0);
   FVideo.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FVideo.TaxonId        := FTaxonId;
   FVideo.IndividualId   := FIndividualId;

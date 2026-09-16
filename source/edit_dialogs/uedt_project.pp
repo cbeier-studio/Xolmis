@@ -264,10 +264,8 @@ procedure TedtProject.SetRecord;
 begin
   FProject.Title           := eTitle.Text;
   FProject.ShortTitle      := eShortTitle.Text;
-  if Trim(eStartDate.Text) <> EmptyStr then
-    FProject.StartDate     := StrToDate(eStartDate.Text);
-  if Trim(eEndDate.Text) <> EmptyStr then
-    FProject.EndDate       := StrToDate(eEndDate.Text);
+  FProject.StartDate     := StrToDateDef(eStartDate.Text, NullDate);
+  FProject.EndDate       := StrToDateDef(eEndDate.Text, NullDate);
   FProject.WebsiteUri      := eWebsite.Text;
   FProject.EmailAddress    := eEmail.Text;
   FProject.ContactName     := eContactName.Text;

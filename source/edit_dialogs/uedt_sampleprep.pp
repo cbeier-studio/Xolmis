@@ -371,13 +371,9 @@ end;
 procedure TedtSamplePrep.SetRecord;
 begin
   FSamplePrep.AccessionNum := eAccessionNumber.Text;
-  if (eDuplicateSeq.Text <> EmptyStr) then
-    FSamplePrep.DuplicateSeq := StrToInt(eDuplicateSeq.Text)
-  else
-    FSamplePrep.DuplicateSeq := 0;
+  FSamplePrep.DuplicateSeq := StrToIntDef(eDuplicateSeq.Text, 0);
   FSamplePrep.AccessionType := StrToAccessionType(cbSampleType.Text);
-  if (ePreparationDate.Text <> EmptyStr) then
-    FSamplePrep.PreparationDate := StrToDate(ePreparationDate.Text);
+  FSamplePrep.PreparationDate := StrToDateDef(ePreparationDate.Text, NullDate);
   FSamplePrep.PreparerId := FPreparerId;
   FSamplePrep.InstitutionId := FInstitutionId;
   FSamplePrep.Notes := mNotes.Text;

@@ -1675,25 +1675,16 @@ end;
 procedure TedtCapture.SetRecord;
 begin
   FCapture.IndividualId := FIndividualId;
-  FCapture.SurveyId    := FSurveyId;
-  FCapture.LocalityId  := FLocalityId;
-  FCapture.CaptureDate := StrToDate(eCaptureDate.Text);
-  if (Length(eCaptureTime.Text) > 0) then
-    FCapture.CaptureTime := StrToTime(eCaptureTime.Text)
-  else
-    FCapture.CaptureTime := NullTime;
-  FCapture.BanderId    := FBanderId;
-  FCapture.AnnotatorId := FAnnotatorId;
-  FCapture.CaptureType := StrToCaptureType(cbCaptureType.Text);
-  FCapture.NetId         := FNetId;
-  if (Length(eLongitude.Text) > 0) then
-    FCapture.Longitude   := StrToFloat(eLongitude.Text)
-  else
-    FCapture.Longitude := 0;
-  if (Length(eLatitude.Text) > 0) then
-    FCapture.Latitude   := StrToFloat(eLatitude.Text)
-  else
-    FCapture.Latitude := 0;
+  FCapture.SurveyId     := FSurveyId;
+  FCapture.LocalityId   := FLocalityId;
+  FCapture.CaptureDate  := StrToDate(eCaptureDate.Text);
+  FCapture.CaptureTime  := StrToTimeDef(eCaptureTime.Text, NullTime);
+  FCapture.BanderId     := FBanderId;
+  FCapture.AnnotatorId  := FAnnotatorId;
+  FCapture.CaptureType  := StrToCaptureType(cbCaptureType.Text);
+  FCapture.NetId        := FNetId;
+  FCapture.Longitude    := StrToFloatDef(eLongitude.Text, 0);
+  FCapture.Latitude     := StrToFloatDef(eLatitude.Text, 0);
   FCapture.CoordinatePrecision  := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FCapture.TaxonId              := FTaxonId;
   FCapture.BandId               := FBandId;

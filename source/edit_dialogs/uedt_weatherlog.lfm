@@ -388,12 +388,13 @@ object edtWeatherLog: TedtWeatherLog
           ParentColor = False
           ParentFont = False
         end
-        object lblSampleMoment1: TLabel
+        object lblObserver: TLabel
           Left = 208
           Height = 15
           Top = 3
           Width = 176
           BorderSpacing.Top = 3
+          Caption = 'Observer:'
           ParentColor = False
           ParentFont = False
         end
@@ -413,6 +414,26 @@ object edtWeatherLog: TedtWeatherLog
           OnChange = eSampleDateChange
           OnKeyDown = FormKeyDown
           OnKeyPress = eSampleTimeKeyPress
+        end
+        object eObserver: TEditButton
+          Left = 208
+          Height = 23
+          Top = 22
+          Width = 176
+          ButtonHint = 'Find observer'
+          ButtonWidth = 23
+          Images = DMM.iEdits
+          ImageIndex = 0
+          MaxLength = 0
+          NumGlyphs = 1
+          ParentShowHint = False
+          PasswordChar = #0
+          ShowHint = True
+          Spacing = 0
+          TabOrder = 1
+          OnButtonClick = eObserverButtonClick
+          OnKeyDown = FormKeyDown
+          OnKeyPress = eObserverKeyPress
         end
       end
       object pCloudCoverTemperature: TPanel

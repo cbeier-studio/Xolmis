@@ -594,14 +594,8 @@ begin
   FPoi.SampleDate := StrToDateDef(eDate.Text, NullDate);
   FPoi.SampleTime := StrToTimeDef(eTime.Text, NullTime);
   FPoi.ObserverId := FObserverId;
-  if (Length(eLongitude.Text) > 0) then
-    FPoi.Longitude := StrToFloat(eLongitude.Text)
-  else
-    FPoi.Longitude := 0;
-  if (Length(eLatitude.Text) > 0) then
-    FPoi.Latitude := StrToFloat(eLatitude.Text)
-  else
-    FPoi.Latitude := 0;
+  FPoi.Longitude := StrToFloatDef(eLongitude.Text, 0);
+  FPoi.Latitude := StrToFloatDef(eLatitude.Text, 0);
   FPoi.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FPoi.Altitude := eAltitude.Value;
   FPoi.TaxonId := FTaxonId;

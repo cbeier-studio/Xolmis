@@ -13,6 +13,8 @@
 {"hash":36766314,"name":"tedtweatherlog.lblprecipitation.caption","sourcebytes":[80,114,101,99,105,112,105,116,97,116,105,111,110,58],"value":"Precipitation:"},
 {"hash":154062394,"name":"tedtweatherlog.lblrainfall.caption","sourcebytes":[65,99,99,117,109,117,108,97,116,101,100,32,114,97,105,110,102,97,108,108,32,40,109,109,41,58],"value":"Accumulated rainfall (mm):"},
 {"hash":63252554,"name":"tedtweatherlog.lblsamplemoment.caption","sourcebytes":[77,111,109,101,110,116,58,32,42],"value":"Moment: *"},
+{"hash":164207050,"name":"tedtweatherlog.lblobserver.caption","sourcebytes":[79,98,115,101,114,118,101,114,58],"value":"Observer:"},
+{"hash":77134802,"name":"tedtweatherlog.eobserver.buttonhint","sourcebytes":[70,105,110,100,32,111,98,115,101,114,118,101,114],"value":"Find observer"},
 {"hash":119595626,"name":"tedtweatherlog.lblcloudcover.caption","sourcebytes":[67,108,111,117,100,32,99,111,118,101,114,32,40,37,41,58],"value":"Cloud cover (%):"},
 {"hash":6998794,"name":"tedtweatherlog.lbltemperature.caption","sourcebytes":[84,101,109,112,101,114,97,116,117,114,101,32,40,194,176,67,41,58],"value":"Temperature (\u00B0C):"},
 {"hash":212080010,"name":"tedtweatherlog.lblrelativehumidity.caption","sourcebytes":[82,101,108,97,116,105,118,101,32,104,117,109,105,100,105,116,121,32,40,37,41,58],"value":"Relative humidity (%):"},

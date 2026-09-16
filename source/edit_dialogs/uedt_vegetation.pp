@@ -384,12 +384,9 @@ procedure TedtVegetation.SetRecord;
 begin
   FVegetation.SurveyId           := FSurveyId;
   FVegetation.SampleDate         := StrToDate(eSampleDate.Text);
-  if eSampleTime.Text <> EmptyStr then
-    FVegetation.SampleTime         := StrToTime(eSampleTime.Text);
-  if eLongitude.Text <> EmptyStr then
-    FVegetation.Longitude          := StrToFloat(eLongitude.Text);
-  if eLatitude.Text <> EmptyStr then
-    FVegetation.Latitude           := StrToFloat(eLatitude.Text);
+  FVegetation.SampleTime         := StrToTimeDef(eSampleTime.Text, 0);
+  FVegetation.Longitude          := StrToFloatDef(eLongitude.Text, 0);
+  FVegetation.Latitude           := StrToFloatDef(eLatitude.Text, 0);
   FVegetation.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FVegetation.HerbsDistribution  := TStratumDistribution(cbHerbsDistribution.ItemIndex);
   FVegetation.HerbsProportion    := eHerbsProportion.Value;

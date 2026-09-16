@@ -170,7 +170,7 @@ object frmQuickEntry: TfrmQuickEntry
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = pProgress
     Left = 0
-    Height = 238
+    Height = 233
     Top = 98
     Width = 1098
     Anchors = [akTop, akLeft, akRight, akBottom]
@@ -199,8 +199,8 @@ object frmQuickEntry: TfrmQuickEntry
   end
   object SBar: TStatusBar
     Left = 0
-    Height = 23
-    Top = 597
+    Height = 28
+    Top = 592
     Width = 1098
     Panels = <    
       item
@@ -370,7 +370,7 @@ object frmQuickEntry: TfrmQuickEntry
     AnchorSideBottom.Control = SBar
     Left = 8
     Height = 245
-    Top = 344
+    Top = 339
     Width = 1082
     Anchors = [akLeft, akRight, akBottom]
     BorderSpacing.Left = 8

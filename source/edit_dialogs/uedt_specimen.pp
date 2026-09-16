@@ -720,23 +720,11 @@ begin
   FSpecimen.FieldNumber := eFieldNumber.Text;
   FSpecimen.SampleType := StrToSpecimenType(cbSampleType.Text);
   FSpecimen.CollectionYear := StrToInt(eCollectionYear.Text);
-  if eCollectionMonth.Text <> EmptyStr then
-    FSpecimen.CollectionMonth := StrToInt(eCollectionMonth.Text)
-  else
-    FSpecimen.CollectionMonth := 0;
-  if eCollectionDay.Text <> EmptyStr then
-    FSpecimen.CollectionDay := StrToInt(eCollectionDay.Text)
-  else
-    FSpecimen.CollectionDay := 0;
+  FSpecimen.CollectionMonth := StrToIntDef(eCollectionMonth.Text, 0);
+  FSpecimen.CollectionDay := StrToIntDef(eCollectionDay.Text, 0);
   FSpecimen.LocalityId := FLocalityId;
-  if (Length(eLongitude.Text) > 0) then
-    FSpecimen.Longitude := StrToFloat(eLongitude.Text)
-  else
-    FSpecimen.Longitude := 0;
-  if (Length(eLatitude.Text) > 0) then
-    FSpecimen.Latitude := StrToFloat(eLatitude.Text)
-  else
-    FSpecimen.Latitude := 0;
+  FSpecimen.Longitude := StrToFloatDef(eLongitude.Text, 0);
+  FSpecimen.Latitude := StrToFloatDef(eLatitude.Text, 0);
   FSpecimen.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FSpecimen.TaxonId := FTaxonId;
   FSpecimen.CustomTaxonName := FCustomTaxonName;

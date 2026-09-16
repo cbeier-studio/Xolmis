@@ -6,7 +6,7 @@ object edtNest: TedtNest
   AutoSize = True
   Caption = 'New nest'
   ClientHeight = 643
-  ClientWidth = 416
+  ClientWidth = 413
   Constraints.MinWidth = 416
   Font.Height = -12
   PopupMode = pmAuto

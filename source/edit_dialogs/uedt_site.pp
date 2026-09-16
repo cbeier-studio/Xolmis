@@ -428,18 +428,9 @@ begin
   FSite.Name := eName.Text;
   FSite.Abbreviation := eAbbreviation.Text;
   FSite.Rank := StrToSiteRank(cbRank.Text);
-  if (eLongitude.Text <> EmptyStr) then
-    FSite.Longitude := StrToFloat(eLongitude.Text)
-  else
-    FSite.Longitude := 0.0;
-  if (eLatitude.Text <> EmptyStr) then
-    FSite.Latitude := StrToFloat(eLatitude.Text)
-  else
-    FSite.Latitude := 0.0;
-  if (eAltitude.Text <> EmptyStr) then
-    FSite.Altitude := StrToFloat(eAltitude.Text)
-  else
-    FSite.Altitude := 0.0;
+  FSite.Longitude := StrToFloatDef(eLongitude.Text, 0);
+  FSite.Latitude := StrToFloatDef(eLatitude.Text, 0);
+  FSite.Altitude := StrToFloatDef(eAltitude.Text, 0);
   //FSite.ParentSiteId := GetKey('gazetteer', 'site_id', 'site_name', eParentSite.Text);
   if (Length(eFullname.Text) = 0) then
     GetFullName;

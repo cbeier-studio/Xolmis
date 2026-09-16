@@ -658,44 +658,20 @@ procedure TedtIndividual.SetRecord;
 begin
   FIndividual.TaxonId        := FTaxonId;
   FIndividual.BandId         := FBandId;
-  if eBandingDate.Text = EmptyStr then
-    FIndividual.BandingDate  := NullDate
-  else
-    FIndividual.BandingDate  := StrToDate(eBandingDate.Text);
+  FIndividual.BandingDate  := StrToDateDef(eBandingDate.Text, NullDate);
   FIndividual.DoubleBandId   := FDoubleBandId;
   FIndividual.RemovedBandId  := FRemovedBandId;
-  if eBandChangeDate.Text = EmptyStr then
-    FIndividual.BandChangeDate    := NullDate
-  else
-    FIndividual.BandChangeDate := StrToDate(eBandChangeDate.Text);
+  FIndividual.BandChangeDate := StrToDateDef(eBandChangeDate.Text, NullDate);
   FIndividual.RightTarsus  := eRightTarsus.Text;
   FIndividual.LeftTarsus   := eLeftTarsus.Text;
   FIndividual.RightTibia  := eRightTibia.Text;
   FIndividual.LeftTibia   := eLeftTibia.Text;
-  if eBirthYear.Text = EmptyStr then
-    FIndividual.BirthYear := 0
-  else
-    FIndividual.BirthYear      := StrToInt(eBirthYear.Text);
-  if eBirthMonth.Text = EmptyStr then
-    FIndividual.BirthMonth := 0
-  else
-    FIndividual.BirthMonth     := StrToInt(eBirthMonth.Text);
-  if eBirthDay.Text = EmptyStr then
-    FIndividual.BirthDay := 0
-  else
-    FIndividual.BirthDay       := StrToInt(eBirthDay.Text);
-  if eDeathYear.Text = EmptyStr then
-    FIndividual.DeathYear := 0
-  else
-    FIndividual.DeathYear      := StrToInt(eDeathYear.Text);
-  if eDeathMonth.Text = EmptyStr then
-    FIndividual.DeathMonth := 0
-  else
-    FIndividual.DeathMonth     := StrToInt(eDeathMonth.Text);
-  if eDeathDay.Text = EmptyStr then
-    FIndividual.DeathDay := 0
-  else
-    FIndividual.DeathDay       := StrToInt(eDeathDay.Text);
+  FIndividual.BirthYear      := StrToIntDef(eBirthYear.Text, 0);
+  FIndividual.BirthMonth     := StrToIntDef(eBirthMonth.Text, 0);
+  FIndividual.BirthDay       := StrToIntDef(eBirthDay.Text, 0);
+  FIndividual.DeathYear      := StrToIntDef(eDeathYear.Text, 0);
+  FIndividual.DeathMonth     := StrToIntDef(eDeathMonth.Text, 0);
+  FIndividual.DeathDay       := StrToIntDef(eDeathDay.Text, 0);
   FIndividual.Sex := StrToSex(cbSex.Text);
   FIndividual.Age := StrToAge(cbAge.Text);
   FIndividual.NestId               := FNestId;

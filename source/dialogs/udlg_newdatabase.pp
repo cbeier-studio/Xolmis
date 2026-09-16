@@ -381,37 +381,44 @@ begin
     Exit;
 
   sbCreateDB.Enabled := False;
+  sbCancel.Enabled := False;
 
-  if not FileExists(eDBFile.Text) then
-    if CreateUserDatabase(dbSqlite, eDBFile.Text, eName.Text, eAuthor.Text, eDescription.Text) then
+  try
+    if not FileExists(eDBFile.Text) then
     begin
-      Qry := TSQLQuery.Create(nil);
-      with Qry, SQL do
-      try
-        // Create new connection
-        SQLConnection := DMM.sysCon;
-        SQLTransaction := DMM.sysTrans;
-        Clear;
-        Add('INSERT INTO connections (connection_name, database_type, database_name, insert_date) ');
-        Add('VALUES (:aname, 0, :afile, datetime(''now'', ''localtime''))');
-        ParamByName('ANAME').AsString := eName.Text;
-        ParamByName('AFILE').AsString := eDBFile.Text;
-        ExecSQL;
-      finally
-        FreeAndNil(Qry);
+      if CreateUserDatabase(dbSqlite, eDBFile.Text, eName.Text, eAuthor.Text, eDescription.Text) then
+      begin
+        Qry := TSQLQuery.Create(nil);
+        with Qry, SQL do
+        try
+          // Create new connection
+          SQLConnection := DMM.sysCon;
+          SQLTransaction := DMM.sysTrans;
+          Clear;
+          Add('INSERT INTO connections (connection_name, database_type, database_name, insert_date) ');
+          Add('VALUES (:aname, 0, :afile, datetime(''now'', ''localtime''))');
+          ParamByName('ANAME').AsString := eName.Text;
+          ParamByName('AFILE').AsString := eDBFile.Text;
+          ExecSQL;
+        finally
+          FreeAndNil(Qry);
+        end;
+
+        DMM.sysTrans.CommitRetaining;
+
+        //MsgDlg(rsTitleCreateDatabase, rsSuccessfulDatabaseCreation, mtInformation);
+        nbPages.PageIndex := nbPages.PageIndex + 1;
+        FConnectionName := eName.Text;
+      end
+      else
+      begin
+        MsgDlg(rsTitleCreateDatabase, rsErrorDatabaseCreation, mtError);
+        sbCreateDB.Enabled := True;
       end;
-
-      DMM.sysTrans.CommitRetaining;
-
-      //MsgDlg(rsTitleCreateDatabase, rsSuccessfulDatabaseCreation, mtInformation);
-      nbPages.PageIndex := nbPages.PageIndex + 1;
-      FConnectionName := eName.Text;
-    end
-    else
-    begin
-      MsgDlg(rsTitleCreateDatabase, rsErrorDatabaseCreation, mtError);
-      sbCreateDB.Enabled := True;
     end;
+  finally
+    sbCancel.Enabled := True;
+  end;
 end;
 
 procedure TdlgNewDatabase.sbCreateUserClick(Sender: TObject);

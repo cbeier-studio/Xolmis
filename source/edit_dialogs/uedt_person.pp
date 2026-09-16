@@ -143,6 +143,7 @@ type
     procedure eCountryKeyPress(Sender: TObject; var Key: char);
     procedure eDeathDateButtonClick(Sender: TObject);
     procedure eFullnameChange(Sender: TObject);
+    procedure eFullnameEditingDone(Sender: TObject);
     procedure eFullnameKeyPress(Sender: TObject; var Key: char);
     procedure eInstitutionButtonClick(Sender: TObject);
     procedure eInstitutionKeyPress(Sender: TObject; var Key: char);
@@ -171,6 +172,7 @@ type
     function IsRequiredFilled: Boolean;
     function ValidateFields: Boolean;
     procedure ApplyDarkMode;
+    procedure GetCitationAbbrev;
     procedure GetStateCountry(Sender: TObject);
   public
     property IsNewRecord: Boolean read FIsNew write FIsNew default False;
@@ -184,6 +186,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_dialogs, utils_finddialogs, utils_validations, utils_themes, utils_editdialogs,
+  utils_conversions,
   data_types, data_getvalue, data_consts, data_columns, models_record_types, models_geo,
   udm_main, udm_grid, uDarkStyleParams;
 
@@ -289,6 +292,11 @@ end;
 procedure TedtPerson.eFullnameChange(Sender: TObject);
 begin
   sbSave.Enabled := IsRequiredFilled;
+end;
+
+procedure TedtPerson.eFullnameEditingDone(Sender: TObject);
+begin
+  GetCitationAbbrev;
 end;
 
 procedure TedtPerson.eFullnameKeyPress(Sender: TObject; var Key: char);
@@ -457,6 +465,17 @@ begin
 
   // Temporarily disabled
   pProfileImage.Visible := False;
+end;
+
+procedure TedtPerson.GetCitationAbbrev;
+begin
+  if (Trim(eFullname.Text) = EmptyStr) then
+    Exit;
+
+  if Trim(eCitation.Text) = EmptyStr then
+    eCitation.Text := GenerateCitation(Trim(eFullname.Text), True);
+  if Trim(eAbbreviation.Text) = EmptyStr then
+    eAbbreviation.Text := GenerateAbbreviation(Trim(eFullname.Text));
 end;
 
 procedure TedtPerson.GetRecord;
@@ -638,14 +657,8 @@ begin
   FPerson.Abbreviation   := eAbbreviation.Text;
   FPerson.TitleTreatment := cbTreatment.Text;
   FPerson.Gender         := cbGender.Text;
-  if eBirthDate.Text = EmptyStr then
-    FPerson.BirthDate    := NullDate
-  else
-    FPerson.BirthDate    := StrToDateDef(eBirthDate.Text, NullDate);
-  if eDeathDate.Text = EmptyStr then
-    FPerson.DeathDate    := NullDate
-  else
-    FPerson.DeathDate    := StrToDateDef(eDeathDate.Text, NullDate);
+  FPerson.BirthDate    := StrToDateDef(eBirthDate.Text, NullDate);
+  FPerson.DeathDate    := StrToDateDef(eDeathDate.Text, NullDate);
   FPerson.IdDocument1    := eRG.Text;
   FPerson.IdDocument2    := eCPF.Text;
   FPerson.Email          := eEmail.Text;

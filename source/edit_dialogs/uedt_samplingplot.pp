@@ -389,14 +389,8 @@ begin
   FSamplingPlot.FullName := eName.Text;
   FSamplingPlot.Abbreviation := eAbbreviation.Text;
   FSamplingPlot.LocalityId := FLocalityId;
-  if (Length(eLongitude.Text) > 0) then
-    FSamplingPlot.Longitude := StrToFloat(eLongitude.Text)
-  else
-    FSamplingPlot.Longitude := 0;
-  if (Length(eLatitude.Text) > 0) then
-    FSamplingPlot.Latitude := StrToFloat(eLatitude.Text)
-  else
-    FSamplingPlot.Latitude := 0;
+  FSamplingPlot.Longitude := StrToFloatDef(eLongitude.Text, 0);
+  FSamplingPlot.Latitude := StrToFloatDef(eLatitude.Text, 0);
   FSamplingPlot.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FSamplingPlot.Description := mDescription.Text;
   FSamplingPlot.Notes := mNotes.Text;

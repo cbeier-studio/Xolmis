@@ -5657,6 +5657,9 @@ begin
   // Value list
   if FColField.Rules.ValueList <> EmptyStr then
   begin
+    if FCellValue = EmptyStr then
+      Exit;
+
     lst := TStringList.Create;
     try
       lst.Delimiter := ',';
@@ -5815,6 +5818,9 @@ begin
     // Value list
     if FColField.Rules.ValueList <> EmptyStr then
     begin
+      if FCellValue = EmptyStr then
+        Exit;
+
       lst := TStringList.Create;
       try
         lst.Delimiter := ',';

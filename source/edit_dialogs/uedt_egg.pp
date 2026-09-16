@@ -587,7 +587,7 @@ begin
   FEgg.NestId         := FNestId;
   FEgg.FieldNumber    := eFieldNumber.Text;
   FEgg.EggSeq         := eEggSeq.Value;
-  FEgg.MeasureDate    := StrToDate(eMeasureDate.Text);
+  FEgg.MeasureDate    := StrToDateDef(eMeasureDate.Text, NullDate);
   FEgg.TaxonId        := FTaxonId;
   FEgg.CustomTaxonName := FCustomTaxonName;
   FEgg.ObserverId     := FObserverId;

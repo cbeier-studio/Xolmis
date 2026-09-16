@@ -21,7 +21,7 @@ unit utils_conversions;
 interface
 
 uses
-  Classes, SysUtils, Forms, RegExpr, DateUtils, models_record_types;
+  Classes, SysUtils, StrUtils, Forms, RegExpr, DateUtils, models_record_types;
 
   // Text treatment
   function WildcardWords(aText: String; aWildcard: String = '%'): String;
@@ -35,6 +35,9 @@ uses
   function RemoveDiacritics(const aText: String): String;
 
   function SentenceCase(aText: String): String;
+
+  function GenerateCitation(const AFullName: string; JustInitials: Boolean = True): string;
+  function GenerateAbbreviation(const AFullName: string; KeepPeriods: Boolean = False): string;
 
   // Boolean treatment
   function TextToBool(aValue, aTrue, aFalse: String): Boolean;
@@ -99,6 +102,54 @@ uses
 implementation
 
 uses utils_global, utils_locale;
+
+// Lista de conectores que devem ser ignorados na abreviação/citação
+function IsConnector(const AWord: string): Boolean;
+const
+  CONNECTORS: array[0..12] of string = (
+    'de', 'da', 'do', 'das', 'dos', 'e',
+    'del', 'd''', 'van', 'von', 'der', 'di', 'la'
+  );
+var
+  P, C: string;
+begin
+  P := LowerCase(AWord);
+  for C in CONNECTORS do
+    if P = C then
+      Exit(True);
+  Result := False;
+end;
+
+// Identify sufixes
+function IsSuffix(const AWord: string): Boolean;
+const
+  SUFFIXES: array[0..6] of string = (
+    'junior', 'júnior', 'filho', 'sobrinho', 'neto', 'segundo', 'terceiro'
+  );
+var
+  P, S: string;
+begin
+  P := LowerCase(AWord);
+  for S in SUFFIXES do
+    if P = S then
+      Exit(True);
+  Result := False;
+end;
+
+function DivideName(const AFullName: string): TStringList;
+var
+  I: Integer;
+begin
+  Result := TStringList.Create;
+  Result.Delimiter := ' ';
+  Result.StrictDelimiter := True;
+  Result.DelimitedText := Trim(AFullName);
+
+  // Remove empty entries due to multiple spaces
+  for I := Result.Count - 1 downto 0 do
+    if Trim(Result[I]) = '' then
+      Result.Delete(I);
+end;
 
 function WildcardWords(aText: String; aWildcard: String): String;
 var
@@ -287,6 +338,101 @@ begin
   Result := aText;
 end;
 
+function GenerateCitation(const AFullName: string; JustInitials: Boolean): string;
+var
+  Words: TStringList;
+  I, QtyWords, SurnameIndex: Integer;
+  Surname, FormattedNames, aWord: string;
+begin
+  Result := '';
+  Words := DivideName(AFullName);
+  try
+    QtyWords := Words.Count;
+    if QtyWords = 0 then Exit;
+    if QtyWords = 1 then Exit(Words[0]);
+
+    // Determines where begins the main surname
+    SurnameIndex := QtyWords - 1;
+    if (QtyWords > 2) and IsSuffix(Words[SurnameIndex]) then
+      Dec(SurnameIndex);
+
+    Surname := Trim(Words[SurnameIndex]);
+
+    FormattedNames := '';
+    for I := 0 to SurnameIndex - 1 do
+    begin
+      aWord := Words[I];
+      if IsConnector(aWord) then
+      begin
+        if not JustInitials then
+          FormattedNames := FormattedNames + LowerCase(aWord) + ' ';
+      end
+      else
+      begin
+        if JustInitials then
+          FormattedNames := FormattedNames + UpperCase(aWord[1]) + '. '
+        else
+          FormattedNames := FormattedNames + AnsiProperCase(aWord, [' ']) + ' ';
+      end;
+    end;
+
+    Result := Surname + ', ' + Trim(FormattedNames);
+  finally
+    Words.Free;
+  end;
+end;
+
+function GenerateAbbreviation(const AFullName: string; KeepPeriods: Boolean): string;
+const
+  CONNECTORS: array[0..12] of string = (
+    'de', 'da', 'do', 'das', 'dos', 'e',
+    'del', 'd''', 'van', 'von', 'der', 'di', 'la'
+  );
+
+  function IsConnector(const AWord: string): Boolean;
+  var
+    P, Connector: string;
+  begin
+    P := AnsiLowerCase(AWord);
+    for Connector in CONNECTORS do
+      if P = Connector then
+        Exit(True);
+    Result := False;
+  end;
+
+var
+  Words: TStringList;
+  I: Integer;
+  AWord, FirstLetter: string;
+begin
+  Result := '';
+  Words := TStringList.Create;
+  try
+    Words.Delimiter := ' ';
+    Words.StrictDelimiter := True;
+    Words.DelimitedText := Trim(AFullName);
+
+    for I := 0 to Words.Count - 1 do
+    begin
+      AWord := Trim(Words[I]);
+
+      // Jump empty words and CONNECTORS
+      if (AWord = '') or IsConnector(AWord) then
+        Continue;
+
+      // Safe extract the first character (supports accents)
+      FirstLetter := AnsiUpperCase(Copy(AWord, 1, 1));
+
+      if KeepPeriods then
+        Result := Result + FirstLetter + '.'
+      else
+        Result := Result + FirstLetter;
+    end;
+  finally
+    Words.Free;
+  end;
+end;
+
 { --------------------------------------------------------- }
 { Boolean treatment }
 { --------------------------------------------------------- }
@@ -360,7 +506,7 @@ begin
     Result := 0;
 end;
 
-function StrToFloatOrZero(avalue: String): Double;
+function StrToFloatOrZero(aValue: String): Double;
 var
   Fl: Double;
 begin

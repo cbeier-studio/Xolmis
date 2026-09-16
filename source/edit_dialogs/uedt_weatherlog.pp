@@ -21,7 +21,7 @@ unit uedt_weatherlog;
 interface
 
 uses
-  Classes, EditBtn, MaskEdit, Spin, SysUtils, DB, LResources, Forms, Controls, DateUtils,
+  Classes, EditBtn, MaskEdit, Spin, SysUtils, DB, LResources, Forms, Controls, DateUtils, Character,
   Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, atshapelinebgra,
   models_sampling;
 
@@ -34,6 +34,7 @@ type
     cbSampleMoment: TComboBox;
     cbPrecipitation: TComboBox;
     cbWindDirection: TComboBox;
+    eObserver: TEditButton;
     eSampleTime: TEdit;
     eSampleDate: TEditButton;
     eTemperature: TFloatSpinEdit;
@@ -44,7 +45,7 @@ type
     lblAtmosphericPressure: TLabel;
     lblRelativeHumidity: TLabel;
     lblSampleMoment: TLabel;
-    lblSampleMoment1: TLabel;
+    lblObserver: TLabel;
     lblWindDirection: TLabel;
     lblWindDirection1: TLabel;
     lblTemperature: TLabel;
@@ -74,6 +75,8 @@ type
     eRainfall: TSpinEdit;
     eWindSpeedBft: TSpinEdit;
     procedure btnHelpClick(Sender: TObject);
+    procedure eObserverButtonClick(Sender: TObject);
+    procedure eObserverKeyPress(Sender: TObject; var Key: char);
     procedure eSampleDateButtonClick(Sender: TObject);
     procedure eSampleDateChange(Sender: TObject);
     procedure eSampleTimeKeyPress(Sender: TObject; var Key: char);
@@ -84,7 +87,7 @@ type
   private
     FIsNew: Boolean;
     FWeather: TWeatherLog;
-    FSurveyId: Integer;
+    FSurveyId, FObserverId: Integer;
     procedure SetWeather(Value: TWeatherLog);
     procedure GetRecord;
     procedure SetRecord;
@@ -103,8 +106,8 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, utils_validations, utils_conversions,
-  data_columns, models_record_types,
+  utils_locale, utils_global, utils_dialogs, utils_validations, utils_conversions, utils_finddialogs,
+  data_types, data_columns, data_consts, data_getvalue, models_record_types,
   udm_main, uDarkStyleParams;
 
 { TedtWeatherLog }
@@ -112,12 +115,46 @@ uses
 procedure TedtWeatherLog.ApplyDarkMode;
 begin
   eSampleDate.Images := DMM.iEditsDark;
+  eObserver.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
 end;
 
 procedure TedtWeatherLog.btnHelpClick(Sender: TObject);
 begin
   OpenHelp(HELP_SURVEYS);
+end;
+
+procedure TedtWeatherLog.eObserverButtonClick(Sender: TObject);
+begin
+  FindDlg(tbPeople, eObserver, FObserverId, '', COL_ABBREVIATION);
+end;
+
+procedure TedtWeatherLog.eObserverKeyPress(Sender: TObject; var Key: char);
+begin
+  FormKeyPress(Sender, Key);
+
+  { Alphabetic search in numeric field }
+  if IsLetter(Key) or IsNumber(Key) or IsPunctuation(Key) or IsSeparator(Key) or IsSymbol(Key) then
+  begin
+    FindDlg(tbPeople, eObserver, FObserverId, Key, COL_ABBREVIATION);
+    Key := #0;
+  end;
+  { CLEAR FIELD = Backspace }
+  if (Key = #8) then
+  begin
+    FObserverId := 0;
+    eObserver.Clear;
+    Key := #0;
+  end;
+  { <ENTER/RETURN> Key }
+  if (Key = #13) and (xSettings.UseEnterAsTab) then
+  begin
+    if (Sender is TEditButton) then
+      Screen.ActiveForm.SelectNext(Screen.ActiveControl, True, True)
+    else
+      SelectNext(Sender as TWinControl, True, True);
+    Key := #0;
+  end;
 end;
 
 procedure TedtWeatherLog.eSampleDateButtonClick(Sender: TObject);
@@ -215,6 +252,8 @@ begin
   else
     cbSampleMoment.ItemIndex := -1;
   end;
+  FObserverId := FWeather.ObserverId;
+  eObserver.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
   eCloudCover.Value := FWeather.CloudCover;
   eTemperature.Value := FWeather.Temperature;
   case FWeather.Precipitation of
@@ -264,8 +303,9 @@ procedure TedtWeatherLog.SetRecord;
 begin
   FWeather.SurveyId := FSurveyId;
   FWeather.SampleDate := StrToDate(eSampleDate.Text);
-  FWeather.SampleTime := StrToTime(eSampleTime.Text);
+  FWeather.SampleTime := StrToTimeDef(eSampleTime.Text, NullTime);
   FWeather.SampleMoment := StrToSampleMoment(cbSampleMoment.Text);
+  FWeather.ObserverId := FObserverId;
   FWeather.CloudCover  := eCloudCover.Value;
   FWeather.Temperature := eTemperature.Value;
   FWeather.Precipitation := StrToPrecipitation(cbPrecipitation.Text);

@@ -461,7 +461,7 @@ procedure TedtNestRevision.SetRecord;
 begin
   FRevision.NestId := FNestId;
   FRevision.RevisionDate := StrToDate(eRevisionDate.Text);
-  FRevision.RevisionTime := StrToTime(eRevisionTime.Text);
+  FRevision.RevisionTime := StrToTimeDef(eRevisionTime.Text, NullTime);
   FRevision.Observer1Id  := FObserver1Id;
   FRevision.Observer2Id  := FObserver2Id;
   FRevision.NestStage := StrToNestStage(cbNestStage.Text);

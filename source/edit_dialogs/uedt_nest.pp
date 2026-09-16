@@ -885,17 +885,13 @@ begin
   FNest.CustomTaxonName := FCustomTaxonName;
   FNest.FieldNumber := eFieldNumber.Text;
   FNest.NestFate := StrToNestFate(cbNestFate.Text);
-  if eFoundDate.Text <> EmptyStr then
-    FNest.FoundDate         := StrToDate(eFoundDate.Text);
-  if eLastDate.Text <> EmptyStr then
-    FNest.LastDate          := StrToDate(eLastDate.Text);
+  FNest.FoundDate         := StrToDateDef(eFoundDate.Text, NullDate);
+  FNest.LastDate          := StrToDateDef(eLastDate.Text, NullDate);
   FNest.ProjectId         := FProjectId;
   FNest.ObserverId        := FObserverId;
   FNest.LocalityId        := FLocalityId;
-  if eLongitude.Text <> EmptyStr then
-    FNest.Longitude         := StrToFloat(eLongitude.Text);
-  if eLatitude.Text <> EmptyStr then
-    FNest.Latitude          := StrToFloat(eLatitude.Text);
+  FNest.Longitude         := StrToFloatDef(eLongitude.Text, 0);
+  FNest.Latitude          := StrToFloatDef(eLatitude.Text, 0);
   FNest.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FNest.Description       := mDescription.Text;
   FNest.NestProductivity  := eProductivity.Value;

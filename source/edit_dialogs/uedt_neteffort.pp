@@ -545,18 +545,9 @@ procedure TedtNetEffort.SetRecord;
 begin
   FNetEffort.SurveyId       := FSurveyId;
   FNetEffort.PermanentNetId := FPermanentNetId;
-  if eNetNumber.Text <> EmptyStr then
-    FNetEffort.NetNumber    := StrToInt(eNetNumber.Text)
-  else
-    FNetEffort.NetNumber    := 0;
-  if eLongitude.Text <> EmptyStr then
-    FNetEffort.Longitude    := StrToFloat(eLongitude.Text)
-  else
-    FNetEffort.Longitude    := 0;
-  if eLatitude.Text <> EmptyStr then
-    FNetEffort.Latitude     := StrToFloat(eLatitude.Text)
-  else
-    FNetEffort.Latitude    := 0;
+  FNetEffort.NetNumber    := StrToIntDef(eNetNumber.Text, 0);
+  FNetEffort.Longitude    := StrToFloatDef(eLongitude.Text, 0);
+  FNetEffort.Latitude     := StrToFloatDef(eLatitude.Text, 0);
   FNetEffort.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FNetEffort.NetLength      := eNetLength.Value;
   FNetEffort.NetHeight      := eNetHeight.Value;
@@ -564,30 +555,12 @@ begin
   FNetEffort.SampleDate     := StrToDate(eDate.Text);
   FNetEffort.NetOpen1       := StrToTime(eNetOpen1.Text);
   FNetEffort.NetClose1      := StrToTime(eNetClose1.Text);
-  if eNetOpen2.Text <> EmptyStr then
-    FNetEffort.NetOpen2     := StrToTime(eNetOpen2.Text)
-  else
-    FNetEffort.NetOpen2     := StrToTime('00:00:00');
-  if eNetClose2.Text <> EmptyStr then
-    FNetEffort.NetClose2    := StrToTime(eNetClose2.Text)
-  else
-    FNetEffort.NetClose2     := StrToTime('00:00:00');
-  if eNetOpen3.Text <> EmptyStr then
-    FNetEffort.NetOpen3     := StrToTime(eNetOpen3.Text)
-  else
-    FNetEffort.NetOpen3     := StrToTime('00:00:00');
-  if eNetClose3.Text <> EmptyStr then
-    FNetEffort.NetClose3    := StrToTime(eNetClose3.Text)
-  else
-    FNetEffort.NetClose3     := StrToTime('00:00:00');
-  if eNetOpen4.Text <> EmptyStr then
-    FNetEffort.NetOpen4     := StrToTime(eNetOpen4.Text)
-  else
-    FNetEffort.NetOpen4     := StrToTime('00:00:00');
-  if eNetClose4.Text <> EmptyStr then
-    FNetEffort.NetClose4    := StrToTime(eNetClose4.Text)
-  else
-    FNetEffort.NetClose4     := StrToTime('00:00:00');
+  FNetEffort.NetOpen2     := StrToTimeDef(eNetOpen2.Text, NullTime);
+  FNetEffort.NetClose2    := StrToTimeDef(eNetClose2.Text, NullTime);
+  FNetEffort.NetOpen3     := StrToTimeDef(eNetOpen3.Text, NullTime);
+  FNetEffort.NetClose3    := StrToTimeDef(eNetClose3.Text, NullTime);
+  FNetEffort.NetOpen4     := StrToTimeDef(eNetOpen4.Text, NullTime);
+  FNetEffort.NetClose4    := StrToTimeDef(eNetClose4.Text, NullTime);
   FNetEffort.Notes          := mNotes.Text;
 
   GetFullName;

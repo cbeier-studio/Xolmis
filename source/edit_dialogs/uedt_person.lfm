@@ -224,6 +224,7 @@ object edtPerson: TedtPerson
           Width = 368
           TabOrder = 0
           OnChange = eFullnameChange
+          OnEditingDone = eFullnameEditingDone
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eFullnameKeyPress
