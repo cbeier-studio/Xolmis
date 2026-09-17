@@ -218,7 +218,7 @@ type
 
     procedure AddMapping(const SourceField, DestField: string);
     function Apply(const Row: TXRow): TXRow;
-    function ValidateRequired(const RequiredFields: array of string): Boolean;
+    function ValidateRequired: Boolean;
     function ToJSON: String;
     procedure FromJSON(const S: String);
 
@@ -970,21 +970,23 @@ begin
   inherited Destroy;
 end;
 
-function TFieldMapper.ValidateRequired(const RequiredFields: array of string): Boolean;
+function TFieldMapper.ValidateRequired: Boolean;
 var
-  Req: string;
   I: Integer;
   Mapping: TFieldMapping;
   Found: Boolean;
+  TabSchema: TTableSchema;
+  Col: TFieldSchema;
 begin
   Result := True;
-  for Req in RequiredFields do
+  TabSchema := DBSchema.GetTable(FTableType);
+  for Col in TabSchema.Fields do;
   begin
     Found := False;
     for I := 0 to FMap.Count - 1 do
     begin
       Mapping := FMap[I];
-      if SameText(Mapping.TargetField, Req) and Mapping.Import then
+      if Col.Rules.RequiredField and Mapping.Import then
       begin
         Found := True;
         Break;

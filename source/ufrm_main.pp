@@ -1260,6 +1260,13 @@ begin
     navTabs.OptScalePercents := (oldPPI * 100) div 96;
   end;
 
+  // Show beta version onboarding
+  if xSettings.FirstBetaVersion then
+  begin
+    ShowMarkdownDlg(APP_NAME, rsOnboardingBetaVersion);
+    xSettings.SaveOnboarding('/ONBOARDING/FirstBetaVersion', False);
+  end;
+
   // Create the onboarding tour dialog
   dlgTourTip := TdlgTourTip.Create(nil);
   with dlgTourTip do

@@ -1,0 +1,40 @@
+object dlgMarkdown: TdlgMarkdown
+  Left = 350
+  Height = 699
+  Top = 250
+  Width = 605
+  AutoSize = True
+  BorderStyle = bsDialog
+  Caption = 'Xolmis'
+  ClientHeight = 699
+  ClientWidth = 605
+  Position = poScreenCenter
+  LCLVersion = '4.8.0.0'
+  OnShow = FormShow
+  object MdView: TPixieMarkdownView
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    Left = 0
+    Height = 644
+    Top = 0
+    Width = 586
+    TabOrder = 0
+    TabStop = True
+    Zoom = 1
+    Color = clWhite
+    OnClick = MdViewClick
+    Markdown.Strings = (
+      '# Welcome to the Xolmis Desktop Beta'
+      ''
+      'Thank you for testing **Xolmis Desktop**! This is an **evolving test and evaluation version**. To ensure the safety of your ornithological data, please keep the following precautions in mind:'
+      ''
+      '- **Exercise caution with batch changes:** Be careful when importing large volumes of data, performing bulk edits, or permanently deleting records.'
+      '- **Back up frequently:** Create backups of your database before making major changes via **Settings → Backup and restore**.'
+      '- **Use test databases:** When first exploring the system, opt for a test database containing non-critical records.'
+      ''
+      '## Your feedback matters!'
+      ''
+      'Found a bug or have suggestions to improve the system? Report them directly via the menu: **Help → Feedback**.'
+    )
+  end
+end

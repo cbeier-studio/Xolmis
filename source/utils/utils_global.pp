@@ -281,6 +281,7 @@ type
     procedure SetLastPathUsed(aValue: String);
   public
     { Onboarding }
+    FirstBetaVersion,
     FirstAppExecution, FirstDeletedRecord, FirstMediaAdded, FirstSummaryView, FirstColumnsView,
     FirstQuickExport, FirstMapView, FirstNewBatchBands, FirstTransferBands, FirstBandsOpen,
     FirstFeathersOpen, FirstNewBatchNets, FirstProjectsOpen, FirstGazetteerOpen, FirstBotanicalTaxaOpen,
@@ -1397,6 +1398,7 @@ begin
   FDelimiter := FConfig.GetValue('/CSV/Delimiter', ';')[1];
   FDecimalSeparator := FConfig.GetValue('/CSV/DecimalSeparator', ',')[1];
   { Onboarding }
+  FirstBetaVersion := FConfig.GetValue('/ONBOARDING/FirstBetaVersion', True);
   FirstAppExecution := FConfig.GetValue('/ONBOARDING/FirstAppExecution', True);
   FirstDeletedRecord := FConfig.GetValue('/ONBOARDING/FirstDeletedRecord', True);
   FirstMediaAdded := FConfig.GetValue('/ONBOARDING/FirstMediaAdded', True);

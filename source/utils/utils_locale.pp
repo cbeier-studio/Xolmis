@@ -789,6 +789,13 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
         '4. Researchers' + LineEnding + LineEnding +
         'Optionally, you may also add: Projects, Permits, Bands, and Methods.' + LineEnding + LineEnding +
         'Following this sequence ensures that your database is properly structured and ready for use.';
+    rsOnboardingBetaVersion = '# Welcome to the Xolmis Desktop Beta' + LineEnding + LineEnding +
+        'Thank you for testing **Xolmis Desktop**! This is an **evolving test and evaluation version**. To ensure the safety of your ornithological data, please keep the following precautions in mind:' + LineEnding + LineEnding +
+        '- **Exercise caution with batch changes:** Be careful when importing large volumes of data, performing bulk edits, or permanently deleting records.'  + LineEnding +
+        '- **Back up frequently:** Create backups of your database before making major changes via **File → Settings → Backup and restore**.'  + LineEnding +
+        '- **Use test databases:** When first exploring the system, opt for a test database containing non-critical records.'  + LineEnding + LineEnding +
+        '## Your feedback matters!'  + LineEnding + LineEnding +
+        'Found a bug or have suggestions to improve the system? Report them directly via the menu: **Help → Feedback**.';
 
     { Hints }
     rsHintCheckUncheckAll = 'Mark/unmark all';

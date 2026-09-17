@@ -65,6 +65,7 @@ type
     iButtonsDark: TImageList;
     arrowReplaceChars: TImage;
     icoImportFinished: TImage;
+    icoBetaWarning: TImage;
     imgFinished: TImageList;
     imgFinishedDark: TImageList;
     lblCoordinateAxis: TLabel;
@@ -72,6 +73,7 @@ type
     lblArrayHandling: TLabel;
     lblDateFormat: TLabel;
     lblFieldsTargetTable: TLabel;
+    lblBetaWarning: TLabel;
     lblRemoveAccents: TLabel;
     lblNormalizeWhitespace: TLabel;
     lblReplaceChars: TLabel;
@@ -113,6 +115,7 @@ type
     pDataType: TBCPanel;
     pArrayHandling: TBCPanel;
     pDateFormat: TBCPanel;
+    pBetaWarning: TBCPanel;
     pRemoveAccents: TBCPanel;
     pNormalizeWhitespace: TBCPanel;
     pReplaceChars: TBCPanel;
@@ -610,6 +613,7 @@ begin
   sbRetry.Images := iButtonsDark;
   sbSaveLog.Images := iButtonsDark;
   arrowReplaceChars.Images := iButtonsDark;
+  icoBetaWarning.Images := iButtonsDark;
 
   pSourceFile.Background.Color := ActiveTheme.Background.SolidSecondary;
   pSourceFile.Border.Color := ActiveTheme.System.SolidNeutralFG;
@@ -1276,6 +1280,10 @@ procedure TdlgImport.FormShow(Sender: TObject);
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
+
+  pBetaWarning.Background.Color := ActiveTheme.System.CautionBG;
+  pBetaWarning.Border.Color := ActiveTheme.System.CautionFG;
+  lblBetaWarning.Font.Color := ActiveTheme.System.CautionFG;
 
   LoadTargetTables;
   LoadProfilesList;
@@ -2780,6 +2788,9 @@ var
   i: Integer;
   aTargetName: String;
 begin
+  //if not FFieldMap.ValidateRequired then
+  //  raise Exception.Create('SetMappings: there are required fields not selected to import.');
+
   for i := 1 to gridFields.RowCount - 1 do
   begin
     FFieldMap.Map[i - 1].Import := StrToBool(gridFields.Cells[2, i]);
@@ -2791,9 +2802,9 @@ begin
       FFieldMap.Map[i - 1].DisplayTargetField := gridFields.Cells[3, i];
     end;
   end;
-  {$IFDEF DEBUG}
-  LogDebug(FFieldMap.ToJSON);
-  {$ENDIF}
+  //{$IFDEF DEBUG}
+  //LogDebug(FFieldMap.ToJSON);
+  //{$ENDIF}
 end;
 
 procedure TdlgImport.tsBooleanValueChange(Sender: TObject);

@@ -63,12 +63,13 @@ type
 
   { Onboarding dialogs }
   procedure ShowOnboardingBig(aTip: TBigTipType);
+  procedure ShowMarkdownDlg(aTitle, aMarkdown: String);
 
 implementation
 
 uses
   utils_locale, utils_global, data_types, data_management, models_sampling, udm_main, models_record_types,
-  udlg_find, udlg_validate, udlg_plantminer, udlg_authorship, udlg_export, udlg_bigtip,
+  udlg_find, udlg_validate, udlg_plantminer, udlg_authorship, udlg_export, udlg_bigtip, udlg_markdown,
   udlg_calendar, udlg_colorbands, ulst_cyclecode, ulst_moltlimits, ulst_howsexedaged,
   ulst_detectiontype, ulst_breedingstatus;
 
@@ -654,6 +655,21 @@ begin
   finally
     FreeAndNil(dlgBigTip);
     LogEvent(leaClose, 'Big onboarding dialog');
+  end;
+end;
+
+procedure ShowMarkdownDlg(aTitle, aMarkdown: String);
+begin
+  LogEvent(leaOpen, 'Markdown dialog');
+  dlgMarkdown := TdlgMarkdown.Create(nil);
+  with dlgMarkdown do
+  try
+    Title := aTitle;
+    MarkdownText := aMarkdown;
+    ShowModal;
+  finally
+    FreeAndNil(dlgMarkdown);
+    LogEvent(leaClose, 'Markdown dialog');
   end;
 end;
 

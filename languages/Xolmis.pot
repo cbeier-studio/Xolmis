@@ -4988,6 +4988,13 @@ msgstr ""
 msgid "Array fields"
 msgstr ""
 
+#: tdlgimport.lblbetawarning.caption
+msgid ""
+"The import wizard is currently under development.\n"
+"\n"
+"Changes made via data file import are permanent. Be sure to create a backup beforehand and carefully check all settings, column mapping, and the data preview before confirming the operation."
+msgstr ""
+
 #: tdlgimport.lblbooleanvalue.caption
 msgid "Boolean value"
 msgstr ""
@@ -18066,6 +18073,21 @@ msgid ""
 "The Bands module is where you manage all band identifiers used in your records.\n"
 "\n"
 "Here you can create new batches of bands, transfer bands between banders, and track their usage. This central view helps you keep bands organized and ensures consistency across your dataset. Use it to maintain clear control over band assignments and availability."
+msgstr ""
+
+#: utils_locale.rsonboardingbetaversion
+msgid ""
+"# Welcome to the Xolmis Desktop Beta\n"
+"\n"
+"Thank you for testing **Xolmis Desktop**! This is an **evolving test and evaluation version**. To ensure the safety of your ornithological data, please keep the following precautions in mind:\n"
+"\n"
+"- **Exercise caution with batch changes:** Be careful when importing large volumes of data, performing bulk edits, or permanently deleting records.\n"
+"- **Back up frequently:** Create backups of your database before making major changes via **File → Settings → Backup and restore**.\n"
+"- **Use test databases:** When first exploring the system, opt for a test database containing non-critical records.\n"
+"\n"
+"## Your feedback matters!\n"
+"\n"
+"Found a bug or have suggestions to improve the system? Report them directly via the menu: **Help → Feedback**."
 msgstr ""
 
 #: utils_locale.rsonboardingbotanicaltaxa

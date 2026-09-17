@@ -24,7 +24,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="145">
+      <ExcludedIdentifiers Count="146">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -170,13 +170,14 @@
         <Item143 Value="tfrmQuickEntry.cbErrorHandling.Text"/>
         <Item144 Value="tcfgOptions.txtMediaPath.Caption"/>
         <Item145 Value="tcfgOptions.txtThumbnailCacheSize.Caption"/>
+        <Item146 Value="tdlgMarkdown.Caption"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="527"/>
+      <BuildNr Value="529"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1687,6 +1688,12 @@
       <Unit>
         <Filename Value="utils\utils_web.pp"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\udlg_markdown.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgMarkdown"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
     <Debugger>
