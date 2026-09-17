@@ -1296,15 +1296,15 @@ begin
       ParamByName('collection_year').AsInteger := R.CollectionYear;
       ParamByName('collection_month').AsInteger := R.CollectionMonth;
       ParamByName('collection_day').AsInteger := R.CollectionDay;
-      ColDate.Encode(R.CollectionYear, R.CollectionMonth, R.CollectionDay, '.');
-      SetStrParam(ParamByName('collection_date'), ColDate.ToString);
+      //ColDate.Encode(R.CollectionYear, R.CollectionMonth, R.CollectionDay, '.');
+      //SetStrParam(ParamByName('collection_date'), ColDate.ToString);
     end
     else
     begin
       ParamByName('collection_year').Clear;
       ParamByName('collection_month').Clear;
       ParamByName('collection_day').Clear;
-      ParamByName('collection_date').Clear;
+      //ParamByName('collection_date').Clear;
     end;
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('nest_id'), R.NestId);
@@ -1364,15 +1364,15 @@ begin
       ParamByName('collection_year').AsInteger := R.CollectionYear;
       ParamByName('collection_month').AsInteger := R.CollectionMonth;
       ParamByName('collection_day').AsInteger := R.CollectionDay;
-      ColDate.Encode(R.CollectionYear, R.CollectionMonth, R.CollectionDay, '.');
-      SetStrParam(ParamByName('collection_date'), ColDate.ToString);
+      //ColDate.Encode(R.CollectionYear, R.CollectionMonth, R.CollectionDay, '.');
+      //SetStrParam(ParamByName('collection_date'), ColDate.ToString);
     end
     else
     begin
       ParamByName('collection_year').Clear;
       ParamByName('collection_month').Clear;
       ParamByName('collection_day').Clear;
-      ParamByName('collection_date').Clear;
+      //ParamByName('collection_date').Clear;
     end;
     SetForeignParam(ParamByName('individual_id'), R.IndividualId);
     SetForeignParam(ParamByName('nest_id'), R.NestId);

@@ -3256,12 +3256,7 @@ begin
         if not VarIsNull(aTaxonId) then
           FRecord.TaxonId := aTaxonId;
         FRecord.SampleDate := GetDateTimeValue(TBL_SIGHTINGS, COL_SIGHTING_DATE, COL_SIGHTING_ID, aSighting);
-        aTime := GetDateTimeValue(TBL_SIGHTINGS, COL_SIGHTING_TIME, COL_SIGHTING_ID, aSighting);
-        if not (aTime = NullTime) then
-          FRecord.SampleTime := aTime;
-        aObserverId := GetFieldValue(TBL_SIGHTINGS, COL_OBSERVER_ID, COL_SIGHTING_ID, aSighting);
-        if not VarIsNull(aObserverId) then
-          FRecord.ObserverId := aObserverId;
+        FRecord.SampleTime := GetDateTimeValue(TBL_SIGHTINGS, COL_SIGHTING_TIME, COL_SIGHTING_ID, aSighting);
       end;
       EditSourceStr := rsInsertedByForm;
     end else

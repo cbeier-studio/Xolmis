@@ -278,12 +278,13 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsProgressRewritingHierarchy = 'Rewriting %s...';
     rsProgressLoadingCSVFile = 'Loading CSV file... %d%%';
     rsProgressImportingCSVFile = 'Importing CSV file...';
-    rsProgressRecords = 'Processing %d of %d records...';
     rsProgressImportBandingJournal = 'Importing banding journals...';
     rsProgressImportBandingWeatherLog = 'Importing banding weather log...';
     rsProgressImportBandingEffort = 'Importing banding effort...';
     rsProgressImportCaptures = 'Importing captures...';
+    rsProgressImportingFile = 'Importing file "%s"';
     rsFinishedImporting = 'Finished importing!';
+    rsProgressRecords = 'Processing %d of %d records...';
     rsFinishedInsertingUpdating = 'Finished inserting or updating records!';
     rsProgressGeneratingReport = 'Generating report...';
     rsProgressCreatingTable = 'Creating table: %s (%d/%d)';
@@ -439,6 +440,8 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsCheckingDatabaseIntegrity = 'Checking database integrity...';
     rsLoadingListOfSheets = 'Loading list of sheets...';
     rsLoadingListOfFields = 'Loading list of fields...';
+    rsLoadingMap = 'Loading map tiles...';
+    rsMapLoaded = 'Map loaded';
 
     { Backup messages }
     rsPromptBackupNow = 'The automatic backup will start now and may take several minutes. ' +

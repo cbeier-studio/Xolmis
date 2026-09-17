@@ -952,8 +952,8 @@ begin
   FS := DefaultFormatSettings;
   FS.DecimalSeparator  := FImportSettings.DecimalSeparator;
   FS.ThousandSeparator := #0;   // disable thousands grouping while probing
-  TrueBoolStrs := ['true', 'sim', 'yes', 'S', 'Y', 'verdadeiro', 'V', 'T', 'sí', 'on', 'wahr'];
-  FalseBoolStrs := ['false', 'não', 'no', 'N', 'falso', 'F', 'off', 'falsch'];
+  //TrueBoolStrs := ['true', 'sim', 'yes', 's', 'y', 'verdadeiro', 'v', 't', 'sí', 'on', 'wahr'];
+  //FalseBoolStrs := ['false', 'não', 'no', 'n', 'falso', 'f', 'off', 'falsch'];
 
   for i := 0 to Row.Count - 1 do
   begin
@@ -971,18 +971,47 @@ begin
     if TryStrToInt64(S, VInt) then
     begin
       Inc(ColStats[idx].IntCount);
+
+      if (VInt = 0) or (VInt = 1) then
+      begin
+        Inc(ColStats[idx].BoolCount);
+      end
+      else
+      begin
+        Inc(ColStats[idx].NonBoolIntCount);
+      end;
+
       Continue;
     end;
 
     // Float
-    if TryStrToFloat(S, VFloat) then
+    if TryStrToFloat(S, VFloat) or TryStrToFloat(S, VFloat, FS) then
     begin
       Inc(ColStats[idx].FloatCount);
       Continue;
     end;
-    if TryStrToFloat(S, VFloat, FS) then
+
+    // Boolean text — checked before integer so 'true'/'false' are not
+    // silently absorbed by TryStrToInt64 as a non-matching call
+    TrueBoolStrs := ['true', 'sim', 'yes', 'verdadeiro', 'sí', 'on', 'wahr'];
+    FalseBoolStrs := ['false', 'não', 'no', 'falso', 'off', 'falsch'];
+    if TryStrToBool(LowerCase(S), VBool)   then
     begin
-      Inc(ColStats[idx].FloatCount);
+      Inc(ColStats[idx].BoolCount);
+      Continue;
+    end;
+
+    // Time
+    if IsLikelyTime(S) and TryParseTimeFlexible(S, VTime) then
+    begin
+      Inc(ColStats[idx].TimeCount);
+      Continue;
+    end;
+
+    // Date
+    if IsLikelyDate(S) and TryParseDateFlexible(S, VDate) then
+    begin
+      Inc(ColStats[idx].DateCount);
       Continue;
     end;
 
@@ -990,28 +1019,6 @@ begin
     if TryParseDateTimeFlexible(S, VDateTime) then
     begin
       Inc(ColStats[idx].DateTimeCount);
-      Continue;
-    end;
-
-    // Date
-    if TryParseDateFlexible(S, VDate) then
-    begin
-      Inc(ColStats[idx].DateCount);
-      Continue;
-    end;
-
-    // Time
-    if TryParseTimeFlexible(S, VTime) then
-    begin
-      Inc(ColStats[idx].TimeCount);
-      Continue;
-    end;
-
-    // Boolean text — checked before integer so 'true'/'false' are not
-    // silently absorbed by TryStrToInt64 as a non-matching call
-    if TryStrToBool(S, VBool)   then
-    begin
-      Inc(ColStats[idx].BoolCount);
       Continue;
     end;
   end;
@@ -1319,6 +1326,8 @@ begin
 end;
 
 procedure TdlgImport.GetFieldSettings(AIndex: Integer);
+var
+  aMap: TFieldMapping;
 begin
   if AIndex < 0 then
     Exit;
@@ -1329,8 +1338,17 @@ begin
   if FFieldMap.Map.Count = 0 then
     raise Exception.Create('Field map was not loaded.');
 
-  tsPrimaryKey.Checked := FFieldMap.Map[AIndex].IsCorrespondingKey;
-  case FFieldMap.Map[AIndex].DataType of
+  aMap := FFieldMap.Map[AIndex];
+
+  tsPrimaryKey.Checked := aMap.IsCorrespondingKey;
+  //if not aMap.Modified then
+  //  if DBSchema.GetTable(FTableType).GetField(aMap.TargetField).LookupInfo.LookupTable <> tbNone) then
+  //  begin
+  //    aMap.DataType := sdtLookup;
+  //    aMap.LookupTable := DBSchema.GetTable(FTableType).GetField(aMap.TargetField).LookupInfo.LookupTable;
+  //    aMap.LookupField := DBSchema.GetTable(FTableType).GetField(aMap.TargetField).LookupInfo.LookupField;
+  //  end;
+  case aMap.DataType of
     sdtText:      cbDataType.ItemIndex := 0;
     sdtInteger:   cbDataType.ItemIndex := 1;
     sdtFloat:     cbDataType.ItemIndex := 2;
@@ -1343,64 +1361,64 @@ begin
     sdtYear:      cbDataType.ItemIndex := 3;
     sdtMonthYear: cbDataType.ItemIndex := 3;
   end;
-  if FFieldMap.Map[AIndex].LookupTable <> tbNone then
-    cbLookupTable.ItemIndex := cbLookupTable.Items.IndexOf(LocaleTablesDict[FFieldMap.Map[AIndex].LookupTable])
+  if aMap.LookupTable <> tbNone then
+    cbLookupTable.ItemIndex := cbLookupTable.Items.IndexOf(LocaleTablesDict[aMap.LookupTable])
   else
     cbLookupTable.ItemIndex := -1;
   if cbLookupTable.ItemIndex >= 0 then
-    cbLookupField.ItemIndex := cbLookupField.Items.IndexOf(FFieldMap.Map[AIndex].LookupField)
+    cbLookupField.ItemIndex := cbLookupField.Items.IndexOf(aMap.LookupField)
   else
     cbLookupField.ItemIndex := -1;
-  case FFieldMap.Map[AIndex].NullHandling of
+  case aMap.NullHandling of
     nhIgnore:       cbNullHandling.ItemIndex := 0;
     nhDefaultValue: cbNullHandling.ItemIndex := 1;
     nhUseMean:      cbNullHandling.ItemIndex := 2;
     nhUseMedian:    cbNullHandling.ItemIndex := 3;
     nhUseMode:      cbNullHandling.ItemIndex := 4;
   end;
-  eDefaultValue.Text := FFieldMap.Map[AIndex].DefaultValue;
-  case FFieldMap.Map[AIndex].ArrayHandling of
+  eDefaultValue.Text := aMap.DefaultValue;
+  case aMap.ArrayHandling of
     ahIgnore:     cbArrayHandling.ItemIndex := 0;
     ahJsonString: cbArrayHandling.ItemIndex := 1;
   end;
-  tsTrimValue.Checked := (vtrTrim in FFieldMap.Map[AIndex].Transformations);
-  tsNormalizeWhitespace.Checked := (vtrNormalizeWhitespace in FFieldMap.Map[AIndex].Transformations);
-  tsBooleanValue.Checked := (vtrBoolean in FFieldMap.Map[AIndex].Transformations);
-  if (vtrLowerCase in FFieldMap.Map[AIndex].Transformations) then
+  tsTrimValue.Checked := (vtrTrim in aMap.Transformations);
+  tsNormalizeWhitespace.Checked := (vtrNormalizeWhitespace in aMap.Transformations);
+  tsBooleanValue.Checked := (vtrBoolean in aMap.Transformations);
+  if (vtrLowerCase in aMap.Transformations) then
     cbTextCase.ItemIndex := 1
   else
-  if (vtrUpperCase in FFieldMap.Map[AIndex].Transformations) then
+  if (vtrUpperCase in aMap.Transformations) then
     cbTextCase.ItemIndex := 2
   else
-  if (vtrSentenceCase in FFieldMap.Map[AIndex].Transformations) then
+  if (vtrSentenceCase in aMap.Transformations) then
     cbTextCase.ItemIndex := 3
   else
-  if (vtrTitleCase in FFieldMap.Map[AIndex].Transformations) then
+  if (vtrTitleCase in aMap.Transformations) then
     cbTextCase.ItemIndex := 4
   else
     cbTextCase.ItemIndex := 0;
-  tsRemoveAccents.Checked := (vtrRemoveAccents in FFieldMap.Map[AIndex].Transformations);
-  tsReplaceChars.Checked := (vtrReplaceChars in FFieldMap.Map[AIndex].Transformations);
-  eReplaceCharFrom.Text := FFieldMap.Map[AIndex].ReplaceCharFrom;
-  eReplaceCharTo.Text := FFieldMap.Map[AIndex].ReplaceCharTo;
-  tsRoundValue.Checked := (vtrRound in FFieldMap.Map[AIndex].Transformations);
-  eRoundPrecision.Value := FFieldMap.Map[AIndex].RoundPrecision;
-  tsScaleValue.Checked := (vtrScale in FFieldMap.Map[AIndex].Transformations);
-  cbScaleOperation.ItemIndex := Ord(FFieldMap.Map[AIndex].ScaleOperation);
-  eScale.Value := FFieldMap.Map[AIndex].ScaleSize;
-  if (vtrExtractDay in FFieldMap.Map[AIndex].Transformations) then
+  tsRemoveAccents.Checked := (vtrRemoveAccents in aMap.Transformations);
+  tsReplaceChars.Checked := (vtrReplaceChars in aMap.Transformations);
+  eReplaceCharFrom.Text := aMap.ReplaceCharFrom;
+  eReplaceCharTo.Text := aMap.ReplaceCharTo;
+  tsRoundValue.Checked := (vtrRound in aMap.Transformations);
+  eRoundPrecision.Value := aMap.RoundPrecision;
+  tsScaleValue.Checked := (vtrScale in aMap.Transformations);
+  cbScaleOperation.ItemIndex := Ord(aMap.ScaleOperation);
+  eScale.Value := aMap.ScaleSize;
+  if (vtrExtractDay in aMap.Transformations) then
   begin
     tsExtractDatePart.Checked := True;
     cbExtractDatePart.ItemIndex := 0;
   end
   else
-  if (vtrExtractMonth in FFieldMap.Map[AIndex].Transformations) then
+  if (vtrExtractMonth in aMap.Transformations) then
   begin
     tsExtractDatePart.Checked := True;
     cbExtractDatePart.ItemIndex := 1;
   end
   else
-  if (vtrExtractYear in FFieldMap.Map[AIndex].Transformations) then
+  if (vtrExtractYear in aMap.Transformations) then
   begin
     tsExtractDatePart.Checked := True;
     cbExtractDatePart.ItemIndex := 2;
@@ -1410,15 +1428,15 @@ begin
     tsExtractDatePart.Checked := False;
     cbExtractDatePart.ItemIndex := -1;
   end;
-  tsConvertCoordinates.Checked := (vtrConvertCoordinates in FFieldMap.Map[AIndex].Transformations);
-  case FFieldMap.Map[AIndex].CoordinateAxis of
+  tsConvertCoordinates.Checked := (vtrConvertCoordinates in aMap.Transformations);
+  case aMap.CoordinateAxis of
     smaNone:    cbCoordinateAxis.ItemIndex := 0;
     smaLong:    cbCoordinateAxis.ItemIndex := 1;
     smaLat:     cbCoordinateAxis.ItemIndex := 2;
     smaLongLat: cbCoordinateAxis.ItemIndex := 3;
     smaLatLong: cbCoordinateAxis.ItemIndex := 4;
   end;
-  cbSourceCoordinatesFormat.ItemIndex := Ord(FFieldMap.Map[AIndex].CoordinatesFormat);
+  cbSourceCoordinatesFormat.ItemIndex := Ord(aMap.CoordinatesFormat);
 end;
 
 procedure TdlgImport.GetSheetsList;
@@ -1495,6 +1513,7 @@ begin
   sbRetry.Visible := False;
   sbSaveLog.Visible := False;
   sbSaveProfile.Visible := False;
+  AppendLog(rsProgressStarting);
 
   FileStream := TFileStream.Create(FSourceFile, fmOpenRead or fmShareDenyWrite);
   try
@@ -1525,7 +1544,7 @@ begin
         Importer.Mapper := FFieldMap;
         FImportSettings.OnProgress := @DoProgress;
 
-        AppendLog(rsProgressStarting);
+        AppendLog(Format(rsProgressImportingFile, [FSourceFile]));
         Importer.Import(FileStream, FImportSettings, @AddImportRow);
         LogEvent(leaFinish, 'Import data');
         AppendLog(rsFinishedImporting);
@@ -1604,14 +1623,20 @@ const
 var
   MinMatch: Integer;
 begin
+  //{$IFDEF DEBUG}
+  //LogDebug(Format('{ name=%s; seen=%d; intcount=%d; nonboolintcount=%d; floatcount=%d; datecount=%d; timecount=%d; datetimecount=%d; boolcount=%d }',
+  //  [Stats.Name, Stats.Seen, Stats.IntCount, Stats.NonBoolIntCount, Stats.FloatCount, Stats.DateCount, Stats.TimeCount,
+  //  Stats.DateTimeCount, Stats.BoolCount]));
+  //{$ENDIF}
+
   if Stats.Seen = 0 then
     Exit(sdtText);
 
   // Require at least ceil(Seen * Threshold) matching values
   MinMatch := Max(1, Ceil(Stats.Seen * Threshold));
 
-  // Boolean text (true/false/yes/no — 0/1 integers are not counted here)
-  if Stats.BoolCount >= MinMatch then
+  // Boolean
+  if (Stats.BoolCount >= MinMatch) and (Stats.NonBoolIntCount = 0) then
     Exit(sdtBoolean);
 
   // Integer
@@ -1622,26 +1647,35 @@ begin
   if (Stats.IntCount + Stats.FloatCount >= MinMatch) and (Stats.FloatCount > 0) then
     Exit(sdtFloat);
 
+  // Pure Time
+  if (Stats.TimeCount >= MinMatch) and (Stats.DateTimeCount = 0) and (Stats.DateCount = 0) then
+    Exit(sdtTime);
+
+  // Pure Date
+  if (Stats.DateCount >= MinMatch) and (Stats.DateTimeCount = 0) and (Stats.TimeCount = 0) then
+    Exit(sdtDate);
+
   // Pure DateTime
   if Stats.DateTimeCount >= MinMatch then
     Exit(sdtDateTime);
+
+  // Tolerance for pure date
+  if Stats.DateCount >= MinMatch then
+    Exit(sdtDate);
+
+  // Tolerance for pure time
+  if Stats.TimeCount >= MinMatch then
+    Exit(sdtTime);
 
   // Mixed Date + DateTime (some rows have a time component, others do not)
   if (Stats.DateCount + Stats.DateTimeCount >= MinMatch) and
      (Stats.DateCount > 0) and (Stats.DateTimeCount > 0) then
     Exit(sdtDateTime);
 
-  // Pure Date
-  if Stats.DateCount >= MinMatch then
-    Exit(sdtDate);
-
-  // Pure Time
-  if Stats.TimeCount >= MinMatch then
-    Exit(sdtTime);
-
   // Mixed Date + Time → DateTime (column stored inconsistently)
   if (Stats.DateCount + Stats.TimeCount >= MinMatch) and
-     (Stats.DateCount > 0) and (Stats.TimeCount > 0) then
+     (Stats.DateCount >= Ceil(Stats.Seen * 0.05)) and
+     (Stats.TimeCount >= Ceil(Stats.Seen * 0.05)) then
     Exit(sdtDateTime);
 
   Result := sdtText;
@@ -1857,6 +1891,9 @@ begin
 
         for F in T.Fields do
         begin
+          if F.IsVirtual then
+            Continue;
+
           if SameText(Source, F.Name) then
           begin
             Mapping.TargetField := F.Name;
@@ -2142,6 +2179,7 @@ begin
   cbTarget.Sorted := True;
 
   cbLookupTable.Items.Assign(cbTarget.Items);
+  cbLookupTable.Items.Add(rsTitleZooTaxa);
   cbLookupTable.Sorted := True;
 end;
 
@@ -2485,6 +2523,9 @@ procedure TdlgImport.sbRetryClick(Sender: TObject);
 begin
   FImportSettings.Cancel.Reset;
   nbPages.PageIndex := 0;
+  sbCancel.Caption := rsCaptionCancel;
+  sbPrior.Visible := (nbPages.PageIndex > 0) and (nbPages.PageIndex < 4);
+  sbNext.Enabled := nbPages.PageIndex < (nbPages.PageCount - 1);
 end;
 
 procedure TdlgImport.sbExportImportProfileClick(Sender: TObject);
@@ -2737,12 +2778,18 @@ end;
 procedure TdlgImport.SetMappings;
 var
   i: Integer;
+  aTargetName: String;
 begin
   for i := 1 to gridFields.RowCount - 1 do
   begin
     FFieldMap.Map[i - 1].Import := StrToBool(gridFields.Cells[2, i]);
-    FFieldMap.Map[i - 1].TargetField := FTargetFields.KeyData[gridFields.Cells[3, i]];
-    FFieldMap.Map[i - 1].DisplayTargetField := gridFields.Cells[3, i];
+    if gridFields.Cells[3, i] <> EmptyStr then
+    begin
+      if not FTargetFields.TryGetData(gridFields.Cells[3, i], aTargetName) then
+        raise Exception.CreateFmt('Field name "%s" not found in the field map.', [gridFields.Cells[3, i]]);
+      FFieldMap.Map[i - 1].TargetField := FTargetFields.KeyData[gridFields.Cells[3, i]];
+      FFieldMap.Map[i - 1].DisplayTargetField := gridFields.Cells[3, i];
+    end;
   end;
   {$IFDEF DEBUG}
   LogDebug(FFieldMap.ToJSON);

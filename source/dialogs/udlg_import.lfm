@@ -111,7 +111,7 @@ object dlgImport: TdlgImport
     Height = 430
     Top = 0
     Width = 920
-    PageIndex = 3
+    PageIndex = 4
     Align = alTop
     Constraints.MinHeight = 430
     Constraints.MinWidth = 560
@@ -1451,7 +1451,7 @@ object dlgImport: TdlgImport
             item
               ReadOnly = True
               Title.Caption = 'Source field'
-              Width = 214
+              Width = 216
             end          
             item
               Alignment = taCenter
@@ -1463,7 +1463,7 @@ object dlgImport: TdlgImport
             item
               ButtonStyle = cbsPickList
               Title.Caption = 'Target field'
-              Width = 214
+              Width = 216
             end>
           Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goTabs, goThumbTracking, goSmoothScroll, goFixedRowNumbering, goCellEllipsis, goRowHighlight]
           RowCount = 2
@@ -1474,9 +1474,9 @@ object dlgImport: TdlgImport
           OnSelectCell = gridFieldsSelectCell
           ColWidths = (
             64
-            214
+            216
             60
-            214
+            216
           )
           Cells = (
             2
@@ -1505,8 +1505,8 @@ object dlgImport: TdlgImport
           Anchors = [akTop, akRight, akBottom]
           ChildSizing.LeftRightSpacing = 8
           ChildSizing.TopBottomSpacing = 8
-          ClientHeight = 327
-          ClientWidth = 307
+          ClientHeight = 331
+          ClientWidth = 328
           TabOrder = 2
           object pLookupTable: TBCPanel
             Left = 8

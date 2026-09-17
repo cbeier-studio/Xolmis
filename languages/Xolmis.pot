@@ -17338,6 +17338,10 @@ msgctxt "utils_locale.rsloadingmainwindow"
 msgid "Loading main window..."
 msgstr ""
 
+#: utils_locale.rsloadingmap
+msgid "Loading map tiles..."
+msgstr ""
+
 #: utils_locale.rsloadingrecords
 msgctxt "utils_locale.rsloadingrecords"
 msgid "Loading records..."
@@ -17423,6 +17427,10 @@ msgstr ""
 #: utils_locale.rsmainwindowloaded
 msgctxt "utils_locale.rsmainwindowloaded"
 msgid "Main window loaded!"
+msgstr ""
+
+#: utils_locale.rsmaploaded
+msgid "Map loaded"
 msgstr ""
 
 #: utils_locale.rsmapview
@@ -18892,6 +18900,11 @@ msgstr ""
 
 #: utils_locale.rsprogressimportingcsvfile
 msgid "Importing CSV file..."
+msgstr ""
+
+#: utils_locale.rsprogressimportingfile
+#, object-pascal-format
+msgid "Importing file \"%s\""
 msgstr ""
 
 #: utils_locale.rsprogressimportvideos

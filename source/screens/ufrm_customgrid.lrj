@@ -213,6 +213,7 @@
 {"hash":21376,"name":"tfrmcustomgrid.titlemap.caption","sourcebytes":[77,97,112],"value":"Map"},
 {"hash":241060595,"name":"tfrmcustomgrid.sbsharemappoints.hint","sourcebytes":[69,120,112,111,114,116,32,109,97,112,32,112,111,105,110,116,115],"value":"Export map points"},
 {"hash":116547620,"name":"tfrmcustomgrid.cbmapprovider.text","sourcebytes":[79,112,101,110,83,116,114,101,101,116,77,97,112,32,83,116,97,110,100,97,114,100],"value":"OpenStreetMap Standard"},
+{"hash":86901726,"name":"tfrmcustomgrid.lblmapstatus.caption","sourcebytes":[76,111,97,100,105,110,103,32,116,105,108,101,115,46,46,46],"value":"Loading tiles..."},
 {"hash":97496163,"name":"tfrmcustomgrid.titlevideos.caption","sourcebytes":[86,105,100,101,111,115],"value":"Videos"},
 {"hash":167291327,"name":"tfrmcustomgrid.sbvideoinfo.hint","sourcebytes":[86,105,101,119,32,97,110,100,32,101,100,105,116,32,118,105,100,101,111,32,105,110,102,111],"value":"View and edit video info"},
 {"hash":108838175,"name":"tfrmcustomgrid.sbaddvideo.hint","sourcebytes":[65,100,100,32,118,105,100,101,111],"value":"Add video"},

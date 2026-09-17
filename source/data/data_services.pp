@@ -96,6 +96,9 @@ end;
 
 procedure TBandMovementService.ApplyStatusChange(ABand: TBand; ANewStatus: TBandStatus);
 begin
+  if ABand.Status = ANewStatus then
+    Exit;
+
   if not CanTransitionTo(ABand, ANewStatus) then
     raise Exception.CreateFmt(rsInvalidBandStatusTransition,
       [BAND_STATUSES[ABand.Status], BAND_STATUSES[ANewStatus]]);

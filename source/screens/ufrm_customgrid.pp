@@ -73,6 +73,7 @@ type
     lblCategoryFilter: TLabel;
     lblRecycleStatus: TLabel;
     lblProjectBalance: TLabel;
+    lblMapStatus: TLabel;
     lblRubricBalance: TLabel;
     pmcNewOccurrencePoint: TMenuItem;
     pgChild7: TPage;
@@ -93,6 +94,7 @@ type
     pmvRefreshVideos: TMenuItem;
     pmVideos: TPopupMenu;
     pRecycleStatus: TBCPanel;
+    pMapStatus: TBCPanel;
     pSearch: TBCPanel;
     pVideosToolbar: TBCPanel;
     pmpBandsBalance: TMenuItem;
@@ -1042,6 +1044,7 @@ type
     procedure gridVideosDblClick(Sender: TObject);
     procedure iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
       var AResultWidth: Integer);
+    procedure mapGeoCenterMove(Sender: TObject);
     procedure mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
     procedure pClientResize(Sender: TObject);
     procedure pmAddDocumentClick(Sender: TObject);
@@ -1294,6 +1297,8 @@ type
     procedure OnDatesFilterChanged;
     procedure OnDefaultRowHeightChanged;
     procedure OnGazetteerFilterChanged;
+    procedure OnMapLoaded(Sender: TObject);
+    procedure OnMapLoading(const TileId: TTileId);
     procedure OnMethodCategoryFilterChanged;
     procedure OnThumbnailReadyEvent(Sender: TObject; const AMediaHash: string; const ABitmap: TBitmap);
 
@@ -2303,7 +2308,8 @@ begin
       end;
     tbSightings:
       case nbChilds.PageIndex of
-        0: EditPoi(DMG.qSightingPois, 0, dsLink.DataSet.FieldByName(COL_SIGHTING_ID).AsInteger, 0, isNew);
+        0: EditPoi(DMG.qSightingPois, dsLink.DataSet.FieldByName(COL_SURVEY_ID).AsInteger,
+          dsLink.DataSet.FieldByName(COL_SIGHTING_ID).AsInteger, dsLink.DataSet.FieldByName(COL_INDIVIDUAL_ID).AsInteger, isNew);
       end;
     tbSpecimens:
       case nbChilds.PageIndex of
@@ -2449,6 +2455,8 @@ begin
   pDocsToolbar.Border.Color := ActiveTheme.Background.CardSecondary;
   pMapToolbar.Background.Color := ActiveTheme.Background.CardDefault;
   pMapToolbar.Border.Color := ActiveTheme.Background.CardSecondary;
+  pMapStatus.Background.Color := ActiveTheme.Background.CardDefault;
+  pMapStatus.Border.Color := ActiveTheme.Background.CardSecondary;
   pColumnsToolbar.Background.Color := ActiveTheme.Background.CardDefault;
   pColumnsToolbar.Border.Color := ActiveTheme.Background.CardSecondary;
   pRecycleToolbar.Background.Color := ActiveTheme.Background.CardDefault;
@@ -2513,6 +2521,7 @@ begin
   // Set buttons images
   sbInsertRecord.Images := iButtonsDark;
   sbQuickEntry.Images := iButtonsDark;
+  sbInsertBatch.Images := iButtonsDark;
   sbEditRecord.Images := iButtonsDark;
   sbRecordVerifications.Images := iButtonsDark;
   sbMarkRecords.Images := iButtonsDark;
@@ -4215,7 +4224,7 @@ procedure TfrmCustomGrid.dsLinkDataChange(Sender: TObject; Field: TField);
 begin
   LoadRecordRow;
 
-  if mapGeo.Active then
+  if mapGeo.Active and (pSide.Visible) and (cpSide.ActivePageComponent = cardMap) then
     RefreshMap;
 
   UpdateChildBar;
@@ -5221,6 +5230,9 @@ begin
   FSearch := TCustomSearch.Create(FTableType);
 
   mapGeo.CachePath := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, 'map-cache']));
+  mapGeo.Engine.JobQueue.OnIdle := @OnMapLoaded;
+  mapGeo.Engine.OnTileDownloaded := @OnMapLoading;
+
 
   { Resize panels }
   pSide.Visible := False;
@@ -5834,13 +5846,13 @@ begin
     begin
       if DBG.Columns.Items[i].Visible then
       begin
-        Inc(RowIndex);
         if gridRecord.RowCount <= RowIndex then
           gridRecord.RowCount := RowIndex + 1;
         if not (dsLink.DataSet.IsEmpty) and (DBG.Columns.Items[i].Field.DataType = ftMemo) then
           gridRecord.Cells[1, RowIndex] := DBG.Columns.Items[i].Field.AsString
         else
           gridRecord.Cells[1, RowIndex] := DBG.Columns.Items[i].Field.DisplayText;
+        Inc(RowIndex);
       end;
     end;
   finally
@@ -5886,6 +5898,11 @@ begin
     lblRecycleStatus.Caption := Format(rsRecordsFoundPlural, [FRecycleList.Count]);
 
   dbgRecycle.Invalidate;
+end;
+
+procedure TfrmCustomGrid.mapGeoCenterMove(Sender: TObject);
+begin
+  lblMapStatus.Caption := rsLoadingMap;
 end;
 
 procedure TfrmCustomGrid.mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
@@ -5940,6 +5957,18 @@ procedure TfrmCustomGrid.OnGazetteerFilterChanged;
 begin
   if (fufSites in FModule.FilterUiFlags) then
     LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+end;
+
+procedure TfrmCustomGrid.OnMapLoaded(Sender: TObject);
+begin
+  lblMapStatus.Caption := rsMapLoaded;
+  //mapGeo.Invalidate;
+end;
+
+procedure TfrmCustomGrid.OnMapLoading(const TileId: TTileId);
+begin
+  lblMapStatus.Caption := rsLoadingMap;
+  mapGeo.Invalidate;
 end;
 
 procedure TfrmCustomGrid.OnMethodCategoryFilterChanged;
@@ -7590,6 +7619,8 @@ var
   poi: TGpsPoint;
   rp: TRealPoint;
 begin
+  lblMapStatus.Caption := rsLoadingMap;
+
   rp.InitLatLon(0, 0);
 
   mapGeo.GPSItems.Clear(0);
@@ -8522,7 +8553,7 @@ begin
       //UpdateFilterPanels;
       OnDatesFilterChanged;
       UpdateChildRightPanel;
-      RefreshAutoSizeColumns;
+      //RefreshAutoSizeColumns;
       pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
     end;
   finally
@@ -9044,6 +9075,7 @@ begin
         xSettings.FirstMapView := False;
         xSettings.SaveOnboarding('/ONBOARDING/FirstMapView', False);
       end;
+      RefreshMap;
     end
     else
     if (cpSide.ActivePageComponent = cardImages) or (cpSide.ActivePageComponent = cardAudio) or

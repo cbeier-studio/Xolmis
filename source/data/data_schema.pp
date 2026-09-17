@@ -195,6 +195,7 @@ var
   procedure RegisterSurveyTeamSchema(DB: TDatabaseSchema);
   procedure RegisterVegetationSchema(DB: TDatabaseSchema);
   procedure RegisterWeatherLogsSchema(DB: TDatabaseSchema);
+  procedure RegisterZooTaxaSchema(DB: TDatabaseSchema);
 
   procedure RegisterDatabaseSchema;
 
@@ -295,6 +296,7 @@ begin
   // Type
   AddField(T, 'band_type', rscType, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'A,F,N,W,T,L,R,C,O';
+  T.Fields.Last.DefaultValue := 'A';
   T.Fields.Last.PickList.CommaText := rsBandTypeList;
   T.Fields.Last.Aliases.CommaText := 'type,tipo,band type,ring type,tipo de anilha';
   T.Fields.Last.DisplayWidth := 170;
@@ -304,6 +306,7 @@ begin
   // Status
   AddField(T, 'band_status', rscStatus, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'O,A,U,R,B,L,T,X';
+  T.Fields.Last.DefaultValue := 'A';
   T.Fields.Last.PickList.CommaText := rsBandStatusList;
   T.Fields.Last.Aliases.CommaText := STATUS_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
@@ -331,6 +334,7 @@ begin
   // Source
   AddField(T, 'band_source', rscSource, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'A,T,L,D,F';
+  T.Fields.Last.DefaultValue := 'A';
   T.Fields.Last.PickList.CommaText := '"' + rsBandAcquiredFromSupplier + '","' +
     rsBandTransferBetweenBanders + '","' +
     rsBandLivingBirdBandedByOthers + '","' +
@@ -365,7 +369,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_SUPPLIER_NAME;
   // Requester ID
-  AddField(T, 'requester_id', rscRequesterID, sdtInteger, False, 0, False, True, tbPeople);
+  AddField(T, 'requester_id', rscRequesterID, sdtInteger, True, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := 'requester,solicitante';
   T.Fields.Last.LookupInfo.LookupField := COL_REQUESTER_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
@@ -389,7 +393,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_REQUESTER_NAME;
   // Carrier ID
-  AddField(T, 'carrier_id', rscCarrierID, sdtInteger, False, 0, False, True, tbPeople);
+  AddField(T, 'carrier_id', rscCarrierID, sdtInteger, True, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := 'carrier,portador';
   T.Fields.Last.LookupInfo.LookupField := COL_CARRIER_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
@@ -845,6 +849,7 @@ begin
   // Capture type
   AddField(T, 'capture_type', rscType, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'N,R,S,C,U';
+  T.Fields.Last.DefaultValue := 'N';
   T.Fields.Last.PickList.CommaText := rsCaptureTypeList;
   T.Fields.Last.Aliases.CommaText := 'type,tipo,capture type,tipo de captura,natureza';
   T.Fields.Last.DisplayWidth := 170;
@@ -1063,6 +1068,7 @@ begin
   // Status
   AddField(T, 'subject_status', rscStatus, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'N,I,W,X,D';
+  T.Fields.Last.DefaultValue := 'N';
   T.Fields.Last.PickList.CommaText := '"' + rsStatusNormal + '","' + rsStatusInjured + '","' +
     rsStatusWingSprain + '","' + rsStatusStressed + '","' + rsStatusDead + '"';
   T.Fields.Last.Aliases.CommaText := STATUS_ALIASES + ',subject status,individual status,status do indivíduo,estado do indivíduo';
@@ -1756,7 +1762,7 @@ begin
   T.Fields.Last.GroupingField := rscHostEgg;
   // Observer ID
   // renamed "researcher_id" -> "observer_id" - v2
-  AddField(T, 'observer_id', rscObserverID, sdtInteger, False, 0, False, True, tbPeople);
+  AddField(T, 'observer_id', rscObserverID, sdtInteger, True, 0, False, True, tbPeople);
   T.Fields.Last.Aliases.CommaText := PERSON_ALIASES;
   T.Fields.Last.LookupInfo.LookupField := COL_OBSERVER_ID;
   T.Fields.Last.LookupInfo.LookupKeyField := COL_PERSON_ID;
@@ -2191,6 +2197,7 @@ begin
   // Source
   AddField(T, 'source_type', rscSource, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'U,C,S,P';
+  T.Fields.Last.DefaultValue := 'C';
   with T.Fields.Last.PickList do
   begin
     Clear;
@@ -2207,6 +2214,7 @@ begin
   // Symmetry
   AddField(T, 'symmetrical', rscSymmetry, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'U,S,A';
+  T.Fields.Last.DefaultValue := 'S';
   with T.Fields.Last.PickList do
   begin
     Clear;
@@ -2249,6 +2257,7 @@ begin
   // Body side
   AddField(T, 'body_side', rscBodySide, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'NA,R,L';
+  T.Fields.Last.DefaultValue := 'R';
   with T.Fields.Last.PickList do
   begin
     Clear;
@@ -2408,16 +2417,16 @@ begin
   T.Fields.Last.SummaryEnabled := False;
   // Type
   AddField(T, 'site_rank', rscType, sdtList, True, 1);
-  T.Fields.Last.Rules.ValueList := 'P,E,R,M,D,L';
+  T.Fields.Last.Rules.ValueList := 'C,S,O,M,L,P';
   with T.Fields.Last.PickList do
   begin
     Clear;
     Add(rsCaptionCountry);
     Add(rsCaptionState);
-    Add(rsCaptionRegion);
+    Add(rsCaptionCounty);
     Add(rsCaptionMunicipality);
-    Add(rsCaptionDistrict);
     Add(rsCaptionLocality);
+    Add(rsCaptionProperty);
   end;
   T.Fields.Last.Aliases.CommaText := 'rank,tipo,nivel,nível,site type,level';
   T.Fields.Last.DisplayWidth := 170;
@@ -2742,6 +2751,7 @@ begin
   AddField(T, 'individual_sex', rscSex, sdtList, False, 1);
   T.Fields.Last.ExportName := 'sex';
   T.Fields.Last.Rules.ValueList := 'M,F,U';
+  T.Fields.Last.DefaultValue := 'U';
   T.Fields.Last.PickList.CommaText := rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
   T.Fields.Last.Aliases.CommaText := SEX_ALIASES;
   T.Fields.Last.DisplayWidth := 170;
@@ -2752,6 +2762,7 @@ begin
   AddField(T, 'individual_age', rscAge, sdtList, False, 1);
   T.Fields.Last.ExportName := 'age';
   T.Fields.Last.Rules.ValueList := 'U,N,F,J,A,Y,S,T,4,5';
+  T.Fields.Last.DefaultValue := 'U';
   T.Fields.Last.PickList.CommaText := rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
     rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
     rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
@@ -3275,6 +3286,7 @@ begin
   // Role
   AddField(T, 'role', rscRole, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'U,M,F,H,O';
+  T.Fields.Last.DefaultValue := 'U';
   T.Fields.Last.PickList.CommaText := rsNestOwnersRoleList;
   T.Fields.Last.Aliases.CommaText := 'role,papel,função';
   T.Fields.Last.DisplayWidth := 170;
@@ -3648,6 +3660,7 @@ begin
   // Fate
   AddField(T, 'nest_fate', rscNestFate, sdtList, False, 1);
   T.Fields.Last.Rules.ValueList := 'U,L,S';
+  T.Fields.Last.DefaultValue := 'U';
   T.Fields.Last.PickList.CommaText := '"' + rsNestLost + '","' + rsNestSuccess + '","' + rsNestUnknown + '"';
   T.Fields.Last.Aliases.CommaText := 'fate,nest fate,destino,destino do ninho';
   T.Fields.Last.DisplayWidth := 120;
@@ -5134,6 +5147,7 @@ begin
   // Status
   AddField(T, 'progress_status', rscStatus, sdtList, False, 5);
   T.Fields.Last.Rules.ValueList := 'T,P,F,C,D,R,B';
+  T.Fields.Last.DefaultValue := 'T';
   with T.Fields.Last.PickList do
   begin
     Clear;
@@ -5355,6 +5369,7 @@ begin
   // Status
   AddField(T, 'goal_status', rscStatus, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'P,R,C';
+  T.Fields.Last.DefaultValue := 'P';
   with T.Fields.Last.PickList do
   begin
     Clear;
@@ -5474,6 +5489,7 @@ begin
   // added in v2
   AddField(T, 'project_status', rscStatus, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'P,A,D,F,C';
+  T.Fields.Last.DefaultValue := 'P';
   with T.Fields.Last.PickList do
   begin
     Clear;
@@ -7394,6 +7410,7 @@ begin
   // Herbs - distribution
   AddField(T, 'herbs_distribution', rscHerbsDistribution, sdtInteger, True);
   T.Fields.Last.Rules.ValueList := '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14';
+  T.Fields.Last.DefaultValue := 0;
   with T.Fields.Last.PickList do
   begin
     Clear;
@@ -7438,6 +7455,7 @@ begin
   // Shrubs - distribution
   AddField(T, 'shrubs_distribution', rscShrubsDistribution, sdtInteger);
   T.Fields.Last.Rules.ValueList := '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14';
+  T.Fields.Last.DefaultValue := 0;
   with T.Fields.Last.PickList do
   begin
     Clear;
@@ -7482,6 +7500,7 @@ begin
   // Trees - distribution
   AddField(T, 'trees_distribution', rscTreesDistribution, sdtInteger);
   T.Fields.Last.Rules.ValueList := '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14';
+  T.Fields.Last.DefaultValue := 0;
   with T.Fields.Last.PickList do
   begin
     Clear;
@@ -7654,6 +7673,7 @@ begin
   // Precipitation
   AddField(T, 'precipitation', rscPrecipitation, sdtList, False, 1);
   T.Fields.Last.Rules.ValueList := 'N,F,M,D,R';
+  T.Fields.Last.DefaultValue := 'N';
   T.Fields.Last.PickList.CommaText := rsPrecipitationNone + ',' +
                                      rsPrecipitationFog + ',' +
                                      rsPrecipitationMist + ',' +
@@ -7750,6 +7770,67 @@ begin
   DB.Tables.Add(T);
 end;
 
+procedure RegisterZooTaxaSchema(DB: TDatabaseSchema);
+var
+  T: TTableSchema;
+begin
+  T := TTableSchema.Create;
+  T.TableType := tbZooTaxa;
+  T.TableName := TBL_ZOO_TAXA;
+  T.DisplayName := LocaleTablesDict[tbZooTaxa];
+  // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
+  T.QuickEntrySchemaVersion := 1;
+
+  // ID
+  AddField(T, 'taxon_id', rscId, sdtInteger, True, 0, True);
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  // Scientific name
+  AddField(T, 'scientific_name', rscScientificName, sdtText, True, 100);
+  T.Fields.Last.Aliases.CommaText := SCIENTIFIC_NAME_ALIASES;
+  T.Fields.Last.DisplayWidth := 230;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
+  // Taxon concept ID
+  AddField(T, 'taxon_concept_id', rscTaxonConceptId, sdtText, True, 30);
+  T.Fields.Last.Aliases.CommaText := 'concept,taxon concept,conceito,conceito de táxon';
+  T.Fields.Last.DisplayWidth := 170;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryEnabled := False;
+  { #todo : Add the other fields for zoo_taxa }
+  // Record audit
+  AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  AddField(T, COL_USER_UPDATED, rscUserUpdated, sdtInteger);
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  AddField(T, COL_INSERT_DATE, rscInsertDate, sdtDateTime);
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  AddField(T, COL_UPDATE_DATE, rscUpdateDate, sdtDateTime);
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+  AddField(T, COL_EXPORTED_STATUS, rscExportedStatus, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscExportedStatus;
+  AddField(T, COL_MARKED_STATUS, rscMarkedStatus, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscMarkedStatus;
+  AddField(T, COL_ACTIVE_STATUS, rscActiveStatus, sdtBoolean);
+  T.Fields.Last.DefaultValue := 1;
+  T.Fields.Last.QuickEntryVisible := False;
+  T.Fields.Last.SummaryEnabled := False;
+
+  DB.Tables.Add(T);
+end;
+
 procedure RegisterDatabaseSchema;
 begin
   if Assigned(DBSchema) then
@@ -7759,6 +7840,7 @@ begin
 
   //DBSchema.Tables.Clear;
 
+  RegisterZooTaxaSchema(DBSchema);
   RegisterBotanicTaxaSchema(DBSchema);
   RegisterGazetteerSchema(DBSchema);
   RegisterInstitutionsSchema(DBSchema);

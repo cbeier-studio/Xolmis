@@ -17336,6 +17336,10 @@ msgctxt "utils_locale.rsloadingmainwindow"
 msgid "Loading main window..."
 msgstr "Carregando a janela principal..."
 
+#: utils_locale.rsloadingmap
+msgid "Loading map tiles..."
+msgstr "Carregando quadrantes do mapa..."
+
 #: utils_locale.rsloadingrecords
 msgctxt "utils_locale.rsloadingrecords"
 msgid "Loading records..."
@@ -17422,6 +17426,10 @@ msgstr "Intempéries/clima"
 msgctxt "utils_locale.rsmainwindowloaded"
 msgid "Main window loaded!"
 msgstr "Janela principal carregada!"
+
+#: utils_locale.rsmaploaded
+msgid "Map loaded"
+msgstr "Mapa carregado"
 
 #: utils_locale.rsmapview
 msgid "Map view"
@@ -19062,6 +19070,11 @@ msgstr "Processando %d de %d imagens..."
 #: utils_locale.rsprogressimportingcsvfile
 msgid "Importing CSV file..."
 msgstr "Importando arquivo CSV..."
+
+#: utils_locale.rsprogressimportingfile
+#, object-pascal-format
+msgid "Importing file \"%s\""
+msgstr "Importando arquivo \"%s\""
 
 #: utils_locale.rsprogressimportvideos
 #, object-pascal-format

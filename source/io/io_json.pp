@@ -601,16 +601,22 @@ begin
   else
   begin
     // JSON clássico como estava
-    parser := TJSONParser.Create(Stream, [joUTF8]);
+    //parser := TJSONParser.Create(Stream, [joUTF8]);
     try
-      root := parser.Parse;
       try
-        HandleRegularJSON(root, RowOut, Options, FMapper);
-      finally
-        root.Free;
+        //root := parser.Parse;
+        Stream.Position := 0;
+        root := GetJSON(Stream);
+        try
+          HandleRegularJSON(root, RowOut, Options, FMapper);
+        finally
+          root.Free;
+        end;
+      except
+        raise;
       end;
     finally
-      parser.Free;
+      //parser.Free;
       LogEvent(leaFinish, 'Import JSON file');
     end;
   end;

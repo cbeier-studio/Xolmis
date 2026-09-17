@@ -289,26 +289,28 @@ var
   r, c, lastRow, lastCol, headerRow: Cardinal;
   Cell: PCell;
   row, Transformed: TXRow;
-  headers: array of string;
-  tmp: TFileStream;
+  headers: TStringList;
+  //tmp: TFileStream;
   i: Integer;
   fname: string;
 begin
   LogEvent(leaStart, 'Import ODS file');
 
+  Stream.Position := 0;
+
   // fpspreadsheet lê de arquivo; salve stream para temp
-  fname := GetTempFileName;
-  tmp := TFileStream.Create(fname, fmCreate);
-  try
-    tmp.CopyFrom(Stream, 0);
-  finally
-    tmp.Free;
-  end;
+  //fname := GetTempFileName;
+  //tmp := TFileStream.Create(fname, fmCreate);
+  //try
+  //  tmp.CopyFrom(Stream, 0);
+  //finally
+  //  tmp.Free;
+  //end;
 
   wb := TsWorkbook.Create;
   try
     // The temporary file has a .tmp extension, so the format must be explicit.
-    wb.ReadFromFile(fname, sfOpenDocument);
+    wb.ReadFromStream(Stream, sfidOpenDocument);
     if wb.GetWorksheetCount = 0 then Exit;
     if Options.SheetName <> '' then
       ws := wb.GetWorksheetByName(Options.SheetName)
@@ -323,57 +325,51 @@ begin
     if (lastRow = 0) and Options.HasHeader then
       Exit;
 
-    headerRow := 0; // zero-based
-    SetLength(headers, lastCol+1);
-    for c := 0 to lastCol do
-    begin
-      if Options.HasHeader then
+    Stream.Position := 0;
+    headers := GetFieldNames(Stream, Options);
+    try
+      for r := Ord(Options.HasHeader) to lastRow do
       begin
-        Cell := ws.FindCell(headerRow, c);
-        if Assigned(Cell) then
-          headers[c] := ws.ReadAsText(Cell)
-        else
-          headers[c] := 'Col' + IntToStr(c + 1);
-      end
-      else
-        headers[c] := 'Col' + IntToStr(c + 1);
-    end;
+        if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+          Break;
 
-    for r := Ord(Options.HasHeader) to lastRow do
-    begin
-      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
-        Break;
+        row := TXRow.Create;
+        Transformed := row;
+        try
+          for c := 0 to lastCol do
+          begin
+            Cell := ws.FindCell(r, c);
+            if Assigned(Cell) then
+              row.Values[headers[c]] := ws.ReadAsText(Cell)
+            else
+              row.Values[headers[c]] := '';
+          end;
 
-      row := TXRow.Create;
-      Transformed := row;
-      try
-        for c := 0 to lastCol do
-        begin
-          i := row.Add(headers[c]);
-          Cell := ws.FindCell(r, c);
-          if Assigned(Cell) then
-            row.ValueFromIndex[i] := ws.ReadAsText(Cell)
+          if Assigned(FMapper) then
+            Transformed := FMapper.Apply(row)
           else
-            row.ValueFromIndex[i] := '';
+            Transformed := row;
+
+          if Assigned(RowOut) then
+            RowOut(Transformed);
+        finally
+          if Transformed <> row then
+            Transformed.Free;
+          row.Free;
         end;
-        if Assigned(FMapper) then
-          Transformed := FMapper.Apply(row);
-        if Assigned(RowOut) then RowOut(Transformed);
-      finally
-        if Transformed <> row then
-          Transformed.Free;
-        row.Free;
+
+        if Assigned(Options.OnProgress) then
+          Options.OnProgress(Trunc((r * 100.0) / Max(1, lastRow)), rsImportingODS);
+
+        if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
+          Break;
       end;
-
-      if Assigned(Options.OnProgress) then
-        Options.OnProgress(Trunc((r * 100.0) / Max(1, lastRow)), rsImportingODS);
-
-      if Assigned(Options.Cancel) and Options.Cancel.IsCancellationRequested then
-        Break;
+    finally
+      headers.Free;
     end;
   finally
     wb.Free;
-    DeleteFile(fname);
+    //DeleteFile(fname);
     LogEvent(leaFinish, 'Import ODS file');
   end;
 end;

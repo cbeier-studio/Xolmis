@@ -62,6 +62,8 @@ type
     aReferenceName: String = ''; aMessageList: TStrings = nil): Boolean;
   function ValidTime(aTimeStr: String; aDisplayName: String = ''; aMessageList: TStrings = nil): Boolean;
   function IsLikelyYear(const AValue: Integer): Boolean;
+  function IsLikelyDate(const AValue: String): Boolean;
+  function IsLikelyTime(const AValue: String): Boolean;
   function TryParseDateFlexible(const AValue: String; out ADate: TDateTime): Boolean;
   function TryParseTimeFlexible(const AValue: String; out ATime: TDateTime): Boolean;
   function TryParseDateTimeFlexible(const AValue: String; out ADateTime: TDateTime): Boolean;
@@ -645,6 +647,32 @@ end;
 function IsLikelyYear(const AValue: Integer): Boolean;
 begin
   Result := (AValue >= 1500) and (AValue <= YearOf(Date) + 10);
+end;
+
+function IsLikelyDate(const AValue: String): Boolean;
+var
+  S: String;
+  Dt: TDateTime;
+begin
+  S := LowerCase(AValue);
+  S := StringReplace(S, ' ', '/', [rfReplaceAll]);
+  S := StringReplace(S, '.', '/', [rfReplaceAll]);
+  S := StringReplace(S, '-', '/', [rfReplaceAll]);
+
+  Result := (Pos('/', S) > 0) and ((Pos(':', S) = 0) and (Pos('h', S) = 0));
+end;
+
+function IsLikelyTime(const AValue: String): Boolean;
+var
+  S: String;
+  Dt: TDateTime;
+begin
+  S := LowerCase(AValue);
+  S := StringReplace(S, ' ', '/', [rfReplaceAll]);
+  S := StringReplace(S, '.', '/', [rfReplaceAll]);
+  S := StringReplace(S, '-', '/', [rfReplaceAll]);
+
+  Result := (Pos('/', S) = 0) and ((Pos(':', S) > 0) or (Pos('h', S) > 0));
 end;
 
 function TryParseDateFlexible(const AValue: String; out ADate: TDateTime): Boolean;
@@ -1385,7 +1413,8 @@ begin
     Qry.SQL.Text := SQLText;
 
     Qry.MacroByName('table').Value := TABLE_NAMES[aTable];
-    Qry.MacroByName('key_field').Value := aKeyField;
+    if aKeyValue > 0 then
+      Qry.MacroByName('key_field').Value := aKeyField;
 
     // Assign fields
     for i := Low(FieldsSet) to High(FieldsSet) do

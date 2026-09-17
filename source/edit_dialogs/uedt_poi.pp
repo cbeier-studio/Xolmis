@@ -486,15 +486,19 @@ begin
       FTaxonId := FPoi.TaxonId;
       eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
     end;
-    if FPoi.IndividualId > 0 then
+    if FIndividualId > 0 then
     begin
-      FIndividualId := FPoi.IndividualId;
+      FPoi.IndividualId := FIndividualId;
       eIndividual.Text := GetName(TBL_INDIVIDUALS, COL_FULL_NAME, COL_INDIVIDUAL_ID, FIndividualId);
     end;
-    if FPoi.SightingId > 0 then
+    if FSightingId > 0 then
     begin
-      FSightingId := FPoi.SightingId;
+      FPoi.SightingId := FSightingId;
       eSighting.Text := GetName(TBL_SIGHTINGS, COL_FULL_NAME, COL_SIGHTING_ID, FSightingId);
+      if not DateIsNull(FPoi.SampleDate) then
+        eDate.Text := DateToStr(FPoi.SampleDate);
+      if not TimeIsNull(FPoi.SampleTime) then
+        eTime.Text := FormatDateTime('hh:nn', FPoi.SampleTime);
     end;
     if FSurveyId > 0 then
     begin
@@ -508,6 +512,7 @@ begin
   begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionOccurrencePoint)]);
     GetRecord;
+    sbSave.Enabled := IsRequiredFilled;
   end;
 end;
 

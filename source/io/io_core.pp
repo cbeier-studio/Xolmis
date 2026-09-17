@@ -67,6 +67,7 @@ type
     ScaleSize: Double;
     CoordinateAxis: TSourceMapAxis;
     CoordinatesFormat: TSourceCoordinatesFormat;
+    Modified: Boolean;
   public
     function IsMapped: Boolean;
     function IsValid: Boolean;
@@ -86,6 +87,7 @@ type
     Name: string;
     Seen: Integer;
     IntCount: Integer;
+    NonBoolIntCount: Integer;
     FloatCount: Integer;
     DateCount: Integer;
     TimeCount: Integer;
@@ -549,7 +551,14 @@ begin
   FFieldMapping := TFieldMapping.Create;
   FFieldMapping.SourceField := SourceField;
   FFieldMapping.TargetField := DestField;
-  FFieldMapping.LookupTable := tbNone;
+  if DestField <> EmptyStr then
+  begin
+    FFieldMapping.LookupTable := DBSchema.GetTable(FTableType).GetField(DestField).LookupInfo.LookupTable;
+    FFieldMapping.LookupField := DBSchema.GetTable(FTableType).GetField(DestField).LookupInfo.LookupField;
+  end
+  else
+    FFieldMapping.LookupTable := tbNone;
+  FFieldMapping.Modified := False;
   FMap.Add(FFieldMapping);
 end;
 
@@ -609,7 +618,13 @@ begin
         nhIgnore:
           Continue; // do not add to target value
         nhDefaultValue:
-          DestValue := VarToStr(Mapping.DefaultValue);
+        begin
+          if not VarIsNull(Mapping.DefaultValue) and not VarIsEmpty(Mapping.DefaultValue) then
+            DestValue := VarToStr(Mapping.DefaultValue);
+          if (DestValue = EmptyStr) and not VarIsNull(DBSchema.GetTable(FTableType).GetField(Mapping.TargetField).DefaultValue) and
+            VarIsEmpty(DBSchema.GetTable(FTableType).GetField(Mapping.TargetField).DefaultValue) then
+            DestValue := VarToStr(DBSchema.GetTable(FTableType).GetField(Mapping.TargetField).DefaultValue);
+        end;
         nhUseMean: ;
         nhUseMedian: ; { #todo : replace null values by mean, median, or mode on importing }
         nhUseMode: ;

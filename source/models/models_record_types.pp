@@ -543,7 +543,7 @@ const
   PRECIPITATION_VALUES: array [TPrecipitation] of String = ('', 'N', 'F', 'M', 'D', 'R', 'S', 'W', 'H', 'G');
 
   // Specimens
-  SPECIMEN_TYPES: array [0..12] of String = ('WS', 'PS', 'N', 'B', 'E', 'P', 'F', 'BS', 'C', 'S', 'T', 'D', 'R');
+  SPECIMEN_TYPES: array [-1..12] of String = ('', 'WS', 'PS', 'N', 'B', 'E', 'P', 'F', 'BS', 'C', 'S', 'T', 'D', 'R');
 
   // Nests and Eggs
   NEST_FATES: array [TNestFate] of Char = ('L', 'S', 'U');
