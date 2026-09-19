@@ -161,8 +161,8 @@ begin
   { If it needs administrator permission }
   if NeedAdmin then
   begin
-    eUsername.ReadOnly := True;
-    eUsername.Text := 'admin';
+    //eUsername.ReadOnly := True;
+    //eUsername.Text := 'admin';
     { yellow }
     eUsername.Font.Color := ActiveTheme.System.CautionFG;
     eUsername.Color := ActiveTheme.System.CautionBG;
@@ -223,7 +223,7 @@ begin
   try
     Database := DMM.sqlCon;
     Clear;
-    Add('SELECT user_id, full_name, user_name, user_password FROM users');
+    Add('SELECT user_id, role_id, user_name, user_password FROM users');
     Add('WHERE (active_status = 1) AND (user_name = :login)');
     ParamByName('LOGIN').DataType := ftString;
     ParamByName('LOGIN').AsString := eUsername.Text;
@@ -232,6 +232,15 @@ begin
     begin
       LogError('User not found');
       MsgDlg(rsAuthentication, rsInvalidLogin, mtError);
+      if eUsername.CanSetFocus then
+        eUsername.SetFocus;
+      Exit;
+    end;
+
+    if (NeedAdmin) and (FieldByName('role_id').AsInteger <> 1) then
+    begin
+      LogError('User is not admin');
+      MsgDlg(rsAuthentication, rsUserIsNotAdmin, mtError);
       if eUsername.CanSetFocus then
         eUsername.SetFocus;
       Exit;

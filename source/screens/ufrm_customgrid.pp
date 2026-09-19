@@ -1044,6 +1044,7 @@ type
     procedure gridVideosDblClick(Sender: TObject);
     procedure iHeadersGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
       var AResultWidth: Integer);
+    procedure iIconsGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer; var AResultWidth: Integer);
     procedure mapGeoCenterMove(Sender: TObject);
     procedure mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
     procedure pClientResize(Sender: TObject);
@@ -5503,24 +5504,20 @@ begin
     Grid.Canvas.Pen.Color := ActiveTheme.Border.Default;
     Grid.Canvas.Rectangle(RThumb);
     if IsDarkModeEnabled then
-      iIconsDark.DrawForPPI(Grid.Canvas, (RThumb.Right - RThumb.Width div 2) - (IconSize div 2),
-        (RThumb.Bottom - RThumb.Height div 2) - (IconSize div 2), 42, 20,
-        Screen.PixelsPerInch, ScaleFactor)
+      iIconsDark.DrawForControl(Grid.Canvas, (RThumb.Right - RThumb.Width div 2) - (IconSize div 2),
+        (RThumb.Bottom - RThumb.Height div 2) - (IconSize div 2), 42, 20, Grid)
     else
-      iIcons.DrawForPPI(Grid.Canvas, (RThumb.Right - RThumb.Width div 2) - (IconSize div 2),
-        (RThumb.Bottom - RThumb.Height div 2) - (IconSize div 2), 42, 20,
-        Screen.PixelsPerInch, ScaleFactor);
+      iIcons.DrawForControl(Grid.Canvas, (RThumb.Right - RThumb.Width div 2) - (IconSize div 2),
+        (RThumb.Bottom - RThumb.Height div 2) - (IconSize div 2), 42, 20, Grid);
   end;
 
   // Overlay the error icon when the thumbnail is shown but the original file is missing
   if Item.HasError then
   begin
     if IsDarkModeEnabled then
-      iIconsDark.DrawForPPI(Grid.Canvas, RText.Right - IconSize - 2, RText.Bottom - IconSize - 2, 41, 20,
-        Screen.PixelsPerInch, ScaleFactor)
+      iIconsDark.DrawForControl(Grid.Canvas, RText.Right - IconSize - 2, RText.Bottom - IconSize - 2, 41, 20, Grid)
     else
-      iIcons.DrawForPPI(Grid.Canvas, RText.Right - IconSize - 2, RText.Bottom - IconSize - 2, 41, 20,
-        Screen.PixelsPerInch, ScaleFactor);
+      iIcons.DrawForControl(Grid.Canvas, RText.Right - IconSize - 2, RText.Bottom - IconSize - 2, 41, 20, Grid);
   end;
 
   // Metadata (everything except Subtitle), drawn to the right of the thumbnail
@@ -5549,7 +5546,10 @@ begin
 
   if Item.HasError then
   begin
-    Grid.Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+    if (gdSelected in aState) and (not IsDarkModeEnabled) then
+      Grid.Canvas.Font.Color := ActiveTheme.System.CriticalBG
+    else
+      Grid.Canvas.Font.Color := ActiveTheme.System.CriticalFG;
     // Word-wrap the error message, capped to two lines within the remaining space
     ErrRect := Rect(RText.Left, TextTop, RText.Right, RText.Bottom);
     DrawText(Grid.Canvas.Handle, PChar(Item.ErrorMessage), Length(Item.ErrorMessage), ErrRect,
@@ -5692,6 +5692,28 @@ procedure TfrmCustomGrid.iHeadersGetWidthForPPI(Sender: TCustomImageList; AImage
   var AResultWidth: Integer);
 begin
   AResultWidth := AImageWidth * APPI div 96;
+end;
+
+procedure TfrmCustomGrid.iIconsGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer;
+  var AResultWidth: Integer);
+var
+  IdealWidth: Integer;
+begin
+  // AImageWidth is the requested base size (eg: 20)
+  // Calculate the ideal size for the current PPI
+  IdealWidth := MulDiv(AImageWidth, APPI, 96);
+
+  // Mpas for the best resolution available
+  if IdealWidth <= 22 then
+    AResultWidth := 20
+  else
+  if IdealWidth <= 28 then
+    AResultWidth := 24
+  else
+  if IdealWidth <= 40 then
+    AResultWidth := 32
+  else
+    AResultWidth := IdealWidth;
 end;
 
 procedure TfrmCustomGrid.LoadColumnsConfig;

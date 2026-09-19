@@ -533,6 +533,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsAuthentication = 'Authentication';
     rsInvalidLogin = 'User not found.';
     rsIncorrectPassword = 'Incorrect password.';
+    rsUserIsNotAdmin = 'The user do not have administrator permissions.';
 
     { Gazetteer Autofill }
     rsAutofillCountries = 'Select the countries that you want to add to your Gazetteer, with their states/provinces:';
@@ -781,14 +782,26 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsOnboardingFeedback = 'The Feedback option opens the Xolmis GitHub Issues page. ' +
         'There you can report bugs you encounter or suggest new features for future development.' + LineEnding + LineEnding +
         'Your input helps improve the system and ensures that Xolmis continues to evolve with user needs.';
-    rsOnboardingNewDatabase = 'A new database has been created.' + LineEnding + LineEnding +
-        'To get started, you should enter the core information in the following order:' + LineEnding +
-        '1. Gazetteer' + LineEnding +
-        '2. Sampling plots' + LineEnding +
-        '3. Institutions' + LineEnding +
-        '4. Researchers' + LineEnding + LineEnding +
-        'Optionally, you may also add: Projects, Permits, Bands, and Methods.' + LineEnding + LineEnding +
-        'Following this sequence ensures that your database is properly structured and ready for use.';
+    rsOnboardingNewDatabase = '### Database Created Successfully!' + LineEnding + LineEnding +
+        'Now you can connect to it and start adding some data.' + LineEnding + LineEnding +
+        'To keep your data organized and avoid errors, we recommend setting up your base in the following order:' + LineEnding + LineEnding +
+        '**1. Essential Setup:**' + LineEnding + LineEnding +
+        '- **Gazetteer** (Geographic hierarchy)' + LineEnding +
+        '- **Sampling plots** (Field stations and study sites)' + LineEnding +
+        '- **Institutions** (Organizations and affiliations)' + LineEnding +
+        '- **Researchers** (Authorship and team members)' + LineEnding + LineEnding +
+        '**2. Optional (when needed):**' + LineEnding + LineEnding +
+        '- Projects, Permits, Band stock, and Sampling methods' + LineEnding + LineEnding +
+        '---' + LineEnding + LineEnding +
+        'Following this order ensures your database is properly structured and ready for registering observations, captures, and specimens.';
+    //rsOnboardingNewDatabase = 'A new database has been created.' + LineEnding + LineEnding +
+    //    'To get started, you should enter the core information in the following order:' + LineEnding +
+    //    '1. Gazetteer' + LineEnding +
+    //    '2. Sampling plots' + LineEnding +
+    //    '3. Institutions' + LineEnding +
+    //    '4. Researchers' + LineEnding + LineEnding +
+    //    'Optionally, you may also add: Projects, Permits, Bands, and Methods.' + LineEnding + LineEnding +
+    //    'Following this sequence ensures that your database is properly structured and ready for use.';
     rsOnboardingBetaVersion = '# Welcome to the Xolmis Desktop Beta' + LineEnding + LineEnding +
         'Thank you for testing **Xolmis Desktop**! This is an **evolving test and evaluation version**. To ensure the safety of your ornithological data, please keep the following precautions in mind:' + LineEnding + LineEnding +
         '- **Exercise caution with batch changes:** Be careful when importing large volumes of data, performing bulk edits, or permanently deleting records.'  + LineEnding +

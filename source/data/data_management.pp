@@ -704,7 +704,7 @@ begin
         SeedAccessControlTables(Conn);
 
         // Create admin user
-        CreateAdminUser(Conn);
+        //CreateAdminUser(Conn);
 
         Trans.CommitRetaining;
         if not Trans.Active then

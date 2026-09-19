@@ -407,7 +407,7 @@ begin
         DMM.sysTrans.CommitRetaining;
 
         //MsgDlg(rsTitleCreateDatabase, rsSuccessfulDatabaseCreation, mtInformation);
-        nbPages.PageIndex := nbPages.PageIndex + 1;
+        nbPages.PageIndex := nbPages.PageIndex + 2;
         FConnectionName := eName.Text;
       end
       else
@@ -460,8 +460,8 @@ begin
       Add('VALUES ( :username, :fullname, :role, :rank, :pass );');
       ParamByName('USERNAME').AsString := eUserName.Text;
       ParamByName('FULLNAME').AsString := eUserFullName.Text;
-      ParamByName('ROLE').AsInteger := ROLE_STANDARD_ID;
-      ParamByName('RANK').AsString := 'Standard';
+      ParamByName('ROLE').AsInteger := ROLE_ADMIN_ID;
+      ParamByName('RANK').AsString := rsAdminUser;
       ParamByName('PASS').AsString := aPass;
       ExecSQL;
 

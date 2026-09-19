@@ -473,6 +473,8 @@ procedure TfrmMain.actDBNewExecute(Sender: TObject);
 begin
   if NewDatabase then
   begin
+    ShowMarkdownDlg(APP_NAME, rsOnboardingNewDatabase);
+
     if ConnectDatabase then
     begin
       FBandStockCheckDone := False;
@@ -484,7 +486,7 @@ begin
       UpdateStatusBar;
       ScheduleInitialNotificationChecks;
 
-      ShowOnboardingBig(obtNewDatabase);
+      //ShowOnboardingBig(obtNewDatabase);
     end;
   end;
 end;
@@ -1283,7 +1285,7 @@ begin
 
   { Check if there are connections available }
   DMM.qsConn.Open;
-  if DMM.qsConn.RecordCount = 0 then
+  if DMM.qsConn.IsEmpty then
   begin
     dlgOnboarding := TdlgOnboarding.Create(Self);
     try
@@ -1294,7 +1296,7 @@ begin
     end;
 
     DMM.qsConn.Refresh;
-    if DMM.qsConn.RecordCount = 0 then
+    if DMM.qsConn.IsEmpty then
       Application.Terminate;
   end;
   DMM.qsConn.Refresh;

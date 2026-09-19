@@ -2089,7 +2089,9 @@ object cfgOptions: TcfgOptions
               ParentColor = False
             end
             object tsDeleteMediaFile: TToggleSwitch
+              AnchorSideTop.Control = pDeleteMedia
               AnchorSideTop.Side = asrCenter
+              AnchorSideRight.Control = pDeleteMedia
               AnchorSideRight.Side = asrBottom
               Left = 559
               Height = 25

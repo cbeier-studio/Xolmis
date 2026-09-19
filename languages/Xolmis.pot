@@ -5502,7 +5502,7 @@ msgid "Set a password for the Admin user. "
 msgstr ""
 
 #: tdlgnewdatabase.lblsubtitleconnection.caption
-msgid "Inform a file name and metadata to create the new database."
+msgid "Choose where to save the database file and assign a name to identify it in your list of connections."
 msgstr ""
 
 #: tdlgnewdatabase.lblsubtitlemedia.caption
@@ -5511,7 +5511,7 @@ msgstr ""
 
 #: tdlgnewdatabase.lblsubtitleuser.caption
 msgctxt "tdlgnewdatabase.lblsubtitleuser.caption"
-msgid "Create your user to access the database. "
+msgid "Enter your username and set a password. This account will have full permissions and be associated with your records in the system."
 msgstr ""
 
 #: tdlgnewdatabase.lbltitleauthentication.caption
@@ -18257,17 +18257,26 @@ msgstr ""
 
 #: utils_locale.rsonboardingnewdatabase
 msgid ""
-"A new database has been created.\n"
+"### Database Created Successfully!\n"
 "\n"
-"To get started, you should enter the core information in the following order:\n"
-"1. Gazetteer\n"
-"2. Sampling plots\n"
-"3. Institutions\n"
-"4. Researchers\n"
+"Now you can connect to it and start adding some data.\n"
 "\n"
-"Optionally, you may also add: Projects, Permits, Bands, and Methods.\n"
+"To keep your data organized and avoid errors, we recommend setting up your base in the following order:\n"
 "\n"
-"Following this sequence ensures that your database is properly structured and ready for use."
+"**1. Essential Setup:**\n"
+"\n"
+"- **Gazetteer** (Geographic hierarchy)\n"
+"- **Sampling plots** (Field stations and study sites)\n"
+"- **Institutions** (Organizations and affiliations)\n"
+"- **Researchers** (Authorship and team members)\n"
+"\n"
+"**2. Optional (when needed):**\n"
+"\n"
+"- Projects, Permits, Band stock, and Sampling methods\n"
+"\n"
+"---\n"
+"\n"
+"Following this order ensures your database is properly structured and ready for registering observations, captures, and specimens."
 msgstr ""
 
 #: utils_locale.rsonboardingprojects
@@ -20631,6 +20640,10 @@ msgstr ""
 #: utils_locale.rsusenewdatabaseoption
 msgctxt "utils_locale.rsusenewdatabaseoption"
 msgid "The database file was not found. Use the New database option."
+msgstr ""
+
+#: utils_locale.rsuserisnotadmin
+msgid "The user do not have administrator permissions."
 msgstr ""
 
 #: utils_locale.rsusernumberandtotal

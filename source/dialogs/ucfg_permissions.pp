@@ -234,7 +234,7 @@ end;
 
 function TcfgPermissions.RoleCanDelete(const RoleId: Integer): Boolean;
 begin
-  Result := not (RoleId in [ROLE_ADMIN_ID, ROLE_GUEST_ID]);
+  Result := not (RoleId in [ROLE_ADMIN_ID, ROLE_STANDARD_ID, ROLE_GUEST_ID]);
 end;
 
 procedure TcfgPermissions.LoadRoles;
