@@ -30,6 +30,7 @@ type
 
   TdlgAbout = class(TForm)
     imgMasterSponsor: TImage;
+    imgMasterSponsor1: TImage;
     lblPlatinumSponsor: TLabel;
     linkClementsVersion: TATLabelLink;
     iButtons: TImageList;

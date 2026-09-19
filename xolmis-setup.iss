@@ -1,21 +1,24 @@
 
 #define MyAppName "Xolmis"
-#define MyAppVersion GetVersionNumbersString("Xolmis.exe")
 #define MyAppPublisher "Christian Beier Studio"
-#define MyAppExeName "Xolmis.exe"
+#define MyAppAuthor "Christian Beier"
+#define MyAppExeName MyAppName + ".exe"
 #define MyAppSource "win64\x86_64"
+#define MyAppVersion GetVersionNumbersString(MyAppSource + "\Xolmis.exe")
 
 [Setup]
-AppId=E9CE3CB4-EB71-4E42-9B7E-5DE99A2C0D0E
+AppId={#MyAppName}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
+AppPublisherURL=http://xolmis.app/
+AppCopyright=Copyright (C) 2023-2026 {#MyAppAuthor}
 DefaultDirName={autopf}\{#MyAppName}
 ;DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 ;AllowNoIcons=yes
-LicenseFile=.\LICENSE
+LicenseFile=.\LICENSE.txt
 OutputBaseFilename=xolmis-{#MyAppVersion}-win64
 Compression=lzma2/max
 SolidCompression=yes
@@ -24,16 +27,17 @@ VersionInfoVersion={#MyAppVersion}
 VersionInfoCopyright=Christian Beier
 VersionInfoProductName={#MyAppName}
 MinVersion=0,10.0
-ArchitecturesAllowed=x64
-ArchitecturesInstallIn64BitMode=x64
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+SetupArchitecture=x64
 CloseApplications=yes
 ShowLanguageDialog=auto
+UsedUserAreasWarning=no
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
-Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl" 
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
@@ -54,13 +58,13 @@ Source: "resources\taxon_ranks_en-US.json"; DestDir: "{localappdata}\{#MyAppName
 Source: "resources\taxon_ranks_pt-BR.json"; DestDir: "{localappdata}\{#MyAppName}"
 Source: "reports\*.lrf"; DestDir: "{app}\reports"
 Source: "site\*"; DestDir: "{app}\docs"; Flags: recursesubdirs 
-Source: "resources\FiraCode-Regular.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "resources\FiraCode-Bold.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "resources\FiraCode-SemiBold.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Code SemiBold"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "resources\FiraSans-Regular.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "resources\FiraSans-Bold.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "resources\FiraSans-Italic.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "resources\FiraSans-BoldItalic.ttf"; DestDir: "{fonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraCode-Regular.ttf"; DestDir: "{autofonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraCode-Bold.ttf"; DestDir: "{autofonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraCode-SemiBold.ttf"; DestDir: "{autofonts}"; FontInstall: "Fira Code SemiBold"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraSans-Regular.ttf"; DestDir: "{autofonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraSans-Bold.ttf"; DestDir: "{autofonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraSans-Italic.ttf"; DestDir: "{autofonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "resources\FiraSans-BoldItalic.ttf"; DestDir: "{autofonts}"; FontInstall: "Fira Sans"; Flags: onlyifdoesntexist uninsneveruninstall
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -75,4 +79,11 @@ Name: "{app}\reports"; Flags: uninsalwaysuninstall
 Name: "{app}\docs"; Flags: uninsalwaysuninstall
 
 [UninstallDelete]
-Type: filesandordirs; Name: "{localappdata}\{#MyAppName}"
+Type: filesandordirs; Name: "{localappdata}\{#MyAppName}\columns"
+Type: filesandordirs; Name: "{localappdata}\{#MyAppName}\quickentry"
+Type: filesandordirs; Name: "{localappdata}\{#MyAppName}\map-cache"
+Type: filesandordirs; Name: "{localappdata}\{#MyAppName}\thumbs"
+Type: files; Name: "{localappdata}\{#MyAppName}\*.txt"
+Type: files; Name: "{localappdata}\{#MyAppName}\*.dat"
+Type: files; Name: "{localappdata}\{#MyAppName}\*.sqlite3"
+
