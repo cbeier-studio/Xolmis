@@ -19,15 +19,7 @@ To create a new database file and connection:
 4. Optionally, add the **Author** and a **Description** for documentation purposes.
 5. Click the **Create database** button to generate the file and proceed.
 
-All databases are created with a default **admin user**.
-
-- Set the **Admin user password** for the new database.
-- Click **Apply** to save the password.
-
-!!! warning
-    It is **not recommended** to use the `admin` user for regular work in Xolmis. The `admin` account should be reserved for maintenance and configuration tasks.
-
-Create a **standard user** for daily use:
+Create a **administrator user**:
 
 - Provide a username and password.
 - Click the **Create user** button to finish the database creation process.

@@ -49,7 +49,6 @@ Para editar informações de uma gravação:
 | **Data da gravação** | Sim | Data em que a gravação foi feita |
 | **Hora da gravação** |  | Hora em que a gravação foi feita |
 | **Tipo de gravação** |  | Tipo de som gravado (ver abaixo) |
-| **Arquivo da gravação** | Sim | Caminho relativo do arquivo da gravação |
 | **Localidade** |  | Local onde a gravação foi feita |
 | **Longitude** |  | Coordenada de longitude da gravação |
 | **Latitude** |  | Coordenada de latitude da gravação |

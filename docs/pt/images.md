@@ -51,7 +51,6 @@ Para editar informações da imagem:
 | **Data da imagem** | Sim | Data em que a imagem foi tirada |
 | **Hora da imagem** |  | Hora em que a imagem foi tirada |
 | **Tipo de imagem** |  | Categoria da imagem (ver abaixo) |
-| **Arquivo da imagem** | Sim | Caminho relativo do arquivo da imagem |
 | **Localidade** |  | Local onde a imagem foi tirada |
 | **Precisão das coordenadas** |  | Precisão das coordenadas geográficas |
 | **Longitude** |  | Coordenada de longitude da imagem |

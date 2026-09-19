@@ -49,7 +49,6 @@ To edit the information of an audio recording:
 | **Recording date** | Yes | Date when the recording was made |
 | **Recording time** |  | Time when the recording was made |
 | **Recording type** |  | Type of sound recorded (see below) |
-| **Recording file** | Yes | Relative file path of the recording |
 | **Locality** |  | Site where the recording was made |
 | **Longitude** |  | Longitude coordinate of the recording |
 | **Latitude** |  | Latitude coordinate of the recording |

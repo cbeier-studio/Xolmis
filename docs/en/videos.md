@@ -49,7 +49,6 @@ To edit video information:
 | **Recording date** | Yes | Date when the recording was made |
 | **Recording time** |  | Time when the recording was made |
 | **Recording type** |  | Type of recording (see below) |
-| **Recording file** | Yes | Relative file path of the recording |
 | **Locality** |  | Site where the recording was made |
 | **Longitude** |  | Longitude coordinate of the recording |
 | **Latitude** |  | Latitude coordinate of the recording |

@@ -15,11 +15,11 @@ O Xolmis fornece um instalador nativo para sistemas Windows.
 
 ## Linux
 
-Atualmente, pacotes para Linux **ainda não estão disponíveis**. Versões futuras incluirão suporte para pacotes `.deb` e `.rpm`, bem como instalação via gerenciadores de pacotes. Usuários avançados podem compilar o Xolmis a partir do código-fonte usando as instruções fornecidas no repositório.
+Atualmente, pacotes para Linux **ainda não estão disponíveis**. Usuários avançados podem compilar o Xolmis a partir do código-fonte usando as instruções fornecidas no repositório.
 
 ## macOS
 
-Atualmente, versões para macOS **ainda não estão disponíveis**. O suporte para macOS será adicionado em lançamentos futuros, com instalação via pacotes `.dmg` e integração com Homebrew planejada.
+Atualmente, versões para macOS **ainda não estão disponíveis**. O suporte para macOS será adicionado em lançamentos futuros.
 
 ## Primeiros passos
 
@@ -29,11 +29,7 @@ Ao abrir o Xolmis pela primeira vez após a instalação, ou se nenhuma conexão
       - Você pode começar do zero com um novo banco de dados ou conectar-se a um conjunto de dados existente.  
       - Bancos de dados são o núcleo do Xolmis, armazenando todos os registros ornitológicos, projetos e metadados.  
 
-2. **Definir local de mídia**  
-      - Escolha a pasta onde fotos, gravações de áudio e outros arquivos de mídia serão armazenados.  
-      - Isso garante que toda a mídia vinculada a indivíduos, capturas e levantamentos esteja organizada e acessível.  
-
-3. **Definir local e período de backup**  
+2. **Definir local e período de backup**  
       - Selecione um local seguro para backups (disco externo, pasta na nuvem etc.).  
       - Defina a frequência dos backups para proteger contra perda de dados.  
 

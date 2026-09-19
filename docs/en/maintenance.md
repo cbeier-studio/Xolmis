@@ -66,12 +66,6 @@ To access the Maintenance tool, go to **File → Maintenance** in the main menu.
 - Includes information about configuration and potential issues.
 - Useful for technical support or troubleshooting.
 
-### Recreate thumbnails
-
-- Rebuilds all image thumbnails stored in the database.
-- Ensures that previews are up-to-date and consistent.
-- Recommended after editing large sets of images or for troubleshooting.
-
 ## Best practices
 
 - **Schedule backups**: Perform regular database and settings backups to avoid data loss. Set the periodic automatic backup in [Settings](settings.md).

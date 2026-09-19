@@ -54,7 +54,6 @@ Para editar informações do documento ou link:
 | **Autor** |  | Pessoa que criou o documento |
 | **Data do documento** | Sim | Data de criação do documento |
 | **Hora do documento** |  | Hora de criação do documento |
-| **Arquivo/URL do documento** | Sim | Caminho relativo do arquivo ou URL externo |
 | **Tipo de licença** |  | Tipo de licença aplicada ao documento |
 | **Ano da licença** |  | Ano em que o documento foi licenciado |
 | **Detentor da licença** |  | Titular dos direitos do documento |

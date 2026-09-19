@@ -2,7 +2,7 @@
 
 This section documents the changes, new features, and improvements introduced in each version of **Xolmis**. Release notes help users understand what has been added, modified, or planned for future updates.
 
-## v0.1 (release date)
+## v0.1.0 (2026-09-19)
 
 Initial release of Xolmis.
 
@@ -75,17 +75,8 @@ Initial release of Xolmis.
 
 ### Technical updates
 
-- Updated **Lazarus** to v4.4 (development environment).  
-- Updated **SQLite** to v3.51.3 (database engine).
-
-## What's next
-
-Planned features for upcoming releases:
-
-- Interactive map to select coordinates directly for longitude and latitude fields.  
-- Generator of colored band combinations.  
-- Support for **Darwin Core** files (standard for biodiversity data exchange).  
-- Export data to **eBird** format for direct integration with the platform.  
+- Updated **Lazarus** to v4.8 (development environment).  
+- Updated **SQLite** to v3.53.4 (database engine).
 
 *[CSV]: Comma Separated Values
 *[JSON]: JavaScript Object Notation

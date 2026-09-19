@@ -54,7 +54,6 @@ To edit document or link information:
 | **Author** |  | Person who created the document |
 | **Document date** | Yes | Date of creation of the document |
 | **Document time** |  | Time of creation of the document |
-| **Document file/URL** | Yes | Relative file path of the document or external URL |
 | **License type** |  | Type of license applied to the document |
 | **License year** |  | Year the document was licensed |
 | **License owner** |  | Rights holder of the document |

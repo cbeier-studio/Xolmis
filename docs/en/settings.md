@@ -47,14 +47,14 @@ This section manages how collected data is displayed and curated.
 
 ## Media
 
-This section defines how media files (images, audio, video, documents) are stored and handled.
+This section defines how media files (images, audio, video, documents) are stored and managed.
 
 | Setting | Description | Default |
 | --- | --- | --- |
-| **Images location** | Folder path for storing images. | `.\images\` |
-| **Audio files location** | Folder path for storing audio recordings. | `.\sounds\` |
-| **Videos location** | Folder path for storing videos. | `.\videos\` |
-| **Documents location** | Folder path for storing documents. | `.\attachments\` |
+| **Media storage folder** | Folder for storing images, audio recordings, videos, and documents. | `%LOCALAPPDATA%\xolmis\storage\` |
+| **Image thumbnail cache** | Shows the disk space occupied by image thumbnails, with an option to clear the cache. |  |
+| **When adding media records** | Behavior when adding an attached media file: move the file to the media storage folder or only copy it. | Copy media files |
+| **Delete file when deleting the media record** | If enabled, deletes the file from the media storage folder when the media record is deleted. | Disabled |
 | **Open files after export** | If enabled, opens exported files in the default application. | Disabled |
 
 ## Security and privacy
@@ -99,6 +99,16 @@ Allows you to select a previously created backup file and restore it as the acti
 
 !!! note
     Currently, Xolmis does not manage backup storage. You must manually check storage usage and delete older backups if necessary. A more automated solution is planned for future versions.
+
+### Settings backup
+
+Two options are available:
+
+- **Create settings backup**: Saves a file containing the current settings.
+- **Restore settings**: Replaces the current settings using a settings backup file.
+
+!!! warning
+    Settings are not currently included in data backups, and settings backups are not created automatically. Settings must be backed up manually whenever necessary or desired.
 
 ## Best practices
 

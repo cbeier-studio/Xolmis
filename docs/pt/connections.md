@@ -19,15 +19,7 @@ Para criar um novo arquivo de banco de dados e conexão:
 4. Opcionalmente, adicione o **Autor** e uma **Descrição** para fins de documentação.  
 5. Clique no botão **Criar banco de dados** para gerar o arquivo e prosseguir.  
 
-Todos os bancos de dados são criados com um **usuário admin padrão**.
-
-- Defina a **senha do usuário admin** para o novo banco de dados.  
-- Clique em **Aplicar** para salvar a senha.  
-
-!!! warning
-    Não é **recomendado** usar o usuário `admin` para o trabalho regular no Xolmis. A conta `admin` deve ser reservada para tarefas de manutenção e configuração.
-
-Crie um **usuário padrão** para uso diário:
+Crie um **usuário administrador**:
 
 - Forneça um nome de usuário e senha.  
 - Clique no botão **Criar usuário** para finalizar o processo de criação do banco de dados.  

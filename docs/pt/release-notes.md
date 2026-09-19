@@ -2,7 +2,7 @@
 
 Esta seção documenta as mudanças, novas funcionalidades e melhorias introduzidas em cada versão do **Xolmis**. As notas de versão ajudam os usuários a entender o que foi adicionado, modificado ou planejado para futuras atualizações.
 
-## v0.1 (data de lançamento)
+## v0.1.0 (2026-09-19)
 
 Primeiro lançamento do Xolmis.
 
@@ -75,17 +75,8 @@ Primeiro lançamento do Xolmis.
 
 ### Atualizações técnicas
 
-- Atualizado **Lazarus** para v4.4 (ambiente de desenvolvimento).  
-- Atualizado **SQLite** para v3.51.3 (motor de banco de dados).
-
-## O que vem a seguir
-
-Funcionalidades planejadas para próximas versões:
-
-- Mapa interativo para selecionar coordenadas diretamente nos campos de longitude e latitude.  
-- Gerador de combinações de anilhas coloridas.  
-- Suporte a arquivos **Darwin Core** (padrão para intercâmbio de dados de biodiversidade).  
-- Exportação de dados para formato **eBird** para integração direta com a plataforma.  
+- Atualizado **Lazarus** para v4.8 (ambiente de desenvolvimento).  
+- Atualizado **SQLite** para v3.53.4 (motor de banco de dados).
 
 *[CSV]: Comma Separated Values
 *[JSON]: JavaScript Object Notation

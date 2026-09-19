@@ -51,10 +51,10 @@ Esta seção define como arquivos de mídia (imagens, áudio, vídeo, documentos
 
 | Configuração | Descrição | Padrão |
 | --- | --- | --- |
-| **Local das imagens** | Pasta para armazenar imagens. | `.\images\` |
-| **Local dos arquivos de áudio** | Pasta para armazenar gravações de áudio. | `.\sounds\` |
-| **Local dos vídeos** | Pasta para armazenar vídeos. | `.\videos\` |
-| **Local dos documentos** | Pasta para armazenar documentos. | `.\attachments\` |
+| **Pasta de armazenamento de mídias** | Pasta para armazenar imagens, gravações de áudio, vídeos e documentos. | `%LOCALAPPDATA%\xolmis\storage\` |
+| **Cache de miniaturas de imagens** | Mostra o espaço em disco ocupado pelas miniaturas de imagens, com opção para limpar o cache. |  |
+| **Quando adicionar registros de mídia** | Comportamento ao adicionar um arquivo de mídia anexo: mover arquivo para a pasta de armazenamento de mídias ou apenas copiar. | Copiar arquivos de mídia |
+| **Apagar arquivo ao apagar o registro da mídia** | Caso habilitado, apaga o arquivo da pasta de armazenamento de mídias ao apagar o registro da mídia. | Desabilitado |
 | **Abrir arquivos após exportar** | Se habilitado, abre arquivos exportados no aplicativo padrão. | Desabilitado |
 
 ## Segurança e privacidade
@@ -100,6 +100,16 @@ Permite selecionar um arquivo de backup previamente criado e restaurá-lo como b
 !!! note
     Atualmente, o Xolmis não gerencia o armazenamento de backups. Você deve verificar manualmente o uso de espaço e excluir backups antigos, se necessário. Uma solução mais automatizada está planejada para versões futuras.
 
+### Backup das configurações
+
+Há duas opções disponíveis:
+
+- **Criar backup das configurações**: salva um arquivo das configurações atuais.
+- **Restaurar configurações**: substitui as configurações atuais a partir de um arquivo de backup de configurações.
+
+!!! warning
+    As configurações não estão incluídas no backup de dados atualmente e não é realizado automaticamente. O backup das configurações deve ser feito manualmente quando necessário ou desejado.
+
 ## Boas práticas
 
 - **Revise as configurações periodicamente**: ajuste preferências conforme seu fluxo de trabalho evolui.  
@@ -115,7 +125,7 @@ As configurações afetam o comportamento de todos os módulos do Xolmis:
 - **Geral** – Controla o comportamento inicial e o ciclo de vida dos registros.  
 - **Aparência** – Define como grades de dados e relatórios são exibidos.  
 - **Coleção** – Influencia buscas de táxons e curadoria de dados.  
-- **Mídia** – Gerencia como imagens, áudios e documentos são vinculados aos registros.  
+- **Mídia** – Gerencia como imagens, áudios, vídeos e documentos são vinculados aos registros.  
 - **Segurança e privacidade** – Impacta login e solução de problemas.  
 - **Backup e restauração** – Garante segurança e recuperação dos dados.  
 

@@ -15,11 +15,11 @@ Xolmis provides a native installer for Windows systems.
 
 ## Linux
 
-Currently, Linux packages are **not yet available**. Future versions will include support for `.deb` and `.rpm` packages, as well as installation via package managers. Advanced users may compile Xolmis from source using the instructions provided in the repository.
+Currently, Linux packages are **not yet available**. Advanced users may compile Xolmis from source using the instructions provided in the repository.
 
 ## macOS
 
-Currently, macOS builds are **not yet available**. Support for macOS will be added in future releases, with installation via `.dmg` packages and Homebrew integration planned.
+Currently, macOS builds are **not yet available**. Support for macOS will be added in future releases.
 
 ## First steps
 
@@ -29,11 +29,7 @@ When you open Xolmis for the first time after installation, or if no database co
       - You can start fresh with a new database or connect to an existing dataset.  
       - Databases are the core of Xolmis, storing all ornithological records, projects, and metadata.  
 
-2. **Set media location**  
-      - Define the folder where photos, audio recordings, and other media files will be stored.  
-      - This ensures that all media linked to individuals, captures, and surveys is organized and accessible.  
-
-3. **Set backup location and period**  
+2. **Set backup location and period**  
       - Choose a secure location for backups (external drive, cloud folder, etc.).  
       - Define the frequency of backups to protect against data loss.  
 

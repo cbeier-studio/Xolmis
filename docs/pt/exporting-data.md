@@ -27,10 +27,6 @@ Selecione as **colunas** que deseja exportar. Essa etapa garante que apenas os d
 
 ### Escolhendo o formato
 
-No canto superior direito do diálogo,olumns list for options to mark or unmark all and invert selection.
-
-### Escolhendo o formato
-
 No topo direito do diálogo, selecione o formato de arquivo para o qual deseja exportar. O Xolmis suporta múltiplos formatos, cada um adequado para diferentes casos de uso:
 
 #### CSV

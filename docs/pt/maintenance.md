@@ -65,12 +65,6 @@ Para acessar a ferramenta de Manutenção, vá em **Arquivo → Manutenção** n
 - Inclui informações sobre configuração e possíveis problemas.  
 - Útil para suporte técnico ou solução de problemas.  
 
-### Recriar miniaturas
-
-- Reconstrói todas as miniaturas de imagens armazenadas no banco de dados.  
-- Garante que as pré-visualizações estejam atualizadas e consistentes.  
-- Recomendado após editar grandes conjuntos de imagens ou para solução de problemas.  
-
 ## Boas práticas
 
 - **Agende backups**: Realize backups regulares do banco de dados e das configurações para evitar perda de dados. Configure o backup automático periódico em [Configurações](settings.md).  

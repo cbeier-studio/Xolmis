@@ -26,7 +26,7 @@ Cada etapa é descrita em detalhes abaixo.
 Na primeira etapa, você escolhe:
 
 - **Arquivo de origem:** o arquivo externo que deseja importar (veja os tipos de arquivo suportados abaixo).  
-- **Tabela de destino:** a tabela do Xolmis onde os dados serão inseridos (ex.: *Sightings*, *Individuals*, *Nests*, *Eggs*, *Specimens* etc.).  
+- **Tabela de destino:** a tabela do Xolmis onde os dados serão inseridos (ex.: *Observações*, *Indivíduos*, *Ninhos*, *Ovos*, *Espécimes* etc.).  
 - **Configurações de importação:** opcionalmente, você pode escolher um perfil de importação salvo.
 
 Essa etapa garante que o assistente carregue a estrutura correta e prepare as opções adequadas de mapeamento de campos.
@@ -70,7 +70,7 @@ O assistente automaticamente:
 
 - lista todos os campos do arquivo de origem  
 - lista todos os campos da tabela de destino  
-- tenta **inferir tipos de dados** (inteiro, decimal, data, hora, booleano, texto)  
+- tenta **inferir tipos de dados** (inteiro, decimal, data, hora, lógico, texto)  
 - sugere mapeamentos quando possível  
 
 Você pode ajustar cada mapeamento manualmente. Para cada campo, estão disponíveis as seguintes opções:

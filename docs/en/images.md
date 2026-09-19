@@ -51,7 +51,6 @@ To edit image information:
 | **Image date** | Yes | Date when the image was taken |
 | **Image time** |  | Time when the image was taken |
 | **Image type** |  | Category of the image (see below) |
-| **Image file** | Yes | Relative file path of the image |
 | **Locality** |  | Site where the image was taken |
 | **Coordinates precision** |  | Precision of the geographical coordinates |
 | **Longitude** |  | Longitude coordinate of the image |
