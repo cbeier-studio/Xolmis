@@ -279,6 +279,7 @@ type
     procedure actReleaseNotesExecute(Sender: TObject);
     procedure actSettingsExecute(Sender: TObject);
     procedure actViewBandsBalanceExecute(Sender: TObject);
+    procedure actWebsiteExecute(Sender: TObject);
     procedure AppEventsException(Sender: TObject; E: Exception);
     procedure eSearchChange(Sender: TObject);
     procedure eSearchEnter(Sender: TObject);
@@ -846,6 +847,11 @@ end;
 procedure TfrmMain.actViewBandsBalanceExecute(Sender: TObject);
 begin
   AbreForm(TdlgBandsBalance, dlgBandsBalance);
+end;
+
+procedure TfrmMain.actWebsiteExecute(Sender: TObject);
+begin
+  OpenURL('https://xolmis.app');
 end;
 
 procedure TfrmMain.AppEventsException(Sender: TObject; E: Exception);

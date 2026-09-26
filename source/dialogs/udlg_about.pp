@@ -55,6 +55,8 @@ type
     pContent: TPanel;
     pBottom: TPanel;
     procedure FormShow(Sender: TObject);
+    procedure imgMasterSponsor1Click(Sender: TObject);
+    procedure imgMasterSponsorClick(Sender: TObject);
     procedure linkClementsVersionClick(Sender: TObject);
     procedure linkLicenseClick(Sender: TObject);
     procedure linkPrivacyClick(Sender: TObject);
@@ -121,6 +123,16 @@ begin
   pClementsVersion.Caption := FloatToStr(ReadTaxonomyVersion);
   //pIocVersion.Caption := xSettings.IocVersion;
   //pCbroVersion.Caption := xSettings.CbroVersion;
+end;
+
+procedure TdlgAbout.imgMasterSponsor1Click(Sender: TObject);
+begin
+  OpenURL('https://www.savebrasil.org.br');
+end;
+
+procedure TdlgAbout.imgMasterSponsorClick(Sender: TObject);
+begin
+  OpenURL('https://www.alianzadelpastizal.org.br');
 end;
 
 procedure TdlgAbout.linkClementsVersionClick(Sender: TObject);

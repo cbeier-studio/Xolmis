@@ -188,7 +188,7 @@ object dlgAbout: TdlgAbout
       Cursor = crHandPoint
       Left = 32
       Height = 15
-      Hint = 'http://xolmis.github.io'
+      Hint = 'https://xolmis.app'
       Top = 152
       Width = 42
       BorderSpacing.Left = 32
@@ -201,7 +201,7 @@ object dlgAbout: TdlgAbout
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      Link = 'http://xolmis.github.io'
+      Link = 'https://xolmis.app'
       ColorLinkNormal = 13066075
       ColorLinkMouseover = 9520964
     end
@@ -401,6 +401,7 @@ object dlgAbout: TdlgAbout
         AnchorSideTop.Side = asrBottom
         AnchorSideRight.Control = pSponsors
         AnchorSideRight.Side = asrBottom
+        Cursor = crHandPoint
         Left = 0
         Height = 113
         Top = 31
@@ -9021,6 +9022,7 @@ object dlgAbout: TdlgAbout
           EFA43E5D1FF74F8C0000000049454E44AE426082
         }
         Proportional = True
+        OnClick = imgMasterSponsorClick
       end
       object imgMasterSponsor1: TImage
         AnchorSideLeft.Control = pSponsors
@@ -9028,6 +9030,7 @@ object dlgAbout: TdlgAbout
         AnchorSideTop.Side = asrBottom
         AnchorSideRight.Control = pSponsors
         AnchorSideRight.Side = asrBottom
+        Cursor = crHandPoint
         Left = 0
         Height = 137
         Top = 152
@@ -10341,6 +10344,7 @@ object dlgAbout: TdlgAbout
           4E44AE426082
         }
         Proportional = True
+        OnClick = imgMasterSponsor1Click
       end
     end
   end

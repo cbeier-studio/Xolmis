@@ -1112,6 +1112,7 @@ object frmMain: TfrmMain
     object actWebsite: TAction
       Category = 'Help'
       Caption = 'Xolmis'' website'
+      OnExecute = actWebsiteExecute
     end
   end
   object bStatusBar: TImageList

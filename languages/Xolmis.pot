@@ -3861,10 +3861,6 @@ msgctxt "tdlgabout.linkwebsite.caption"
 msgid "Website"
 msgstr ""
 
-#: tdlgabout.linkwebsite.hint
-msgid "http://xolmis.github.io"
-msgstr ""
-
 #: tdlgabout.sbclose.caption
 msgctxt "tdlgabout.sbclose.caption"
 msgid "Close"
