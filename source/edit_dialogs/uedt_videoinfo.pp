@@ -668,7 +668,7 @@ begin
   FVideo.Distance       := eDistance.Value;
   FVideo.Habitat        := eHabitat.Text;
   FVideo.LicenseType    := cbLicenseType.Text;
-  FVideo.LicenseYear    := StrToIntOrZero(eLicenseYear.Text);
+  FVideo.LicenseYear    := StrToIntDef(eLicenseYear.Text, 0);
   FVideo.LicenseOwner   := eLicenseOwner.Text;
   FVideo.LicenseNotes   := eLicenseNotes.Text;
   FVideo.LicenseUri     := eLicenseUri.Text;

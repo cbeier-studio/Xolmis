@@ -674,12 +674,12 @@ begin
   //FImage.FilePath   := ExtractRelativePath(xSettings.ImagesFolder, eFilePath.Text);
   FImage.LocalityId := FLocalityId;
   FImage.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
-  FImage.Longitude := StrToFloatOrZero(eLongitude.Text);
-  FImage.Latitude  := StrToFloatOrZero(eLatitude.Text);
+  FImage.Longitude := StrToFloatDef(eLongitude.Text, 0);
+  FImage.Latitude  := StrToFloatDef(eLatitude.Text, 0);
   FImage.TaxonId   := FTaxonId;
 
   FImage.LicenseType  := cbLicenseType.Text;
-  FImage.LicenseYear  := StrToIntOrZero(eLicenseYear.Text);
+  FImage.LicenseYear  := StrToIntDef(eLicenseYear.Text, 0);
   FImage.LicenseOwner := eLicenseOwner.Text;
   FImage.LicenseNotes := eLicenseNotes.Text;
   FImage.LicenseUri   := eLicenseUri.Text;

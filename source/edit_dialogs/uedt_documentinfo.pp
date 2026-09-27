@@ -398,7 +398,7 @@ begin
   FDocument.DocumentTime := TextToTime(eDocumentTime.Text);
   //FDocument.FilePath     := ExtractRelativePath(xSettings.DocumentsFolder, eFilePath.Text);
   FDocument.LicenseType  := cbLicenseType.Text;
-  FDocument.LicenseYear  := StrToIntOrZero(eLicenseYear.Text);
+  FDocument.LicenseYear  := StrToIntDef(eLicenseYear.Text, 0);
   FDocument.LicenseOwner := eLicenseOwner.Text;
   FDocument.LicenseNotes := eLicenseNotes.Text;
   FDocument.LicenseUri   := eLicenseUri.Text;

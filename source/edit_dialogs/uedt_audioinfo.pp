@@ -690,8 +690,8 @@ begin
   FAudio.AudioType     := StrToAudioType(cbAudioType.Text);
   //FAudio.FilePath      := ExtractRelativePath(xSettings.AudiosFolder, eFilePath.Text);
   FAudio.LocalityId    := FLocalityId;
-  FAudio.Longitude     := StrToFloatOrZero(eLongitude.Text);
-  FAudio.Latitude      := StrToFloatOrZero(eLatitude.Text);
+  FAudio.Longitude     := StrToFloatDef(eLongitude.Text, 0);
+  FAudio.Latitude      := StrToFloatDef(eLatitude.Text, 0);
   FAudio.CoordinatePrecision := StrToCoordinatePrecision(cbCoordinatePrecision.Text);
   FAudio.TaxonId       := FTaxonId;
   FAudio.IndividualId  := FIndividualId;
@@ -711,7 +711,7 @@ begin
   FAudio.PlaybackUsed     := ckPlaybackUsed.Checked;
   FAudio.Habitat          := eHabitat.Text;
   FAudio.LicenseType      := cbLicenseType.Text;
-  FAudio.LicenseYear      := StrToIntOrZero(eLicenseYear.Text);
+  FAudio.LicenseYear      := StrToIntDef(eLicenseYear.Text, 0);
   FAudio.LicenseOwner     := eLicenseOwner.Text;
   FAudio.LicenseNotes     := eLicenseNotes.Text;
   FAudio.LicenseUri       := eLicenseUri.Text;

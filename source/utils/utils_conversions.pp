@@ -58,9 +58,6 @@ type
   function DartISO8601ToDate(aValue: String): TDateTime;
 
   // Numeric treatment
-  function StrToIntOrZero(aValue: String): Integer;
-  function StrToFloatOrZero(aValue: String): Double;
-
   function FormatBytes(const ABytes: Int64): String;
 
   // Convert to specific enum types
@@ -521,26 +518,6 @@ end;
 { --------------------------------------------------------- }
 { Numeric treatment }
 { --------------------------------------------------------- }
-
-function StrToIntOrZero(aValue: String): Integer;
-var
-  I: Integer;
-begin
-  if TryStrToInt(aValue, I) then
-    Result := I
-  else
-    Result := 0;
-end;
-
-function StrToFloatOrZero(aValue: String): Double;
-var
-  Fl: Double;
-begin
-  if TryStrToFloat(aValue, Fl) then
-    Result := Fl
-  else
-    Result := 0.0;
-end;
 
 function FormatBytes(const ABytes: Int64): String;
 const

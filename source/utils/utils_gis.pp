@@ -257,14 +257,14 @@ var
   function UtmToDecimal(aUtm: TUTMPoint): TMapPoint; deprecated;
   function DecimalToUtm(aDec: TMapPoint): TUTMPoint; deprecated;
   function DmsToUtm(aDms: TDMSPoint): TUTMPoint; deprecated;
-  function DecimalToMercator(aDec: TMapPoint): TMercatorPoint;
-  function MercatorToDecimal(aMerc: TMercatorPoint): TMapPoint;
+  function DecimalToMercator(aDec: TMapPoint): TMercatorPoint; deprecated;
+  function MercatorToDecimal(aMerc: TMercatorPoint): TMapPoint; deprecated;
 
   { >> returns only Longitude or Latitude }
-  function AxisDecToDMS(aCoord: String; aAxis: TMapAxis; WithSymbols: Boolean = False): String; overload;
-  function AxisDecToDMS(aCoord: TMapPoint; aAxis: TMapAxis; WithSymbols: Boolean = False): String; overload;
-  function AxisDMSToDec(aCoord: String; aAxis: TMapAxis): Extended; overload;
-  function AxisDMSToDec(aCoord: TDMS; aAxis: TMapAxis): Extended; overload;
+  function AxisDecToDMS(aCoord: String; aAxis: TMapAxis; WithSymbols: Boolean = False): String; overload; deprecated;
+  function AxisDecToDMS(aCoord: TMapPoint; aAxis: TMapAxis; WithSymbols: Boolean = False): String; overload; deprecated;
+  function AxisDMSToDec(aCoord: String; aAxis: TMapAxis): Extended; overload; deprecated;
+  function AxisDMSToDec(aCoord: TDMS; aAxis: TMapAxis): Extended; overload; deprecated;
 
   { Maps and KML }
   procedure AddKMLPoint(Doc: TXMLDocument; RootNode: TDOMNode; aMapPoint: TMapPoint);
@@ -418,7 +418,7 @@ begin
   E2S := Sqr(Sqrt(Sqr(DATUM_A) - Sqr(DATUM_B)) / DATUM_B); // 2a Eccentricity
   cPolar := +(Sqr(DATUM_A)) / DATUM_B;                    // Polar radius of curvature
 
-  IsNegative:= Ord(aUtm.Band) > Ord('N');
+  IsNegative := Ord(aUtm.Band) < Ord('N');
   X := aUtm.X;
   Y := aUtm.Y;
   MeridCentral := 6 * aUtm.Zone - 183;
@@ -465,6 +465,7 @@ begin
 
   IsNegative := Sign(aDec.Y) = NegativeValue;
   Result.Band := UTM_BANDS[Trunc(aDec.Y / 8)];
+  Result.Hemisphere := BoolToText(IsNegative, 'S', 'N')[1];
   Result.Zone := Trunc((aDec.X / 6) + 31);
 
   RadX := (aDec.X * pi) / 180;   // Longitude in radians
@@ -511,7 +512,7 @@ begin
   if (Length(aCoord) = 0) then
     Exit;
 
-  if TryStrToFloat(aCoord, f) then
+  if not TryStrToFloat(aCoord, f) then
   begin
     LogError(Format('%s is not a valid coordinate', [aCoord]));
     Exit;
@@ -1714,7 +1715,7 @@ begin
   E2S := Sqr(Sqrt(Sqr(DATUM_A) - Sqr(DATUM_B)) / DATUM_B); // 2a Eccentricity
   cPolar := +(Sqr(DATUM_A)) / DATUM_B;                    // Polar radius of curvature
 
-  IsNegative:= Ord(FPoint.Band) > Ord('N');
+  IsNegative := Ord(FPoint.Band) < Ord('N');
   X := FPoint.X;
   Y := FPoint.Y;
   MeridCentral := 6 * FPoint.Zone - 183;
