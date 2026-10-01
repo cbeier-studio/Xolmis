@@ -187585,6 +187585,13 @@
                         "timezone": "America\/Havana"
                     },
                     {
+                        "id": 163982,
+                        "name": "Cotorro",
+                        "latitude": "23.02611111",
+                        "longitude": "-82.24750000",
+                        "timezone": "America\/Havana"
+                    },
+                    {
                         "id": 21847,
                         "name": "Diez de Octubre",
                         "latitude": "23.08810000",
@@ -187617,6 +187624,34 @@
                         "name": "La Habana Vieja",
                         "latitude": "23.13028000",
                         "longitude": "-82.35306000",
+                        "timezone": "America\/Havana"
+                    },
+                    {
+                        "id": 163981,
+                        "name": "La Lisa",
+                        "latitude": "23.02472222",
+                        "longitude": "-82.46305556",
+                        "timezone": "America\/Havana"
+                    },
+                    {
+                        "id": 163980,
+                        "name": "Marianao",
+                        "latitude": "23.08333300",
+                        "longitude": "-82.43333300",
+                        "timezone": "America\/Havana"
+                    },
+                    {
+                        "id": 163978,
+                        "name": "Playa",
+                        "latitude": "23.09416700",
+                        "longitude": "-82.44888900",
+                        "timezone": "America\/Havana"
+                    },
+                    {
+                        "id": 163979,
+                        "name": "Plaza de la Revolución",
+                        "latitude": "23.12444444",
+                        "longitude": "-82.38611111",
                         "timezone": "America\/Havana"
                     },
                     {
@@ -201693,8 +201728,8 @@
                     {
                         "id": 30620,
                         "name": "Copenhagen",
-                        "latitude": "43.89343900",
-                        "longitude": "-75.67382800",
+                        "latitude": "55.67609800",
+                        "longitude": "12.56833700",
                         "timezone": "Europe\/Copenhagen"
                     },
                     {
@@ -295516,7 +295551,7 @@
             "it": "Georgia",
             "zh-CN": "格鲁吉亚",
             "tr": "Gürcistan",
-            "ru": "Джорджия",
+            "ru": "Грузия",
             "uk": "Грузія",
             "pl": "Gruzja",
             "hi": "जॉर्जिया",
@@ -303700,6 +303735,13 @@
                         "name": "Atting",
                         "latitude": "48.89412000",
                         "longitude": "12.48776000",
+                        "timezone": "Europe\/Berlin"
+                    },
+                    {
+                        "id": 163983,
+                        "name": "Au",
+                        "latitude": "47.46258000",
+                        "longitude": "10.28342000",
                         "timezone": "Europe\/Berlin"
                     },
                     {
@@ -321015,6 +321057,13 @@
                         "timezone": "Europe\/Berlin"
                     },
                     {
+                        "id": 163984,
+                        "name": "Bensersiel",
+                        "latitude": "53.67296700",
+                        "longitude": "7.57633300",
+                        "timezone": "Europe\/Berlin"
+                    },
+                    {
                         "id": 24031,
                         "name": "Berge",
                         "latitude": "52.62326000",
@@ -321425,6 +321474,13 @@
                         "name": "Burgdorf",
                         "latitude": "52.44628000",
                         "longitude": "10.00640000",
+                        "timezone": "Europe\/Berlin"
+                    },
+                    {
+                        "id": 163985,
+                        "name": "Burhave",
+                        "latitude": "53.57440000",
+                        "longitude": "8.36250000",
                         "timezone": "Europe\/Berlin"
                     },
                     {
@@ -389634,17 +389690,17 @@
                         "timezone": "Asia\/Kolkata"
                     },
                     {
+                        "id": 147670,
+                        "name": "Ahilyanagar",
+                        "latitude": "19.08333333",
+                        "longitude": "74.73333333",
+                        "timezone": "Asia\/Kolkata"
+                    },
+                    {
                         "id": 57604,
                         "name": "Ahmadpur",
                         "latitude": "18.70622000",
                         "longitude": "76.93731000",
-                        "timezone": "Asia\/Kolkata"
-                    },
-                    {
-                        "id": 147670,
-                        "name": "Ahmednagar",
-                        "latitude": "19.08333333",
-                        "longitude": "74.73333333",
                         "timezone": "Asia\/Kolkata"
                     },
                     {
@@ -556403,13 +556459,6 @@
                         "timezone": "America\/Mexico_City"
                     },
                     {
-                        "id": 70312,
-                        "name": "Epitacio Huerta",
-                        "latitude": "20.13493000",
-                        "longitude": "-100.29321000",
-                        "timezone": "America\/Mexico_City"
-                    },
-                    {
                         "id": 70376,
                         "name": "Etúcuaro",
                         "latitude": "19.89286000",
@@ -577311,6 +577360,13 @@
                         "name": "Emiliano Zapata",
                         "latitude": "19.33780000",
                         "longitude": "-101.93550000",
+                        "timezone": "America\/Mexico_City"
+                    },
+                    {
+                        "id": 70312,
+                        "name": "Epitacio Huerta",
+                        "latitude": "20.13493000",
+                        "longitude": "-100.29321000",
                         "timezone": "America\/Mexico_City"
                     },
                     {
@@ -842959,7 +843015,7 @@
         "numeric_code": "694",
         "phonecode": "232",
         "capital": "Freetown",
-        "currency": "SLL",
+        "currency": "SLE",
         "currency_name": "Sierra Leonean leone",
         "currency_symbol": "Le",
         "tld": ".sl",
@@ -937349,17 +937405,185 @@
                 "name": "Changhua",
                 "iso2": "CHA",
                 "iso3166_2": "TW-CHA",
-                "native": "Changhua",
+                "native": "彰化縣",
                 "latitude": "24.07556670",
                 "longitude": "120.54446670",
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
+                        "id": 164066,
+                        "name": "Beidou Township",
+                        "latitude": "23.86667000",
+                        "longitude": "120.53333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109003,
                         "name": "Changhua",
                         "latitude": "23.95361000",
                         "longitude": "120.49083000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164081,
+                        "name": "Chutang Township",
+                        "latitude": "23.85280000",
+                        "longitude": "120.41100000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164071,
+                        "name": "Dacheng Township",
+                        "latitude": "23.86666667",
+                        "longitude": "120.31666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164072,
+                        "name": "Dacun Township",
+                        "latitude": "23.99111111",
+                        "longitude": "120.53944444",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164063,
+                        "name": "Erhlin Township",
+                        "latitude": "23.92290000",
+                        "longitude": "120.40900000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164064,
+                        "name": "Erhshui Township",
+                        "latitude": "23.81666667",
+                        "longitude": "120.61666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164085,
+                        "name": "Fangyuan Township",
+                        "latitude": "23.92500000",
+                        "longitude": "120.31583333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164083,
+                        "name": "Fenyuan Township",
+                        "latitude": "24.01540000",
+                        "longitude": "120.62700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164079,
+                        "name": "Fuxing Township",
+                        "latitude": "24.03333000",
+                        "longitude": "120.43333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164067,
+                        "name": "Hemei Township",
+                        "latitude": "24.11666667",
+                        "longitude": "120.50000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164074,
+                        "name": "Hsichou Township",
+                        "latitude": "23.85110000",
+                        "longitude": "120.49866670",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164080,
+                        "name": "Hsiushui Township",
+                        "latitude": "24.03333333",
+                        "longitude": "120.50000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164084,
+                        "name": "Huatan Township",
+                        "latitude": "24.03333333",
+                        "longitude": "120.55000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164086,
+                        "name": "Lukang Township",
+                        "latitude": "24.08333000",
+                        "longitude": "120.45000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164070,
+                        "name": "Pitou Township",
+                        "latitude": "23.88333333",
+                        "longitude": "120.46666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164068,
+                        "name": "Pusin Township",
+                        "latitude": "23.95230000",
+                        "longitude": "120.53500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164069,
+                        "name": "Puyan Township",
+                        "latitude": "23.99610000",
+                        "longitude": "120.46200000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164065,
+                        "name": "Shenkang Township",
+                        "latitude": "24.16480000",
+                        "longitude": "120.48900000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164078,
+                        "name": "Shetou Township",
+                        "latitude": "23.91666667",
+                        "longitude": "120.60000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164077,
+                        "name": "Tianwei Township",
+                        "latitude": "23.90000000",
+                        "longitude": "120.51666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164076,
+                        "name": "Tianzhong Township",
+                        "latitude": "23.85000000",
+                        "longitude": "120.58333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164082,
+                        "name": "Xianxi Township",
+                        "latitude": "24.13750000",
+                        "longitude": "120.46916667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164075,
+                        "name": "Xihu Township",
+                        "latitude": "23.95940000",
+                        "longitude": "120.48000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164073,
+                        "name": "Yongchin Township",
+                        "latitude": "23.93333333",
+                        "longitude": "120.53333333",
                         "timezone": "Asia\/Taipei"
                     },
                     {
@@ -937376,7 +937600,7 @@
                 "name": "Chiayi",
                 "iso2": "CYI",
                 "iso3166_2": "TW-CYI",
-                "native": "Chiayi",
+                "native": "嘉義市",
                 "latitude": "23.45916640",
                 "longitude": "120.29300040",
                 "type": "city",
@@ -937390,10 +937614,24 @@
                         "timezone": "Asia\/Taipei"
                     },
                     {
+                        "id": 163998,
+                        "name": "East District",
+                        "latitude": "23.48890000",
+                        "longitude": "120.47700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109026,
                         "name": "Pizitou",
                         "latitude": "23.48556000",
                         "longitude": "120.44472000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 163999,
+                        "name": "West District",
+                        "latitude": "23.48370000",
+                        "longitude": "120.42200000",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937409,6 +937647,13 @@
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
+                    {
+                        "id": 164013,
+                        "name": "Alishan Township",
+                        "latitude": "23.35000000",
+                        "longitude": "120.80000000",
+                        "timezone": "Asia\/Taipei"
+                    },
                     {
                         "id": 160127,
                         "name": "Budai",
@@ -937431,10 +937676,108 @@
                         "timezone": "Asia\/Taipei"
                     },
                     {
+                        "id": 164002,
+                        "name": "Dapu Township",
+                        "latitude": "23.29455556",
+                        "longitude": "120.59372222",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164006,
+                        "name": "Dongshi Township",
+                        "latitude": "23.46660000",
+                        "longitude": "120.17900000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164010,
+                        "name": "Fanlu Township",
+                        "latitude": "23.43333000",
+                        "longitude": "120.60000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164001,
+                        "name": "Lioujiao Township",
+                        "latitude": "23.51666667",
+                        "longitude": "120.26666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164014,
+                        "name": "Lucao Township",
+                        "latitude": "23.41330000",
+                        "longitude": "120.30900000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164007,
+                        "name": "Meishan Township",
+                        "latitude": "23.55000000",
+                        "longitude": "120.63333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 160129,
                         "name": "Minxiong",
                         "latitude": "23.55039900",
                         "longitude": "120.44569600",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164005,
+                        "name": "Puzi City",
+                        "latitude": "23.46110000",
+                        "longitude": "120.24200000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164008,
+                        "name": "Shueishang Township",
+                        "latitude": "23.43190000",
+                        "longitude": "120.41500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164003,
+                        "name": "Taibao City",
+                        "latitude": "23.48333333",
+                        "longitude": "120.33333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164009,
+                        "name": "Xikou Township",
+                        "latitude": "23.59470000",
+                        "longitude": "120.39500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164004,
+                        "name": "Xingang Township",
+                        "latitude": "23.55000000",
+                        "longitude": "120.35000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164012,
+                        "name": "Yizhu Township",
+                        "latitude": "23.35650000",
+                        "longitude": "120.22400000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164000,
+                        "name": "Zhongpu Township",
+                        "latitude": "23.40820000",
+                        "longitude": "120.53400000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164011,
+                        "name": "Zhuqi Township",
+                        "latitude": "23.50650000",
+                        "longitude": "120.60200000",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937444,17 +937787,38 @@
                 "name": "Hsinchu",
                 "iso2": "HSZ",
                 "iso3166_2": "TW-HSZ",
-                "native": "Hsinchu",
+                "native": "新竹市",
                 "latitude": "24.81382870",
                 "longitude": "120.96747980",
                 "type": "city",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
-                        "id": 109011,
+                        "id": 164116,
+                        "name": "East District",
+                        "latitude": "24.79590000",
+                        "longitude": "120.99300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 109010,
                         "name": "Hsinchu",
-                        "latitude": "24.67416000",
-                        "longitude": "121.16111000",
+                        "latitude": "24.80361000",
+                        "longitude": "120.96861000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164115,
+                        "name": "North District",
+                        "latitude": "24.82800000",
+                        "longitude": "120.94800000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164117,
+                        "name": "Xiangshan District",
+                        "latitude": "24.77460000",
+                        "longitude": "120.92600000",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937471,10 +937835,45 @@
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
-                        "id": 109010,
+                        "id": 164120,
+                        "name": "Baoshan Township",
+                        "latitude": "24.74279167",
+                        "longitude": "120.99910278",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164119,
+                        "name": "Beipu Township",
+                        "latitude": "24.66388889",
+                        "longitude": "121.06805556",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164122,
+                        "name": "Emei Township",
+                        "latitude": "24.68333333",
+                        "longitude": "121.00000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164128,
+                        "name": "Guanxi Township",
+                        "latitude": "24.78333333",
+                        "longitude": "121.18333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164125,
+                        "name": "Hengshan Township",
+                        "latitude": "24.71666190",
+                        "longitude": "121.14126600",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 109011,
                         "name": "Hsinchu",
-                        "latitude": "24.80361000",
-                        "longitude": "120.96861000",
+                        "latitude": "24.67416000",
+                        "longitude": "121.16111000",
                         "timezone": "Asia\/Taipei"
                     },
                     {
@@ -937485,10 +937884,52 @@
                         "timezone": "Asia\/Taipei"
                     },
                     {
+                        "id": 164121,
+                        "name": "Jianshi Township",
+                        "latitude": "24.61283333",
+                        "longitude": "121.29622222",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164127,
+                        "name": "Qionglin Township",
+                        "latitude": "24.76666667",
+                        "longitude": "121.10000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164118,
+                        "name": "Wufeng Township",
+                        "latitude": "24.63333333",
+                        "longitude": "121.11666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164124,
+                        "name": "Xinfeng Township",
+                        "latitude": "24.91666667",
+                        "longitude": "121.00000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164123,
+                        "name": "Xinpu Township",
+                        "latitude": "24.84780000",
+                        "longitude": "121.09600000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 160130,
                         "name": "Zhubei",
                         "latitude": "24.83333333",
                         "longitude": "121.01194444",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164126,
+                        "name": "Zhudong Township",
+                        "latitude": "24.73661111",
+                        "longitude": "121.09157778",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937498,17 +937939,101 @@
                 "name": "Hualien",
                 "iso2": "HUA",
                 "iso3166_2": "TW-HUA",
-                "native": "Hualien",
+                "native": "花蓮縣",
                 "latitude": "23.98715890",
                 "longitude": "121.60157140",
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
+                        "id": 164247,
+                        "name": "Fengbin Township",
+                        "latitude": "23.58333000",
+                        "longitude": "121.48333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164248,
+                        "name": "Fenglin Township",
+                        "latitude": "23.75000000",
+                        "longitude": "121.43333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164241,
+                        "name": "Fuli Township",
+                        "latitude": "23.13333333",
+                        "longitude": "121.28333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164237,
+                        "name": "Guangfu Township",
+                        "latitude": "23.63506389",
+                        "longitude": "121.42276111",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109012,
                         "name": "Hualien",
                         "latitude": "23.78166000",
                         "longitude": "121.39333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164239,
+                        "name": "Ji'an Township",
+                        "latitude": "23.95000000",
+                        "longitude": "121.57222222",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164244,
+                        "name": "Ruisui Township",
+                        "latitude": "23.51667000",
+                        "longitude": "121.40000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164240,
+                        "name": "Shoufeng Township",
+                        "latitude": "23.86666667",
+                        "longitude": "121.51666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164246,
+                        "name": "Wanrong Township",
+                        "latitude": "23.73333000",
+                        "longitude": "121.31667000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164242,
+                        "name": "Xincheng Township",
+                        "latitude": "24.08333000",
+                        "longitude": "121.60000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164245,
+                        "name": "Xiulin Township",
+                        "latitude": "24.10000000",
+                        "longitude": "121.48333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164243,
+                        "name": "Yuli Township",
+                        "latitude": "23.38333000",
+                        "longitude": "121.35000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164238,
+                        "name": "Zhuoxi Township",
+                        "latitude": "23.33333333",
+                        "longitude": "121.28333333",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937518,17 +938043,283 @@
                 "name": "Kaohsiung",
                 "iso2": "KHH",
                 "iso3166_2": "TW-KHH",
-                "native": "Kaohsiung",
+                "native": "高雄市",
                 "latitude": "22.62033480",
                 "longitude": "120.31203750",
                 "type": "special municipality",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
+                        "id": 164326,
+                        "name": "Alian District",
+                        "latitude": "22.88333333",
+                        "longitude": "120.33333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164298,
+                        "name": "Cianjhen District",
+                        "latitude": "22.60060000",
+                        "longitude": "120.31500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164297,
+                        "name": "Cianjin District",
+                        "latitude": "22.62880000",
+                        "longitude": "120.29500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164314,
+                        "name": "Ciaotou District",
+                        "latitude": "22.75180000",
+                        "longitude": "120.30100000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164323,
+                        "name": "Cieding District",
+                        "latitude": "22.90678611",
+                        "longitude": "120.18260278",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164308,
+                        "name": "Cijin District",
+                        "latitude": "22.58740600",
+                        "longitude": "120.28789000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164307,
+                        "name": "Cishan District",
+                        "latitude": "22.86800000",
+                        "longitude": "120.47400000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164299,
+                        "name": "Daliao District",
+                        "latitude": "22.59630000",
+                        "longitude": "120.41400000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164301,
+                        "name": "Dashe District",
+                        "latitude": "22.74310000",
+                        "longitude": "120.37100000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164300,
+                        "name": "Dashu District",
+                        "latitude": "22.69338889",
+                        "longitude": "120.43308333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164328,
+                        "name": "Fongshan District",
+                        "latitude": "22.63333333",
+                        "longitude": "120.35000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164303,
+                        "name": "Gangshan District",
+                        "latitude": "22.80000000",
+                        "longitude": "120.28333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164330,
+                        "name": "Gushan District",
+                        "latitude": "22.64888889",
+                        "longitude": "120.27250000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164316,
+                        "name": "Hunei District",
+                        "latitude": "22.89500000",
+                        "longitude": "120.22500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164319,
+                        "name": "Jiasian District",
+                        "latitude": "23.08333333",
+                        "longitude": "120.58333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109016,
                         "name": "Kaohsiung",
                         "latitude": "22.61626000",
                         "longitude": "120.31333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164321,
+                        "name": "Lingya District",
+                        "latitude": "22.62360000",
+                        "longitude": "120.31700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164310,
+                        "name": "Linyuan District",
+                        "latitude": "22.50713240",
+                        "longitude": "120.39490240",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164296,
+                        "name": "Liouguei District",
+                        "latitude": "22.99700000",
+                        "longitude": "120.64800000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164324,
+                        "name": "Luzhu District",
+                        "latitude": "22.85500000",
+                        "longitude": "120.26500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164322,
+                        "name": "Maolin District",
+                        "latitude": "22.92740000",
+                        "longitude": "120.74600000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164320,
+                        "name": "Meinong District",
+                        "latitude": "22.90000000",
+                        "longitude": "120.54000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164305,
+                        "name": "Mituo District",
+                        "latitude": "22.78010000",
+                        "longitude": "120.24000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164325,
+                        "name": "Namasia District",
+                        "latitude": "23.27160000",
+                        "longitude": "120.72600000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164313,
+                        "name": "Nanzih District",
+                        "latitude": "22.72680000",
+                        "longitude": "120.29750000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164295,
+                        "name": "Neimen District",
+                        "latitude": "22.95180000",
+                        "longitude": "120.46800000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164327,
+                        "name": "Niaosong District",
+                        "latitude": "22.66120000",
+                        "longitude": "120.37200000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164294,
+                        "name": "Renwu District",
+                        "latitude": "22.69700000",
+                        "longitude": "120.35800000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164293,
+                        "name": "Sanmin District",
+                        "latitude": "22.65620000",
+                        "longitude": "120.32700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164309,
+                        "name": "Shanlin District",
+                        "latitude": "23.00040000",
+                        "longitude": "120.56300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164302,
+                        "name": "Siaogang District",
+                        "latitude": "22.55440000",
+                        "longitude": "120.36000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164306,
+                        "name": "Sinsing District",
+                        "latitude": "22.62472222",
+                        "longitude": "120.30130556",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164311,
+                        "name": "Taoyuan District",
+                        "latitude": "23.23880000",
+                        "longitude": "120.83400000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164318,
+                        "name": "Tianliao District",
+                        "latitude": "22.86510000",
+                        "longitude": "120.39000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164317,
+                        "name": "Yanchao District",
+                        "latitude": "22.78930000",
+                        "longitude": "120.36900000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164329,
+                        "name": "Yancheng District",
+                        "latitude": "22.62466600",
+                        "longitude": "120.28679500",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164315,
+                        "name": "Yongan District",
+                        "latitude": "22.82270000",
+                        "longitude": "120.22700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164312,
+                        "name": "Zihguan District",
+                        "latitude": "22.74910000",
+                        "longitude": "120.25500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164304,
+                        "name": "Zuoying District",
+                        "latitude": "22.68220000",
+                        "longitude": "120.29400000",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937538,19 +938329,69 @@
                 "name": "Keelung",
                 "iso2": "KEE",
                 "iso3166_2": "TW-KEE",
-                "native": "Keelung",
+                "native": "基隆市",
                 "latitude": "25.13172320",
                 "longitude": "121.74465200",
                 "type": "city",
                 "timezone": "Asia\/Taipei",
-                "cities": []
+                "cities": [
+                    {
+                        "id": 164020,
+                        "name": "Anle District",
+                        "latitude": "25.15130000",
+                        "longitude": "121.70300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164021,
+                        "name": "Nuannuan District",
+                        "latitude": "25.08750000",
+                        "longitude": "121.74800000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164015,
+                        "name": "Qidu District",
+                        "latitude": "25.11170000",
+                        "longitude": "121.68500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164018,
+                        "name": "Ren-ai District",
+                        "latitude": "25.12030000",
+                        "longitude": "121.74300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164019,
+                        "name": "Xinyi District",
+                        "latitude": "25.12860000",
+                        "longitude": "121.77300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164016,
+                        "name": "Zhongshan District",
+                        "latitude": "25.15190000",
+                        "longitude": "121.72900000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164017,
+                        "name": "Zhongzheng District",
+                        "latitude": "25.14780000",
+                        "longitude": "121.77200000",
+                        "timezone": "Asia\/Taipei"
+                    }
+                ]
             },
             {
                 "id": 3415,
                 "name": "Kinmen",
                 "iso2": "KIN",
                 "iso3166_2": "TW-KIN",
-                "native": "Kinmen",
+                "native": "金門縣",
                 "latitude": "24.43676380",
                 "longitude": "118.31864350",
                 "type": "county",
@@ -937564,10 +938405,45 @@
                         "timezone": "Asia\/Taipei"
                     },
                     {
+                        "id": 164273,
+                        "name": "Jinhu Township",
+                        "latitude": "24.43769100",
+                        "longitude": "118.42799300",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164271,
+                        "name": "Jinning Township",
+                        "latitude": "24.45672000",
+                        "longitude": "118.33450600",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164272,
+                        "name": "Jinsha Township",
+                        "latitude": "24.48110900",
+                        "longitude": "118.42799300",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109017,
                         "name": "Kinmen",
                         "latitude": "24.45333000",
                         "longitude": "118.38861000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164269,
+                        "name": "Lieyu Township",
+                        "latitude": "24.42805556",
+                        "longitude": "118.23500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164270,
+                        "name": "Wuqiu Township",
+                        "latitude": "24.98333333",
+                        "longitude": "119.45000000",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937577,12 +938453,33 @@
                 "name": "Lienchiang",
                 "iso2": "LIE",
                 "iso3166_2": "TW-LIE",
-                "native": "Lienchiang",
+                "native": "連江縣",
                 "latitude": "26.15779510",
                 "longitude": "119.95197560",
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
+                    {
+                        "id": 164266,
+                        "name": "Beigan Township",
+                        "latitude": "26.22361111",
+                        "longitude": "119.98916667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164267,
+                        "name": "Dongyin Township",
+                        "latitude": "26.37666667",
+                        "longitude": "120.50666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164268,
+                        "name": "Juguang Township",
+                        "latitude": "25.96400000",
+                        "longitude": "119.95900000",
+                        "timezone": "Asia\/Taipei"
+                    },
                     {
                         "id": 109018,
                         "name": "Lienchiang",
@@ -937604,17 +938501,136 @@
                 "name": "Miaoli",
                 "iso2": "MIA",
                 "iso3166_2": "TW-MIA",
-                "native": "Miaoli",
+                "native": "苗栗縣",
                 "latitude": "24.56015900",
                 "longitude": "120.82142650",
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
+                        "id": 164254,
+                        "name": "Dahu Township",
+                        "latitude": "24.40000000",
+                        "longitude": "120.85000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164251,
+                        "name": "Gongguan Township",
+                        "latitude": "24.50530000",
+                        "longitude": "120.84500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164255,
+                        "name": "Houlong Township",
+                        "latitude": "24.61666667",
+                        "longitude": "120.76666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109021,
                         "name": "Miaoli",
                         "latitude": "24.48972000",
                         "longitude": "120.90638000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164253,
+                        "name": "Nanzhuang Township",
+                        "latitude": "24.56666667",
+                        "longitude": "121.01666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164249,
+                        "name": "Sanwan Township",
+                        "latitude": "24.63200000",
+                        "longitude": "120.93700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164250,
+                        "name": "Sanyi Township",
+                        "latitude": "24.41666667",
+                        "longitude": "120.76666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164257,
+                        "name": "Shitan Township",
+                        "latitude": "24.53333333",
+                        "longitude": "120.91666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164256,
+                        "name": "Tai-an Township",
+                        "latitude": "24.41666667",
+                        "longitude": "121.06666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164263,
+                        "name": "Tongluo Township",
+                        "latitude": "24.48333333",
+                        "longitude": "120.78333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164261,
+                        "name": "Tongxiao Township",
+                        "latitude": "24.48333333",
+                        "longitude": "120.70000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164264,
+                        "name": "Toufen City",
+                        "latitude": "24.68333333",
+                        "longitude": "120.91666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164265,
+                        "name": "Touwu Township",
+                        "latitude": "24.56666667",
+                        "longitude": "120.86666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164260,
+                        "name": "Xihu Township",
+                        "latitude": "24.55000000",
+                        "longitude": "120.75000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164259,
+                        "name": "Yuanli Township",
+                        "latitude": "24.41666667",
+                        "longitude": "120.68333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164262,
+                        "name": "Zaoqiao Township",
+                        "latitude": "24.63333333",
+                        "longitude": "120.86666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164258,
+                        "name": "Zhunan Township",
+                        "latitude": "24.68333333",
+                        "longitude": "120.88333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164252,
+                        "name": "Zhuolan Township",
+                        "latitude": "24.33333333",
+                        "longitude": "120.85000000",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937624,17 +938640,59 @@
                 "name": "Nantou",
                 "iso2": "NAN",
                 "iso3166_2": "TW-NAN",
-                "native": "Nantou",
+                "native": "南投縣",
                 "latitude": "23.90235000",
                 "longitude": "120.69091670",
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
+                        "id": 163995,
+                        "name": "Caotun Township",
+                        "latitude": "23.98333333",
+                        "longitude": "120.73333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 163992,
+                        "name": "Guosing Township",
+                        "latitude": "24.01666667",
+                        "longitude": "120.85000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 163988,
+                        "name": "Jhongliao Township",
+                        "latitude": "23.91666667",
+                        "longitude": "120.78333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 163994,
+                        "name": "Jhushan Township",
+                        "latitude": "23.68888889",
+                        "longitude": "120.72888889",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 163996,
+                        "name": "Jiji Township",
+                        "latitude": "23.82861111",
+                        "longitude": "120.78638889",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109019,
                         "name": "Lugu",
                         "latitude": "23.74639000",
                         "longitude": "120.75250000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 163991,
+                        "name": "Mingjian Township",
+                        "latitude": "23.85000000",
+                        "longitude": "120.66666667",
                         "timezone": "Asia\/Taipei"
                     },
                     {
@@ -937652,6 +938710,34 @@
                         "timezone": "Asia\/Taipei"
                     },
                     {
+                        "id": 163989,
+                        "name": "Ren-ai Township",
+                        "latitude": "24.02527778",
+                        "longitude": "121.13111111",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 163993,
+                        "name": "Shueili Township",
+                        "latitude": "23.81666667",
+                        "longitude": "120.85000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 163990,
+                        "name": "Sinyi Township",
+                        "latitude": "23.66240000",
+                        "longitude": "121.01600000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 163997,
+                        "name": "Yuchih Township",
+                        "latitude": "23.88333333",
+                        "longitude": "120.91666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109041,
                         "name": "Zhongxing New Village",
                         "latitude": "23.95908000",
@@ -937665,24 +938751,256 @@
                 "name": "New Taipei",
                 "iso2": "NWT",
                 "iso3166_2": "TW-NWT",
-                "native": "New Taipei",
+                "native": "新北市",
                 "latitude": "25.01199700",
                 "longitude": "121.46566190",
                 "type": "special municipality",
                 "timezone": "Asia\/Taipei",
-                "cities": []
+                "cities": [
+                    {
+                        "id": 164092,
+                        "name": "Bali District",
+                        "latitude": "25.15000000",
+                        "longitude": "121.40000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 109002,
+                        "name": "Banqiao",
+                        "latitude": "25.01427000",
+                        "longitude": "121.46719000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164111,
+                        "name": "Gongliao District",
+                        "latitude": "25.01666667",
+                        "longitude": "121.90000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164112,
+                        "name": "Jinshan District",
+                        "latitude": "25.21667000",
+                        "longitude": "121.60000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 109015,
+                        "name": "Jiufen",
+                        "latitude": "25.10957000",
+                        "longitude": "121.84424000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164098,
+                        "name": "Linkou District",
+                        "latitude": "25.10000000",
+                        "longitude": "121.35000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164110,
+                        "name": "Luzhou District",
+                        "latitude": "25.08333333",
+                        "longitude": "121.46666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164094,
+                        "name": "Pinglin District",
+                        "latitude": "24.92444444",
+                        "longitude": "121.72666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164095,
+                        "name": "Pingxi District",
+                        "latitude": "25.02579700",
+                        "longitude": "121.73914400",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164106,
+                        "name": "Ruifang District",
+                        "latitude": "25.11666667",
+                        "longitude": "121.80000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164089,
+                        "name": "Sanchong District",
+                        "latitude": "25.06134330",
+                        "longitude": "121.49436950",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164087,
+                        "name": "Sanxia District",
+                        "latitude": "24.88333000",
+                        "longitude": "121.40000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164088,
+                        "name": "Sanzhi District",
+                        "latitude": "25.23666667",
+                        "longitude": "121.52527778",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164104,
+                        "name": "Shenkeng District",
+                        "latitude": "25.00000000",
+                        "longitude": "121.61667000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164107,
+                        "name": "Shiding District",
+                        "latitude": "24.95000000",
+                        "longitude": "121.63333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164108,
+                        "name": "Shimen District",
+                        "latitude": "25.26667000",
+                        "longitude": "121.56667000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164113,
+                        "name": "Shuangxi District",
+                        "latitude": "25.00972222",
+                        "longitude": "121.83416667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164099,
+                        "name": "Shulin District",
+                        "latitude": "24.98333000",
+                        "longitude": "121.40000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164102,
+                        "name": "Taishan District",
+                        "latitude": "25.05000000",
+                        "longitude": "121.41667000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164103,
+                        "name": "Tamsui District",
+                        "latitude": "25.16666667",
+                        "longitude": "121.43333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164093,
+                        "name": "Tucheng District",
+                        "latitude": "24.96670000",
+                        "longitude": "121.43300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164109,
+                        "name": "Wanli District",
+                        "latitude": "25.18333000",
+                        "longitude": "121.63333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164091,
+                        "name": "Wugu District",
+                        "latitude": "25.08093470",
+                        "longitude": "121.43634800",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164105,
+                        "name": "Wulai District",
+                        "latitude": "24.86666667",
+                        "longitude": "121.55000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164096,
+                        "name": "Xindian District",
+                        "latitude": "24.95000000",
+                        "longitude": "121.53333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164097,
+                        "name": "Xinzhuang District",
+                        "latitude": "25.03333333",
+                        "longitude": "121.45000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164101,
+                        "name": "Xizhi District",
+                        "latitude": "25.06666667",
+                        "longitude": "121.66666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164114,
+                        "name": "Yingge District",
+                        "latitude": "24.95000000",
+                        "longitude": "121.33333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164100,
+                        "name": "Yonghe District",
+                        "latitude": "25.00750000",
+                        "longitude": "121.51638889",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164090,
+                        "name": "Zhonghe District",
+                        "latitude": "24.99722222",
+                        "longitude": "121.50416667",
+                        "timezone": "Asia\/Taipei"
+                    }
+                ]
             },
             {
                 "id": 3403,
                 "name": "Penghu",
                 "iso2": "PEN",
                 "iso3166_2": "TW-PEN",
-                "native": "Penghu",
+                "native": "澎湖縣",
                 "latitude": "23.56969400",
                 "longitude": "119.56645430",
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
+                    {
+                        "id": 164143,
+                        "name": "Baisha Township",
+                        "latitude": "23.66339167",
+                        "longitude": "119.59236111",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164140,
+                        "name": "Cimei Township",
+                        "latitude": "23.21138889",
+                        "longitude": "119.43166667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164142,
+                        "name": "Huxi Township",
+                        "latitude": "23.58333333",
+                        "longitude": "119.66666667",
+                        "timezone": "Asia\/Taipei"
+                    },
                     {
                         "id": 109020,
                         "name": "Magong",
@@ -937696,6 +939014,20 @@
                         "latitude": "23.57111000",
                         "longitude": "119.61138000",
                         "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164141,
+                        "name": "Wangan Township",
+                        "latitude": "23.35805555",
+                        "longitude": "119.49722222",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164144,
+                        "name": "Xiyu Township",
+                        "latitude": "23.60861111",
+                        "longitude": "119.51138889",
+                        "timezone": "Asia\/Taipei"
                     }
                 ]
             },
@@ -937704,17 +939036,66 @@
                 "name": "Pingtung",
                 "iso2": "PIF",
                 "iso3166_2": "TW-PIF",
-                "native": "Pingtung",
+                "native": "屏東縣",
                 "latitude": "22.66284680",
                 "longitude": "120.49156770",
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
+                        "id": 164058,
+                        "name": "Changjhih Township",
+                        "latitude": "22.70000000",
+                        "longitude": "120.55000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164048,
+                        "name": "Chaojhou Township",
+                        "latitude": "22.53333333",
+                        "longitude": "120.55000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164056,
+                        "name": "Checheng Township",
+                        "latitude": "22.08333333",
+                        "longitude": "120.75000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164042,
+                        "name": "Chunrih Township",
+                        "latitude": "22.38333333",
+                        "longitude": "120.70000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109007,
                         "name": "Donggang",
                         "latitude": "22.46515000",
                         "longitude": "120.44927000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164043,
+                        "name": "Fangliao Township",
+                        "latitude": "22.40000000",
+                        "longitude": "120.60000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164044,
+                        "name": "Fangshan Township",
+                        "latitude": "22.25638889",
+                        "longitude": "120.65833333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164060,
+                        "name": "Gaoshu Township",
+                        "latitude": "22.80000000",
+                        "longitude": "120.58333333",
                         "timezone": "Asia\/Taipei"
                     },
                     {
@@ -937725,10 +939106,171 @@
                         "timezone": "Asia\/Taipei"
                     },
                     {
+                        "id": 164053,
+                        "name": "Jhutian Township",
+                        "latitude": "22.59416667",
+                        "longitude": "120.53416667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164035,
+                        "name": "Jiadong Township",
+                        "latitude": "22.43050000",
+                        "longitude": "120.54700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164034,
+                        "name": "Jiuru Township",
+                        "latitude": "22.73333333",
+                        "longitude": "120.48333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164039,
+                        "name": "Kanding Township",
+                        "latitude": "22.51666667",
+                        "longitude": "120.48333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164036,
+                        "name": "Laiyi Township",
+                        "latitude": "22.50000000",
+                        "longitude": "120.68333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164057,
+                        "name": "Ligang Township",
+                        "latitude": "22.80000000",
+                        "longitude": "120.50000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164045,
+                        "name": "Linbian Township",
+                        "latitude": "22.43333333",
+                        "longitude": "120.51666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164062,
+                        "name": "Linluo Township",
+                        "latitude": "22.65194444",
+                        "longitude": "120.52916667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164051,
+                        "name": "Liouciou Township",
+                        "latitude": "22.34166667",
+                        "longitude": "120.36944444",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164052,
+                        "name": "Majia Township",
+                        "latitude": "22.67830000",
+                        "longitude": "120.66500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164047,
+                        "name": "Manjhou Township",
+                        "latitude": "22.05000000",
+                        "longitude": "120.83333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164049,
+                        "name": "Mudan Township",
+                        "latitude": "22.15000000",
+                        "longitude": "120.80000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164038,
+                        "name": "Nanjhou Township",
+                        "latitude": "22.47890000",
+                        "longitude": "120.51600000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164037,
+                        "name": "Neipu Township",
+                        "latitude": "22.65000000",
+                        "longitude": "120.58750000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109025,
                         "name": "Pingtung",
                         "latitude": "22.49555000",
                         "longitude": "120.61444000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164033,
+                        "name": "Sandimen Township",
+                        "latitude": "22.71666667",
+                        "longitude": "120.65000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164040,
+                        "name": "Shinyuan Township",
+                        "latitude": "22.51666667",
+                        "longitude": "120.45000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164050,
+                        "name": "Shizi Township",
+                        "latitude": "22.20177500",
+                        "longitude": "120.70543800",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164041,
+                        "name": "Sinpi Township",
+                        "latitude": "22.48333333",
+                        "longitude": "120.58333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164046,
+                        "name": "Taiwu Township",
+                        "latitude": "22.60000000",
+                        "longitude": "120.68333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164054,
+                        "name": "Wandan Township",
+                        "latitude": "22.58333333",
+                        "longitude": "120.46666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164055,
+                        "name": "Wanluan Township",
+                        "latitude": "22.58333333",
+                        "longitude": "120.58333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164059,
+                        "name": "Wutai Township",
+                        "latitude": "22.76666667",
+                        "longitude": "120.80000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164061,
+                        "name": "Yenpu Township",
+                        "latitude": "22.73333333",
+                        "longitude": "120.56666667",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937738,17 +939280,220 @@
                 "name": "Taichung",
                 "iso2": "TXG",
                 "iso3166_2": "TW-TXG",
-                "native": "Taichung",
+                "native": "臺中市",
                 "latitude": "24.16316200",
                 "longitude": "120.64782820",
                 "type": "special municipality",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
+                        "id": 164147,
+                        "name": "Beitun District",
+                        "latitude": "24.18042778",
+                        "longitude": "120.74661389",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164145,
+                        "name": "Central District",
+                        "latitude": "24.14200000",
+                        "longitude": "120.68000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164153,
+                        "name": "Da'an District",
+                        "latitude": "24.36520000",
+                        "longitude": "120.59000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164155,
+                        "name": "Dadu District",
+                        "latitude": "24.15366000",
+                        "longitude": "120.54096000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164154,
+                        "name": "Dajia District",
+                        "latitude": "24.34710000",
+                        "longitude": "120.62300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164156,
+                        "name": "Dali District",
+                        "latitude": "24.09166667",
+                        "longitude": "120.69166667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164157,
+                        "name": "Daya District",
+                        "latitude": "24.21666667",
+                        "longitude": "120.65000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164160,
+                        "name": "Dongshi District",
+                        "latitude": "24.25869444",
+                        "longitude": "120.82816667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164161,
+                        "name": "East District",
+                        "latitude": "24.13730000",
+                        "longitude": "120.69700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164171,
+                        "name": "Fengyuan District",
+                        "latitude": "24.25000000",
+                        "longitude": "120.71666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164151,
+                        "name": "Heping District",
+                        "latitude": "24.26666667",
+                        "longitude": "121.15000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164150,
+                        "name": "Houli District",
+                        "latitude": "24.31667000",
+                        "longitude": "120.70000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164173,
+                        "name": "Longjing District",
+                        "latitude": "24.21000000",
+                        "longitude": "120.51800000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164149,
+                        "name": "Nantun District",
+                        "latitude": "24.14160000",
+                        "longitude": "120.63800000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164146,
+                        "name": "North District",
+                        "latitude": "24.15760000",
+                        "longitude": "120.68100000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164164,
+                        "name": "Qingshui District",
+                        "latitude": "24.27361000",
+                        "longitude": "120.58000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164163,
+                        "name": "Shalu District",
+                        "latitude": "24.23722000",
+                        "longitude": "120.56028000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164168,
+                        "name": "Shengang District",
+                        "latitude": "24.25900000",
+                        "longitude": "120.66300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164167,
+                        "name": "Shigang District",
+                        "latitude": "24.26620000",
+                        "longitude": "120.78500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164148,
+                        "name": "South District",
+                        "latitude": "24.12160000",
+                        "longitude": "120.66500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109028,
                         "name": "Taichung",
                         "latitude": "24.14690000",
                         "longitude": "120.68390000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164158,
+                        "name": "Taiping District",
+                        "latitude": "24.11667000",
+                        "longitude": "120.76667000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164165,
+                        "name": "Tanzi District",
+                        "latitude": "24.21611000",
+                        "longitude": "120.70611000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164152,
+                        "name": "Waipu District",
+                        "latitude": "24.32990000",
+                        "longitude": "120.65400000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164169,
+                        "name": "West District",
+                        "latitude": "24.14450000",
+                        "longitude": "120.66500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164172,
+                        "name": "Wufeng District",
+                        "latitude": "24.06666667",
+                        "longitude": "120.70000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164162,
+                        "name": "Wuqi District",
+                        "latitude": "24.25760000",
+                        "longitude": "120.52900000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164166,
+                        "name": "Wuri District",
+                        "latitude": "24.08870000",
+                        "longitude": "120.63200000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164159,
+                        "name": "Xinshe District",
+                        "latitude": "24.26430000",
+                        "longitude": "120.80000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164170,
+                        "name": "Xitun District",
+                        "latitude": "24.18290000",
+                        "longitude": "120.62600000",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937758,12 +939503,229 @@
                 "name": "Tainan",
                 "iso2": "TNN",
                 "iso3166_2": "TW-TNN",
-                "native": "Tainan",
+                "native": "臺南市",
                 "latitude": "22.99123480",
                 "longitude": "120.18498200",
                 "type": "special municipality",
                 "timezone": "Asia\/Taipei",
                 "cities": [
+                    {
+                        "id": 164200,
+                        "name": "Anding District",
+                        "latitude": "23.09555556",
+                        "longitude": "120.22222222",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164199,
+                        "name": "Annan District",
+                        "latitude": "23.04730278",
+                        "longitude": "120.18468055",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164201,
+                        "name": "Anping District",
+                        "latitude": "22.99347778",
+                        "longitude": "120.16485278",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164216,
+                        "name": "Baihe District",
+                        "latitude": "23.36666667",
+                        "longitude": "120.45000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164193,
+                        "name": "Beimen District",
+                        "latitude": "23.28333333",
+                        "longitude": "120.13333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164186,
+                        "name": "Cigu District",
+                        "latitude": "23.13333333",
+                        "longitude": "120.11666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164197,
+                        "name": "Danei District",
+                        "latitude": "23.15000000",
+                        "longitude": "120.38333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164211,
+                        "name": "Dongshan District",
+                        "latitude": "23.28520000",
+                        "longitude": "120.43300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164210,
+                        "name": "Eastern District",
+                        "latitude": "22.98570000",
+                        "longitude": "120.22600000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164218,
+                        "name": "Guanmiao District",
+                        "latitude": "22.95966000",
+                        "longitude": "120.32776000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164202,
+                        "name": "Guantian District",
+                        "latitude": "23.20000000",
+                        "longitude": "120.33333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164214,
+                        "name": "Gueiren District",
+                        "latitude": "22.96666667",
+                        "longitude": "120.28333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164206,
+                        "name": "Houbi District",
+                        "latitude": "23.36270000",
+                        "longitude": "120.34900000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164190,
+                        "name": "Jiali District",
+                        "latitude": "23.17000000",
+                        "longitude": "120.17800000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164203,
+                        "name": "Jiangjyun District",
+                        "latitude": "23.20000000",
+                        "longitude": "120.11666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164191,
+                        "name": "Lioujia District",
+                        "latitude": "23.22400000",
+                        "longitude": "120.37700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164212,
+                        "name": "Liouying District",
+                        "latitude": "23.28333333",
+                        "longitude": "120.35000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164221,
+                        "name": "Longci District",
+                        "latitude": "22.96666667",
+                        "longitude": "120.38333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164220,
+                        "name": "Madou District",
+                        "latitude": "23.18333333",
+                        "longitude": "120.24833333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164194,
+                        "name": "Nanhua District",
+                        "latitude": "23.11666667",
+                        "longitude": "120.55000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164213,
+                        "name": "Nansi District",
+                        "latitude": "23.18333333",
+                        "longitude": "120.51666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164192,
+                        "name": "North District",
+                        "latitude": "23.01090000",
+                        "longitude": "120.20700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164189,
+                        "name": "Rende District",
+                        "latitude": "22.95000000",
+                        "longitude": "120.23333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164196,
+                        "name": "Shanhua District",
+                        "latitude": "23.15000000",
+                        "longitude": "120.28333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164204,
+                        "name": "Shanshang District",
+                        "latitude": "23.10000000",
+                        "longitude": "120.36666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164217,
+                        "name": "Sigang District",
+                        "latitude": "23.13333333",
+                        "longitude": "120.20000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164207,
+                        "name": "Sinhua District",
+                        "latitude": "23.03833333",
+                        "longitude": "120.31083333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164208,
+                        "name": "Sinshih District",
+                        "latitude": "23.08333333",
+                        "longitude": "120.26666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164209,
+                        "name": "Sinying District",
+                        "latitude": "23.30000000",
+                        "longitude": "120.28333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164195,
+                        "name": "South District",
+                        "latitude": "22.96160000",
+                        "longitude": "120.19100000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164198,
+                        "name": "Syuejia District",
+                        "latitude": "23.25000000",
+                        "longitude": "120.18333333",
+                        "timezone": "Asia\/Taipei"
+                    },
                     {
                         "id": 109030,
                         "name": "Tainan",
@@ -937772,10 +939734,45 @@
                         "timezone": "Asia\/Taipei"
                     },
                     {
+                        "id": 164188,
+                        "name": "West Central District",
+                        "latitude": "22.99650000",
+                        "longitude": "120.19400000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164187,
+                        "name": "Xiaying District",
+                        "latitude": "23.22905555",
+                        "longitude": "120.26455556",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164219,
+                        "name": "Yanshuei District",
+                        "latitude": "23.30000000",
+                        "longitude": "120.23305556",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164215,
+                        "name": "Yongkang District",
+                        "latitude": "23.03333333",
+                        "longitude": "120.25000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109039,
                         "name": "Yujing",
                         "latitude": "23.12493000",
                         "longitude": "120.46138000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164205,
+                        "name": "Zuojhen District",
+                        "latitude": "23.03333000",
+                        "longitude": "120.40000000",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937785,24 +939782,59 @@
                 "name": "Taipei",
                 "iso2": "TPE",
                 "iso3166_2": "TW-TPE",
-                "native": "Taipei",
+                "native": "臺北市",
                 "latitude": "25.03296940",
                 "longitude": "121.56541770",
                 "type": "special municipality",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
-                        "id": 109002,
-                        "name": "Banqiao",
-                        "latitude": "25.01427000",
-                        "longitude": "121.46719000",
+                        "id": 164178,
+                        "name": "Beitou District",
+                        "latitude": "25.11670000",
+                        "longitude": "121.50000000",
                         "timezone": "Asia\/Taipei"
                     },
                     {
-                        "id": 109015,
-                        "name": "Jiufen",
-                        "latitude": "25.10957000",
-                        "longitude": "121.84424000",
+                        "id": 164182,
+                        "name": "Da'an District",
+                        "latitude": "25.02638889",
+                        "longitude": "121.53444444",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164181,
+                        "name": "Datong District",
+                        "latitude": "25.05972222",
+                        "longitude": "121.51416667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164179,
+                        "name": "Nangang District",
+                        "latitude": "25.05331389",
+                        "longitude": "121.60740833",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164177,
+                        "name": "Neihu District",
+                        "latitude": "25.08333000",
+                        "longitude": "121.58333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164180,
+                        "name": "Shilin District",
+                        "latitude": "25.08330000",
+                        "longitude": "121.51700000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164184,
+                        "name": "Songshan District",
+                        "latitude": "25.05920000",
+                        "longitude": "121.55900000",
                         "timezone": "Asia\/Taipei"
                     },
                     {
@@ -937810,6 +939842,41 @@
                         "name": "Taipei",
                         "latitude": "25.04776000",
                         "longitude": "121.53185000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164185,
+                        "name": "Wanhua District",
+                        "latitude": "25.03330000",
+                        "longitude": "121.48300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164183,
+                        "name": "Wenshan District",
+                        "latitude": "24.98972222",
+                        "longitude": "121.57222222",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164176,
+                        "name": "Xinyi District",
+                        "latitude": "25.02875210",
+                        "longitude": "121.55480640",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164174,
+                        "name": "Zhongshan District",
+                        "latitude": "25.06888889",
+                        "longitude": "121.53305556",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164175,
+                        "name": "Zhongzheng District",
+                        "latitude": "25.03166667",
+                        "longitude": "121.51638889",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937819,17 +939886,122 @@
                 "name": "Taitung",
                 "iso2": "TTT",
                 "iso3166_2": "TW-TTT",
-                "native": "Taitung",
+                "native": "臺東縣",
                 "latitude": "22.75604470",
                 "longitude": "121.14565380",
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
+                        "id": 164222,
+                        "name": "Beinan Township",
+                        "latitude": "22.78333333",
+                        "longitude": "121.11666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164234,
+                        "name": "Changbin Township",
+                        "latitude": "23.31666667",
+                        "longitude": "121.45000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164226,
+                        "name": "Chenggong Township",
+                        "latitude": "23.11666667",
+                        "longitude": "121.35000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164228,
+                        "name": "Chihshang Township",
+                        "latitude": "23.10000000",
+                        "longitude": "121.21666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164232,
+                        "name": "Daren Township",
+                        "latitude": "22.36666667",
+                        "longitude": "120.81666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164223,
+                        "name": "Dawu Township",
+                        "latitude": "22.36666667",
+                        "longitude": "120.90000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164227,
+                        "name": "Donghe Township",
+                        "latitude": "22.97480000",
+                        "longitude": "121.29830000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164235,
+                        "name": "Guanshan Township",
+                        "latitude": "23.01805556",
+                        "longitude": "121.19388889",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164229,
+                        "name": "Haiduan Township",
+                        "latitude": "23.13333333",
+                        "longitude": "121.03333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164233,
+                        "name": "Jinfeng Township",
+                        "latitude": "22.60000000",
+                        "longitude": "120.96666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164231,
+                        "name": "Lanyu Township",
+                        "latitude": "22.04638889",
+                        "longitude": "121.53833333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164236,
+                        "name": "Luye Township",
+                        "latitude": "22.95250000",
+                        "longitude": "121.16300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164230,
+                        "name": "Lyudao Township",
+                        "latitude": "22.66666667",
+                        "longitude": "121.48333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164224,
+                        "name": "Taimali Township",
+                        "latitude": "22.58333333",
+                        "longitude": "120.98333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109033,
                         "name": "Taitung",
                         "latitude": "22.88361000",
                         "longitude": "121.04833000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164225,
+                        "name": "Yanping Township",
+                        "latitude": "22.90000000",
+                        "longitude": "120.98333333",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937839,12 +940011,19 @@
                 "name": "Taoyuan",
                 "iso2": "TAO",
                 "iso3166_2": "TW-TAO",
-                "native": "Taoyuan",
+                "native": "桃園市",
                 "latitude": "24.99362810",
                 "longitude": "121.30097980",
                 "type": "special municipality",
                 "timezone": "Asia\/Taipei",
                 "cities": [
+                    {
+                        "id": 164130,
+                        "name": "Bade District",
+                        "latitude": "24.95761944",
+                        "longitude": "121.29878333",
+                        "timezone": "Asia\/Taipei"
+                    },
                     {
                         "id": 109006,
                         "name": "Daxi",
@@ -937853,10 +940032,80 @@
                         "timezone": "Asia\/Taipei"
                     },
                     {
+                        "id": 164131,
+                        "name": "Dayuan District",
+                        "latitude": "25.06666667",
+                        "longitude": "121.20000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164133,
+                        "name": "Fuxing District",
+                        "latitude": "24.71500000",
+                        "longitude": "121.35500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164137,
+                        "name": "Guanyin District",
+                        "latitude": "25.03333333",
+                        "longitude": "121.10000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164139,
+                        "name": "Guishan District",
+                        "latitude": "25.03333333",
+                        "longitude": "121.35000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164138,
+                        "name": "Longtan District",
+                        "latitude": "24.84444444",
+                        "longitude": "121.20527778",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164136,
+                        "name": "Luzhu District",
+                        "latitude": "25.06666667",
+                        "longitude": "121.28333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164132,
+                        "name": "Pingzhen District",
+                        "latitude": "24.94388889",
+                        "longitude": "121.21611111",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109035,
                         "name": "Taoyuan",
                         "latitude": "24.89500000",
                         "longitude": "121.24611000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164134,
+                        "name": "Xinwu District",
+                        "latitude": "24.98333333",
+                        "longitude": "121.06666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164135,
+                        "name": "Yangmei District",
+                        "latitude": "24.91666667",
+                        "longitude": "121.11666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164129,
+                        "name": "Zhongli District",
+                        "latitude": "24.95694444",
+                        "longitude": "121.22361111",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937866,17 +940115,94 @@
                 "name": "Yilan",
                 "iso2": "ILA",
                 "iso3166_2": "TW-ILA",
-                "native": "Yilan",
+                "native": "宜蘭縣",
                 "latitude": "24.73027910",
                 "longitude": "121.76311490",
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
+                        "id": 164028,
+                        "name": "Datong Township",
+                        "latitude": "24.67716667",
+                        "longitude": "121.60902778",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164024,
+                        "name": "Dongshan Township",
+                        "latitude": "24.65000000",
+                        "longitude": "121.76000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164029,
+                        "name": "Jiaoxi Township",
+                        "latitude": "24.81666667",
+                        "longitude": "121.73333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164030,
+                        "name": "Luodong Township",
+                        "latitude": "24.67668333",
+                        "longitude": "121.76692500",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164025,
+                        "name": "Nan'ao Township",
+                        "latitude": "24.46666667",
+                        "longitude": "121.80000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164022,
+                        "name": "Sanxing Township",
+                        "latitude": "24.66596340",
+                        "longitude": "121.65322920",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164031,
+                        "name": "Su'ao Township",
+                        "latitude": "24.59166667",
+                        "longitude": "121.85333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164032,
+                        "name": "Toucheng Township",
+                        "latitude": "24.90000000",
+                        "longitude": "121.85000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164023,
+                        "name": "Wujie Township",
+                        "latitude": "24.70000000",
+                        "longitude": "121.78333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109037,
                         "name": "Yilan",
                         "latitude": "24.54250000",
                         "longitude": "121.63361000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164026,
+                        "name": "Yuanshan Township",
+                        "latitude": "24.75000000",
+                        "longitude": "121.68333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164027,
+                        "name": "Zhuangwei Township",
+                        "latitude": "24.77020000",
+                        "longitude": "121.80200000",
                         "timezone": "Asia\/Taipei"
                     }
                 ]
@@ -937886,17 +940212,150 @@
                 "name": "Yunlin",
                 "iso2": "YUN",
                 "iso3166_2": "TW-YUN",
-                "native": "Yunlin",
+                "native": "雲林縣",
                 "latitude": "23.69907750",
                 "longitude": "120.52455110",
                 "type": "county",
                 "timezone": "Asia\/Taipei",
                 "cities": [
                     {
+                        "id": 164290,
+                        "name": "Baojhong Township",
+                        "latitude": "23.71666667",
+                        "longitude": "120.30000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164276,
+                        "name": "Beigang Township",
+                        "latitude": "23.57010000",
+                        "longitude": "120.30162000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164288,
+                        "name": "Cihtong Township",
+                        "latitude": "23.76667000",
+                        "longitude": "120.53333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164284,
+                        "name": "Dongshih Township",
+                        "latitude": "23.70000000",
+                        "longitude": "120.25000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
                         "id": 109008,
                         "name": "Douliu",
                         "latitude": "23.70944000",
                         "longitude": "120.54333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164283,
+                        "name": "Dounan Township",
+                        "latitude": "23.68333333",
+                        "longitude": "120.48333333",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164274,
+                        "name": "Erlun Township",
+                        "latitude": "23.78333000",
+                        "longitude": "120.40000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164278,
+                        "name": "Gukeng Township",
+                        "latitude": "23.65000000",
+                        "longitude": "120.56666667",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164289,
+                        "name": "Huwei Township",
+                        "latitude": "23.72000000",
+                        "longitude": "120.43500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164277,
+                        "name": "Kouhu Township",
+                        "latitude": "23.57630000",
+                        "longitude": "120.17300000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164285,
+                        "name": "Linnei Township",
+                        "latitude": "23.75000000",
+                        "longitude": "120.61667000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164282,
+                        "name": "Lunbei Township",
+                        "latitude": "23.78333000",
+                        "longitude": "120.33333000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164292,
+                        "name": "Mailiao Township",
+                        "latitude": "23.78333000",
+                        "longitude": "120.25000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164286,
+                        "name": "Shueilin Township",
+                        "latitude": "23.56620000",
+                        "longitude": "120.23400000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164279,
+                        "name": "Sihhu Township",
+                        "latitude": "23.65000000",
+                        "longitude": "120.20000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164291,
+                        "name": "Siluo Township",
+                        "latitude": "23.78333000",
+                        "longitude": "120.45000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164287,
+                        "name": "Taihsi Township",
+                        "latitude": "23.71667000",
+                        "longitude": "120.20000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164281,
+                        "name": "Tapi Township",
+                        "latitude": "23.64940000",
+                        "longitude": "120.42500000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164280,
+                        "name": "Tuku Township",
+                        "latitude": "23.70000000",
+                        "longitude": "120.35000000",
+                        "timezone": "Asia\/Taipei"
+                    },
+                    {
+                        "id": 164275,
+                        "name": "Yuanchang Township",
+                        "latitude": "23.64200000",
+                        "longitude": "120.32300000",
                         "timezone": "Asia\/Taipei"
                     },
                     {
@@ -979715,6 +982174,20 @@
                         "timezone": "Asia\/Dubai"
                     },
                     {
+                        "id": 163977,
+                        "name": "Al Raha",
+                        "latitude": "24.44470000",
+                        "longitude": "54.57720000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163976,
+                        "name": "Al Reem Island",
+                        "latitude": "24.49640000",
+                        "longitude": "54.40720000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
                         "id": 26,
                         "name": "Bani Yas City",
                         "latitude": "24.30978000",
@@ -979761,6 +982234,20 @@
                         "name": "Ruwais",
                         "latitude": "24.11028000",
                         "longitude": "52.73056000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163975,
+                        "name": "Saadiyat Island",
+                        "latitude": "24.54220000",
+                        "longitude": "54.43720000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163974,
+                        "name": "Yas Island",
+                        "latitude": "24.49650000",
+                        "longitude": "54.60360000",
                         "timezone": "Asia\/Dubai"
                     },
                     {
@@ -979818,10 +982305,73 @@
                 "timezone": "Asia\/Dubai",
                 "cities": [
                     {
+                        "id": 163967,
+                        "name": "Al Awir",
+                        "latitude": "25.16670000",
+                        "longitude": "55.53330000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163965,
+                        "name": "Al Barsha",
+                        "latitude": "25.10550000",
+                        "longitude": "55.20860000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163971,
+                        "name": "Bur Dubai",
+                        "latitude": "25.26160000",
+                        "longitude": "55.29740000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163972,
+                        "name": "Business Bay",
+                        "latitude": "25.18550000",
+                        "longitude": "55.26620000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163970,
+                        "name": "Deira",
+                        "latitude": "25.27440000",
+                        "longitude": "55.31600000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
                         "id": 32,
                         "name": "Dubai",
                         "latitude": "25.06570000",
                         "longitude": "55.17128000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163968,
+                        "name": "Dubai Marina",
+                        "latitude": "25.08050000",
+                        "longitude": "55.14030000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163969,
+                        "name": "Jebel Ali",
+                        "latitude": "24.99260000",
+                        "longitude": "55.06120000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163973,
+                        "name": "Jumeirah",
+                        "latitude": "25.20480000",
+                        "longitude": "55.23600000",
+                        "timezone": "Asia\/Dubai"
+                    },
+                    {
+                        "id": 163966,
+                        "name": "Naif",
+                        "latitude": "25.27480000",
+                        "longitude": "55.30550000",
                         "timezone": "Asia\/Dubai"
                     }
                 ]
@@ -992895,6 +995445,13 @@
                         "timezone": "Europe\/London"
                     },
                     {
+                        "id": 163986,
+                        "name": "Uxbridge",
+                        "latitude": "51.54850000",
+                        "longitude": "-0.47960000",
+                        "timezone": "Europe\/London"
+                    },
+                    {
                         "id": 51814,
                         "name": "West Drayton",
                         "latitude": "51.50000000",
@@ -1001663,6 +1004220,13 @@
                         "name": "Teddington",
                         "latitude": "51.42233000",
                         "longitude": "-0.33053000",
+                        "timezone": "Europe\/London"
+                    },
+                    {
+                        "id": 163987,
+                        "name": "Twickenham",
+                        "latitude": "51.44400000",
+                        "longitude": "-0.33700000",
                         "timezone": "Europe\/London"
                     },
                     {
@@ -1012521,20 +1015085,6 @@
                         "timezone": "America\/Anchorage"
                     },
                     {
-                        "id": 111143,
-                        "name": "Aleutians East Borough",
-                        "latitude": "54.85000000",
-                        "longitude": "-163.41667000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
-                        "id": 111144,
-                        "name": "Aleutians West Census Area",
-                        "latitude": "52.16298000",
-                        "longitude": "-174.28505000",
-                        "timezone": "America\/Adak"
-                    },
-                    {
                         "id": 111303,
                         "name": "Anchor Point",
                         "latitude": "59.77667000",
@@ -1012546,13 +1015096,6 @@
                         "name": "Anchorage",
                         "latitude": "61.21806000",
                         "longitude": "-149.90028000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
-                        "id": 111306,
-                        "name": "Anchorage Municipality",
-                        "latitude": "61.16667000",
-                        "longitude": "-149.25056000",
                         "timezone": "America\/Anchorage"
                     },
                     {
@@ -1012584,24 +1015127,10 @@
                         "timezone": "America\/Anchorage"
                     },
                     {
-                        "id": 112284,
-                        "name": "Bethel Census Area",
-                        "latitude": "60.75056000",
-                        "longitude": "-160.50056000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
                         "id": 112325,
                         "name": "Big Lake",
                         "latitude": "61.52139000",
                         "longitude": "-149.95444000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
-                        "id": 112813,
-                        "name": "Bristol Bay Borough",
-                        "latitude": "58.75056000",
-                        "longitude": "-156.83333000",
                         "timezone": "America\/Anchorage"
                     },
                     {
@@ -1012617,13 +1015146,6 @@
                         "latitude": "61.52778000",
                         "longitude": "-165.58639000",
                         "timezone": "America\/Nome"
-                    },
-                    {
-                        "id": 114045,
-                        "name": "City and Borough of Wrangell",
-                        "latitude": "56.41331000",
-                        "longitude": "-132.32009000",
-                        "timezone": "America\/Anchorage"
                     },
                     {
                         "id": 114374,
@@ -1012661,13 +1015183,6 @@
                         "timezone": "America\/Anchorage"
                     },
                     {
-                        "id": 115235,
-                        "name": "Denali Borough",
-                        "latitude": "63.78889000",
-                        "longitude": "-150.19167000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
                         "id": 115315,
                         "name": "Diamond Ridge",
                         "latitude": "59.67611000",
@@ -1012679,13 +1015194,6 @@
                         "name": "Dillingham",
                         "latitude": "59.03972000",
                         "longitude": "-158.45750000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
-                        "id": 115341,
-                        "name": "Dillingham Census Area",
-                        "latitude": "59.76193000",
-                        "longitude": "-158.31848000",
                         "timezone": "America\/Anchorage"
                     },
                     {
@@ -1012728,13 +1015236,6 @@
                         "name": "Fairbanks",
                         "latitude": "64.83778000",
                         "longitude": "-147.71639000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
-                        "id": 116291,
-                        "name": "Fairbanks North Star Borough",
-                        "latitude": "64.83333000",
-                        "longitude": "-146.41667000",
                         "timezone": "America\/Anchorage"
                     },
                     {
@@ -1012787,13 +1015288,6 @@
                         "timezone": "America\/Juneau"
                     },
                     {
-                        "id": 117844,
-                        "name": "Haines Borough",
-                        "latitude": "59.25056000",
-                        "longitude": "-135.50056000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
                         "id": 118219,
                         "name": "Healy",
                         "latitude": "63.85694000",
@@ -1012805,13 +1015299,6 @@
                         "name": "Homer",
                         "latitude": "59.64250000",
                         "longitude": "-151.54940000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
-                        "id": 118632,
-                        "name": "Hoonah-Angoon Census Area",
-                        "latitude": "57.94807000",
-                        "longitude": "-134.94153000",
                         "timezone": "America\/Anchorage"
                     },
                     {
@@ -1012850,25 +1015337,11 @@
                         "timezone": "America\/Anchorage"
                     },
                     {
-                        "id": 119441,
-                        "name": "Kenai Peninsula Borough",
-                        "latitude": "60.41667000",
-                        "longitude": "-151.25056000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
                         "id": 119523,
                         "name": "Ketchikan",
                         "latitude": "55.34180000",
                         "longitude": "-131.64757000",
                         "timezone": "America\/Sitka"
-                    },
-                    {
-                        "id": 119524,
-                        "name": "Ketchikan Gateway Borough",
-                        "latitude": "55.50056000",
-                        "longitude": "-131.41667000",
-                        "timezone": "America\/Anchorage"
                     },
                     {
                         "id": 119583,
@@ -1012892,13 +1015365,6 @@
                         "timezone": "America\/Anchorage"
                     },
                     {
-                        "id": 119699,
-                        "name": "Kodiak Island Borough",
-                        "latitude": "57.33333000",
-                        "longitude": "-153.33333000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
                         "id": 119700,
                         "name": "Kodiak Station",
                         "latitude": "57.76587000",
@@ -1012911,13 +1015377,6 @@
                         "latitude": "66.89846000",
                         "longitude": "-162.59809000",
                         "timezone": "America\/Nome"
-                    },
-                    {
-                        "id": 120003,
-                        "name": "Lake and Peninsula Borough",
-                        "latitude": "57.00056000",
-                        "longitude": "-158.00056000",
-                        "timezone": "America\/Anchorage"
                     },
                     {
                         "id": 120024,
@@ -1012939,13 +1015398,6 @@
                         "latitude": "61.87811100",
                         "longitude": "162.08500000",
                         "timezone": "America\/New_York"
-                    },
-                    {
-                        "id": 121399,
-                        "name": "Matanuska-Susitna Borough",
-                        "latitude": "62.50056000",
-                        "longitude": "-150.00556000",
-                        "timezone": "America\/Anchorage"
                     },
                     {
                         "id": 121561,
@@ -1012976,31 +1015428,10 @@
                         "timezone": "America\/Nome"
                     },
                     {
-                        "id": 122935,
-                        "name": "Nome Census Area",
-                        "latitude": "64.83333000",
-                        "longitude": "-163.75056000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
                         "id": 123084,
                         "name": "North Pole",
                         "latitude": "64.75111000",
                         "longitude": "-147.34944000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
-                        "id": 123107,
-                        "name": "North Slope Borough",
-                        "latitude": "69.25056000",
-                        "longitude": "-152.00056000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
-                        "id": 123173,
-                        "name": "Northwest Arctic Borough",
-                        "latitude": "66.83333000",
-                        "longitude": "-161.00056000",
                         "timezone": "America\/Anchorage"
                     },
                     {
@@ -1013016,13 +1015447,6 @@
                         "latitude": "56.81250000",
                         "longitude": "-132.95556000",
                         "timezone": "America\/Sitka"
-                    },
-                    {
-                        "id": 124110,
-                        "name": "Petersburg Borough",
-                        "latitude": "56.76529000",
-                        "longitude": "-133.19313000",
-                        "timezone": "America\/Anchorage"
                     },
                     {
                         "id": 124724,
@@ -1013067,13 +1015491,6 @@
                         "timezone": "America\/Sitka"
                     },
                     {
-                        "id": 126471,
-                        "name": "Sitka City and Borough",
-                        "latitude": "57.08255000",
-                        "longitude": "-135.26917000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
                         "id": 126475,
                         "name": "Skagway",
                         "latitude": "59.46852000",
@@ -1013085,13 +1015502,6 @@
                         "name": "Soldotna",
                         "latitude": "60.48778000",
                         "longitude": "-151.05833000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
-                        "id": 126766,
-                        "name": "Southeast Fairbanks Census Area",
-                        "latitude": "63.75056000",
-                        "longitude": "-143.25056000",
                         "timezone": "America\/Anchorage"
                     },
                     {
@@ -1013137,13 +1015547,6 @@
                         "timezone": "America\/Anchorage"
                     },
                     {
-                        "id": 128084,
-                        "name": "Valdez-Cordova Census Area",
-                        "latitude": "61.50056000",
-                        "longitude": "-144.50056000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
                         "id": 128593,
                         "name": "Wasilla",
                         "latitude": "61.58090000",
@@ -1013176,13 +1015579,6 @@
                         "name": "Yakutat City and Borough",
                         "latitude": "59.66667000",
                         "longitude": "-139.13333000",
-                        "timezone": "America\/Anchorage"
-                    },
-                    {
-                        "id": 129731,
-                        "name": "Yukon-Koyukuk Census Area",
-                        "latitude": "65.70000000",
-                        "longitude": "-152.71667000",
                         "timezone": "America\/Anchorage"
                     }
                 ]
@@ -1153299,9 +1155695,9 @@
         "numeric_code": "716",
         "phonecode": "263",
         "capital": "Harare",
-        "currency": "ZWL",
-        "currency_name": "Zimbabwe Dollar",
-        "currency_symbol": "$",
+        "currency": "ZWG",
+        "currency_name": "Zimbabwe Gold",
+        "currency_symbol": "ZiG",
         "tld": ".zw",
         "native": "Zimbabwe",
         "population": 17073087,

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xolmis Desktop Schema Explorer</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans h-screen flex flex-col overflow-hidden">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-gray-800 border-b border-gray-700 px-6 py-3 flex items-center justify-between shrink-0">
+        <div class="flex items-center space-x-3">
+            <div class="p-2 bg-indigo-600 rounded-lg text-white">
+                <i data-lucide="database" class="w-5 h-5"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg leading-tight text-white flex items-center gap-2">
+                    xolmis_desktop
+                    <span class="text-xs font-mono bg-indigo-900/60 text-indigo-300 border border-indigo-700/50 px-2 py-0.5 rounded">SQLite</span>
+                </h1>
+                <p class="text-xs text-gray-400">Ornithological Research Database Schema</p>
+            </div>
+        </div>
+
+        <!-- Global Stats & Controls -->
+        <div class="flex items-center space-x-6 text-sm">
+            <div class="flex items-center space-x-4 text-gray-400 border-r border-gray-700 pr-6">
+                <div><span class="text-white font-semibold" id="stat-tables">0</span> <span class="text-xs">Tables</span></div>
+                <div><span class="text-white font-semibold" id="stat-partials">2</span> <span class="text-xs">Partials</span></div>
+                <div><span class="text-white font-semibold" id="stat-refs">0</span> <span class="text-xs">Relations</span></div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="file" id="dbml-file" accept=".dbml,text/plain" class="hidden" onchange="loadDBMLFile(event)">
+                <button onclick="document.getElementById('dbml-file').click()" class="px-3 py-1.5 rounded-md text-xs font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors flex items-center gap-1.5">
+                    <i data-lucide="file-up" class="w-4 h-4"></i> Load DBML
+                </button>
+                <button id="btn-view-schema" onclick="switchView('schema')" class="px-3 py-1.5 rounded-md text-xs font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition-colors flex items-center gap-1.5">
+                    <i data-lucide="layout-grid" class="w-4 h-4"></i> Schema Explorer
+                </button>
+                <button id="btn-view-ddl" onclick="switchView('ddl')" class="px-3 py-1.5 rounded-md text-xs font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors flex items-center gap-1.5">
+                    <i data-lucide="code" class="w-4 h-4"></i> Export SQL DDL
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div id="view-schema" class="flex-1 flex overflow-hidden">
+        <!-- Sidebar: Table Search & List -->
+        <aside class="w-80 bg-gray-800/50 border-r border-gray-700 flex flex-col shrink-0">
+            <!-- Search Box -->
+            <div class="p-3 border-b border-gray-700">
+                <div class="relative">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-gray-400"></i>
+                    <input type="text" id="search-input" oninput="filterTables()" placeholder="Search tables, fields, refs..."
+                        class="w-full bg-gray-900 border border-gray-700 rounded-md pl-9 pr-3 py-1.5 text-xs text-gray-200 placeholder-gray-500 focus:outline-none focus:border-indigo-500">
+                </div>
+            </div>
+
+            <!-- Category / Group Filter Tabs -->
+            <div class="flex border-b border-gray-700 bg-gray-800 text-xs">
+                <button onclick="setCategoryFilter('all')" class="cat-tab flex-1 py-2 text-center text-indigo-400 font-medium border-b-2 border-indigo-500" data-cat="all">All (<span id="count-all">0</span>)</button>
+                <button onclick="setCategoryFilter('core')" class="cat-tab flex-1 py-2 text-center text-gray-400 font-medium hover:text-gray-200" data-cat="core">Core</button>
+                <button onclick="setCategoryFilter('collection')" class="cat-tab flex-1 py-2 text-center text-gray-400 font-medium hover:text-gray-200" data-cat="collection">Collection</button>
+                <button onclick="setCategoryFilter('taxa')" class="cat-tab flex-1 py-2 text-center text-gray-400 font-medium hover:text-gray-200" data-cat="taxa">Taxa</button>
+            </div>
+
+            <!-- Table Navigation List -->
+            <div id="table-list" class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1">
+                <!-- Dynamically Populated -->
+            </div>
+        </aside>
+
+        <!-- Details Panel -->
+        <main class="flex-1 bg-gray-900 overflow-y-auto custom-scrollbar p-6">
+            <div id="table-detail-container" class="max-w-5xl mx-auto space-y-6">
+                <!-- Dynamically populated schema detail -->
+            </div>
+        </main>
+    </div>
+
+    <!-- SQL DDL Output View (Hidden by default) -->
+    <div id="view-ddl" class="flex-1 bg-gray-900 p-6 overflow-y-auto custom-scrollbar hidden">
+        <div class="max-w-5xl mx-auto space-y-4">
+            <div class="flex justify-between items-center bg-gray-800 p-4 rounded-lg border border-gray-700">
+                <div>
+                    <h2 class="text-base font-semibold text-white">SQLite DDL Script</h2>
+                    <p class="text-xs text-gray-400">Generated SQLite CREATE TABLE statements based on DBML definitions.</p>
+                </div>
+                <button onclick="copyDDL()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-xs font-medium flex items-center gap-1.5">
+                    <i data-lucide="copy" class="w-4 h-4"></i> Copy SQL
+                </button>
+            </div>
+            <pre class="bg-gray-950 border border-gray-800 rounded-lg p-4 font-mono text-xs text-indigo-300 overflow-x-auto leading-relaxed custom-scrollbar" id="ddl-output"></pre>
+        </div>
+    </div>
+
+    <script>
+        // DBML Schema JSON representation
+        const schemaData = {
+            partials: {
+                audit_fields: [
+                    { name: "user_inserted", type: "integer" },
+                    { name: "user_updated", type: "integer" },
+                    { name: "insert_date", type: "datetime" },
+                    { name: "update_date", type: "datetime" },
+                    { name: "exported_status", type: "boolean", default: "false" },
+                    { name: "marked_status", type: "boolean", default: "false" },
+                    { name: "active_status", type: "boolean", default: "true" },
+                    { name: "inactivated_by", type: "varchar(5)" }
+                ],
+                license_fields: [
+                    { name: "license_type", type: "varchar(20)" },
+                    { name: "license_year", type: "integer" },
+                    { name: "license_uri", type: "varchar(200)" },
+                    { name: "license_notes", type: "varchar(100)" },
+                    { name: "license_owner", type: "varchar(150)" }
+                ]
+            },
+            tables: [
+                {
+                    name: "audio_library",
+                    category: "core",
+                    partials: ["license_fields", "audit_fields"],
+                    fields: [
+                        { name: "audio_id", type: "integer", pk: true, inc: true, notNull: true },
+                        { name: "full_name", type: "varchar(100)" },
+                        { name: "taxon_id", type: "integer", ref: "zoo_taxa.taxon_id" },
+                        { name: "individual_id", type: "integer", ref: "individuals.individual_id" },
+                        { name: "specimen_id", type: "integer", ref: "specimens.specimen_id" },
+                        { name: "sighting_id", type: "integer", ref: "sightings.sighting_id" },
+                        { name: "audio_type", type: "varchar(15)" },
+                        { name: "recording_date", type: "date" },
+                        { name: "recording_time", type: "time" },
+                        { name: "author_id", type: "integer", ref: "people.person_id" },
+                        { name: "locality_id", type: "integer", ref: "gazetteer.site_id" },
+                        { name: "coordinate_precision", type: "char(1)", check: "coordinate_precision IN ('E', 'A', 'R')" },
+                        { name: "longitude", type: "real", check: "longitude BETWEEN -180 AND 180" },
+                        { name: "latitude", type: "real", check: "latitude BETWEEN -90 AND 90" },
+                        { name: "temperature", type: "real" },
+                        { name: "cloud_cover", type: "integer", check: "cloud_cover BETWEEN 0 AND 100" },
+                        { name: "precipitation", type: "char(1)", check: "precipitation IN ('N', 'F', 'M', 'D', 'R')" },
+                        { name: "relative_humidity", type: "integer", check: "relative_humidity BETWEEN 0 AND 100" },
+                        { name: "wind_speed", type: "integer", check: "wind_speed BETWEEN 0 AND 12" },
+                        { name: "recording_context", type: "varchar(60)" },
+                        { name: "habitat", type: "varchar(60)" },
+                        { name: "playback_used", type: "boolean", default: "false" },
+                        { name: "subjects_tally", type: "integer" },
+                        { name: "distance", type: "real" },
+                        { name: "recorder_model", type: "varchar(60)" },
+                        { name: "mic_model", type: "varchar(60)" },
+                        { name: "filter_model", type: "varchar(60)" },
+                        { name: "file_path", type: "varchar(250)" },
+                        { name: "subtitle", type: "text" },
+                        { name: "notes", type: "text" }
+                    ],
+                    indexes: [
+                        { name: "idx_audio_library_date", fields: ["recording_date"] },
+                        { name: "idx_audio_library_fullname", fields: ["full_name"], note: "COLLATE NOCASE" },
+                        { name: "idx_audio_library_file_path", fields: ["file_path"], note: "COLLATE NOCASE" }
+                    ]
+                },
+                {
+                    name: "band_history",
+                    category: "core",
+                    partials: ["audit_fields"],
+                    fields: [
+                        { name: "event_id", type: "integer", pk: true, inc: true, notNull: true },
+                        { name: "band_id", type: "integer", ref: "bands.band_id", onDelete: "cascade" },
+                        { name: "event_type", type: "char(5)", notNull: true },
+                        { name: "event_date", type: "date" },
+                        { name: "order_number", type: "integer" },
+                        { name: "supplier_id", type: "integer", ref: "institutions.institution_id" },
+                        { name: "sender_id", type: "integer", ref: "people.person_id" },
+                        { name: "requester_id", type: "integer", ref: "people.person_id" },
+                        { name: "notes", type: "text" },
+                        { name: "individual_id", type: "integer", ref: "individuals.individual_id" },
+                        { name: "capture_id", type: "integer", ref: "captures.capture_id" },
+                        { name: "reported", type: "boolean", default: "false" },
+                        { name: "report_date", type: "date" }
+                    ],
+                    indexes: [{ name: "idx_band_history_date", fields: ["event_date"], note: "COLLATE BINARY ASC" }]
+                },
+                {
+                    name: "bands",
+                    category: "core",
+                    partials: ["audit_fields"],
+                    fields: [
+                        { name: "band_id", type: "integer", pk: true, inc: true, notNull: true },
+                        { name: "band_size", type: "varchar(5)" },
+                        { name: "band_number", type: "integer" },
+                        { name: "band_status", type: "varchar(5)" },
+                        { name: "band_type", type: "varchar(5)" },
+                        { name: "band_prefix", type: "varchar(10)" },
+                        { name: "band_suffix", type: "varchar(10)" },
+                        { name: "band_color", type: "varchar(10)" },
+                        { name: "band_source", type: "varchar(5)" },
+                        { name: "supplier_id", type: "integer", ref: "institutions.institution_id" },
+                        { name: "requester_id", type: "integer", ref: "people.person_id" },
+                        { name: "carrier_id", type: "integer", ref: "people.person_id" },
+                        { name: "individual_id", type: "integer", ref: "individuals.individual_id" },
+                        { name: "project_id", type: "integer" },
+                        { name: "notes", type: "text" },
+                        { name: "full_name", type: "varchar(40)" }
+                    ],
+                    indexes: [
+                        { name: "idx_bands_fullname", fields: ["full_name"], note: "COLLATE NOCASE" },
+                        { name: "idx_bands_number", fields: ["band_number"] }
+                    ]
+                },
+                {
+                    name: "captures",
+                    category: "core",
+                    partials: ["audit_fields"],
+                    fields: [
+                        { name: "capture_id", type: "integer", pk: true, inc: true, notNull: true },
+                        { name: "survey_id", type: "integer", ref: "surveys.survey_id" },
+                        { name: "individual_id", type: "integer", ref: "individuals.individual_id" },
+                        { name: "taxon_id", type: "integer", ref: "zoo_taxa.taxon_id" },
+                        { name: "full_name", type: "varchar(120)" },
+                        { name: "project_id", type: "integer", ref: "projects.project_id" },
+                        { name: "capture_date", type: "date", notNull: true },
+                        { name: "capture_time", type: "time" },
+                        { name: "locality_id", type: "integer", ref: "gazetteer.site_id" },
+                        { name: "net_station_id", type: "integer", ref: "sampling_plots.sampling_plot_id" },
+                        { name: "bander_id", type: "integer", ref: "people.person_id" },
+                        { name: "weight", type: "real" },
+                        { name: "tarsus_length", type: "real" },
+                        { name: "wing_chord", type: "real" },
+                        { name: "tail_length", type: "real" },
+                        { name: "notes", type: "text" }
+                    ],
+                    indexes: [
+                        { name: "idx_captures_date", fields: ["capture_date"] },
+                        { name: "idx_captures_fullname", fields: ["full_name"], note: "COLLATE NOCASE" }
+                    ]
+                },
+                {
+                    name: "zoo_taxa",
+                    category: "taxa",
+                    partials: ["audit_fields"],
+                    fields: [
+                        { name: "taxon_id", type: "integer", pk: true, inc: true, notNull: true },
+                        { name: "scientific_name", type: "varchar(100)", notNull: true, unique: true },
+                        { name: "authorship", type: "varchar(150)" },
+                        { name: "formatted_name", type: "varchar(250)" },
+                        { name: "quick_code", type: "varchar(10)" },
+                        { name: "rank_id", type: "integer", notNull: true, ref: "taxon_ranks.rank_id" },
+                        { name: "parent_taxon_id", type: "integer" },
+                        { name: "iucn_status", type: "varchar(5)" },
+                        { name: "ebird_code", type: "varchar(20)" }
+                    ],
+                    indexes: [
+                        { name: "idx_zoo_taxa_authorship", fields: ["authorship"], note: "COLLATE NOCASE" },
+                        { name: "idx_zoo_taxa_ebird_code", fields: ["ebird_code"] }
+                    ]
+                },
+                {
+                    name: "projects",
+                    category: "core",
+                    partials: ["audit_fields"],
+                    fields: [
+                        { name: "project_id", type: "integer", pk: true, inc: true, notNull: true },
+                        { name: "project_title", type: "varchar(150)", notNull: true, unique: true },
+                        { name: "short_title", type: "varchar(60)" },
+                        { name: "start_date", type: "date" },
+                        { name: "end_date", type: "date" },
+                        { name: "protocol_number", type: "varchar(30)" },
+                        { name: "project_status", type: "varchar(5)" }
+                    ],
+                    indexes: [
+                        { name: "idx_projects_short_title", fields: ["short_title"], note: "COLLATE NOCASE" }
+                    ]
+                },
+                {
+                    name: "people",
+                    category: "core",
+                    partials: ["audit_fields"],
+                    fields: [
+                        { name: "person_id", type: "integer", pk: true, inc: true, notNull: true },
+                        { name: "full_name", type: "varchar(100)", notNull: true },
+                        { name: "abbreviation", type: "varchar(10)", notNull: true, unique: true },
+                        { name: "email_addr", type: "varchar(60)" },
+                        { name: "institution_id", type: "integer", ref: "institutions.institution_id" }
+                    ],
+                    indexes: [
+                        { name: "idx_people_fullname", fields: ["full_name"], note: "COLLATE NOCASE" }
+                    ]
+                },
+                {
+                    name: "gazetteer",
+                    category: "core",
+                    partials: ["audit_fields"],
+                    fields: [
+                        { name: "site_id", type: "integer", pk: true, inc: true, notNull: true },
+                        { name: "site_name", type: "varchar(60)", notNull: true },
+                        { name: "abbreviation", type: "varchar(10)" },
+                        { name: "longitude", type: "real" },
+                        { name: "latitude", type: "real" },
+                        { name: "altitude", type: "real" },
+                        { name: "full_name", type: "varchar(180)" },
+                        { name: "ebird_name", type: "varchar(150)" }
+                    ],
+                    indexes: [
+                        { name: "idx_gazetteer_coordinate", fields: ["longitude", "latitude"] },
+                        { name: "idx_gazetteer_site_name", fields: ["site_name"], note: "COLLATE NOCASE" }
+                    ]
+                }
+            ]
+        };
+
+        let currentCategory = 'all';
+        let selectedTable = schemaData.tables[0].name;
+        const collectionTables = new Set([
+            'audio_library', 'band_history', 'bands', 'captures', 'eggs', 'expeditions',
+            'feathers', 'images', 'individuals', 'nest_owners', 'nest_revisions', 'nests',
+            'nets_effort', 'permanent_nets', 'poi_library', 'sample_preps', 'sampling_plots',
+            'sighting_observers', 'sightings', 'specimen_collectors', 'specimens', 'survey_team',
+            'surveys', 'vegetation', 'videos', 'weather_logs'
+        ]);
+
+        function getTableCategory(name) {
+            if (name.startsWith('zoo_') || name === 'botanic_taxa' || name === 'taxon_ranks') return 'taxa';
+            return collectionTables.has(name) ? 'collection' : 'core';
+        }
+
+        schemaData.tables.forEach(table => {
+            table.category = getTableCategory(table.name);
+        });
+
+        function parseDBML(dbml) {
+            const source = dbml.replace(/\/\*[\s\S]*?\*\//g, '');
+            const lines = source.split(/\r?\n/);
+            const partials = {};
+            const tables = [];
+            const references = [];
+
+            for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+                const header = lines[lineIndex].match(/^\s*(TablePartial|Table)\s+(\w+)\s*\{/);
+                if (!header) continue;
+
+                const isPartial = header[1] === 'TablePartial';
+                const name = header[2];
+                const body = [];
+                let depth = 1;
+                while (++lineIndex < lines.length && depth > 0) {
+                    const line = lines[lineIndex];
+                    depth += (line.match(/\{/g) || []).length;
+                    depth -= (line.match(/\}/g) || []).length;
+                    if (depth > 0) body.push(line);
+                }
+
+                if (isPartial) {
+                    partials[name] = body.map(parseField).filter(Boolean);
+                    continue;
+                }
+
+                const table = {
+                    name,
+                    category: getTableCategory(name),
+                    partials: [],
+                    fields: [],
+                    indexes: []
+                };
+                let inIndexes = false;
+
+                body.forEach(line => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return;
+                    if (trimmed === 'indexes {') {
+                        inIndexes = true;
+                        return;
+                    }
+                    if (inIndexes) {
+                        if (trimmed === '}') {
+                            inIndexes = false;
+                            return;
+                        }
+                        const index = parseIndex(trimmed, name);
+                        if (index) table.indexes.push(index);
+                        return;
+                    }
+                    if (trimmed.startsWith('~')) {
+                        table.partials.push(trimmed.slice(1));
+                        return;
+                    }
+                    const field = parseField(line);
+                    if (field) table.fields.push(field);
+                });
+                tables.push(table);
+            }
+
+            lines.forEach(line => {
+                const reference = line.match(/^\s*Ref:\s+(\w+)\.(\w+)\s*(?:>|->|-)\s*(\w+)\.(\w+)(?:\s+\[([^\]]*)\])?/);
+                if (reference) references.push([...reference.slice(1, 5), reference[5] || '']);
+            });
+
+            references.forEach(([tableName, fieldName, targetTable, targetField, actions]) => {
+                const table = tables.find(item => item.name === tableName);
+                const field = table && table.fields.find(item => item.name === fieldName);
+                if (field) {
+                    field.ref = `${targetTable}.${targetField}`;
+                    const onDelete = actions.match(/\bdelete:\s*(set null|cascade|restrict|no action)\b/i);
+                    if (onDelete) field.onDelete = onDelete[1].toLowerCase();
+                }
+            });
+
+            function parseField(line) {
+                const fieldMatch = line.trim().match(/^(\w+)\s+([a-z]+(?:\([^)]*\))?)(.*)$/i);
+                if (!fieldMatch) return null;
+                const [, fieldName, type, remainder] = fieldMatch;
+                const attributes = (remainder.match(/\[([^\]]*)\]/g) || []).join(' ');
+                const field = { name: fieldName, type };
+                if (/\bprimary key\b/i.test(attributes)) field.pk = true;
+                if (/\bincrement\b/i.test(attributes)) field.inc = true;
+                if (/\bnot null\b/i.test(attributes)) field.notNull = true;
+                if (/\bunique\b/i.test(attributes)) field.unique = true;
+                const defaultValue = attributes.match(/\bdefault:\s*(false|true|-?\d+(?:\.\d+)?|'[^']*'|"[^"]*")/i);
+                if (defaultValue) field.default = defaultValue[1];
+                const note = attributes.match(/\bnote:\s*'([^']*)'/i);
+                if (note) {
+                    field.note = note[1];
+                    if (/\bAUTOINCREMENT\b/i.test(note[1])) field.inc = true;
+                }
+                const inlineReference = attributes.match(/\bref:\s*>?\s*(\w+)\.(\w+)/i);
+                if (inlineReference) field.ref = `${inlineReference[1]}.${inlineReference[2]}`;
+                const check = remainder.match(/\/\/\s*\[check:\s*`([^`]+)`\]/i);
+                if (check) field.check = check[1];
+                return field;
+            }
+
+            function parseIndex(line, tableName) {
+                const attributeStart = line.indexOf('[');
+                if (attributeStart < 0) return null;
+                const indexedFields = line.slice(0, attributeStart).trim().replace(/^\(|\)$/g, '');
+                const attributes = line.slice(attributeStart);
+                const nameMatch = attributes.match(/\bname:\s*'([^']+)'/);
+                const isPrimaryKey = /\bpk\b/i.test(attributes);
+                if (!nameMatch && !isPrimaryKey) return null;
+                const noteMatch = attributes.match(/\bnote:\s*'([^']*)'/);
+                return {
+                    name: nameMatch ? nameMatch[1] : `${tableName}_primary_key`,
+                    fields: indexedFields.split(',').map(field => field.trim()),
+                    ...(noteMatch ? { note: noteMatch[1] } : {}),
+                    ...(/\bunique\b/i.test(attributes) ? { unique: true } : {}),
+                    ...(isPrimaryKey ? { pk: true } : {})
+                };
+            }
+
+            return { partials, tables };
+        }
+
+        async function applyDBML(dbml) {
+            const parsedSchema = parseDBML(dbml);
+            if (!parsedSchema.tables.length) throw new Error('No tables were found in the DBML file.');
+            schemaData.partials = parsedSchema.partials;
+            schemaData.tables = parsedSchema.tables;
+            selectedTable = schemaData.tables[0].name;
+            calculateStats();
+            renderTableList();
+            renderTableDetail(selectedTable);
+            generateDDL();
+        }
+
+        async function loadDBMLFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            try {
+                await applyDBML(await file.text());
+            } catch (error) {
+                alert(`Could not load DBML: ${error.message}`);
+            }
+            event.target.value = '';
+        }
+
+        function init() {
+            lucide.createIcons();
+            calculateStats();
+            renderTableList();
+            renderTableDetail(selectedTable);
+            generateDDL();
+            fetch('database.dbml')
+                .then(response => {
+                    if (!response.ok) throw new Error('DBML file not available');
+                    return response.text();
+                })
+                .then(applyDBML)
+                .catch(() => {});
+        }
+
+        function calculateStats() {
+            document.getElementById('stat-tables').innerText = schemaData.tables.length;
+            document.getElementById('count-all').innerText = schemaData.tables.length;
+
+            let refsCount = 0;
+            schemaData.tables.forEach(t => {
+                t.fields.forEach(f => {
+                    if (f.ref) refsCount++;
+                });
+            });
+            document.getElementById('stat-refs').innerText = refsCount;
+        }
+
+        function setCategoryFilter(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-tab').forEach(tab => {
+                if (tab.dataset.cat === cat) {
+                    tab.className = "cat-tab flex-1 py-2 text-center text-indigo-400 font-medium border-b-2 border-indigo-500";
+                } else {
+                    tab.className = "cat-tab flex-1 py-2 text-center text-gray-400 font-medium hover:text-gray-200";
+                }
+            });
+            renderTableList();
+        }
+
+        function filterTables() {
+            renderTableList();
+        }
+
+        function renderTableList() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const listContainer = document.getElementById('table-list');
+            listContainer.innerHTML = '';
+
+            const filtered = schemaData.tables.filter(table => {
+                const matchesCat = currentCategory === 'all' || table.category === currentCategory;
+                const matchesSearch = table.name.toLowerCase().includes(query) ||
+                    table.fields.some(f => f.name.toLowerCase().includes(query));
+                return matchesCat && matchesSearch;
+            });
+
+            filtered.forEach(table => {
+                const isActive = table.name === selectedTable;
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left px-3 py-2 rounded-md transition-colors flex items-center justify-between text-xs ${
+                    isActive
+                        ? 'bg-indigo-600/20 text-indigo-300 font-semibold border border-indigo-500/40'
+                        : 'text-gray-300 hover:bg-gray-800'
+                }`;
+                btn.onclick = () => {
+                    selectedTable = table.name;
+                    renderTableList();
+                    renderTableDetail(selectedTable);
+                };
+
+                btn.innerHTML = `
+                    <span class="flex items-center gap-2">
+                        <i data-lucide="table" class="w-3.5 h-3.5 text-gray-400"></i>
+                        ${table.name}
+                    </span>
+                    <span class="text-[10px] text-gray-500">${table.fields.length} cols</span>
+                `;
+                listContainer.appendChild(btn);
+            });
+            lucide.createIcons();
+        }
+
+        function renderTableDetail(tableName) {
+            const table = schemaData.tables.find(t => t.name === tableName);
+            if (!table) return;
+
+            const container = document.getElementById('table-detail-container');
+
+            // Find FK relationships pointing to or from this table
+            let incomingRefs = [];
+            schemaData.tables.forEach(t => {
+                t.fields.forEach(f => {
+                    if (f.ref && f.ref.startsWith(tableName + '.')) {
+                        incomingRefs.push({ fromTable: t.name, fromField: f.name, toField: f.ref.split('.')[1] });
+                    }
+                });
+            });
+
+            container.innerHTML = `
+                <!-- Header -->
+                <div class="bg-gray-800 border border-gray-700 rounded-lg p-5 flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-3">
+                            <h2 class="text-xl font-bold text-white font-mono">${table.name}</h2>
+                            <span class="text-xs bg-indigo-900/60 text-indigo-300 border border-indigo-700/50 px-2.5 py-0.5 rounded-full">Table</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">
+                            ${table.fields.length} direct columns ${table.partials ? `+ ${table.partials.join(', ')}` : ''}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Fields Table -->
+                <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
+                    <div class="px-4 py-3 border-b border-gray-700 bg-gray-800/80 flex items-center justify-between">
+                        <h3 class="text-sm font-semibold text-gray-200">Columns & Data Types</h3>
+                    </div>
+                    <table class="w-full text-left text-xs text-gray-300">
+                        <thead class="bg-gray-900/60 text-gray-400 uppercase text-[10px]">
+                            <tr>
+                                <th class="px-4 py-2.5">Field Name</th>
+                                <th class="px-4 py-2.5">Type</th>
+                                <th class="px-4 py-2.5">Attributes</th>
+                                <th class="px-4 py-2.5">Foreign Key / Constraint</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700/50">
+                            ${table.fields.map(f => `
+                                <tr class="hover:bg-gray-750">
+                                    <td class="px-4 py-2.5 font-mono text-white flex items-center gap-1.5">
+                                        ${f.pk ? '<i data-lucide="key" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>' : ''}
+                                        ${f.name}
+                                    </td>
+                                    <td class="px-4 py-2.5 font-mono text-indigo-300">${f.type}</td>
+                                    <td class="px-4 py-2.5 space-x-1">
+                                        ${f.pk ? '<span class="bg-amber-900/50 text-amber-300 border border-amber-700/50 px-1.5 py-0.5 rounded text-[10px]">PK</span>' : ''}
+                                        ${f.inc ? '<span class="bg-cyan-900/50 text-cyan-300 border border-cyan-700/50 px-1.5 py-0.5 rounded text-[10px]">AUTOINCREMENT</span>' : ''}
+                                        ${f.notNull ? '<span class="bg-gray-700 text-gray-300 px-1.5 py-0.5 rounded text-[10px]">NOT NULL</span>' : ''}
+                                        ${f.unique ? '<span class="bg-purple-900/50 text-purple-300 border border-purple-700/50 px-1.5 py-0.5 rounded text-[10px]">UNIQUE</span>' : ''}
+                                        ${f.default ? `<span class="bg-gray-700/60 text-gray-300 px-1.5 py-0.5 rounded text-[10px]">default: ${f.default}</span>` : ''}
+                                    </td>
+                                    <td class="px-4 py-2.5 font-mono text-xs">
+                                        ${f.ref ? `<span class="text-indigo-400 hover:underline cursor-pointer" onclick="navigateTo('${f.ref.split('.')[0]}')">Ref: ${f.ref}</span>` : ''}
+                                        ${f.check ? `<span class="text-emerald-400 block text-[10px]">CHECK: ${f.check}</span>` : ''}
+                                        ${f.note && !/^AUTOINCREMENT$/i.test(f.note.trim()) ? `<span class="text-gray-400 block text-[10px]">${f.note}</span>` : ''}
+                                    </td>
+                                </tr>
+                            `).join('')}
+
+                            ${table.partials ? table.partials.map(pName => `
+                                <tr class="bg-gray-900/30">
+                                    <td colspan="4" class="px-4 py-2 text-[11px] text-gray-400 italic">
+                                        Included Partial: <span class="font-mono text-indigo-400 font-semibold">~${pName}</span>
+                                    </td>
+                                </tr>
+                                ${schemaData.partials[pName].map(pf => `
+                                    <tr class="hover:bg-gray-750 opacity-80">
+                                        <td class="px-4 py-2 font-mono text-gray-300 pl-8">• ${pf.name}</td>
+                                        <td class="px-4 py-2 font-mono text-indigo-300/80">${pf.type}</td>
+                                        <td class="px-4 py-2 space-x-1">
+                                            ${pf.default ? `<span class="bg-gray-700/50 text-gray-400 px-1.5 py-0.5 rounded text-[10px]">default: ${pf.default}</span>` : ''}
+                                        </td>
+                                        <td class="px-4 py-2 font-mono text-xs text-gray-500">Partial field</td>
+                                    </tr>
+                                `).join('')}
+                            `).join('') : ''}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Indexes & Incoming Relations -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Indexes -->
+                    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+                        <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                            <i data-lucide="layers" class="w-4 h-4 text-indigo-400"></i> Indexes
+                        </h3>
+                        <div class="space-y-2">
+                            ${table.indexes && table.indexes.length > 0 ? table.indexes.map(idx => `
+                                <div class="bg-gray-900/80 border border-gray-700/60 p-2.5 rounded text-xs">
+                                    <div class="font-mono text-indigo-300 font-semibold">${idx.name} ${idx.pk ? '(PRIMARY KEY)' : idx.unique ? '(UNIQUE)' : ''}</div>
+                                    <div class="text-gray-400 font-mono text-[11px] mt-0.5">(${idx.fields.join(', ')})</div>
+                                    ${idx.note ? `<div class="text-[10px] text-gray-500 mt-1">${idx.note}</div>` : ''}
+                                </div>
+                            `).join('') : '<p class="text-xs text-gray-500 italic">No custom indexes defined.</p>'}
+                        </div>
+                    </div>
+
+                    <!-- Referenced By -->
+                    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+                        <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                            <i data-lucide="git-fork" class="w-4 h-4 text-emerald-400"></i> Referenced By
+                        </h3>
+                        <div class="space-y-2">
+                            ${incomingRefs.length > 0 ? incomingRefs.map(r => `
+                                <div class="bg-gray-900/80 border border-gray-700/60 p-2.5 rounded text-xs flex justify-between items-center">
+                                    <span class="font-mono text-gray-200">${r.fromTable}.${r.fromField}</span>
+                                    <button onclick="navigateTo('${r.fromTable}')" class="text-[10px] bg-indigo-900/50 hover:bg-indigo-800 text-indigo-300 px-2 py-0.5 rounded border border-indigo-700/40">View Table</button>
+                                </div>
+                            `).join('') : '<p class="text-xs text-gray-500 italic">No incoming references found.</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function navigateTo(tableName) {
+            selectedTable = tableName;
+            renderTableList();
+            renderTableDetail(tableName);
+        }
+
+        function switchView(view) {
+            document.getElementById('view-schema').classList.toggle('hidden', view !== 'schema');
+            document.getElementById('view-ddl').classList.toggle('hidden', view !== 'ddl');
+
+            document.getElementById('btn-view-schema').className = view === 'schema'
+                ? 'px-3 py-1.5 rounded-md text-xs font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition-colors flex items-center gap-1.5'
+                : 'px-3 py-1.5 rounded-md text-xs font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors flex items-center gap-1.5';
+
+            document.getElementById('btn-view-ddl').className = view === 'ddl'
+                ? 'px-3 py-1.5 rounded-md text-xs font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition-colors flex items-center gap-1.5'
+                : 'px-3 py-1.5 rounded-md text-xs font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors flex items-center gap-1.5';
+        }
+
+        function generateDDL() {
+            let ddl = `-- SQLite Schema generated from DBML\n\n`;
+
+            schemaData.tables.forEach(table => {
+                ddl += `CREATE TABLE ${table.name} (\n`;
+
+                let colDefs = [];
+                table.fields.forEach(f => {
+                    let col = `  ${f.name} ${f.type.toUpperCase()}`;
+                    if (f.pk) col += ` PRIMARY KEY`;
+                    if (f.inc) col += ` AUTOINCREMENT`;
+                    if (f.notNull) col += ` NOT NULL`;
+                    if (f.unique) col += ` UNIQUE`;
+                    if (f.default !== undefined) col += ` DEFAULT ${f.default}`;
+                    if (f.check) col += ` CHECK (${f.check})`;
+                    if (f.note && !/\bAUTOINCREMENT\b/i.test(f.note)) col += ` ${f.note}`;
+                    colDefs.push(col);
+                });
+
+                if (table.partials) {
+                    table.partials.forEach(pName => {
+                        schemaData.partials[pName].forEach(pf => {
+                            let col = `  ${pf.name} ${pf.type.toUpperCase()}`;
+                            if (pf.default !== undefined) col += ` DEFAULT ${pf.default}`;
+                            colDefs.push(col);
+                        });
+                    });
+                }
+
+                table.indexes.filter(idx => idx.pk || idx.unique).forEach(idx => {
+                    const constraint = idx.pk ? 'PRIMARY KEY' : 'UNIQUE';
+                    colDefs.push(`  ${constraint} (${idx.fields.join(', ')})`);
+                });
+                table.fields.filter(field => field.ref).forEach(field => {
+                    const [targetTable, targetField] = field.ref.split('.');
+                    let foreignKey = `  FOREIGN KEY (${field.name}) REFERENCES ${targetTable} (${targetField})`;
+                    if (field.onDelete) foreignKey += ` ON DELETE ${field.onDelete.toUpperCase()}`;
+                    colDefs.push(foreignKey);
+                });
+
+                ddl += colDefs.join(",\n");
+                ddl += `\n);\n\n`;
+
+                if (table.indexes) {
+                    table.indexes.filter(idx => !idx.pk && !idx.unique).forEach(idx => {
+                        ddl += `CREATE INDEX ${idx.name} ON ${table.name} (${idx.fields.join(', ')});\n`;
+                    });
+                    ddl += `\n`;
+                }
+            });
+
+            document.getElementById('ddl-output').innerText = ddl;
+        }
+
+        function copyDDL() {
+            const code = document.getElementById('ddl-output').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                alert("SQL DDL copied to clipboard!");
+            });
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

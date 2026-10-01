@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Database documentation in HTML using `database.dbml` file.
+
+### Changed
+
+- Updated links to Xolmis website.
+- Updated **Countries States Cities Database** to v3.2-export.8.
+
 ## [0.1.0] - 2026-09-19
 
 ### Added
