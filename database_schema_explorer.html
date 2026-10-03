@@ -51,8 +51,9 @@
             </div>
             <div class="flex items-center space-x-2">
                 <input type="file" id="dbml-file" accept=".dbml,text/plain" class="hidden" onchange="loadDBMLFile(event)">
-                <button onclick="document.getElementById('dbml-file').click()" class="px-3 py-1.5 rounded-md text-xs font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors flex items-center gap-1.5">
+                <button id="btn-load-dbml" onclick="document.getElementById('dbml-file').click()" class="px-3 py-1.5 rounded-md text-xs font-medium bg-amber-600 text-white hover:bg-amber-500 transition-colors flex items-center gap-1.5">
                     <i data-lucide="file-up" class="w-4 h-4"></i> Load DBML
+                    <span id="dbml-required-indicator" class="text-[10px] uppercase tracking-wide bg-amber-900/50 border border-amber-400/40 px-1.5 py-0.5 rounded">Required</span>
                 </button>
                 <button id="btn-view-schema" onclick="switchView('schema')" class="px-3 py-1.5 rounded-md text-xs font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition-colors flex items-center gap-1.5">
                     <i data-lucide="layout-grid" class="w-4 h-4"></i> Schema Explorer
@@ -67,7 +68,7 @@
     <!-- Main Content Area -->
     <div id="view-schema" class="flex-1 flex overflow-hidden">
         <!-- Sidebar: Table Search & List -->
-        <aside class="w-80 bg-gray-800/50 border-r border-gray-700 flex flex-col shrink-0">
+        <aside id="table-sidebar" class="w-80 bg-gray-800/50 border-r border-gray-700 flex flex-col shrink-0">
             <!-- Search Box -->
             <div class="p-3 border-b border-gray-700">
                 <div class="relative">
@@ -107,7 +108,7 @@
                     <h2 class="text-base font-semibold text-white">SQLite DDL Script</h2>
                     <p class="text-xs text-gray-400">Generated SQLite CREATE TABLE statements based on DBML definitions.</p>
                 </div>
-                <button onclick="copyDDL()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-xs font-medium flex items-center gap-1.5">
+                <button id="btn-copy-ddl" onclick="copyDDL()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-xs font-medium flex items-center gap-1.5">
                     <i data-lucide="copy" class="w-4 h-4"></i> Copy SQL
                 </button>
             </div>
@@ -330,6 +331,7 @@
         };
 
         let currentCategory = 'all';
+        let dbmlLoaded = false;
         let selectedTable = schemaData.tables[0].name;
         const collectionTables = new Set([
             'audio_library', 'band_history', 'bands', 'captures', 'eggs', 'expeditions',
@@ -475,7 +477,9 @@
             if (!parsedSchema.tables.length) throw new Error('No tables were found in the DBML file.');
             schemaData.partials = parsedSchema.partials;
             schemaData.tables = parsedSchema.tables;
+            dbmlLoaded = true;
             selectedTable = schemaData.tables[0].name;
+            updateDBMLLoadState();
             calculateStats();
             renderTableList();
             renderTableDetail(selectedTable);
@@ -495,6 +499,7 @@
 
         function init() {
             lucide.createIcons();
+            updateDBMLLoadState();
             calculateStats();
             renderTableList();
             renderTableDetail(selectedTable);
@@ -509,16 +514,27 @@
         }
 
         function calculateStats() {
-            document.getElementById('stat-tables').innerText = schemaData.tables.length;
-            document.getElementById('count-all').innerText = schemaData.tables.length;
+            document.getElementById('stat-tables').innerText = dbmlLoaded ? schemaData.tables.length : 0;
+            document.getElementById('stat-partials').innerText = dbmlLoaded ? Object.keys(schemaData.partials).length : 0;
+            document.getElementById('count-all').innerText = dbmlLoaded ? schemaData.tables.length : 0;
 
             let refsCount = 0;
-            schemaData.tables.forEach(t => {
+            (dbmlLoaded ? schemaData.tables : []).forEach(t => {
                 t.fields.forEach(f => {
                     if (f.ref) refsCount++;
                 });
             });
             document.getElementById('stat-refs').innerText = refsCount;
+        }
+
+        function updateDBMLLoadState() {
+            const button = document.getElementById('btn-load-dbml');
+            const indicator = document.getElementById('dbml-required-indicator');
+            document.getElementById('table-sidebar').classList.toggle('hidden', !dbmlLoaded);
+            button.className = dbmlLoaded
+                ? 'px-3 py-1.5 rounded-md text-xs font-medium bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors flex items-center gap-1.5'
+                : 'px-3 py-1.5 rounded-md text-xs font-medium bg-amber-600 text-white hover:bg-amber-500 transition-colors flex items-center gap-1.5';
+            indicator.classList.toggle('hidden', dbmlLoaded);
         }
 
         function setCategoryFilter(cat) {
@@ -541,6 +557,7 @@
             const query = document.getElementById('search-input').value.toLowerCase();
             const listContainer = document.getElementById('table-list');
             listContainer.innerHTML = '';
+            if (!dbmlLoaded) return;
 
             const filtered = schemaData.tables.filter(table => {
                 const matchesCat = currentCategory === 'all' || table.category === currentCategory;
@@ -576,10 +593,27 @@
         }
 
         function renderTableDetail(tableName) {
+            const container = document.getElementById('table-detail-container');
+            if (!dbmlLoaded) {
+                container.innerHTML = `
+                    <div class="min-h-full flex items-center justify-center text-center">
+                        <div class="max-w-md py-12">
+                            <div class="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300">
+                                <i data-lucide="database" class="h-6 w-6"></i>
+                            </div>
+                            <h2 class="text-lg font-semibold text-white">No schema data to display</h2>
+                            <p class="mt-2 text-sm text-gray-400">Load a DBML file to explore its tables, relationships, and SQL definition.</p>
+                            <button onclick="document.getElementById('dbml-file').click()" class="mt-5 inline-flex items-center gap-2 rounded-md bg-amber-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-amber-500">
+                                <i data-lucide="file-up" class="h-4 w-4"></i> Load DBML file
+                            </button>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
             const table = schemaData.tables.find(t => t.name === tableName);
             if (!table) return;
-
-            const container = document.getElementById('table-detail-container');
 
             // Find FK relationships pointing to or from this table
             let incomingRefs = [];
@@ -720,6 +754,16 @@
         }
 
         function generateDDL() {
+            const output = document.getElementById('ddl-output');
+            const copyButton = document.getElementById('btn-copy-ddl');
+            if (!dbmlLoaded) {
+                output.innerText = 'Load a DBML file to generate SQL DDL.';
+                copyButton.disabled = true;
+                copyButton.classList.add('opacity-50', 'cursor-not-allowed');
+                return;
+            }
+            copyButton.disabled = false;
+            copyButton.classList.remove('opacity-50', 'cursor-not-allowed');
             let ddl = `-- SQLite Schema generated from DBML\n\n`;
 
             schemaData.tables.forEach(table => {
@@ -770,10 +814,11 @@
                 }
             });
 
-            document.getElementById('ddl-output').innerText = ddl;
+            output.innerText = ddl;
         }
 
         function copyDDL() {
+            if (!dbmlLoaded) return;
             const code = document.getElementById('ddl-output').innerText;
             navigator.clipboard.writeText(code).then(() => {
                 alert("SQL DDL copied to clipboard!");
