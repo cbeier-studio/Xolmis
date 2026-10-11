@@ -585,6 +585,11 @@ Table methods {
     recommended_uses text
     notes text
     can_delete boolean [default: true]
+    allows_species_repetition boolean [default: false]
+    has_time_limit boolean [default: false]
+    has_species_limit boolean [default: false]
+    requires_spatial_data boolean [default: false]
+    allows_transport_mode boolean [default: false]
     ~audit_fields
 
     indexes {
@@ -1096,11 +1101,6 @@ Table sightings {
     subject_distance real
     flight_height real
     flight_direction varchar(5) // [check: `flight_direction IN ('N', 'S', 'E', 'W', 'NE', 'SE', 'NW', 'SW')`]
-    subject_seen boolean [default: false]
-    subject_heard boolean [default: false]
-    subject_photographed boolean [default: false]
-    subject_recorded boolean [default: false]
-    subject_captured boolean [default: false]
     males_tally varchar(10)
     females_tally varchar(10)
     not_sexed_tally varchar(10)
@@ -1110,9 +1110,13 @@ Table sightings {
     new_captures_tally integer
     recaptures_tally integer
     unbanded_tally integer
-    detection_type varchar(30)
+    detection_modes_json text
+    evidences_json text
     breeding_status varchar(30)
+    habitats_json text
+    activities_json text
     out_of_sample boolean [default: false]
+    is_doubtful boolean [default: false]
     ebird_available boolean [default: false]
     full_name varchar(100)
     notes text
@@ -1204,6 +1208,7 @@ Table surveys {
     start_time time
     end_time time
     duration integer
+    max_species integer
     method_id integer
     net_station_id integer
     expedition_id integer
@@ -1219,6 +1224,9 @@ Table surveys {
     area_total real
     distance_total real
     nets_total integer
+    total_paused_time real
+    total_intervals integer
+    discarded boolean [default: false]
     habitat text
     net_rounds text
     full_name varchar(100)

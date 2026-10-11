@@ -406,6 +406,7 @@ var
 implementation
 
 uses
+  {$IFDEF DEBUG}utils_debug,{$ENDIF}
   utils_locale, utils_dialogs, utils_system, utils_autoupdate, utils_permissions, utils_backup,
   utils_editdialogs, utils_themes, utils_gis,
   models_access_control, models_users, models_taxonomy, models_record_types,
@@ -1571,12 +1572,16 @@ begin
   Screen.BeginTempCursor(crAppStart);
   SBar.Panels[2].Text := Format(rsLoadingForm, [LowerCase(aCaption)]);
   //sbarStatus.Caption := Format(rsLoadingForm, [LowerCase(aCaption)]);
+  {$IFDEF DEBUG}PerfReset('Open grid ' + aCaption);{$ENDIF}
   aForm := TfrmCustomGrid.Create(Application);
+  {$IFDEF DEBUG}PerfMark('TfrmCustomGrid.Create (LFM streaming + FormCreate)');{$ENDIF}
   aForm.Caption := aCaption;
   aForm.TableType := aTableType;
   LogEvent(leaOpen, aForm.Caption);
   PGW.ShowFormInPage(aForm, aIcon);
+  {$IFDEF DEBUG}PerfMark('ShowFormInPage (FormShow + SetModule)');{$ENDIF}
   Application.ProcessMessages;
+  {$IFDEF DEBUG}PerfMark('ProcessMessages after ShowFormInPage (includes OpenAsync if timer fired)');{$ENDIF}
   PGW.ActivePageComponent.Tag := Ord(aTableType);
   navTabs.AddTab(PGW.PageIndex, PGW.ActivePageComponent.Caption);
   navTabs.TabIndex := navTabs.TabCount - 1;
@@ -1590,6 +1595,7 @@ begin
   //sbarStatus.Caption := EmptyStr;
   Screen.EndTempCursor(crAppStart);
   pSplash.Visible := False;
+  {$IFDEF DEBUG}PerfMark('Main tab/menu update');{$ENDIF}
 
   //dlgLoading.Hide;
   isOpening := False;

@@ -436,10 +436,46 @@ type
     Teal: TTagColorPair;
   end;
 
+  { Primary and support colors (Xolmis brand) }
+  TBrandColors = record
+    JacarandaCore: TColor;
+    JacarandaDeep: TColor;
+    JacarandaLight: TColor;
+    JacarandaContainer: TColor;
+    RosaOrquideaCore: TColor;
+    RosaOrquideaContainer: TColor;
+    RosaOrquideaDeep: TColor;
+    FolhaCampo: TColor;
+  end;
+
+  { Categorical palette (16 pairs pastel + bright) }
+  TCategoricalColors = record
+    Jacaranda: TTagColorPair;
+    Esmeralda: TTagColorPair;
+    LaranjaCalango: TTagColorPair;
+    AzulMarinho: TTagColorPair;
+    CarmesimAra: TTagColorPair;
+    TealLagoa: TTagColorPair;
+    Purpura: TTagColorPair;
+    OlivaCampo: TTagColorPair;
+    AmbarSol: TTagColorPair;
+    MagentaFlor: TTagColorPair;
+    CianoCeleste: TTagColorPair;
+    TerraMadeira: TTagColorPair;
+    VerdeLimao: TTagColorPair;
+    Indigo: TTagColorPair;
+    MarromArgila: TTagColorPair;
+    Grafite: TTagColorPair;
+  end;
+
   { Complete color theme — all groups that UI controls should reference }
   TColorTheme = record
     Name: String;
     IsDark: Boolean;
+    { Brand Colors }
+    Brand: TBrandColors;
+    { Categorical palette }
+    Categorical: TCategoricalColors;
     { Window and panel background layers }
     Background: TBackgroundColors;
     { Text and foreground colors }
@@ -554,6 +590,19 @@ procedure SetupDarkTheme;
 begin
   ActiveTheme.Name   := 'Xolmis Dark';
   ActiveTheme.IsDark := True;
+
+  // Brand colors
+  with ActiveTheme.Brand do
+  begin
+    JacarandaCore         := TColor($00C5666B); // HEX #6B66C5
+    JacarandaDeep         := TColor($009B4248); // HEX #48429B
+    JacarandaLight        := TColor($00FAECEC); // HEX #ECECFA
+    JacarandaContainer    := TColor($00F9E0E2); // HEX #E2E0F9
+    RosaOrquideaCore      := TColor($008352C2); // HEX #C25283
+    RosaOrquideaContainer := TColor($00E3D7F8); // HEX #F8D7E3
+    RosaOrquideaDeep      := TColor($00592A8E); // HEX #8E2A59
+    FolhaCampo            := TColor($00527D3A); // HEX #3A7D52
+  end;
 
   // Background layers
   with ActiveTheme.Background do
@@ -693,12 +742,46 @@ begin
     Teal.Background        := clTagTealBGDark;
     Teal.Foreground        := clTagTealFGDark;
   end;
+
+  // Categorical palette (dark mode: background = bright, text = pastel)
+  with ActiveTheme.Categorical do
+  begin
+    Jacaranda.Background      := TColor($009B4248); Jacaranda.Foreground      := TColor($00FAECEC);
+    Esmeralda.Background      := TColor($00205E1B); Esmeralda.Foreground      := TColor($00E9F5E8);
+    LaranjaCalango.Background := TColor($000051E6); LaranjaCalango.Foreground := TColor($00E0F3FF);
+    AzulMarinho.Background    := TColor($00A1470D); AzulMarinho.Foreground    := TColor($00FDF2E3);
+    CarmesimAra.Background    := TColor($001C1CB7); CarmesimAra.Foreground    := TColor($00EEEBFF);
+    TealLagoa.Background      := TColor($00404D00); TealLagoa.Foreground      := TColor($00F1F2E0);
+    Purpura.Background        := TColor($008C144A); Purpura.Foreground        := TColor($00F5E5F3);
+    OlivaCampo.Background     := TColor($001E6933); OlivaCampo.Foreground     := TColor($00E9F8F1);
+    AmbarSol.Background       := TColor($00177FF5); AmbarSol.Foreground       := TColor($00E1F8FF);
+    MagentaFlor.Background    := TColor($004F0E88); MagentaFlor.Foreground    := TColor($00ECE4FC);
+    CianoCeleste.Background   := TColor($00646000); CianoCeleste.Foreground   := TColor($00FAF7E0);
+    TerraMadeira.Background   := TColor($00526D8C); TerraMadeira.Foreground   := TColor($00E6ECF4);
+    VerdeLimao.Background     := TColor($00177782); VerdeLimao.Foreground     := TColor($00E7FBF9);
+    Indigo.Background         := TColor($007E231A); Indigo.Foreground         := TColor($00F6EAE8);
+    MarromArgila.Background   := TColor($0023273E); MarromArgila.Foreground   := TColor($00E9EBEF);
+    Grafite.Background        := TColor($00383226); Grafite.Foreground        := TColor($00F1EFEC);
+  end;
 end;
 
 procedure SetupLightTheme;
 begin
   ActiveTheme.Name   := 'Xolmis Light';
   ActiveTheme.IsDark := False;
+
+  // Brand colors
+  with ActiveTheme.Brand do
+  begin
+    JacarandaCore         := TColor($00C5666B); // HEX #6B66C5
+    JacarandaDeep         := TColor($009B4248); // HEX #48429B
+    JacarandaLight        := TColor($00FAECEC); // HEX #ECECFA
+    JacarandaContainer    := TColor($00F9E0E2); // HEX #E2E0F9
+    RosaOrquideaCore      := TColor($008352C2); // HEX #C25283
+    RosaOrquideaContainer := TColor($00E3D7F8); // HEX #F8D7E3
+    RosaOrquideaDeep      := TColor($00592A8E); // HEX #8E2A59
+    FolhaCampo            := TColor($00527D3A); // HEX #3A7D52
+  end;
 
   // Background layers
   with ActiveTheme.Background do
@@ -837,6 +920,27 @@ begin
     BrightOrange.Foreground:= clTagBrightOrangeFGLight;
     Teal.Background        := clTagTealBGLight;
     Teal.Foreground        := clTagTealFGLight;
+  end;
+
+  // Categorical palette (light mode: background = pastel, text = bright)
+  with ActiveTheme.Categorical do
+  begin
+    Jacaranda.Background      := TColor($00FAECEC); Jacaranda.Foreground      := TColor($009B4248);
+    Esmeralda.Background      := TColor($00E9F5E8); Esmeralda.Foreground      := TColor($00205E1B);
+    LaranjaCalango.Background := TColor($00E0F3FF); LaranjaCalango.Foreground := TColor($000051E6);
+    AzulMarinho.Background    := TColor($00FDF2E3); AzulMarinho.Foreground    := TColor($00A1470D);
+    CarmesimAra.Background    := TColor($00EEEBFF); CarmesimAra.Foreground    := TColor($001C1CB7);
+    TealLagoa.Background      := TColor($00F1F2E0); TealLagoa.Foreground      := TColor($00404D00);
+    Purpura.Background        := TColor($00F5E5F3); Purpura.Foreground        := TColor($008C144A);
+    OlivaCampo.Background     := TColor($00E9F8F1); OlivaCampo.Foreground     := TColor($001E6933);
+    AmbarSol.Background       := TColor($00E1F8FF); AmbarSol.Foreground       := TColor($00177FF5);
+    MagentaFlor.Background    := TColor($00ECE4FC); MagentaFlor.Foreground    := TColor($004F0E88);
+    CianoCeleste.Background   := TColor($00FAF7E0); CianoCeleste.Foreground   := TColor($00646000);
+    TerraMadeira.Background   := TColor($00E6ECF4); TerraMadeira.Foreground   := TColor($00526D8C);
+    VerdeLimao.Background     := TColor($00E7FBF9); VerdeLimao.Foreground     := TColor($00177782);
+    Indigo.Background         := TColor($00F6EAE8); Indigo.Foreground         := TColor($007E231A);
+    MarromArgila.Background   := TColor($00E9EBEF); MarromArgila.Foreground   := TColor($0023273E);
+    Grafite.Background        := TColor($00F1EFEC); Grafite.Foreground        := TColor($00383226);
   end;
 end;
 

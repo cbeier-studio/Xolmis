@@ -46,11 +46,11 @@ type
     FFlightDirection: String;
     FMethodId: Integer;
     FMackinnonListNumber: Integer;
-    FSubjectCaptured: Boolean;
-    FSubjectSeen: Boolean;
-    FSubjectHeard: Boolean;
-    FSubjectPhotographed: Boolean;
-    FSubjectRecorded: Boolean;
+    //FSubjectCaptured: Boolean;
+    //FSubjectSeen: Boolean;
+    //FSubjectHeard: Boolean;
+    //FSubjectPhotographed: Boolean;
+    //FSubjectRecorded: Boolean;
     FMalesTally: String;
     FFemalesTally: String;
     FNotSexedTally: String;
@@ -60,9 +60,14 @@ type
     FRecapturesTally: Integer;
     FNewCapturesTally: Integer;
     FUnbandedTally: Integer;
-    FDetectionType: String;
+    //FDetectionType: String;
+    FDetectionModes: String;
+    FEvidences: String;
     FBreedingStatus: String;
+    FHabitats: String;
+    FActivities: String;
     FOutOfSample: Boolean;
+    FIsDoubtful: Boolean;
     FIsOnEbird: Boolean;
     FFullName: String;
     FNotes: String;
@@ -95,11 +100,11 @@ type
     property FlightDirection: String read FFlightDirection write FFlightDirection;
     property MethodId: Integer read FMethodId write FMethodId;
     property MackinnonListNumber: Integer read FMackinnonListNumber write FMackinnonListNumber;
-    property SubjectCaptured: Boolean read FSubjectCaptured write FSubjectCaptured;
-    property SubjectSeen: Boolean read FSubjectSeen write FSubjectSeen;
-    property SubjectHeard: Boolean read FSubjectHeard write FSubjectHeard;
-    property SubjectPhotographed: Boolean read FSubjectPhotographed write FSubjectPhotographed;
-    property SubjectRecorded: Boolean read FSubjectRecorded write FSubjectRecorded;
+    //property SubjectCaptured: Boolean read FSubjectCaptured write FSubjectCaptured; deprecated;
+    //property SubjectSeen: Boolean read FSubjectSeen write FSubjectSeen; deprecated;
+    //property SubjectHeard: Boolean read FSubjectHeard write FSubjectHeard; deprecated;
+    //property SubjectPhotographed: Boolean read FSubjectPhotographed write FSubjectPhotographed; deprecated;
+    //property SubjectRecorded: Boolean read FSubjectRecorded write FSubjectRecorded; deprecated;
     property MalesTally: String read FMalesTally write FMalesTally;
     property FemalesTally: String read FFemalesTally write FFemalesTally;
     property NotSexedTally: String read FNotSexedTally write FNotSexedTally;
@@ -109,9 +114,14 @@ type
     property RecapturesTally: Integer read FRecapturesTally write FRecapturesTally;
     property NewCapturesTally: Integer read FNewCapturesTally write FNewCapturesTally;
     property UnbandedTally: Integer read FUnbandedTally write FUnbandedTally;
-    property DetectionType: String read FDetectionType write FDetectionType;
+    //property DetectionType: String read FDetectionType write FDetectionType; deprecated;
+    property DetectionModes: String read FDetectionModes write FDetectionModes;
+    property Evidences: String read FEvidences write FEvidences;
     property BreedingStatus: String read FBreedingStatus write FBreedingStatus;
+    property Habitats: String read FHabitats write FHabitats;
+    property Activities: String read FActivities write FActivities;
     property OutOfSample: Boolean read FOutOfSample write FOutOfSample;
+    property IsDoubtful: Boolean read FIsDoubtful write FIsDoubtful;
     property IsOnEbird: Boolean read FIsOnEbird write FIsOnEbird;
     property FullName: String read FFullName write FFullName;
     property Notes: String read FNotes write FNotes;
@@ -217,11 +227,11 @@ begin
     FFlightDirection := TSighting(Source).FlightDirection;
     FMethodId := TSighting(Source).MethodId;
     FMackinnonListNumber := TSighting(Source).MackinnonListNumber;
-    FSubjectCaptured := TSighting(Source).SubjectCaptured;
-    FSubjectSeen := TSighting(Source).SubjectSeen;
-    FSubjectHeard := TSighting(Source).SubjectHeard;
-    FSubjectPhotographed := TSighting(Source).SubjectPhotographed;
-    FSubjectRecorded := TSighting(Source).SubjectRecorded;
+    //FSubjectCaptured := TSighting(Source).SubjectCaptured;
+    //FSubjectSeen := TSighting(Source).SubjectSeen;
+    //FSubjectHeard := TSighting(Source).SubjectHeard;
+    //FSubjectPhotographed := TSighting(Source).SubjectPhotographed;
+    //FSubjectRecorded := TSighting(Source).SubjectRecorded;
     FMalesTally := TSighting(Source).MalesTally;
     FFemalesTally := TSighting(Source).FemalesTally;
     FNotSexedTally := TSighting(Source).NotSexedTally;
@@ -231,9 +241,14 @@ begin
     FRecapturesTally := TSighting(Source).RecapturesTally;
     FNewCapturesTally := TSighting(Source).NewCapturesTally;
     FUnbandedTally := TSighting(Source).UnbandedTally;
-    FDetectionType := TSighting(Source).DetectionType;
+    //FDetectionType := TSighting(Source).DetectionType;
+    FDetectionModes := TSighting(Source).DetectionModes;
+    FEvidences := TSighting(Source).Evidences;
     FBreedingStatus := TSighting(Source).BreedingStatus;
+    FHabitats := TSighting(Source).Habitats;
+    FActivities := TSighting(Source).Activities;
     FOutOfSample := TSighting(Source).OutOfSample;
+    FIsDoubtful := TSighting(Source).IsDoubtful;
     FIsOnEbird := TSighting(Source).IsOnEbird;
     FFullName := TSighting(Source).FullName;
     FNotes := TSighting(Source).Notes;
@@ -260,11 +275,11 @@ begin
   FFlightDirection := EmptyStr;
   FMethodId := 0;
   FMackinnonListNumber := 0;
-  FSubjectCaptured := False;
-  FSubjectSeen := False;
-  FSubjectHeard := False;
-  FSubjectPhotographed := False;
-  FSubjectRecorded := False;
+  //FSubjectCaptured := False;
+  //FSubjectSeen := False;
+  //FSubjectHeard := False;
+  //FSubjectPhotographed := False;
+  //FSubjectRecorded := False;
   FMalesTally := EmptyStr;
   FFemalesTally := EmptyStr;
   FNotSexedTally := EmptyStr;
@@ -274,9 +289,14 @@ begin
   FRecapturesTally := 0;
   FNewCapturesTally := 0;
   FUnbandedTally := 0;
-  FDetectionType := EmptyStr;
+  //FDetectionType := EmptyStr;
+  FDetectionModes := EmptyStr;
+  FEvidences := EmptyStr;
   FBreedingStatus := EmptyStr;
+  FHabitats := EmptyStr;
+  FActivities := EmptyStr;
   FOutOfSample := False;
+  FIsDoubtful := False;
   FIsOnEbird := False;
   FFullName := EmptyStr;
   FNotes := EmptyStr;
@@ -339,16 +359,16 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscMackinnonList, aOld.MackinnonListNumber, FMackinnonListNumber, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscCaptured, aOld.SubjectCaptured, FSubjectCaptured, R) then
-    Changes.Add(R);
-  if FieldValuesDiff(rscSeen, aOld.SubjectSeen, FSubjectSeen, R) then
-    Changes.Add(R);
-  if FieldValuesDiff(rscHeard, aOld.SubjectHeard, FSubjectHeard, R) then
-    Changes.Add(R);
-  if FieldValuesDiff(rscPhotographed, aOld.SubjectPhotographed, FSubjectPhotographed, R) then
-    Changes.Add(R);
-  if FieldValuesDiff(rscAudioRecorded, aOld.SubjectRecorded, FSubjectRecorded, R) then
-    Changes.Add(R);
+  //if FieldValuesDiff(rscCaptured, aOld.SubjectCaptured, FSubjectCaptured, R) then
+  //  Changes.Add(R);
+  //if FieldValuesDiff(rscSeen, aOld.SubjectSeen, FSubjectSeen, R) then
+  //  Changes.Add(R);
+  //if FieldValuesDiff(rscHeard, aOld.SubjectHeard, FSubjectHeard, R) then
+  //  Changes.Add(R);
+  //if FieldValuesDiff(rscPhotographed, aOld.SubjectPhotographed, FSubjectPhotographed, R) then
+  //  Changes.Add(R);
+  //if FieldValuesDiff(rscAudioRecorded, aOld.SubjectRecorded, FSubjectRecorded, R) then
+  //  Changes.Add(R);
   if FieldValuesDiff(rscMales, aOld.MalesTally, FMalesTally, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscFemales, aOld.FemalesTally, FFemalesTally, R) then
@@ -363,11 +383,21 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscUnbanded, aOld.UnbandedTally, FUnbandedTally, R) then
     Changes.Add(R);
-  if FieldValuesDiff(rscDetectionType, aOld.DetectionType, FDetectionType, R) then
+  //if FieldValuesDiff(rscDetectionType, aOld.DetectionType, FDetectionType, R) then
+  //  Changes.Add(R);
+  if FieldValuesDiff(rscDetectionModes, aOld.DetectionModes, FDetectionModes, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscEvidences, aOld.Evidences, FEvidences, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscBreedingCode, aOld.BreedingStatus, FBreedingStatus, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscHabitats, aOld.Habitats, FHabitats, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscActivities, aOld.Activities, FActivities, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscOutOfSample, aOld.OutOfSample, FOutOfSample, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIsDoubtful, aOld.IsDoubtful, FIsDoubtful, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscIsInEBird, aOld.IsOnEbird, FIsOnEbird, R) then
     Changes.Add(R);
@@ -407,11 +437,11 @@ begin
     FFlightDirection      := Obj.Get('flight_direction', '');
     FMethodId             := Obj.Get('method_id', 0);
     FMackinnonListNumber  := Obj.Get('mackinnon_list_number', 0);
-    FSubjectCaptured      := Obj.Get('captured', False);
-    FSubjectSeen          := Obj.Get('seen', False);
-    FSubjectHeard         := Obj.Get('heard', False);
-    FSubjectPhotographed  := Obj.Get('photographed', False);
-    FSubjectRecorded      := Obj.Get('recorded', False);
+    //FSubjectCaptured      := Obj.Get('captured', False);
+    //FSubjectSeen          := Obj.Get('seen', False);
+    //FSubjectHeard         := Obj.Get('heard', False);
+    //FSubjectPhotographed  := Obj.Get('photographed', False);
+    //FSubjectRecorded      := Obj.Get('recorded', False);
     FMalesTally           := Obj.Get('males_tally', '');
     FFemalesTally         := Obj.Get('females_tally', '');
     FNotSexedTally        := Obj.Get('not_sexed_tally', '');
@@ -421,9 +451,14 @@ begin
     FNewCapturesTally     := Obj.Get('new_captures_tally', 0);
     FRecapturesTally      := Obj.Get('recaptures_tally', 0);
     FUnbandedTally        := Obj.Get('unbanded_tally', 0);
-    FDetectionType        := Obj.Get('detection_type', '');
+    //FDetectionType        := Obj.Get('detection_type', '');
+    FDetectionModes       := Obj.Get('detection_modes', '[]');
+    FEvidences            := Obj.Get('evidences', '[]');
     FBreedingStatus       := Obj.Get('breeding_status', '');
+    FHabitats             := Obj.Get('habitats', '[]');
+    FActivities           := Obj.Get('activities', '[]');
     FOutOfSample          := Obj.Get('out_of_sample', False);
+    FIsDoubtful           := Obj.Get('is_doubtful', False);
     FIsOnEbird            := Obj.Get('is_on_ebird', False);
     FFullName             := Obj.Get('full_name', '');
     FNotes                := Obj.Get('notes', '');
@@ -455,11 +490,11 @@ begin
     Obj.Add('flight_direction', FFlightDirection);
     Obj.Add('method_id', FMethodId);
     Obj.Add('mackinnon_list_number', FMackinnonListNumber);
-    Obj.Add('captured', FSubjectCaptured);
-    Obj.Add('seen', FSubjectSeen);
-    Obj.Add('heard', FSubjectHeard);
-    Obj.Add('photographed', FSubjectPhotographed);
-    Obj.Add('recorded', FSubjectRecorded);
+    //Obj.Add('captured', FSubjectCaptured);
+    //Obj.Add('seen', FSubjectSeen);
+    //Obj.Add('heard', FSubjectHeard);
+    //Obj.Add('photographed', FSubjectPhotographed);
+    //Obj.Add('recorded', FSubjectRecorded);
     Obj.Add('males_tally', FMalesTally);
     Obj.Add('females_tally', FFemalesTally);
     Obj.Add('not_sexed_tally', FNotSexedTally);
@@ -469,9 +504,14 @@ begin
     Obj.Add('new_captures_tally', FNewCapturesTally);
     Obj.Add('recaptures_tally', FRecapturesTally);
     Obj.Add('unbanded_tally', FUnbandedTally);
-    Obj.Add('detection_type', FDetectionType);
+    //Obj.Add('detection_type', FDetectionType);
+    Obj.Add('detection_modes', FDetectionModes);
+    Obj.Add('evidences', FEvidences);
     Obj.Add('breeding_status', FBreedingStatus);
+    Obj.Add('habitats', FHabitats);
+    Obj.Add('activities', FActivities);
     Obj.Add('out_of_sample', FOutOfSample);
+    Obj.Add('is_doubtful', FIsDoubtful);
     Obj.Add('is_on_ebird', FIsOnEbird);
     Obj.Add('full_name', FFullName);
     Obj.Add('notes', FNotes);
@@ -487,19 +527,23 @@ begin
   Result := Format('Sighting(Id=%d, SurveyId=%d, SightingDate=%s, SightingTime=%s, LocalityId=%d, ' +
     'Longitude=%f, Latitude=%f, CoordinatePrecision=%s, TaxonId=%d, CustomTaxonName=%s, ' +
     'IndividualId=%d, SubjectTally=%d, SubjectDistance=%f, FlightHeight=%f, FlightDirection=%s, ' +
-    'MethodId=%d, MackinnonListNumber=%d, Captured=%s, Seen=%s, Heard=%s, Photographed=%s, Recorded=%s, ' +
+    'MethodId=%d, MackinnonListNumber=%d, ' +
+    //'Captured=%s, Seen=%s, Heard=%s, Photographed=%s, Recorded=%s, ' +
     'MalesTally=%s, FemalesTally=%s, NotSexedTally=%s, AdultsTally=%s, ImmaturesTally=%s, NotAgedTally=%s, ' +
-    'NewCapturesTally=%d, RecapturesTally=%d, UnbandedTally=%d, DetectionType=%s, BreedingStatus=%s, ' +
-    'OutOfSample=%s, IsOnEbird=%s, FullName=%s, Notes=%s, ' +
+    'NewCapturesTally=%d, RecapturesTally=%d, UnbandedTally=%d, DetectionModes=%s, Evidences=%s, BreedingStatus=%s, ' +
+    'Habitats=%s, Activities=%s, ' +
+    'OutOfSample=%s, IsDoubtful=%s, IsOnEbird=%s, FullName=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FSurveyId, DateToStr(FSightingDate), TimeToStr(FSightingTime), FLocalityId, FLongitude, FLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision],
     FTaxonId, FCustomTaxonName, FIndividualId, FSubjectTally, FSubjectDistance,
     FFlightHeight, FFlightDirection, FMethodId, FMackinnonListNumber,
-    BoolToStr(FSubjectCaptured, 'True', 'False'), BoolToStr(FSubjectSeen, 'True', 'False'),
-    BoolToStr(FSubjectHeard, 'True', 'False'), BoolToStr(FSubjectPhotographed, 'True', 'False'),
-    BoolToStr(FSubjectRecorded, 'True', 'False'), FMalesTally, FFemalesTally, FNotSexedTally, FAdultsTally,
-    FImmatureTally, FNotAgedTally, FNewCapturesTally, FRecapturesTally, FUnbandedTally, FDetectionType,
-    FBreedingStatus, BoolToStr(FOutOfSample, 'True', 'False'), BoolToStr(FIsOnEbird, 'True', 'False'), FFullName, FNotes,
+    //BoolToStr(FSubjectCaptured, 'True', 'False'), BoolToStr(FSubjectSeen, 'True', 'False'),
+    //BoolToStr(FSubjectHeard, 'True', 'False'), BoolToStr(FSubjectPhotographed, 'True', 'False'),
+    //BoolToStr(FSubjectRecorded, 'True', 'False'),
+    FMalesTally, FFemalesTally, FNotSexedTally, FAdultsTally,
+    FImmatureTally, FNotAgedTally, FNewCapturesTally, FRecapturesTally, FUnbandedTally, FDetectionModes, FEvidences,
+    FBreedingStatus, FHabitats, FActivities, BoolToStr(FOutOfSample, 'True', 'False'),
+    BoolToStr(FIsDoubtful, 'True', 'False'), BoolToStr(FIsOnEbird, 'True', 'False'), FFullName, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -751,11 +795,11 @@ begin
     R.FlightDirection := FieldByName('flight_direction').AsString;
     R.MethodId := FieldByName('method_id').AsInteger;
     R.MackinnonListNumber := FieldByName('mackinnon_list_num').AsInteger;
-    R.SubjectCaptured := FieldByName('subject_captured').AsBoolean;
-    R.SubjectSeen := FieldByName('subject_seen').AsBoolean;
-    R.SubjectHeard := FieldByName('subject_heard').AsBoolean;
-    R.SubjectPhotographed := FieldByName('subject_photographed').AsBoolean;
-    R.SubjectRecorded := FieldByName('subject_recorded').AsBoolean;
+    //R.SubjectCaptured := FieldByName('subject_captured').AsBoolean;
+    //R.SubjectSeen := FieldByName('subject_seen').AsBoolean;
+    //R.SubjectHeard := FieldByName('subject_heard').AsBoolean;
+    //R.SubjectPhotographed := FieldByName('subject_photographed').AsBoolean;
+    //R.SubjectRecorded := FieldByName('subject_recorded').AsBoolean;
     R.MalesTally := FieldByName('males_tally').AsString;
     R.FemalesTally := FieldByName('females_tally').AsString;
     R.NotSexedTally := FieldByName('not_sexed_tally').AsString;
@@ -765,9 +809,14 @@ begin
     R.RecapturesTally := FieldByName('recaptures_tally').AsInteger;
     R.NewCapturesTally := FieldByName('new_captures_tally').AsInteger;
     R.UnbandedTally := FieldByName('unbanded_tally').AsInteger;
-    R.DetectionType := FieldByName('detection_type').AsString;
+    //R.DetectionType := FieldByName('detection_type').AsString;
+    R.DetectionModes := FieldByName('detection_modes_json').AsString;
+    R.Evidences := FieldByName('evidences_json').AsString;
     R.BreedingStatus := FieldByName('breeding_status').AsString;
+    R.Habitats := FieldByName('habitats_json').AsString;
+    R.Activities := FieldByName('activities_json').AsString;
     R.OutOfSample := FieldByName('out_of_sample').AsBoolean;
+    R.IsDoubtful := FieldByName('is_doubtful').AsBoolean;
     R.IsOnEbird := FieldByName('ebird_available').AsBoolean;
     R.FullName := FieldByName('full_name').AsString;
     R.Notes := FieldByName('notes').AsString;
@@ -835,16 +884,16 @@ begin
     R.MethodId := StrToIntDef(ARow.Values['method_id'], 0);
   if ARow.IndexOfName('mackinnon_list_num') >= 0 then
     R.MackinnonListNumber := StrToIntDef(ARow.Values['mackinnon_list_num'], 0);
-  if ARow.IndexOfName('subject_captured') >= 0 then
-    R.SubjectCaptured := StrToBoolDef(ARow.Values['subject_captured'], False);
-  if ARow.IndexOfName('subject_seen') >= 0 then
-    R.SubjectSeen := StrToBoolDef(ARow.Values['subject_seen'], False);
-  if ARow.IndexOfName('subject_heard') >= 0 then
-    R.SubjectHeard := StrToBoolDef(ARow.Values['subject_heard'], False);
-  if ARow.IndexOfName('subject_photographed') >= 0 then
-    R.SubjectPhotographed := StrToBoolDef(ARow.Values['subject_photographed'], False);
-  if ARow.IndexOfName('subject_recorded') >= 0 then
-    R.SubjectRecorded := StrToBoolDef(ARow.Values['subject_recorded'], False);
+  //if ARow.IndexOfName('subject_captured') >= 0 then
+  //  R.SubjectCaptured := StrToBoolDef(ARow.Values['subject_captured'], False);
+  //if ARow.IndexOfName('subject_seen') >= 0 then
+  //  R.SubjectSeen := StrToBoolDef(ARow.Values['subject_seen'], False);
+  //if ARow.IndexOfName('subject_heard') >= 0 then
+  //  R.SubjectHeard := StrToBoolDef(ARow.Values['subject_heard'], False);
+  //if ARow.IndexOfName('subject_photographed') >= 0 then
+  //  R.SubjectPhotographed := StrToBoolDef(ARow.Values['subject_photographed'], False);
+  //if ARow.IndexOfName('subject_recorded') >= 0 then
+  //  R.SubjectRecorded := StrToBoolDef(ARow.Values['subject_recorded'], False);
   if ARow.IndexOfName('males_tally') >= 0 then
     R.MalesTally := ARow.Values['males_tally'];
   if ARow.IndexOfName('females_tally') >= 0 then
@@ -863,12 +912,22 @@ begin
     R.RecapturesTally := StrToIntDef(ARow.Values['recaptures_tally'], 0);
   if ARow.IndexOfName('unbanded_tally') >= 0 then
     R.UnbandedTally := StrToIntDef(ARow.Values['unbanded_tally'], 0);
-  if ARow.IndexOfName('detection_type') >= 0 then
-    R.DetectionType := ARow.Values['detection_type'];
+  //if ARow.IndexOfName('detection_type') >= 0 then
+  //  R.DetectionType := ARow.Values['detection_type'];
+  if ARow.IndexOfName('detection_modes_json') >= 0 then
+    R.DetectionModes := ARow.Values['detection_modes_json'];
+  if ARow.IndexOfName('evidences_json') >= 0 then
+    R.Evidences := ARow.Values['evidences_json'];
   if ARow.IndexOfName('breeding_status') >= 0 then
     R.BreedingStatus := ARow.Values['breeding_status'];
+  if ARow.IndexOfName('habitats_json') >= 0 then
+    R.Habitats := ARow.Values['habitats_json'];
+  if ARow.IndexOfName('activities_json') >= 0 then
+    R.Activities := ARow.Values['activites_json'];
   if ARow.IndexOfName('out_of_sample') >= 0 then
     R.OutOfSample := StrToBoolDef(ARow.Values['out_of_sample'], False);
+  if ARow.IndexOfName('is_doubtful') >= 0 then
+    R.IsDoubtful := StrToBoolDef(ARow.Values['is_doubtful'], False);
   if ARow.IndexOfName('ebird_available') >= 0 then
     R.IsOnEbird := StrToBoolDef(ARow.Values['ebird_available'], False);
   if ARow.IndexOfName('full_name') >= 0 then
@@ -908,11 +967,11 @@ begin
     SetFloatParam(ParamByName('subject_distance'), R.SubjectDistance);
     SetFloatParam(ParamByName('flight_height'), R.FlightHeight);
     SetStrParam(ParamByName('flight_direction'), R.FlightDirection);
-    ParamByName('subject_captured').AsBoolean := R.SubjectCaptured;
-    ParamByName('subject_seen').AsBoolean := R.SubjectSeen;
-    ParamByName('subject_heard').AsBoolean := R.SubjectHeard;
-    ParamByName('subject_photographed').AsBoolean := R.SubjectPhotographed;
-    ParamByName('subject_recorded').AsBoolean := R.SubjectRecorded;
+    //ParamByName('subject_captured').AsBoolean := R.SubjectCaptured;
+    //ParamByName('subject_seen').AsBoolean := R.SubjectSeen;
+    //ParamByName('subject_heard').AsBoolean := R.SubjectHeard;
+    //ParamByName('subject_photographed').AsBoolean := R.SubjectPhotographed;
+    //ParamByName('subject_recorded').AsBoolean := R.SubjectRecorded;
     SetStrParam(ParamByName('males_tally'), R.MalesTally);
     SetStrParam(ParamByName('females_tally'), R.FemalesTally);
     SetStrParam(ParamByName('not_sexed_tally'), R.NotSexedTally);
@@ -922,9 +981,14 @@ begin
     SetIntParam(ParamByName('new_captures_tally'), R.NewCapturesTally);
     SetIntParam(ParamByName('recaptures_tally'), R.RecapturesTally);
     SetIntParam(ParamByName('unbanded_tally'), R.UnbandedTally);
-    SetStrParam(ParamByName('detection_type'), R.DetectionType);
+    //SetStrParam(ParamByName('detection_type'), R.DetectionType);
+    SetStrParam(ParamByName('detection_modes_json'), R.DetectionModes);
+    SetStrParam(ParamByName('evidences_json'), R.Evidences);
     SetStrParam(ParamByName('breeding_status'), R.BreedingStatus);
+    SetStrParam(ParamByName('habitats_json'), R.Habitats);
+    SetStrParam(ParamByName('activities_json'), R.Activities);
     ParamByName('out_of_sample').AsBoolean := R.OutOfSample;
+    ParamByName('is_doubtful').AsBoolean := R.IsDoubtful;
     ParamByName('ebird_available').AsBoolean := R.IsOnEbird;
     ParamByName('full_name').AsString := GetSightingFullName(R.TaxonId, R.CustomTaxonName, R.SightingDate,
       R.SightingTime, R.LocalityId);
@@ -983,11 +1047,11 @@ begin
     SetFloatParam(ParamByName('subject_distance'), R.SubjectDistance);
     SetFloatParam(ParamByName('flight_height'), R.FlightHeight);
     SetStrParam(ParamByName('flight_direction'), R.FlightDirection);
-    ParamByName('subject_captured').AsBoolean := R.SubjectCaptured;
-    ParamByName('subject_seen').AsBoolean := R.SubjectSeen;
-    ParamByName('subject_heard').AsBoolean := R.SubjectHeard;
-    ParamByName('subject_photographed').AsBoolean := R.SubjectPhotographed;
-    ParamByName('subject_recorded').AsBoolean := R.SubjectRecorded;
+    //ParamByName('subject_captured').AsBoolean := R.SubjectCaptured;
+    //ParamByName('subject_seen').AsBoolean := R.SubjectSeen;
+    //ParamByName('subject_heard').AsBoolean := R.SubjectHeard;
+    //ParamByName('subject_photographed').AsBoolean := R.SubjectPhotographed;
+    //ParamByName('subject_recorded').AsBoolean := R.SubjectRecorded;
     SetStrParam(ParamByName('males_tally'), R.MalesTally);
     SetStrParam(ParamByName('females_tally'), R.FemalesTally);
     SetStrParam(ParamByName('not_sexed_tally'), R.NotSexedTally);
@@ -997,9 +1061,14 @@ begin
     SetIntParam(ParamByName('new_captures_tally'), R.NewCapturesTally);
     SetIntParam(ParamByName('recaptures_tally'), R.RecapturesTally);
     SetIntParam(ParamByName('unbanded_tally'), R.UnbandedTally);
-    SetStrParam(ParamByName('detection_type'), R.DetectionType);
+    //SetStrParam(ParamByName('detection_type'), R.DetectionType);
+    SetStrParam(ParamByName('detection_modes_json'), R.DetectionModes);
+    SetStrParam(ParamByName('evidences_json'), R.Evidences);
     SetStrParam(ParamByName('breeding_status'), R.BreedingStatus);
+    SetStrParam(ParamByName('habitats_json'), R.Habitats);
+    SetStrParam(ParamByName('activities_json'), R.Activities);
     ParamByName('out_of_sample').AsBoolean := R.OutOfSample;
+    ParamByName('is_doubtful').AsBoolean := R.IsDoubtful;
     ParamByName('ebird_available').AsBoolean := R.IsOnEbird;
     ParamByName('full_name').AsString := GetSightingFullName(R.TaxonId, R.CustomTaxonName, R.SightingDate,
       R.SightingTime, R.LocalityId);

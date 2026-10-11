@@ -37,6 +37,11 @@ type
     FRecommendedUses: String;
     FNotes: String;
     FCanDelete: Boolean;
+    FAllowsSpeciesRepetition: Boolean;
+    FHasTimeLimit: Boolean;
+    FHasSpeciesLimit: Boolean;
+    FRequiresSpatialData: Boolean;
+    FAllowsTransportMode: Boolean;
   public
     constructor Create(aValue: Integer = 0); reintroduce; virtual;
     procedure Clear; override;
@@ -57,6 +62,11 @@ type
     property RecommendedUses: String read FRecommendedUses write FRecommendedUses;
     property Notes: String read FNotes write FNotes;
     property CanDelete: Boolean read FCanDelete write FCanDelete;
+    property AllowsSpeciesRepetition: Boolean read FAllowsSpeciesRepetition write FAllowsSpeciesRepetition;
+    property HasTimeLimit: Boolean read FHasTimeLimit write FHasTimeLimit;
+    property HasSpeciesLimit: Boolean read FHasSpeciesLimit write FHasSpeciesLimit;
+    property RequiresSpatialData: Boolean read FRequiresSpatialData write FRequiresSpatialData;
+    property AllowsTransportMode: Boolean read FAllowsTransportMode write FAllowsTransportMode;
   end;
 
   { TMethodRepository }
@@ -105,6 +115,11 @@ begin
     FRecommendedUses := TMethod(Source).RecommendedUses;
     FNotes := TMethod(Source).Notes;
     FCanDelete := TMethod(Source).CanDelete;
+    FAllowsSpeciesRepetition := TMethod(Source).AllowsSpeciesRepetition;
+    FHasTimeLimit := TMethod(Source).HasTimeLimit;
+    FHasSpeciesLimit := TMethod(Source).HasSpeciesLimit;
+    FRequiresSpatialData := TMethod(Source).RequiresSpatialData;
+    FAllowsTransportMode := TMethod(Source).AllowsTransportMode;
   end;
 end;
 
@@ -119,6 +134,11 @@ begin
   FRecommendedUses := EmptyStr;
   FNotes := EmptyStr;
   FCanDelete := True;
+  FAllowsSpeciesRepetition := False;
+  FHasTimeLimit := False;
+  FHasSpeciesLimit := False;
+  FRequiresSpatialData := False;
+  FAllowsTransportMode := False;
 end;
 
 function TMethod.Clone: TXolmisRecord;
@@ -158,6 +178,16 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscNotes, aOld.Notes, FNotes, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscAllowsSpeciesRepetition, aOld.AllowsSpeciesRepetition, FAllowsSpeciesRepetition, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHasTimeLimit, aOld.HasTimeLimit, FHasTimeLimit, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscHasSpeciesLimit, aOld.HasSpeciesLimit, FHasSpeciesLimit, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscRequiresSpatialData, aOld.RequiresSpatialData, FRequiresSpatialData, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscAllowsTransportMode, aOld.AllowsTransportMode, FAllowsTransportMode, R) then
+    Changes.Add(R);
 
   Result := Changes.Count > 0;
 end;
@@ -180,6 +210,11 @@ begin
     FDescription      := Obj.Get('description', '');
     FRecommendedUses  := Obj.Get('recommended_uses', '');
     FNotes            := Obj.Get('notes', '');
+    FAllowsSpeciesRepetition := Obj.Get('allows_species_repetition', False);
+    FHasTimeLimit     := Obj.Get('has_time_limit', False);
+    FHasSpeciesLimit  := Obj.Get('has_species_limit', False);
+    FRequiresSpatialData := Obj.Get('requires_spatial_data', False);
+    FAllowsTransportMode := Obj.Get('allows_transport_mode', False);
   finally
     Obj.Free;
   end;
@@ -187,31 +222,38 @@ end;
 
 function TMethod.ToJSON: String;
 var
-  JSONObject: TJSONObject;
+  Obj: TJSONObject;
 begin
-  JSONObject := TJSONObject.Create;
+  Obj := TJSONObject.Create;
   try
-    JSONObject.Add('method_name', FName);
-    JSONObject.Add('abbreviation', FAbbreviation);
-    JSONObject.Add('category', FCategory);
-    JSONObject.Add('ebird_name', FEbirdName);
-    JSONObject.Add('description', FDescription);
-    JSONObject.Add('recommended_uses', FRecommendedUses);
-    JSONObject.Add('notes', FNotes);
+    Obj.Add('method_name', FName);
+    Obj.Add('abbreviation', FAbbreviation);
+    Obj.Add('category', FCategory);
+    Obj.Add('ebird_name', FEbirdName);
+    Obj.Add('description', FDescription);
+    Obj.Add('recommended_uses', FRecommendedUses);
+    Obj.Add('notes', FNotes);
+    Obj.Add('allows_species_repetition', FAllowsSpeciesRepetition);
+    Obj.Add('has_time_limit', FHasTimeLimit);
+    Obj.Add('has_species_limit', FHasSpeciesLimit);
+    Obj.Add('requires_spatial_data', FRequiresSpatialData);
+    Obj.Add('allows_transport_mode', FAllowsTransportMode);
 
-    Result := JSONObject.AsJSON;
+    Result := Obj.AsJSON;
   finally
-    JSONObject.Free;
+    Obj.Free;
   end;
 end;
 
 function TMethod.ToString: String;
 begin
   Result := Format('Method(Id=%d, Name=%s, Abbreviation=%s, Category=%s, EbirdName=%s, Description=%s, ' +
-    'RecommendedUses=%s, Notes=%s, CanDelete=%s, ' +
-    'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
+    'RecommendedUses=%s, Notes=%s, CanDelete=%s, AllowsSpeciesRepetition=%s, HasTimeLimit=%s, HasSpeciesLimit=%s, ' +
+    'RequiresSpatialData=%s, AllowsTransportMode=%s, InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
     [FId, FName, FAbbreviation, FCategory, FEbirdName, FDescription, FRecommendedUses, FNotes,
-    BoolToStr(FCanDelete, 'True', 'False'),
+    BoolToStr(FCanDelete, 'True', 'False'), BoolToStr(FAllowsSpeciesRepetition, 'True', 'False'),
+    BoolToStr(FHasTimeLimit, 'True', 'False'), BoolToStr(FHasSpeciesLimit, 'True', 'False'),
+    BoolToStr(FRequiresSpatialData, 'True', 'False'), BoolToStr(FAllowsTransportMode, 'True', 'False'),
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -410,6 +452,11 @@ begin
     R.RecommendedUses := FieldByName('recommended_uses').AsString;
     R.Notes := FieldByName('notes').AsString;
     R.CanDelete := FieldByName('can_delete').AsBoolean;
+    R.AllowsSpeciesRepetition := FieldByName('allows_species_repetition').AsBoolean;
+    R.HasTimeLimit := FieldByName('has_time_limit').AsBoolean;
+    R.HasSpeciesLimit := FieldByName('has_species_limit').AsBoolean;
+    R.RequiresSpatialData := FieldByName('requires_spatial_data').AsBoolean;
+    R.AllowsTransportMode := FieldByName('allows_transport_mode').AsBoolean;
     R.UserInserted := FieldByName('user_inserted').AsInteger;
     R.UserUpdated := FieldByName('user_updated').AsInteger;
     // SQLite may store date and time data as ISO8601 string or Julian date real formats
@@ -449,6 +496,16 @@ begin
     R.Notes := ARow.Values['notes'];
   if ARow.IndexOfName('can_delete') >= 0 then
     R.CanDelete := StrToBoolDef(ARow.Values['can_delete'], True);
+  if ARow.IndexOfName('allows_species_repetition') >= 0 then
+    R.AllowsSpeciesRepetition := StrToBoolDef(ARow.Values['allows_species_repetition'], False);
+  if ARow.IndexOfName('has_time_limit') >= 0 then
+    R.HasTimeLimit := StrToBoolDef(ARow.Values['has_time_limit'], False);
+  if ARow.IndexOfName('has_species_limit') >= 0 then
+    R.HasSpeciesLimit := StrToBoolDef(ARow.Values['has_species_limit'], False);
+  if ARow.IndexOfName('requires_spatial_data') >= 0 then
+    R.RequiresSpatialData := StrToBoolDef(ARow.Values['requires_spatial_data'], False);
+  if ARow.IndexOfName('allows_transport_mode') >= 0 then
+    R.AllowsTransportMode := StrToBoolDef(ARow.Values['allows_transport_mode'], False);
 end;
 
 procedure TMethodRepository.Insert(E: TXolmisRecord);
@@ -473,6 +530,11 @@ begin
     SetStrParam(ParamByName('description'), R.Description);
     SetStrParam(ParamByName('recommended_uses'), R.RecommendedUses);
     SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('allows_species_repetition').AsBoolean := R.AllowsSpeciesRepetition;
+    ParamByName('has_time_limit').AsBoolean := R.HasTimeLimit;
+    ParamByName('has_species_limit').AsBoolean := R.HasSpeciesLimit;
+    ParamByName('requires_spatial_data').AsBoolean := R.RequiresSpatialData;
+    ParamByName('allows_transport_mode').AsBoolean := R.AllowsTransportMode;
     ParamByName('user_inserted').AsInteger := ActiveUser.Id;
 
     ExecSQL;
@@ -518,6 +580,11 @@ begin
     SetStrParam(ParamByName('description'), R.Description);
     SetStrParam(ParamByName('recommended_uses'), R.RecommendedUses);
     SetStrParam(ParamByName('notes'), R.Notes);
+    ParamByName('allows_species_repetition').AsBoolean := R.AllowsSpeciesRepetition;
+    ParamByName('has_time_limit').AsBoolean := R.HasTimeLimit;
+    ParamByName('has_species_limit').AsBoolean := R.HasSpeciesLimit;
+    ParamByName('requires_spatial_data').AsBoolean := R.RequiresSpatialData;
+    ParamByName('allows_transport_mode').AsBoolean := R.AllowsTransportMode;
     ParamByName('user_updated').AsInteger := ActiveUser.Id;
     ParamByName('marked_status').AsBoolean := R.Marked;
     ParamByName('active_status').AsBoolean := R.Active;

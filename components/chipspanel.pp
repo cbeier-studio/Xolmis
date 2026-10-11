@@ -85,6 +85,8 @@ type
 
     FChips: TList;
     FSelectedChips: TList;
+    FUpdateCount: Integer;
+    FColorsDirty: Boolean;
 
     procedure SetDarkMode(AValue: Boolean);
     procedure SetColorMode(AValue: TChipColorMode);
@@ -116,6 +118,9 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
+    procedure BeginUpdate;
+    procedure EndUpdate;
 
     function AddChip(const AText: String; const AID: String = ''): TChip;
     procedure ClearChips;
@@ -330,6 +335,11 @@ var
   Chip: TChip;
   BgColor, TextColor: TColor;
 begin
+  if FUpdateCount > 0 then
+  begin
+    FColorsDirty := True;
+    Exit;
+  end;
   for I := 0 to ControlCount - 1 do
   begin
     if Controls[I] is TChip then
@@ -438,6 +448,30 @@ begin
     FOnChipClick(Self, AChip);
 end;
 
+procedure TChipsPanel.BeginUpdate;
+begin
+  if FUpdateCount = 0 then
+    DisableAlign;
+  Inc(FUpdateCount);
+end;
+
+procedure TChipsPanel.EndUpdate;
+begin
+  if FUpdateCount = 0 then Exit;
+  Dec(FUpdateCount);
+  if FUpdateCount = 0 then
+  begin
+    UpdateChipsList;
+    UpdateSelectedChipsList;
+    if FColorsDirty then
+    begin
+      FColorsDirty := False;
+      ApplyColorsToChips;
+    end;
+    EnableAlign;
+  end;
+end;
+
 procedure TChipsPanel.Loaded;
 begin
   inherited Loaded;
@@ -463,6 +497,11 @@ begin
     Result.ID := AText;
 
   Result.Parent := Self;
+  if FUpdateCount > 0 then
+  begin
+    FColorsDirty := True;
+    Exit;
+  end;
   ApplyColorsToChips;
   UpdateChipsList;
 end;

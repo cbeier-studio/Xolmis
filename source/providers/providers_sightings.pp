@@ -75,11 +75,11 @@ begin
       'subject_distance     REAL,' +
       'flight_height        REAL,' +
       'flight_direction     VARCHAR (5),' +
-      'subject_seen         BOOLEAN       DEFAULT (0),' +
-      'subject_heard        BOOLEAN       DEFAULT (0),' +
-      'subject_photographed BOOLEAN       DEFAULT (0),' +
-      'subject_recorded     BOOLEAN       DEFAULT (0),' +
-      'subject_captured     BOOLEAN       DEFAULT (0),' +
+      //'subject_seen         BOOLEAN       DEFAULT (0),' +
+      //'subject_heard        BOOLEAN       DEFAULT (0),' +
+      //'subject_photographed BOOLEAN       DEFAULT (0),' +
+      //'subject_recorded     BOOLEAN       DEFAULT (0),' +
+      //'subject_captured     BOOLEAN       DEFAULT (0),' +
       'males_tally          VARCHAR (10),' +
       'females_tally        VARCHAR (10),' +
       'not_sexed_tally      VARCHAR (10),' +
@@ -89,9 +89,14 @@ begin
       'new_captures_tally   INTEGER,' +
       'recaptures_tally     INTEGER,' +
       'unbanded_tally       INTEGER,' +
-      'detection_type       VARCHAR (30),' +
+      //'detection_type       VARCHAR (30),' +
+      'detection_modes_json TEXT,' +
+      'evidences_json       TEXT,' +
       'breeding_status      VARCHAR (30),' +
+      'habitats_json        TEXT,' +
+      'activities_json      TEXT,' +
       'out_of_sample        BOOLEAN       DEFAULT (0),' +
+      'is_doubtful          BOOLEAN       DEFAULT (0),' +
       'ebird_available      BOOLEAN       DEFAULT (0),' +
       'full_name            VARCHAR (100),' +
       'notes                TEXT,' +
@@ -155,11 +160,11 @@ begin
       'subject_distance, ' +
       'flight_height, ' +
       'flight_direction, ' +
-      'subject_seen, ' +
-      'subject_heard, ' +
-      'subject_photographed, ' +
-      'subject_recorded, ' +
-      'subject_captured, ' +
+      //'subject_seen, ' +
+      //'subject_heard, ' +
+      //'subject_photographed, ' +
+      //'subject_recorded, ' +
+      //'subject_captured, ' +
       'males_tally, ' +
       'females_tally, ' +
       'not_sexed_tally, ' +
@@ -169,9 +174,13 @@ begin
       'new_captures_tally, ' +
       'recaptures_tally, ' +
       'unbanded_tally, ' +
-      'detection_type, ' +
+      'detection_modes_json, ' +
+      'evidences_json, ' +
       'breeding_status, ' +
+      'habitats_json, ' +
+      'activities_json, ' +
       'out_of_sample, ' +
+      'is_doubtful, ' +
       'ebird_available, ' +
       'full_name, ' +
       'notes, ' +
@@ -196,11 +205,11 @@ begin
       ':subject_distance, ' +
       ':flight_height, ' +
       ':flight_direction, ' +
-      ':subject_seen, ' +
-      ':subject_heard, ' +
-      ':subject_photographed, ' +
-      ':subject_recorded, ' +
-      ':subject_captured, ' +
+      //':subject_seen, ' +
+      //':subject_heard, ' +
+      //':subject_photographed, ' +
+      //':subject_recorded, ' +
+      //':subject_captured, ' +
       ':males_tally, ' +
       ':females_tally, ' +
       ':not_sexed_tally, ' +
@@ -210,9 +219,13 @@ begin
       ':new_captures_tally, ' +
       ':recaptures_tally, ' +
       ':unbanded_tally, ' +
-      ':detection_type, ' +
+      ':detection_modes_json, ' +
+      ':evidences_json, ' +
       ':breeding_status, ' +
+      ':habitats_json, ' +
+      ':activities_json, ' +
       ':out_of_sample, ' +
+      ':is_doubtful, ' +
       ':ebird_available, ' +
       ':full_name, ' +
       ':notes, ' +
@@ -318,11 +331,6 @@ begin
       'subject_distance, ' +
       'flight_height, ' +
       'flight_direction, ' +
-      'subject_seen, ' +
-      'subject_heard, ' +
-      'subject_photographed, ' +
-      'subject_recorded, ' +
-      'subject_captured, ' +
       'males_tally, ' +
       'females_tally, ' +
       'not_sexed_tally, ' +
@@ -332,9 +340,13 @@ begin
       'new_captures_tally, ' +
       'recaptures_tally, ' +
       'unbanded_tally, ' +
-      'detection_type, ' +
+      'detection_modes_json, ' +
+      'evidences_json, ' +
       'breeding_status, ' +
+      'habitats_json, ' +
+      'activities_json, ' +
       'out_of_sample, ' +
+      'is_doubtful, ' +
       'ebird_available, ' +
       'full_name, ' +
       'notes, ' +
@@ -398,11 +410,11 @@ begin
       'subject_distance = :subject_distance, ' +
       'flight_height = :flight_height, ' +
       'flight_direction = :flight_direction, ' +
-      'subject_seen = :subject_seen, ' +
-      'subject_heard = :subject_heard, ' +
-      'subject_photographed = :subject_photographed, ' +
-      'subject_recorded = :subject_recorded, ' +
-      'subject_captured = :subject_captured, ' +
+      //'subject_seen = :subject_seen, ' +
+      //'subject_heard = :subject_heard, ' +
+      //'subject_photographed = :subject_photographed, ' +
+      //'subject_recorded = :subject_recorded, ' +
+      //'subject_captured = :subject_captured, ' +
       'males_tally = :males_tally, ' +
       'females_tally = :females_tally, ' +
       'not_sexed_tally = :not_sexed_tally, ' +
@@ -412,9 +424,13 @@ begin
       'new_captures_tally = :new_captures_tally, ' +
       'recaptures_tally = :recaptures_tally, ' +
       'unbanded_tally = :unbanded_tally, ' +
-      'detection_type = :detection_type, ' +
+      'detection_modes_json = :detection_modes_json, ' +
+      'evidences_json = :evidences_json, ' +
       'breeding_status = :breeding_status, ' +
+      'habitats_json = :habitats_json, ' +
+      'activities_json = :activities_json, ' +
       'out_of_sample = :out_of_sample, ' +
+      'is_doubtful = :is_doubtful, ' +
       'ebird_available = :ebird_available, ' +
       'full_name = :full_name, ' +
       'notes = :notes, ' +

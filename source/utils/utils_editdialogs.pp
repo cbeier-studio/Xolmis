@@ -71,7 +71,7 @@ uses
 implementation
 
 uses
-  utils_locale, utils_global, utils_permissions, utils_dialogs,
+  utils_locale, utils_global, utils_permissions, utils_dialogs, chipspanel,
   data_getvalue, data_consts, data_services,
   models_record_types, models_geo, models_sampling, models_botany, models_breeding, models_birds, models_projects,
   models_media, models_bands, models_sightings, models_institutions, models_people, models_permits,
@@ -2087,6 +2087,7 @@ var
   FRepo: TSightingRepository;
   FRecord, FOldRecord: TSighting;
   SelectedPersonIDs: TStringList;
+  I: Integer;
 begin
   LogEvent(leaOpen, 'Sighting edit dialog');
   Application.CreateForm(TedtSighting, edtSighting);
@@ -2144,7 +2145,12 @@ begin
         // Save sighting observers
         SelectedPersonIDs := TStringList.Create;
         try
-          pObserverChips.GetSelectedIDs(SelectedPersonIDs);
+          if pObserverChips.Selectable then
+            pObserverChips.GetSelectedIDs(SelectedPersonIDs)
+          else
+            // Not selectable: every chip is an observer of the sighting
+            for I := 0 to pObserverChips.Chips.Count - 1 do
+              SelectedPersonIDs.Add(TChip(pObserverChips.Chips[I]).ID);
 
           SaveSightingObservers(Sighting.Id, SelectedPersonIDs);
         finally
@@ -3334,7 +3340,7 @@ begin
     try
       DataBase := DMM.sqlCon;
 
-      Add('SELECT so.person_id, p.abbreviation AS person_name FROM sighting_observers AS so');
+      Add('SELECT so.sighting_observer_id, so.person_id, p.abbreviation AS person_name FROM sighting_observers AS so');
       Add('LEFT JOIN people AS p ON so.person_id = p.person_id');
       Add('WHERE (so.sighting_id = :sighting_id) AND (so.active_status = 1)');
       Add('ORDER BY person_name ASC');

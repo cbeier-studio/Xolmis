@@ -21,7 +21,7 @@ unit uedt_sighting;
 interface
 
 uses
-  Classes, EditBtn, Spin, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, DateUtils,
+  Classes, EditBtn, Spin, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, DateUtils, fpjson, jsonparser,
   ExtCtrls, Character, StdCtrls, Buttons, Menus, atshapelinebgra,
   BCPanel, models_sightings, chipspanel;
 
@@ -34,13 +34,23 @@ type
     btnHelp: TSpeedButton;
     btnNew: TBitBtn;
     cbCoordinatePrecision: TComboBox;
+    ckIsDoubtful: TCheckBox;
+    eMackinnonListNumber: TEdit;
+    lblDetectionModes: TLabel;
+    lblEvidences: TLabel;
+    lblActivities: TLabel;
+    lblHabitats: TLabel;
+    lblMackinnonListNumber: TLabel;
+    pEvidencesChips: TChipsPanel;
+    pActivitiesChips: TChipsPanel;
+    pHabitatsChips: TChipsPanel;
+    pDetectionModes: TPanel;
+    pDetectionChips: TChipsPanel;
+    pEvidences: TPanel;
+    pActivities: TPanel;
+    pHabitats: TPanel;
     pObserversToolbar: TPanel;
     pObserverChips: TChipsPanel;
-    ckCaptured: TCheckBox;
-    ckSeen: TCheckBox;
-    ckHeard: TCheckBox;
-    ckPhotographed: TCheckBox;
-    ckAudioRecording: TCheckBox;
     ckIsInEbird: TCheckBox;
     ckNotSurveying: TCheckBox;
     cbFlightDirection: TComboBox;
@@ -51,8 +61,6 @@ type
     eMalesTally: TEdit;
     eFemalesTally: TEdit;
     eNotSexedTally: TEdit;
-    eMackinnonListNumber: TEdit;
-    eDetectionType: TEditButton;
     eBreedingStatus: TEditButton;
     eTaxon: TEditButton;
     eIndividual: TEditButton;
@@ -70,9 +78,6 @@ type
     lblLatitude: TLabel;
     lblDate: TLabel;
     lblLongitude: TLabel;
-    lblDetectionType: TLabel;
-    lblMackinnonListNumber: TLabel;
-    lblMackinnonListNumber1: TLabel;
     lblFlightHeight: TLabel;
     lblTime: TLabel;
     lblQuantity: TLabel;
@@ -93,8 +98,6 @@ type
     lblTaxon: TLabel;
     lblLocality: TLabel;
     lblSurvey: TLabel;
-    lblHowWasRecorded: TLabel;
-    lblUseDate1: TLabel;
     lineBottom: TShapeLineBGRA;
     pCoordinatesPrecision: TPanel;
     pmnNewSurvey: TMenuItem;
@@ -109,7 +112,6 @@ type
     pCapturesRecapturesUnbanded: TPanel;
     pMalesFemalesNotSexed: TPanel;
     pAdultsImmaturesNotAged: TPanel;
-    pHowWasRecorded: TPanel;
     pInEbirdNotSurveying: TPanel;
     pNotes: TPanel;
     pDateTime: TPanel;
@@ -119,8 +121,7 @@ type
     pFlightHeightDirection: TPanel;
     pTaxon: TPanel;
     pLongitudeLatitude: TPanel;
-    pDetectionBreeding: TPanel;
-    pMackinnonListNumber: TPanel;
+    pBreedingMackinnon: TPanel;
     pLocality: TPanel;
     pSurvey: TBCPanel;
     pQuantityDistance: TPanel;
@@ -138,7 +139,6 @@ type
     procedure eDateKeyPress(Sender: TObject; var Key: char);
     procedure eBreedingStatusButtonClick(Sender: TObject);
     procedure eDateButtonClick(Sender: TObject);
-    procedure eDetectionTypeButtonClick(Sender: TObject);
     procedure eIndividualButtonClick(Sender: TObject);
     procedure eIndividualEditingDone(Sender: TObject);
     procedure eIndividualKeyPress(Sender: TObject; var Key: char);
@@ -172,8 +172,16 @@ type
     FSurveyId, FObserverId, FMethodId, FLocalityId, FTaxonId, FIndividualId: Integer;
     FCustomTaxonName: String;
     procedure SetSighting(Value: TSighting);
+    procedure GetActivities;
+    procedure GetDetectionModes;
+    procedure GetEvidences;
+    procedure GetHabitats;
     procedure GetObservers;
     procedure GetRecord;
+    procedure SetDetectionModes;
+    procedure SetEvidences;
+    procedure SetHabitats;
+    procedure SetActivities;
     procedure SetRecord;
     function IsRequiredFilled: Boolean;
     procedure UpdateTaxonField;
@@ -216,13 +224,17 @@ begin
   eTaxon.Images := DMM.iEditsDark;
   sbAddCustomTaxon.Images := DMM.iEditsDark;
   eIndividual.Images := DMM.iEditsDark;
-  eDetectionType.Images := DMM.iEditsDark;
+  //eDetectionType.Images := DMM.iEditsDark;
   eBreedingStatus.Images := DMM.iEditsDark;
   btnHelp.Images := DMM.iEditsDark;
   btnNew.Images := DMM.iEditsDark;
   btnAddObserver.Images := DMM.iEditsDark;
 
   pObserverChips.DarkMode := True;
+  pDetectionChips.DarkMode := True;
+  pEvidencesChips.DarkMode := True;
+  pHabitatsChips.DarkMode := True;
+  pActivitiesChips.DarkMode := True;
 end;
 
 procedure TedtSighting.btnAddObserverClick(Sender: TObject);
@@ -291,11 +303,6 @@ begin
       SelectNext(Sender as TWinControl, True, True);
     Key := #0;
   end;
-end;
-
-procedure TedtSighting.eDetectionTypeButtonClick(Sender: TObject);
-begin
-  DetectionDialog(eDetectionType);
 end;
 
 procedure TedtSighting.eIndividualButtonClick(Sender: TObject);
@@ -564,8 +571,8 @@ end;
 
 procedure TedtSighting.eNewCapturesTallyEditingDone(Sender: TObject);
 begin
-  if (eNewCapturesTally.Value > 0) or (eRecapturesTally.Value > 0) or (eUnbandedTally.Value > 0) then
-    ckCaptured.Checked := True;
+  //if (eNewCapturesTally.Value > 0) or (eRecapturesTally.Value > 0) or (eUnbandedTally.Value > 0) then
+  //  ckCaptured.Checked := True;
 end;
 
 procedure TedtSighting.eSurveyButtonClick(Sender: TObject);
@@ -674,11 +681,79 @@ begin
   pSurvey.Visible := FSurveyId = 0;
   pIndividual.Visible := FIndividualId = 0;
 
+  pObserverChips.BeginUpdate;
+  pDetectionChips.BeginUpdate;
+  pEvidencesChips.BeginUpdate;
+  pHabitatsChips.BeginUpdate;
+  pActivitiesChips.BeginUpdate;
+  try
+
   with cbCoordinatePrecision.Items do
   begin
     Add(rsExactCoordinate);
     Add(rsApproximatedCoordinate);
     Add(rsReferenceCoordinate);
+  end;
+
+  with pDetectionChips do
+  begin
+    AddChip(rsDetectionVisual, 'visual');
+    AddChip(rsDetectionSong, 'song');
+    AddChip(rsDetectionCall, 'call');
+    AddChip(rsDetectionWingFlapping, 'wing_flapping');
+    AddChip(rsDetectionDrumming, 'drumming');
+    AddChip(rsDetectionCapture, 'capture');
+    AddChip(rsDetectionRemote, 'remote');
+    AddChip(rsDetectionTrack, 'track');
+    AddChip(rsDetectionOther, 'other');
+  end;
+
+  with pEvidencesChips do
+  begin
+    AddChip(rsEvidencePhoto, 'photo');
+    AddChip(rsEvidenceAudio, 'audio');
+    AddChip(rsEvidenceVideo, 'video');
+    AddChip(rsEvidenceCapture, 'capture');
+    AddChip(rsEvidenceSample, 'sample');
+    AddChip(rsEvidenceOther, 'other');
+  end;
+
+  with pHabitatsChips do
+  begin
+    AddChip(rsHabitatForest, 'forest');
+    AddChip(rsHabitatWoods, 'woods');
+    AddChip(rsHabitatSavanna, 'savanna');
+    AddChip(rsHabitatShrubs, 'shrubs');
+    AddChip(rsHabitatGrassland, 'grassland');
+    AddChip(rsHabitatWetland, 'wetland');
+    AddChip(rsHabitatCoastal, 'coastal');
+    AddChip(rsHabitatMarine, 'marine');
+    AddChip(rsHabitatMangrove, 'mangrove');
+    AddChip(rsHabitatFreshwater, 'freshwater');
+    AddChip(rsHabitatCropland, 'cropland');
+    AddChip(rsHabitatUrban, 'urban');
+    AddChip(rsHabitatRocky, 'rocky');
+    AddChip(rsHabitatDesert, 'desert');
+    AddChip(rsHabitatOther, 'other');
+  end;
+
+  with pActivitiesChips do
+  begin
+    AddChip(rsActivityResting, 'resting');
+    AddChip(rsActivityFeeding, 'feeding');
+    AddChip(rsActivityPreening, 'preening');
+    AddChip(rsActivityFlying, 'flying');
+    AddChip(rsActivityWalking, 'walking');
+    AddChip(rsActivitySwimming, 'swimming');
+    AddChip(rsActivityVocalizing, 'vocalizing');
+    AddChip(rsActivitySocial, 'social');
+    AddChip(rsActivityCourtship, 'courtship');
+    AddChip(rsActivityNestBuilding, 'nesting');
+    AddChip(rsActivityIncubationBroodCare, 'brooding');
+    AddChip(rsActivityTerritorial, 'territorial');
+    AddChip(rsActivityVigilance, 'vigilance');
+    AddChip(rsActivityPredatorAvoidance, 'predator');
+    AddChip(rsActivityOther, 'other');
   end;
 
   if FIsNew then
@@ -729,6 +804,109 @@ begin
     Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSighting)]);
     GetRecord;
     sbSave.Enabled := IsRequiredFilled;
+  end;
+  finally
+    pObserverChips.EndUpdate;
+    pDetectionChips.EndUpdate;
+    pEvidencesChips.EndUpdate;
+    pHabitatsChips.EndUpdate;
+    pActivitiesChips.EndUpdate;
+  end;
+end;
+
+procedure TedtSighting.GetActivities;
+var
+  Arr: TJSONArray;
+  i: Integer;
+  Value: String;
+begin
+  with pActivitiesChips do
+  begin
+    if FSighting.Activities = EmptyStr then
+      FSighting.Activities := '[]';
+    Arr := GetJSON(FSighting.Activities) as TJSONArray;
+    try
+      for i := 0 to Arr.Count - 1 do
+      begin
+        Value := Arr.Strings[i];
+
+        SelectByID(Value);
+      end;
+    finally
+      Arr.Free;
+    end;
+  end;
+end;
+
+procedure TedtSighting.GetDetectionModes;
+var
+  Arr: TJSONArray;
+  i: Integer;
+  Value: String;
+begin
+  with pDetectionChips do
+  begin
+    if FSighting.DetectionModes = EmptyStr then
+      FSighting.DetectionModes := '[]';
+    Arr := GetJSON(FSighting.DetectionModes) as TJSONArray;
+    try
+      for i := 0 to Arr.Count - 1 do
+      begin
+        Value := Arr.Strings[i];
+
+        SelectByID(Value);
+      end;
+    finally
+      Arr.Free;
+    end;
+  end;
+end;
+
+procedure TedtSighting.GetEvidences;
+var
+  Arr: TJSONArray;
+  i: Integer;
+  Value: String;
+begin
+  with pEvidencesChips do
+  begin
+    if FSighting.Evidences = EmptyStr then
+      FSighting.Evidences := '[]';
+    Arr := GetJSON(FSighting.Evidences) as TJSONArray;
+    try
+      for i := 0 to Arr.Count - 1 do
+      begin
+        Value := Arr.Strings[i];
+
+        SelectByID(Value);
+      end;
+    finally
+      Arr.Free;
+    end;
+  end;
+end;
+
+procedure TedtSighting.GetHabitats;
+var
+  Arr: TJSONArray;
+  i: Integer;
+  Value: String;
+begin
+  with pHabitatsChips do
+  begin
+    if FSighting.Habitats = EmptyStr then
+      FSighting.Habitats := '[]';
+    Arr := GetJSON(FSighting.Habitats) as TJSONArray;
+    try
+      for i := 0 to Arr.Count - 1 do
+      begin
+        Value := Arr.Strings[i];
+
+        SelectByID(Value);
+      end;
+    finally
+      Arr.Free;
+    end;
   end;
 end;
 
@@ -903,15 +1081,13 @@ begin
   eDistance.Value := FSighting.SubjectDistance;
   eFlightHeight.Value := FSighting.FlightHeight;
   cbFlightDirection.ItemIndex := cbFlightDirection.Items.IndexOf(FSighting.FlightDirection);
-  eDetectionType.Text := FSighting.DetectionType;
   eBreedingStatus.Text := FSighting.BreedingStatus;
   if (FSighting.MackinnonListNumber > 0) then
     eMackinnonListNumber.Text := IntToStr(FSighting.MackinnonListNumber);
-  ckCaptured.Checked := FSighting.SubjectCaptured;
-  ckSeen.Checked := FSighting.SubjectSeen;
-  ckHeard.Checked := FSighting.SubjectHeard;
-  ckPhotographed.Checked := FSighting.SubjectPhotographed;
-  ckAudioRecording.Checked := FSighting.SubjectRecorded;
+  GetDetectionModes;
+  GetEvidences;
+  GetHabitats;
+  GetActivities;
   eNewCapturesTally.Value := FSighting.NewCapturesTally;
   eRecapturesTally.Value := FSighting.RecapturesTally;
   eUnbandedTally.Value := FSighting.UnbandedTally;
@@ -923,6 +1099,7 @@ begin
   eNotSexedTally.Text := FSighting.NotSexedTally;
   ckIsInEbird.Checked := FSighting.IsOnEbird;
   ckNotSurveying.Checked := FSighting.OutOfSample;
+  ckIsDoubtful.Checked := FSighting.IsDoubtful;
   mNotes.Text := FSighting.Notes;
 end;
 
@@ -999,6 +1176,86 @@ begin
   ModalResult := mrOk;
 end;
 
+procedure TedtSighting.SetActivities;
+var
+  Arr: TJSONArray;
+  I: Integer;
+  Chip: TChip;
+begin
+  Arr := TJSONArray.Create;
+  try
+    for I := 0 to pActivitiesChips.GetSelectedChips.Count - 1 do
+    begin
+      Chip := TChip(pActivitiesChips.GetSelectedChips[I]);
+      Arr.Add(Chip.ID);
+    end;
+
+    FSighting.Activities := Arr.AsJSON;
+  finally
+    Arr.Free;
+  end;
+end;
+
+procedure TedtSighting.SetDetectionModes;
+var
+  Arr: TJSONArray;
+  I: Integer;
+  Chip: TChip;
+begin
+  Arr := TJSONArray.Create;
+  try
+    for I := 0 to pDetectionChips.GetSelectedChips.Count - 1 do
+    begin
+      Chip := TChip(pDetectionChips.GetSelectedChips[I]);
+      Arr.Add(Chip.ID);
+    end;
+
+    FSighting.DetectionModes := Arr.AsJSON;
+  finally
+    Arr.Free;
+  end;
+end;
+
+procedure TedtSighting.SetEvidences;
+var
+  Arr: TJSONArray;
+  I: Integer;
+  Chip: TChip;
+begin
+  Arr := TJSONArray.Create;
+  try
+    for I := 0 to pEvidencesChips.GetSelectedChips.Count - 1 do
+    begin
+      Chip := TChip(pEvidencesChips.GetSelectedChips[I]);
+      Arr.Add(Chip.ID);
+    end;
+
+    FSighting.Evidences := Arr.AsJSON;
+  finally
+    Arr.Free;
+  end;
+end;
+
+procedure TedtSighting.SetHabitats;
+var
+  Arr: TJSONArray;
+  I: Integer;
+  Chip: TChip;
+begin
+  Arr := TJSONArray.Create;
+  try
+    for I := 0 to pHabitatsChips.GetSelectedChips.Count - 1 do
+    begin
+      Chip := TChip(pHabitatsChips.GetSelectedChips[I]);
+      Arr.Add(Chip.ID);
+    end;
+
+    FSighting.Habitats := Arr.AsJSON;
+  finally
+    Arr.Free;
+  end;
+end;
+
 procedure TedtSighting.SetRecord;
 begin
   FSighting.SurveyId            := FSurveyId;
@@ -1017,14 +1274,12 @@ begin
   FSighting.SubjectDistance     := eDistance.Value;
   FSighting.FlightHeight        := eFlightHeight.Value;
   FSighting.FlightDirection     := cbFlightDirection.Text;
-  FSighting.DetectionType       := eDetectionType.Text;
   FSighting.BreedingStatus      := eBreedingStatus.Text;
   FSighting.MackinnonListNumber := StrToIntDef(eMackinnonListNumber.Text, 0);
-  FSighting.SubjectCaptured     := ckCaptured.Checked;
-  FSighting.SubjectSeen         := ckSeen.Checked;
-  FSighting.SubjectHeard        := ckHeard.Checked;
-  FSighting.SubjectPhotographed := ckPhotographed.Checked;
-  FSighting.SubjectRecorded     := ckAudioRecording.Checked;
+  SetDetectionModes;
+  SetEvidences;
+  SetHabitats;
+  SetActivities;
   FSighting.NewCapturesTally    := eNewCapturesTally.Value;
   FSighting.RecapturesTally     := eRecapturesTally.Value;
   FSighting.UnbandedTally       := eUnbandedTally.Value;
@@ -1035,7 +1290,8 @@ begin
   FSighting.FemalesTally        := eFemalesTally.Text;
   FSighting.NotSexedTally       := eNotSexedTally.Text;
   FSighting.IsOnEbird           := ckIsInEbird.Checked;
-  FSighting.OutOfSample        := ckNotSurveying.Checked;
+  FSighting.OutOfSample         := ckNotSurveying.Checked;
+  FSighting.IsDoubtful          := ckIsDoubtful.Checked;
   FSighting.Notes               := mNotes.Text;
 end;
 

@@ -29,6 +29,8 @@ uses
     aWhere: TStrings; strTotal: TLabel; ackMarcados: TCheckBox);
   procedure RegAtual(aDataset: TDataset; strAtual: TLabel);
 
+  function QueryRecordCount(aQuery: TSQLQuery): Integer;
+
   procedure SetCountSQL(const aSQL: TStrings; aTable: TTableType);
 
   procedure CountIndividualsSQL(const aSQL: TStrings);
@@ -51,6 +53,204 @@ uses
 implementation
 
 uses utils_locale, udm_main;
+
+function IsSQLIdentifierChar(const AChar: Char): Boolean;
+begin
+  Result := (Ord(AChar) > 127) or (AChar in ['a'..'z', 'A'..'Z', '0'..'9', '_', '$']);
+end;
+
+function SkipSQLWhitespaceAndComments(const ASQL: String; APosition: SizeInt): SizeInt;
+begin
+  while APosition <= Length(ASQL) do
+  begin
+    if ASQL[APosition] in [#9, #10, #13, ' '] then
+      Inc(APosition)
+    else
+    if (APosition < Length(ASQL)) and (ASQL[APosition] = '-') and (ASQL[APosition + 1] = '-') then
+    begin
+      Inc(APosition, 2);
+      while (APosition <= Length(ASQL)) and not (ASQL[APosition] in [#10, #13]) do
+        Inc(APosition);
+    end
+    else
+    if (APosition < Length(ASQL)) and (ASQL[APosition] = '/') and (ASQL[APosition + 1] = '*') then
+    begin
+      Inc(APosition, 2);
+      while (APosition < Length(ASQL)) and not ((ASQL[APosition] = '*') and (ASQL[APosition + 1] = '/')) do
+        Inc(APosition);
+      if APosition < Length(ASQL) then
+        Inc(APosition, 2)
+      else
+        APosition := Length(ASQL) + 1;
+    end
+    else
+      Break;
+  end;
+  Result := APosition;
+end;
+
+function IsSQLKeywordAt(const ASQL, AKeyword: String; APosition: SizeInt): Boolean;
+var
+  KeywordEnd: SizeInt;
+begin
+  Result := False;
+  KeywordEnd := APosition + Length(AKeyword);
+  if (APosition < 1) or (KeywordEnd - 1 > Length(ASQL)) then
+    Exit;
+  if not SameText(Copy(ASQL, APosition, Length(AKeyword)), AKeyword) then
+    Exit;
+  if (APosition > 1) and IsSQLIdentifierChar(ASQL[APosition - 1]) then
+    Exit;
+  if (KeywordEnd <= Length(ASQL)) and IsSQLIdentifierChar(ASQL[KeywordEnd]) then
+    Exit;
+  Result := True;
+end;
+
+function RemoveTrailingOrderBy(const ASQL: String): String;
+var
+  I, J, OrderByPosition, Depth, DollarEnd: SizeInt;
+  QuoteChar: Char;
+  DollarTag: String;
+begin
+  I := 1;
+  Depth := 0;
+  OrderByPosition := 0;
+
+  while I <= Length(ASQL) do
+  begin
+    if ASQL[I] in ['''', '"', '`'] then
+    begin
+      QuoteChar := ASQL[I];
+      Inc(I);
+      while I <= Length(ASQL) do
+      begin
+        if ASQL[I] = QuoteChar then
+        begin
+          if (I < Length(ASQL)) and (ASQL[I + 1] = QuoteChar) then
+            Inc(I, 2)
+          else
+          begin
+            Inc(I);
+            Break;
+          end;
+        end
+        else
+          Inc(I);
+      end;
+      Continue;
+    end;
+
+    if ASQL[I] = '[' then
+    begin
+      Inc(I);
+      while (I <= Length(ASQL)) and (ASQL[I] <> ']') do
+        Inc(I);
+      Inc(I);
+      Continue;
+    end;
+
+    if ASQL[I] = '$' then
+    begin
+      J := I + 1;
+      if (J <= Length(ASQL)) and (ASQL[J] <> '$') and
+         not (ASQL[J] in ['a'..'z', 'A'..'Z', '_']) then
+      begin
+        Inc(I);
+        Continue;
+      end;
+      while (J <= Length(ASQL)) and (ASQL[J] <> '$') and IsSQLIdentifierChar(ASQL[J]) do
+        Inc(J);
+      if (J <= Length(ASQL)) and (ASQL[J] = '$') then
+      begin
+        DollarTag := Copy(ASQL, I, J - I + 1);
+        DollarEnd := Pos(DollarTag, Copy(ASQL, J + 1, Length(ASQL)));
+        if DollarEnd > 0 then
+        begin
+          I := J + DollarEnd + Length(DollarTag);
+          Continue;
+        end;
+      end;
+    end;
+
+    if ASQL[I] = '#' then
+    begin
+      while (I <= Length(ASQL)) and not (ASQL[I] in [#10, #13]) do
+        Inc(I);
+      Continue;
+    end;
+
+    if (I < Length(ASQL)) and (ASQL[I] = '-') and (ASQL[I + 1] = '-') then
+    begin
+      Inc(I, 2);
+      while (I <= Length(ASQL)) and not (ASQL[I] in [#10, #13]) do
+        Inc(I);
+      Continue;
+    end;
+
+    if (I < Length(ASQL)) and (ASQL[I] = '/') and (ASQL[I + 1] = '*') then
+    begin
+      Inc(I, 2);
+      while (I < Length(ASQL)) and not ((ASQL[I] = '*') and (ASQL[I + 1] = '/')) do
+        Inc(I);
+      Inc(I, 2);
+      Continue;
+    end;
+
+    if ASQL[I] = '(' then
+      Inc(Depth)
+    else
+    if (ASQL[I] = ')') and (Depth > 0) then
+      Dec(Depth)
+    else
+    if (Depth = 0) and IsSQLKeywordAt(ASQL, 'ORDER', I) then
+    begin
+      J := SkipSQLWhitespaceAndComments(ASQL, I + Length('ORDER'));
+      if IsSQLKeywordAt(ASQL, 'BY', J) then
+        OrderByPosition := I;
+    end;
+    Inc(I);
+  end;
+
+  if OrderByPosition > 0 then
+    Result := TrimRight(Copy(ASQL, 1, OrderByPosition - 1))
+  else
+    Result := TrimRight(ASQL);
+end;
+
+function QueryRecordCount(aQuery: TSQLQuery): Integer;
+var
+  CountQuery: TSQLQuery;
+  QuerySQL: String;
+begin
+  if not Assigned(aQuery) then
+    raise EArgumentNilException.Create('The SQL query must be assigned.');
+  if not Assigned(aQuery.Database) then
+    raise Exception.CreateFmt('The SQL query "%s" has no database connection.', [aQuery.Name]);
+
+  QuerySQL := RemoveTrailingOrderBy(aQuery.SQL.Text);
+  QuerySQL := TrimRight(QuerySQL);
+  if (QuerySQL <> EmptyStr) and (QuerySQL[Length(QuerySQL)] = ';') then
+    Delete(QuerySQL, Length(QuerySQL), 1);
+  if Trim(QuerySQL) = EmptyStr then
+    raise Exception.CreateFmt('The SQL query "%s" has no SQL statement.', [aQuery.Name]);
+
+  CountQuery := TSQLQuery.Create(nil);
+  try
+    CountQuery.Database := aQuery.Database;
+    CountQuery.Transaction := aQuery.Transaction;
+    CountQuery.DataSource := aQuery.DataSource;
+    CountQuery.ParamCheck := aQuery.ParamCheck;
+    CountQuery.MacroCheck := aQuery.MacroCheck;
+    CountQuery.SQL.Text := 'SELECT COUNT(*) FROM (' + LineEnding + QuerySQL +
+      LineEnding + ') AS query_record_count';
+    CountQuery.Params.Assign(aQuery.Params);
+    CountQuery.Macros.Assign(aQuery.Macros);
+    CountQuery.Open;
+    Result := CountQuery.Fields[0].AsInteger;
+  finally
+    FreeAndNil(CountQuery);
+  end;
+end;
 
 function MarkedCount(aTabela: TTableType; aModifier: TRecordStatus; aWhere: TStrings;
   aField: String): Integer;
@@ -640,4 +840,3 @@ begin
 end;
 
 end.
-

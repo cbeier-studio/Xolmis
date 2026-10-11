@@ -555,12 +555,12 @@ begin
   lstDetectionType := TlstDetectionType.Create(nil);
   with lstDetectionType do
   try
-    Deteccao := aDetect;
+    JsonString := aDetect;
     // GetFormPosition(aEdit, WindowPos);
     if ShowModal = mrOK then
     begin
       CanEdit(aDataSet);
-      aDataset.FieldByName(aCampo).AsString := Deteccao;
+      aDataset.FieldByName(aCampo).AsString := JsonString;
       Result := True;
     end;
   finally
@@ -576,11 +576,11 @@ begin
   lstDetectionType := TlstDetectionType.Create(nil);
   with lstDetectionType do
   try
-    //Deteccao := aDetect;
+    //JsonString := aDetect;
     // GetFormPosition(aEdit, WindowPos);
     if ShowModal = mrOK then
     begin
-      aEdit.Text := Deteccao;
+      aEdit.Text := JsonString;
       Result := True;
     end;
   finally

@@ -88,7 +88,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnPrepareCanvas = gridRecordPrepareCanvas
           ColWidths = (
             100
-            348
+            327
           )
         end
       end
@@ -8701,6 +8701,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             TitleStyle = tsNative
             OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
@@ -8727,6 +8728,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             TitleStyle = tsNative
             OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
@@ -8753,6 +8755,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             TitleStyle = tsNative
             OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
@@ -8779,6 +8782,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             TitleStyle = tsNative
             OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
@@ -8805,6 +8809,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             TitleStyle = tsNative
             OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
@@ -8831,6 +8836,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             TitleStyle = tsNative
             OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
@@ -8857,6 +8863,7 @@ object frmCustomGrid: TfrmCustomGrid
             TitleImageList = iHeaders
             TitleStyle = tsNative
             OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
             OnDblClick = gridChild1DblClick
             OnEditButtonClick = DBGEditButtonClick
             OnEditingDone = DBGEditingDone
@@ -10075,6 +10082,7 @@ object frmCustomGrid: TfrmCustomGrid
         TitleStyle = tsNative
         OnColEnter = DBGColEnter
         OnContextPopup = DBGContextPopup
+        OnDrawColumnCell = DBGDrawColumnCell
         OnDblClick = DBGDblClick
         OnEditButtonClick = DBGEditButtonClick
         OnEditingDone = DBGEditingDone
@@ -29014,7 +29022,7 @@ object frmCustomGrid: TfrmCustomGrid
   end
   object TimerOpen: TTimer
     Enabled = False
-    Interval = 250
+    Interval = 100
     OnTimer = TimerOpenTimer
     Left = 424
     Top = 64

@@ -27,6 +27,8 @@ function LocalizePermissionGroup(const PermissionGroup: String): String;
 function LocalizePermissionName(const PermissionName: String): String;
 function LocalizePermissionDescription(const PermissionName: String; const FallbackDescription: String = ''): String;
 
+function TranslateSightingJsonValue(const AValue: String): String;
+
   {
     Unicode diacritics (pt-BR):
     À = #192; Á = #193; Â = #194; Ã = #195
@@ -289,7 +291,7 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsProgressGeneratingReport = 'Generating report...';
     rsProgressCreatingTable = 'Creating table: %s (%d/%d)';
     rsProgressCreatingView = 'Creating view: %s (%d/%d)';
-    rsProgressPopulatingTables = 'Populating tables... This may take a few minutes.';
+    rsProgressPopulatingTables = 'Populating tables (%s)... This may take a few minutes.';
     rsProgressOptimizingDatabase = 'Optimizing database...';
     rsUpgradingDatabaseSchema = 'Upgrading database schema...';
     rsInsertingRecords = 'Inserting records in database...';
@@ -1138,6 +1140,60 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsTemporaryTaxonName = 'Temporary taxon name';
     rsObserversSelect = 'Observers: (select the observers involved)';
     rsObserversAddRemove = 'Observers: (add the involved observers and remove the others)';
+    rsDetectionTypes = '"visual","song","call","wing flapping","drumming","capture","remote","track or sign","other"';
+    rsDetectionVisual = 'Visual';
+    rsDetectionSong = 'Song';
+    rsDetectionCall = 'Call';
+    rsDetectionWingFlapping = 'Wing flapping';
+    rsDetectionDrumming = 'Drumming';
+    rsDetectionCapture = 'Capture';
+    rsDetectionRemote = 'Remote';
+    rsDetectionTrack = 'Track or sign';
+    rsDetectionOther = 'Other';
+    rsEvidencePhoto = 'Photo';
+    rsEvidenceAudio = 'Audio';
+    rsEvidenceVideo = 'Video';
+    rsEvidenceCapture = 'Capture';
+    rsEvidenceSample = 'Sample';
+    rsEvidenceOther = 'Other';
+    rsHabitatForest = 'Forest';
+    rsHabitatWoods = 'Woods';
+    rsHabitatSavanna = 'Savanna';
+    rsHabitatShrubs = 'Shrubs';
+    rsHabitatGrassland = 'Grassland';
+    rsHabitatWetland = 'Wetland';
+    rsHabitatCoastal = 'Coastal';
+    rsHabitatMarine = 'Marine';
+    rsHabitatMangrove = 'Mangrove';
+    rsHabitatFreshwater= 'Freshwater';
+    rsHabitatCropland = 'Cropland';
+    rsHabitatUrban = 'Urban';
+    rsHabitatRocky = 'Rocky';
+    rsHabitatDesert = 'Desert';
+    rsHabitatOther = 'Other';
+    rsActivityResting = 'Resting/Roosting';
+    rsActivityFeeding = 'Feeding/Foraging';
+    rsActivityPreening = 'Preening';
+    rsActivityFlying = 'Flying';
+    rsActivityWalking = 'Walking/Hopping';
+    rsActivitySwimming = 'Swimming/Diving';
+    rsActivityVocalizing = 'Vocalizing';
+    rsActivitySocial = 'Social interaction';
+    rsActivityCourtship = 'Courtship/Mating';
+    rsActivityNestBuilding = 'Nest building';
+    rsActivityIncubationBroodCare = 'Incubation/Brood care';
+    rsActivityTerritorial = 'Territorial behavior';
+    rsActivityVigilance = 'Vigilance';
+    rsActivityPredatorAvoidance = 'Predator avoidance';
+    rsActivityOther = 'Other';
+    rsBreedingCodes = '"Confirmed","NY - Nest with Young","NE - Nest with Eggs","FS - carrying Fecal Sac",' +
+      '"FY - Feeding Young","CF - Carrying Food","FL - recently Fledged young","ON - Occupied Nest",' +
+      '"UN - Used Nest","DD - Distraction Display,"Confirmed/Probable","NB - Nest Building",' +
+      '"CN - Carrying Nesting material","Probable","PE - Physiological Evidence",' +
+      '"B - wren/woodpecker nest Building","A - Agitated behavior","N - visiting probable Nest site",' +
+      '"C - Courtship, display or copulation","T - Territorial defense","P - Pair in suitable habitat",' +
+      '"M - Multiple singing birds (7+)","S7 - Singing bird present 7+ days","Possible","S - Singing bird",' +
+      '"H - in appropriate Habitat","Observed","F - Flyover"';
 
     { Feathers }
     rsFeatherUnknown = 'Unknown';
@@ -1360,16 +1416,6 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
       '"O - Other (such as behavior/copulation; put in notes)","U - Undetermined after examination",' +
       '"X - age or sex determination not attempted","Z - less precise age (< 95%) but high certainty"';
 
-    rsDetectionTypes = '"S - song","C - call","V - seen","W - wing flapping","D - drumming","F - flying"';
-    rsBreedingCodes = '"Confirmed","NY - Nest with Young","NE - Nest with Eggs","FS - carrying Fecal Sac",' +
-      '"FY - Feeding Young","CF - Carrying Food","FL - recently Fledged young","ON - Occupied Nest",' +
-      '"UN - Used Nest","DD - Distraction Display,"Confirmed/Probable","NB - Nest Building",' +
-      '"CN - Carrying Nesting material","Probable","PE - Physiological Evidence",' +
-      '"B - wren/woodpecker nest Building","A - Agitated behavior","N - visiting probable Nest site",' +
-      '"C - Courtship, display or copulation","T - Territorial defense","P - Pair in suitable habitat",' +
-      '"M - Multiple singing birds (7+)","S7 - Singing bird present 7+ days","Possible","S - Singing bird",' +
-      '"H - in appropriate Habitat","Observed","F - Flyover"';
-
     { Sex }
     rsSexMale = 'Male';
     rsSexFemale = 'Female';
@@ -1451,6 +1497,17 @@ function LocalizePermissionDescription(const PermissionName: String; const Fallb
     rsActivityDelayed = 'Delayed';
     rsActivityNeedsReview = 'Needs review';
     rsActivityBlocked = 'Blocked';
+
+    { Transport modes }
+    rsTransportNotApplicable = 'Not applicable';
+    rsTransportWalking = 'Walking';
+    rsTransportVehicle = 'Vehicle/Car';
+    rsTransportVessel = 'Vessel/Boat';
+    rsTransportAerial = 'Aircraft/Drone';
+    rsTransportBicycle = 'Vehicle/Bicycle';
+    rsTransportAnimal = 'Animal/Horse';
+    rsTransportRemote = 'Remote';
+    rsTransportOther = 'Other';
 
     { Sampling moments }
     rsMomentStart = 'Start';
@@ -1903,6 +1960,59 @@ begin
     Result := FallbackDescription
   else
     Result := PermissionName;
+end;
+
+function TranslateSightingJsonValue(const AValue: String): String;
+begin
+  case AValue of
+    'visual':        Result := rsDetectionVisual;
+    'song':          Result := rsDetectionSong;
+    'call':          Result := rsDetectionCall;
+    'wing_flapping': Result := rsDetectionWingFlapping;
+    'drumming':      Result := rsDetectionDrumming;
+    'capture':       Result := rsDetectionCapture;
+    'remote':        Result := rsDetectionRemote;
+    'track':         Result := rsDetectionTrack;
+
+    'photo':         Result := rsEvidencePhoto;
+    'audio':         Result := rsEvidenceAudio;
+    'video':         Result := rsEvidenceVideo;
+    //'capture':       Result := rsEvidenceCapture;
+    'sample':        Result := rsEvidenceSample;
+
+    'forest':         Result := rsHabitatForest;
+    'woods':          Result := rsHabitatWoods;
+    'savanna':        Result := rsHabitatSavanna;
+    'shrubs':         Result := rsHabitatShrubs;
+    'grassland':      Result := rsHabitatGrassland;
+    'wetland':        Result := rsHabitatWetland;
+    'coastal':        Result := rsHabitatCoastal;
+    'marine':         Result := rsHabitatMarine;
+    'mangrove':       Result := rsHabitatMangrove;
+    'freshwater':     Result := rsHabitatFreshwater;
+    'cropland':       Result := rsHabitatCropland;
+    'urban':          Result := rsHabitatUrban;
+    'rocky':          Result := rsHabitatRocky;
+    'desert':         Result := rsHabitatDesert;
+
+    'resting':        Result := rsActivityResting;
+    'feeding':        Result := rsActivityFeeding;
+    'preening':       Result := rsActivityPreening;
+    'flying':         Result := rsActivityFlying;
+    'walking':        Result := rsActivityWalking;
+    'swimming':       Result := rsActivitySwimming;
+    'vocalizing':     Result := rsActivityVocalizing;
+    'social':         Result := rsActivitySocial;
+    'courtship':      Result := rsActivityCourtship;
+    'nesting':        Result := rsActivityNestBuilding;
+    'brooding':       Result := rsActivityIncubationBroodCare;
+    'territorial':    Result := rsActivityTerritorial;
+    'vigilance':      Result := rsActivityVigilance;
+    'predator':       Result := rsActivityPredatorAvoidance;
+    'other':          Result := rsActivityOther;
+  else
+    Result := AValue;
+  end;
 end;
 
 end.

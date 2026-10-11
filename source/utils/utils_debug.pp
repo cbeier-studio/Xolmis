@@ -41,10 +41,38 @@ type
     procedure StopTimer;
   end;
 
+{ Start a new sequence of performance marks }
+procedure PerfReset(const aLabel: String);
+{ Log time elapsed since the previous mark and since the start of the sequence }
+procedure PerfMark(const aLabel: String);
+
 implementation
 
 uses
   utils_global;
+
+var
+  PerfStart, PerfLast: QWord;
+
+procedure PerfReset(const aLabel: String);
+begin
+  PerfStart := GetTickCount64;
+  PerfLast := PerfStart;
+  {$IFDEF DEBUG}
+  LogDebug(Format('[PERF] %s (start)', [aLabel]));
+  {$ENDIF}
+end;
+
+procedure PerfMark(const aLabel: String);
+var
+  Cur: QWord;
+begin
+  Cur := GetTickCount64;
+  {$IFDEF DEBUG}
+  LogDebug(Format('[PERF] %s: +%d ms (total %d ms)', [aLabel, Cur - PerfLast, Cur - PerfStart]));
+  {$ENDIF}
+  PerfLast := Cur;
+end;
 
 
 { TElapsedTimer }

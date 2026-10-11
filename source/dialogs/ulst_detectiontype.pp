@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, CheckLst, Buttons,
-  atshapelinebgra, BCPanel;
+  atshapelinebgra, fpjson, jsonparser;
 
 type
 
@@ -32,21 +32,18 @@ type
     cklDetect: TCheckListBox;
     lineBottom: TShapeLineBGRA;
     pBottom: TPanel;
-    pCode: TBCPanel;
     sbCancel: TBitBtn;
     sbOK: TBitBtn;
-    procedure cklDetectClickCheck(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure sbCancelClick(Sender: TObject);
     procedure sbOKClick(Sender: TObject);
   private
-    xDetect: String;
+    strJson: String;
     procedure ApplyDarkMode;
-    function DetectCode: String;
   public
-    property Deteccao: String read xDetect write xDetect;
+    property JsonString: String read strJson write strJson;
   end;
 
 var
@@ -62,40 +59,12 @@ uses utils_locale, utils_global, utils_dialogs, utils_themes, uDarkStyleParams;
 
 procedure TlstDetectionType.ApplyDarkMode;
 begin
-  pCode.Background.Color := ActiveTheme.Interactive.SelectionBackground;
-end;
 
-procedure TlstDetectionType.cklDetectClickCheck(Sender: TObject);
-begin
-  GravaStat(Name, 'cklDetect', 'clickcheck');
-  pCode.Caption := DetectCode;
-end;
-
-function TlstDetectionType.DetectCode: String;
-var
-  L: String;
-  i: Integer;
-begin
-  Result := '';
-
-  L := '';
-  for i := 0 to cklDetect.Count - 1 do
-    if cklDetect.Checked[i] then
-      case i of
-        0: L := L + 'S';
-        1: L := L + 'C';
-        2: L := L + 'V';
-        3: L := L + 'W';
-        4: L := L + 'D';
-        5: L := L + 'F';
-      end;
-
-  Result := L;
 end;
 
 procedure TlstDetectionType.FormCreate(Sender: TObject);
 begin
-  Deteccao := '';
+  JsonString := '';
 end;
 
 procedure TlstDetectionType.FormKeyPress(Sender: TObject; var Key: char);
@@ -124,48 +93,83 @@ end;
 
 procedure TlstDetectionType.FormShow(Sender: TObject);
 var
-  C: Char;
+  Arr: TJSONArray;
   i: Integer;
+  Value: String;
 begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
   cklDetect.Items.CommaText := rsDetectionTypes;
 
-  if Length(Deteccao) > 0 then
+  if JsonString <> '' then
   begin
-    for i := 1 to Length(Deteccao) do
-    begin
-      C := Deteccao[i];
-      case C of
-        'S': cklDetect.Checked[0] := True;
-        'C': cklDetect.Checked[1] := True;
-        'V': cklDetect.Checked[2] := True;
-        'W': cklDetect.Checked[3] := True;
-        'D': cklDetect.Checked[4] := True;
-        'F': cklDetect.Checked[5] := True;
+    Arr := GetJSON(JsonString) as TJSONArray;
+    try
+      for i := 0 to Arr.Count - 1 do
+      begin
+        Value := Arr.Strings[i];
+
+        case Value of
+          'visual':        cklDetect.Checked[0] := True;
+          'song':          cklDetect.Checked[1] := True;
+          'call':          cklDetect.Checked[2] := True;
+          'wing_flapping': cklDetect.Checked[3] := True;
+          'drumming':      cklDetect.Checked[4] := True;
+          'capture':       cklDetect.Checked[5] := True;
+          'remote':        cklDetect.Checked[6] := True;
+          'track':         cklDetect.Checked[7] := True;
+          'other':         cklDetect.Checked[8] := True;
+        end;
       end;
+    finally
+      Arr.Free;
     end;
-    pCode.Caption := Deteccao;
   end;
 end;
 
 procedure TlstDetectionType.sbCancelClick(Sender: TObject);
 begin
-  GravaStat(Name, 'SBCancel', 'click');
   ModalResult := mrCancel;
 end;
 
 procedure TlstDetectionType.sbOKClick(Sender: TObject);
+var
+  Arr: TJSONArray;
 begin
-  GravaStat(Name, 'SBSave', 'click');
-  if DetectCode = '' then
-  begin
-    MsgDlg('', rsListCheckedNone, mtError);
-    Exit;
-  end;
+  Arr := TJSONArray.Create;
+  try
+    if cklDetect.Checked[0] then
+      Arr.Add('visual');
 
-  Deteccao := DetectCode;
+    if cklDetect.Checked[1] then
+      Arr.Add('song');
+
+    if cklDetect.Checked[2] then
+      Arr.Add('call');
+
+    if cklDetect.Checked[3] then
+      Arr.Add('wing_flapping');
+
+    if cklDetect.Checked[4] then
+      Arr.Add('drumming');
+
+    if cklDetect.Checked[5] then
+      Arr.Add('capture');
+
+    if cklDetect.Checked[6] then
+      Arr.Add('remote');
+
+    if cklDetect.Checked[7] then
+      Arr.Add('track');
+
+    if cklDetect.Checked[8] then
+      Arr.Add('other');
+
+    JsonString := Arr.AsJSON;
+  finally
+    Arr.Free;
+  end;
 
   ModalResult := mrOK;
 end;

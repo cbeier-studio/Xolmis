@@ -23,7 +23,7 @@ unit ufrm_customgrid;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl, fpjson, jsonparser,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra, BCPanel, bctypes,
   DBControlGrid, Types, ImgList, ToggleSwitch, XolmisDBGrid, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
@@ -944,6 +944,8 @@ type
     procedure DBGColEnter(Sender: TObject);
     procedure DBGContextPopup(Sender: TObject; MousePos: TPoint; var Handled: Boolean);
     procedure DBGDblClick(Sender: TObject);
+    procedure DBGDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+      State: TGridDrawState);
     procedure DBGEditButtonClick(Sender: TObject);
     procedure DBGEditingDone(Sender: TObject);
     procedure DBGKeyPress(Sender: TObject; var Key: char);
@@ -1257,6 +1259,11 @@ type
     FDragging: Boolean;
     FImageList: TAttachedImageList;
     FRecycleList: TRecycleList;
+    FChildOpened: array[0..6] of Boolean;
+    FClosedCountMasterId: Integer;
+    // Exact total of the master query (-1 = unknown); needed because only 300 records are loaded at a time
+    FMasterTotal: Integer;
+    FFiltersPanelOpened, FFiltersDirty: Boolean;
     FThumbManager: TThumbnailManager;
     cellMemo: TMemo;
 
@@ -1279,6 +1286,8 @@ type
 
     procedure ClearSearch;
 
+    procedure DrawJsonTags(ACanvas: TCanvas; const ARect: TRect; const JsonText: String; Selected: Boolean);
+
     function GetChildDataSet: TDataSet;
 
     procedure GetColumns;
@@ -1294,6 +1303,10 @@ type
     procedure LoadImagesMetadataFromDB;
     procedure LoadRecycleMetadataFromDB;
 
+    procedure EnsureFiltersLoaded;
+    procedure EnsureRecycleLoaded;
+    procedure EnsureSidePanelLoaded;
+
     procedure OnAutoAdjustColumnsChanged;
     procedure OnDatesFilterChanged;
     procedure OnDefaultRowHeightChanged;
@@ -1304,14 +1317,7 @@ type
     procedure OnThumbnailReadyEvent(Sender: TObject; const AMediaHash: string; const ABitmap: TBitmap);
 
     procedure OpenAsync;
-    procedure OpenExpeditionChilds;
-    procedure OpenIndividualChilds;
-    procedure OpenNestChilds;
-    procedure OpenProjectChilds;
-    procedure OpenSamplingPlotChilds;
-    procedure OpenSightingChilds;
-    procedure OpenSpecimenChilds;
-    procedure OpenSurveyChilds;
+    procedure OpenChild(aIndex: Integer);
 
     procedure QuickAddChild(aInitialValue: String = '');
 
@@ -1349,9 +1355,11 @@ type
     procedure UpdateButtons(aDataSet: TDataSet);
     procedure UpdateChildBar;
     procedure UpdateChildButtons(aDataSet: TDataSet);
-    procedure UpdateChildCount;
+    procedure UpdateChildCount(aPageIndex: Integer = -1);
+    procedure UpdateMasterCountLabel;
+    procedure UpdateClosedChildCounts(aForce: Boolean = False);
     procedure UpdateChildRightPanel;
-    procedure UpdateChildStatus;
+    procedure UpdateChildStatus(aRecordCount: Integer);
     procedure UpdateGridTitles(aGrid: TDBGrid; aSearch: TCustomSearch);
     procedure UpdateImageButtons(aDataSet: TDataSet);
     procedure UpdateAudioButtons(aDataSet: TDataSet);
@@ -1412,7 +1420,7 @@ implementation
 uses
   utils_locale, utils_global, utils_system, utils_themes, utils_editdialogs, utils_dialogs, utils_math,
   utils_finddialogs, utils_print, utils_gis, utils_taxonomy, utils_validations, utils_web, utils_conversions,
-  data_management, data_getvalue, data_columns, data_setparam, data_consts,
+  data_management, data_getvalue, data_columns, data_setparam, data_consts, data_count,
   models_access_control, models_taxonomy, models_users, models_record_types,
   modules_bands, modules_birds, modules_botany, modules_breeding, modules_gazetteer, modules_institutions,
   modules_methods, modules_people, modules_permits, modules_projects, modules_sampling, modules_sampling_plots,
@@ -1424,6 +1432,16 @@ uses
   ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer, ubatch_bandsreceive;
 
 {$R *.lfm}
+
+{ Cheap record count for enabling navigation buttons: it avoids a SELECT COUNT(*) on every record change.
+  When a full packet was loaded there may be more records, so a large value is returned. }
+function NavigationRecordCount(aDataSet: TDataSet): Integer;
+begin
+  Result := aDataSet.RecordCount;
+  if (aDataSet is TSQLQuery) and (TSQLQuery(aDataSet).PacketRecords > 0) and
+    (Result >= TSQLQuery(aDataSet).PacketRecords) then
+    Result := High(Integer);
+end;
 
 function ReplaceTrailingOrderBy(const ASQL: String; const AOrderBy: String): String;
 var
@@ -1665,6 +1683,7 @@ begin
   begin
     // Show child grid when there is no active tab
     FParentForm.nbChilds.PageIndex := Self.PageIndex;
+    FParentForm.OpenChild(Self.PageIndex);
     if not FParentForm.pChild.Visible then
       FParentForm.pChild.Visible := True;
     FParentForm.pChild.Top := FParentForm.pChildsBar.Top + FParentForm.pChildsBar.Height + 1;
@@ -1780,7 +1799,7 @@ begin
     6: FParentForm.UpdateChildButtons(FParentForm.dsLink7.DataSet);
   end;
 
-  FParentForm.UpdateChildStatus;
+  FParentForm.UpdateChildCount(Self.PageIndex);
   isWorking := False;
 end;
 
@@ -2164,30 +2183,47 @@ begin
 
   try
     aGrid.BeginUpdate;
+    {$IFDEF DEBUG}PerfMark('AddGridColumns: start');{$ENDIF}
     aGrid.Columns.Clear;
+    {$IFDEF DEBUG}PerfMark('AddGridColumns: Columns.Clear');{$ENDIF}
 
-    for i := 0 to (aGrid.DataSource.DataSet.FieldCount-1) do
-      // Add only fields set as visible
-      //if aGrid.DataSource.DataSet.Fields[i].Visible then
-      begin
-        C := aGrid.Columns.Add;
-        C.FieldName := aGrid.DataSource.DataSet.Fields[i].FieldName;
-        // Set all fields as read only, except marked_status
-        C.ReadOnly := not (C.FieldName = COL_MARKED_STATUS);
-        C.Visible := aGrid.DataSource.DataSet.Fields[i].Visible;
-        //C := nil;
-      end;
+    // Collection-level update lock: avoids a full grid relayout for every column added
+    aGrid.Columns.BeginUpdate;
+    try
+      for i := 0 to (aGrid.DataSource.DataSet.FieldCount-1) do
+        // Add only fields set as visible
+        //if aGrid.DataSource.DataSet.Fields[i].Visible then
+        begin
+          C := aGrid.Columns.Add;
+          C.FieldName := aGrid.DataSource.DataSet.Fields[i].FieldName;
+          // Set all fields as read only, except marked_status
+          C.ReadOnly := not (C.FieldName = COL_MARKED_STATUS);
+          C.Visible := aGrid.DataSource.DataSet.Fields[i].Visible;
+          //C := nil;
+        end;
+    finally
+      aGrid.Columns.EndUpdate;
+    end;
+    {$IFDEF DEBUG}PerfMark(Format('AddGridColumns: Columns.Add x%d', [aGrid.DataSource.DataSet.FieldCount]));{$ENDIF}
 
     SetGridColumns(aGrid);
+    {$IFDEF DEBUG}PerfMark('AddGridColumns: SetGridColumns (ConfigureColumns)');{$ENDIF}
 
-    LoadRecordColumns;
-    LoadRecordRow;
+    // The record panel mirrors only the master grid
+    if aGrid = DBG then
+    begin
+      LoadRecordColumns;
+      LoadRecordRow;
+    end;
+    {$IFDEF DEBUG}PerfMark('AddGridColumns: LoadRecordColumns/Row');{$ENDIF}
 
-    if xSettings.AutoAdjustColumns then
+    if (aGrid = DBG) and xSettings.AutoAdjustColumns then
       DBG.AutoAdjustColumns;
+    {$IFDEF DEBUG}PerfMark('AddGridColumns: AutoAdjustColumns');{$ENDIF}
   finally
     //aGrid.Columns.LinkFields;
     aGrid.EndUpdate;
+    {$IFDEF DEBUG}PerfMark('AddGridColumns: EndUpdate (relayout/repaint)');{$ENDIF}
   end;
 end;
 
@@ -3266,6 +3302,7 @@ begin
   FCanToggle := False;
   rbMarkedAll.Checked := True;
 
+  EnsureFiltersLoaded;
   FModule.ClearFilters;
 
   //EP.Clear;
@@ -3353,6 +3390,24 @@ procedure TfrmCustomGrid.DBGDblClick(Sender: TObject);
 begin
   if sbEditRecord.Enabled then
     sbEditRecordClick(nil);
+end;
+
+procedure TfrmCustomGrid.DBGDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;
+  State: TGridDrawState);
+var
+  Grid: TXolmisDBGrid;
+begin
+  Grid := TXolmisDBGrid(Sender);
+
+  if (Column.FieldName = COL_DETECTION_MODES) or (Column.FieldName = COL_EVIDENCES) or
+     (Column.FieldName = COL_HABITATS) or (Column.FieldName = COL_ACTIVITIES) then
+  begin
+    Grid.Canvas.FillRect(Rect);
+
+    DrawJsonTags(Grid.Canvas, Rect, Column.Field.AsString, gdSelected in State);
+  end
+  else
+    Grid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
 procedure TfrmCustomGrid.DBGEditButtonClick(Sender: TObject);
@@ -4103,11 +4158,104 @@ begin
 
 end;
 
+procedure TfrmCustomGrid.DrawJsonTags(ACanvas: TCanvas; const ARect: TRect; const JsonText: String; Selected: Boolean);
+var
+  Arr: TJSONArray;
+  i: Integer;
+  X, Y: Integer;
+  TagRect: TRect;
+  S, OverflowText: String;
+  TagWidth: Integer;
+  HiddenCount: Integer;
+  BgColor, FontColor: TColor;
+
+  function CalcTagWidth(const Text: String): Integer;
+  begin
+    Result := ACanvas.TextWidth(Text) + 12;
+  end;
+
+begin
+  if JsonText = '' then Exit;
+
+  if Selected then
+  begin
+    BgColor := clHighlight;
+    FontColor := clHighlightText;
+  end
+  else
+  if IsDarkModeEnabled then
+  begin
+    BgColor := $505050;
+    FontColor := clWhite;
+  end
+  else
+  begin
+    BgColor := $00E6E6E6;
+    FontColor := clBlack;
+  end;
+
+  Arr := GetJSON(JsonText) as TJSONArray;
+  try
+    X := ARect.Left + 3;
+    Y := ARect.Top + 2;
+    HiddenCount := 0;
+
+    for i := 0 to Arr.Count - 1 do
+    begin
+
+      S := TranslateSightingJsonValue(Arr.Strings[i]);
+      TagWidth := CalcTagWidth(S);
+
+      if X + TagWidth > ARect.Right - 3 then
+      begin
+        HiddenCount := Arr.Count - i;
+        Break;
+      end;
+
+      TagRect := Rect(X, Y, X + TagWidth, ARect.Bottom - 2);
+
+      ACanvas.Brush.Color := BgColor;
+      ACanvas.Pen.Color := BgColor;
+      ACanvas.RoundRect(TagRect.Left, TagRect.Top, TagRect.Right, TagRect.Bottom, 8, 8);
+
+      ACanvas.Font.Color := FontColor;
+
+      ACanvas.TextOut(TagRect.Left + 6, TagRect.Top +
+        ((TagRect.Bottom - TagRect.Top - ACanvas.TextHeight(S)) div 2), S);
+
+      Inc(X, TagWidth + 4);
+    end;
+
+    if HiddenCount > 0 then
+    begin
+      OverflowText := Format('+%d', [HiddenCount]);
+      TagWidth := CalcTagWidth(OverflowText);
+
+      if X + TagWidth <= ARect.Right - 2 then
+      begin
+        TagRect := Rect(X, Y, X + TagWidth, ARect.Bottom - 2);
+
+        ACanvas.Brush.Color := $00909090;
+        ACanvas.Pen.Color := $00909090;
+
+        ACanvas.RoundRect(TagRect.Left, TagRect.Top, TagRect.Right, TagRect.Bottom, 8, 8);
+
+        ACanvas.Font.Color := clWhite;
+
+        ACanvas.TextOut(TagRect.Left + 6, TagRect.Top +
+            ((TagRect.Bottom - TagRect.Top - ACanvas.TextHeight(OverflowText)) div 2), OverflowText);
+      end;
+    end;
+  finally
+    Arr.Free;
+  end;
+end;
+
 procedure TfrmCustomGrid.dsAudiosDataChange(Sender: TObject; Field: TField);
 begin
   UpdateAudioButtons(qAudios);
   {$IFDEF DEBUG}
-  LogDebug('Param: ' + qAudios.Params[0].Name + ' ' + qAudios.Params[0].AsString + '; Count: ' + IntToStr(qAudios.RecordCount));
+  LogDebug('Param: ' + qAudios.Params[0].Name + ' ' + qAudios.Params[0].AsString);
   {$ENDIF}
 end;
 
@@ -4120,7 +4268,7 @@ procedure TfrmCustomGrid.dsDocsDataChange(Sender: TObject; Field: TField);
 begin
   UpdateDocButtons(qDocs);
   {$IFDEF DEBUG}
-  LogDebug('Param: ' + qDocs.Params[0].Name + ' ' + qDocs.Params[0].AsString + '; Count: ' + IntToStr(qDocs.RecordCount));
+  LogDebug('Param: ' + qDocs.Params[0].Name + ' ' + qDocs.Params[0].AsString);
   {$ENDIF}
 end;
 
@@ -4133,7 +4281,7 @@ procedure TfrmCustomGrid.dsImagesDataChange(Sender: TObject; Field: TField);
 begin
   UpdateImageButtons(qImages);
   {$IFDEF DEBUG}
-  LogDebug('Param: ' + qImages.Params[0].Name + ' ' + qImages.Params[0].AsString + '; Count: ' + IntToStr(qImages.RecordCount));
+  LogDebug('Param: ' + qImages.Params[0].Name + ' ' + qImages.Params[0].AsString);
   {$ENDIF}
 end;
 
@@ -4246,7 +4394,7 @@ begin
     UpdateButtons(dsLink.DataSet);
 
   sbEmptyAddCountries.Visible := FTableType = tbGazetteer;
-  pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
+  pEmptyQuery.Visible := dsLink.DataSet.IsEmpty;
 
   UpdateChildBar;
 end;
@@ -4260,7 +4408,7 @@ procedure TfrmCustomGrid.dsVideosDataChange(Sender: TObject; Field: TField);
 begin
   UpdateVideoButtons(qVideos);
   {$IFDEF DEBUG}
-  LogDebug('Param: ' + qVideos.Params[0].Name + ' ' + qVideos.Params[0].AsString + '; Count: ' + IntToStr(qVideos.RecordCount));
+  LogDebug('Param: ' + qVideos.Params[0].Name + ' ' + qVideos.Params[0].AsString);
   {$ENDIF}
 end;
 
@@ -4828,6 +4976,7 @@ end;
 procedure TfrmCustomGrid.FormCreate(Sender: TObject);
 begin
   FCanToggle := False;
+  FMasterTotal := -1;
   isFiltered := False;
 
   oldAutoSizeCols := False;
@@ -4851,15 +5000,20 @@ begin
 
   //cellMemo.Tag := -1;
 
+  {$IFDEF DEBUG}PerfMark('FormCreate: lists/managers');{$ENDIF}
   // Open reports data module
   if not Assigned(DMR) then
     DMR := TDMR.Create(nil);
+  {$IFDEF DEBUG}PerfMark('FormCreate: TDMR.Create');{$ENDIF}
   if not Assigned(DMS) then
     DMS := TDMS.Create(nil);
+  {$IFDEF DEBUG}PerfMark('FormCreate: TDMS.Create');{$ENDIF}
   if not Assigned(DMI) then
     DMI := TDMI.Create(nil);
+  {$IFDEF DEBUG}PerfMark('FormCreate: TDMI.Create');{$ENDIF}
   if not Assigned(DMB) then
     DMB := TDMB.Create(nil);
+  {$IFDEF DEBUG}PerfMark('FormCreate: TDMB.Create');{$ENDIF}
 end;
 
 procedure TfrmCustomGrid.FormDestroy(Sender: TObject);
@@ -5222,11 +5376,14 @@ end;
 
 procedure TfrmCustomGrid.FormShow(Sender: TObject);
 begin
+  {$IFDEF DEBUG}PerfMark('FormShow: start (gap since FormCreate/ShowFormInPage)');{$ENDIF}
   if IsDarkModeEnabled then
     ApplyDarkMode;
+  {$IFDEF DEBUG}PerfMark('FormShow: ApplyDarkMode');{$ENDIF}
 
   // Initialize module
   CreateModules;
+  {$IFDEF DEBUG}PerfMark('FormShow: CreateModules');{$ENDIF}
 
   FSearch := TCustomSearch.Create(FTableType);
 
@@ -5242,10 +5399,13 @@ begin
   FChildPanelFactor := 0.4;
   pChild.Height := Round((pClient.Height - SplitChild.Height) * FChildPanelFactor);
   UpdateRowHeights;
+  {$IFDEF DEBUG}PerfMark('FormShow: map/panels/UpdateRowHeights');{$ENDIF}
   Application.ProcessMessages;
+  {$IFDEF DEBUG}PerfMark('FormShow: ProcessMessages');{$ENDIF}
 
   { Load datasources }
   SetModule;
+  {$IFDEF DEBUG}PerfMark('FormShow: SetModule (total)');{$ENDIF}
 
   // Use a timer to load the rest to speed up opening
   TimerOpen.Enabled := True;
@@ -5579,36 +5739,81 @@ var
   R, FDrawRect: TRect;
   Flags: Longint;
   Padding, NeededHeight: Integer;
-begin
-  if (ACol = 1) and (dsLink.DataSet.RecordCount > 0) and (DBG.Columns[aRow].Field.DataType = ftMemo) then
+  Field: TField;
+
+  function IsJsonArrayField(AField: TField): Boolean;
   begin
-    Padding := Round(2 * Self.GetCanvasScaleFactor);
-    Txt := gridRecord.Cells[ACol, ARow];
-
-    // Line break settings
-    Flags := DT_WORDBREAK or DT_LEFT or DT_NOPREFIX;
-
-    // Calculate height
-    R := ARect;
-    InflateRect(R, -Padding, -Padding);
-    DrawText(gridRecord.Canvas.Handle, PChar(Txt), Length(Txt), R,
-      Flags or DT_CALCRECT);
-    NeededHeight := (R.Bottom - R.Top) + Padding * 2;
-
-    // Adjust row height
-    if gridRecord.RowHeights[ARow] < NeededHeight then
-      gridRecord.RowHeights[ARow] := NeededHeight;
-
-    // Draw wrapped text
-    gridRecord.Canvas.FillRect(ARect);
-    FDrawRect := ARect;
-    InflateRect(FDrawRect, -Padding, -Padding);
-    DrawText(gridRecord.Canvas.Handle, PChar(Txt), Length(Txt), FDrawRect, Flags);
-
-    Exit;
+    Result :=
+      (AField <> nil) and
+      AField.FieldName.EndsWith('_json') and
+      (AField.AsString <> '');
   end;
 
-  // Draw regular cells
+  // gridRecord lists only the visible columns of DBG, so the row index is not the column index
+  function FieldOfRow(aRowIndex: Integer): TField;
+  var
+    k, VisibleIdx: Integer;
+  begin
+    Result := nil;
+    VisibleIdx := 0;
+    for k := 0 to DBG.Columns.Count - 1 do
+      if DBG.Columns[k].Visible then
+      begin
+        if VisibleIdx = aRowIndex then
+          Exit(DBG.Columns[k].Field);
+        Inc(VisibleIdx);
+      end;
+  end;
+
+begin
+  if (ACol = 1) and (ARow >= 0) then
+  begin
+    Field := FieldOfRow(ARow);
+
+    if Assigned(Field) then
+    begin
+
+      { JSON arrays }
+      if IsJsonArrayField(Field) then
+      begin
+        gridRecord.Canvas.FillRect(ARect);
+
+        DrawJsonTags(gridRecord.Canvas, ARect, Field.AsString, gdSelected in aState);
+
+        Exit;
+      end;
+
+      { Memo fields }
+      if not dsLink.DataSet.IsEmpty
+      and (Field.DataType = ftMemo) then
+      begin
+        Padding := Round(2 * Self.GetCanvasScaleFactor);
+        Txt := gridRecord.Cells[ACol, ARow];
+
+        Flags := DT_WORDBREAK or DT_LEFT or DT_NOPREFIX;
+
+        R := ARect;
+        InflateRect(R, -Padding, -Padding);
+
+        DrawText(gridRecord.Canvas.Handle, PChar(Txt), Length(Txt), R, Flags or DT_CALCRECT);
+
+        NeededHeight := (R.Bottom - R.Top) + Padding * 2;
+
+        if gridRecord.RowHeights[ARow] < NeededHeight then
+          gridRecord.RowHeights[ARow] := NeededHeight;
+
+        gridRecord.Canvas.FillRect(ARect);
+
+        FDrawRect := ARect;
+        InflateRect(FDrawRect, -Padding, -Padding);
+
+        DrawText(gridRecord.Canvas.Handle, PChar(Txt), Length(Txt), FDrawRect, Flags);
+
+        Exit;
+      end;
+    end;
+  end;
+
   gridRecord.DefaultDrawCell(ACol, ARow, ARect, AState);
 end;
 
@@ -5680,7 +5885,7 @@ end;
 
 procedure TfrmCustomGrid.HandleChildDataChange(PageIndex: Integer);
 begin
-  UpdateChildCount;
+  UpdateChildCount(PageIndex);
   if nbChilds.PageIndex = PageIndex then 
   begin
     TimerChildUpdate.Enabled := False;
@@ -5836,17 +6041,18 @@ begin
     begin
       if DBG.Columns.Items[i].Visible then
       begin
-        Inc(RowIndex);
         if gridRecord.RowCount <= RowIndex then
           gridRecord.RowCount := RowIndex + 1;
         gridRecord.Cells[0, RowIndex] := DBG.Columns.Items[i].Title.Caption;
 
-        if (DBG.Columns.Items[i].Field.DataType = ftMemo) or
-          (DBG.Columns.Items[i].Field.DataType = ftBlob) then
+        if ((DBG.Columns.Items[i].Field.DataType = ftMemo) or
+          (DBG.Columns.Items[i].Field.DataType = ftBlob)) and
+          (not DBG.Columns.Items[i].Field.FieldName.EndsWith('_json')) then
         begin
           gridRecord.RowHeights[RowIndex] := gridRecord.DefaultRowHeight * 4;
         end;
 
+        Inc(RowIndex);
       end;
     end;
   finally
@@ -5967,7 +6173,12 @@ end;
 procedure TfrmCustomGrid.OnDatesFilterChanged;
 begin
   if (fufDates in FModule.FilterUiFlags) then
-    LoadDateTreeData(FTableType, tvDateFilter);
+  begin
+    if FFiltersPanelOpened then
+      LoadDateTreeData(FTableType, tvDateFilter)
+    else
+      FFiltersDirty := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.OnDefaultRowHeightChanged;
@@ -5978,7 +6189,12 @@ end;
 procedure TfrmCustomGrid.OnGazetteerFilterChanged;
 begin
   if (fufSites in FModule.FilterUiFlags) then
-    LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+  begin
+    if FFiltersPanelOpened then
+      LoadSiteTreeData(FTableType, tvSiteFilter, 4)
+    else
+      FFiltersDirty := True;
+  end;
 end;
 
 procedure TfrmCustomGrid.OnMapLoaded(Sender: TObject);
@@ -6001,6 +6217,11 @@ begin
 
   if (fufCategory in FModule.FilterUiFlags) then
   begin
+    if not FFiltersPanelOpened then
+    begin
+      FFiltersDirty := True;
+      Exit;
+    end;
     if cbCategoryFilter.ItemIndex > 0 then
       S := cbCategoryFilter.Text;
     cbCategoryFilter.Items.Clear;
@@ -6028,6 +6249,7 @@ begin
   Usage := TElapsedTimer.Create(Format('Show %s', [Caption]), 'load master table');
   {$ENDIF}
 
+  {$IFDEF DEBUG}PerfMark('OpenAsync: start (timer delay)');{$ENDIF}
   { Load master grid columns }
   if Assigned(dsLink.DataSet) then
   begin
@@ -6035,36 +6257,20 @@ begin
     Usage.AddPart('load master grid columns');
     {$ENDIF}
     LoadColumnsConfig;
+    {$IFDEF DEBUG}PerfMark('OpenAsync: LoadColumnsConfig');{$ENDIF}
     AddGridColumns(FTableType, DBG);
+    {$IFDEF DEBUG}PerfMark('OpenAsync: AddGridColumns');{$ENDIF}
     //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
     //  (dsLink.DataSet as TSQLQuery).ReadOnly := True;
     if not (dsLink.DataSet.Active) then
       dsLink.DataSet.Open;
     UpdateGridTitles(DBG, FSearch);
+    {$IFDEF DEBUG}PerfMark('OpenAsync: UpdateGridTitles');{$ENDIF}
     {$IFDEF DEBUG}
-    LogDebug(Format('%s: %d records', [dsLink.DataSet.Name, dsLink.DataSet.RecordCount]));
+    LogDebug(Format('%s: %d records loaded', [dsLink.DataSet.Name, dsLink.DataSet.RecordCount]));
     {$ENDIF}
     Application.ProcessMessages;
-  end;
-
-  { Load child grids columns }
-  if Assigned(dsLink1.DataSet) then
-  begin
-    {$IFDEF DEBUG}
-    Usage.AddPart('load detail table');
-    {$ENDIF}
-
-    case FTableType of
-      tbIndividuals:    OpenIndividualChilds;
-      tbNests:          OpenNestChilds;
-      tbExpeditions:    OpenExpeditionChilds;
-      tbSurveys:        OpenSurveyChilds;
-      tbSightings:      OpenSightingChilds;
-      tbSpecimens:      OpenSpecimenChilds;
-      tbSamplingPlots:  OpenSamplingPlotChilds;
-      tbProjects:       OpenProjectChilds;
-    end;
-    Application.ProcessMessages;
+    {$IFDEF DEBUG}PerfMark('OpenAsync: ProcessMessages #1');{$ENDIF}
   end;
 
   { Load side panels }
@@ -6072,21 +6278,32 @@ begin
   Usage.AddPart('load side panels');
   {$ENDIF}
   LoadRecordColumns;
+  {$IFDEF DEBUG}PerfMark('OpenAsync: LoadRecordColumns');{$ENDIF}
   LoadRecordRow;
+  {$IFDEF DEBUG}PerfMark('OpenAsync: LoadRecordRow');{$ENDIF}
   UpdateFilterPanels;
+  {$IFDEF DEBUG}PerfMark('OpenAsync: UpdateFilterPanels');{$ENDIF}
   UpdateButtons(dsLink.DataSet);
+  {$IFDEF DEBUG}PerfMark('OpenAsync: UpdateButtons');{$ENDIF}
   UpdateChildCount;
+  {$IFDEF DEBUG}PerfMark('OpenAsync: UpdateChildCount');{$ENDIF}
   if DBG.CanSetFocus then
     DBG.SetFocus;
   if gridColumns.RowCount <= 2 then
     LoadColumnsConfigGrid;
+  {$IFDEF DEBUG}PerfMark('OpenAsync: SetFocus/LoadColumnsConfigGrid');{$ENDIF}
   SetImages;
+  {$IFDEF DEBUG}PerfMark('OpenAsync: SetImages');{$ENDIF}
   SetAudios;
+  {$IFDEF DEBUG}PerfMark('OpenAsync: SetAudios');{$ENDIF}
   SetVideos;
+  {$IFDEF DEBUG}PerfMark('OpenAsync: SetVideos');{$ENDIF}
   SetDocs;
+  {$IFDEF DEBUG}PerfMark('OpenAsync: SetDocs');{$ENDIF}
   SetRecycle;
   FCanToggle := True;
   Application.ProcessMessages;
+  {$IFDEF DEBUG}PerfMark('OpenAsync: SetRecycle + ProcessMessages #2');{$ENDIF}
 
   dlgLoading.Hide;
 
@@ -6096,132 +6313,33 @@ begin
   {$ENDIF}
 end;
 
-procedure TfrmCustomGrid.OpenExpeditionChilds;
+procedure TfrmCustomGrid.OpenChild(aIndex: Integer);
+var
+  Grid: TDBGrid;
+  Source: TDataSource;
 begin
-  AddGridColumns(tbSurveys, gridChild1);
-  dsLink1.DataSet.Open;
-  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  //begin
-  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-  //end;
-end;
+  if (aIndex < 0) or (aIndex > High(FChildOpened)) or FChildOpened[aIndex] then
+    Exit;
+  if aIndex >= FModule.Submodules.Count then
+    Exit;
 
-procedure TfrmCustomGrid.OpenIndividualChilds;
-begin
-  AddGridColumns(tbCaptures, gridChild1);
-  dsLink1.DataSet.Open;
-  AddGridColumns(tbFeathers, gridChild2);
-  dsLink2.DataSet.Open;
-  AddGridColumns(tbSightings, gridChild3);
-  dsLink3.DataSet.Open;
-  AddGridColumns(tbNests, gridChild4);
-  dsLink4.DataSet.Open;
-  AddGridColumns(tbSpecimens, gridChild5);
-  dsLink5.DataSet.Open;
-  AddGridColumns(tbPoiLibrary, gridChild6);
-  dsLink6.DataSet.Open;
-  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  //begin
-  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
-  //end;
-end;
+  case aIndex of
+    0: begin Grid := gridChild1; Source := dsLink1; end;
+    1: begin Grid := gridChild2; Source := dsLink2; end;
+    2: begin Grid := gridChild3; Source := dsLink3; end;
+    3: begin Grid := gridChild4; Source := dsLink4; end;
+    4: begin Grid := gridChild5; Source := dsLink5; end;
+    5: begin Grid := gridChild6; Source := dsLink6; end;
+    6: begin Grid := gridChild7; Source := dsLink7; end;
+  end;
+  if not Assigned(Source.DataSet) then
+    Exit;
 
-procedure TfrmCustomGrid.OpenNestChilds;
-begin
-  AddGridColumns(tbNestOwners, gridChild1);
-  dsLink1.DataSet.Open;
-  AddGridColumns(tbNestRevisions, gridChild2);
-  dsLink2.DataSet.Open;
-  AddGridColumns(tbEggs, gridChild3);
-  dsLink3.DataSet.Open;
-  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  //begin
-  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-  //end;
-end;
-
-procedure TfrmCustomGrid.OpenProjectChilds;
-begin
-  AddGridColumns(tbProjectTeams, gridChild1);
-  dsLink1.DataSet.Open;
-  AddGridColumns(tbProjectGoals, gridChild2);
-  dsLink2.DataSet.Open;
-  AddGridColumns(tbProjectChronograms, gridChild3);
-  dsLink3.DataSet.Open;
-  AddGridColumns(tbProjectBudgets, gridChild4);
-  dsLink4.DataSet.Open;
-  AddGridColumns(tbProjectExpenses, gridChild5);
-  dsLink5.DataSet.Open;
-  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  //begin
-  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
-  //end;
-end;
-
-procedure TfrmCustomGrid.OpenSamplingPlotChilds;
-begin
-  AddGridColumns(tbPermanentNets, gridChild1);
-  dsLink1.DataSet.Open;
-  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  //begin
-  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-  //end;
-end;
-
-procedure TfrmCustomGrid.OpenSightingChilds;
-begin
-  AddGridColumns(tbPoiLibrary, gridChild1);
-  dsLink1.DataSet.Open;
-end;
-
-procedure TfrmCustomGrid.OpenSpecimenChilds;
-begin
-  AddGridColumns(tbSpecimenCollectors, gridChild1);
-  dsLink1.DataSet.Open;
-  AddGridColumns(tbSamplePreps, gridChild2);
-  dsLink2.DataSet.Open;
-  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  //begin
-  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-  //end;
-end;
-
-procedure TfrmCustomGrid.OpenSurveyChilds;
-begin
-  AddGridColumns(tbSurveyTeams, gridChild1);
-  dsLink1.DataSet.Open;
-  AddGridColumns(tbNetsEffort, gridChild2);
-  dsLink2.DataSet.Open;
-  AddGridColumns(tbWeatherLogs, gridChild3);
-  dsLink3.DataSet.Open;
-  AddGridColumns(tbCaptures, gridChild4);
-  dsLink4.DataSet.Open;
-  AddGridColumns(tbSightings, gridChild5);
-  dsLink5.DataSet.Open;
-  AddGridColumns(tbVegetation, gridChild6);
-  dsLink6.DataSet.Open;
-  AddGridColumns(tbPoiLibrary, gridChild7);
-  dsLink7.DataSet.Open;
-  //if ActiveUser.IsVisitor or not ActiveUser.AllowManageCollection then
-  //begin
-  //  (dsLink1.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink2.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink3.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink4.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink5.DataSet as TSQLQuery).ReadOnly := True;
-  //  (dsLink6.DataSet as TSQLQuery).ReadOnly := True;
-  //end;
+  // Child grids are opened only when their tab is first selected
+  AddGridColumns(FModule.Submodules[aIndex].TableType, Grid);
+  if not Source.DataSet.Active then
+    Source.DataSet.Open;
+  FChildOpened[aIndex] := True;
 end;
 
 procedure TfrmCustomGrid.pClientResize(Sender: TObject);
@@ -6576,8 +6694,10 @@ end;
 
 procedure TfrmCustomGrid.pmGridChildPopup(Sender: TObject);
 begin
-  pmcNewProjectActivityFromGoal.Visible := (ChildTable = tbProjectGoals) and (dsLink2.DataSet.RecordCount > 0);
-  pmcNewExpenseFromRubric.Visible := (ChildTable = tbProjectBudgets) and (dsLink4.DataSet.RecordCount > 0);
+  pmcNewProjectActivityFromGoal.Visible := (ChildTable = tbProjectGoals) and dsLink2.DataSet.Active and
+    not dsLink2.DataSet.IsEmpty;
+  pmcNewExpenseFromRubric.Visible := (ChildTable = tbProjectBudgets) and dsLink4.DataSet.Active and
+    not dsLink4.DataSet.IsEmpty;
 end;
 
 procedure TfrmCustomGrid.pmiRefreshImagesClick(Sender: TObject);
@@ -6942,7 +7062,7 @@ begin
     qObservers.Open;
 
     // Check if there are observers in the list
-    if qObservers.RecordCount = 0 then
+    if qObservers.IsEmpty then
     begin
       MsgDlg(rsTitleInformation, rsNothingToPrint, mtInformation);
       Exit;
@@ -7063,10 +7183,13 @@ begin
 
   isWorking := True;
   try
-    if not dsRecycle.DataSet.Active then
-      dsRecycle.DataSet.Open;
-    dsRecycle.DataSet.Refresh;
-    LoadRecycleMetadataFromDB;
+    if dsRecycle.DataSet.Active then
+    begin
+      dsRecycle.DataSet.Refresh;
+      LoadRecycleMetadataFromDB;
+    end
+    else
+      EnsureRecycleLoaded;
     UpdateRecycleButtons(dsRecycle.DataSet);
     UpdateButtons(dsLink.DataSet);
   finally
@@ -7708,7 +7831,7 @@ begin
     if not dsLink2.DataSet.Active then
       Open;
 
-    if RecordCount > 0 then
+    if not dsLink2.DataSet.IsEmpty then
     try
       BM := Bookmark;
       DisableControls;
@@ -8257,7 +8380,8 @@ begin
       SQL.Add('DELETE FROM %ftable WHERE (active_status = 0)');
       MacroByName('FTABLE').AsString := TABLE_NAMES[FTableType];
       ExecSQL;
-      qRecycle.Refresh;
+      if qRecycle.Active then
+        qRecycle.Refresh;
     finally
       FreeAndNil(Qry);
     end;
@@ -8300,6 +8424,7 @@ begin
 
     // Inactivate the selected record
     DeleteRecord(FTableType, dsLink.DataSet);
+    FMasterTotal := -1;
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
     // Notify modules to update site filters
@@ -8326,7 +8451,8 @@ begin
     end;
 
     // Update the recycle bin
-    dsRecycle.DataSet.Refresh;
+    if dsRecycle.DataSet.Active then
+      dsRecycle.DataSet.Refresh;
     UpdateRecycleButtons(dsRecycle.DataSet);
     dbgRecycle.RowCount := 0;
     LoadRecycleMetadataFromDB;
@@ -8524,13 +8650,14 @@ begin
 
     if needsRefresh then
     begin
+      FMasterTotal := -1;
       dsLink.DataSet.Refresh;
       UpdateButtons(dsLink.DataSet);
       //UpdateFilterPanels;
       OnDatesFilterChanged;
       UpdateChildRightPanel;
       RefreshAutoSizeColumns;
-      pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
+      pEmptyQuery.Visible := dsLink.DataSet.IsEmpty;
     end;
   finally
     isWorking := False;
@@ -8576,7 +8703,7 @@ begin
       OnDatesFilterChanged;
       UpdateChildRightPanel;
       //RefreshAutoSizeColumns;
-      pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
+      pEmptyQuery.Visible := dsLink.DataSet.IsEmpty;
     end;
   finally
     isWorking := False;
@@ -8925,10 +9052,11 @@ begin
   try
     if not dsLink.DataSet.Active then
       dsLink.DataSet.Open;
+    FMasterTotal := -1;
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
     RefreshAutoSizeColumns;
-    pEmptyQuery.Visible := (dsLink.DataSet.RecordCount = 0);
+    pEmptyQuery.Visible := dsLink.DataSet.IsEmpty;
   finally
     isWorking := False;
   end;
@@ -8950,6 +9078,7 @@ begin
 
     // Restore the selected record
     RestoreRecord(FTableType, dsRecycle.DataSet);
+    FMasterTotal := -1;
     dsLink.DataSet.Refresh;
     UpdateButtons(dsLink.DataSet);
 
@@ -8963,7 +9092,8 @@ begin
     end;
 
     // Update the recycle bin
-    dsRecycle.DataSet.Refresh;
+    if dsRecycle.DataSet.Active then
+      dsRecycle.DataSet.Refresh;
     UpdateRecycleButtons(dsRecycle.DataSet);
     dbgRecycle.RowCount := 0;
     LoadRecycleMetadataFromDB;
@@ -9088,6 +9218,7 @@ begin
   if (Sender as TSpeedButton).Down then
   begin
     cpSide.PageIndex := (Sender as TSpeedButton).Tag;
+    EnsureSidePanelLoaded;
 
     if (cpSide.ActivePageComponent = cardMap) then
     begin
@@ -9166,6 +9297,7 @@ begin
     {$ENDIF}
     FSearch.TextFilters.Clear;
     FSearch.QuickFilters.Clear;
+    FMasterTotal := -1;
     lblRecordStatus.Caption := rsLoadingRecords;
 
     AddBooleanFilter(FSearch, COL_MARKED_STATUS, rscMarkedStatus, rbMarkedYes.Checked, rbMarkedNo.Checked);
@@ -9357,6 +9489,17 @@ procedure TfrmCustomGrid.SetModule;
 var
   i: Integer;
 begin
+  if FModule.DataSet is TSQLQuery then
+    TSQLQuery(FModule.DataSet).PacketRecords := 300;
+  for i := 0 to FModule.Submodules.Count - 1 do
+    if FModule.Submodules[i].DataSet is TSQLQuery then
+      TSQLQuery(FModule.Submodules[i].DataSet).PacketRecords := 300;
+  qAudios.PacketRecords := 300;
+  qDocs.PacketRecords := 300;
+  qImages.PacketRecords := 300;
+  qRecycle.PacketRecords := 300;
+  qVideos.PacketRecords := 300;
+
   Caption := FModule.CaptionText;
   FSearch.DataSet := TSQLQuery(FModule.DataSet);
   dsLink.DataSet := FSearch.DataSet;
@@ -9519,9 +9662,44 @@ begin
   // Set visible child buttons
   sbChildVerifications.Visible := (gufShowVerifications in FModule.UiFlags);
 
+  {$IFDEF DEBUG}PerfMark('SetModule: visibility flags');{$ENDIF}
   CreatePanelTabs;
+  {$IFDEF DEBUG}PerfMark('SetModule: CreatePanelTabs');{$ENDIF}
   SplitChild.Visible := pChild.Visible;
   Search(EmptyStr);
+  {$IFDEF DEBUG}PerfMark('SetModule: Search(EmptyStr) (main query open)');{$ENDIF}
+end;
+
+procedure TfrmCustomGrid.EnsureRecycleLoaded;
+begin
+  if qRecycle.Active then
+    Exit;
+
+  qRecycle.Open;
+
+  lblRecycleWarning.Caption := Format(rsRecycleAutoDeleteInfo, [xSettings.ClearDeletedPeriod * 30]);
+  pRecycleWarning.Visible := xSettings.ClearDeletedPeriod > 0;
+
+  LoadRecycleMetadataFromDB;
+end;
+
+procedure TfrmCustomGrid.EnsureFiltersLoaded;
+begin
+  FFiltersPanelOpened := True;
+  if FFiltersDirty then
+  begin
+    FFiltersDirty := False;
+    UpdateFilterPanels;
+  end;
+end;
+
+procedure TfrmCustomGrid.EnsureSidePanelLoaded;
+begin
+  if cpSide.ActivePageComponent = cardQuickFilters then
+    EnsureFiltersLoaded
+  else
+  if cpSide.ActivePageComponent = cardRecycle then
+    EnsureRecycleLoaded;
 end;
 
 procedure TfrmCustomGrid.SetRecycle;
@@ -9649,12 +9827,6 @@ begin
   //lblRecycleId.DataField := qRecycle.MacroByName('FID').AsString;
   //lblRecycleName.DataField := qRecycle.MacroByName('FNAME').AsString;
 
-  qRecycle.Open;
-
-  lblRecycleWarning.Caption := Format(rsRecycleAutoDeleteInfo, [xSettings.ClearDeletedPeriod * 30]);
-  pRecycleWarning.Visible := xSettings.ClearDeletedPeriod > 0;
-
-  LoadRecycleMetadataFromDB;
 end;
 
 procedure TfrmCustomGrid.SetSidePanel(aValue: Boolean);
@@ -9717,6 +9889,7 @@ begin
       oldSideIndex := FSideIndex;
     FSideIndex := aValue;
     cpSide.PageIndex := FSideIndex;
+    EnsureSidePanelLoaded;
   end;
 end;
 
@@ -9866,6 +10039,8 @@ begin
 
   LoadImagesMetadataFromDB;
   RefreshAutoSizeColumns;
+  UpdateClosedChildCounts;
+  UpdateMasterCountLabel;
 
   aStatus := GetRecordVerification(TABLE_NAMES[FTableType], aId, aTotalProblems);
 
@@ -10074,6 +10249,8 @@ begin
 end;
 
 procedure TfrmCustomGrid.UpdateAudioButtons(aDataSet: TDataSet);
+var
+  Cnt, MasterCnt: Integer;
 begin
   if isClosing then
     Exit;
@@ -10089,10 +10266,12 @@ begin
     end;
     dsBrowse:
     begin
-      sbAddAudio.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
-      sbAudioInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
-      sbDelAudio.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
-      sbPlayAudio.Enabled := (aDataSet.RecordCount > 0);
+      MasterCnt := Ord(not dsLink.DataSet.IsEmpty);
+      Cnt := Ord(not aDataSet.IsEmpty);
+      sbAddAudio.Enabled := (MasterCnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
+      sbAudioInfo.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelAudio.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
+      sbPlayAudio.Enabled := (Cnt > 0);
 
     end;
     dsEdit, dsInsert:
@@ -10149,6 +10328,8 @@ begin
 end;
 
 procedure TfrmCustomGrid.UpdateButtons(aDataSet: TDataSet);
+var
+  Cnt, MasterCnt: Integer;
 begin
   case aDataSet.State of
     dsInactive:
@@ -10186,19 +10367,20 @@ begin
     end;
     dsBrowse:
     begin
+      Cnt := NavigationRecordCount(aDataSet);
       sbInsertRecord.Enabled := not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
-      sbEditRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
-      sbDelRecord.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
-      sbRecordHistory.Enabled := (aDataSet.RecordCount > 0);
-      sbRecordVerifications.Enabled := (aDataSet.RecordCount > 0);
-      sbShareRecords.Enabled := (aDataSet.RecordCount > 0) and CanExportTable(FTableType);
-      sbPrint.Enabled := (aDataSet.RecordCount > 0) and CanPrintTable(FTableType);
-      sbMarkRecords.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbEditRecord.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelRecord.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
+      sbRecordHistory.Enabled := (Cnt > 0);
+      sbRecordVerifications.Enabled := (Cnt > 0);
+      sbShareRecords.Enabled := (Cnt > 0) and CanExportTable(FTableType);
+      sbPrint.Enabled := (Cnt > 0) and CanPrintTable(FTableType);
+      sbMarkRecords.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
 
-      sbFirstRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
-      sbPriorRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
-      sbNextRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
-      sbLastRecord.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
+      sbFirstRecord.Enabled := (Cnt > 1) and (aDataSet.RecNo > 1);
+      sbPriorRecord.Enabled := (Cnt > 1) and (aDataSet.RecNo > 1);
+      sbNextRecord.Enabled := (Cnt > 1) and (aDataSet.RecNo < Cnt);
+      sbLastRecord.Enabled := (Cnt > 1) and (aDataSet.RecNo < Cnt);
 
       sbShowQuickFilters.Enabled := True;
       sbShowImages.Enabled := True;
@@ -10252,6 +10434,8 @@ begin
       if (Self.Parent is TPage) and (frmMain.navTabs.TabCount = frmMain.PGW.PageCount) then
         frmMain.navTabs.GetTabData((Self.Parent as TPage).PageIndex).TabModified := True;
       pSide.Enabled := False;
+      // The total may change when the record is saved
+      FMasterTotal := -1;
     end;
 
   end;
@@ -10277,12 +10461,54 @@ begin
   pmpAddCountriesAndStates.Enabled := sbInsertRecord.Enabled;
   pmpAddMunicipalities.Enabled := sbInsertRecord.Enabled;
 
-  // Update the record count
-  if dsLink.DataSet.RecordCount = 1 then
-    lblRecordStatus.Caption := Format(rsRecordsFound, [dsLink.DataSet.RecordCount])
+  // aDataSet is the master dataset at every call site.
+  if aDataSet.State <> dsBrowse then
+    Exit;
+
+  if Cnt = High(Integer) then
+  begin
+    // Packet is full: the exact total comes from a count query, cached until the data changes
+    if FMasterTotal >= 0 then
+      MasterCnt := FMasterTotal
+    else
+    begin
+      lblRecordStatus.Caption := rsLoadingRecords;
+      TimerRecordUpdate.Enabled := False;
+      TimerRecordUpdate.Enabled := True;
+      Exit;
+    end;
+  end
   else
-  if dsLink.DataSet.RecordCount > 1 then
-    lblRecordStatus.Caption := Format(rsRecordsFoundPlural, [dsLink.DataSet.RecordCount])
+  begin
+    MasterCnt := Cnt;
+    FMasterTotal := Cnt;
+  end;
+  if MasterCnt = 1 then
+    lblRecordStatus.Caption := Format(rsRecordsFound, [MasterCnt])
+  else
+  if MasterCnt > 1 then
+    lblRecordStatus.Caption := Format(rsRecordsFoundPlural, [MasterCnt])
+  else
+    lblRecordStatus.Caption := rsNoRecordsFound;
+end;
+
+procedure TfrmCustomGrid.UpdateMasterCountLabel;
+begin
+  if (FMasterTotal >= 0) or not dsLink.DataSet.Active or (dsLink.DataSet.State <> dsBrowse) then
+    Exit;
+
+  try
+    FMasterTotal := QueryRecordCount(TSQLQuery(dsLink.DataSet));
+  except
+    FMasterTotal := -1;
+    Exit;
+  end;
+
+  if FMasterTotal = 1 then
+    lblRecordStatus.Caption := Format(rsRecordsFound, [FMasterTotal])
+  else
+  if FMasterTotal > 1 then
+    lblRecordStatus.Caption := Format(rsRecordsFoundPlural, [FMasterTotal])
   else
     lblRecordStatus.Caption := rsNoRecordsFound;
 end;
@@ -10302,6 +10528,8 @@ begin
 end;
 
 procedure TfrmCustomGrid.UpdateChildButtons(aDataSet: TDataSet);
+var
+  Cnt, MasterCnt: Integer;
 begin
   if isClosing then
     Exit;
@@ -10327,17 +10555,19 @@ begin
     end;
     dsBrowse:
     begin
-      sbAddChild.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FChildTable);
-      sbEditChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FChildTable);
-      sbDelChild.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FChildTable);
-      sbChildHistory.Enabled := (aDataSet.RecordCount > 0);
-      sbChildVerifications.Enabled := (aDataSet.RecordCount > 0);
-      sbShareChild.Enabled := (aDataSet.RecordCount > 0) and CanExportTable(FChildTable);
+      Cnt := NavigationRecordCount(aDataSet);
+      MasterCnt := Ord(not dsLink.DataSet.IsEmpty);
+      sbAddChild.Enabled := (MasterCnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FChildTable);
+      sbEditChild.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FChildTable);
+      sbDelChild.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FChildTable);
+      sbChildHistory.Enabled := (Cnt > 0);
+      sbChildVerifications.Enabled := (Cnt > 0);
+      sbShareChild.Enabled := (Cnt > 0) and CanExportTable(FChildTable);
       sbRefreshChild.Enabled := True;
-      sbFirstChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
-      sbPriorChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo > 1);
-      sbNextChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
-      sbLastChild.Enabled := (aDataSet.RecordCount > 1) and (aDataSet.RecNo < aDataSet.RecordCount);
+      sbFirstChild.Enabled := (Cnt > 1) and (aDataSet.RecNo > 1);
+      sbPriorChild.Enabled := (Cnt > 1) and (aDataSet.RecNo > 1);
+      sbNextChild.Enabled := (Cnt > 1) and (aDataSet.RecNo < Cnt);
+      sbLastChild.Enabled := (Cnt > 1) and (aDataSet.RecNo < Cnt);
 
       pSide.Enabled := True;
     end;
@@ -10371,10 +10601,11 @@ begin
   //UpdateChildCount;
 end;
 
-procedure TfrmCustomGrid.UpdateChildCount;
+procedure TfrmCustomGrid.UpdateChildCount(aPageIndex: Integer);
 var
   PanelTab: TCustomPanelTab;
-  i: Integer;
+  i, Cnt, SelectedCount: Integer;
+  DS: TDataSet;
 begin
   if isClosing then
     Exit;
@@ -10387,15 +10618,85 @@ begin
     Exit;
   end;
 
+  if aPageIndex >= 0 then
+  begin
+    if (aPageIndex >= FModule.Submodules.Count) or
+       (aPageIndex > High(FChildOpened)) or not FChildOpened[aPageIndex] then
+      Exit;
+
+    DS := FModule.Submodules[aPageIndex].DataSet;
+    if DS.Active then
+      Cnt := QueryRecordCount(TSQLQuery(DS))
+    else
+      Cnt := 0;
+    panelTabs[aPageIndex].UpdateCounter(Cnt);
+    if aPageIndex = nbChilds.PageIndex then
+      UpdateChildStatus(Cnt);
+    Exit;
+  end;
+
+  UpdateClosedChildCounts(True);
+
+  SelectedCount := 0;
   if FModule.Submodules.Count > 0 then
   begin
     for i := 0 to FModule.Submodules.Count - 1 do
     begin
-      panelTabs[i].UpdateCounter(FModule.Submodules[i].DataSet.RecordCount);
+      if (i <= High(FChildOpened)) and FChildOpened[i] then
+      begin
+        DS := FModule.Submodules[i].DataSet;
+        if DS.Active then
+          Cnt := QueryRecordCount(TSQLQuery(DS))
+        else
+          Cnt := 0;
+        panelTabs[i].UpdateCounter(Cnt);
+        if i = nbChilds.PageIndex then
+          SelectedCount := Cnt;
+      end;
     end;
   end;
 
-  UpdateChildStatus;
+  if (nbChilds.PageIndex <= High(FChildOpened)) and FChildOpened[nbChilds.PageIndex] then
+    UpdateChildStatus(SelectedCount);
+end;
+
+procedure TfrmCustomGrid.UpdateClosedChildCounts(aForce: Boolean);
+var
+  i, aMasterId: Integer;
+  DS: TDataSet;
+  AllCountsSucceeded: Boolean;
+begin
+  if isClosing or not Assigned(FModule) or not dsLink.DataSet.Active then
+    Exit;
+
+  aMasterId := dsLink.DataSet.FieldByName(GetPrimaryKey(FTableType)).AsInteger;
+  // Counts of unopened tabs only depend on the master record
+  if (not aForce) and (aMasterId = FClosedCountMasterId) then
+    Exit;
+
+  AllCountsSucceeded := True;
+  for i := 0 to FModule.Submodules.Count - 1 do
+  begin
+    if (i > High(FChildOpened)) or FChildOpened[i] or (i >= panelTabs.Count) then
+      Continue;
+
+    DS := FModule.Submodules[i].DataSet;
+    if not (Assigned(DS) and (DS is TSQLQuery)) or DS.Active then
+      Continue;
+
+    try
+      panelTabs[i].UpdateCounter(QueryRecordCount(TSQLQuery(DS)));
+    except
+      on E: Exception do
+      begin
+        LogError(Format('Child count failed for %s: %s', [DS.Name, E.Message]));
+        AllCountsSucceeded := False;
+      end;
+    end;
+  end;
+
+  if AllCountsSucceeded then
+    FClosedCountMasterId := aMasterId;
 end;
 
 procedure TfrmCustomGrid.UpdateChildRightPanel;
@@ -10436,26 +10737,23 @@ begin
   end;
 end;
 
-procedure TfrmCustomGrid.UpdateChildStatus;
-var
-  DS: TDataSet;
+procedure TfrmCustomGrid.UpdateChildStatus(aRecordCount: Integer);
 begin
-  DS := nil;
   if FChildTable = tbNone then
     Exit;
 
-  DS := GetChildDataSet;
-
-  if DS.RecordCount = 1 then
-    lblChildStatus.Caption := Format(rsRecordsFound, [DS.RecordCount])
+  if aRecordCount = 1 then
+    lblChildStatus.Caption := Format(rsRecordsFound, [aRecordCount])
   else
-  if DS.RecordCount > 1 then
-    lblChildStatus.Caption := Format(rsRecordsFoundPlural, [DS.RecordCount])
+  if aRecordCount > 1 then
+    lblChildStatus.Caption := Format(rsRecordsFoundPlural, [aRecordCount])
   else
     lblChildStatus.Caption := rsNoRecordsFound;
 end;
 
 procedure TfrmCustomGrid.UpdateDocButtons(aDataSet: TDataSet);
+var
+  Cnt, MasterCnt: Integer;
 begin
   if isClosing then
     Exit;
@@ -10471,10 +10769,12 @@ begin
     end;
     dsBrowse:
     begin
-      sbAddDoc.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
-      sbDocInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
-      sbDelDoc.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
-      sbOpenDoc.Enabled := (aDataSet.RecordCount > 0);
+      Cnt := Ord(not aDataSet.IsEmpty);
+      MasterCnt := Ord(not dsLink.DataSet.IsEmpty);
+      sbAddDoc.Enabled := (MasterCnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
+      sbDocInfo.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelDoc.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
+      sbOpenDoc.Enabled := (Cnt > 0);
 
     end;
     dsEdit, dsInsert:
@@ -10523,6 +10823,8 @@ begin
 end;
 
 procedure TfrmCustomGrid.UpdateImageButtons(aDataSet: TDataSet);
+var
+  Cnt, MasterCnt: Integer;
 begin
   if isClosing then
     Exit;
@@ -10538,10 +10840,12 @@ begin
     end;
     dsBrowse:
     begin
-      sbAddImage.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
-      sbImageInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
-      sbDelImage.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
-      sbViewImage.Enabled := (aDataSet.RecordCount > 0);
+      Cnt := Ord(not aDataSet.IsEmpty);
+      MasterCnt := Ord(not dsLink.DataSet.IsEmpty);
+      sbAddImage.Enabled := (MasterCnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
+      sbImageInfo.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelImage.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
+      sbViewImage.Enabled := (Cnt > 0);
 
     end;
     dsEdit, dsInsert:
@@ -10562,6 +10866,8 @@ begin
 end;
 
 procedure TfrmCustomGrid.UpdateRecycleButtons(aDataset: TDataSet);
+var
+  Cnt: Integer;
 begin
   case aDataset.State of
     dsInactive:
@@ -10571,8 +10877,9 @@ begin
     end;
     dsBrowse:
     begin
-      sbRestoreRecord.Enabled := (aDataset.RecordCount > 0) and ActiveUser.HasPermission(PERM_RESTORE_RECORDS);
-      sbDelPermanently.Enabled := (aDataset.RecordCount > 0) and CanDeleteTable(FTableType);
+      Cnt := Ord(not aDataset.IsEmpty);
+      sbRestoreRecord.Enabled := (Cnt > 0) and ActiveUser.HasPermission(PERM_RESTORE_RECORDS);
+      sbDelPermanently.Enabled := (Cnt > 0) and CanDeleteTable(FTableType);
     end;
     dsEdit, dsInsert:
     begin
@@ -10602,6 +10909,8 @@ begin
 end;
 
 procedure TfrmCustomGrid.UpdateVideoButtons(aDataSet: TDataSet);
+var
+  Cnt, MasterCnt: Integer;
 begin
   if isClosing then
     Exit;
@@ -10617,10 +10926,12 @@ begin
     end;
     dsBrowse:
     begin
-      sbAddVideo.Enabled := (dsLink.DataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
-      sbVideoInfo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
-      sbDelVideo.Enabled := (aDataSet.RecordCount > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
-      sbPlayVideo.Enabled := (aDataSet.RecordCount > 0);
+      Cnt := Ord(not aDataSet.IsEmpty);
+      MasterCnt := Ord(not dsLink.DataSet.IsEmpty);
+      sbAddVideo.Enabled := (MasterCnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
+      sbVideoInfo.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelVideo.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
+      sbPlayVideo.Enabled := (Cnt > 0);
 
     end;
     dsEdit, dsInsert:
@@ -10642,6 +10953,13 @@ end;
 
 procedure TfrmCustomGrid.UpdateFilterPanels;
 begin
+  // Dynamic filters are built only when the filters panel is first opened
+  if not FFiltersPanelOpened then
+  begin
+    FFiltersDirty := True;
+    Exit;
+  end;
+
   // Band size
   pBandSizeFilter.Visible := (fufBandSize in FModule.FilterUiFlags);
   // Band status
@@ -10912,4 +11230,3 @@ begin
 end;
 
 end.
-

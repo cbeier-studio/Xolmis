@@ -322,6 +322,9 @@ type
   end;
   TAuthors = array of TAuthor;
 
+  // Transport mode
+  TTransportMode = (tmdNotApplicable, tmdWalking, tmdVehicle, tmdVessel, tmdAerial, tmdBicycle, tmdAnimal, tmdRemote, tmdOther);
+
   // Weather
   TWeatherSampleMoment = (wmNone, wmStart, wmMiddle, wmEnd);
   TPrecipitation = (wpEmpty = -1, wpNone, wpFog, wpMist, wpDrizzle, wpRain, wpShowers, wpSnow, wpHail, wpFrost);
@@ -537,6 +540,9 @@ const
 
   // Permits
   PERMIT_STATUSES: array [TPermitStatus] of String = ('A', 'R', 'K', 'C');
+
+  // Transport mode
+  TRANSPORT_MODES: array [TTransportMode] of String = ('NA', 'WA', 'VC', 'VB', 'AC', 'BC', 'AH', 'RM', 'OT');
 
   // Weather
   SAMPLE_MOMENTS: array [TWeatherSampleMoment] of String = ('', 'S', 'M', 'E');

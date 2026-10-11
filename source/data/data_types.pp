@@ -226,7 +226,7 @@ type
   );
   TTableFieldType = (ctString, ctInteger, ctFloat, ctDate, ctTime, ctDateTime, ctBoolean);
   TSearchDataType = (sdtText, sdtInteger, sdtFloat, sdtDate, sdtTime, sdtDateTime, sdtBoolean, sdtList,
-    sdtLookup, sdtYear, sdtMonthYear, sdtSplitDate);
+    sdtLookup, sdtYear, sdtMonthYear, sdtSplitDate, sdtJsonArray);
   TFilterValue = (fvNone, fvReset, fvAll, fvMarked, fvUnmarked, fvDeleted, fvQueued);
   TSeparator = (spNone, spSemicolon, spComma, spColon, spPeriod, spPipe, spSlash, spHyphen, spUnderline, spSpace);
   TSQLAndOr = (aoNone, aoAnd, aoOr);
@@ -273,7 +273,7 @@ const
   TiposCampo: array[TTableFieldType] of String = ('String', 'Integer', 'Float', 'Date', 'Time',
     'DateTime', 'Boolean');
   SEARCH_DATA_TYPES: array[TSearchDataType] of String = ('Text', 'Integer', 'Float', 'Date', 'Time',
-    'DateTime', 'Boolean', 'List', 'Lookup', 'Year', 'MonthYear', 'SplitDate');
+    'DateTime', 'Boolean', 'List', 'Lookup', 'Year', 'MonthYear', 'SplitDate', 'JsonArray');
   SEPARATORS: array [TSeparator] of Char = (#0, ';', ',', ':', '.', '|', '/', '-', '_', ' ');
   COORDINATES_SEPARATORS: set of Char = [';', ',', ':', '|', '/'];
 

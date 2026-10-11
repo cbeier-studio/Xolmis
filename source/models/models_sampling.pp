@@ -80,7 +80,9 @@ type
     FStartTime: TTime;
     FEndTime: TTime;
     FDuration: Integer;
+    FMaxSpecies: Integer;
     FMethodId: Integer;
+    FTransportMode: TTransportMode;
     FNetStationId: Integer;
     FExpeditionId: Integer;
     FLocalityId: Integer;
@@ -95,6 +97,9 @@ type
     FTotalArea: Double;
     FTotalDistance: Double;
     FTotalNets: Integer;
+    FTotalPausedTime: Double;
+    FTotalIntervals: Integer;
+    FIsDiscarded: Boolean;
     FHabitat: String;
     FNetRounds: String;
     FFullName: String;
@@ -115,7 +120,9 @@ type
     property StartTime: TTime read FStartTime write FStartTime;
     property EndTime: TTime read FEndTime write FEndTime;
     property Duration: Integer read FDuration write FDuration;
+    property MaxSpecies: Integer read FMaxSpecies write FMaxSpecies;
     property MethodId: Integer read FMethodId write FMethodId;
+    property TransportMode: TTransportMode read FTransportMode write FTransportMode;
     property NetStationId: Integer read FNetStationId write FNetStationId;
     property ExpeditionId: Integer read FExpeditionId write FExpeditionId;
     property LocalityId: Integer read FLocalityId write FLocalityId;
@@ -130,6 +137,9 @@ type
     property TotalArea: Double read FTotalArea write FTotalArea;
     property TotalDistance: Double read FTotalDistance write FTotalDistance;
     property TotalNets: Integer read FTotalNets write FTotalNets;
+    property TotalPausedTime: Double read FTotalPausedTime write FTotalPausedTime;
+    property TotalIntervals: Integer read FTotalIntervals write FTotalIntervals;
+    property IsDiscarded: Boolean read FIsDiscarded write FIsDiscarded;
     property Habitat: String read FHabitat write FHabitat;
     property NetRounds: String read FNetRounds write FNetRounds;
     property FullName: String read FFullName write FFullName;
@@ -2613,7 +2623,9 @@ begin
     FStartTime := TSurvey(Source).StartTime;
     FEndTime := TSurvey(Source).EndTime;
     FDuration := TSurvey(Source).Duration;
+    FMaxSpecies := TSurvey(Source).MaxSpecies;
     FMethodId := TSurvey(Source).MethodId;
+    FTransportMode := TSurvey(Source).TransportMode;
     FNetStationId := TSurvey(Source).NetStationId;
     FExpeditionId := TSurvey(Source).ExpeditionId;
     FLocalityId := TSurvey(Source).LocalityId;
@@ -2628,6 +2640,9 @@ begin
     FTotalArea := TSurvey(Source).TotalArea;
     FTotalDistance := TSurvey(Source).TotalDistance;
     FTotalNets := TSurvey(Source).TotalNets;
+    FTotalPausedTime := TSurvey(Source).TotalPausedTime;
+    FTotalIntervals := TSurvey(Source).TotalIntervals;
+    FIsDiscarded := TSurvey(Source).IsDiscarded;
     FHabitat := TSurvey(Source).Habitat;
     FNetRounds := TSurvey(Source).NetRounds;
     FFullName := TSurvey(Source).FullName;
@@ -2642,7 +2657,9 @@ begin
   FStartTime := NullTime;
   FEndTime := NullTime;
   FDuration := 0;
+  FMaxSpecies := 0;
   FMethodId := 0;
+  FTransportMode := tmdWalking;
   FNetStationId := 0;
   FExpeditionId := 0;
   FLocalityId := 0;
@@ -2657,6 +2674,9 @@ begin
   FTotalArea := 0.0;
   FTotalDistance := 0.0;
   FTotalNets := 0;
+  FTotalPausedTime := 0;
+  FTotalIntervals := 0;
+  FIsDiscarded := False;
   FHabitat := EmptyStr;
   FNetRounds := EmptyStr;
   FFullName := EmptyStr;
@@ -2694,7 +2714,11 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscDurationMin, aOld.Duration, FDuration, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscSpeciesLimit, aOld.MaxSpecies, FMaxSpecies, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscMethodID, aOld.MethodId, FMethodId, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTransportMode, aOld.TransportMode, FTransportMode, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscSamplingPlotID, aOld.NetStationId, FNetStationId, R) then
     Changes.Add(R);
@@ -2724,6 +2748,12 @@ begin
     Changes.Add(R);
   if FieldValuesDiff(rscMistnets, aOld.TotalNets, FTotalNets, R) then
     Changes.Add(R);
+  if FieldValuesDiff(rscTotalPausedTime, aOld.TotalPausedTime, FTotalPausedTime, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscTotalIntervals, aOld.TotalIntervals, FTotalIntervals, R) then
+    Changes.Add(R);
+  if FieldValuesDiff(rscIsDiscarded, aOld.IsDiscarded, FIsDiscarded, R) then
+    Changes.Add(R);
   if FieldValuesDiff(rscHabitat, aOld.Habitat, FHabitat, R) then
     Changes.Add(R);
   if FieldValuesDiff(rscMistnetRounds, aOld.NetRounds, FNetRounds, R) then
@@ -2751,7 +2781,9 @@ begin
     FStartTime      := Obj.Get('start_time', NullTime);
     FEndTime        := Obj.Get('end_time', NullTime);
     FDuration       := Obj.Get('duration', 0);
+    FMaxSpecies     := Obj.Get('max_species', 0);
     FMethodId       := Obj.Get('method_id', 0);
+    FTransportMode  := StrToTransportMode(Obj.Get('transport_mode', ''));
     FNetStationId   := Obj.Get('net_station_id', 0);
     FExpeditionId   := Obj.Get('expedition_id', 0);
     FLocalityId     := Obj.Get('locality_id', 0);
@@ -2766,6 +2798,9 @@ begin
     FTotalArea      := Obj.Get('total_area', 0.0);
     FTotalDistance  := Obj.Get('total_distance', 0.0);
     FTotalNets      := Obj.Get('total_nets', 0);
+    FTotalPausedTime := Obj.Get('total_paused_time', 0);
+    FTotalIntervals := Obj.Get('total_intervals', 0);
+    FIsDiscarded    := Obj.Get('discarded', False);
     FHabitat        := Obj.Get('habitat', '');
     FNetRounds      := Obj.Get('net_rounds', '');
     FFullName       := Obj.Get('full_name', '');
@@ -2777,50 +2812,57 @@ end;
 
 function TSurvey.ToJSON: String;
 var
-  JSONObject: TJSONObject;
+  Obj: TJSONObject;
 begin
-  JSONObject := TJSONObject.Create;
+  Obj := TJSONObject.Create;
   try
-    JSONObject.Add('survey_date', FSurveyDate);
-    JSONObject.Add('start_time', FStartTime);
-    JSONObject.Add('end_time', FEndTime);
-    JSONObject.Add('duration', FDuration);
-    JSONObject.Add('method_id', FMethodId);
-    JSONObject.Add('net_station_id', FNetStationId);
-    JSONObject.Add('expedition_id', FExpeditionId);
-    JSONObject.Add('locality_id', FLocalityId);
-    JSONObject.Add('project_id', FProjectId);
-    JSONObject.Add('sample_id', FSampleId);
-    JSONObject.Add('start_longitude', FStartLongitude);
-    JSONObject.Add('start_latitude', FStartLatitude);
-    JSONObject.Add('end_longitude', FEndLongitude);
-    JSONObject.Add('end_latitude', FEndLatitude);
-    JSONObject.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
-    JSONObject.Add('observers_tally', FObserversTally);
-    JSONObject.Add('total_area', FTotalArea);
-    JSONObject.Add('total_distance', FTotalDistance);
-    JSONObject.Add('total_nets', FTotalNets);
-    JSONObject.Add('habitat', FHabitat);
-    JSONObject.Add('net_rounds', FNetRounds);
-    JSONObject.Add('full_name', FFullName);
-    JSONObject.Add('notes', FNotes);
+    Obj.Add('survey_date', FSurveyDate);
+    Obj.Add('start_time', FStartTime);
+    Obj.Add('end_time', FEndTime);
+    Obj.Add('duration', FDuration);
+    Obj.Add('max_species', FMaxSpecies);
+    Obj.Add('method_id', FMethodId);
+    Obj.Add('transport_mode', TRANSPORT_MODES[FTransportMode]);
+    Obj.Add('net_station_id', FNetStationId);
+    Obj.Add('expedition_id', FExpeditionId);
+    Obj.Add('locality_id', FLocalityId);
+    Obj.Add('project_id', FProjectId);
+    Obj.Add('sample_id', FSampleId);
+    Obj.Add('start_longitude', FStartLongitude);
+    Obj.Add('start_latitude', FStartLatitude);
+    Obj.Add('end_longitude', FEndLongitude);
+    Obj.Add('end_latitude', FEndLatitude);
+    Obj.Add('coordinate_precision', COORDINATE_PRECISIONS[FCoordinatePrecision]);
+    Obj.Add('observers_tally', FObserversTally);
+    Obj.Add('total_area', FTotalArea);
+    Obj.Add('total_distance', FTotalDistance);
+    Obj.Add('total_nets', FTotalNets);
+    Obj.Add('total_paused_time', FTotalPausedTime);
+    Obj.Add('total_intervals', FTotalIntervals);
+    Obj.Add('discarded', FIsDiscarded);
+    Obj.Add('habitat', FHabitat);
+    Obj.Add('net_rounds', FNetRounds);
+    Obj.Add('full_name', FFullName);
+    Obj.Add('notes', FNotes);
 
-    Result := JSONObject.AsJSON;
+    Result := Obj.AsJSON;
   finally
-    JSONObject.Free;
+    Obj.Free;
   end;
 end;
 
 function TSurvey.ToString: String;
 begin
-  Result := Format('Survey(Id=%d, SurveyDate=%s, StartTime=%s, EndTime=%s, Duration=%d, MethodId=%d, NetStationId=%d, ' +
+  Result := Format('Survey(Id=%d, SurveyDate=%s, StartTime=%s, EndTime=%s, Duration=%d, MaxSpecies=%d, MethodId=%d, TransportMode=%s, NetStationId=%d, ' +
     'ExpeditionId=%d, LocalityId=%d, ProjectId=%d, SampleId=%s, StartLongitude=%f, StartLatitude=%f, ' +
-    'EndLongitude=%f, EndLatitude=%f, CoordinatePrecision=%s, ObserversTally=%d, TotalArea=%f, TotalDistance=%f, TotalNets=%d, Habitat=%s, ' +
-    'NetRounds=%s, FullName=%s, Notes=%s, ' +
+    'EndLongitude=%f, EndLatitude=%f, CoordinatePrecision=%s, ObserversTally=%d, TotalArea=%f, TotalDistance=%f, TotalNets=%d, ' +
+    'TotalPausedTime=%f, TotalIntervals=%d, IsDiscarded=%s, ' +
+    'Habitat=%s, NetRounds=%s, FullName=%s, Notes=%s, ' +
     'InsertDate=%s, UpdateDate=%s, Marked=%s, Active=%s)',
-    [FId, DateToStr(FSurveyDate), TimeToStr(FStartTime), TimeToStr(FEndTime), FDuration, FMethodId, FNetStationId,
+    [FId, DateToStr(FSurveyDate), TimeToStr(FStartTime), TimeToStr(FEndTime), FDuration, FMaxSpecies, FMethodId, TRANSPORT_MODES[FTransportMode], FNetStationId,
     FExpeditionId, FLocalityId, FProjectId, FSampleId, FStartLongitude, FStartLatitude, FEndLongitude,
-    FEndLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FObserversTally, FTotalArea, FTotalDistance, FTotalNets, FHabitat, FNetRounds, FNotes,
+    FEndLatitude, COORDINATE_PRECISIONS[FCoordinatePrecision], FObserversTally, FTotalArea, FTotalDistance, FTotalNets,
+    FTotalPausedTime, FTotalIntervals, BoolToStr(FIsDiscarded, 'True', 'False'), FHabitat, FNetRounds, FNotes,
     DateTimeToStr(FInsertDate), DateTimeToStr(FUpdateDate), BoolToStr(FMarked, 'True', 'False'),
     BoolToStr(FActive, 'True', 'False')]);
 end;
@@ -3058,7 +3100,9 @@ begin
     R.StartTime := FieldByName('start_time').AsDateTime;
     R.EndTime := FieldByName('end_time').AsDateTime;
     R.Duration := FieldByName('duration').AsInteger;
+    R.MaxSpecies := FieldByName('max_species').AsInteger;
     R.MethodId := FieldByName('method_id').AsInteger;
+    R.TransportMode := StrToTransportMode(FieldByName('transport_mode').AsString);
     R.NetStationId := FieldByName('net_station_id').AsInteger;
     R.ExpeditionId := FieldByName('expedition_id').AsInteger;
     R.LocalityId := FieldByName('locality_id').AsInteger;
@@ -3073,6 +3117,9 @@ begin
     R.TotalArea := FieldByName('area_total').AsFloat;
     R.TotalDistance := FieldByName('distance_total').AsFloat;
     R.TotalNets := FieldByName('nets_total').AsInteger;
+    R.TotalPausedTime := FieldByName('total_paused_time').AsFloat;
+    R.TotalIntervals := FieldByName('total_intervals').AsInteger;
+    R.IsDiscarded := FieldByName('discarded').AsBoolean;
     R.Habitat := FieldByName('habitat').AsString;
     R.NetRounds := FieldByName('net_rounds').AsString;
     R.FullName := FieldByName('full_name').AsString;
@@ -3118,8 +3165,12 @@ begin
   end;
   if ARow.IndexOfName('duration') >= 0 then
     R.Duration := StrToIntDef(ARow.Values['duration'], 0);
+  if ARow.IndexOfName('max_species') >= 0 then
+    R.MaxSpecies := StrToIntDef(ARow.Values['max_species'], 0);
   if ARow.IndexOfName('method_id') >= 0 then
     R.MethodId := StrToIntDef(ARow.Values['method_id'], 0);
+  if ARow.IndexOfName('transport_mode') >= 0 then
+    R.TransportMode := StrToTransportMode(ARow.Values['transport_mode']);
   if ARow.IndexOfName('net_station_id') >= 0 then
     R.NetStationId := StrToIntDef(ARow.Values['net_station_id'], 0);
   if ARow.IndexOfName('expedition_id') >= 0 then
@@ -3148,6 +3199,12 @@ begin
     R.TotalDistance := StrToFloatDef(ARow.Values['distance_total'], 0);
   if ARow.IndexOfName('nets_total') >= 0 then
     R.TotalNets := StrToIntDef(ARow.Values['nets_total'], 0);
+  if ARow.IndexOfName('total_paused_time') >= 0 then
+    R.TotalPausedTime := StrToFloatDef(ARow.Values['total_paused_time'], 0);
+  if ARow.IndexOfName('total_intervals') >= 0 then
+    R.TotalIntervals := StrToIntDef(ARow.Values['total_intervals'], 0);
+  if ARow.IndexOfName('discarded') >= 0 then
+    R.IsDiscarded := StrToBoolDef(ARow.Values['discarded'], False);
   if ARow.IndexOfName('habitat') >= 0 then
     R.Habitat := ARow.Values['habitat'];
   if ARow.IndexOfName('net_rounds') >= 0 then
@@ -3177,7 +3234,9 @@ begin
     SetTimeParam(ParamByName('start_time'), R.StartTime);
     SetTimeParam(ParamByName('end_time'), R.EndTime);
     SetIntParam(ParamByName('duration'), R.Duration);
+    SetIntParam(ParamByName('max_species'), R.MaxSpecies);
     ParamByName('method_id').AsInteger := R.MethodId;
+    SetStrParam(ParamByName('transport_mode'), TRANSPORT_MODES[R.TransportMode]);
     SetForeignParam(ParamByName('net_station_id'), R.NetStationId);
     SetForeignParam(ParamByName('expedition_id'), R.ExpeditionId);
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
@@ -3190,6 +3249,9 @@ begin
     SetIntParam(ParamByName('nets_total'), R.TotalNets);
     SetFloatParam(ParamByName('area_total'), R.TotalArea);
     SetFloatParam(ParamByName('distance_total'), R.TotalDistance);
+    SetFloatParam(ParamByName('total_paused_time'), R.TotalPausedTime);
+    SetIntParam(ParamByName('total_intervals'), R.TotalIntervals);
+    ParamByName('discarded').AsBoolean := R.IsDiscarded;
     SetStrParam(ParamByName('habitat'), R.Habitat);
     SetStrParam(ParamByName('net_rounds'), R.NetRounds);
     SetStrParam(ParamByName('notes'), R.Notes);
@@ -3236,7 +3298,9 @@ begin
     SetTimeParam(ParamByName('start_time'), R.StartTime);
     SetTimeParam(ParamByName('end_time'), R.EndTime);
     SetIntParam(ParamByName('duration'), R.Duration);
+    SetIntParam(ParamByName('max_species'), R.MaxSpecies);
     ParamByName('method_id').AsInteger := R.MethodId;
+    SetStrParam(ParamByName('transport_mode'), TRANSPORT_MODES[R.TransportMode]);
     SetForeignParam(ParamByName('net_station_id'), R.NetStationId);
     SetForeignParam(ParamByName('expedition_id'), R.ExpeditionId);
     SetForeignParam(ParamByName('project_id'), R.ProjectId);
@@ -3249,6 +3313,9 @@ begin
     SetIntParam(ParamByName('nets_total'), R.TotalNets);
     SetFloatParam(ParamByName('area_total'), R.TotalArea);
     SetFloatParam(ParamByName('distance_total'), R.TotalDistance);
+    SetFloatParam(ParamByName('total_paused_time'), R.TotalPausedTime);
+    SetIntParam(ParamByName('total_intervals'), R.TotalIntervals);
+    ParamByName('discarded').AsBoolean := R.IsDiscarded;
     SetStrParam(ParamByName('habitat'), R.Habitat);
     SetStrParam(ParamByName('net_rounds'), R.NetRounds);
     SetStrParam(ParamByName('notes'), R.Notes);

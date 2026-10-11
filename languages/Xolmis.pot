@@ -55,6 +55,10 @@ msgctxt "data_columns.rscactivestatus"
 msgid "Active"
 msgstr ""
 
+#: data_columns.rscactivities
+msgid "Activities"
+msgstr ""
+
 #: data_columns.rscaddress1
 msgctxt "data_columns.rscaddress1"
 msgid "Address 1"
@@ -88,6 +92,14 @@ msgstr ""
 #: data_columns.rscal3
 msgctxt "data_columns.rscal3"
 msgid "Al3"
+msgstr ""
+
+#: data_columns.rscallowsspeciesrepetition
+msgid "Allows species repetition"
+msgstr ""
+
+#: data_columns.rscallowstransportmode
+msgid "Allows transport mode"
 msgstr ""
 
 #: data_columns.rscaltitude
@@ -516,6 +528,10 @@ msgctxt "data_columns.rscdescription"
 msgid "Description"
 msgstr ""
 
+#: data_columns.rscdetectionmodes
+msgid "Detection modes"
+msgstr ""
+
 #: data_columns.rscdetectiontype
 msgctxt "data_columns.rscdetectiontype"
 msgid "Detection type"
@@ -659,6 +675,10 @@ msgstr ""
 #: data_columns.rscescaped
 msgctxt "data_columns.rscescaped"
 msgid "Escaped"
+msgstr ""
+
+#: data_columns.rscevidences
+msgid "Evidences"
 msgstr ""
 
 #: data_columns.rscexpedition
@@ -922,6 +942,10 @@ msgctxt "data_columns.rschabitat"
 msgid "Habitat"
 msgstr ""
 
+#: data_columns.rschabitats
+msgid "Habitats"
+msgstr ""
+
 #: data_columns.rschaluxlengthclaw
 msgctxt "data_columns.rschaluxlengthclaw"
 msgid "Halux length (claw)"
@@ -940,6 +964,14 @@ msgstr ""
 #: data_columns.rschasphilornislarvae
 msgctxt "data_columns.rschasphilornislarvae"
 msgid "Has Philornis larvae"
+msgstr ""
+
+#: data_columns.rschasspecieslimit
+msgid "Has species limit"
+msgstr ""
+
+#: data_columns.rschastimelimit
+msgid "Has time limit"
 msgstr ""
 
 #: data_columns.rschatched
@@ -1070,6 +1102,14 @@ msgstr ""
 #: data_columns.rscioc
 msgctxt "data_columns.rscioc"
 msgid "IOC"
+msgstr ""
+
+#: data_columns.rscisdiscarded
+msgid "Is discarded"
+msgstr ""
+
+#: data_columns.rscisdoubtful
+msgid "Is doubtful"
 msgstr ""
 
 #: data_columns.rscisinebird
@@ -2019,6 +2059,10 @@ msgctxt "data_columns.rscrequesterid"
 msgid "Requester ID"
 msgstr ""
 
+#: data_columns.rscrequiresspatialdata
+msgid "Requires spatial data"
+msgstr ""
+
 #: data_columns.rscresearcher
 msgctxt "data_columns.rscresearcher"
 msgid "Researcher"
@@ -2222,6 +2266,10 @@ msgstr ""
 #: data_columns.rscspeciesid
 msgctxt "data_columns.rscspeciesid"
 msgid "Species ID"
+msgstr ""
+
+#: data_columns.rscspecieslimit
+msgid "Species limit"
 msgstr ""
 
 #: data_columns.rscspecimenid
@@ -2436,14 +2484,26 @@ msgctxt "data_columns.rsctotalculmen"
 msgid "Total culmen"
 msgstr ""
 
+#: data_columns.rsctotalintervals
+msgid "Total intervals"
+msgstr ""
+
 #: data_columns.rsctotallength
 msgctxt "data_columns.rsctotallength"
 msgid "Total length"
 msgstr ""
 
+#: data_columns.rsctotalpausedtime
+msgid "Total paused time"
+msgstr ""
+
 #: data_columns.rsctotaltimeopenedh
 msgctxt "data_columns.rsctotaltimeopenedh"
 msgid "Total time opened (h)"
+msgstr ""
+
+#: data_columns.rsctransportmode
+msgid "Transport mode"
 msgstr ""
 
 #: data_columns.rsctreatment
@@ -9472,19 +9532,8 @@ msgctxt "tedtsighting.btnnew.caption"
 msgid "New"
 msgstr ""
 
-#: tedtsighting.ckaudiorecording.caption
-msgctxt "tedtsighting.ckaudiorecording.caption"
-msgid "Recorded audio"
-msgstr ""
-
-#: tedtsighting.ckcaptured.caption
-msgctxt "tedtsighting.ckcaptured.caption"
-msgid "Captured"
-msgstr ""
-
-#: tedtsighting.ckheard.caption
-msgctxt "tedtsighting.ckheard.caption"
-msgid "Heard"
+#: tedtsighting.ckisdoubtful.caption
+msgid "Doubtful record"
 msgstr ""
 
 #: tedtsighting.ckisinebird.caption
@@ -9495,16 +9544,6 @@ msgstr ""
 #: tedtsighting.cknotsurveying.caption
 msgctxt "tedtsighting.cknotsurveying.caption"
 msgid "Outside the sampling"
-msgstr ""
-
-#: tedtsighting.ckphotographed.caption
-msgctxt "tedtsighting.ckphotographed.caption"
-msgid "Photographed"
-msgstr ""
-
-#: tedtsighting.ckseen.caption
-msgctxt "tedtsighting.ckseen.caption"
-msgid "Seen"
 msgstr ""
 
 #: tedtsighting.edate.buttonhint
@@ -9547,6 +9586,10 @@ msgctxt "tedtsighting.etime.texthint"
 msgid "HH:MM"
 msgstr ""
 
+#: tedtsighting.lblactivities.caption
+msgid "Activities:"
+msgstr ""
+
 #: tedtsighting.lbladultstally.caption
 msgctxt "tedtsighting.lbladultstally.caption"
 msgid "Nr. of adults:"
@@ -9567,9 +9610,8 @@ msgctxt "tedtsighting.lbldate.caption"
 msgid "Date: *"
 msgstr ""
 
-#: tedtsighting.lbldetectiontype.caption
-msgctxt "tedtsighting.lbldetectiontype.caption"
-msgid "Detection type:"
+#: tedtsighting.lbldetectionmodes.caption
+msgid "Detection modes:"
 msgstr ""
 
 #: tedtsighting.lbldistance.caption
@@ -9581,6 +9623,10 @@ msgstr ""
 msgid "Flight direction:"
 msgstr ""
 
+#: tedtsighting.lblevidences.caption
+msgid "Evidences:"
+msgstr ""
+
 #: tedtsighting.lblfemalestally.caption
 msgctxt "tedtsighting.lblfemalestally.caption"
 msgid "Nr. of females:"
@@ -9590,9 +9636,8 @@ msgstr ""
 msgid "Flight height (m):"
 msgstr ""
 
-#: tedtsighting.lblhowwasrecorded.caption
-msgctxt "tedtsighting.lblhowwasrecorded.caption"
-msgid "How was recorded:"
+#: tedtsighting.lblhabitats.caption
+msgid "Habitats:"
 msgstr ""
 
 #: tedtsighting.lblimmaturestally.caption
@@ -10346,6 +10391,7 @@ msgid "Herbs"
 msgstr ""
 
 #: tedtvegetation.lbltitleshrubs.caption
+msgctxt "tedtvegetation.lbltitleshrubs.caption"
 msgid "Shrubs"
 msgstr ""
 
@@ -14012,6 +14058,10 @@ msgctxt "utils_locale.rsactivitycanceled"
 msgid "Canceled"
 msgstr ""
 
+#: utils_locale.rsactivitycourtship
+msgid "Courtship/Mating"
+msgstr ""
+
 #: utils_locale.rsactivitydelayed
 msgctxt "utils_locale.rsactivitydelayed"
 msgid "Delayed"
@@ -14027,6 +14077,18 @@ msgctxt "utils_locale.rsactivityduedatenotification"
 msgid "Activity due date"
 msgstr ""
 
+#: utils_locale.rsactivityfeeding
+msgid "Feeding/Foraging"
+msgstr ""
+
+#: utils_locale.rsactivityflying
+msgid "Flying"
+msgstr ""
+
+#: utils_locale.rsactivityincubationbroodcare
+msgid "Incubation/Brood care"
+msgstr ""
+
 #: utils_locale.rsactivityinprogress
 msgctxt "utils_locale.rsactivityinprogress"
 msgid "In progress"
@@ -14037,9 +14099,57 @@ msgctxt "utils_locale.rsactivityneedsreview"
 msgid "Needs review"
 msgstr ""
 
+#: utils_locale.rsactivitynestbuilding
+msgctxt "utils_locale.rsactivitynestbuilding"
+msgid "Nest building"
+msgstr ""
+
+#: utils_locale.rsactivityother
+msgctxt "utils_locale.rsactivityother"
+msgid "Other"
+msgstr ""
+
+#: utils_locale.rsactivitypredatoravoidance
+msgid "Predator avoidance"
+msgstr ""
+
+#: utils_locale.rsactivitypreening
+msgid "Preening"
+msgstr ""
+
+#: utils_locale.rsactivityresting
+msgid "Resting/Roosting"
+msgstr ""
+
+#: utils_locale.rsactivitysocial
+msgctxt "utils_locale.rsactivitysocial"
+msgid "Social interaction"
+msgstr ""
+
+#: utils_locale.rsactivityswimming
+msgid "Swimming/Diving"
+msgstr ""
+
+#: utils_locale.rsactivityterritorial
+msgid "Territorial behavior"
+msgstr ""
+
 #: utils_locale.rsactivitytodo
 msgctxt "utils_locale.rsactivitytodo"
 msgid "To do"
+msgstr ""
+
+#: utils_locale.rsactivityvigilance
+msgid "Vigilance"
+msgstr ""
+
+#: utils_locale.rsactivityvocalizing
+msgctxt "utils_locale.rsactivityvocalizing"
+msgid "Vocalizing"
+msgstr ""
+
+#: utils_locale.rsactivitywalking
+msgid "Walking/Hopping"
 msgstr ""
 
 #: utils_locale.rsaddlink
@@ -14132,6 +14242,7 @@ msgid "Alarm/stress"
 msgstr ""
 
 #: utils_locale.rsaudiocall
+msgctxt "utils_locale.rsaudiocall"
 msgid "Call"
 msgstr ""
 
@@ -14180,6 +14291,7 @@ msgid "Audio recorded"
 msgstr ""
 
 #: utils_locale.rsaudiosong
+msgctxt "utils_locale.rsaudiosong"
 msgid "Song"
 msgstr ""
 
@@ -15545,9 +15657,50 @@ msgctxt "utils_locale.rsdelimitertab"
 msgid "Tab"
 msgstr ""
 
+#: utils_locale.rsdetectioncall
+msgctxt "utils_locale.rsdetectioncall"
+msgid "Call"
+msgstr ""
+
+#: utils_locale.rsdetectioncapture
+msgctxt "utils_locale.rsdetectioncapture"
+msgid "Capture"
+msgstr ""
+
+#: utils_locale.rsdetectiondrumming
+msgid "Drumming"
+msgstr ""
+
+#: utils_locale.rsdetectionother
+msgctxt "utils_locale.rsdetectionother"
+msgid "Other"
+msgstr ""
+
+#: utils_locale.rsdetectionremote
+msgctxt "utils_locale.rsdetectionremote"
+msgid "Remote"
+msgstr ""
+
+#: utils_locale.rsdetectionsong
+msgctxt "utils_locale.rsdetectionsong"
+msgid "Song"
+msgstr ""
+
+#: utils_locale.rsdetectiontrack
+msgid "Track or sign"
+msgstr ""
+
 #: utils_locale.rsdetectiontypes
 msgctxt "utils_locale.rsdetectiontypes"
-msgid "\"S - song\",\"C - call\",\"V - seen\",\"W - wing flapping\",\"D - drumming\",\"F - flying\""
+msgid "\"visual\",\"song\",\"call\",\"wing flapping\",\"drumming\",\"capture\",\"remote\",\"track or sign\",\"other\""
+msgstr ""
+
+#: utils_locale.rsdetectionvisual
+msgid "Visual"
+msgstr ""
+
+#: utils_locale.rsdetectionwingflapping
+msgid "Wing flapping"
 msgstr ""
 
 #: utils_locale.rsdiscardchangestitle
@@ -16389,6 +16542,34 @@ msgctxt "utils_locale.rserrorwritingadminpassword"
 msgid "An error occurred while writing the Admin user password: %s"
 msgstr ""
 
+#: utils_locale.rsevidenceaudio
+msgid "Audio"
+msgstr ""
+
+#: utils_locale.rsevidencecapture
+msgctxt "utils_locale.rsevidencecapture"
+msgid "Capture"
+msgstr ""
+
+#: utils_locale.rsevidenceother
+msgctxt "utils_locale.rsevidenceother"
+msgid "Other"
+msgstr ""
+
+#: utils_locale.rsevidencephoto
+msgctxt "utils_locale.rsevidencephoto"
+msgid "Photo"
+msgstr ""
+
+#: utils_locale.rsevidencesample
+msgid "Sample"
+msgstr ""
+
+#: utils_locale.rsevidencevideo
+msgctxt "utils_locale.rsevidencevideo"
+msgid "Video"
+msgstr ""
+
 #: utils_locale.rsexactcoordinate
 msgctxt "utils_locale.rsexactcoordinate"
 msgid "Exact"
@@ -16778,6 +16959,68 @@ msgstr ""
 #: utils_locale.rsguestuser
 msgctxt "utils_locale.rsguestuser"
 msgid "Guest"
+msgstr ""
+
+#: utils_locale.rshabitatcoastal
+msgid "Coastal"
+msgstr ""
+
+#: utils_locale.rshabitatcropland
+msgid "Cropland"
+msgstr ""
+
+#: utils_locale.rshabitatdesert
+msgid "Desert"
+msgstr ""
+
+#: utils_locale.rshabitatforest
+msgid "Forest"
+msgstr ""
+
+#: utils_locale.rshabitatfreshwater
+msgid "Freshwater"
+msgstr ""
+
+#: utils_locale.rshabitatgrassland
+msgid "Grassland"
+msgstr ""
+
+#: utils_locale.rshabitatmangrove
+msgid "Mangrove"
+msgstr ""
+
+#: utils_locale.rshabitatmarine
+msgid "Marine"
+msgstr ""
+
+#: utils_locale.rshabitatother
+msgctxt "utils_locale.rshabitatother"
+msgid "Other"
+msgstr ""
+
+#: utils_locale.rshabitatrocky
+msgid "Rocky"
+msgstr ""
+
+#: utils_locale.rshabitatsavanna
+msgid "Savanna"
+msgstr ""
+
+#: utils_locale.rshabitatshrubs
+msgctxt "utils_locale.rshabitatshrubs"
+msgid "Shrubs"
+msgstr ""
+
+#: utils_locale.rshabitaturban
+msgid "Urban"
+msgstr ""
+
+#: utils_locale.rshabitatwetland
+msgid "Wetland"
+msgstr ""
+
+#: utils_locale.rshabitatwoods
+msgid "Woods"
 msgstr ""
 
 #: utils_locale.rsheard
@@ -18966,8 +19209,9 @@ msgid "Optimizing database..."
 msgstr ""
 
 #: utils_locale.rsprogresspopulatingtables
+#, object-pascal-format
 msgctxt "utils_locale.rsprogresspopulatingtables"
-msgid "Populating tables... This may take a few minutes."
+msgid "Populating tables (%s)... This may take a few minutes."
 msgstr ""
 
 #: utils_locale.rsprogresspreparing
@@ -20562,6 +20806,45 @@ msgctxt "utils_locale.rstransferbands"
 msgid "Transfer bands"
 msgstr ""
 
+#: utils_locale.rstransportaerial
+msgid "Aircraft/Drone"
+msgstr ""
+
+#: utils_locale.rstransportanimal
+msgid "Animal/Horse"
+msgstr ""
+
+#: utils_locale.rstransportbicycle
+msgid "Vehicle/Bicycle"
+msgstr ""
+
+#: utils_locale.rstransportnotapplicable
+msgctxt "utils_locale.rstransportnotapplicable"
+msgid "Not applicable"
+msgstr ""
+
+#: utils_locale.rstransportother
+msgctxt "utils_locale.rstransportother"
+msgid "Other"
+msgstr ""
+
+#: utils_locale.rstransportremote
+msgctxt "utils_locale.rstransportremote"
+msgid "Remote"
+msgstr ""
+
+#: utils_locale.rstransportvehicle
+msgid "Vehicle/Car"
+msgstr ""
+
+#: utils_locale.rstransportvessel
+msgid "Vessel/Boat"
+msgstr ""
+
+#: utils_locale.rstransportwalking
+msgid "Walking"
+msgstr ""
+
 #: utils_locale.rstreatmentlist
 msgctxt "utils_locale.rstreatmentlist"
 msgid "Mr.,Sir,Mrs.,Miss,Ms.,Madam,B./BS.,M./MSc.,Dr./PhD."
@@ -20725,6 +21008,7 @@ msgid "Dead bird"
 msgstr ""
 
 #: utils_locale.rsvideonestbuilding
+msgctxt "utils_locale.rsvideonestbuilding"
 msgid "Nest building"
 msgstr ""
 
@@ -20747,6 +21031,7 @@ msgid "Predation"
 msgstr ""
 
 #: utils_locale.rsvideosocial
+msgctxt "utils_locale.rsvideosocial"
 msgid "Social interaction"
 msgstr ""
 
@@ -20756,6 +21041,7 @@ msgid "Unknown"
 msgstr ""
 
 #: utils_locale.rsvideovocalizing
+msgctxt "utils_locale.rsvideovocalizing"
 msgid "Vocalizing"
 msgstr ""
 

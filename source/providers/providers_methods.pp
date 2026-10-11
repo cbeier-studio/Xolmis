@@ -50,6 +50,11 @@ begin
       'recommended_uses TEXT,' +
       'notes            TEXT,' +
       'can_delete       BOOLEAN       DEFAULT (1),' +
+      'allows_species_repetition BOOLEAN       DEFAULT (0),' +
+      'has_time_limit            BOOLEAN       DEFAULT (0),' +
+      'has_species_limit         BOOLEAN       DEFAULT (0),' +
+      'requires_spatial_data     BOOLEAN       DEFAULT (0),' +
+      'allows_transport_mode     BOOLEAN       DEFAULT (0),' +
       'user_inserted    INTEGER,' +
       'user_updated     INTEGER,' +
       'insert_date      DATETIME,' +
@@ -109,6 +114,11 @@ begin
       'description, ' +
       'recommended_uses, ' +
       'notes, ' +
+      'allows_species_repetition, ' +
+      'has_time_limit, ' +
+      'has_species_limit, ' +
+      'requires_spatial_data, ' +
+      'allows_transport_mode, ' +
       'user_inserted, ' +
       'insert_date) ' +
     'VALUES (' +
@@ -119,6 +129,11 @@ begin
       ':description, ' +
       ':recommended_uses, ' +
       ':notes, ' +
+      ':allows_species_repetition, ' +
+      ':has_time_limit, ' +
+      ':has_species_limit, ' +
+      ':requires_spatial_data, ' +
+      ':allows_transport_mode, ' +
       ':user_inserted, ' +
       'datetime(''now'', ''subsec''))';
 end;
@@ -161,6 +176,11 @@ begin
       'recommended_uses, ' +
       'notes, ' +
       'can_delete, ' +
+      'allows_species_repetition, ' +
+      'has_time_limit, ' +
+      'has_species_limit, ' +
+      'requires_spatial_data, ' +
+      'allows_transport_mode, ' +
       'user_inserted, ' +
       'user_updated, ' +
       'datetime(insert_date, ''localtime'') AS insert_date, ' +
@@ -203,6 +223,11 @@ begin
       'description = :description, ' +
       'recommended_uses = :recommended_uses, ' +
       'notes = :notes, ' +
+      'allows_species_repetition = :allows_species_repetition, ' +
+      'has_time_limit = :has_time_limit, ' +
+      'has_species_limit = :has_species_limit, ' +
+      'requires_spatial_data = :requires_spatial_data, ' +
+      'allows_transport_mode = :allows_transport_mode, ' +
       'user_updated = :user_updated, ' +
       'update_date = datetime(''now'', ''subsec''), ' +
       'marked_status = :marked_status, ' +

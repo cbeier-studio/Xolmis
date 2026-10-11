@@ -3134,7 +3134,7 @@ begin
   T.TableName := TBL_METHODS;
   T.DisplayName := LocaleTablesDict[tbMethods];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 1;
+  T.QuickEntrySchemaVersion := 2;
 
   // ID
   AddField(T, 'method_id', rscId, sdtInteger, True, 0, True);
@@ -3227,6 +3227,41 @@ begin
   T.Fields.Last.SummaryKind := skSum;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := rscCanDelete;
+  // Allows species repetition - added in v2
+  AddField(T, 'allows_species_repetition', rscAllowsSpeciesRepetition, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.Visible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscAllowsSpeciesRepetition;
+  // Has time limit - added in v2
+  AddField(T, 'has_time_limit', rscHasTimeLimit, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.Visible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscHasTimeLimit;
+  // Has species limit - added in v2
+  AddField(T, 'has_species_limit', rscHasSpeciesLimit, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.Visible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscHasSpeciesLimit;
+  // Requires spatial data - added in v2
+  AddField(T, 'requires_spatial_data', rscRequiresSpatialData, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.Visible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscRequiresSpatialData;
+  // Allows transport mode - added in v2
+  AddField(T, 'allows_transport_mode', rscAllowsTransportMode, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.Visible := False;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscAllowsTransportMode;
   // Record audit
   AddField(T, COL_USER_INSERTED, rscUserInserted, sdtInteger);
   T.Fields.Last.QuickEntryVisible := False;
@@ -6115,7 +6150,7 @@ begin
   T.TableName := TBL_SIGHTINGS;
   T.DisplayName := LocaleTablesDict[tbSightings];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 5;
+  T.QuickEntrySchemaVersion := 6;
 
   // ID
   AddField(T, 'sighting_id', rscId, sdtInteger, True, 0, True);
@@ -6357,9 +6392,21 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
-  // Detection type
-  AddField(T, 'detection_type', rscDetectionType, sdtText, False, 30);
-  T.Fields.Last.Aliases.CommaText := 'detection,detection type,detecção,tipo de detecção';
+  // Detection type - removed in v6
+  //AddField(T, 'detection_type', rscDetectionType, sdtText, False, 30);
+  //T.Fields.Last.Aliases.CommaText := 'detection,detection type,detecção,tipo de detecção';
+  //T.Fields.Last.SummaryKind := skCount;
+  //T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  //T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  // Detection modes - added in v6
+  AddField(T, 'detection_modes_json', rscDetectionModes, sdtJsonArray, False);
+  T.Fields.Last.Aliases.CommaText := 'detection,detection type,detection modes,detecção,tipo de detecção,modo de detecção';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  // Evidences - added in v6
+  AddField(T, 'evidences_json', rscEvidences, sdtJsonArray, False);
+  T.Fields.Last.Aliases.CommaText := 'evidences,evidências';
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
@@ -6369,57 +6416,69 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  // Habitats - added in v6
+  AddField(T, 'habitats_json', rscHabitats, sdtJsonArray, False);
+  T.Fields.Last.Aliases.CommaText := 'habitats,ambientes';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  // Activities - added in v6
+  AddField(T, 'activities_json', rscActivities, sdtJsonArray, False);
+  T.Fields.Last.Aliases.CommaText := 'activities,behavior,atividades,comportamento';
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Mackinnon list number
   AddField(T, 'mackinnon_list_num', rscMackinnonList, sdtInteger);
   T.Fields.Last.ExportName := 'mackinnon_list_number';
   T.Fields.Last.Aliases.CommaText := 'mackinnon list,mackinnon list number,mackinnon list nr,list number,list nr,' +
     'lista de mackinnon,número da lista de mackinnon,nº da lista de mackinnon,número da lista,nº da lista';
   T.Fields.Last.SummaryEnabled := False;
-  // Captured
-  AddField(T, 'subject_captured', rscCaptured, sdtBoolean);
-  T.Fields.Last.ExportName := 'captured';
-  T.Fields.Last.DefaultValue := 0;
-  T.Fields.Last.Aliases.CommaText := 'captured,capturado,capture,captura';
-  T.Fields.Last.Alignment := taCenter;
-  T.Fields.Last.SummaryKind := skSum;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := rscCaptured;
-  // Seen
-  AddField(T, 'subject_seen', rscSeen, sdtBoolean);
-  T.Fields.Last.ExportName := 'seen';
-  T.Fields.Last.DefaultValue := 0;
-  T.Fields.Last.Aliases.CommaText := 'seen,visto,visual';
-  T.Fields.Last.Alignment := taCenter;
-  T.Fields.Last.SummaryKind := skSum;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := rscSeen;
-  // Heard
-  AddField(T, 'subject_heard', rscHeard, sdtBoolean);
-  T.Fields.Last.ExportName := 'heard';
-  T.Fields.Last.DefaultValue := 0;
-  T.Fields.Last.Aliases.CommaText := 'heard,ouvido,sonoro,sound,som,voz,vocal';
-  T.Fields.Last.Alignment := taCenter;
-  T.Fields.Last.SummaryKind := skSum;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := rscHeard;
-  // Photographed
-  AddField(T, 'subject_photographed', rscPhotographed, sdtBoolean);
-  T.Fields.Last.ExportName := 'photographed';
-  T.Fields.Last.DefaultValue := 0;
-  T.Fields.Last.Aliases.CommaText := 'photographed,fotografado,photo,foto,photos,fotos';
-  T.Fields.Last.Alignment := taCenter;
-  T.Fields.Last.SummaryKind := skSum;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := rscPhotographed;
-  // Recorded
-  AddField(T, 'subject_recorded', rscRecorded, sdtBoolean);
-  T.Fields.Last.ExportName := 'audio_recorded';
-  T.Fields.Last.DefaultValue := 0;
-  T.Fields.Last.Aliases.CommaText := 'recorded,gravado,audio,áudio';
-  T.Fields.Last.Alignment := taCenter;
-  T.Fields.Last.SummaryKind := skSum;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := rscRecorded;
+  // Captured - removed in v6
+  //AddField(T, 'subject_captured', rscCaptured, sdtBoolean);
+  //T.Fields.Last.ExportName := 'captured';
+  //T.Fields.Last.DefaultValue := 0;
+  //T.Fields.Last.Aliases.CommaText := 'captured,capturado,capture,captura';
+  //T.Fields.Last.Alignment := taCenter;
+  //T.Fields.Last.SummaryKind := skSum;
+  //T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  //T.Fields.Last.GroupingField := rscCaptured;
+  // Seen - removed in v6
+  //AddField(T, 'subject_seen', rscSeen, sdtBoolean);
+  //T.Fields.Last.ExportName := 'seen';
+  //T.Fields.Last.DefaultValue := 0;
+  //T.Fields.Last.Aliases.CommaText := 'seen,visto,visual';
+  //T.Fields.Last.Alignment := taCenter;
+  //T.Fields.Last.SummaryKind := skSum;
+  //T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  //T.Fields.Last.GroupingField := rscSeen;
+  // Heard - removed in v6
+  //AddField(T, 'subject_heard', rscHeard, sdtBoolean);
+  //T.Fields.Last.ExportName := 'heard';
+  //T.Fields.Last.DefaultValue := 0;
+  //T.Fields.Last.Aliases.CommaText := 'heard,ouvido,sonoro,sound,som,voz,vocal';
+  //T.Fields.Last.Alignment := taCenter;
+  //T.Fields.Last.SummaryKind := skSum;
+  //T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  //T.Fields.Last.GroupingField := rscHeard;
+  // Photographed - removed in v6
+  //AddField(T, 'subject_photographed', rscPhotographed, sdtBoolean);
+  //T.Fields.Last.ExportName := 'photographed';
+  //T.Fields.Last.DefaultValue := 0;
+  //T.Fields.Last.Aliases.CommaText := 'photographed,fotografado,photo,foto,photos,fotos';
+  //T.Fields.Last.Alignment := taCenter;
+  //T.Fields.Last.SummaryKind := skSum;
+  //T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  //T.Fields.Last.GroupingField := rscPhotographed;
+  // Recorded - removed in v6
+  //AddField(T, 'subject_recorded', rscRecorded, sdtBoolean);
+  //T.Fields.Last.ExportName := 'audio_recorded';
+  //T.Fields.Last.DefaultValue := 0;
+  //T.Fields.Last.Aliases.CommaText := 'recorded,gravado,audio,áudio';
+  //T.Fields.Last.Alignment := taCenter;
+  //T.Fields.Last.SummaryKind := skSum;
+  //T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  //T.Fields.Last.GroupingField := rscRecorded;
   // New captures
   AddField(T, 'new_captures_tally', rscNewCaptures, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'captures,# captures,new captures,# new captures,capturas,# capturas,novas capturas,# novas capturas';
@@ -6490,6 +6549,14 @@ begin
   T.Fields.Last.SummaryKind := skSum;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := rscOutOfSample;
+  // Out of sample - added in v6
+  AddField(T, 'is_doubtful', rscIsDoubtful, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.Aliases.CommaText := 'doubtful,is doubtful,doubtful record,duvidoso,registro duvidoso';
+  T.Fields.Last.Alignment := taCenter;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscIsDoubtful;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
@@ -6926,7 +6993,7 @@ begin
   T.TableName := TBL_SURVEYS;
   T.DisplayName := LocaleTablesDict[tbSurveys];
   // Increase QuickEntrySchemaVersion by 1 when adding or removing columns in this schema
-  T.QuickEntrySchemaVersion := 2;
+  T.QuickEntrySchemaVersion := 3;
 
   // ID
   AddField(T, 'survey_id', rscId, sdtInteger, True, 0, True);
@@ -7010,6 +7077,25 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_METHOD_NAME;
+  // Transport mode - added in v3
+  AddField(T, 'transport_mode', rscTransportMode, sdtList, False, 5);
+  T.Fields.Last.Rules.ValueList := 'W,C,B,A,H,O';
+  T.Fields.Last.DefaultValue := 'W';
+  with T.Fields.Last.PickList do
+  begin
+    Clear;
+    Add(rsTransportWalking);
+    Add(rsTransportVehicle);
+    Add(rsTransportVessel);
+    Add(rsTransportAerial);
+    Add(rsTransportAnimal);
+    Add(rsTransportOther);
+  end;
+  T.Fields.Last.Aliases.CommaText := 'transport,transport mode,transporte,locomoção,meio de locomoção';
+  T.Fields.Last.DisplayWidth := 170;
+  T.Fields.Last.SizePriority := 0;
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Locality ID
   AddField(T, 'locality_id', rscLocalityID, sdtInteger, True, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := LOCALITY_ALIASES;
@@ -7141,6 +7227,12 @@ begin
   AddField(T, 'sample_id', rscSampleID, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'sample id,id da amostra,sample,amostra';
   T.Fields.Last.SummaryEnabled := False;
+  // Species limit - added in v3
+  AddField(T, 'max_species', rscSpeciesLimit, sdtInteger);
+  T.Fields.Last.Aliases.CommaText := 'species limit,maximum species,max species,limite de espécies,máximo de espécies,máx. espécies';
+  T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   // Total area
   AddField(T, 'area_total', rscAreaHa, sdtFloat);
   T.Fields.Last.ExportName := 'area';
@@ -7165,6 +7257,24 @@ begin
   T.Fields.Last.Alignment := taRightJustify;
   T.Fields.Last.SummaryKind := skStats;
   T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  // Total paused time - added in v3
+  AddField(T, 'total_paused_time', rscTotalPausedTime, sdtFloat);
+  T.Fields.Last.Aliases.CommaText := 'paused time,total paused time,paused seconds,tempo pausado,tempo total pausado,segundos pausados';
+  T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  // Total intervals - added in v3
+  AddField(T, 'total_intervals', rscTotalIntervals, sdtInteger);
+  T.Fields.Last.Aliases.CommaText := 'intervals,total intervals,intervalos,total de intervalos';
+  T.Fields.Last.Alignment := taRightJustify;
+  T.Fields.Last.SummaryKind := skStats;
+  T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
+  // Is discarded - added in v3
+  AddField(T, 'discarded', rscIsDiscarded, sdtBoolean);
+  T.Fields.Last.DefaultValue := 0;
+  T.Fields.Last.SummaryKind := skSum;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.GroupingField := rscIsDiscarded;
   // Habitat
   AddField(T, 'habitat', rscHabitat, sdtText);
   T.Fields.Last.Aliases.CommaText := 'environment,ambiente';

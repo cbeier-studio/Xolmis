@@ -1,24 +1,24 @@
 object lstDetectionType: TlstDetectionType
   Left = 352
-  Height = 246
+  Height = 263
   Top = 33
   Width = 246
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Detection type'
-  ClientHeight = 246
+  ClientHeight = 263
   ClientWidth = 246
   PopupMode = pmAuto
   Position = poOwnerFormCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   object pBottom: TPanel
     Left = 0
     Height = 41
-    Top = 205
+    Top = 222
     Width = 246
     Align = alBottom
     AutoSize = True
@@ -56,7 +56,7 @@ object lstDetectionType: TlstDetectionType
   end
   object cklDetect: TCheckListBox
     Left = 8
-    Height = 144
+    Height = 204
     Top = 8
     Width = 230
     Align = alClient
@@ -64,72 +64,30 @@ object lstDetectionType: TlstDetectionType
     Constraints.MinHeight = 144
     Constraints.MinWidth = 230
     Items.Strings = (
-      'S - song'
-      'C - call'
-      'V - seen'
-      'W - wing flapping'
-      'D - drumming'
-      'F - flying'
+      'visual'
+      'song'
+      'call'
+      'wing flapping'
+      'drumming'
+      'capture'
+      'remote'
+      'track or sign'
+      'other'
     )
     ItemHeight = 21
     TabOrder = 1
-    OnClickCheck = cklDetectClickCheck
     Data = {
-      06000000000000000000
+      09000000000000000000000000
     }
   end
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 203
+    Top = 220
     Width = 246
     Align = alBottom
     LineColor = 9276813
     ArrowColor = clBlack
     LineWidth = 1
-  end
-  object pCode: TBCPanel
-    Left = 8
-    Height = 35
-    Top = 160
-    Width = 230
-    Align = alBottom
-    BorderSpacing.Left = 8
-    BorderSpacing.Right = 8
-    BorderSpacing.Bottom = 8
-    Background.Color = 16226706
-    Background.Gradient1.StartColor = clWhite
-    Background.Gradient1.EndColor = clBlack
-    Background.Gradient1.GradientType = gtLinear
-    Background.Gradient1.Point1XPercent = 0
-    Background.Gradient1.Point1YPercent = 0
-    Background.Gradient1.Point2XPercent = 0
-    Background.Gradient1.Point2YPercent = 100
-    Background.Gradient2.StartColor = clWhite
-    Background.Gradient2.EndColor = clBlack
-    Background.Gradient2.GradientType = gtLinear
-    Background.Gradient2.Point1XPercent = 0
-    Background.Gradient2.Point1YPercent = 0
-    Background.Gradient2.Point2XPercent = 0
-    Background.Gradient2.Point2YPercent = 100
-    Background.Gradient1EndPercent = 35
-    Background.Style = bbsColor
-    BevelInner = bvNone
-    BevelOuter = bvNone
-    BevelWidth = 1
-    Border.Style = bboNone
-    BorderBCStyle = bpsBorder
-    FontEx.Color = 9520964
-    FontEx.FontQuality = fqSystemClearType
-    FontEx.Height = 24
-    FontEx.Shadow = False
-    FontEx.ShadowRadius = 5
-    FontEx.ShadowOffsetX = 5
-    FontEx.ShadowOffsetY = 5
-    FontEx.Style = []
-    ParentBackground = False
-    Rounding.RoundX = 8
-    Rounding.RoundY = 8
-    TabOrder = 2
   end
 end

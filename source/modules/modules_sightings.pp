@@ -151,10 +151,18 @@ begin
     //  ColumnByFieldname(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
       ColumnByFieldname(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_DETECTION_TYPE).Visible then
-      ColumnByFieldname(COL_DETECTION_TYPE).ButtonStyle := cbsEllipsis;
+    //if DataSource.DataSet.FieldByName(COL_DETECTION_TYPE).Visible then
+    //  ColumnByFieldname(COL_DETECTION_TYPE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_DETECTION_MODES).Visible then
+      ColumnByFieldname(COL_DETECTION_MODES).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_EVIDENCES).Visible then
+      ColumnByFieldname(COL_EVIDENCES).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_BREEDING_STATUS).Visible then
       ColumnByFieldname(COL_BREEDING_STATUS).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_HABITATS).Visible then
+      ColumnByFieldname(COL_HABITATS).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_ACTIVITIES).Visible then
+      ColumnByFieldname(COL_ACTIVITIES).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_SIGHTING_DATE).Visible then
       ColumnByFieldname(COL_SIGHTING_DATE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then
@@ -343,10 +351,18 @@ begin
     //  ColumnByFieldname(COL_OBSERVER_NAME).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_INDIVIDUAL_NAME).Visible then
       ColumnByFieldname(COL_INDIVIDUAL_NAME).ButtonStyle := cbsEllipsis;
-    if DataSource.DataSet.FieldByName(COL_DETECTION_TYPE).Visible then
-      ColumnByFieldname(COL_DETECTION_TYPE).ButtonStyle := cbsEllipsis;
+    //if DataSource.DataSet.FieldByName(COL_DETECTION_TYPE).Visible then
+    //  ColumnByFieldname(COL_DETECTION_TYPE).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_DETECTION_MODES).Visible then
+      ColumnByFieldname(COL_DETECTION_MODES).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_EVIDENCES).Visible then
+      ColumnByFieldname(COL_EVIDENCES).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_BREEDING_STATUS).Visible then
       ColumnByFieldname(COL_BREEDING_STATUS).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_HABITATS).Visible then
+      ColumnByFieldname(COL_HABITATS).ButtonStyle := cbsEllipsis;
+    if DataSource.DataSet.FieldByName(COL_ACTIVITIES).Visible then
+      ColumnByFieldname(COL_ACTIVITIES).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_SIGHTING_DATE).Visible then
       ColumnByFieldname(COL_SIGHTING_DATE).ButtonStyle := cbsEllipsis;
     if DataSource.DataSet.FieldByName(COL_LONGITUDE).Visible then

@@ -98,6 +98,7 @@ type
   function StrToSubjectStatus(const AValue: String): TSubjectStatus;
   function StrToSupportType(const AValue: String): String;
   function StrToSymmetry(const AValue: String): TSymmetry;
+  function StrToTransportMode(const AValue: String): TTransportMode;
   function StrToUserRank(const AValue: String): TUserRank;
   function StrToVideoType(const AValue: String): TVideoType;
 
@@ -1579,6 +1580,37 @@ begin
     Result := symAsymmetrical
   else
     Result := symUnknown;
+end;
+
+function StrToTransportMode(const AValue: String): TTransportMode;
+begin
+  Result := tmdWalking;
+  if (AValue = rsTransportNotApplicable) or (AValue = 'NA') then
+    Result := tmdNotApplicable
+  else
+  if (AValue = rsTransportWalking) or (AValue = 'WA') then
+    Result := tmdWalking
+  else
+  if (AValue = rsTransportVehicle) or (AValue = 'VC') then
+    Result := tmdVehicle
+  else
+  if (AValue = rsTransportVessel) or (AValue = 'VB') then
+    Result := tmdVessel
+  else
+  if (AValue = rsTransportAerial) or (AValue = 'AC') then
+    Result := tmdAerial
+  else
+  if (AValue = rsTransportBicycle) or (AValue = 'BC') then
+    Result := tmdBicycle
+  else
+  if (AValue = rsTransportAnimal) or (AValue = 'AH') then
+    Result := tmdAnimal
+  else
+  if (AValue = rsTransportRemote) or (AValue = 'RM') then
+    Result := tmdRemote
+  else
+  if (AValue = rsTransportOther) or (AValue = 'OT') then
+    Result := tmdOther;
 end;
 
 function StrToUserRank(const AValue: String): TUserRank;

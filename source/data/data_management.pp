@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 17;
+  SCHEMA_VERSION: Integer = 18;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -694,13 +694,13 @@ begin
         if not Trans.Active then
           Trans.StartTransaction;
 
-        // Populate tables
-        dlgProgress.Text := rsProgressPopulatingTables;
+        // >> Populate tables
         dlgProgress.Indeterminate := True;
         Application.ProcessMessages;
         LogDebug('Populating database');
 
         // Populate user roles and permissions
+        dlgProgress.Text := Format(rsProgressPopulatingTables, [rsRolePermissions]);
         SeedAccessControlTables(Conn);
 
         // Create admin user
@@ -711,6 +711,7 @@ begin
           Trans.StartTransaction;
 
         // Populate botanic taxa
+        dlgProgress.Text := Format(rsProgressPopulatingTables, [rsTitleBotanicalTaxa]);
         DMM.scriptUserDBInit.DataBase := Conn;
         DMM.scriptUserDBInit.Transaction := Conn.Transaction;
         DMM.scriptUserDBInit.ExecuteScript;
@@ -721,6 +722,7 @@ begin
         dlgProgress.Indeterminate := False;
 
         // Populate methods
+        dlgProgress.Text := Format(rsProgressPopulatingTables, [rsTitleMethods]);
         PopulateMethodsTable(Conn, dlgProgress.PBar);
 
         Trans.CommitRetaining;
@@ -728,6 +730,7 @@ begin
           Trans.StartTransaction;
 
         // Populate taxon ranks
+        dlgProgress.Text := Format(rsProgressPopulatingTables, [rsTitleTaxonRanks]);
         PopulateTaxonRanksTable(Conn, dlgProgress.PBar);
 
         Trans.CommitRetaining;
@@ -735,6 +738,7 @@ begin
           Trans.StartTransaction;
 
         // Populate countries
+        dlgProgress.Text := Format(rsProgressPopulatingTables, [rsTitleCountries]);
         PopulateCountriesTable(Conn, dlgProgress.PBar);
 
         Trans.CommitRetaining;
@@ -742,6 +746,7 @@ begin
           Trans.StartTransaction;
 
         // Populate languages
+        dlgProgress.Text := Format(rsProgressPopulatingTables, [rsTitleLanguages]);
         PopulateLanguagesTable(Conn, dlgProgress.PBar);
 
         Trans.CommitRetaining;
@@ -749,6 +754,7 @@ begin
           Trans.StartTransaction;
 
         // Populate bird taxa
+        dlgProgress.Text := Format(rsProgressPopulatingTables, [rsTitleZooTaxa]);
         PopulateZooTaxaTable(Conn, dlgProgress.PBar);
 
         Trans.CommitRetaining;
@@ -1275,11 +1281,11 @@ begin
           dlgProgress.AllowCancel := False;
           dlgProgress.Show;
 
-          dlgProgress.Text := rsProgressPopulatingTables + ' ' + rsTitleCountries;
+          dlgProgress.Text := Format(rsProgressPopulatingTables, [rsTitleCountries]);
           PopulateCountriesTable(DMM.sqlCon, dlgProgress.PBar);
-          dlgProgress.Text := rsProgressPopulatingTables + ' ' + rsTitleLanguages;
+          dlgProgress.Text := Format(rsProgressPopulatingTables, [rsTitleLanguages]);
           PopulateLanguagesTable(DMM.sqlCon, dlgProgress.PBar);
-          dlgProgress.Text := rsProgressPopulatingTables + ' ' + rsTitleZooTaxa;
+          dlgProgress.Text := Format(rsProgressPopulatingTables, [rsTitleZooTaxa]);
           PopulateZooTaxaTable(DMM.sqlCon, dlgProgress.PBar);
         finally
           dlgProgress.Close;
@@ -1340,6 +1346,222 @@ begin
 
         Result := True;
       end;
+
+      if OldVersion < 18 then
+      begin
+        LogDebug('Upgrading database schema to version 18');
+
+        // Add surveys columns
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE surveys ADD COLUMN transport_mode VARCHAR(5);');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE surveys ADD COLUMN max_species INTEGER;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE surveys ADD COLUMN total_paused_time REAL;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE surveys ADD COLUMN total_intervals INTEGER;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE surveys ADD COLUMN discarded BOOLEAN DEFAULT 0;');
+        // Add sightings columns
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings ADD COLUMN detection_modes_json TEXT;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings ADD COLUMN evidences_json TEXT;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings ADD COLUMN habitats_json TEXT;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings ADD COLUMN activities_json TEXT;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings ADD COLUMN is_doubtful BOOLEAN DEFAULT 0;');
+
+        // Migrate values to detection_modes_json in sightings
+        DMM.sqlCon.ExecuteDirect(
+          'WITH detection_values AS ( ' +
+            'WITH RECURSIVE chars(id, pos, value) AS ( ' +
+                'SELECT sighting_id, 1, substr(detection_type, 1, 1) ' +
+                'FROM sightings ' +
+                'WHERE detection_type IS NOT NULL ' +
+                  'AND detection_type <> '''' ' +
+                'UNION ALL ' +
+                'SELECT ' +
+                    'id, ' +
+                    'pos + 1, ' +
+                    'substr( ' +
+                        '(SELECT detection_type ' +
+                         'FROM sightings s ' +
+                         'WHERE s.sighting_id = chars.id), ' +
+                        'pos + 1, ' +
+                        '1 ' +
+                    ') ' +
+                'FROM chars ' +
+                'WHERE value <> '''' ' +
+            ') ' +
+            'SELECT id, value ' +
+            'FROM chars ' +
+            'WHERE value <> '''' ' +
+            'UNION ' +
+            'SELECT sighting_id AS id, ''V'' ' +
+            'FROM sightings ' +
+            'WHERE subject_seen = 1 ' +
+            'UNION ' +
+            'SELECT sighting_id AS id, ''S'' ' +
+            'FROM sightings ' +
+            'WHERE subject_heard = 1 ' +
+            'UNION ' +
+            'SELECT sighting_id AS id, ''G'' ' +
+            'FROM sightings ' +
+            'WHERE subject_captured = 1 ' +
+        ') ' +
+        'UPDATE sightings ' +
+        'SET detection_modes_json = ' +
+        '( ' +
+            'SELECT json_group_array(value) ' +
+            'FROM detection_values d ' +
+            'WHERE d.id = sightings.sighting_id ' +
+        ');');
+        // Convert values in detection_modes_json
+        DMM.sqlCon.ExecuteDirect('UPDATE sightings ' +
+        'SET detection_modes_json = ' +
+        '( ' +
+            'SELECT json_group_array( ' +
+                'CASE value ' +
+                    'WHEN ''V'' THEN ''visual'' ' +
+                    'WHEN ''S'' THEN ''song'' ' +
+                    'WHEN ''C'' THEN ''call'' ' +
+                    'WHEN ''W'' THEN ''wing_flapping'' ' +
+                    'WHEN ''D'' THEN ''drumming'' ' +
+                    'WHEN ''G'' THEN ''capture'' ' +
+                    'WHEN ''F'' THEN ''other'' ' +
+                    'ELSE value ' +
+                'END ' +
+            ') ' +
+            'FROM json_each(sightings.detection_modes_json) ' +
+        ') ' +
+        'WHERE detection_modes_json IS NOT NULL;');
+        // Migrate values to evidences_json
+        DMM.sqlCon.ExecuteDirect('UPDATE sightings ' +
+        'SET evidences_json = ' +
+        '( ' +
+            'SELECT json_group_array(value) ' +
+            'FROM ( ' +
+                'SELECT ''photo'' AS value ' +
+                'WHERE subject_photographed = 1 ' +
+                'UNION ALL ' +
+                'SELECT ''audio'' AS value ' +
+                'WHERE subject_recorded = 1 ' +
+                'UNION ALL ' +
+                'SELECT ''capture'' AS value ' +
+                'WHERE subject_captured = 1 ' +
+            ') ' +
+        ') ' +
+        'WHERE subject_photographed = 1 ' +
+           'OR subject_recorded = 1;');
+
+        // Create methods mapping
+        DMM.sqlCon.ExecuteDirect('CREATE TEMP TABLE tmp_method_mapping (' +
+          'old_method_id INTEGER PRIMARY KEY, ' +
+          'new_method_id INTEGER NOT NULL);');
+
+        // Mapeamento completo cruzando as Abbreviations/conceitos antigos (1 a 32) para os novos (1 a 29)
+        // Nota: Métodos de trajeto específicos (Car(10), Boat(15), Plane(16)) foram unificados no Traveling(4)
+        DMM.sqlCon.ExecuteDirect('INSERT INTO tmp_method_mapping (old_method_id, new_method_id) VALUES ' +
+          '(1, 1), (2, 4), (3, 8), (4, 10), (5, 22), (6, 13), (7, 17), (8, 16), ' +
+          '(9, 5), (10, 4), (11, 9), (12, 19), (13, 7), (14, 6), (15, 4), (16, 4), ' +
+          '(17, 2), (18, 12), (19, 26), (20, 3), (21, 11), (22, 23), (23, 25), (24, 28), ' +
+          '(25, 21), (26, 15), (27, 14), (28, 29), (29, 27), (30, 18), (31, 24), (32, 20);');
+
+        // Migrate methods where it is referenced using the mapping
+        DMM.sqlCon.ExecuteDirect('UPDATE surveys ' +
+          'SET method_id = (' +
+              'SELECT new_method_id ' +
+              'FROM tmp_method_mapping ' +
+              'WHERE old_method_id = surveys.method_id ' +
+          ') ' +
+          'WHERE method_id IN (SELECT old_method_id FROM tmp_method_mapping);');
+
+        DMM.sqlCon.ExecuteDirect('UPDATE sightings ' +
+          'SET method_id = (' +
+              'SELECT new_method_id ' +
+              'FROM tmp_method_mapping ' +
+              'WHERE old_method_id = sightings.method_id ' +
+          ') ' +
+          'WHERE method_id IN (SELECT old_method_id FROM tmp_method_mapping);');
+
+        // Rename old methods table and create new one
+        DMM.sqlCon.ExecuteDirect('PRAGMA legacy_alter_table = ON;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE methods RENAME TO methods_old;');
+        DMM.sqlCon.ExecuteDirect('CREATE TABLE methods ( ' +
+            'method_id                 INTEGER       PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, ' +
+            'method_name               VARCHAR (100) NOT NULL UNIQUE, ' +
+            'abbreviation              VARCHAR (20), ' +
+            'ebird_name                VARCHAR (60), ' +
+            'category                  VARCHAR (30), ' +
+            'description               TEXT, ' +
+            'recommended_uses          TEXT, ' +
+            'notes                     TEXT, ' +
+            'can_delete                BOOLEAN       DEFAULT (1), ' +
+            'allows_species_repetition BOOLEAN       DEFAULT (0), ' +
+            'has_time_limit            BOOLEAN       DEFAULT (0), ' +
+            'has_species_limit         BOOLEAN       DEFAULT (0), ' +
+            'requires_spatial_data     BOOLEAN       DEFAULT (0), ' +
+            'allows_transport_mode     BOOLEAN       DEFAULT (0), ' +
+            'user_inserted             INTEGER, ' +
+            'user_updated              INTEGER, ' +
+            'insert_date               DATETIME, ' +
+            'update_date               DATETIME, ' +
+            'marked_status             BOOLEAN       DEFAULT (0), ' +
+            'exported_status           BOOLEAN       DEFAULT (0), ' +
+            'active_status             BOOLEAN       DEFAULT (1), ' +
+            'inactivated_by            VARCHAR (5) ' +
+        ');');
+
+        // Add preloaded methods
+        dlgProgress := TdlgProgress.Create(nil);
+        try
+          dlgProgress.Title := rsTitleUpgradeDatabase;
+          dlgProgress.Text := rsProgressPreparing;
+          dlgProgress.Position := 0;
+          dlgProgress.AllowCancel := False;
+          dlgProgress.Show;
+
+          dlgProgress.Text := Format(rsProgressPopulatingTables, [rsTitleMethods]);
+          PopulateMethodsTable(DMM.sqlCon, dlgProgress.PBar);
+        finally
+          dlgProgress.Close;
+          if Assigned(dlgProgress) then
+            FreeAndNil(dlgProgress);
+        end;
+
+        // Copy user methods
+        DMM.sqlCon.ExecuteDirect('INSERT INTO methods (' +
+            'method_id, method_name, abbreviation, ebird_name, category, ' +
+            'description, recommended_uses, notes, can_delete, ' +
+            'insert_date, update_date, marked_status, active_status, ' +
+            'allows_species_repetition, has_time_limit, has_species_limit, ' +
+            'requires_spatial_data, allows_transport_mode' +
+        ') ' +
+        'SELECT ' +
+            'method_id, method_name, abbreviation, ebird_name, category, ' +
+            'description, recommended_uses, notes, can_delete, ' +
+            'insert_date, update_date, marked_status, active_status, ' +
+            '0, 0, 0, 0, 0 ' +
+        'FROM methods_old ' +
+        'WHERE can_delete = 1 ' +
+          'AND method_id NOT IN (SELECT old_method_id FROM tmp_method_mapping) ' + // <--- CORREÇÃO: old_method_id
+          'AND method_id NOT IN (SELECT method_id FROM methods);');
+
+        DMM.sqlCon.ExecuteDirect('PRAGMA legacy_alter_table = OFF;');
+
+        // Create indexes
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_abbreviation ON methods (abbreviation COLLATE BINARY);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_ebird_name ON methods (ebird_name COLLATE NOCASE);');
+
+        // Drop temp tables
+        DMM.sqlCon.ExecuteDirect('DROP TABLE methods_old;');
+        DMM.sqlCon.ExecuteDirect('DROP TABLE tmp_method_mapping;');
+
+        Result := True;
+      end;
+
+      // !!! --- DO NOT FORGET IN VERSION 20 --- !!!
+
+        // Drop columns from sightings
+        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN detection_type;');
+        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_seen;');
+        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_heard;');
+        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_captured;');
+        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_photographed;');
+        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_recorded;');
 
       if Result then
       begin

@@ -542,11 +542,15 @@ type
     qInstitutionsuser_updated: TLongintField;
     qMethodsabbreviation: TStringField;
     qMethodsactive_status: TBooleanField;
+    qMethodsallows_species_repetition: TBooleanField;
+    qMethodsallows_transport_mode: TBooleanField;
     qMethodscan_delete: TBooleanField;
     qMethodscategory: TStringField;
     qMethodsdescription: TMemoField;
     qMethodsebird_name: TStringField;
     qMethodsexported_status: TBooleanField;
+    qMethodshas_species_limit: TBooleanField;
+    qMethodshas_time_limit: TBooleanField;
     qMethodsinactivated_by: TStringField;
     qMethodsinsert_date: TDateTimeField;
     qMethodsmarked_status: TBooleanField;
@@ -554,6 +558,7 @@ type
     qMethodsmethod_name: TStringField;
     qMethodsnotes: TMemoField;
     qMethodsrecommended_uses: TMemoField;
+    qMethodsrequires_spatial_data: TBooleanField;
     qMethodsupdate_date: TDateTimeField;
     qMethodsuser_inserted: TLongintField;
     qMethodsuser_updated: TLongintField;
@@ -861,15 +866,20 @@ type
     qSamplingPlotsstate_id: TLongintField;
     qSamplingPlotsstate_name: TStringField;
     qSightingPoisuser_updated1: TLongintField;
+    qSightingsactivities_json: TMemoField;
     qSightingscoordinate_precision: TStringField;
     qSightingscountry_id: TLongintField;
     qSightingscustom_taxon_name: TStringField;
+    qSightingsdetection_modes_json: TMemoField;
+    qSightingsevidences_json: TMemoField;
     qSightingsfamily_id: TLongintField;
     qSightingsflight_direction: TStringField;
     qSightingsflight_height: TFloatField;
     qSightingsgenus_id: TLongintField;
+    qSightingshabitats_json: TMemoField;
     qSightingsinactivated_by: TStringField;
     qSightingsindividual_name: TStringField;
+    qSightingsis_doubtful: TBooleanField;
     qSightingslocality_name: TStringField;
     qSightingsmethod_name: TStringField;
     qSightingsmunicipality_id: TLongintField;
@@ -896,13 +906,18 @@ type
     qSurveyscoordinate_precision: TStringField;
     qSurveyscountry_id: TLongintField;
     qSurveyscountry_name: TStringField;
+    qSurveysdiscarded: TBooleanField;
     qSurveysexpedition_name: TStringField;
     qSurveysinactivated_by: TStringField;
+    qSurveysmax_species: TLongintField;
     qSurveysmunicipality_id: TLongintField;
     qSurveysmunicipality_name: TStringField;
     qSurveysnet_effort: TFloatField;
     qSurveysstate_id: TLongintField;
     qSurveysstate_name: TStringField;
+    qSurveystotal_intervals: TLongintField;
+    qSurveystotal_paused_time: TFloatField;
+    qSurveystransport_mode: TStringField;
     qVernacularTaxa: TSQLQuery;
     qSynonymTaxascientific_name: TStringField;
     qTaxaaccepted_status: TBooleanField;
@@ -1125,7 +1140,6 @@ type
     qSightingsactive_status: TBooleanField;
     qSightingsadults_tally: TStringField;
     qSightingsbreeding_status: TStringField;
-    qSightingsdetection_type: TStringField;
     qSightingsebird_available: TBooleanField;
     qSightingsexported_status: TBooleanField;
     qSightingsfemales_tally: TStringField;
@@ -1149,12 +1163,7 @@ type
     qSightingssighting_id: TAutoIncField;
     qSightingssighting_time: TTimeField;
     qSightingssubjects_tally: TLongintField;
-    qSightingssubject_captured: TBooleanField;
     qSightingssubject_distance: TFloatField;
-    qSightingssubject_heard: TBooleanField;
-    qSightingssubject_photographed: TBooleanField;
-    qSightingssubject_recorded: TBooleanField;
-    qSightingssubject_seen: TBooleanField;
     qSightingssurvey_id: TLongintField;
     qSightingstaxon_id: TLongintField;
     qSightingsunbanded_tally: TLongintField;
@@ -1571,6 +1580,8 @@ type
     procedure qSurveyscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qSurveyscoordinate_precisionSetText(Sender: TField; const aText: string);
     procedure qSurveyssurvey_dateValidate(Sender: TField);
+    procedure qSurveystransport_modeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qSurveystransport_modeSetText(Sender: TField; const aText: string);
     procedure qTaxaBeforeOpen(DataSet: TDataSet);
     procedure qTaxadistributionGetText(Sender: TField;
       var aText: string; DisplayText: Boolean);
@@ -5244,6 +5255,59 @@ procedure TDMG.qSurveyssurvey_dateValidate(Sender: TField);
 begin
   if IsFutureDate(Sender.AsDateTime, Today, rsDateSurvey, rsDateToday) then
     raise EFutureDate.CreateFmt(rsFutureDate, [rsDateToday, rsDateSurvey, DateToStr(Sender.AsDateTime)]);
+end;
+
+procedure TDMG.qSurveystransport_modeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'NA': aText := rsTransportNotApplicable;
+    'WA': aText := rsTransportWalking;
+    'VC': aText := rsTransportVehicle;
+    'VB': aText := rsTransportVessel;
+    'AC': aText := rsTransportAerial;
+    'BC': aText := rsTransportBicycle;
+    'AH': aText := rsTransportAnimal;
+    'RM': aText := rsTransportRemote;
+    'OT': aText := rsTransportOther;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMG.qSurveystransport_modeSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsTransportNotApplicable then
+    Sender.AsString := 'NA'
+  else
+  if aText = rsTransportWalking then
+    Sender.AsString := 'WA'
+  else
+  if aText = rsTransportVehicle then
+    Sender.AsString := 'VC'
+  else
+  if aText = rsTransportVessel then
+    Sender.AsString := 'VB'
+  else
+  if aText = rsTransportAerial then
+    Sender.AsString := 'AC'
+  else
+  if aText = rsTransportBicycle then
+    Sender.AsString := 'BC'
+  else
+  if aText = rsTransportAnimal then
+    Sender.AsString := 'AH'
+  else
+  if aText = rsTransportRemote then
+    Sender.AsString := 'RM'
+  else
+  if aText = rsTransportOther then
+    Sender.AsString := 'OT';
 end;
 
 procedure TDMG.qTaxaBeforeOpen(DataSet: TDataSet);

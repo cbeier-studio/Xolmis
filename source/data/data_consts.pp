@@ -184,6 +184,11 @@ const
   COL_CATEGORY = 'category';
   COL_RECOMMENDED_USES = 'recommended_uses';
   COL_CAN_DELETE = 'can_delete';
+  COL_ALLOWS_SPECIES_REPETITION = 'allows_species_repetition';
+  COL_HAS_TIME_LIMIT = 'has_time_limit';
+  COL_HAS_SPECIES_LIMIT = 'has_species_limit';
+  COL_REQUIRES_SPATIAL_DATA = 'requires_spatial_data';
+  COL_ALLOWS_TRANSPORT_MODE = 'allows_transport_mode';
 
   // Taxon ranks columns
 const
@@ -351,6 +356,11 @@ const
   COL_NETS_TOTAL = 'nets_total';
   COL_HABITAT = 'habitat';
   COL_NET_ROUNDS = 'net_rounds';
+  COL_MAX_SPECIES = 'max_species';
+  COL_TOTAL_PAUSED_TIME = 'total_paused_time';
+  COL_TOTAL_INTERVALS = 'total_intervals';
+  COL_DISCARDED = 'discarded';
+  COL_TRANSPORT_MODE = 'transport_mode';
 
   // Survey members columns
 const
@@ -433,9 +443,14 @@ const
   COL_RECAPTURES_TALLY = 'recaptures_tally';
   COL_UNBANDED_TALLY = 'unbanded_tally';
   COL_DETECTION_TYPE = 'detection_type';
+  COL_DETECTION_MODES = 'detection_modes_json';
+  COL_EVIDENCES = 'evidences_json';
   COL_BREEDING_STATUS = 'breeding_status';
+  COL_HABITATS = 'habitats_json';
+  COL_ACTIVITIES = 'activities_json';
   COL_OUT_OF_SAMPLE = 'out_of_sample';
   COL_EBIRD_AVAILABLE = 'ebird_available';
+  COL_IS_DOUBTFUL = 'is_doubtful';
 
 const
   // Sighting observers columns

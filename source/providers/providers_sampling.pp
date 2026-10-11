@@ -318,7 +318,9 @@ begin
       'start_time               TIME,' +
       'end_time                 TIME,' +
       'duration                 INTEGER,' +
+      'max_species              INTEGER,' +
       'method_id                INTEGER       REFERENCES methods (method_id) ON UPDATE CASCADE,' +
+      'transport_mode           VARCHAR (5),' +
       'net_station_id           INTEGER       REFERENCES sampling_plots (sampling_plot_id) ON UPDATE CASCADE,' +
       'expedition_id            INTEGER       REFERENCES expeditions (expedition_id) ON UPDATE CASCADE,' +
       'project_id               INTEGER       REFERENCES projects (project_id) ON UPDATE CASCADE,' +
@@ -333,6 +335,9 @@ begin
       'area_total               REAL,' +
       'distance_total           REAL,' +
       'nets_total               INTEGER,' +
+      'total_paused_time        REAL,' +
+      'total_intervals          INTEGER,' +
+      'discarded                BOOLEAN       DEFAULT (0),' +
       'habitat                  TEXT,' +
       'net_rounds               TEXT,' +
       'full_name                VARCHAR (100),' +
@@ -384,7 +389,9 @@ begin
         'start_time, ' +
         'end_time, ' +
         'duration, ' +
+        'max_species, ' +
         'method_id, ' +
+        'transport_mode, ' +
         'net_station_id, ' +
         'expedition_id, ' +
         'project_id, ' +
@@ -399,6 +406,9 @@ begin
         'area_total, ' +
         'distance_total, ' +
         'nets_total, ' +
+        'total_paused_time, ' +
+        'total_intervals, ' +
+        'discarded, ' +
         'habitat, ' +
         'net_rounds, ' +
         'full_name, ' +
@@ -410,7 +420,9 @@ begin
         'time(:start_time), ' +
         'time(:end_time), ' +
         ':duration, ' +
+        ':max_species, ' +
         ':method_id, ' +
+        ':transport_mode, ' +
         ':net_station_id, ' +
         ':expedition_id, ' +
         ':project_id, ' +
@@ -425,6 +437,9 @@ begin
         ':area_total, ' +
         ':distance_total, ' +
         ':nets_total, ' +
+        ':total_paused_time, ' +
+        ':total_intervals, ' +
+        ':discarded, ' +
         ':habitat, ' +
         ':net_rounds, ' +
         ':full_name, ' +
@@ -513,7 +528,9 @@ begin
       'start_time, ' +
       'end_time, ' +
       'duration, ' +
+      'max_species, ' +
       'method_id, ' +
+      'transport_mode, ' +
       'net_station_id, ' +
       'expedition_id, ' +
       'project_id, ' +
@@ -528,6 +545,9 @@ begin
       'area_total, ' +
       'distance_total, ' +
       'nets_total, ' +
+      'total_paused_time, ' +
+      'total_intervals, ' +
+      'discarded, ' +
       'habitat, ' +
       'net_rounds, ' +
       'full_name, ' +
@@ -572,7 +592,9 @@ begin
       'start_time = time(:start_time), ' +
       'end_time = time(:end_time), ' +
       'duration = :duration, ' +
+      'max_species = :max_species, ' +
       'method_id = :method_id, ' +
+      'transport_mode = :transport_mode, ' +
       'net_station_id = :net_station_id, ' +
       'expedition_id = :expedition_id, ' +
       'project_id = :project_id, ' +
@@ -587,6 +609,9 @@ begin
       'area_total = :area_total, ' +
       'distance_total = :distance_total, ' +
       'nets_total = :nets_total, ' +
+      'total_paused_time = :total_paused_time, ' +
+      'total_intervals = :total_intervals, ' +
+      'discarded = :discarded, ' +
       'habitat = :habitat, ' +
       'net_rounds = :net_rounds, ' +
       'full_name = :full_name, ' +

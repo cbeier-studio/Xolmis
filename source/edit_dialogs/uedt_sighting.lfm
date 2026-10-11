@@ -124,7 +124,7 @@ object edtSighting: TedtSighting
     TabOrder = 0
     object pClient: TPanel
       Left = 0
-      Height = 1136
+      Height = 1106
       Top = 0
       Width = 436
       Align = alTop
@@ -134,13 +134,13 @@ object edtSighting: TedtSighting
       ChildSizing.TopBottomSpacing = 16
       ChildSizing.EnlargeHorizontal = crsSameSize
       ChildSizing.ShrinkHorizontal = crsSameSize
-      ClientHeight = 1136
+      ClientHeight = 1106
       ClientWidth = 436
       TabOrder = 0
       object pNotes: TPanel
         Left = 0
         Height = 113
-        Top = 991
+        Top = 961
         Width = 436
         Align = alTop
         AutoSize = True
@@ -154,7 +154,7 @@ object edtSighting: TedtSighting
         ClientHeight = 113
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 18
+        TabOrder = 20
         object lblNotes: TLabel
           Left = 16
           Height = 16
@@ -400,58 +400,7 @@ object edtSighting: TedtSighting
           OnKeyPress = eDateKeyPress
         end
       end
-      object pMackinnonListNumber: TPanel
-        Left = 0
-        Height = 45
-        Top = 604
-        Width = 436
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 45
-        ClientWidth = 436
-        ParentBackground = False
-        TabOrder = 12
-        object lblMackinnonListNumber: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 194
-          BorderSpacing.Top = 3
-          Caption = 'Mackinnon list number:'
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblMackinnonListNumber1: TLabel
-          Left = 226
-          Height = 15
-          Top = 3
-          Width = 194
-          BorderSpacing.Top = 3
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object eMackinnonListNumber: TEdit
-          Left = 16
-          Height = 23
-          Top = 22
-          Width = 194
-          NumbersOnly = True
-          TabOrder = 0
-          OnEnter = ControlEnter
-          OnKeyDown = FormKeyDown
-          OnKeyPress = eDateKeyPress
-        end
-      end
-      object pDetectionBreeding: TPanel
+      object pBreedingMackinnon: TPanel
         Left = 0
         Height = 45
         Top = 559
@@ -470,18 +419,8 @@ object edtSighting: TedtSighting
         ClientWidth = 436
         ParentBackground = False
         TabOrder = 11
-        object lblDetectionType: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 194
-          BorderSpacing.Top = 3
-          Caption = 'Detection type:'
-          ParentColor = False
-          ParentFont = False
-        end
         object lblBreedingStatus: TLabel
-          Left = 226
+          Left = 16
           Height = 15
           Top = 3
           Width = 194
@@ -490,7 +429,17 @@ object edtSighting: TedtSighting
           ParentColor = False
           ParentFont = False
         end
-        object eDetectionType: TEditButton
+        object lblMackinnonListNumber: TLabel
+          Left = 226
+          Height = 15
+          Top = 3
+          Width = 194
+          BorderSpacing.Top = 3
+          Caption = 'Mackinnon list number:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object eBreedingStatus: TEditButton
           Left = 16
           Height = 23
           Top = 22
@@ -505,27 +454,18 @@ object edtSighting: TedtSighting
           ShowHint = True
           Spacing = 0
           TabOrder = 0
-          OnButtonClick = eDetectionTypeButtonClick
+          OnButtonClick = eBreedingStatusButtonClick
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
         end
-        object eBreedingStatus: TEditButton
+        object eMackinnonListNumber: TEdit
           Left = 226
           Height = 23
           Top = 22
           Width = 194
-          ButtonWidth = 23
-          Images = DMM.iEdits
-          ImageIndex = 7
-          MaxLength = 0
-          NumGlyphs = 1
-          ParentShowHint = False
-          PasswordChar = #0
-          ShowHint = True
-          Spacing = 0
+          NumbersOnly = True
           TabOrder = 1
-          OnButtonClick = eBreedingStatusButtonClick
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
           OnKeyPress = eDateKeyPress
@@ -534,7 +474,7 @@ object edtSighting: TedtSighting
       object pCapturesRecapturesUnbanded: TPanel
         Left = 0
         Height = 45
-        Top = 762
+        Top = 709
         Width = 436
         Align = alTop
         AutoSize = True
@@ -550,7 +490,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 14
+        TabOrder = 16
         object lblNewCapturesTally: TLabel
           Left = 16
           Height = 15
@@ -915,107 +855,10 @@ object edtSighting: TedtSighting
           OnKeyPress = eIndividualKeyPress
         end
       end
-      object pHowWasRecorded: TPanel
-        Left = 0
-        Height = 87
-        Top = 662
-        Width = 436
-        Align = alTop
-        AutoSize = True
-        BorderSpacing.Top = 13
-        BevelOuter = bvNone
-        ChildSizing.LeftRightSpacing = 16
-        ChildSizing.HorizontalSpacing = 16
-        ChildSizing.VerticalSpacing = 4
-        ChildSizing.EnlargeHorizontal = crsSameSize
-        ChildSizing.ShrinkHorizontal = crsSameSize
-        ChildSizing.Layout = cclLeftToRightThenTopToBottom
-        ChildSizing.ControlsPerLine = 2
-        ClientHeight = 87
-        ClientWidth = 436
-        ParentBackground = False
-        TabOrder = 13
-        object lblHowWasRecorded: TLabel
-          Left = 16
-          Height = 15
-          Top = 3
-          Width = 194
-          BorderSpacing.Top = 3
-          Caption = 'How was recorded:'
-          ParentColor = False
-          ParentFont = False
-        end
-        object lblUseDate1: TLabel
-          Left = 226
-          Height = 15
-          Top = 3
-          Width = 194
-          AutoSize = False
-          BorderSpacing.Top = 3
-          Font.Color = 6579300
-          ParentColor = False
-          ParentFont = False
-        end
-        object ckCaptured: TCheckBox
-          Left = 16
-          Height = 19
-          Top = 22
-          Width = 194
-          Caption = 'Captured'
-          TabOrder = 0
-          OnEnter = ControlEnter
-          OnKeyPress = eDateKeyPress
-          OnKeyDown = FormKeyDown
-        end
-        object ckSeen: TCheckBox
-          Left = 226
-          Height = 19
-          Top = 22
-          Width = 194
-          Caption = 'Seen'
-          TabOrder = 1
-          OnEnter = ControlEnter
-          OnKeyPress = eDateKeyPress
-          OnKeyDown = FormKeyDown
-        end
-        object ckHeard: TCheckBox
-          Left = 16
-          Height = 19
-          Top = 45
-          Width = 194
-          Caption = 'Heard'
-          TabOrder = 2
-          OnEnter = ControlEnter
-          OnKeyPress = eDateKeyPress
-          OnKeyDown = FormKeyDown
-        end
-        object ckPhotographed: TCheckBox
-          Left = 226
-          Height = 19
-          Top = 45
-          Width = 194
-          Caption = 'Photographed'
-          TabOrder = 3
-          OnEnter = ControlEnter
-          OnKeyPress = eDateKeyPress
-          OnKeyDown = FormKeyDown
-        end
-        object ckAudioRecording: TCheckBox
-          Left = 16
-          Height = 19
-          Top = 68
-          Width = 194
-          Caption = 'Recorded audio'
-          TabOrder = 4
-          OnEnter = ControlEnter
-          OnKeyPress = eDateKeyPress
-          OnKeyDown = FormKeyDown
-        end
-      end
       object pMalesFemalesNotSexed: TPanel
         Left = 0
         Height = 45
-        Top = 820
+        Top = 767
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1031,7 +874,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 15
+        TabOrder = 17
         object lblMalesTally: TLabel
           Left = 16
           Height = 15
@@ -1096,7 +939,7 @@ object edtSighting: TedtSighting
       object pAdultsImmaturesNotAged: TPanel
         Left = 0
         Height = 45
-        Top = 878
+        Top = 825
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1112,7 +955,7 @@ object edtSighting: TedtSighting
         ClientHeight = 45
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 16
+        TabOrder = 18
         object lblAdultsTally: TLabel
           Left = 16
           Height = 15
@@ -1176,8 +1019,8 @@ object edtSighting: TedtSighting
       end
       object pInEbirdNotSurveying: TPanel
         Left = 0
-        Height = 42
-        Top = 936
+        Height = 65
+        Top = 883
         Width = 436
         Align = alTop
         AutoSize = True
@@ -1188,10 +1031,10 @@ object edtSighting: TedtSighting
         ChildSizing.VerticalSpacing = 4
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
-        ClientHeight = 42
+        ClientHeight = 65
         ClientWidth = 436
         ParentBackground = False
-        TabOrder = 17
+        TabOrder = 19
         object ckIsInEbird: TCheckBox
           Left = 16
           Height = 19
@@ -1210,6 +1053,17 @@ object edtSighting: TedtSighting
           Width = 131
           Caption = 'Outside the sampling'
           TabOrder = 1
+          OnEnter = ControlEnter
+          OnKeyPress = eDateKeyPress
+          OnKeyDown = FormKeyDown
+        end
+        object ckIsDoubtful: TCheckBox
+          Left = 16
+          Height = 19
+          Top = 46
+          Width = 131
+          Caption = 'Doubtful record'
+          TabOrder = 2
           OnEnter = ControlEnter
           OnKeyPress = eDateKeyPress
           OnKeyDown = FormKeyDown
@@ -1418,6 +1272,186 @@ object edtSighting: TedtSighting
           TabOrder = 0
           OnEnter = ControlEnter
           OnKeyDown = FormKeyDown
+        end
+      end
+      object pDetectionModes: TPanel
+        Left = 0
+        Height = 23
+        Top = 604
+        Width = 436
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 23
+        ClientWidth = 436
+        ParentBackground = False
+        TabOrder = 12
+        object lblDetectionModes: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 404
+          BorderSpacing.Top = 3
+          Caption = 'Detection modes:'
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object pDetectionChips: TChipsPanel
+          Left = 16
+          Height = 1
+          Top = 22
+          Width = 404
+          AutoSize = True
+          BevelOuter = bvNone
+          ControlList = <>
+          FlowLayout = tlTop
+          FlowStyle = fsLeftRightTopBottom
+          TabOrder = 0
+          ColorMode = cmSingleColor
+          MultiSelect = True
+        end
+      end
+      object pEvidences: TPanel
+        Left = 0
+        Height = 23
+        Top = 627
+        Width = 436
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 23
+        ClientWidth = 436
+        ParentBackground = False
+        TabOrder = 13
+        object lblEvidences: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 404
+          BorderSpacing.Top = 3
+          Caption = 'Evidences:'
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object pEvidencesChips: TChipsPanel
+          Left = 16
+          Height = 1
+          Top = 22
+          Width = 404
+          AutoSize = True
+          BevelOuter = bvNone
+          ControlList = <>
+          FlowLayout = tlTop
+          FlowStyle = fsLeftRightTopBottom
+          TabOrder = 0
+          ColorMode = cmSingleColor
+          MultiSelect = True
+        end
+      end
+      object pActivities: TPanel
+        Left = 0
+        Height = 23
+        Top = 673
+        Width = 436
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 23
+        ClientWidth = 436
+        ParentBackground = False
+        TabOrder = 15
+        object lblActivities: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 404
+          BorderSpacing.Top = 3
+          Caption = 'Activities:'
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object pActivitiesChips: TChipsPanel
+          Left = 16
+          Height = 1
+          Top = 22
+          Width = 404
+          AutoSize = True
+          BevelOuter = bvNone
+          ControlList = <>
+          FlowLayout = tlTop
+          FlowStyle = fsLeftRightTopBottom
+          TabOrder = 0
+          ColorMode = cmSingleColor
+          MultiSelect = True
+        end
+      end
+      object pHabitats: TPanel
+        Left = 0
+        Height = 23
+        Top = 650
+        Width = 436
+        Align = alTop
+        AutoSize = True
+        BevelOuter = bvNone
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.HorizontalSpacing = 16
+        ChildSizing.VerticalSpacing = 4
+        ChildSizing.EnlargeHorizontal = crsSameSize
+        ChildSizing.ShrinkHorizontal = crsSameSize
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 1
+        ClientHeight = 23
+        ClientWidth = 436
+        ParentBackground = False
+        TabOrder = 14
+        object lblHabitats: TLabel
+          Left = 16
+          Height = 15
+          Top = 3
+          Width = 404
+          BorderSpacing.Top = 3
+          Caption = 'Habitats:'
+          ParentColor = False
+          ParentFont = False
+          WordWrap = True
+        end
+        object pHabitatsChips: TChipsPanel
+          Left = 16
+          Height = 1
+          Top = 22
+          Width = 404
+          AutoSize = True
+          BevelOuter = bvNone
+          ControlList = <>
+          FlowLayout = tlTop
+          FlowStyle = fsLeftRightTopBottom
+          TabOrder = 0
+          ColorMode = cmSingleColor
+          MultiSelect = True
         end
       end
     end

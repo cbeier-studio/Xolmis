@@ -26,6 +26,7 @@ uses
 
 const
   CHECK_UPDATE_URL: String  = 'http://api.github.com/repos/cbeier-studio/Xolmis/releases/latest';
+  CHECK_RELEASES_URL: String = 'http://api.github.com/repos/cbeier-studio/Xolmis/releases?per_page=10';
   AUTOUPDATE_URL: String       = 'http://github.com/cbeier-studio/Xolmis/releases/latest';
 
 type
@@ -117,11 +118,60 @@ begin
   Result := CompareVersion(NewVersion, CurrentVersion) > 0;
 end;
 
+{ Reads the newest published release tag. Uses releases/latest (stable only) and, when GitHub has no stable
+  release (404), falls back to the releases list, which includes pre-releases. }
+function GetLatestReleaseTag(Client: TFPHTTPClient; out aTag: String): Boolean;
+var
+  Response: TStringStream;
+  Data, Item, Tag: TJSONData;
+  i: Integer;
+begin
+  Result := False;
+  aTag := '';
+  Response := TStringStream.Create('');
+  try
+    Client.HTTPMethod('GET', CHECK_UPDATE_URL, Response, [200, 404]);
+    if Client.ResponseStatusCode = 200 then
+    begin
+      Data := GetJSON(Response.DataString);
+      try
+        Tag := Data.FindPath('tag_name');
+        if Tag <> nil then
+          aTag := Tag.AsString;
+      finally
+        Data.Free;
+      end;
+      Exit(aTag <> '');
+    end;
+
+    Response.Size := 0;
+    Client.HTTPMethod('GET', CHECK_RELEASES_URL, Response, [200]);
+    Data := GetJSON(Response.DataString);
+    try
+      if Data.JSONType = jtArray then
+        for i := 0 to Data.Count - 1 do
+        begin
+          Item := Data.Items[i];
+          if (Item.JSONType <> jtObject) or (TJSONObject(Item).Get('draft', False)) then
+            Continue;
+          Tag := Item.FindPath('tag_name');
+          if (Tag <> nil) and (Tag.AsString <> '') then
+          begin
+            aTag := Tag.AsString;
+            Exit(True);
+          end;
+        end;
+    finally
+      Data.Free;
+    end;
+  finally
+    Response.Free;
+  end;
+end;
+
 function CheckUpdates: TCheckUpdateResponse;
 var
   Client: TFPHTTPClient;
-  Response: TStringStream;
-  Data: TJSONData;
   Versao: String;
   Atual: String;
 begin
@@ -132,7 +182,6 @@ begin
 
   LogEvent(leaStart, 'Check for Xolmis updates');
   Client := TFPHttpClient.Create(nil);
-  Response := TStringStream.Create('');
   try
     if not HasInternetConnection(CHECK_UPDATE_URL) then
     begin
@@ -145,9 +194,12 @@ begin
     { Allow redirections }
     //Client.AllowRedirect := true;
     try
-      Client.Get(CHECK_UPDATE_URL, Response);
-      Data := GetJSON(Response.DataString);
-      Versao := Data.FindPath('tag_name').AsString;
+      if not GetLatestReleaseTag(Client, Versao) then
+      begin
+        Result := ckrNone;
+        LogDebug('No published Xolmis release found while checking updates.');
+        Exit;
+      end;
       Atual := GetBuildInfoAsString;
       if CompareVersion(Versao, Atual) > 0 then
       begin
@@ -169,7 +221,6 @@ begin
     end;
   finally
     Client.Free;
-    Response.Free;
     LogEvent(leaFinish, 'Check for Xolmis updates');
   end;
 end;

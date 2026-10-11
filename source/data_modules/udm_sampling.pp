@@ -253,13 +253,15 @@ type
     qPoisuser_updated: TLongintField;
     qSightings: TSQLQuery;
     qSightingsactive_status: TBooleanField;
+    qSightingsactivities_json: TMemoField;
     qSightingsadults_tally: TStringField;
     qSightingsbreeding_status: TStringField;
     qSightingscoordinate_precision: TStringField;
     qSightingscountry_id: TLongintField;
     qSightingscustom_taxon_name: TStringField;
-    qSightingsdetection_type: TStringField;
+    qSightingsdetection_modes_json: TMemoField;
     qSightingsebird_available: TBooleanField;
+    qSightingsevidences_json: TMemoField;
     qSightingsexported_status: TBooleanField;
     qSightingsfamily_id: TLongintField;
     qSightingsfemales_tally: TStringField;
@@ -267,11 +269,13 @@ type
     qSightingsflight_height: TFloatField;
     qSightingsfull_name: TStringField;
     qSightingsgenus_id: TLongintField;
+    qSightingshabitats_json: TMemoField;
     qSightingsimmatures_tally: TStringField;
     qSightingsinactivated_by: TStringField;
     qSightingsindividual_id: TLongintField;
     qSightingsindividual_name: TStringField;
     qSightingsinsert_date: TDateTimeField;
+    qSightingsis_doubtful: TBooleanField;
     qSightingslatitude: TFloatField;
     qSightingslocality_id: TLongintField;
     qSightingslocality_name: TStringField;
@@ -296,12 +300,7 @@ type
     qSightingsspecies_id: TLongintField;
     qSightingsstate_id: TLongintField;
     qSightingssubjects_tally: TLongintField;
-    qSightingssubject_captured: TBooleanField;
     qSightingssubject_distance: TFloatField;
-    qSightingssubject_heard: TBooleanField;
-    qSightingssubject_photographed: TBooleanField;
-    qSightingssubject_recorded: TBooleanField;
-    qSightingssubject_seen: TBooleanField;
     qSightingssurvey_id: TLongintField;
     qSightingssurvey_name: TStringField;
     qSightingstaxon_formatted_name: TStringField;
@@ -354,6 +353,7 @@ type
     qSurveyscoordinate_precision: TStringField;
     qSurveyscountry_id: TLongintField;
     qSurveyscountry_name: TStringField;
+    qSurveysdiscarded: TBooleanField;
     qSurveysdistance_total: TFloatField;
     qSurveysduration: TLongintField;
     qSurveysend_latitude: TFloatField;
@@ -369,6 +369,7 @@ type
     qSurveyslocality_id: TLongintField;
     qSurveyslocality_name: TStringField;
     qSurveysmarked_status: TBooleanField;
+    qSurveysmax_species: TLongintField;
     qSurveysmethod_id: TLongintField;
     qSurveysmethod_name: TStringField;
     qSurveysmunicipality_id: TLongintField;
@@ -390,6 +391,9 @@ type
     qSurveysstate_name: TStringField;
     qSurveyssurvey_date: TDateField;
     qSurveyssurvey_id: TAutoIncField;
+    qSurveystotal_intervals: TLongintField;
+    qSurveystotal_paused_time: TFloatField;
+    qSurveystransport_mode: TStringField;
     qSurveysupdate_date: TDateTimeField;
     qSurveysuser_inserted: TLongintField;
     qSurveysuser_updated: TLongintField;
@@ -509,6 +513,8 @@ type
     procedure qSurveysBeforePost(DataSet: TDataSet);
     procedure qSurveyscoordinate_precisionGetText(Sender: TField; var aText: string; DisplayText: Boolean);
     procedure qSurveyscoordinate_precisionSetText(Sender: TField; const aText: string);
+    procedure qSurveystransport_modeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+    procedure qSurveystransport_modeSetText(Sender: TField; const aText: string);
     procedure qSurveyTeamAfterCancel(DataSet: TDataSet);
     procedure qSurveyTeamAfterInsert(DataSet: TDataSet);
     procedure qSurveyTeamAfterPost(DataSet: TDataSet);
@@ -1337,6 +1343,59 @@ begin
   else
   if aText = rsReferenceCoordinate then
     Sender.AsString := 'R';
+end;
+
+procedure TDMS.qSurveystransport_modeGetText(Sender: TField; var aText: string; DisplayText: Boolean);
+begin
+  if Sender.AsString = EmptyStr then
+    Exit;
+
+  case Sender.AsString of
+    'NA': aText := rsTransportNotApplicable;
+    'WA': aText := rsTransportWalking;
+    'VC': aText := rsTransportVehicle;
+    'VB': aText := rsTransportVessel;
+    'AC': aText := rsTransportAerial;
+    'BC': aText := rsTransportBicycle;
+    'AH': aText := rsTransportAnimal;
+    'RM': aText := rsTransportRemote;
+    'OT': aText := rsTransportOther;
+  end;
+
+  DisplayText := True;
+end;
+
+procedure TDMS.qSurveystransport_modeSetText(Sender: TField; const aText: string);
+begin
+  if aText = EmptyStr then
+    Exit;
+
+  if aText = rsTransportNotApplicable then
+    Sender.AsString := 'NA'
+  else
+  if aText = rsTransportWalking then
+    Sender.AsString := 'WA'
+  else
+  if aText = rsTransportVehicle then
+    Sender.AsString := 'VC'
+  else
+  if aText = rsTransportVessel then
+    Sender.AsString := 'VB'
+  else
+  if aText = rsTransportAerial then
+    Sender.AsString := 'AC'
+  else
+  if aText = rsTransportBicycle then
+    Sender.AsString := 'BC'
+  else
+  if aText = rsTransportAnimal then
+    Sender.AsString := 'AH'
+  else
+  if aText = rsTransportRemote then
+    Sender.AsString := 'RM'
+  else
+  if aText = rsTransportOther then
+    Sender.AsString := 'OT';
 end;
 
 procedure TDMS.qSurveyTeamAfterCancel(DataSet: TDataSet);

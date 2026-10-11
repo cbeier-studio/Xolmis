@@ -52,12 +52,18 @@ type
     FInventoryId: String;
     FSpeciesName: String;
     FIsOutOfInventory: Boolean;
+    FIsDoubtful: Boolean;
     FCount: Integer;
     FNotes: String;
     FSampleTime: TDateTime;
     FDistance: Double;
     FFlightHeight: Double;
     FFlightDirection: String;
+    FSex: String;
+    FReproductiveStatus: String;
+    FDetectionModes: String;
+    FHabitats: String;
+    FActivities: String;
     FSightingKey: Integer;
     FPoiList: TMobilePoiList;
   public
@@ -124,10 +130,12 @@ type
   public
     FId: String;
     FType: TMobileInventoryType;
+    FTransportMode: TTransportMode;
     FDuration: Integer;
     FMaxSpecies: Integer;
     FStartTime: TDateTime;
     FEndTime: TDateTime;
+    FTotalPausedTime: Double;
     FStartLongitude: Extended;
     FStartLatitude: Extended;
     FEndLongitude: Extended;
@@ -137,6 +145,7 @@ type
     FCurrentInterval: Integer;
     FIntervalsWithoutNewSpecies: Integer;
     FCurrentIntervalSpeciesCount: Integer;
+    FIsDiscarded: Boolean;
     FSurveyKey: Integer;
     FObserver: String;
     FTotalObservers: Integer;
@@ -267,16 +276,16 @@ type
   TMobileSpecimenList = specialize TFPGObjectList<TMobileSpecimen>;
 
 const
-  MOBILE_QUALITATIVE_FREE: String = 'Free';
-  MOBILE_QUALITATIVE_TIMED: String = 'Fixed-Time';
-  MOBILE_QUALITATIVE_INTERVAL: String = 'Interval';
-  MOBILE_MACKINNON_LIST: String = 'Mackinnon';
-  MOBILE_TRANSECT_COUNT: String = 'Line';
-  MOBILE_POINT_COUNT: String = 'Point';
-  MOBILE_BANDING: String = 'Banding';
-  MOBILE_CASUAL: String = 'Casual';
-  MOBILE_DETECTION_TRANSECT: String = 'T-Detection';
-  MOBILE_DETECTION_POINT: String = 'P-Detection';
+  MOBILE_QUALITATIVE_FREE: String = 'free';
+  MOBILE_QUALITATIVE_TIMED: String = 'timed';
+  MOBILE_QUALITATIVE_INTERVAL: String = 'int';
+  MOBILE_MACKINNON_LIST: String = 'mack';
+  MOBILE_TRANSECT_COUNT: String = 'tran';
+  MOBILE_POINT_COUNT: String = 'pc';
+  MOBILE_BANDING: String = 'band';
+  MOBILE_CASUAL: String = 'cas';
+  MOBILE_DETECTION_TRANSECT: String = 'tran-det';
+  MOBILE_DETECTION_POINT: String = 'pc-det';
 
 implementation
 
@@ -336,12 +345,18 @@ begin
   FInventoryId := EmptyStr;
   FSpeciesName := EmptyStr;
   FIsOutOfInventory := False;
+  FIsDoubtful := False;
   FCount := 0;
   FNotes := EmptyStr;
   FSampleTime := NullDateTime;
   FDistance := 0;
   FFlightHeight := 0;
   FFlightDirection := EmptyStr;
+  FSex := EmptyStr;
+  FReproductiveStatus := EmptyStr;
+  FDetectionModes := EmptyStr;
+  FHabitats := EmptyStr;
+  FActivities := EmptyStr;
   FSightingKey := 0;
 
   FPoiList.Clear;
@@ -365,12 +380,19 @@ begin
     FInventoryId := JSONObj.Get('inventoryId', '');
     FSpeciesName := JSONObj.Get('name', '');
     FIsOutOfInventory := JSONObj.Get('isOutOfInventory', 0) = 1;
+    FIsDoubtful := JSONObj.Get('isDoubtful', 0) = 1;
     FCount := JSONObj.Get('count', 0);
     FNotes := JSONObj.Get('notes', '');
     FSampleTime := DartISO8601ToDate(JSONObj.Get('sampleTime', '1500-12-30T00:00:00'));
     FDistance := JSONObj.Get('distance', 0.0);
     FFlightHeight := JSONObj.Get('flightHeight', 0.0);
     FFlightDirection := JSONObj.Get('flightDirection', '');
+    FSex := JSONObj.Get('sex', '');
+    FReproductiveStatus := JSONObj.Get('reproductiveStatus', '');
+    FDetectionModes := JSONObj.Get('detectionModes', '');
+    FHabitats := JSONObj.Get('habitats', '');
+    FActivities := JSONObj.Get('activities', '');
+
     PoiArray := JSONObj.FindPath('pois') as TJSONArray;
     if Assigned(PoiArray) then
       LoadPoiList(PoiArray);
@@ -532,10 +554,12 @@ procedure TMobileInventory.Clear;
 begin
   FId := EmptyStr;
   FType := invQualitativeFree;
+  FTransportMode := tmdWalking;
   FDuration := 0;
   FMaxSpecies := 0;
   FStartTime := NullDateTime;
   FEndTime := NullDateTime;
+  FTotalPausedTime := 0.0;
   FStartLongitude := 0.0;
   FStartLatitude := 0.0;
   FEndLongitude := 0.0;
@@ -544,6 +568,7 @@ begin
   FCurrentInterval := 0;
   FIntervalsWithoutNewSpecies := 0;
   FCurrentIntervalSpeciesCount := 0;
+  FIsDiscarded := False;
   FSurveyKey := 0;
   FObserver := EmptyStr;
   FTotalObservers := 0;
@@ -575,10 +600,12 @@ begin
     FImport := not JSONObj.Get('isDiscarded', False);
     FId := JSONObj.Get('id', '');
     FType := TMobileInventoryType(JSONObj.Get('type', Integer(invQualitativeFree)));
+    FTransportMode := TTransportMode(JSONObj.Get('transportMode', Integer(tmdWalking)));
     FDuration := JSONObj.Get('duration', 0);
     FMaxSpecies := JSONObj.Get('maxSpecies', 0);
     FStartTime := DartISO8601ToDate(JSONObj.Get('startTime', '1500-12-30T00:00:00'));
     FEndTime := DartISO8601ToDate(JSONObj.Get('endTime', '1500-12-30T00:00:00'));
+    FTotalPausedTime := JSONObj.Get('totalPausedTimeInSeconds', 0.0);
     FStartLongitude := JSONObj.Get('startLongitude', 0.0);
     FStartLatitude := JSONObj.Get('startLatitude', 0.0);
     if not (FType in [invPointCount, invPointDetection, invBanding]) then
@@ -591,6 +618,7 @@ begin
     FCurrentInterval := JSONObj.Get('currentInterval', 0);
     FIntervalsWithoutNewSpecies := JSONObj.Get('intervalWithoutNewSpecies', 0);
     FCurrentIntervalSpeciesCount := JSONObj.Get('currentIntervalSpeciesCount', 0);
+    FIsDiscarded := JSONObj.Get('isDiscarded', False);
     FTotalObservers := JSONObj.Get('totalObservers', 1);
     FObserver := JSONObj.Get('observer', '');
 
@@ -690,11 +718,13 @@ begin
     invPointDetection:
       aSurvey.MethodId := GetMethodKey(MOBILE_DETECTION_POINT);
   end;
+  aSurvey.TransportMode := FTransportMode;
   //aSurvey.Duration := FDuration;
   aSurvey.SurveyDate := FStartTime;
   aSurvey.StartTime := FStartTime;
   aSurvey.EndTime := FEndTime;
   aSurvey.Duration := MinutesBetween(FStartTime, FEndTime);
+  aSurvey.MaxSpecies := FMaxSpecies;
   aSurvey.StartLongitude := FStartLongitude;
   aSurvey.StartLatitude := FStartLatitude;
   if (FStartLongitude <> 0) and (FStartLatitude <> 0) then
@@ -703,6 +733,8 @@ begin
   aSurvey.EndLatitude := FEndLatitude;
   aSurvey.LocalityId := GetSiteKey(FLocalityName);
   aSurvey.ObserversTally := FTotalObservers;
+  aSurvey.TotalPausedTime := FTotalPausedTime;
+  aSurvey.TotalIntervals := FCurrentInterval;
   aSurvey.Notes := FNotes;
 end;
 
