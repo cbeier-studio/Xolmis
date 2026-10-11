@@ -3501,9 +3501,9 @@ begin
       FindDlg(tbBands, InplaceEditor, DataSource.DataSet, COL_REMOVED_BAND_ID, COL_REMOVED_BAND_NAME, False);
 
     // Open detection dialog
-    if FieldName = COL_DETECTION_TYPE then
-      DetectionDialog(DataSource.DataSet.FieldByName(COL_DETECTION_TYPE).AsString,
-        DataSource.DataSet, COL_DETECTION_TYPE);
+    if FieldName = COL_DETECTION_MODES then
+      MultiChipsDialog(cdtDetectionModes, DataSource.DataSet, COL_DETECTION_MODES,
+        DataSource.DataSet.FieldByName(COL_DETECTION_TYPE).AsString);
     // Open breeding and behavior dialog
     if FieldName = COL_BREEDING_STATUS then
       BreedingDialog(DataSource.DataSet.FieldByName(COL_BREEDING_STATUS).AsString,
@@ -4177,22 +4177,22 @@ var
 begin
   if JsonText = '' then Exit;
 
-  if Selected then
-  begin
-    BgColor := clHighlight;
-    FontColor := clHighlightText;
-  end
-  else
-  if IsDarkModeEnabled then
-  begin
-    BgColor := $505050;
-    FontColor := clWhite;
-  end
-  else
-  begin
-    BgColor := $00E6E6E6;
-    FontColor := clBlack;
-  end;
+  //if Selected then
+  //begin
+  //  BgColor := clHighlight;
+  //  FontColor := clHighlightText;
+  //end
+  //else
+  //if IsDarkModeEnabled then
+  //begin
+    BgColor := ActiveTheme.Categorical.Jacaranda.Background;
+    FontColor := ActiveTheme.Categorical.Jacaranda.Foreground;
+  //end
+  //else
+  //begin
+  //  BgColor := $00E6E6E6;
+  //  FontColor := clBlack;
+  //end;
 
   Arr := GetJSON(JsonText) as TJSONArray;
   try
@@ -4235,8 +4235,8 @@ begin
       begin
         TagRect := Rect(X, Y, X + TagWidth, ARect.Bottom - 2);
 
-        ACanvas.Brush.Color := $00909090;
-        ACanvas.Pen.Color := $00909090;
+        ACanvas.Brush.Color := BgColor;
+        ACanvas.Pen.Color := BgColor;
 
         ACanvas.RoundRect(TagRect.Left, TagRect.Top, TagRect.Right, TagRect.Bottom, 8, 8);
 

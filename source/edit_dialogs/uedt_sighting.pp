@@ -681,13 +681,6 @@ begin
   pSurvey.Visible := FSurveyId = 0;
   pIndividual.Visible := FIndividualId = 0;
 
-  pObserverChips.BeginUpdate;
-  pDetectionChips.BeginUpdate;
-  pEvidencesChips.BeginUpdate;
-  pHabitatsChips.BeginUpdate;
-  pActivitiesChips.BeginUpdate;
-  try
-
   with cbCoordinatePrecision.Items do
   begin
     Add(rsExactCoordinate);
@@ -695,116 +688,130 @@ begin
     Add(rsReferenceCoordinate);
   end;
 
-  with pDetectionChips do
-  begin
-    AddChip(rsDetectionVisual, 'visual');
-    AddChip(rsDetectionSong, 'song');
-    AddChip(rsDetectionCall, 'call');
-    AddChip(rsDetectionWingFlapping, 'wing_flapping');
-    AddChip(rsDetectionDrumming, 'drumming');
-    AddChip(rsDetectionCapture, 'capture');
-    AddChip(rsDetectionRemote, 'remote');
-    AddChip(rsDetectionTrack, 'track');
-    AddChip(rsDetectionOther, 'other');
-  end;
+  pObserverChips.BeginUpdate;
+  pDetectionChips.BeginUpdate;
+  pEvidencesChips.BeginUpdate;
+  pHabitatsChips.BeginUpdate;
+  pActivitiesChips.BeginUpdate;
+  try
+    pDetectionChips.SingleChipColorDark := ActiveTheme.Categorical.Jacaranda.Background;
+    pDetectionChips.SingleChipColorLight := ActiveTheme.Categorical.Jacaranda.Background;
+    with pDetectionChips do
+    begin
+      AddChip(rsDetectionVisual, 'visual');
+      AddChip(rsDetectionSong, 'song');
+      AddChip(rsDetectionCall, 'call');
+      AddChip(rsDetectionWingFlapping, 'wing_flapping');
+      AddChip(rsDetectionDrumming, 'drumming');
+      AddChip(rsDetectionCapture, 'capture');
+      AddChip(rsDetectionRemote, 'remote');
+      AddChip(rsDetectionTrack, 'track');
+      AddChip(rsDetectionOther, 'other');
+    end;
 
-  with pEvidencesChips do
-  begin
-    AddChip(rsEvidencePhoto, 'photo');
-    AddChip(rsEvidenceAudio, 'audio');
-    AddChip(rsEvidenceVideo, 'video');
-    AddChip(rsEvidenceCapture, 'capture');
-    AddChip(rsEvidenceSample, 'sample');
-    AddChip(rsEvidenceOther, 'other');
-  end;
+    pEvidencesChips.SingleChipColorDark := ActiveTheme.Categorical.Jacaranda.Background;
+    pEvidencesChips.SingleChipColorLight := ActiveTheme.Categorical.Jacaranda.Background;
+    with pEvidencesChips do
+    begin
+      AddChip(rsEvidencePhoto, 'photo');
+      AddChip(rsEvidenceAudio, 'audio');
+      AddChip(rsEvidenceVideo, 'video');
+      AddChip(rsEvidenceCapture, 'capture');
+      AddChip(rsEvidenceSample, 'sample');
+      AddChip(rsEvidenceOther, 'other');
+    end;
 
-  with pHabitatsChips do
-  begin
-    AddChip(rsHabitatForest, 'forest');
-    AddChip(rsHabitatWoods, 'woods');
-    AddChip(rsHabitatSavanna, 'savanna');
-    AddChip(rsHabitatShrubs, 'shrubs');
-    AddChip(rsHabitatGrassland, 'grassland');
-    AddChip(rsHabitatWetland, 'wetland');
-    AddChip(rsHabitatCoastal, 'coastal');
-    AddChip(rsHabitatMarine, 'marine');
-    AddChip(rsHabitatMangrove, 'mangrove');
-    AddChip(rsHabitatFreshwater, 'freshwater');
-    AddChip(rsHabitatCropland, 'cropland');
-    AddChip(rsHabitatUrban, 'urban');
-    AddChip(rsHabitatRocky, 'rocky');
-    AddChip(rsHabitatDesert, 'desert');
-    AddChip(rsHabitatOther, 'other');
-  end;
+    pHabitatsChips.SingleChipColorDark := ActiveTheme.Categorical.Jacaranda.Background;
+    pHabitatsChips.SingleChipColorLight := ActiveTheme.Categorical.Jacaranda.Background;
+    with pHabitatsChips do
+    begin
+      AddChip(rsHabitatForest, 'forest');
+      AddChip(rsHabitatWoods, 'woods');
+      AddChip(rsHabitatSavanna, 'savanna');
+      AddChip(rsHabitatShrubs, 'shrubs');
+      AddChip(rsHabitatGrassland, 'grassland');
+      AddChip(rsHabitatWetland, 'wetland');
+      AddChip(rsHabitatCoastal, 'coastal');
+      AddChip(rsHabitatMarine, 'marine');
+      AddChip(rsHabitatMangrove, 'mangrove');
+      AddChip(rsHabitatFreshwater, 'freshwater');
+      AddChip(rsHabitatCropland, 'cropland');
+      AddChip(rsHabitatUrban, 'urban');
+      AddChip(rsHabitatRocky, 'rocky');
+      AddChip(rsHabitatDesert, 'desert');
+      AddChip(rsHabitatOther, 'other');
+    end;
 
-  with pActivitiesChips do
-  begin
-    AddChip(rsActivityResting, 'resting');
-    AddChip(rsActivityFeeding, 'feeding');
-    AddChip(rsActivityPreening, 'preening');
-    AddChip(rsActivityFlying, 'flying');
-    AddChip(rsActivityWalking, 'walking');
-    AddChip(rsActivitySwimming, 'swimming');
-    AddChip(rsActivityVocalizing, 'vocalizing');
-    AddChip(rsActivitySocial, 'social');
-    AddChip(rsActivityCourtship, 'courtship');
-    AddChip(rsActivityNestBuilding, 'nesting');
-    AddChip(rsActivityIncubationBroodCare, 'brooding');
-    AddChip(rsActivityTerritorial, 'territorial');
-    AddChip(rsActivityVigilance, 'vigilance');
-    AddChip(rsActivityPredatorAvoidance, 'predator');
-    AddChip(rsActivityOther, 'other');
-  end;
+    pActivitiesChips.SingleChipColorDark := ActiveTheme.Categorical.Jacaranda.Background;
+    pActivitiesChips.SingleChipColorLight := ActiveTheme.Categorical.Jacaranda.Background;
+    with pActivitiesChips do
+    begin
+      AddChip(rsActivityResting, 'resting');
+      AddChip(rsActivityFeeding, 'feeding');
+      AddChip(rsActivityPreening, 'preening');
+      AddChip(rsActivityFlying, 'flying');
+      AddChip(rsActivityWalking, 'walking');
+      AddChip(rsActivitySwimming, 'swimming');
+      AddChip(rsActivityVocalizing, 'vocalizing');
+      AddChip(rsActivitySocial, 'social');
+      AddChip(rsActivityCourtship, 'courtship');
+      AddChip(rsActivityNestBuilding, 'nesting');
+      AddChip(rsActivityIncubationBroodCare, 'brooding');
+      AddChip(rsActivityTerritorial, 'territorial');
+      AddChip(rsActivityVigilance, 'vigilance');
+      AddChip(rsActivityPredatorAvoidance, 'predator');
+      AddChip(rsActivityOther, 'other');
+    end;
 
-  if FIsNew then
-  begin
-    Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSighting)]);
-    if not DateIsNull(FSighting.SightingDate) then
-      eDate.Text := DateToStr(FSighting.SightingDate)
+    if FIsNew then
+    begin
+      Caption := Format(rsTitleNew, [AnsiLowerCase(rsCaptionSighting)]);
+      if not DateIsNull(FSighting.SightingDate) then
+        eDate.Text := DateToStr(FSighting.SightingDate)
+      else
+        eDate.Text := DateToStr(Today);
+      if FSighting.MethodId > 0 then
+      begin
+        FMethodId := FSighting.MethodId;
+        eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
+      end;
+      if FSighting.LocalityId > 0 then
+      begin
+        FLocalityId := FSighting.LocalityId;
+        eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      end;
+      if FSighting.TaxonId > 0 then
+      begin
+        FTaxonId := FSighting.TaxonId;
+        eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
+      end;
+
+      if (FSighting.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
+      begin
+        FSighting.LocalityId := xSettings.LastLocalityId;
+        FLocalityId := FSighting.LocalityId;
+        eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
+      end;
+      if (FObserverId = 0) and (xSettings.RememberCollectionInfo) then
+      begin
+        //FObserverId := xSettings.LastObserverId;
+        FObserverId := xSettings.LastObserverId;
+        //FObserverId := FSighting.ObserverId;
+        //eObserver.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
+      end;
+      if (FSighting.MethodId = 0) and (xSettings.RememberCollectionInfo) then
+      begin
+        FSighting.MethodId := xSettings.LastMethodId;
+        FMethodId := FSighting.MethodId;
+        eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
+      end;
+    end
     else
-      eDate.Text := DateToStr(Today);
-    if FSighting.MethodId > 0 then
     begin
-      FMethodId := FSighting.MethodId;
-      eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
+      Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSighting)]);
+      GetRecord;
+      sbSave.Enabled := IsRequiredFilled;
     end;
-    if FSighting.LocalityId > 0 then
-    begin
-      FLocalityId := FSighting.LocalityId;
-      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
-    end;
-    if FSighting.TaxonId > 0 then
-    begin
-      FTaxonId := FSighting.TaxonId;
-      eTaxon.Text := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, FTaxonId);
-    end;
-
-    if (FSighting.LocalityId = 0) and (xSettings.RememberCollectionInfo) then
-    begin
-      FSighting.LocalityId := xSettings.LastLocalityId;
-      FLocalityId := FSighting.LocalityId;
-      eLocality.Text := GetName(TBL_GAZETTEER, COL_FULL_NAME, COL_SITE_ID, FLocalityId);
-    end;
-    if (FObserverId = 0) and (xSettings.RememberCollectionInfo) then
-    begin
-      //FObserverId := xSettings.LastObserverId;
-      FObserverId := xSettings.LastObserverId;
-      //FObserverId := FSighting.ObserverId;
-      //eObserver.Text := GetName(TBL_PEOPLE, COL_ABBREVIATION, COL_PERSON_ID, FObserverId);
-    end;
-    if (FSighting.MethodId = 0) and (xSettings.RememberCollectionInfo) then
-    begin
-      FSighting.MethodId := xSettings.LastMethodId;
-      FMethodId := FSighting.MethodId;
-      eMethod.Text := GetName(TBL_METHODS, COL_METHOD_NAME, COL_METHOD_ID, FMethodId);
-    end;
-  end
-  else
-  begin
-    Caption := Format(rsTitleEditing, [AnsiLowerCase(rsCaptionSighting)]);
-    GetRecord;
-    sbSave.Enabled := IsRequiredFilled;
-  end;
   finally
     pObserverChips.EndUpdate;
     pDetectionChips.EndUpdate;

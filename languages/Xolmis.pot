@@ -529,6 +529,7 @@ msgid "Description"
 msgstr ""
 
 #: data_columns.rscdetectionmodes
+msgctxt "data_columns.rscdetectionmodes"
 msgid "Detection modes"
 msgstr ""
 
@@ -13936,21 +13937,6 @@ msgctxt "tlstcyclecode.sbok.caption"
 msgid "Apply"
 msgstr ""
 
-#: tlstdetectiontype.caption
-msgctxt "tlstdetectiontype.caption"
-msgid "Detection type"
-msgstr ""
-
-#: tlstdetectiontype.sbcancel.caption
-msgctxt "tlstdetectiontype.sbcancel.caption"
-msgid "Cancel"
-msgstr ""
-
-#: tlstdetectiontype.sbok.caption
-msgctxt "tlstdetectiontype.sbok.caption"
-msgid "Apply"
-msgstr ""
-
 #: tlsthowsexedaged.caption
 msgid "How sexed/aged"
 msgstr ""
@@ -13977,6 +13963,26 @@ msgstr ""
 
 #: tlstmoltlimits.sbok.caption
 msgctxt "tlstmoltlimits.sbok.caption"
+msgid "Apply"
+msgstr ""
+
+#: tlstmultichips.caption
+msgctxt "tlstmultichips.caption"
+msgid "Detection modes"
+msgstr ""
+
+#: tlstmultichips.lblchips.caption
+msgctxt "tlstmultichips.lblchips.caption"
+msgid "Select the options that apply to this record:"
+msgstr ""
+
+#: tlstmultichips.sbcancel.caption
+msgctxt "tlstmultichips.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tlstmultichips.sbok.caption
+msgctxt "tlstmultichips.sbok.caption"
 msgid "Apply"
 msgstr ""
 

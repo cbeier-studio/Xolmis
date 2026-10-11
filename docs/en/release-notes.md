@@ -2,6 +2,21 @@
 
 This section documents the changes, new features, and improvements introduced in each version of **Xolmis**. Release notes help users understand what has been added, modified, or planned for future updates.
 
+## [Unreleased]
+
+### New features
+
+- News fields in Methods, Surveys, and Sightings.
+
+### Enhancements
+
+- Added links to Xolmis website.
+- Revised pre-loaded Methods to reduce ambiguity and confusion.
+
+### Removed
+
+- Ambiguous fields removed from Sightings.
+
 ## v0.1.0 (2026-09-19)
 
 Initial release of Xolmis.

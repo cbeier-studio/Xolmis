@@ -9,12 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added new fields to Methods: allows species repetition, has time limit, has species limit, requires spatial data, and allows transport mode.
+- Added new fields to Surveys: transport mode, total paused time, total intervals, species limit, and discarded.
+- Added new fields to Sightings: detection modes, evidences, habitats, activities, and doubtful record. 
 - Database documentation in HTML using `database.dbml` file.
 
 ### Changed
 
+- Dialog for multi selection now uses `TChipsPanel`.
+- Revised the pre-loaded Methods to reduce ambiguity and confusion.
 - Updated links to Xolmis website.
 - Updated **Countries States Cities Database** to v3.2-export.8.
+
+### Removed
+
+- Removed fields from Sightings: captured, seen, heard, photographed, recorded, and detection types.
 
 ## [0.1.0] - 2026-09-19
 

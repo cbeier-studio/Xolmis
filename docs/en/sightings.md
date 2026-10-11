@@ -23,14 +23,12 @@ When creating or editing a sighting record, the following fields are available:
 | **Individual** |  | Specific individual sighted (if already registered) |
 | **Quantity** |  | Number of individuals sighted |
 | **Distance** |  | Distance from the transect or observer, in meters |
-| **Detection type** |  | How the bird was detected (see below) |
 | **Breeding/behavior code** |  | [eBird breeding and behavior code](https://support.ebird.org/en/support/solutions/articles/48000837520-ebird-breeding-and-behavior-codes#anchorDefinitions) |
 | **Mackinnon list number** |  | Mackinnon list in which the sighting is included |
-| **Captured** |  | Check if the bird/taxon was captured |
-| **Seen** |  | Check if the bird/taxon was seen |
-| **Heard** |  | Check if the bird/taxon was heard |
-| **Photographed** |  | Check if the bird/taxon was photographed |
-| **Audio recorded** |  | Check if the bird/taxon was recorded in audio |
+| **Detection modes** |  | How the bird was detected |
+| **Evidences** |  | Documental proofs of the record |
+| **Habitats** |  | In which habitats the bird was found |
+| **Activities** |  | Observed behaviors |
 | **Nr. of new captures** |  | Number of birds captured for the first time |
 | **Nr. of recaptures** |  | Number of birds captured again |
 | **Nr. of unbanded** |  | Number of birds captured without bands |
@@ -40,8 +38,9 @@ When creating or editing a sighting record, the following fields are available:
 | **Nr. of adults** |  | Number of adults observed |
 | **Nr. of immatures** |  | Number of immatures or juveniles observed |
 | **Nr. of birds not aged** |  | Number of birds whose age could not be determined |
-| **Record is on eBird** |  | Check if the sighting is also recorded on eBird |
-| **Out of sample** |  | Check if the sighting was made outside regular sampling effort |
+| **Record is on eBird** |  | Check it if the sighting is also recorded on eBird |
+| **Out of sample** |  | Check it if the sighting was made outside regular sampling effort |
+| **Doubtful record** |  | Check it if the record could be dubious |
 | **Notes** |  | Any additional information about the sighting |
 
 ## Detection types

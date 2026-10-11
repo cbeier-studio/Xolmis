@@ -178,7 +178,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="533"/>
+      <BuildNr Value="536"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -845,9 +845,9 @@
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
-        <Filename Value="dialogs\ulst_detectiontype.pp"/>
+        <Filename Value="dialogs\ulst_multichips.pp"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="lstDetectionType"/>
+        <ComponentName Value="lstMultiChips"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>

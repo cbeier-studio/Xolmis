@@ -16,6 +16,7 @@ Ao criar ou editar um registro de amostragem, os seguintes campos estão dispon�
 | **Hora inicial** |  | Hora em que a amostragem começou |
 | **Hora final** |  | Hora em que a amostragem terminou |
 | **Método** | Sim | Método de amostragem utilizado (contagem por ponto, transecto, rede de neblina etc.) |
+| **Meio de locomoção** |  | Como o observador se moveu durante a amostragem (se aplicável) |
 | **Localidade** | Sim | Localidade onde ocorreu a amostragem (vinculada ao Gazetteer) |
 | **Estação de rede de neblina** |  | Estação usada se o método foi anilhamento |
 | **Projeto** |  | Projeto ao qual o levantamento está associado |
@@ -26,10 +27,14 @@ Ao criar ou editar um registro de amostragem, os seguintes campos estão dispon�
 | **Precisão da coordenada** |  | Acurácia das coordenadas geográficas |
 | **Número de observadores** |  | Número de observadores ou anilhadores participantes |
 | **Identificador da amostra** |  | Identificador para ponto, transecto, lista etc. |
+| **Limite de espécies** |  | Número máximo de espécies em uma lista de Mackinnon |
 | **Área** |  | Área total amostrada, em hectares |
 | **Distância** |  | Distância total amostrada, em quilômetros |
 | **Número de redes de neblina** |  | Número total de redes de neblina utilizadas |
 | **Esforço de redes de neblina** |  | Esforço total de captura usando redes de neblina (calculado automaticamente) |
+| **Tempo total pausado** |  | Tempo sem amostrar durante a amostragem (para compatibilidade com Xolmis Mobile) |
+| **Total de intervalos** |  | Número de intervalos de tempo amostrados (Lista Qualitativa por Intervalos) |
+| **Descartado** |  | Marque se a amostragem deve ser desconsiderada, mas mantida como histórico |
 | **Descrição do ambiente** |  | Breve descrição do entorno |
 | **Horários de checagem das redes** |  | Horários de cada checagem das redes de neblina |
 | **Notas** |  | Qualquer informação adicional sobre o levantamento |

@@ -1,0 +1,117 @@
+object lstMultiChips: TlstMultiChips
+  Left = 352
+  Height = 263
+  Top = 33
+  Width = 354
+  AutoSize = True
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Detection modes'
+  ClientHeight = 263
+  ClientWidth = 354
+  Constraints.MinWidth = 354
+  PopupMode = pmAuto
+  Position = poScreenCenter
+  LCLVersion = '4.8.0.0'
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  object pBottom: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = lineBottom
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 0
+    Height = 41
+    Top = 107
+    Width = 354
+    Anchors = [akTop, akLeft, akRight]
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 41
+    ClientWidth = 354
+    TabOrder = 0
+    object sbOK: TBitBtn
+      Left = 16
+      Height = 25
+      Top = 8
+      Width = 157
+      Caption = 'Apply'
+      Font.Name = 'Segoe UI Semibold'
+      ParentFont = False
+      TabOrder = 0
+      OnClick = sbOKClick
+    end
+    object sbCancel: TBitBtn
+      Left = 181
+      Height = 25
+      Top = 8
+      Width = 157
+      Caption = 'Cancel'
+      TabOrder = 1
+      OnClick = sbCancelClick
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = pChips
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 0
+    Height = 2
+    Top = 105
+    Width = 354
+    Anchors = [akTop, akLeft, akRight]
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pChips: TChipsPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = lblChips
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 8
+    Height = 50
+    Top = 39
+    Width = 338
+    Anchors = [akTop, akLeft, akRight]
+    BevelOuter = bvNone
+    BorderSpacing.Left = 8
+    BorderSpacing.Top = 8
+    BorderSpacing.Right = 8
+    BorderSpacing.Bottom = 16
+    ControlList = <>
+    FlowLayout = tlTop
+    FlowStyle = fsLeftRightTopBottom
+    TabOrder = 1
+    ColorMode = cmSingleColor
+    MultiSelect = True
+  end
+  object lblChips: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 16
+    Height = 15
+    Top = 16
+    Width = 322
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 16
+    BorderSpacing.Top = 16
+    BorderSpacing.Right = 16
+    Caption = 'Select the options that apply to this record:'
+    WordWrap = True
+  end
+end

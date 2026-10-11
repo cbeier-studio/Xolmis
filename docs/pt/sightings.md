@@ -11,7 +11,7 @@ Ao criar ou editar um registro de observação, os seguintes campos estão dispo
 | Campo | Obrigatório | Descrição |
 | --- | --- | --- |
 | **Amostragem** |  | Levantamento ao qual a observação está vinculada |
-| **Observador** |  | Observador selecionado da tabela de Pesquisadores |
+| **Observador** |  | Observadores selecionados da tabela de Pesquisadores |
 | **Método** | Sim | Método usado quando a ave foi observada (ex.: contagem por ponto, transecto, rede de neblina) |
 | **Localidade** | Sim | Local onde a ave foi observada (vinculado ao Gazetteer) |
 | **Longitude** |  | Coordenada de longitude da observação |
@@ -23,14 +23,12 @@ Ao criar ou editar um registro de observação, os seguintes campos estão dispo
 | **Indivíduo** |  | Indivíduo específico observado (se já registrado) |
 | **Quantidade** |  | Número de indivíduos observados |
 | **Distância** |  | Distância do transecto ou observador, em metros |
-| **Tipo de detecção** |  | Como a ave foi detectada (ver abaixo) |
 | **Código de reprodução/comportamento** |  | [Código de reprodução e comportamento do eBird](https://support.ebird.org/en/support/solutions/articles/48000837520-ebird-breeding-and-behavior-codes#anchorDefinitions) |
 | **Número da lista Mackinnon** |  | Lista Mackinnon na qual a observação está incluída |
-| **Capturada** |  | Marque se a ave/táxon foi capturado |
-| **Vista** |  | Marque se a ave/táxon foi vista |
-| **Ouvida** |  | Marque se a ave/táxon foi ouvida |
-| **Fotografada** |  | Marque se a ave/táxon foi fotografada |
-| **Gravação de áudio** |  | Marque se a ave/táxon foi registrada em áudio |
+| **Modos de detecção** |  | Como a ave foi detectada |
+| **Evidências** |  | Provas documentais do registro |
+| **Ambientes** |  | Em quais ambientes a ave foi encontrada |
+| **Atividades** |  | Comportamentos observados |
 | **Nº de novas capturas** |  | Número de aves capturadas pela primeira vez |
 | **Nº de recapturas** |  | Número de aves recapturadas |
 | **Nº de não anilhadas** |  | Número de aves capturadas sem anilhas |
@@ -42,20 +40,8 @@ Ao criar ou editar um registro de observação, os seguintes campos estão dispo
 | **Nº de aves não envelhecidas** |  | Número de aves cuja idade não pôde ser determinada |
 | **Registro está no eBird** |  | Marque se a observação também está registrada no eBird |
 | **Fora da amostra** |  | Marque se a observação foi feita fora do esforço regular de amostragem |
+| **Registro duvidoso** |  | Marque se o registro pode não ser confiável |
 | **Notas** |  | Qualquer informação adicional sobre a observação |
-
-## Tipos de detecção
-
-Os tipos de detecção descrevem **como a ave foi detectada** durante a observação:
-
-- **S** – Canto  
-- **C** – Chamado  
-- **V** – Vista  
-- **W** – Bater de asas  
-- **D** – Tamborilar  
-- **F** – Em voo  
-
-Esses códigos ajudam a padronizar as observações e torná-las comparáveis entre levantamentos.
 
 ## Boas práticas
 

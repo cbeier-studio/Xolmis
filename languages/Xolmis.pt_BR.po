@@ -531,6 +531,7 @@ msgid "Description"
 msgstr "Descrição"
 
 #: data_columns.rscdetectionmodes
+msgctxt "data_columns.rscdetectionmodes"
 msgid "Detection modes"
 msgstr "Modos de detecção"
 
@@ -13925,21 +13926,6 @@ msgctxt "tlstcyclecode.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
 
-#: tlstdetectiontype.caption
-msgctxt "tlstdetectiontype.caption"
-msgid "Detection type"
-msgstr "Tipo de detecção"
-
-#: tlstdetectiontype.sbcancel.caption
-msgctxt "tlstdetectiontype.sbcancel.caption"
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: tlstdetectiontype.sbok.caption
-msgctxt "tlstdetectiontype.sbok.caption"
-msgid "Apply"
-msgstr "Aplicar"
-
 #: tlsthowsexedaged.caption
 msgid "How sexed/aged"
 msgstr "Como foi sexado/etariado"
@@ -13966,6 +13952,26 @@ msgstr "Cancelar"
 
 #: tlstmoltlimits.sbok.caption
 msgctxt "tlstmoltlimits.sbok.caption"
+msgid "Apply"
+msgstr "Aplicar"
+
+#: tlstmultichips.caption
+msgctxt "tlstmultichips.caption"
+msgid "Detection modes"
+msgstr "Modos de detecção"
+
+#: tlstmultichips.lblchips.caption
+msgctxt "tlstmultichips.lblchips.caption"
+msgid "Select the options that apply to this record:"
+msgstr "Selecione as opções que se aplicam a este registro:"
+
+#: tlstmultichips.sbcancel.caption
+msgctxt "tlstmultichips.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tlstmultichips.sbok.caption
+msgctxt "tlstmultichips.sbok.caption"
 msgid "Apply"
 msgstr "Aplicar"
 

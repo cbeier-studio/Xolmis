@@ -16,6 +16,7 @@ When creating or editing a survey record, the following fields are available:
 | **Starting time** |  | Time when the sampling started |
 | **Ending time** |  | Time when the sampling ended |
 | **Method** | Yes | Sampling method used (point count, transect, mist netting, etc.) |
+| **Transport mode** |  | How the observer moved during sampling (if applicable) |
 | **Locality** | Yes | Locality where the sampling occurred (linked to Gazetteer) |
 | **Mist net station** |  | Station used if the method was banding |
 | **Project** |  | Project to which the survey is associated |
@@ -26,10 +27,14 @@ When creating or editing a survey record, the following fields are available:
 | **Coordinates precision** |  | Accuracy of the geographical coordinates |
 | **Number of observers** |  | Number of observers or banders participating |
 | **Sample identifier** |  | Identifier for point, transect, list, etc. |
+| **Species limit** |  | Maximum number of species in a Mackinnon list |
 | **Area** |  | Total area sampled, in hectares |
 | **Distance** |  | Total distance sampled, in kilometers |
 | **Number of mist nets** |  | Total number of mist nets used |
 | **Mist net effort** |  | Total capture effort using mist nets (calculated automatically) |
+| **Total paused time** |  | Time not sampling during survey (for compatibility with Xolmis Mobile) |
+| **Total intervals** |  | Number of time intervals sampled (Interval Qualitative List) |
+| **Discarded** |  | Check it if the survey must be ignored, but kept for sampling history |
 | **Environment description** |  | Brief description of the surroundings |
 | **Mist net checking times** |  | Times of each mist net checking event |
 | **Notes** |  | Any additional information about the survey |

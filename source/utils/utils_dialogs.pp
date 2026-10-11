@@ -21,13 +21,15 @@ unit utils_dialogs;
 interface
 
 uses
-  Classes, SysUtils, Controls, StdCtrls, Dialogs, DB, RegExpr, EditBtn;
+  Classes, SysUtils, Controls, StdCtrls, Dialogs, DB, RegExpr, Grids, EditBtn;
 
 type
   TBigTipType = (obtDeleteRecord, obtAddMedia, obtSummary, obtGridSettings, obtQuickExport, obtMap, obtNewBatchBands,
     obtTransferBands, obtBands, obtFeathers, obtNewBatchNets, obtProjects, obtGazetteer, obtBotanicalTaxa, obtTaxa,
     obtCoordinatesConverter, obtGeoAssist, obtQuickEntry, obtUsers, obtImportWizard, obtImportMobile, obtImportEbird,
     obtDarkMode, obtCaptureOutliers, obtAutomaticBackup, obtClearDeletedRecords, obtSearch, obtFeedback, obtNewDatabase);
+
+  TMultiSelectionDataType = (cdtDetectionModes, cdtEvidences, cdtHabitats, cdtActivities);
 
   function MsgDlg(aTitle, aText: String; aType: TMsgDlgType): Boolean;
   function QueryDlg(aTitle, aText, aInitialQuery: String; var aResultQuery: String): Boolean;
@@ -56,8 +58,8 @@ type
   function HowAgedDialog(aHowAged: String; aDataset: TDataset; aCampo: String): Boolean; overload;
   function MoltCycleDialog(aCycle: String; aDataset: TDataset; aCampo: String): Boolean; overload;
   function MoltCycleDialog(aEdit: TEditButton): Boolean; overload;
-  function DetectionDialog(aDetect: String; aDataset: TDataset; aCampo: String): Boolean; overload;
-  function DetectionDialog(aEdit: TEditButton): Boolean; overload;
+  function MultiChipsDialog(aType: TMultiSelectionDataType; aDataset: TDataset; aCampo: String; aInitialValue: String = ''): Boolean; overload;
+  function MultiChipsDialog(aType: TMultiSelectionDataType; aControl: TControl; aInitialValue: String): Boolean; overload;
   function BreedingDialog(aBreeding: String; aDataset: TDataset; aCampo: String): Boolean; overload;
   function BreedingDialog(aEdit: TEditButton): Boolean; overload;
 
@@ -71,7 +73,7 @@ uses
   utils_locale, utils_global, data_types, data_management, models_sampling, udm_main, models_record_types,
   udlg_find, udlg_validate, udlg_plantminer, udlg_authorship, udlg_export, udlg_bigtip, udlg_markdown,
   udlg_calendar, udlg_colorbands, ulst_cyclecode, ulst_moltlimits, ulst_howsexedaged,
-  ulst_detectiontype, ulst_breedingstatus;
+  ulst_breedingstatus, ulst_multichips;
 
 function MsgDlg(aTitle, aText: String; aType: TMsgDlgType): Boolean;
 begin
@@ -548,14 +550,15 @@ begin
   end;
 end;
 
-function DetectionDialog(aDetect: String; aDataset: TDataset; aCampo: String): Boolean;
+function MultiChipsDialog(aType: TMultiSelectionDataType; aDataset: TDataset; aCampo: String; aInitialValue: String): Boolean;
 begin
   Result := False;
-  LogEvent(leaOpen, 'Detection code list');
-  lstDetectionType := TlstDetectionType.Create(nil);
-  with lstDetectionType do
+  LogEvent(leaOpen, 'Multi selecion chips list');
+  lstMultiChips := TlstMultiChips.Create(nil);
+  with lstMultiChips do
   try
-    JsonString := aDetect;
+    DialogDataType := aType;
+    JsonString := aInitialValue;
     // GetFormPosition(aEdit, WindowPos);
     if ShowModal = mrOK then
     begin
@@ -564,28 +567,48 @@ begin
       Result := True;
     end;
   finally
-    FreeAndNil(lstDetectionType);
-    LogEvent(leaClose, 'Detection code list');
+    FreeAndNil(lstMultiChips);
+    LogEvent(leaClose, 'Multi selection chips list');
   end;
 end;
 
-function DetectionDialog(aEdit: TEditButton): Boolean;
+function MultiChipsDialog(aType: TMultiSelectionDataType; aControl: TControl; aInitialValue: String): Boolean;
 begin
   Result := False;
-  LogEvent(leaOpen, 'Detection code list');
-  lstDetectionType := TlstDetectionType.Create(nil);
-  with lstDetectionType do
+  LogEvent(leaOpen, 'Multi selecion chips list');
+  lstMultiChips := TlstMultiChips.Create(nil);
+  with lstMultiChips do
   try
-    //JsonString := aDetect;
+    DialogDataType := aType;
+    JsonString := aInitialValue;
     // GetFormPosition(aEdit, WindowPos);
     if ShowModal = mrOK then
     begin
-      aEdit.Text := JsonString;
+      if Assigned(aControl) then
+      begin
+        if aControl is TCustomEdit then
+        begin
+          TCustomEdit(aControl).Text := JsonString;
+          TCustomEdit(aControl).Modified := True;
+        end
+        else
+        if aControl is TEditButton then
+        begin
+          TEditButton(aControl).Text := JsonString;
+          TEditButton(aControl).Modified := True;
+        end
+        else
+        if aControl is TStringGrid then
+        begin
+          TStringGrid(aControl).Cells[TStringGrid(aControl).Col, TStringGrid(aControl).Row] := JsonString;
+        end;
+      end;
+      //aEdit.Text := JsonString;
       Result := True;
     end;
   finally
-    FreeAndNil(lstDetectionType);
-    LogEvent(leaClose, 'Detection code list');
+    FreeAndNil(lstMultiChips);
+    LogEvent(leaClose, 'Multi selecion chips list');
   end;
 end;
 

@@ -21,15 +21,18 @@ unit ulst_detectiontype;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, CheckLst, Buttons,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons, StdCtrls, chipspanel,
   atshapelinebgra, fpjson, jsonparser;
 
 type
 
-  { TlstDetectionType }
+  TMultiSelectionDataType = (cdtDetectionModes, cdtEvidences, cdtHabitats, cdtActivities);
 
-  TlstDetectionType = class(TForm)
-    cklDetect: TCheckListBox;
+  { TlstMultiChips }
+
+  TlstMultiChips = class(TForm)
+    lblChips: TLabel;
+    pChips: TChipsPanel;
     lineBottom: TShapeLineBGRA;
     pBottom: TPanel;
     sbCancel: TBitBtn;
@@ -41,33 +44,36 @@ type
     procedure sbOKClick(Sender: TObject);
   private
     strJson: String;
+    dlgType: TMultiSelectionDataType;
     procedure ApplyDarkMode;
   public
+    property DialogDataType: TMultiSelectionDataType read dlgType write dlgType;
     property JsonString: String read strJson write strJson;
   end;
 
 var
-  lstDetectionType: TlstDetectionType;
+  lstMultiChips: TlstMultiChips;
 
 implementation
 
-uses utils_locale, utils_global, utils_dialogs, utils_themes, uDarkStyleParams;
+uses
+  utils_locale, utils_global, utils_themes, data_columns, uDarkStyleParams;
 
 {$R *.lfm}
 
-{ TlstDetectionType }
+{ TlstMultiChips }
 
-procedure TlstDetectionType.ApplyDarkMode;
+procedure TlstMultiChips.ApplyDarkMode;
 begin
-
+  pChips.DarkMode := True;
 end;
 
-procedure TlstDetectionType.FormCreate(Sender: TObject);
+procedure TlstMultiChips.FormCreate(Sender: TObject);
 begin
   JsonString := '';
 end;
 
-procedure TlstDetectionType.FormKeyPress(Sender: TObject; var Key: char);
+procedure TlstMultiChips.FormKeyPress(Sender: TObject; var Key: char);
 begin
   { CANCELAR = Esc }
   if Key = #27 then
@@ -91,7 +97,7 @@ begin
   end;
 end;
 
-procedure TlstDetectionType.FormShow(Sender: TObject);
+procedure TlstMultiChips.FormShow(Sender: TObject);
 var
   Arr: TJSONArray;
   i: Integer;
@@ -100,71 +106,135 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  cklDetect.Items.CommaText := rsDetectionTypes;
+  pChips.BeginUpdate;
+  try
+    pChips.SingleChipColorDark := ActiveTheme.Categorical.Jacaranda.Background;
+    pChips.SingleChipColorLight := ActiveTheme.Categorical.Jacaranda.Background;
 
-  if JsonString <> '' then
-  begin
-    Arr := GetJSON(JsonString) as TJSONArray;
-    try
-      for i := 0 to Arr.Count - 1 do
+    case dlgType of
+      cdtDetectionModes:
       begin
-        Value := Arr.Strings[i];
+        Caption := rscDetectionModes;
 
-        case Value of
-          'visual':        cklDetect.Checked[0] := True;
-          'song':          cklDetect.Checked[1] := True;
-          'call':          cklDetect.Checked[2] := True;
-          'wing_flapping': cklDetect.Checked[3] := True;
-          'drumming':      cklDetect.Checked[4] := True;
-          'capture':       cklDetect.Checked[5] := True;
-          'remote':        cklDetect.Checked[6] := True;
-          'track':         cklDetect.Checked[7] := True;
-          'other':         cklDetect.Checked[8] := True;
+        with pChips do
+        begin
+          AddChip(rsDetectionVisual, 'visual');
+          AddChip(rsDetectionSong, 'song');
+          AddChip(rsDetectionCall, 'call');
+          AddChip(rsDetectionWingFlapping, 'wing_flapping');
+          AddChip(rsDetectionDrumming, 'drumming');
+          AddChip(rsDetectionCapture, 'capture');
+          AddChip(rsDetectionRemote, 'remote');
+          AddChip(rsDetectionTrack, 'track');
+          AddChip(rsDetectionOther, 'other');
         end;
       end;
-    finally
-      Arr.Free;
+      cdtEvidences:
+      begin
+        Caption := rscEvidences;
+
+        with pChips do
+        begin
+          AddChip(rsEvidencePhoto, 'photo');
+          AddChip(rsEvidenceAudio, 'audio');
+          AddChip(rsEvidenceVideo, 'video');
+          AddChip(rsEvidenceCapture, 'capture');
+          AddChip(rsEvidenceSample, 'sample');
+          AddChip(rsEvidenceOther, 'other');
+        end;
+      end;
+      cdtHabitats:
+      begin
+        Caption := rscHabitats;
+
+        with pChips do
+        begin
+          AddChip(rsHabitatForest, 'forest');
+          AddChip(rsHabitatWoods, 'woods');
+          AddChip(rsHabitatSavanna, 'savanna');
+          AddChip(rsHabitatShrubs, 'shrubs');
+          AddChip(rsHabitatGrassland, 'grassland');
+          AddChip(rsHabitatWetland, 'wetland');
+          AddChip(rsHabitatCoastal, 'coastal');
+          AddChip(rsHabitatMarine, 'marine');
+          AddChip(rsHabitatMangrove, 'mangrove');
+          AddChip(rsHabitatFreshwater, 'freshwater');
+          AddChip(rsHabitatCropland, 'cropland');
+          AddChip(rsHabitatUrban, 'urban');
+          AddChip(rsHabitatRocky, 'rocky');
+          AddChip(rsHabitatDesert, 'desert');
+          AddChip(rsHabitatOther, 'other');
+        end;
+      end;
+      cdtActivities:
+      begin
+        Caption := rscActivities;
+
+        with pChips do
+        begin
+          AddChip(rsActivityResting, 'resting');
+          AddChip(rsActivityFeeding, 'feeding');
+          AddChip(rsActivityPreening, 'preening');
+          AddChip(rsActivityFlying, 'flying');
+          AddChip(rsActivityWalking, 'walking');
+          AddChip(rsActivitySwimming, 'swimming');
+          AddChip(rsActivityVocalizing, 'vocalizing');
+          AddChip(rsActivitySocial, 'social');
+          AddChip(rsActivityCourtship, 'courtship');
+          AddChip(rsActivityNestBuilding, 'nesting');
+          AddChip(rsActivityIncubationBroodCare, 'brooding');
+          AddChip(rsActivityTerritorial, 'territorial');
+          AddChip(rsActivityVigilance, 'vigilance');
+          AddChip(rsActivityPredatorAvoidance, 'predator');
+          AddChip(rsActivityOther, 'other');
+        end;
+      end;
+    end;
+
+    pChips.AutoSize := True;
+  finally
+    pChips.EndUpdate;
+  end;
+
+  if JsonString = EmptyStr then
+    JsonString := '[]';
+  if JsonString <> '' then
+  begin
+    with pChips do
+    begin
+      Arr := GetJSON(JsonString) as TJSONArray;
+      try
+        for i := 0 to Arr.Count - 1 do
+        begin
+          Value := Arr.Strings[i];
+
+          SelectByID(Value);
+        end;
+      finally
+        Arr.Free;
+      end;
     end;
   end;
 end;
 
-procedure TlstDetectionType.sbCancelClick(Sender: TObject);
+procedure TlstMultiChips.sbCancelClick(Sender: TObject);
 begin
   ModalResult := mrCancel;
 end;
 
-procedure TlstDetectionType.sbOKClick(Sender: TObject);
+procedure TlstMultiChips.sbOKClick(Sender: TObject);
 var
   Arr: TJSONArray;
+  I: Integer;
+  Chip: TChip;
 begin
   Arr := TJSONArray.Create;
   try
-    if cklDetect.Checked[0] then
-      Arr.Add('visual');
-
-    if cklDetect.Checked[1] then
-      Arr.Add('song');
-
-    if cklDetect.Checked[2] then
-      Arr.Add('call');
-
-    if cklDetect.Checked[3] then
-      Arr.Add('wing_flapping');
-
-    if cklDetect.Checked[4] then
-      Arr.Add('drumming');
-
-    if cklDetect.Checked[5] then
-      Arr.Add('capture');
-
-    if cklDetect.Checked[6] then
-      Arr.Add('remote');
-
-    if cklDetect.Checked[7] then
-      Arr.Add('track');
-
-    if cklDetect.Checked[8] then
-      Arr.Add('other');
+    for I := 0 to pChips.GetSelectedChips.Count - 1 do
+    begin
+      Chip := TChip(pChips.GetSelectedChips[I]);
+      Arr.Add(Chip.ID);
+    end;
 
     JsonString := Arr.AsJSON;
   finally

@@ -2,6 +2,21 @@
 
 Esta seção documenta as mudanças, novas funcionalidades e melhorias introduzidas em cada versão do **Xolmis**. As notas de versão ajudam os usuários a entender o que foi adicionado, modificado ou planejado para futuras atualizações.
 
+## [Não publicada]
+
+### Novas funcionalidades
+
+- Novos campos em Métodos, Amostragens e Observações.
+
+### Melhorias
+
+- Adicionados links para o website do Xolmis.
+- Revisados os Métodos pré-carregados para reduzir ambiguidade e confusão.
+
+### Remoções
+
+- Campos ambíguos removidos de Observações.
+
 ## v0.1.0 (2026-09-19)
 
 Primeiro lançamento do Xolmis.

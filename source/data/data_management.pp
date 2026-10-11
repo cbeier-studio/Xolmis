@@ -3017,7 +3017,7 @@ var
   currentLang: TLanguageID;
 begin
   currentLang := GetLanguageID;
-  if SameText(currentLang.LanguageID, 'pt-BR') then
+  if SameText(currentLang.LanguageID, 'pt_BR') then
     FFilePath := ConcatPaths([AppDataDir, 'languages_pt-BR.jsonl'])
   else
     FFilePath := ConcatPaths([AppDataDir, 'languages_en-US.jsonl']);
@@ -3093,7 +3093,7 @@ var
   currentLang: TLanguageID;
 begin
   currentLang := GetLanguageID;
-  if SameText(currentLang.LanguageID, 'pt-BR') then
+  if SameText(currentLang.LanguageID, 'pt_BR') then
     FFilePath := ConcatPaths([AppDataDir, 'countries_pt-BR.jsonl'])
   else
     FFilePath := ConcatPaths([AppDataDir, 'countries_en-US.jsonl']);
@@ -3178,7 +3178,7 @@ var
   currentLang: TLanguageID;
 begin
   currentLang := GetLanguageID;
-  if SameText(currentLang.LanguageID, 'pt-BR') then
+  if SameText(currentLang.LanguageID, 'pt_BR') then
     FFilePath := ConcatPaths([AppDataDir, 'methods_pt-BR.json'])
   else
     FFilePath := ConcatPaths([AppDataDir, 'methods_en-US.json']);
@@ -3249,7 +3249,7 @@ var
   currentLang: TLanguageID;
 begin
   currentLang := GetLanguageID;
-  if SameText(currentLang.LanguageID, 'pt-BR') then
+  if SameText(currentLang.LanguageID, 'pt_BR') then
     FFilePath := ConcatPaths([AppDataDir, 'taxon_ranks_pt-BR.json'])
   else
     FFilePath := ConcatPaths([AppDataDir, 'taxon_ranks_en-US.json']);

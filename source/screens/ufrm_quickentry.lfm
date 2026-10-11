@@ -187,6 +187,7 @@ object frmQuickEntry: TfrmQuickEntry
     TitleStyle = tsNative
     OnColRowDeleted = qeGridColRowDeleted
     OnColRowInserted = qeGridColRowInserted
+    OnDrawCell = qeGridDrawCell
     OnButtonClick = qeGridButtonClick
     OnGetCellHint = qeGridGetCellHint
     OnKeyDown = FormKeyDown

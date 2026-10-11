@@ -1,0 +1,6 @@
+{"version":1,"strings":[
+{"hash":183155811,"name":"tlstmultichips.caption","sourcebytes":[68,101,116,101,99,116,105,111,110,32,109,111,100,101,115],"value":"Detection modes"},
+{"hash":4749113,"name":"tlstmultichips.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tlstmultichips.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":33976330,"name":"tlstmultichips.lblchips.caption","sourcebytes":[83,101,108,101,99,116,32,116,104,101,32,111,112,116,105,111,110,115,32,116,104,97,116,32,97,112,112,108,121,32,116,111,32,116,104,105,115,32,114,101,99,111,114,100,58],"value":"Select the options that apply to this record:"}
+]}

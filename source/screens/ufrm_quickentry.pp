@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids, Buttons, ComCtrls, StdCtrls, Menus,
-  Character, DB, SQLDB, fpjson, jsonparser, Clipbrd, LCLType, BCPanel, data_types, data_schema, io_core;
+  Character, DB, SQLDB, fpjson, jsonparser, Clipbrd, LCLType, BCPanel, data_types, data_schema, io_core, Types;
 
 type
 
@@ -71,6 +71,7 @@ type
     procedure qeGridButtonClick(Sender: TObject; aCol, aRow: Integer);
     procedure qeGridColRowDeleted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
     procedure qeGridColRowInserted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
+    procedure qeGridDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
     procedure qeGridGetCellHint(Sender: TObject; ACol, ARow: Integer; var HintText: String);
     procedure qeGridKeyPress(Sender: TObject; var Key: char);
     procedure qeGridPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
@@ -101,7 +102,11 @@ type
     procedure AppendLog(const aMsg: String);
     procedure ApplyDarkMode;
     function CellValue(const FieldName: String; Row: Integer): String;
+    function ColIsMultiSelection(ACol: Integer): Boolean;
     function ColIsSearchable(aCol: Integer): Boolean;
+
+    procedure DrawJsonTags(ACanvas: TCanvas; const ARect: TRect; const JsonText: String; Selected: Boolean);
+
     procedure GetImportSettings;
     function GetValidateCellHint(aCol, aRow: Integer): String;
     function GridHasData: Boolean;
@@ -255,12 +260,99 @@ begin
   end;
 end;
 
+function TfrmQuickEntry.ColIsMultiSelection(ACol: Integer): Boolean;
+var
+  FColField: TFieldSchema;
+begin
+  FColField := FTableSchema.GetFieldByDisplayName(qeGrid.Columns[aCol].Title.Caption);
+  Result := FColField.DataType = sdtJsonArray;
+end;
+
 function TfrmQuickEntry.ColIsSearchable(aCol: Integer): Boolean;
 var
   FColField: TFieldSchema;
 begin
   FColField := FTableSchema.GetFieldByDisplayName(qeGrid.Columns[aCol].Title.Caption);
   Result := FColField.LookupInfo.LookupTable <> tbNone;
+end;
+
+procedure TfrmQuickEntry.DrawJsonTags(ACanvas: TCanvas; const ARect: TRect; const JsonText: String; Selected: Boolean);
+var
+  Arr: TJSONArray;
+  i: Integer;
+  X, Y: Integer;
+  TagRect: TRect;
+  S, OverflowText: String;
+  TagWidth: Integer;
+  HiddenCount: Integer;
+  BgColor, FontColor: TColor;
+
+  function CalcTagWidth(const Text: String): Integer;
+  begin
+    Result := ACanvas.TextWidth(Text) + 12;
+  end;
+
+begin
+  if JsonText = '' then Exit;
+
+  BgColor := ActiveTheme.Categorical.Jacaranda.Background;
+  FontColor := ActiveTheme.Categorical.Jacaranda.Foreground;
+
+  Arr := GetJSON(JsonText) as TJSONArray;
+  try
+    X := ARect.Left + 3;
+    Y := ARect.Top + 2;
+    HiddenCount := 0;
+
+    for i := 0 to Arr.Count - 1 do
+    begin
+
+      S := TranslateSightingJsonValue(Arr.Strings[i]);
+      TagWidth := CalcTagWidth(S);
+
+      if X + TagWidth > ARect.Right - 3 then
+      begin
+        HiddenCount := Arr.Count - i;
+        Break;
+      end;
+
+      TagRect := Rect(X, Y, X + TagWidth, ARect.Bottom - 2);
+
+      ACanvas.Brush.Color := BgColor;
+      ACanvas.Pen.Color := BgColor;
+      ACanvas.RoundRect(TagRect.Left, TagRect.Top, TagRect.Right, TagRect.Bottom, 8, 8);
+
+      ACanvas.Font.Color := FontColor;
+
+      ACanvas.TextOut(TagRect.Left + 6, TagRect.Top +
+        ((TagRect.Bottom - TagRect.Top - ACanvas.TextHeight(S)) div 2), S);
+
+      Inc(X, TagWidth + 4);
+    end;
+
+    if HiddenCount > 0 then
+    begin
+      OverflowText := Format('+%d', [HiddenCount]);
+      TagWidth := CalcTagWidth(OverflowText);
+
+      if X + TagWidth <= ARect.Right - 2 then
+      begin
+        TagRect := Rect(X, Y, X + TagWidth, ARect.Bottom - 2);
+
+        ACanvas.Brush.Color := BgColor;
+        ACanvas.Pen.Color := BgColor;
+
+        ACanvas.RoundRect(TagRect.Left, TagRect.Top, TagRect.Right, TagRect.Bottom, 8, 8);
+
+        ACanvas.Font.Color := clWhite;
+
+        ACanvas.TextOut(TagRect.Left + 6, TagRect.Top +
+            ((TagRect.Bottom - TagRect.Top - ACanvas.TextHeight(OverflowText)) div 2), OverflowText);
+      end;
+    end;
+  finally
+    Arr.Free;
+  end;
 end;
 
 procedure TfrmQuickEntry.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -4761,6 +4853,8 @@ begin
             FColField.LookupInfo.SortingField, FColField.LookupInfo.FilterTag);
         if FColField.DataType = sdtBoolean then
           ButtonStyle := cbsCheckboxColumn;
+        if FColField.DataType = sdtJsonArray then
+          ButtonStyle := cbsEllipsis;
         if FColField.LookupInfo.LookupTable <> tbNone then
           ButtonStyle := cbsEllipsis;
         if SizePriority > 0 then
@@ -4947,6 +5041,24 @@ begin
         FindDlg(tbMethods, Grid, aMethodKey);
     end;
   end;
+
+  if ColIsMultiSelection(aCol) then
+  begin
+    with Grid, SelectedColumn do
+    begin
+      if (Title.Caption = rscDetectionModes) then
+        MultiChipsDialog(cdtDetectionModes, Grid, Cells[aCol, aRow]);
+
+      if (Title.Caption = rscEvidences) then
+        MultiChipsDialog(cdtEvidences, Grid, Cells[aCol, aRow]);
+
+      if (Title.Caption = rscHabitats) then
+        MultiChipsDialog(cdtHabitats, Grid, Cells[aCol, aRow]);
+
+      if (Title.Caption = rscActivities) then
+        MultiChipsDialog(cdtActivities, Grid, Cells[aCol, aRow]);
+    end;
+  end;
 end;
 
 procedure TfrmQuickEntry.qeGridColRowDeleted(Sender: TObject; IsColumn: Boolean; sIndex, tIndex: Integer);
@@ -5001,6 +5113,27 @@ begin
     SetCellValue(COL_BAND_NAME, sIndex, GetName(TBL_BANDS, COL_FULL_NAME, COL_BAND_ID, FBandId));
   if (FObserverId > 0) then
     SetCellValue(COL_OBSERVER_NAME, sIndex, GetName(TBL_PEOPLE, COL_FULL_NAME, COL_PERSON_ID, FObserverId));
+end;
+
+procedure TfrmQuickEntry.qeGridDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
+var
+  Grid: TStringGrid;
+  ColTitle: String;
+begin
+  Grid := TStringGrid(Sender);
+  ColTitle := Grid.Columns[aCol].Title.Caption;
+
+  if (ColTitle = rscDetectionModes) or
+     (ColTitle = rscEvidences) or
+     (ColTitle = rscHabitats) or
+     (ColTitle = rscActivities) then
+  begin
+    Grid.Canvas.FillRect(aRect);
+
+    DrawJsonTags(Grid.Canvas, aRect, Grid.Cells[aCol, aRow], gdSelected in aState);
+  end
+  else
+    Grid.DefaultDrawCell(aCol, aRow, aRect, aState);
 end;
 
 procedure TfrmQuickEntry.qeGridGetCellHint(Sender: TObject; ACol, ARow: Integer; var HintText: String);
@@ -5149,6 +5282,25 @@ begin
       Grid.Cells[Grid.Col, Grid.Row] := EmptyStr;
       Key := #0;
     end;
+  end;
+
+  if (Grid.EditorMode) and (ColIsMultiSelection(Grid.Col)) then
+  begin
+    with Grid, SelectedColumn do
+    begin
+      if (Title.Caption = rscDetectionModes) then
+        MultiChipsDialog(cdtDetectionModes, Grid, Cells[Col, Row]);
+
+      if (Title.Caption = rscEvidences) then
+        MultiChipsDialog(cdtEvidences, Grid, Cells[Col, Row]);
+
+      if (Title.Caption = rscHabitats) then
+        MultiChipsDialog(cdtHabitats, Grid, Cells[Col, Row]);
+
+      if (Title.Caption = rscActivities) then
+        MultiChipsDialog(cdtActivities, Grid, Cells[Col, Row]);
+    end;
+    Key := #0;
   end;
 end;
 
