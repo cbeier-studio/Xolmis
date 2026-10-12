@@ -30,14 +30,12 @@ Here is a list of the main features:
 - [x] Geographical coordinates converter (WGS84) from/to Decimal Degrees, DMS, and UTM formats.
 - [x] Import data from [Xolmis Mobile](https://github.com/cbeier-studio/xolmis_mobile) (JSON file).
 - [x] Import eBird records (CSV file).
-- [x] Import banding journals and captures (CSV file).
-- [ ] Import nests (CSV file).
 - [ ] Import data from files with different schemas (CSV, JSON, ODS, XLSX, XML, and DBF formats).
 - [x] Import and export geographical coordinates from/to file (CSV, KML, GPX, and GeoJSON formats).
 - [x] Export data to file (CSV, JSON, ODS, XLSX, and XML formats).
 - [x] Show geographical coordinates on a map.
 - [x] Column summaries.
-- [x] Attachment of images, audio recording, videos, documents and links to the field records.
+- [x] Attachment of images, audio recording, videos, documents and links to field records.
 - [ ] Print and export data to PDF.
 
 See the [Milestones](https://github.com/cbeier-studio/Xolmis/milestones) for more information on planned features.

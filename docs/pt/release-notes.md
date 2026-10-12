@@ -10,6 +10,7 @@ Esta seção documenta as mudanças, novas funcionalidades e melhorias introduzi
 
 ### Melhorias
 
+- Mõdulos abrem mais rãpido.
 - Adicionados links para o website do Xolmis.
 - Revisados os Métodos pré-carregados para reduzir ambiguidade e confusão.
 

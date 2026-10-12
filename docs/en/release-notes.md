@@ -10,6 +10,7 @@ This section documents the changes, new features, and improvements introduced in
 
 ### Enhancements
 
+- Modules open faster.
 - Added links to Xolmis website.
 - Revised pre-loaded Methods to reduce ambiguity and confusion.
 

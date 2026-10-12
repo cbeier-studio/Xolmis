@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Modules open faster.
 - Dialog for multi selection now uses `TChipsPanel`.
 - Revised the pre-loaded Methods to reduce ambiguity and confusion.
 - Updated links to Xolmis website.
