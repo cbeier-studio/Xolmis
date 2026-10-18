@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>{{report_title}}</title>
+    <style>
+        /* Regras básicas e Reset */
+        body { font-family: system-ui, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 8px; border-bottom: 1px solid var(--border); text-align: left; }
+
+        /* Classes auxiliares baseadas no schema (ReportCSSClass) */
+        .numeric { text-align: right; }
+        .italic { font-style: italic; }
+        .bold { font-weight: bold; }
+
+        /* Tema Injetado Dinamicamente (Brand ou Print) */
+        {{{theme_css}}}
+
+        /* Media Query Obrigatória para Impressão */
+        @media print {
+            thead { display: table-header-group; }
+            tr { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>{{report_title}}</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <!-- Iteração do Mustache pelas colunas definidas no Object Pascal -->
+                {{#columns}}
+                <th class="{{css_class}}">{{label}}</th>
+                {{/columns}}
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iteração pelas linhas da consulta SQL -->
+            {{#rows}}
+            <tr>
+                <!-- Iteração pelas células/campos de cada linha -->
+                {{#cells}}
+                <td class="{{css_class}}">{{value}}</td>
+                {{/cells}}
+            </tr>
+            {{/rows}}
+        </tbody>
+    </table>
+
+</body>
+</html>

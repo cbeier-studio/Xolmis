@@ -193,7 +193,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);C:\lazarus\fpc\3.2.2\source\packages\rtl-generics\src\"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;metadarkstyle\src;modules;providers"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;metadarkstyle\src;modules;providers;reports"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -247,7 +247,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);C:\lazarus\fpc\3.2.2\source\packages\rtl-generics\src\"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;metadarkstyle\src;modules;providers"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;metadarkstyle\src;modules;providers;reports"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -298,7 +298,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers;reports"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -337,7 +337,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers;reports"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -382,7 +382,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers;reports"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -427,7 +427,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers"/>
+            <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers;reports"/>
             <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -475,6 +475,9 @@
       <FormatVersion Value="2"/>
     </RunParams>
     <RequiredPackages>
+      <Item>
+        <PackageName Value="mormot_base"/>
+      </Item>
       <Item>
         <PackageName Value="Pixie.Package.Lazarus"/>
       </Item>
@@ -1696,6 +1699,22 @@
         <ComponentName Value="dlgMarkdown"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
+      <Unit>
+        <Filename Value="reports\xrs_core.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="reports\xrs_mustache.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="reports\xrs_simplelist.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="reports\xrs_renderer.pp"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
     <Debugger>
       <StoreDebuggerClassConfInSession Value="True"/>
@@ -1710,7 +1729,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers"/>
+      <OtherUnitFiles Value="utils;models;data;dialogs;edit_dialogs;data_modules;screens;io;modules;metadarkstyle\src;providers;reports"/>
       <UnitOutputDirectory Value="..\lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
