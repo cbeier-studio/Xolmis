@@ -21,8 +21,8 @@ unit udlg_exportpreview;
 interface
 
 uses
-  Classes, DB, DBGrids, ExtCtrls, LR_PGrid, SQLDB, SysUtils, Forms, Controls, Buttons,
-  Graphics, Dialogs;
+  Classes, DB, DBGrids, ExtCtrls, SQLDB, SysUtils, Forms, Controls, Buttons,
+  Graphics, Dialogs, xrs_renderer;
 
 type
 
@@ -32,7 +32,6 @@ type
     dsLink: TDataSource;
     gridPreview: TDBGrid;
     iButtonsDark: TImageList;
-    printGrid: TFrPrintGrid;
     iButtons: TImageList;
     pToolbar: TPanel;
     sbClose: TSpeedButton;
@@ -43,9 +42,11 @@ type
     procedure sbExportClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
   private
+    FReportRenderer: TReportRenderer;
+    FReportTitle: String;
     procedure ApplyDarkMode;
   public
-
+    property ReportTitle: String read FReportTitle write FReportTitle;
   end;
 
 var
@@ -54,7 +55,7 @@ var
 implementation
 
 uses
-  utils_dialogs;
+  utils_locale, utils_global, utils_dialogs, xrs_simplelist;
 
 {$R *.lfm}
 
@@ -83,8 +84,29 @@ begin
 end;
 
 procedure TdlgExportPreview.sbPrintClick(Sender: TObject);
+var
+  Report: TReportSimpleList;
 begin
-  printGrid.PreviewReport;
+  //if not ActiveUser.HasPermission(PERM_BANDS_PRINT) or not qBandsBalance.Active or qBandsBalance.IsEmpty then
+  //  Exit;
+
+  Report := nil;
+  try
+    try
+      Report := TReportSimpleList.Create(dsLink.DataSet, FReportTitle);
+      if not Assigned(FReportRenderer) then
+        FReportRenderer := TReportRenderer.Create;
+      FReportRenderer.ShowPreview(Report);
+    except
+      on E: Exception do
+      begin
+        LogError(Format('Report generation failed (%s): %s', [E.ClassName, E.Message]));
+        MsgDlg(rsTitleError, Format(rsErrorGeneratingReport, [FReportTitle]), mtError);
+      end;
+    end;
+  finally
+    FreeAndNil(Report);
+  end;
 end;
 
 end.

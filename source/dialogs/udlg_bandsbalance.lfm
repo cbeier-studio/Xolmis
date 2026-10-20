@@ -9,7 +9,7 @@ object dlgBandsBalance: TdlgBandsBalance
   ClientWidth = 320
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnDestroy = FormDestroy
   OnShow = FormShow
   object pBottom: TPanel
@@ -59,25 +59,25 @@ object dlgBandsBalance: TdlgBandsBalance
         Font.Style = [fsBold]
         Title.Alignment = taCenter
         Title.Caption = 'Size'
-        Width = 76
+        Width = 80
         FieldName = 'band_size'
       end    
       item
         Title.Alignment = taCenter
         Title.Caption = 'Leftover'
-        Width = 76
+        Width = 80
         FieldName = 'saldo'
       end    
       item
         Title.Alignment = taCenter
         Title.Caption = 'Avg./day'
-        Width = 76
+        Width = 80
         FieldName = 'media_dia'
       end    
       item
         Title.Alignment = taCenter
         Title.Caption = 'Max./day'
-        Width = 75
+        Width = 80
         FieldName = 'maximo_dia'
       end>
     DataSource = dsBandsBalance
@@ -151,7 +151,7 @@ object dlgBandsBalance: TdlgBandsBalance
   object pmGrid: TPopupMenu
     Images = iPopup
     Left = 175
-    Top = 266
+    Top = 264
     object pmgRefresh: TMenuItem
       Caption = 'Refresh'
       ImageIndex = 0
@@ -432,14 +432,5 @@ object dlgBandsBalance: TdlgBandsBalance
       Required = False
       DisplayFormat = '#,##0'
     end
-  end
-  object FrPrintGrid1: TFrPrintGrid
-    DBGrid = dbgSaldo
-    Caption = 'Bands balance'
-    PrinterIndex = -1
-    ShowCaption = True
-    ShowProgress = True
-    Left = 108
-    Top = 330
   end
 end

@@ -9,7 +9,7 @@ object frmPrintPreview: TfrmPrintPreview
   ClientWidth = 892
   PopupMode = pmAuto
   Position = poDefault
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnShow = FormShow
   object pToolbar: TPanel
     Left = 0
@@ -346,17 +346,19 @@ object frmPrintPreview: TfrmPrintPreview
       BorderSpacing.Right = 2
     end
   end
-  object frPreview: TfrPreview
+  object cefPreview: TCEFWindowParent
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = pToolbar
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = pStatusBar
     Left = 0
     Height = 526
     Top = 38
     Width = 892
-    Align = alClient
-    BevelOuter = bvNone
-    PopupMenu = pmReport
+    Anchors = [akTop, akLeft, akRight, akBottom]
     TabOrder = 2
-    ScrollBars = ssBoth
-    OnScrollPage = frPreviewScrollPage
   end
   object iButtons: TImageList
     Scaled = True
@@ -1727,34 +1729,6 @@ object frmPrintPreview: TfrmPrintPreview
       75189C99B5FF0201D39749
     }
   end
-  object Report: TfrReport
-    Dataset = frDataSet
-    InitialZoom = pzPageWidth
-    ModalPreview = False
-    Options = []
-    Preview = frPreview
-    PreviewButtons = [pbZoom, pbSave, pbPrint, pbFind, pbExit, pbSettings, pbPageSetup]
-    DataType = dtDataSource
-    Title = 'Permits'
-    OnBeginDoc = ReportBeginDoc
-    OnEndDoc = ReportEndDoc
-    OnProgress = ReportProgress
-    Left = 363
-    Top = 166
-  end
-  object lrPDFExport: TlrPDFExport
-    Left = 363
-    Top = 233
-  end
-  object frCheckBoxObj: TfrCheckBoxObject
-    Left = 363
-    Top = 296
-  end
-  object frDataSet: TfrDBDataSet
-    CloseDataSource = True
-    Left = 429
-    Top = 166
-  end
   object PrinterSetupDlg: TPrinterSetupDialog
     Left = 169
     Top = 94
@@ -1769,11 +1743,6 @@ object frmPrintPreview: TfrmPrintPreview
     Filter = 'PDF document (.pdf)|*.pdf'
     Left = 168
     Top = 160
-  end
-  object frDetails: TfrDBDataSet
-    CloseDataSource = True
-    Left = 429
-    Top = 233
   end
   object pmReport: TPopupMenu
     Images = iButtons
@@ -1847,34 +1816,8 @@ object frmPrintPreview: TfrmPrintPreview
       end
     end
   end
-  object frDetails2: TfrDBDataSet
-    CloseDataSource = True
-    Left = 488
-    Top = 233
-  end
-  object frDetails3: TfrDBDataSet
-    CloseDataSource = True
-    Left = 552
-    Top = 233
-  end
-  object frDetails4: TfrDBDataSet
-    CloseDataSource = True
-    Left = 616
-    Top = 233
-  end
-  object frDetails5: TfrDBDataSet
-    CloseDataSource = True
-    Left = 680
-    Top = 233
-  end
-  object frDetails6: TfrDBDataSet
-    CloseDataSource = True
-    Left = 744
-    Top = 233
-  end
-  object frDetails7: TfrDBDataSet
-    CloseDataSource = True
-    Left = 808
-    Top = 233
+  object Chromium: TChromium
+    Left = 647
+    Top = 229
   end
 end

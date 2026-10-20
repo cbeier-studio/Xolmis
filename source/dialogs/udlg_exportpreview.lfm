@@ -9,7 +9,7 @@ object dlgExportPreview: TdlgExportPreview
   ClientWidth = 839
   PopupMode = pmAuto
   Position = poScreenCenter
-  LCLVersion = '4.4.0.0'
+  LCLVersion = '4.8.0.0'
   OnShow = FormShow
   object pToolbar: TPanel
     Left = 0
@@ -220,16 +220,6 @@ object dlgExportPreview: TdlgExportPreview
       9AFF2636593CA67324B567F231B0CFC46E3C9D9D711FB5205F807A6EFF2BB84D
       A02D3781AD5CFF1B011AF86FEFC6DBABB27CF91B30602C3B
     }
-  end
-  object printGrid: TFrPrintGrid
-    DBGrid = gridPreview
-    Orientation = poLandscape
-    Caption = 'Grid'
-    PrinterIndex = -1
-    ShowCaption = True
-    ShowProgress = True
-    Left = 376
-    Top = 96
   end
   object dsLink: TDataSource
     AutoEdit = False

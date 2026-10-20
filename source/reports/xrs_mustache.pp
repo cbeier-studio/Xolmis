@@ -14,11 +14,15 @@ type
   private
     FMustache: TSynMustache;
     FContext: variant;
+    FContextJSON: RawUTF8;
+    FHasContext: Boolean;
+    FUseJSONContext: Boolean;
   public
     constructor Create(const ATemplate: RawUTF8);
     destructor Destroy; override;
 
     procedure SetContextData(const AVariantContext: variant);
+    procedure SetContextJSON(const AJSONContext: RawUTF8);
     function RenderHTML: string;
   end;
 
@@ -39,16 +43,30 @@ end;
 
 procedure TXolmisMustacheRenderer.SetContextData(const AVariantContext: variant);
 begin
-  // Agora recebemos a estrutura de dados já montada em memória
   FContext := AVariantContext;
+  FHasContext := True;
+  FUseJSONContext := False;
+end;
+
+procedure TXolmisMustacheRenderer.SetContextJSON(const AJSONContext: RawUTF8);
+begin
+  FContextJSON := AJSONContext;
+  FHasContext := True;
+  FUseJSONContext := True;
 end;
 
 function TXolmisMustacheRenderer.RenderHTML: string;
 begin
-  if FMustache <> nil then
-    Result := UTF8ToString(FMustache.Render(FContext))
+  if FMustache = nil then
+    raise Exception.Create('The Mustache template could not be parsed.');
+  if not FHasContext then
+    raise Exception.Create('Mustache context data has not been set.');
+
+  // Evita UTF8ToString (converte para a code page ANSI); mantém os bytes UTF-8
+  if FUseJSONContext then
+    Result := FMustache.RenderJSON(FContextJSON)
   else
-    Result := '';
+    Result := FMustache.Render(FContext);
 end;
 
 end.

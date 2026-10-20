@@ -178,7 +178,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="536"/>
+      <BuildNr Value="543"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -476,6 +476,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="CEF4Delphi_Lazarus"/>
+      </Item>
+      <Item>
         <PackageName Value="mormot_base"/>
       </Item>
       <Item>
@@ -495,15 +498,6 @@
       </Item>
       <Item>
         <PackageName Value="Printer4Lazarus"/>
-      </Item>
-      <Item>
-        <PackageName Value="lr_pdfexport"/>
-      </Item>
-      <Item>
-        <PackageName Value="lr_DialogDesign"/>
-      </Item>
-      <Item>
-        <PackageName Value="lazreport"/>
       </Item>
       <Item>
         <PackageName Value="MemDSLaz"/>

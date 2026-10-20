@@ -140,17 +140,35 @@ type
     procedure FetchData; virtual; abstract;
     procedure BuildContent; virtual; abstract;
   public
+    procedure GenerateHTML; virtual;
     function ExportToHTML(const AFileName: string): Boolean; virtual;
+
+    class function GetReportTitle: string; virtual; abstract;
+    class function GetContexts: TModuleContexts; virtual; abstract;
+    class function IsGlobal: Boolean; virtual; abstract;
+    class function CreateForDataSet(ADataSet: TDataSet; ATableType: TTableType): TXolmisReport; virtual; abstract;
   end;
 ```
 
+`TReportRegistry` supplies the classes available for a module context. `GetModuleContextForTable` maps the active grid table to the shared contexts (`mcCaptures`, `mcTaxonomy`, `mcLocations`, or the general `mcGlobal` context). A report is included when it is global or declares the selected context. The custom grid adds those registered classes to the print menu, and each class implements `CreateForDataSet` to bind its report to the active dataset and table.
+
 ### 4.2 TReportSimpleList
 
-Responsável por listagens tabulares simples derivadas diretamente do schema.
+Disponível para todos módulos e submódulos do Xolmis Desktop.
+
+Responsável por listagens tabulares simples derivadas diretamente de um `TDataSet` aberto pelo módulo chamador e de seu schema, com os dados previamente filtrados e ordenados.
+
+O construtor recebe o dataset (emprestado; não é liberado pelo relatório) e o `TTableType` correspondente. Para consultas que não representam uma tabela registrada no schema, também pode receber um título explícito; nesse caso, usa os campos visíveis do dataset e seus `DisplayLabel`, sem exigir um `TTableSchema`. A listagem usa os campos visíveis do dataset na ordem definida pelo dataset, aplicando `ReportOrder` quando informado. Para manter a consulta do módulo inalterada, percorre os registros sem substituir o dataset e restaura o bookmark original ao terminar.
+
+Tem cabeçalho com informações de filtros ou registro-pai (se for tabela-filha).
 
 ### 4.3 TReportGroupedList
 
+Disponível para quase todos módulos e submódulos do Xolmis Desktop.
+
 Responsável por relatórios com agrupamentos e quebras de controle.
+
+Tem cabeçalho geral com informações de filtros ou registro-pai (se for tabela-filha).
 
 Características:
 
@@ -159,16 +177,172 @@ Características:
 - Ordenação obrigatória;
 - Controle de paginação.
 
-### 4.4 TReportCustom
+### 4.4 TReportSpeciesDossier
 
-Classe destinada a relatórios especializados.
+Responsável por relatório completo sobre uma espécie, com dados obtidos de várias tabelas.
 
-Exemplos:
+Características:
 
-- Ficha de espécie;
-- Dossiês;
-- Relatórios científicos;
-- Relatórios analíticos complexos.
+- Cabeçalho com informações da espécie;
+- Indicadores para números de registros por tipo;
+- Mapa de registros (opcional), com lista de localidades;
+- Gráfico de sazonalidade;
+- Gráfico de registros por ano;
+- Gráfico de registros por hora do dia;
+- Indicadores reprodutivos;
+- Histórico de capturas e avistamentos;
+- Tabela com as médias das medidas corporais (das capturas);
+- Gráfico de espécimes por tipo;
+- Gráfico da fenologia (ocorrência, reprodução, muda);
+- Gráfico de frequência;
+- Padrões de muda de penas.
+
+### 4.5 TReportNestDossier
+
+Responsável por relatório completo sobre um ninho, com dados obtidos de várias tabelas.
+
+Características:
+
+- Cabeçalho com informações do ninho;
+- Lista de indivíduos;
+- Lista ou linha do tempo de revisões;
+- Lista de ovos com medidas;
+- Indicadores de sucesso.
+
+### 4.6 TReportExpeditionDossier
+
+Responsável por relatório completo sobre uma expedição, com dados obtidos de várias tabelas.
+
+Características:
+
+- Cabeçalho com informações da expedição;
+- Lista ou linha do tempo das amostragens, com informações resumidas sobre cada uma;
+- Indicadores de diversidade;
+- Lista consolidada das espécies;
+- Espécies de interesse para conservação;
+- Resumo de anilhas usadas;
+- Esforço de redes;
+- Curva de acumulação de espécies;
+- Gráfico de capturas + recapturas;
+- Lista de espécimes coletados;
+- Mapa dos registros e amostragens (opcional).
+
+### 4.7 TReportSurveyDossier
+
+Responsável por relatório completo sobre uma amostragem, com dados obtidos de várias tabelas.
+
+Características:
+
+- Cabeçalho com informações da amostragem;
+- Indicadores de diversidade;
+- Lista de espécies;
+- Resumo de anilhas usadas;
+- Esforço de redes;
+- Curva de acumulação de espécies;
+- Gráfico de capturas + recapturas;
+- Lista de espécimes coletados;
+- Dados de vegetação;
+- Dados meteorológicos;
+- Mapa dos registros (opcional).
+
+### 4.8 TReportIndividualDossier
+
+Responsável por relatório completo sobre um indivíduo, com dados obtidos de várias tabelas.
+
+Características:
+
+- Cabeçalho com informações do indivíduo;
+- Histórico de capturas e anilhas;
+- Mapa de registros (opcional);
+- Resumo da morfometria;
+- Lista de espécimes coletados;
+- Histórico de ninhos;
+- Indicadores reprodutivos;
+- Histórico de mudas de penas.
+
+### 4.9 TReportBandDossier
+
+Responsável por relatório completo sobre uma anilha.
+
+Características:
+
+- Cabeçalho com informações da anilha;
+- Histórico da anilha.
+
+### 4.10 TReportSurveyComparison
+
+Responsável por relatório comparativo entre amostragens.
+
+Características:
+
+- Indicadores gerais.
+- Gráfico de riqueza.
+- Matriz de ocorrência.
+- Indicadores de diversidade.
+
+### 4.11 TReportProjectDossier
+
+Responsável por relatório completo sobre um projeto de pesquisa.
+
+Características:
+
+- Cabeçalho com informações sobre o projeto;
+- Indicadores;
+- Cronograma de atividades com gráfico de Gantt e lista.
+
+### 4.12 TReportProjectFinances
+
+Responsável por relatório financeiro de um projeto de pesquisa.
+
+Características:
+
+- Cabeçalho com informações sobre o projeto;
+- Indicadores;
+- Execução por rubrica;
+- Despesas executadas.
+
+### 4.13 TReportBandsBalance
+
+Responsável por relatório de estoque de anilhas.
+
+Características:
+
+- Indicadores gerais;
+- Lista de saldo de anilhas por tamanho (com mini-gráfico de linha do histórico do saldo?).
+
+### 4.14 TReportBandsCemave
+
+Responsável por relatório de anilhas a serem reportadas ao SNA/CEMAVE.
+
+Características:
+
+- Indicadores gerais;
+- Lista de anilhas usadas por tamanho;
+- Lista de recapturas;
+- Lista de baixa de anilhas.
+
+### 4.15 TReportJournal
+
+Responsável por relatório do diário de campo.
+
+Características:
+
+- Anotações em sequência cronológica e texto com formatação rica.
+
+### 4.16 TReportMap
+
+Reponsável por relatório mostrando registro em um mapa e lista de registros com coordenadas.
+
+Usa leaflet e GeoJSON para plotar o mapa.
+
+### 4.17 TReportSpecimenLabels
+
+Responsável por etiquetas de espécimes.
+
+Características:
+
+- Geração de etiquetas tipo mala direta;
+- Código de barras ou QR Code com número de campo.
 
 ## 5. Registro Dinâmico de Relatórios
 
@@ -242,7 +416,9 @@ Responsabilidades:
 
 O mecanismo de visualização deve utilizar um navegador baseado em Chromium.
 
-A implementação concreta permanece desacoplada da especificação.
+Na implementação inicial, a visualização abre o HTML temporário no navegador padrão do sistema; a integração com Chromium permanece planejada para a Fase 6.
+
+`TXolmisReport.ExportToHTML` gera o relatório e grava o documento em UTF-8 no caminho solicitado. Falhas de leitura, geração ou gravação são propagadas ao chamador.
 
 ## 7. Origem dos Dados para Relatórios de Listagem
 
@@ -281,12 +457,17 @@ ReportCSSClass: String;
 ReportOrder: Integer;
 ReportWidth: Integer;
 ReportFormat: String;
-ReportGroupable: String;
+ReportGroupable: Boolean;
+ReportStackWith: String;
 ```
+
+#### ReportStackWith
+
+Nome do campo principal em cuja coluna este campo será empilhado na listagem simples (um valor abaixo do outro, como na tabela do modelo "r01"). O rótulo da coluna vira `Principal · Secundário`, e os valores vazios dos campos secundários são omitidos. Se o campo principal não estiver na listagem, o campo continua como coluna própria. Atualmente configurado para instituições, pessoas, métodos e anilhas.
 
 #### ReportVisible
 
-Define se o campo participa das listagens genéricas.
+Define se o campo pode participar das listagens genéricas. Quando o schema da tabela já possui pelo menos um campo marcado como visível para relatório, a listagem simples inclui somente esses campos (além de respeitar `TField.Visible`). Para tabelas cujo metadado ainda não foi configurado, usa os campos visíveis do dataset como fallback.
 
 #### ReportLabel
 
@@ -322,14 +503,14 @@ Coordinate
 
 ### 7.2 Seleção de Colunas
 
-Por padrão, os relatórios de listagem devem utilizar apenas as colunas atualmente visíveis ao usuário.
+Por padrão, os relatórios de listagem devem utilizar apenas as colunas atualmente visíveis ao usuário. A listagem simples atual usa `TField.Visible` para determinar esse conjunto; `DisplayLabel` fornece o rótulo já preparado pelo dataset, com `ReportLabel` como alternativa quando o rótulo estiver vazio. `ReportCSSClass` e `ReportOrder` são aplicados quando definidos.
 
-Antes da geração, o sistema pode apresentar um diálogo de configuração permitindo:
+Como evolução da interface, antes da geração o sistema poderá apresentar um diálogo de configuração permitindo:
 
 - Remover colunas da saída;
 - Reordenar colunas (opcional);
 - Configurar agrupamentos;
-- Configurar opções de apresentação.
+- Configurar opções de apresentação (tamanho e orientação de página, tema de cores, etc.).
 
 Essa seleção atua apenas sobre a composição do relatório, sem alterar a consulta ou os dados já carregados no dataset.
 
@@ -614,14 +795,14 @@ O sistema organiza os relatórios em categorias funcionais.
 
 O fluxo quando o usuário dispara a ação para gerar um relatório:
 
-1. Mostra um diálogo de configuração do relatório com:
+1. (Planejado) Mostra um diálogo de configuração do relatório com:
     - Seleção de colunas a incluir no relatório;
     - Seleção de tema de cores (colorido ou monocromático);
     - Seleção da orientação da página (retrato ou paisagem);
     - Seleção de tamanho de página (A4 - padrão, ou Carta);
 2. O relatório é gerado como arquivo temporário.
 3. Mostra relatório gerado na tela de visualização, onde o usuário pode:
-    - Visualizar o relatório;
+    - Visualizar o relatório, se possível, com paginação e zoom;
     - Salvar arquivo HTML;
     - Exportar para PDF;
     - Enviar para impressora.

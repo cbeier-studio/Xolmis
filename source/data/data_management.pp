@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 18;
+  SCHEMA_VERSION: Integer = 19;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -1553,8 +1553,24 @@ begin
         Result := True;
       end;
 
-      // !!! --- DO NOT FORGET IN VERSION 20 --- !!!
+      if OldVersion < 19 then
+      begin
+        LogDebug('Upgrading database schema to version 19');
 
+        CreateNextBirthdaysView(DMM.sqlCon);
+        CreateLastSurveysView(DMM.sqlCon);
+        CreateLastLifersView(DMM.sqlCon);
+        CreateExpiredPermitsView(DMM.sqlCon);
+        CreateBandsLeftoverView(DMM.sqlCon);
+        CreateBandsRunningOutView(DMM.sqlCon);
+        CreateAvgExpeditionDurationView(DMM.sqlCon);
+        CreateEndingProjectsView(DMM.sqlCon);
+        CreateExpiringActivitiesView(DMM.sqlCon);
+
+        Result := True;
+      end;
+
+      // !!! --- DO NOT FORGET IN VERSION 20 --- !!!
         // Drop columns from sightings
         //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN detection_type;');
         //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_seen;');
@@ -2492,20 +2508,35 @@ end;
 procedure CreateNextBirthdaysView(Connection: TSQLConnector);
 begin
   LogDebug('Creating get_next_birthdays view');
+  Connection.ExecuteDirect('DROP VIEW IF EXISTS get_next_birthdays;');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_next_birthdays AS ' +
+    'WITH birthdays AS ( ' +
+      'SELECT full_name, ' +
+        'birth_date, ' +
+        'date(strftime(''%Y'', ''now'') || ''-'' || strftime(''%m-%d'', birth_date)) AS birthday_this_year ' +
+      'FROM people ' +
+      'WHERE (active_status = 1) AND ' +
+        '(birth_date IS NOT NULL) ' +
+    '), ' +
+    'upcoming AS ( ' +
+      'SELECT full_name, ' +
+        'birth_date, ' +
+        'CASE WHEN birthday_this_year >= date(''now'') THEN birthday_this_year ' +
+          'ELSE date(strftime(''%Y'', ''now'', ''+1 year'') || ''-'' || strftime(''%m-%d'', birth_date)) END AS next_birthday ' +
+      'FROM birthdays ' +
+    ') ' +
     'SELECT full_name, ' +
       'birth_date, ' +
       'strftime(''%d/%m'', birth_date) AS ANIVER, ' +
-      'strftime(''%j'', birth_date) - strftime(''%j'', ''now'') AS days_remaining ' +
-    'FROM people ' +
-    'WHERE (active_status = 1) AND ' +
-      '(birth_date NOTNULL) ' +
-    'ORDER BY CASE WHEN days_remaining >= 0 THEN days_remaining ELSE days_remaining + strftime(''%j'', strftime(''%Y-12-31'', ''now'') ) END;');
+      'CAST(julianday(next_birthday) - julianday(date(''now'')) AS INTEGER) AS days_remaining ' +
+    'FROM upcoming ' +
+    'ORDER BY days_remaining, full_name;');
 end;
 
 procedure CreateLastSurveysView(Connection: TSQLConnector);
 begin
   LogDebug('Creating get_last_surveys view');
+  Connection.ExecuteDirect('DROP VIEW IF EXISTS get_last_surveys;');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_last_surveys AS ' +
     'SELECT a.survey_date, ' +
       'a.start_longitude, ' +
@@ -2513,8 +2544,8 @@ begin
       'm.method_name, ' +
       'g.full_name AS locality_name ' +
     'FROM surveys AS a ' +
-    'JOIN methods AS m ON a.method_id = m.method_id ' +
-    'JOIN gazetteer AS g ON a.locality_id = g.site_id ' +
+    'LEFT JOIN methods AS m ON a.method_id = m.method_id ' +
+    'LEFT JOIN gazetteer AS g ON a.locality_id = g.site_id ' +
     'WHERE a.active_status = 1 ' +
     'ORDER BY a.survey_date DESC;');
 end;
@@ -2522,41 +2553,50 @@ end;
 procedure CreateLastLifersView(Connection: TSQLConnector);
 begin
   LogDebug('Creating get_last_lifers view');
+  Connection.ExecuteDirect('DROP VIEW IF EXISTS get_last_lifers;');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_last_lifers AS ' +
     'WITH FirstRecords AS ( ' +
       'SELECT taxon_id, ' +
         'MIN(capture_date) AS first_date, ' +
         '''C'' AS tipo ' +
       'FROM captures ' +
-      'WHERE active_status = 1 ' +
+      'WHERE (active_status = 1) AND (capture_date IS NOT NULL) ' +
       'GROUP BY taxon_id ' +
       'UNION ALL ' +
       'SELECT taxon_id, ' +
         'MIN(sighting_date) AS first_date, ' +
         '''S'' AS tipo ' +
       'FROM sightings ' +
-      'WHERE active_status = 1 ' +
+      'WHERE (active_status = 1) AND (sighting_date IS NOT NULL) ' +
       'GROUP BY taxon_id ' +
+    '), ' +
+    'RankedRecords AS ( ' +
+      'SELECT taxon_id, ' +
+        'first_date, ' +
+        'tipo, ' +
+        'ROW_NUMBER() OVER (PARTITION BY taxon_id ORDER BY first_date, tipo) AS rn ' +
+      'FROM FirstRecords ' +
     ') ' +
     'SELECT z.taxon_id AS taxon, ' +
       'z.scientific_name AS nome_taxon, ' +
       'date(fr.first_date) AS data_registro, ' +
       'fr.tipo ' +
     'FROM zoo_taxa z ' +
-    'LEFT JOIN FirstRecords fr ON z.taxon_id = fr.taxon_id ' +
-    'WHERE data_registro NOTNULL ' +
+    'JOIN RankedRecords fr ON z.taxon_id = fr.taxon_id ' +
+    'WHERE fr.rn = 1 ' +
     'ORDER BY data_registro DESC;');
 end;
 
 procedure CreateExpiredPermitsView(Connection: TSQLConnector);
 begin
   LogDebug('Creating get_expired_permits view');
+  Connection.ExecuteDirect('DROP VIEW IF EXISTS get_expired_permits;');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_expired_permits AS ' +
     'SELECT permit_name, ' +
       'expire_date, ' +
-      'strftime(''%j'', expire_date) - strftime(''%j'', ''now'') AS days_remaining ' +
+      'CAST(julianday(date(expire_date)) - julianday(date(''now'')) AS INTEGER) AS days_remaining ' +
       'FROM permits ' +
-    'WHERE (days_remaining <= 30) AND ' +
+    'WHERE (CAST(julianday(date(expire_date)) - julianday(date(''now'')) AS INTEGER) <= 30) AND ' +
       '(active_status = 1) ' +
     'ORDER BY days_remaining ASC;');
 end;
@@ -2564,29 +2604,32 @@ end;
 procedure CreateBandsLeftoverView(Connection: TSQLConnector);
 begin
   LogDebug('Creating get_bands_leftover view');
+  Connection.ExecuteDirect('DROP VIEW IF EXISTS get_bands_leftover;');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_bands_leftover AS ' +
     'WITH BandSizes AS ( ' +
       'SELECT band_size, ' +
-        'COUNT( * ) AS total_bands ' +
+        'SUM(CASE WHEN (band_status = ''A'') AND (active_status = 1) THEN 1 ELSE 0 END) AS saldo ' +
       'FROM bands ' +
+      'WHERE active_status = 1 ' +
       'GROUP BY band_size ' +
     '), ' +
-    'UsedBands AS ( ' +
-      'SELECT band_size, ' +
-        'COUNT( * ) AS used_bands ' +
-      'FROM bands ' +
-      'WHERE (band_status != ''A'') ' +
-      'GROUP BY band_size ' +
+    'CaptureDays AS ( ' +
+      'SELECT DATE(capture_date) AS capture_date ' +
+      'FROM captures ' +
+      'WHERE (active_status = 1) AND (capture_date IS NOT NULL) ' +
+      'GROUP BY DATE(capture_date) ' +
     '), ' +
     'DailyAverage AS ( ' +
-      'SELECT b.band_size, ' +
-        'DATE(c.capture_date) AS capture_date, ' +
-        'COUNT( * ) AS daily_count ' +
-      'FROM captures c ' +
-      'JOIN bands b ON c.band_id = b.band_id ' +
-      'WHERE c.capture_type = ''N'' ' +
-      'GROUP BY b.band_size, ' +
-      'DATE(c.capture_date) ' +
+      'SELECT bs.band_size, ' +
+        'cd.capture_date, ' +
+        'COUNT(used_band.band_id) AS daily_count ' +
+      'FROM BandSizes bs ' +
+      'CROSS JOIN CaptureDays cd ' +
+      'LEFT JOIN captures c ON (DATE(c.capture_date) = cd.capture_date) AND ' +
+        '(c.capture_type = ''N'') AND (c.active_status = 1) ' +
+      'LEFT JOIN bands used_band ON (c.band_id = used_band.band_id) AND ' +
+        '(used_band.band_size = bs.band_size) ' +
+      'GROUP BY bs.band_size, cd.capture_date ' +
     '), ' +
     'MaxDaily AS ( ' +
       'SELECT band_size, ' +
@@ -2595,11 +2638,10 @@ begin
       'GROUP BY band_size ' +
     ') ' +
     'SELECT bs.band_size, ' +
-      '(bs.total_bands - IFNULL(ub.used_bands, 0) ) AS saldo, ' +
+      'bs.saldo, ' +
       'AVG(da.daily_count) AS media_dia, ' +
       'md.max_daily_count AS maximo_dia ' +
     'FROM BandSizes bs ' +
-    'LEFT JOIN UsedBands ub ON bs.band_size = ub.band_size ' +
     'LEFT JOIN DailyAverage da ON bs.band_size = da.band_size ' +
     'LEFT JOIN MaxDaily md ON bs.band_size = md.band_size ' +
     'GROUP BY bs.band_size ' +
@@ -2609,11 +2651,12 @@ end;
 procedure CreateBandsRunningOutView(Connection: TSQLConnector);
 begin
   LogDebug('Creating get_bands_running_out view');
+  Connection.ExecuteDirect('DROP VIEW IF EXISTS get_bands_running_out;');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_bands_running_out AS ' +
     'WITH capture_days AS ( ' +
       'SELECT date(capture_date) AS capture_date ' +
       'FROM captures ' +
-      'WHERE active_status = 1 ' +
+      'WHERE (active_status = 1) AND (capture_date IS NOT NULL) ' +
       'GROUP BY date(capture_date) ' +
     '), ' +
     'grupos AS ( ' +
@@ -2632,41 +2675,39 @@ begin
       'SELECT AVG(consecutive_dates) AS media_dias_expedicao ' +
       'FROM consecutivo ' +
     '), ' +
-    'UsedBands AS ( ' +
-      'SELECT bands.band_size AS tamanho, ' +
-        'COUNT(captures.band_id) AS conta ' +
-      'FROM captures ' +
-      'JOIN bands ON captures.band_id = bands.band_id ' +
-      'WHERE captures.capture_type = ''N'' AND ' +
-        'captures.active_status = 1 ' +
-      'GROUP BY tamanho, ' +
-        'date(captures.capture_date) ' +
+    'BandSizes AS ( ' +
+      'SELECT band_size, ' +
+        'SUM(CASE WHEN (band_status = ''A'') AND (active_status = 1) THEN 1 ELSE 0 END) AS remaining_bands ' +
+      'FROM bands ' +
+      'WHERE active_status = 1 ' +
+      'GROUP BY band_size ' +
+    '), ' +
+    'DailyCounts AS ( ' +
+      'SELECT bs.band_size, ' +
+        'cd.capture_date, ' +
+        'COUNT(used_band.band_id) AS daily_count ' +
+      'FROM BandSizes bs ' +
+      'CROSS JOIN capture_days cd ' +
+      'LEFT JOIN captures c ON (DATE(c.capture_date) = cd.capture_date) AND ' +
+        '(c.capture_type = ''N'') AND (c.active_status = 1) ' +
+      'LEFT JOIN bands used_band ON (c.band_id = used_band.band_id) AND ' +
+        '(used_band.band_size = bs.band_size) ' +
+      'GROUP BY bs.band_size, cd.capture_date ' +
     '), ' +
     'DailyAverage AS ( ' +
-      'SELECT ub.tamanho, ' +
-        'AVG(ub.conta) AS daily_use ' +
-      'FROM UsedBands AS ub ' +
-      'GROUP BY ub.tamanho ' +
-    '), ' +
-    'BandSizes AS ( ' +
-      'SELECT band_size ' +
-      'FROM bands ' +
-      'GROUP BY band_size ' +
-    '), ' +
-    'AvailableBands AS ( ' +
-      'SELECT band_size, ' +
-        'SUM(CASE WHEN band_status = ''A'' THEN 1 ELSE 0 END) AS remaining_bands ' +
-      'FROM bands ' +
-      'GROUP BY band_size ' +
+      'SELECT bs.band_size, ' +
+        'AVG(dc.daily_count) AS daily_use ' +
+      'FROM BandSizes bs ' +
+      'JOIN DailyCounts dc ON bs.band_size = dc.band_size ' +
+      'GROUP BY bs.band_size ' +
     ') ' +
     'SELECT bs.band_size, ' +
-      'IFNULL(ab.remaining_bands, 0) AS saldo, ' +
+      'bs.remaining_bands AS saldo, ' +
       'da.daily_use AS media_dia, ' +
       '(da.daily_use * e.media_dias_expedicao) AS media_expedicao ' +
     'FROM BandSizes AS bs ' +
     'JOIN expedicao AS e ' +
-    'LEFT JOIN AvailableBands AS ab ON bs.band_size = ab.band_size ' +
-    'LEFT JOIN DailyAverage AS da ON bs.band_size = da.tamanho ' +
+    'LEFT JOIN DailyAverage AS da ON bs.band_size = da.band_size ' +
     'WHERE saldo < media_expedicao ' +
     'GROUP BY bs.band_size ' +
     'ORDER BY saldo ASC;');
@@ -2675,6 +2716,7 @@ end;
 procedure CreateAvgExpeditionDurationView(Connection: TSQLConnector);
 begin
   LogDebug('Creating get_average_expedition_duration view');
+  Connection.ExecuteDirect('DROP VIEW IF EXISTS get_average_expedition_duration;');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_average_expedition_duration AS ' +
     'WITH grupos ( ' +
       'capture_date, ' +
@@ -2682,16 +2724,16 @@ begin
     ') ' +
     'AS ( ' +
       'SELECT DISTINCT date(c.capture_date), ' +
-        'date(c.capture_date, ''-'' || DENSE_RANK() OVER (ORDER BY date(capture_date) ) || '' days'') AS gr ' +
+        'date(c.capture_date, ''-'' || DENSE_RANK() OVER (ORDER BY date(capture_date) ) || '' days'') AS grp ' +
       'FROM captures AS c ' +
-      'WHERE (c.active_status = 1) ' +
+      'WHERE (c.active_status = 1) AND (c.capture_date IS NOT NULL) ' +
     '), ' +
     'consecutivo AS ( ' +
       'SELECT count( * ) AS consecutive_dates, ' +
         'min(grupos.capture_date) AS min_date, ' +
         'max(grupos.capture_date) AS max_date ' +
       'FROM grupos ' +
-      'GROUP BY gr ' +
+      'GROUP BY grupos.grp ' +
       'ORDER BY 1 DESC, 2 DESC ' +
     ') ' +
     'SELECT avg(consecutive_dates) AS media_dias_expedicao ' +
@@ -2701,12 +2743,13 @@ end;
 procedure CreateEndingProjectsView(Connection: TSQLConnector);
 begin
   LogDebug('Creating get_ending_projects view');
+  Connection.ExecuteDirect('DROP VIEW IF EXISTS get_ending_projects;');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_ending_projects AS ' +
     'SELECT short_title, ' +
-      'end_date, ' +
-      'strftime(''%j'', end_date) - strftime(''%j'', ''now'') AS days_remaining ' +
+    'end_date, ' +
+    'CAST(julianday(date(end_date)) - julianday(date(''now'')) AS INTEGER) AS days_remaining ' +
     'FROM projects ' +
-    'WHERE (days_remaining <= 30) AND ' +
+    'WHERE (CAST(julianday(date(end_date)) - julianday(date(''now'')) AS INTEGER) <= 30) AND ' +
       '(project_status IN (''P'', ''A'', ''D'') ) AND ' +
       '(active_status = 1) ' +
     'ORDER BY days_remaining ASC;');
@@ -2715,12 +2758,13 @@ end;
 procedure CreateExpiringActivitiesView(Connection: TSQLConnector);
 begin
   LogDebug('Creating get_expiring_activities view');
+  Connection.ExecuteDirect('DROP VIEW IF EXISTS get_expiring_activities;');
   Connection.ExecuteDirect('CREATE VIEW IF NOT EXISTS get_expiring_activities AS ' +
     'SELECT description, ' +
-      'target_date, ' +
-      'strftime(''%j'', target_date) - strftime(''%j'', ''now'') AS days_remaining ' +
+    'target_date, ' +
+    'CAST(julianday(date(target_date)) - julianday(date(''now'')) AS INTEGER) AS days_remaining ' +
     'FROM project_chronograms ' +
-    'WHERE (days_remaining <= 30) AND ' +
+    'WHERE (CAST(julianday(date(target_date)) - julianday(date(''now'')) AS INTEGER) <= 30) AND ' +
       '(progress_status IN (''T'', ''P'', ''R'', ''D'', ''B'') ) AND ' +
       '(active_status = 1) ' +
     'ORDER BY days_remaining ASC;');

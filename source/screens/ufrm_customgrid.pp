@@ -23,11 +23,11 @@ unit ufrm_customgrid;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl, fpjson, jsonparser,
+  Classes, SysUtils, Contnrs, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl, fpjson, jsonparser,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
-  DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, LR_PGrid, atshapelinebgra, BCPanel, bctypes,
+  DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, atshapelinebgra, BCPanel, bctypes,
   DBControlGrid, Types, ImgList, ToggleSwitch, XolmisDBGrid, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
-  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, LR_Class, BGRABitmap, Math,
+  mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, BGRABitmap, Math,
   data_types, data_filters, data_blobs, models_media, modules_core, utils_media;
 
 type
@@ -273,7 +273,6 @@ type
     pmaRefreshAudios: TMenuItem;
     pmaPlayAudio: TMenuItem;
     pmPrintNestsByTaxon: TMenuItem;
-    PrintGrid: TFrPrintGrid;
     gridSummary: TDBGrid;
     dsRecycle: TDataSource;
     iButtons: TImageList;
@@ -366,7 +365,6 @@ type
     lblProjectFilter: TLabel;
     cardMap: TPage;
     mapGeo: TMapView;
-    pmPrintGrid: TMenuItem;
     pmPrintSightings: TMenuItem;
     pmPrintSightingsBySurvey: TMenuItem;
     pmPrintSightingsByLocality: TMenuItem;
@@ -884,7 +882,6 @@ type
     Separator32: TMenuItem;
     Separator33: TMenuItem;
     Separator34: TMenuItem;
-    SeparatorPrint: TMenuItem;
     Separator5: TShapeLineBGRA;
     Separator6: TMenuItem;
     Separator7: TShapeLineBGRA;
@@ -1101,7 +1098,6 @@ type
     procedure pmPrintBandsWithHistoryClick(Sender: TObject);
     procedure pmPrintExpeditionsClick(Sender: TObject);
     procedure pmPrintGazetteerClick(Sender: TObject);
-    procedure pmPrintGridClick(Sender: TObject);
     procedure pmPrintInstitutionsClick(Sender: TObject);
     procedure pmPrintMethodsClick(Sender: TObject);
     procedure pmPrintPermitsByExpirationClick(Sender: TObject);
@@ -1238,6 +1234,7 @@ type
       Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType);
   private
     FModule: TModuleController;
+    FReportRenderers: TObjectList;
     FTableType, FChildTable: TTableType;
     FSearch: TCustomSearch;
     isFiltered: Boolean;
@@ -1328,6 +1325,9 @@ type
     procedure SaveColumnsConfig;
 
     procedure SetGridColumns(aGrid: TDBGrid);
+    procedure SetXRSPrintMenu;
+    procedure XRSReportMenuItemClick(Sender: TObject);
+    procedure XRSReportProgress(Sender: TObject; const AMessage: string; APercent: Integer);
 
     procedure SetModule;
 
@@ -1426,12 +1426,19 @@ uses
   modules_methods, modules_people, modules_permits, modules_projects, modules_sampling, modules_sampling_plots,
   modules_sightings, modules_specimens, modules_pois,
   udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
+  xrs_core, xrs_renderer, xrs_simplelist,
   {$IFDEF DEBUG}utils_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
   ufrm_main, ufrm_quickentry, udlg_selectrecord, udlg_bandhistory, udlg_gazetteerautofill, udlg_attachmedia,
   ubatch_neteffort, ubatch_feathers, ubatch_bands, ubatch_bandstransfer, ubatch_bandsreceive;
 
 {$R *.lfm}
+
+type
+  TXRSReportMenuItem = class(TMenuItem)
+  public
+    ReportClass: TXolmisReportClass;
+  end;
 
 { Cheap record count for enabling navigation buttons: it avoids a SELECT COUNT(*) on every record change.
   When a full packet was loaded there may be more records, so a large value is returned. }
@@ -5039,6 +5046,7 @@ begin
   FImageList.Free;
   FRecycleList.Free;
   FThumbManager.Free;
+  FreeAndNil(FReportRenderers);
 
   FreeAndNil(FSearch);
 
@@ -6953,12 +6961,6 @@ begin
   PrintPreview(GAZETTEER_REPORT_FILE, DMR.dsGazetteer);
 end;
 
-procedure TfrmCustomGrid.pmPrintGridClick(Sender: TObject);
-begin
-  PrintGrid.Caption := Caption;
-  PrintGrid.PreviewReport;
-end;
-
 procedure TfrmCustomGrid.pmPrintInstitutionsClick(Sender: TObject);
 begin
   DMR.qInstitutions.SQL.Text := TSQLQuery(dsLink.DataSet).SQL.Text;
@@ -8856,8 +8858,94 @@ end;
 
 procedure TfrmCustomGrid.sbPrintClick(Sender: TObject);
 begin
+  SetXRSPrintMenu;
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
     pmPrint.Popup(X, Y);
+end;
+
+procedure TfrmCustomGrid.SetXRSPrintMenu;
+var
+  I, InsertIndex: Integer;
+  ReportClasses: specialize TFPGList<TXolmisReportClass>;
+  ReportClass: TXolmisReportClass;
+  ReportItem: TXRSReportMenuItem;
+begin
+  for I := pmPrint.Items.Count - 1 downto 0 do
+    if pmPrint.Items[I] is TXRSReportMenuItem then
+      pmPrint.Items[I].Free;
+
+  if not Assigned(FModule) or not CanPrintTable(FModule.TableType) or
+    not Assigned(FModule.DataSet) or not FModule.DataSet.Active then
+    Exit;
+
+  ReportClasses := ReportRegistry.GetReportsForContext(GetModuleContextForTable(FModule.TableType));
+  try
+    InsertIndex := 0;
+    for ReportClass in ReportClasses do
+    begin
+      ReportItem := TXRSReportMenuItem.Create(pmPrint);
+      ReportItem.Caption := ReportClass.GetReportTitle;
+      ReportItem.ReportClass := ReportClass;
+      ReportItem.OnClick := @XRSReportMenuItemClick;
+      pmPrint.Items.Insert(InsertIndex, ReportItem);
+      Inc(InsertIndex);
+    end;
+  finally
+    ReportClasses.Free;
+  end;
+end;
+
+procedure TfrmCustomGrid.XRSReportProgress(Sender: TObject; const AMessage: string; APercent: Integer);
+begin
+  dlgLoading.UpdateProgress(AMessage, APercent);
+end;
+
+procedure TfrmCustomGrid.XRSReportMenuItemClick(Sender: TObject);
+var
+  ReportClass: TXolmisReportClass;
+  Report: TXolmisReport;
+  Renderer: TReportRenderer;
+begin
+  if not (Sender is TXRSReportMenuItem) or not Assigned(FModule) or
+    not CanPrintTable(FModule.TableType) then
+    Exit;
+
+  if not Assigned(FModule.DataSet) or not FModule.DataSet.Active or FModule.DataSet.IsEmpty then
+  begin
+    MsgDlg(rsTitleInformation, rsNothingToPrint, mtInformation);
+    Exit;
+  end;
+
+  ReportClass := TXRSReportMenuItem(Sender).ReportClass;
+  Report := nil;
+  Renderer := TReportRenderer.Create;
+  try
+    try
+      dlgLoading.Show;
+      try
+        dlgLoading.UpdateProgress(rsProgressPreparing, -1);
+        Report := ReportClass.CreateForDataSet(FModule.DataSet, FModule.TableType);
+        Report.OnProgress := @XRSReportProgress;
+        Renderer.ShowPreview(Report);
+      finally
+        dlgLoading.Hide;
+      end;
+      if not Assigned(FReportRenderers) then
+        FReportRenderers := TObjectList.Create(True);
+      FReportRenderers.Add(Renderer);
+      Renderer := nil;
+    except
+      on E: Exception do
+      begin
+        LogError(Format('XRS report "%s" failed (%s): %s',
+          [ReportClass.GetReportTitle, E.ClassName, E.Message]));
+        MsgDlg(rsTitleError, Format(rsErrorGeneratingReport, [ReportClass.GetReportTitle]), mtError);
+      end;
+    end;
+  finally
+    Report.Free;
+    Renderer.Free;
+  end;
 end;
 
 procedure TfrmCustomGrid.sbPriorChildClick(Sender: TObject);
@@ -9545,60 +9633,6 @@ begin
     end;
     sbInsertBatch.Visible := True;
   end;
-
-  // Set the print menu
-  pmPrintBands.Visible := (pufBands in FModule.PrintUiFlags);
-  pmPrintBandsByCarrier.Visible := (pufBandsByCarrier in FModule.PrintUiFlags);
-  pmPrintBandsWithHistory.Visible := (pufBandsWithHistory in FModule.PrintUiFlags);
-  pmPrintBandsByStatus.Visible := (pufBandsByStatus in FModule.PrintUiFlags);
-  pmPrintBotanicTaxa.Visible := (pufBotanicalTaxa in FModule.PrintUiFlags);
-  pmPrintBotanicTaxaRecorded.Visible := (pufBotanicalTaxaRecorded in FModule.PrintUiFlags);
-  pmPrintCaptures.Visible := (pufCaptures in FModule.PrintUiFlags);
-  pmPrintCapturesByDate.Visible := (pufCapturesByDate in FModule.PrintUiFlags);
-  pmPrintCapturesByProject.Visible := (pufCapturesByProject in FModule.PrintUiFlags);
-  pmPrintCapturesByLocality.Visible := (pufCapturesByLocality in FModule.PrintUiFlags);
-  pmPrintCapturesByTaxon.Visible := (pufCapturesByTaxon in FModule.PrintUiFlags);
-  pmPrintColoredBands.Visible := (pufColorBandCombinations in FModule.PrintUiFlags);
-  pmPrintEggs.Visible := (pufEggs in FModule.PrintUiFlags);
-  pmPrintEggsByNest.Visible := (pufEggsByNest in FModule.PrintUiFlags);
-  pmPrintEggsByLocality.Visible := (pufEggsByLocality in FModule.PrintUiFlags);
-  pmPrintEggsByTaxon.Visible := (pufEggsByTaxon in FModule.PrintUiFlags);
-  pmPrintExpeditions.Visible := (pufExpeditions in FModule.PrintUiFlags);
-  pmPrintExpeditionsByProject.Visible := (pufExpeditionsByProject in FModule.PrintUiFlags);
-  pmPrintFeathers.Visible := (pufFeathers in FModule.PrintUiFlags);
-  pmPrintGazetteer.Visible := (pufGazetteer in FModule.PrintUiFlags);
-  pmPrintIndividuals.Visible := (pufIndividuals in FModule.PrintUiFlags);
-  pmPrintIndividualsByTaxon.Visible := (pufIndividualsByTaxon in FModule.PrintUiFlags);
-  pmPrintIndividualsByParents.Visible := (pufIndividualsByParents in FModule.PrintUiFlags);
-  pmPrintInstitutions.Visible := (pufInstitutions in FModule.PrintUiFlags);
-  pmPrintMethods.Visible := (pufMethods in FModule.PrintUiFlags);
-  pmPrintNests.Visible := (pufNests in FModule.PrintUiFlags);
-  pmPrintNestsByPeriod.Visible := (pufNestsByDate in FModule.PrintUiFlags);
-  pmPrintNestsByProject.Visible := (pufNestsByProject in FModule.PrintUiFlags);
-  pmPrintNestsByLocality.Visible := (pufNestsByLocality in FModule.PrintUiFlags);
-  pmPrintNestsByTaxon.Visible := (pufNestsByTaxon in FModule.PrintUiFlags);
-  pmPrintSamplingPlots.Visible := (pufSamplingPlots in FModule.PrintUiFlags);
-  pmPrintSamplingPlotsByLocality.Visible := (pufSamplingPlotsByLocality in FModule.PrintUiFlags);
-  pmPrintResearchers.Visible := (pufResearchers in FModule.PrintUiFlags);
-  pmPrintPermits.Visible := (pufPermits in FModule.PrintUiFlags);
-  pmPrintPermitsByExpiration.Visible := (pufPermitsByDate in FModule.PrintUiFlags);
-  pmPrintPermitsByProject.Visible := (pufPermitsByProject in FModule.PrintUiFlags);
-  pmPrintProjects.Visible := (pufProjects in FModule.PrintUiFlags);
-  pmPrintSightings.Visible := (pufSightings in FModule.PrintUiFlags);
-  pmPrintSightingsBySurvey.Visible := (pufSightingsBySurvey in FModule.PrintUiFlags);
-  pmPrintSightingsByObserver.Visible := (pufSightingsByObserver in FModule.PrintUiFlags);
-  pmPrintSightingsByProject.Visible := (pufSightingsByProject in FModule.PrintUiFlags);
-  pmPrintSightingsByLocality.Visible := (pufSightingsByLocality in FModule.PrintUiFlags);
-  pmPrintSightingsByTaxon.Visible := (pufSightingsByTaxon in FModule.PrintUiFlags);
-  pmPrintSpecimens.Visible := (pufSpecimens in FModule.PrintUiFlags);
-  pmPrintSpecimensByYear.Visible := (pufSpecimensByYear in FModule.PrintUiFlags);
-  pmPrintSpecimensByProject.Visible := (pufSpecimensByProject in FModule.PrintUiFlags);
-  pmPrintSpecimensByLocality.Visible := (pufSpecimensByLocality in FModule.PrintUiFlags);
-  pmPrintSpecimensByTaxon.Visible := (pufSpecimensByTaxon in FModule.PrintUiFlags);
-  pmPrintSurveys.Visible := (pufSurveys in FModule.PrintUiFlags);
-  pmPrintSurveysByExpedition.Visible := (pufSurveysByExpedition in FModule.PrintUiFlags);
-  pmPrintSurveysByLocality.Visible := (pufSurveysByLocality in FModule.PrintUiFlags);
-  pmPrintSurveysByProject.Visible := (pufSurveysByProject in FModule.PrintUiFlags);
 
   // Set the childs panel
   FChildTable := tbNone;

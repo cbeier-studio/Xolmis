@@ -88,7 +88,7 @@ object frmCustomGrid: TfrmCustomGrid
           OnPrepareCanvas = gridRecordPrepareCanvas
           ColWidths = (
             100
-            327
+            348
           )
         end
       end
@@ -27029,30 +27029,10 @@ object frmCustomGrid: TfrmCustomGrid
       OnClick = pmiRefreshImagesClick
     end
   end
-  object PrintGrid: TFrPrintGrid
-    Orientation = poLandscape
-    Font.CharSet = ANSI_CHARSET
-    TitleFont.CharSet = ANSI_CHARSET
-    TitleFont.Style = [fsBold]
-    Caption = 'Grid'
-    PrinterIndex = -1
-    ShowCaption = True
-    ShowProgress = True
-    Left = 488
-    Top = 64
-  end
   object pmPrint: TPopupMenu
     Images = iButtons
     Left = 200
     Top = 64
-    object pmPrintGrid: TMenuItem
-      Caption = 'Print grid'
-      ImageIndex = 95
-      OnClick = pmPrintGridClick
-    end
-    object SeparatorPrint: TMenuItem
-      Caption = '-'
-    end
     object pmPrintMethods: TMenuItem
       Caption = 'Methods'
       Visible = False

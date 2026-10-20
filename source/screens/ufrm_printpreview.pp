@@ -12,6 +12,8 @@
 
   You should have received a copy of the GNU General Public License along with this program.  If not,
   see <https://www.gnu.org/licenses/>.
+
+  2026-10-20 - Christian Beier - Converted to use with Xolmis Report Subsystem.
 }
 
 unit ufrm_printpreview;
@@ -22,24 +24,15 @@ interface
 
 uses
   Classes, SysUtils, DB, SQLDB, Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls, ExtCtrls, Buttons,
-  LCLIntf, LR_Class, LR_View, LR_DBSet, LR_ChBox, Printers, Menus, BCFluentSlider, PrintersDlgs, lrPDFExport,
-  lr_e_fclpdf;
+  LCLIntf, Printers, Menus, BCFluentSlider, uCEFChromium, uCEFWindowParent, uCEFInterfaces, PrintersDlgs;
 
 type
 
   { TfrmPrintPreview }
 
   TfrmPrintPreview = class(TForm)
-    frCheckBoxObj: TfrCheckBoxObject;
-    frDataSet: TfrDBDataSet;
-    frDetails: TfrDBDataSet;
-    frDetails5: TfrDBDataSet;
-    frDetails4: TfrDBDataSet;
-    frDetails3: TfrDBDataSet;
-    frDetails2: TfrDBDataSet;
-    frDetails6: TfrDBDataSet;
-    frDetails7: TfrDBDataSet;
-    frPreview: TfrPreview;
+    cefPreview: TCEFWindowParent;
+    Chromium: TChromium;
     pmSavePdf: TMenuItem;
     pmZoomActualSize: TMenuItem;
     pmZoomIn: TMenuItem;
@@ -53,12 +46,10 @@ type
     pmZoomPageWidth: TMenuItem;
     pmZoomPageFit: TMenuItem;
     pmReport: TPopupMenu;
-    Report: TfrReport;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     lblPage: TLabel;
     lblZoom: TLabel;
-    lrPDFExport: TlrPDFExport;
     PrintDlg: TPrintDialog;
     PrinterSetupDlg: TPrinterSetupDialog;
     PBar: TProgressBar;
@@ -83,10 +74,6 @@ type
     Separator3: TMenuItem;
     tbZoom: TBCFluentSlider;
     procedure FormShow(Sender: TObject);
-    procedure frPreviewScrollPage(Sender: TObject);
-    procedure ReportBeginDoc;
-    procedure ReportEndDoc;
-    procedure ReportProgress(n: Integer);
     procedure sbCloseClick(Sender: TObject);
     procedure sbFirstPageClick(Sender: TObject);
     procedure sbLastPageClick(Sender: TObject);
@@ -105,6 +92,8 @@ type
     FDataSource, FDetailSource1, FDetailSource2, FDetailSource3, FDetailSource4, FDetailSource5: TDataSource;
     FDetailSource6, FDetailSource7: TDataSource;
     FReportName: String;
+    FHTMLContent: String;
+    procedure ChromiumAfterCreated(Sender: TObject; const browser: ICefBrowser);
     procedure SetDataSource(AValue: TDataSource);
     procedure SetDetailSource1(AValue: TDataSource);
     procedure SetDetailSource2(AValue: TDataSource);
@@ -115,7 +104,6 @@ type
     procedure SetDetailSource7(AValue: TDataSource);
     procedure SetReportName(AValue: String);
     procedure ApplyDarkMode;
-    procedure UpdateButtons;
   public
     property DataSource: TDataSource read FDataSource write SetDataSource;
     property DetailSource1: TDataSource read FDetailSource1 write SetDetailSource1;
@@ -126,6 +114,7 @@ type
     property DetailSource6: TDataSource read FDetailSource6 write SetDetailSource6;
     property DetailSource7: TDataSource read FDetailSource7 write SetDetailSource7;
     property ReportName: String read FReportName write SetReportName;
+    property HTMLContent: String read FHTMLContent write FHTMLContent;
   end;
 
 var
@@ -134,8 +123,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, utils_dialogs, models_access_control, models_users,
-  udlg_loading, uDarkStyleParams;
+  utils_locale, utils_global, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -165,75 +153,24 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  if FReportName <> EmptyStr then
-  begin
-    try
-      Report.DoublePass := True;
-      Report.LoadFromFile(FReportName);
+  sbPrint.Visible := False;
+  sbPrintSettings.Visible := False;
+  sbSavePDF.Visible := False;
+  sbFirstPage.Visible := False;
+  sbPriorPage.Visible := False;
+  sbNextPage.Visible := False;
+  sbLastPage.Visible := False;
+  pStatusBar.Visible := False;
+  cefPreview.Align := alClient;
 
-      if not Report.PrepareReport then
-      begin
-        MsgDlg(rsTitleError, rsErrorLoadingReport, mtError);
-        Exit;
-      end;
-
-      Report.ShowPreparedReport;
-    except
-      on E: Exception do
-      begin
-        LogError('Unable to prepare report preview: ' + E.Message);
-        MsgDlg(rsTitleError, rsErrorLoadingReport, mtError);
-        Exit;
-      end;
-    end;
-
-    sbZoomAdjustWidthClick(nil);
-  end;
+  Chromium.OnAfterCreated := @ChromiumAfterCreated;
+  if not Chromium.CreateBrowser(cefPreview, '') then
+    raise Exception.Create(rsErrorStartingChromium);
 end;
 
-procedure TfrmPrintPreview.frPreviewScrollPage(Sender: TObject);
+procedure TfrmPrintPreview.ChromiumAfterCreated(Sender: TObject; const browser: ICefBrowser);
 begin
-  lblPage.Caption := Format(rsPageOfPages, [frPreview.Page, frPreview.AllPages]);
-
-  UpdateButtons;
-end;
-
-procedure TfrmPrintPreview.ReportBeginDoc;
-begin
-  //if not Visible then
-  //begin
-  //  dlgProgress := TdlgProgress.Create(nil);
-  //  dlgProgress.AllowCancel := False;
-  //  dlgProgress.Max := Report.Pages.Count;
-  //  dlgProgress.Title := rsTitlePrintPreview;
-  //  dlgProgress.Text := rsProgressGeneratingReport;
-  //  dlgProgress.Show;
-  //end;
-  //dlgLoading.ringProgress.MaxValue := Report.Pages.Count;
-  dlgLoading.Show;
-  dlgLoading.UpdateProgress(rsProgressGeneratingReport, 0);
-  //PBar.Max := Report.Pages.Count;
-  //PBar.Visible := True;
-end;
-
-procedure TfrmPrintPreview.ReportEndDoc;
-begin
-  //if Assigned(dlgProgress) then
-  //begin
-  //  dlgProgress.Close;
-  //  FreeAndNil(dlgProgress);
-  //end;
-  dlgLoading.Hide;
-  //dlgLoading.ringProgress.MaxValue := 100;
-  //PBar.Visible := False;
-end;
-
-procedure TfrmPrintPreview.ReportProgress(n: Integer);
-begin
-  //if Assigned(dlgProgress) then
-  //  dlgProgress.Position := n;
-  dlgLoading.UpdateProgress(rsProgressGeneratingReport, n);
-  //PBar.Position := n;
+  Chromium.LoadString(FHTMLContent, 'about:blank');
 end;
 
 procedure TfrmPrintPreview.sbCloseClick(Sender: TObject);
@@ -243,188 +180,90 @@ end;
 
 procedure TfrmPrintPreview.sbFirstPageClick(Sender: TObject);
 begin
-  frPreview.First;
-
-  UpdateButtons;
 end;
 
 procedure TfrmPrintPreview.sbLastPageClick(Sender: TObject);
 begin
-  frPreview.Last;
-
-  UpdateButtons;
 end;
 
 procedure TfrmPrintPreview.sbNextPageClick(Sender: TObject);
 begin
-  frPreview.Next;
-
-  UpdateButtons;
 end;
 
 procedure TfrmPrintPreview.sbPrintSettingsClick(Sender: TObject);
 begin
-  PrinterSetupDlg.Execute;
 end;
 
 procedure TfrmPrintPreview.sbPriorPageClick(Sender: TObject);
 begin
-  frPreview.Prev;
-
-  UpdateButtons;
 end;
 
 procedure TfrmPrintPreview.sbPrintClick(Sender: TObject);
-var
-  nPages: String;
-  nPrinter: Integer;
 begin
-  nPages := EmptyStr;
-  nPrinter := Printer.PrinterIndex;
-  Report.DoublePass := True;
-
-  if not Report.PrepareReport then
-    Exit;
-
-  PrintDlg.Copies := 1;
-  PrintDlg.Collate := True; // ordened copies
-  PrintDlg.FromPage := 1; // start page
-  PrintDlg.ToPage := Report.EMFPages.Count; // last page
-  PrintDlg.MaxPage := Report.EMFPages.Count; // maximum allowed number of pages
-  if PrintDlg.Execute then
-  begin
-    if (Printer.PrinterIndex <> nPrinter ) or // verify if selected printer has changed
-        Report.CanRebuild or // ... only makes sense if we can reformat the report
-        Report.ChangePrinter(nPrinter, Printer.PrinterIndex) then //... then change printer
-    begin
-      if not Report.PrepareReport then //... and reformat for new printer
-      begin
-        MsgDlg(rsTitleError, rsErrorLoadingReport, mtError);
-        Exit;
-      end;
-    end
-    else
-      Exit; // we couldn't honour the printer change
-
-    if PrintDlg.PrintRange = prPageNums then // user made page range selection
-    begin
-      nPages := IntToStr(PrintDlg.FromPage) + '-' + IntToStr(PrintDlg.ToPage);
-    end;
-
-    Report.PrintPreparedReport(nPages, PrintDlg.Copies);
-    LogInfo('Report sent to printer');
-  end;
 end;
 
 procedure TfrmPrintPreview.sbSavePDFClick(Sender: TObject);
 begin
-  if SaveDlg.Execute then
-  begin
-    try
-      Report.DoublePass := True;
-      if not Report.PrepareReport then
-      begin
-        MsgDlg(rsTitleError, rsErrorLoadingReport, mtError);
-        Exit;
-      end;
-
-      Report.ExportFilename := SaveDlg.FileName;
-      Report.ExportTo(TlrPdfExportFilter, SaveDlg.FileName);
-      LogInfo('Report exported to PDF: ' + SaveDlg.FileName);
-
-      if xSettings.OpenFileAfterExport then
-        OpenDocument(SaveDlg.FileName);
-    except
-      on E: Exception do
-      begin
-        LogError('Unable to export report to PDF: ' + E.Message);
-        MsgDlg(rsTitleError, rsErrorSavingPDF, mtError);
-      end;
-    end;
-  end;
 end;
 
 procedure TfrmPrintPreview.sbZoom100Click(Sender: TObject);
 begin
-  tbZoom.Value := 100;
 end;
 
 procedure TfrmPrintPreview.sbZoomAdjustClick(Sender: TObject);
 begin
-  frPreview.OnePage;
-  tbZoom.Value := Round(frPreview.Zoom);
 end;
 
 procedure TfrmPrintPreview.sbZoomAdjustWidthClick(Sender: TObject);
 begin
-  frPreview.PageWidth;
-  tbZoom.Value := Round(frPreview.Zoom);
 end;
 
 procedure TfrmPrintPreview.sbZoomInClick(Sender: TObject);
 begin
-  if tbZoom.Value < tbZoom.MaxValue then
-    if tbZoom.Value >= 100 then
-      tbZoom.Value := tbZoom.Value + 50
-    else
-      tbZoom.Value := tbZoom.Value + 10;
 end;
 
 procedure TfrmPrintPreview.sbZoomOutClick(Sender: TObject);
 begin
-  if tbZoom.Value > tbZoom.MinValue then
-    if tbZoom.Value > 100 then
-      tbZoom.Value := tbZoom.Value - 50
-    else
-      tbZoom.Value := tbZoom.Value - 10;
 end;
 
 procedure TfrmPrintPreview.SetDataSource(AValue: TDataSource);
 begin
   FDataSource := AValue;
-  frDataSet.DataSource := FDataSource;
 end;
 
 procedure TfrmPrintPreview.SetDetailSource1(AValue: TDataSource);
 begin
   FDetailSource1 := AValue;
-  frDetails.DataSource := FDetailSource1;
 end;
 
 procedure TfrmPrintPreview.SetDetailSource2(AValue: TDataSource);
 begin
   FDetailSource2 := AValue;
-  frDetails2.DataSource := FDetailSource2;
 end;
 
 procedure TfrmPrintPreview.SetDetailSource3(AValue: TDataSource);
 begin
   FDetailSource3 := AValue;
-  frDetails3.DataSource := FDetailSource3;
 end;
 
 procedure TfrmPrintPreview.SetDetailSource4(AValue: TDataSource);
 begin
   FDetailSource4 := AValue;
-  frDetails4.DataSource := FDetailSource4;
 end;
 
 procedure TfrmPrintPreview.SetDetailSource5(AValue: TDataSource);
 begin
   FDetailSource5 := AValue;
-  frDetails5.DataSource := FDetailSource5;
 end;
 
 procedure TfrmPrintPreview.SetDetailSource6(AValue: TDataSource);
 begin
   FDetailSource6 := AValue;
-  frDetails6.DataSource := FDetailSource6;
 end;
 
 procedure TfrmPrintPreview.SetDetailSource7(AValue: TDataSource);
 begin
   FDetailSource7 := AValue;
-  frDetails7.DataSource := FDetailSource7;
 end;
 
 procedure TfrmPrintPreview.SetReportName(AValue: String);
@@ -436,41 +275,6 @@ end;
 
 procedure TfrmPrintPreview.tbZoomChangeValue(Sender: TObject);
 begin
-  lblZoom.Caption := IntToStr(tbZoom.Value) + '%';
-  frPreview.Zoom := tbZoom.Value;
-
-  UpdateButtons;
-end;
-
-procedure TfrmPrintPreview.UpdateButtons;
-begin
-  sbPrint.Enabled := frPreview.AllPages > 0;
-  sbSavePDF.Enabled := (ActiveUser.HasPermission(PERM_REPORT_EXPORT)) and (frPreview.AllPages > 0);
-
-  sbFirstPage.Enabled := frPreview.Page > 1;
-  sbPriorPage.Enabled := frPreview.Page > 1;
-  sbNextPage.Enabled := frPreview.Page < frPreview.AllPages;
-  sbLastPage.Enabled := frPreview.Page < frPreview.AllPages;
-
-  sbZoomAdjustWidth.Enabled := frPreview.AllPages > 0;
-  sbZoomAdjust.Enabled := frPreview.AllPages > 0;
-  sbZoom100.Enabled := frPreview.AllPages > 0;
-  sbZoomOut.Enabled := (frPreview.AllPages > 0) and (tbZoom.Value > tbZoom.MinValue);
-  sbZoomIn.Enabled := (frPreview.AllPages > 0) and (tbZoom.Value < tbZoom.MaxValue);
-  tbZoom.Enabled := frPreview.AllPages > 0;
-
-  pmPrint.Enabled := sbPrint.Enabled;
-  pmSavePdf.Enabled := sbSavePDF.Enabled;
-  pmFirstPage.Enabled := sbFirstPage.Enabled;
-  pmPriorPage.Enabled := sbPriorPage.Enabled;
-  pmNextPage.Enabled := sbNextPage.Enabled;
-  pmLastPage.Enabled := sbLastPage.Enabled;
-  pmZoomPageWidth.Enabled := sbZoomAdjustWidth.Enabled;
-  pmZoomPageFit.Enabled := sbZoomAdjust.Enabled;
-  pmZoomActualSize.Enabled := sbZoom100.Enabled;
-  pmZoomIn.Enabled := sbZoomIn.Enabled;
-  pmZoomOut.Enabled := sbZoomOut.Enabled;
 end;
 
 end.
-

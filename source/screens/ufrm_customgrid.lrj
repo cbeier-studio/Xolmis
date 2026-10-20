@@ -350,7 +350,6 @@
 {"hash":155580437,"name":"tfrmcustomgrid.pmiviewimage.caption","sourcebytes":[38,86,105,101,119,32,105,109,97,103,101],"value":"&View image"},
 {"hash":179055749,"name":"tfrmcustomgrid.pmidelimage.caption","sourcebytes":[38,68,101,108,101,116,101],"value":"&Delete"},
 {"hash":146640424,"name":"tfrmcustomgrid.pmirefreshimages.caption","sourcebytes":[38,82,101,102,114,101,115,104],"value":"&Refresh"},
-{"hash":90411508,"name":"tfrmcustomgrid.pmprintgrid.caption","sourcebytes":[80,114,105,110,116,32,103,114,105,100],"value":"Print grid"},
 {"hash":63632867,"name":"tfrmcustomgrid.pmprintmethods.caption","sourcebytes":[77,101,116,104,111,100,115],"value":"Methods"},
 {"hash":189142243,"name":"tfrmcustomgrid.pmprintexpeditions.caption","sourcebytes":[69,120,112,101,100,105,116,105,111,110,115],"value":"Expeditions"},
 {"hash":164027188,"name":"tfrmcustomgrid.pmprintexpeditionsbyproject.caption","sourcebytes":[69,120,112,101,100,105,116,105,111,110,115,32,112,101,114,32,112,114,111,106,101,99,116],"value":"Expeditions per project"},

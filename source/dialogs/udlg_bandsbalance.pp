@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, DB, SQLDB, fpcsvexport, atshapelinebgra,
-  BCPanel, Grids, DBGrids, Menus, StdCtrls, LR_PGrid;
+  BCPanel, Grids, DBGrids, Menus, StdCtrls, xrs_renderer;
 
 type
 
@@ -32,7 +32,6 @@ type
     CSVExporter1: TCSVExporter;
     dbgSaldo: TDBGrid;
     dsBandsBalance: TDataSource;
-    FrPrintGrid1: TFrPrintGrid;
     iPopup: TImageList;
     iPopupDark: TImageList;
     lineBottom: TShapeLineBGRA;
@@ -62,6 +61,7 @@ type
     procedure pmgSavesAsClick(Sender: TObject);
     procedure TimerLoadTimer(Sender: TObject);
   private
+    FReportRenderer: TReportRenderer;
     MediaDiasExpedicao: Integer;
     procedure ApplyDarkMode;
     procedure UpdateButtons;
@@ -76,7 +76,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_themes, models_users, models_access_control,
-  udm_main, udlg_loading, uDarkStyleParams;
+  udm_main, udlg_loading, utils_dialogs, xrs_simplelist, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -122,6 +122,7 @@ begin
   TimerLoad.Enabled := False;
 
   qBandsBalance.Close;
+  FreeAndNil(FReportRenderer);
 end;
 
 procedure TdlgBandsBalance.ApplyDarkMode;
@@ -178,9 +179,29 @@ begin
 end;
 
 procedure TdlgBandsBalance.pmgPrintClick(Sender: TObject);
+var
+  Report: TReportSimpleList;
 begin
-  frPrintGrid1.Caption := Caption;
-  frPrintGrid1.PreviewReport;
+  if not ActiveUser.HasPermission(PERM_BANDS_PRINT) or not qBandsBalance.Active or qBandsBalance.IsEmpty then
+    Exit;
+
+  Report := nil;
+  try
+    try
+      Report := TReportSimpleList.Create(qBandsBalance, rsTitleBandsBalance);
+      if not Assigned(FReportRenderer) then
+        FReportRenderer := TReportRenderer.Create;
+      FReportRenderer.ShowPreview(Report);
+    except
+      on E: Exception do
+      begin
+        LogError(Format('Bands balance report failed (%s): %s', [E.ClassName, E.Message]));
+        MsgDlg(rsTitleError, Format(rsErrorGeneratingReport, [rsTitleBandsBalance]), mtError);
+      end;
+    end;
+  finally
+    FreeAndNil(Report);
+  end;
 end;
 
 procedure TdlgBandsBalance.pmgRefreshClick(Sender: TObject);
@@ -200,4 +221,3 @@ begin
 end;
 
 end.
-

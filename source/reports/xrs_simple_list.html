@@ -2,25 +2,94 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{report_title}}</title>
     <style>
-        /* Regras básicas e Reset */
-        body { font-family: system-ui, sans-serif; margin: 20px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 8px; border-bottom: 1px solid var(--border); text-align: left; }
+        :root {
+            {{{theme_css}}}
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 18mm 10mm;
+
+            @top-left {
+                content: "{{report_title}}";
+                font: 8pt "Fira Sans", system-ui, sans-serif;
+                color: #555;
+            }
+            @top-right {
+                content: "Xolmis";
+                font: 8pt "Fira Sans", system-ui, sans-serif;
+                color: #555;
+            }
+            @bottom-right {
+                content: "Página " counter(page) " de " counter(pages);
+                font: 8pt "Fira Sans", system-ui, sans-serif;
+                color: #555;
+            }
+        }
+
+        body {
+            color: var(--text-primary);
+            background: var(--surface);
+            font-family: "Fira Sans", system-ui, sans-serif;
+            font-size: 9pt;
+            margin: 0;
+        }
+
+        h1 {
+            color: var(--accent-dark);
+            font-size: 14pt;
+            margin: 0 0 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+            font-size: {{table_font_size}};
+        }
+
+        th, td {
+            padding: 3px 4px;
+            font-size: {{table_font_size}};
+            line-height: 1.25;
+            overflow-wrap: anywhere;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th {
+            color: var(--accent-dark);
+            border-bottom: 2px solid var(--accent);
+        }
 
         /* Classes auxiliares baseadas no schema (ReportCSSClass) */
         .numeric { text-align: right; }
         .italic { font-style: italic; }
         .bold { font-weight: bold; }
+        td .stack-secondary { color: var(--text-secondary, #666); font-size: 0.9em; }
 
-        /* Tema Injetado Dinamicamente (Brand ou Print) */
-        {{{theme_css}}}
+        thead { display: table-header-group; }
+        tr { page-break-inside: avoid; }
 
-        /* Media Query Obrigatória para Impressão */
+        /* Na tela, simula a folha A4 (210mm x 297mm - 2 x 10mm de margem) */
+        @media screen {
+            html { background: #8a8a8a; }
+            body {
+                width: 277mm;
+                min-height: 190mm;
+                box-sizing: content-box;
+                margin: 10mm auto;
+                padding: 10mm;
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+            }
+        }
+
         @media print {
-            thead { display: table-header-group; }
-            tr { page-break-inside: avoid; }
+            html, body { margin: 0 !important; background: none !important; }
+            body { width: auto !important; padding: 0 !important; box-shadow: none !important; }
         }
     </style>
 </head>
@@ -43,7 +112,7 @@
             <tr>
                 <!-- Iteração pelas células/campos de cada linha -->
                 {{#cells}}
-                <td class="{{css_class}}">{{value}}</td>
+                <td class="{{css_class}}">{{#values}}<div class="{{css_class}}">{{value}}</div>{{/values}}</td>
                 {{/cells}}
             </tr>
             {{/rows}}

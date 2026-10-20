@@ -64,6 +64,7 @@ type
     ReportWidth: Integer;
     ReportFormat: String;
     ReportGroupable: Boolean;
+    ReportStackWith: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -327,6 +328,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.ReportOrder := 5;
   T.Fields.Last.ReportGroupable := True;
+  T.Fields.Last.ReportStackWith := 'band_type';
   // Prefix
   AddField(T, 'band_prefix', rscPrefix, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'prefix,prefixo';
@@ -442,6 +444,7 @@ begin
   T.Fields.Last.GroupingField := COL_CARRIER_NAME;
   T.Fields.Last.ReportOrder := 7;
   T.Fields.Last.ReportGroupable := True;
+  T.Fields.Last.ReportStackWith := 'requester_name';
   // Individual ID
   AddField(T, 'individual_id', rscIndividualID, sdtInteger, False, 0, False, True, tbIndividuals);
   T.Fields.Last.Aliases.CommaText := INDIVIDUAL_ALIASES;
@@ -3381,6 +3384,7 @@ begin
   T.Fields.Last.Rules.UniqueField := True;
   T.Fields.Last.Aliases.CommaText := ABBREVIATION_ALIASES;
   T.Fields.Last.SummaryEnabled := False;
+  T.Fields.Last.ReportStackWith := 'method_name';
   // Category
   AddField(T, 'category', rscCategory, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'category,categoria,group,grupo';
@@ -3425,6 +3429,7 @@ begin
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.ReportStackWith := 'category';
   // Description
   AddField(T, 'description', rscDescription, sdtText);
   T.Fields.Last.Aliases.CommaText := DESCRIPTION_ALIASES;
@@ -4723,7 +4728,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // RG
   // renamed "national_id_card" -> "id_document_1" - v2
-  AddField(T, 'id_document_1', rscCPF, sdtText, False, 15);
+  AddField(T, 'id_document_1', rscRG, sdtText, False, 15);
   T.Fields.Last.ExportName := 'rg_number';
   T.Fields.Last.Aliases.CommaText := 'national id card,rg';
   T.Fields.Last.DisplayWidth := 120;
@@ -4731,7 +4736,7 @@ begin
   T.Fields.Last.SummaryEnabled := False;
   // CPF
   // renamed "social_security_number" -> "id_document_2" - v2
-  AddField(T, 'id_document_2', rscRG, sdtText, False, 15);
+  AddField(T, 'id_document_2', rscCPF, sdtText, False, 15);
   T.Fields.Last.ExportName := 'cpf_number';
   T.Fields.Last.Aliases.CommaText := 'social security number,ssn,cpf';
   T.Fields.Last.DisplayWidth := 120;
@@ -8538,6 +8543,19 @@ begin
   DB.Tables.Add(T);
 end;
 
+procedure StackReportField(DB: TDatabaseSchema; ATable: TTableType; const AField, APrimary: String);
+var
+  T: TTableSchema;
+  F: TFieldSchema;
+begin
+  T := DB.GetTable(ATable);
+  if not Assigned(T) then
+    Exit;
+  F := T.GetField(AField);
+  if Assigned(F) then
+    F.ReportStackWith := APrimary;
+end;
+
 procedure RegisterDatabaseSchema;
 begin
   if Assigned(DBSchema) then
@@ -8582,6 +8600,27 @@ begin
   RegisterSpecimensSchema(DBSchema);
   RegisterSpecimenCollectorsSchema(DBSchema);
   RegisterSamplePrepsSchema(DBSchema);
+
+  // Institutions: values shown one below the other in the same report column
+  StackReportField(DBSchema, tbInstitutions, 'abbreviation', 'full_name');
+  StackReportField(DBSchema, tbInstitutions, 'email_addr', 'manager_name');
+  StackReportField(DBSchema, tbInstitutions, 'phone_num', 'manager_name');
+  StackReportField(DBSchema, tbInstitutions, 'address_2', 'address_1');
+  StackReportField(DBSchema, tbInstitutions, 'neighborhood', 'address_1');
+  StackReportField(DBSchema, tbInstitutions, 'state_name', 'municipality_name');
+  StackReportField(DBSchema, tbInstitutions, 'country_name', 'municipality_name');
+  // People
+  StackReportField(DBSchema, tbPeople, 'abbreviation', 'full_name');
+  StackReportField(DBSchema, tbPeople, 'citation', 'full_name');
+  StackReportField(DBSchema, tbPeople, 'id_document_2', 'id_document_1');
+  StackReportField(DBSchema, tbPeople, 'phone_1', 'email_addr');
+  StackReportField(DBSchema, tbPeople, 'phone_2', 'email_addr');
+  StackReportField(DBSchema, tbPeople, 'department', 'institution_name');
+  StackReportField(DBSchema, tbPeople, 'job_role', 'institution_name');
+  StackReportField(DBSchema, tbPeople, 'address_2', 'address_1');
+  StackReportField(DBSchema, tbPeople, 'neighborhood', 'address_1');
+  StackReportField(DBSchema, tbPeople, 'state_name', 'municipality_name');
+  StackReportField(DBSchema, tbPeople, 'country_name', 'municipality_name');
 end;
 
 { TFieldSchema }
@@ -8606,6 +8645,7 @@ begin
   SummaryEnabled := True;
   ReportVisible := True;
   ReportGroupable := False;
+  ReportStackWith := EmptyStr;
 end;
 
 function TFieldSchema.ConvertValue(const S: String): Variant;
