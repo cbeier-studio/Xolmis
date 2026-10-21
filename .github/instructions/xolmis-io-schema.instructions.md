@@ -20,4 +20,4 @@ applyTo:
 - When adding/removing quick-entry fields in a table schema, increment `QuickEntrySchemaVersion` for that table and keep the inline version note updated.
 - Keep virtual and lookup companion fields consistent (`*_id` + display field): if one changes, update `LookupInfo`, `ImportVisible`, `QuickEntryVisible`, and grouping/summary behavior together.
 - Preserve strict validation in `TFieldSchema` (`ConvertValue`, `ValidateValue`, `ResolveLookup`) and raise explicit errors instead of silently coercing invalid data.
-- Avoid changing files under `source/io/backup` unless the task explicitly asks for legacy/backup updates.
+- Never change files under `source/io/backup` unless the task explicitly asks for legacy/backup updates.
