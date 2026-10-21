@@ -56,7 +56,6 @@ Source: "resources\methods_en-US.json"; DestDir: "{localappdata}\{#MyAppName}"
 Source: "resources\methods_pt-BR.json"; DestDir: "{localappdata}\{#MyAppName}"
 Source: "resources\taxon_ranks_en-US.json"; DestDir: "{localappdata}\{#MyAppName}"
 Source: "resources\taxon_ranks_pt-BR.json"; DestDir: "{localappdata}\{#MyAppName}"
-Source: "reports\*.lrf"; DestDir: "{app}\reports"
 Source: "site\*"; DestDir: "{app}\docs"; Flags: recursesubdirs 
 Source: "resources\FiraCode-Regular.ttf"; DestDir: "{autofonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "resources\FiraCode-Bold.ttf"; DestDir: "{autofonts}"; FontInstall: "Fira Code"; Flags: onlyifdoesntexist uninsneveruninstall

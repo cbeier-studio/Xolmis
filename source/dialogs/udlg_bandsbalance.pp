@@ -138,15 +138,15 @@ end;
 procedure TdlgBandsBalance.dbgSaldoPrepareCanvas(sender: TObject; DataCol: Integer;
   Column: TColumn; AState: TGridDrawState);
 var
-  BandAvgPerDay: Integer;
+  BandAvgPerDay: Double;
   vSaldo: Integer;
 begin
   //vSaldo := 0;
-  //if Column.FieldName = 'saldo' then
-  //begin
+  // if Column.FieldName = 'saldo' then
+  // begin
     vSaldo := dbgSaldo.Columns[1].Field.AsInteger;
-    BandAvgPerDay := Round(qBandsBalance.FieldByName('media_dia').AsFloat * MediaDiasExpedicao);
-    if vSaldo < BandAvgPerDay then
+    BandAvgPerDay := qBandsBalance.FieldByName('media_dia').AsFloat * MediaDiasExpedicao;
+    if (vSaldo = 0) or (vSaldo < BandAvgPerDay) then
     begin
       with (Sender as TDBGrid) do
       begin
@@ -162,7 +162,7 @@ begin
         end;
       end;
     end;
-  //end;
+  // end;
 end;
 
 procedure TdlgBandsBalance.dsBandsBalanceStateChange(Sender: TObject);

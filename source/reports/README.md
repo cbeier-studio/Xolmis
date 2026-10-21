@@ -463,7 +463,7 @@ ReportStackWith: String;
 
 #### ReportStackWith
 
-Nome do campo principal em cuja coluna este campo será empilhado na listagem simples (um valor abaixo do outro, como na tabela do modelo "r01"). O rótulo da coluna vira `Principal / Secundário`, e os valores vazios dos campos secundários são omitidos. Se o campo principal não estiver na listagem, o campo continua como coluna própria. Atualmente configurado para instituições, pessoas, métodos e anilhas.
+Nome do campo principal em cuja coluna este campo será empilhado na listagem simples (um valor abaixo do outro, como na tabela do modelo "r01"). O rótulo da coluna vira `Principal / Secundário`, e os valores vazios dos campos secundários são omitidos. Se o campo principal não estiver na listagem, o campo continua como coluna própria. As associações são configuradas por tabela no registro do schema; entre elas, capturas (data/hora), penas (data/hora), revisões de ninhos (data/hora, observadores e contagens de ovos), ovos (medidas), táxons (nome/conceito) e táxons botânicos (nome, autoria, nome vernacular e nível taxonômico).
 
 #### ReportVisible
 

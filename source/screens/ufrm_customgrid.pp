@@ -9580,10 +9580,13 @@ procedure TfrmCustomGrid.SetModule;
 var
   i: Integer;
 begin
-  if FModule.DataSet is TSQLQuery then
+  // "Disconnected" queries (sqoKeepOpenOnCommit) require PacketRecords = -1
+  if (FModule.DataSet is TSQLQuery) and
+    not (sqoKeepOpenOnCommit in TSQLQuery(FModule.DataSet).Options) then
     TSQLQuery(FModule.DataSet).PacketRecords := 300;
   for i := 0 to FModule.Submodules.Count - 1 do
-    if FModule.Submodules[i].DataSet is TSQLQuery then
+    if (FModule.Submodules[i].DataSet is TSQLQuery) and
+      not (sqoKeepOpenOnCommit in TSQLQuery(FModule.Submodules[i].DataSet).Options) then
       TSQLQuery(FModule.Submodules[i].DataSet).PacketRecords := 300;
   qAudios.PacketRecords := 300;
   qDocs.PacketRecords := 300;

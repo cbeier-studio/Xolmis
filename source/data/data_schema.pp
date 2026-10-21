@@ -8676,6 +8676,24 @@ begin
   StackReportField(DBSchema, tbSightings, 'sighting_time', 'sighting_date');
   StackReportField(DBSchema, tbSightings, 'latitude', 'longitude');
   StackReportField(DBSchema, tbSightings, 'coordinate_precision', 'longitude');
+  // Captures
+  StackReportField(DBSchema, tbCaptures, 'capture_time', 'capture_date');
+  // Feathers
+  StackReportField(DBSchema, tbFeathers, 'sample_time', 'sample_date');
+  // Nest revisions
+  StackReportField(DBSchema, tbNestRevisions, 'revision_time', 'revision_date');
+  StackReportField(DBSchema, tbNestRevisions, 'observer_2_name', 'observer_1_name');
+  StackReportField(DBSchema, tbNestRevisions, 'nidoparasite_eggs_tally', 'host_eggs_tally');
+  // Eggs
+  StackReportField(DBSchema, tbEggs, 'egg_width', 'egg_length');
+  StackReportField(DBSchema, tbEggs, 'egg_mass', 'egg_length');
+  StackReportField(DBSchema, tbEggs, 'egg_volume', 'egg_length');
+  // Taxa
+  StackReportField(DBSchema, tbZooTaxa, 'taxon_concept_id', 'scientific_name');
+  // Botanical taxa
+  StackReportField(DBSchema, tbBotanicTaxa, 'authorship', 'scientific_name');
+  StackReportField(DBSchema, tbBotanicTaxa, 'vernacular_name', 'scientific_name');
+  StackReportField(DBSchema, tbBotanicTaxa, 'rank_name', 'scientific_name');
 end;
 
 { TFieldSchema }

@@ -1,11 +1,11 @@
 object dlgBandsBalance: TdlgBandsBalance
   Left = 352
-  Height = 429
+  Height = 466
   Top = 33
   Width = 320
   BorderStyle = bsDialog
   Caption = 'Bands balance'
-  ClientHeight = 429
+  ClientHeight = 466
   ClientWidth = 320
   PopupMode = pmAuto
   Position = poScreenCenter
@@ -15,7 +15,7 @@ object dlgBandsBalance: TdlgBandsBalance
   object pBottom: TPanel
     Left = 0
     Height = 38
-    Top = 391
+    Top = 428
     Width = 320
     Align = alBottom
     BevelOuter = bvNone
@@ -38,7 +38,7 @@ object dlgBandsBalance: TdlgBandsBalance
   object lineBottom: TShapeLineBGRA
     Left = 0
     Height = 2
-    Top = 389
+    Top = 426
     Width = 320
     Align = alBottom
     LineColor = 9276813
@@ -47,7 +47,7 @@ object dlgBandsBalance: TdlgBandsBalance
   end
   object dbgSaldo: TDBGrid
     Left = 0
-    Height = 389
+    Height = 426
     Top = 0
     Width = 320
     Align = alClient
@@ -97,7 +97,7 @@ object dlgBandsBalance: TdlgBandsBalance
     AnchorSideTop.Side = asrCenter
     Left = 26
     Height = 24
-    Top = 182
+    Top = 201
     Width = 269
     ChildSizing.LeftRightSpacing = 4
     ChildSizing.TopBottomSpacing = 1
