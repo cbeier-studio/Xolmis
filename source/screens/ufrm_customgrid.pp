@@ -23,12 +23,13 @@ unit ufrm_customgrid;
 interface
 
 uses
-  Classes, SysUtils, Contnrs, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids, fgl, fpjson, jsonparser,
+  Classes, SysUtils, Contnrs, Forms, Controls, Graphics, Dialogs, StrUtils, RegExpr, DB, SQLDB, DateUtils, Grids,
+  fgl, fpjson, jsonparser,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, atshapelinebgra, BCPanel, bctypes,
-  DBControlGrid, Types, ImgList, ToggleSwitch, XolmisDBGrid, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
+  Types, ImgList, ToggleSwitch, XolmisDBGrid, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
   mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, BGRABitmap, Math,
-  data_types, data_filters, data_blobs, models_media, modules_core, utils_media;
+  data_types, data_filters, models_media, modules_core, utils_media;
 
 type
   { TStringMemoEditor }
@@ -8926,6 +8927,8 @@ begin
         dlgLoading.UpdateProgress(rsProgressPreparing, -1);
         Report := ReportClass.CreateForDataSet(FModule.DataSet, FModule.TableType);
         Report.OnProgress := @XRSReportProgress;
+        if Report is TReportSimpleList then
+          TReportSimpleList(Report).SetSearch(FSearch);
         Renderer.ShowPreview(Report);
       finally
         dlgLoading.Hide;

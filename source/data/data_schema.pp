@@ -8621,6 +8621,61 @@ begin
   StackReportField(DBSchema, tbPeople, 'neighborhood', 'address_1');
   StackReportField(DBSchema, tbPeople, 'state_name', 'municipality_name');
   StackReportField(DBSchema, tbPeople, 'country_name', 'municipality_name');
+  // Projects
+  StackReportField(DBSchema, tbProjects, 'short_title', 'project_title');
+  StackReportField(DBSchema, tbProjects, 'protocol_number', 'short_title');
+  StackReportField(DBSchema, tbProjects, 'end_date', 'start_date');
+  StackReportField(DBSchema, tbProjects, 'email_addr', 'contact_name');
+  StackReportField(DBSchema, tbProjects, 'website_uri', 'contact_name');
+  // Permits
+  StackReportField(DBSchema, tbPermits, 'permit_number', 'permit_name');
+  StackReportField(DBSchema, tbPermits, 'permit_status', 'permit_type');
+  StackReportField(DBSchema, tbPermits, 'expire_date', 'dispatch_date');
+  StackReportField(DBSchema, tbPermits, 'dispatcher_name', 'project_name');
+  // Gazetteer
+  StackReportField(DBSchema, tbGazetteer, 'abbreviation', 'site_name');
+  StackReportField(DBSchema, tbGazetteer, 'parent_site_name', 'site_name');
+  StackReportField(DBSchema, tbGazetteer, 'latitude', 'longitude');
+  StackReportField(DBSchema, tbGazetteer, 'coordinate_precision', 'longitude');
+  StackReportField(DBSchema, tbGazetteer, 'state_name', 'municipality_name');
+  StackReportField(DBSchema, tbGazetteer, 'country_name', 'municipality_name');
+  // Sampling plots
+  StackReportField(DBSchema, tbSamplingPlots, 'abbreviation', 'full_name');
+  StackReportField(DBSchema, tbSamplingPlots, 'latitude', 'longitude');
+  StackReportField(DBSchema, tbSamplingPlots, 'coordinate_precision', 'longitude');
+  // Specimens
+  StackReportField(DBSchema, tbSpecimens, 'sample_type', 'field_number');
+  StackReportField(DBSchema, tbSpecimens, 'collection_month', 'collection_year');
+  StackReportField(DBSchema, tbSpecimens, 'collection_day', 'collection_year');
+  StackReportField(DBSchema, tbSpecimens, 'latitude', 'longitude');
+  StackReportField(DBSchema, tbSpecimens, 'coordinate_precision', 'longitude');
+  StackReportField(DBSchema, tbSpecimens, 'individual_name', 'taxon_name');
+  // Nests
+  StackReportField(DBSchema, tbNests, 'loss_cause', 'nest_fate');
+  StackReportField(DBSchema, tbNests, 'last_date', 'found_date');
+  StackReportField(DBSchema, tbNests, 'observer_name', 'project_name');
+  StackReportField(DBSchema, tbNests, 'latitude', 'longitude');
+  StackReportField(DBSchema, tbNests, 'coordinate_precision', 'longitude');
+  // Individuals
+  StackReportField(DBSchema, tbIndividuals, 'banding_date', 'band_name');
+  StackReportField(DBSchema, tbIndividuals, 'double_band_name', 'band_name');
+  StackReportField(DBSchema, tbIndividuals, 'removed_band_name', 'band_name');
+  StackReportField(DBSchema, tbIndividuals, 'band_change_date', 'band_name');
+  StackReportField(DBSchema, tbIndividuals, 'left_tarsus', 'right_tarsus');
+  StackReportField(DBSchema, tbIndividuals, 'left_tibia', 'right_tibia');
+  StackReportField(DBSchema, tbIndividuals, 'individual_age', 'individual_sex');
+  // Surveys
+  StackReportField(DBSchema, tbSurveys, 'start_time', 'survey_date');
+  StackReportField(DBSchema, tbSurveys, 'end_time', 'survey_date');
+  StackReportField(DBSchema, tbSurveys, 'duration', 'survey_date');
+  StackReportField(DBSchema, tbSurveys, 'transport_mode', 'method_name');
+  StackReportField(DBSchema, tbSurveys, 'net_station_name', 'locality_name');
+  // Sightings
+  StackReportField(DBSchema, tbSightings, 'observers_list', 'survey_name');
+  StackReportField(DBSchema, tbSightings, 'method_name', 'survey_name');
+  StackReportField(DBSchema, tbSightings, 'sighting_time', 'sighting_date');
+  StackReportField(DBSchema, tbSightings, 'latitude', 'longitude');
+  StackReportField(DBSchema, tbSightings, 'coordinate_precision', 'longitude');
 end;
 
 { TFieldSchema }

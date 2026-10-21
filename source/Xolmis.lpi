@@ -178,7 +178,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="543"/>
+      <BuildNr Value="544"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -532,9 +532,6 @@
       </Item>
       <Item>
         <PackageName Value="fpexif_pkg"/>
-      </Item>
-      <Item>
-        <PackageName Value="ibcontrols"/>
       </Item>
       <Item>
         <PackageName Value="SynEdit"/>

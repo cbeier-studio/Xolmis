@@ -71,6 +71,21 @@
         .bold { font-weight: bold; }
         td .stack-secondary { color: var(--text-secondary, #666); font-size: 0.9em; }
 
+        .filters {
+            margin: 0 0 8px;
+            padding: 4px 6px;
+            font-size: 8pt;
+            color: var(--text-secondary, #666);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+        }
+        .filters .filter-item {
+            display: inline-block;
+            margin: 0 8px 0 0;
+            white-space: nowrap;
+        }
+        .filters .filter-item + .filter-item::before { content: "\2022"; margin-right: 8px; }
+
         thead { display: table-header-group; }
         tr { page-break-inside: avoid; }
 
@@ -96,6 +111,13 @@
 <body>
 
     <h1>{{report_title}}</h1>
+
+    {{#has_filters}}
+    <div class="filters">
+        <strong>{{filters_title}}:</strong>
+        {{#filters}}<span class="filter-item">{{text}}</span>{{/filters}}
+    </div>
+    {{/has_filters}}
 
     <table>
         <thead>

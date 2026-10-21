@@ -16,6 +16,9 @@ type
     FDataSet: TDataSet;
     FTableSchema: TTableSchema;
     FReportTitle: string;
+    FFilterLines: TStringList;
+    function DescribeField(AField: TSearchField): string;
+    procedure AddGroupLines(AGroups: TSearchGroups);
     procedure Initialize(ADataSet: TDataSet; ATableSchema: TTableSchema; const AReportTitle: string);
     procedure AddVisibleColumns(AColumns: TJSONArray);
     procedure StackColumns(AColumns: TJSONArray);
@@ -27,6 +30,9 @@ type
     constructor Create(ADataSet: TDataSet; ATableType: TTableType); reintroduce; overload;
     constructor Create(ADataSet: TDataSet; const AReportTitle: string); reintroduce; overload;
     destructor Destroy; override;
+
+    { Describes the active filters in the report header; nothing is shown when there are none. }
+    procedure SetSearch(ASearch: TCustomSearch);
 
     class function GetReportTitle: string; override;
     class function GetContexts: TModuleContexts; override;
@@ -77,14 +83,73 @@ begin
   FTableSchema := ATableSchema;
   FReportTitle := AReportTitle;
   FContextJSON := TJSONObject.Create;
+  FFilterLines := TStringList.Create;
 
   LoadTemplate(REPORT_TEMPLATE_SIMPLE_LIST);
 end;
 
 destructor TReportSimpleList.Destroy;
 begin
+  FFilterLines.Free;
   FContextJSON.Free;
   inherited Destroy;
+end;
+
+function TReportSimpleList.DescribeField(AField: TSearchField): string;
+var
+  V1, V2: string;
+begin
+  V1 := AField.Value1;
+  V2 := AField.Value2;
+  if AField.DataType = sdtBoolean then
+  begin
+    if (V1 = '1') or SameText(V1, 'true') then
+      V1 := rsCaptionYes
+    else
+      V1 := rsCaptionNo;
+  end;
+
+  case AField.Criteria of
+    crNull:     Result := AField.DisplayName + ': ' + rsReportFilterEmpty;
+    crNotNull:  Result := AField.DisplayName + ': ' + rsReportFilterNotEmpty;
+    crNotEqual: Result := AField.DisplayName +     ' <> ' + V1;
+        crBetween:  Result := AField.DisplayName + ': ' + V1 + ' - ' + V2;
+        crMoreThan: Result := AField.DisplayName + ' >= ' + V1;
+        crLessThan: Result := AField.DisplayName + ' <= ' + V1;
+  else
+    Result := AField.DisplayName + ': ' + V1;
+  end;
+end;
+
+procedure TReportSimpleList.AddGroupLines(AGroups: TSearchGroups);
+var
+  G, F: Integer;
+  Line, S: string;
+begin
+  for G := 0 to AGroups.Count - 1 do
+  begin
+    Line := EmptyStr;
+    for F := 0 to AGroups[G].Fields.Count - 1 do
+    begin
+      if AGroups[G].Fields[F].DisplayName = EmptyStr then
+        Continue;
+      S := DescribeField(AGroups[G].Fields[F]);
+      if Line <> EmptyStr then
+        Line := Line + '  /  ';
+      Line := Line + S;
+    end;
+    if Line <> EmptyStr then
+      FFilterLines.Add(Line);
+  end;
+end;
+
+procedure TReportSimpleList.SetSearch(ASearch: TCustomSearch);
+begin
+  FFilterLines.Clear;
+  if not Assigned(ASearch) then
+    Exit;
+  AddGroupLines(ASearch.TextFilters);
+  AddGroupLines(ASearch.QuickFilters);
 end;
 
 procedure TReportSimpleList.AddVisibleColumns(AColumns: TJSONArray);
@@ -213,7 +278,7 @@ begin
     if Stack = nil then
       Continue;
     for J := 0 to Stack.Count - 1 do
-      Primary.Strings['label'] := Primary.Get('label', '') + ' · ' +
+      Primary.Strings['label'] := Primary.Get('label', '') + ' / ' +
         TJSONObject(Stack.Items[J]).Get('label', '');
   end;
 end;
@@ -316,7 +381,9 @@ end;
 
 procedure TReportSimpleList.FetchData;
 var
-  ColArray, RowArray: TJSONArray;
+  ColArray, RowArray, FilterArray: TJSONArray;
+  FilterItem: TJSONObject;
+  I: Integer;
 begin
   FreeAndNil(FContextJSON);
   FContextJSON := TJSONObject.Create;
@@ -343,6 +410,20 @@ begin
   RowArray := TJSONArray.Create;
   AddRows(ColArray, RowArray);
   FContextJSON.Add('rows', RowArray);
+
+  if FFilterLines.Count > 0 then
+  begin
+    FContextJSON.Add('has_filters', True);
+    FContextJSON.Add('filters_title', rsReportFiltersApplied);
+    FilterArray := TJSONArray.Create;
+    for I := 0 to FFilterLines.Count - 1 do
+    begin
+      FilterItem := TJSONObject.Create;
+      FilterItem.Add('text', FFilterLines[I]);
+      FilterArray.Add(FilterItem);
+    end;
+    FContextJSON.Add('filters', FilterArray);
+  end;
 end;
 
 procedure TReportSimpleList.BuildContent;

@@ -877,10 +877,15 @@ end;
 procedure AddExactTextFilter(aSearch: TCustomSearch; const FieldName, Caption: String; aText: String);
 var
   sf: Integer;
+  UsePrefix: Boolean;
 begin
+  UsePrefix := True;
+  if aSearch.TableType = tbMethods then
+    UsePrefix := False;
+
   sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
   aSearch.QuickFilters[sf].Fields.Add(TSearchField.Create(FieldName, Caption, sdtText,
-        crEqual, True, aText));
+        crEqual, UsePrefix, aText));
 end;
 
 procedure AddLookupFilter(aSearch: TCustomSearch; const FieldNames, Captions: array of String; LookupId: Integer);

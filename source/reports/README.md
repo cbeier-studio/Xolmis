@@ -160,7 +160,7 @@ Responsável por listagens tabulares simples derivadas diretamente de um `TDataS
 
 O construtor recebe o dataset (emprestado; não é liberado pelo relatório) e o `TTableType` correspondente. Para consultas que não representam uma tabela registrada no schema, também pode receber um título explícito; nesse caso, usa os campos visíveis do dataset e seus `DisplayLabel`, sem exigir um `TTableSchema`. A listagem usa os campos visíveis do dataset na ordem definida pelo dataset, aplicando `ReportOrder` quando informado. Para manter a consulta do módulo inalterada, percorre os registros sem substituir o dataset e restaura o bookmark original ao terminar.
 
-Tem cabeçalho com informações de filtros ou registro-pai (se for tabela-filha).
+Tem cabeçalho com informações de filtros ou registro-pai (se for tabela-filha). O cabeçalho de filtros é gerado por `SetSearch(TCustomSearch)` (chamado pelo grid com `FSearch`): cada grupo de `TextFilters`/`QuickFilters` vira um item (`Campo: valor`, campos do mesmo grupo separados por `/`). Se não há filtros (todos os registros), o bloco `has_filters` não é renderizado. Filtros de lookup/árvore exibem o ID, pois o `TCustomSearch` não guarda o nome legível.
 
 ### 4.3 TReportGroupedList
 
@@ -463,7 +463,7 @@ ReportStackWith: String;
 
 #### ReportStackWith
 
-Nome do campo principal em cuja coluna este campo será empilhado na listagem simples (um valor abaixo do outro, como na tabela do modelo "r01"). O rótulo da coluna vira `Principal · Secundário`, e os valores vazios dos campos secundários são omitidos. Se o campo principal não estiver na listagem, o campo continua como coluna própria. Atualmente configurado para instituições, pessoas, métodos e anilhas.
+Nome do campo principal em cuja coluna este campo será empilhado na listagem simples (um valor abaixo do outro, como na tabela do modelo "r01"). O rótulo da coluna vira `Principal / Secundário`, e os valores vazios dos campos secundários são omitidos. Se o campo principal não estiver na listagem, o campo continua como coluna própria. Atualmente configurado para instituições, pessoas, métodos e anilhas.
 
 #### ReportVisible
 
