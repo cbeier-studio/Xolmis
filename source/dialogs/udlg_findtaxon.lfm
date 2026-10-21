@@ -8,13 +8,39 @@ object dlgFindTaxon: TdlgFindTaxon
   Caption = 'Find taxon'
   ClientHeight = 268
   ClientWidth = 317
+  KeyPreview = True
   PopupMode = pmAuto
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnShow = FormShow
+  object uList: TDrawGrid
+    Left = 0
+    Height = 237
+    Top = 31
+    Width = 317
+    Align = alClient
+    AutoFillColumns = True
+    ColCount = 1
+    DefaultRowHeight = 52
+    FixedCols = 0
+    FixedRows = 0
+    GridLineStyle = psClear
+    Options = [goFixedVertLine, goFixedHorzLine, goThumbTracking, goSmoothScroll, goRowHighlight]
+    RowCount = 1
+    ScrollBars = ssAutoVertical
+    TabOrder = 1
+    OnDrawCell = uListDrawCell
+    OnKeyDown = FormKeyDown
+    OnKeyPress = FormKeyPress
+    OnMouseUp = uListMouseUp
+    OnSelectCell = uListSelectCell
+    ColWidths = (
+      313
+    )
+  end
   object pSearchBar: TPanel
     Left = 0
     Height = 31
@@ -160,66 +186,6 @@ object dlgFindTaxon: TdlgFindTaxon
         StateDisabled.Color = 13158600
         StateDisabled.BorderColor = 12566463
         StateDisabled.BorderWidth = 0
-      end
-    end
-  end
-  object uList: TDBControlGrid
-    Left = 0
-    Height = 237
-    Top = 31
-    Width = 317
-    Align = alClient
-    AlternateColor = 16448250
-    AltColorStartNormal = True
-    Color = clWindow
-    DataSource = dsFind
-    DefaultPositionAtEnd = False
-    DrawPanel = pContent
-    Options = [dgpIndicator, dgpDisableInsert, dgpCancelOnExit]
-    TabOrder = 1
-    OnKeyDown = FormKeyDown
-    OnKeyPress = FormKeyPress
-    OnPrepareCanvas = uListPrepareCanvas
-    ColWidths = (
-      10
-      286
-    )
-    object pContent: TPanel
-      Left = 10
-      Height = 37
-      Top = 0
-      Width = 286
-      BevelOuter = bvNone
-      ChildSizing.LeftRightSpacing = 8
-      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-      ChildSizing.ShrinkHorizontal = crsHomogenousChildResize
-      ChildSizing.ControlsPerLine = 1
-      ClientHeight = 37
-      ClientWidth = 286
-      ParentBackground = False
-      TabOrder = 0
-      Visible = False
-      OnClick = pContentClick
-      object lblVernacular: TDBText
-        Left = 8
-        Height = 15
-        Top = 17
-        Width = 270
-        Align = alTop
-        DataSource = dsFind
-        Font.Color = 6381921
-        ParentFont = False
-        OnClick = pContentClick
-      end
-      object lblName: TDBText
-        Left = 8
-        Height = 15
-        Top = 2
-        Width = 270
-        Align = alTop
-        BorderSpacing.Top = 2
-        DataSource = dsFind
-        OnClick = pContentClick
       end
     end
   end

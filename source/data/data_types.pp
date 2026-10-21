@@ -522,6 +522,16 @@ type
 
   TRecycleList = specialize TObjectList<TRecycleItem>;
 
+type
+  TTaxonItem = class
+  public
+    TaxonID: Integer;
+    ScientificName: String;
+    VernacularName: String;
+  end;
+
+  TTaxonList = specialize TObjectList<TTaxonItem>;
+
 var
   UID: TGUID;
   TablesDict: TTablesDictionary;

@@ -21,31 +21,28 @@ unit udlg_findtaxon;
 interface
 
 uses
-  Classes, SysUtils, DB, SQLDB, LCLType, Forms, Controls, Graphics, Dialogs, ExtCtrls, DBCtrls,
-  DBControlGrid, StdCtrls, Buttons, BCPanel, ColorSpeedButton, RegExpr, StrUtils,
-  utils_system, models_taxonomy, data_types, Grids, models_record_types;
+  Classes, SysUtils, Math, DB, SQLDB, LCLType, Forms, Controls, Graphics, Dialogs, ExtCtrls,
+  StdCtrls, Buttons, BCPanel, ColorSpeedButton, RegExpr, StrUtils,
+  utils_system, models_taxonomy, data_types, Grids, models_record_types, Types;
 
 type
 
   { TdlgFindTaxon }
 
   TdlgFindTaxon = class(TForm)
+    uList: TDrawGrid;
     iButtons: TImageList;
     iButtonsDark: TImageList;
     lblEmptyQuery: TLabel;
-    lblVernacular: TDBText;
     dsFind: TDataSource;
     EP: TEdit;
-    lblName: TDBText;
     pEmptyQuery: TBCPanel;
     pSearchBar: TPanel;
-    pContent: TPanel;
     pEP: TBCPanel;
     qFind: TSQLQuery;
     sbOptions: TColorSpeedButton;
     sbClose: TColorSpeedButton;
     TimerFind: TTimer;
-    uList: TDBControlGrid;
     procedure dsFindStateChange(Sender: TObject);
     procedure EPChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -53,23 +50,27 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
-    procedure lblNameEnter(Sender: TObject);
-    procedure pContentClick(Sender: TObject);
     procedure sbOptionsClick(Sender: TObject);
     procedure sbCloseClick(Sender: TObject);
     procedure TimerFindTimer(Sender: TObject);
-    procedure uListPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
+    procedure uListClick(Sender: TObject);
+    procedure uListDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
+    procedure uListMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure uListSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
   private
     xCod: Integer;
     xNome, xCodStr, xInit, xFiltro: String;
     xTaxFiltro: TTaxonFilters;
     xValid: Boolean;
     oOrder, oDirection: String;
+    FTaxonList: TTaxonList;
     function Pesquisar(aValor: String): Boolean;
     function PesquisarHashtag(aValor: String): Boolean;
     procedure ApplyDarkMode;
+    procedure MoveGridRow(Delta: Integer);
     procedure GetRankFilter(const aSQL: TStrings; aFilter: TTaxonFilters);
     procedure SetSelect(const aSQL: TStrings; aFilter: TFilterValue; aCriteria: TCriteriaType);
+    procedure LoadTaxonMetadataFromDB;
   public
     procedure SetDialogPosition(X, Y: Integer; ControlWidth, ControlHeight: Integer);
 
@@ -109,8 +110,7 @@ begin
   sbOptions.StateActive.Color := clSolidBGSecondaryDark;
   sbOptions.StateNormal.Color := pEP.Background.Color;
 
-  uList.AlternateColor := clSolidBGSecondaryDark;
-  lblVernacular.Font.Color := clGray;
+  //uList.AlternateColor := clSolidBGSecondaryDark;
 
   pEmptyQuery.Background.Color := clCardBGDefaultDark;
   pEmptyQuery.Border.Color := clCardBGSecondaryDark;
@@ -125,22 +125,24 @@ end;
 procedure TdlgFindTaxon.EPChange(Sender: TObject);
 begin
   TimerFind.Enabled := False;
-  TimerFind.Enabled := True;
-  if Length(EP.Text) = 0 then
-  //begin
-  //  EP.RightButton.Visible := True;
-  //end
-  //else
+  if Length(Trim(EP.Text)) = 0 then
   begin
-    //EP.RightButton.Visible := False;
-    qFind.Close;
+    // Empty search: close the dataset and clear the list instead of querying
+    if qFind.Active then
+      qFind.Close;
+    uList.Enabled := False;
+    LoadTaxonMetadataFromDB;
+    Exit;
   end;
+  TimerFind.Enabled := True;
 end;
 
 procedure TdlgFindTaxon.FormCreate(Sender: TObject);
 begin
   xNome := EmptyStr;
   xCodStr := EmptyStr;
+
+  FTaxonList := TTaxonList.Create(True);
 end;
 
 procedure TdlgFindTaxon.FormDestroy(Sender: TObject);
@@ -148,44 +150,39 @@ begin
   // Fecha tabelas
   if qFind.Active then
     qFind.Close;
+
+  FTaxonList.Free;
 end;
 
 procedure TdlgFindTaxon.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  if (Key = VK_DOWN) then { MOVER SELECAO PARA BAIXO = Down }
-  begin
-    // if DBG.Enabled then
-    // begin
-    // if DBG.SelectedRow < DBG.RowCount-1 then
-    // DBG.SelectedRow:= DBG.SelectedRow + 1;
-    // end;
-    if (qFind.RecordCount > 0) and (qFind.RecNo < qFind.RecordCount) then
-      qFind.Next;
-    Key := 0;
+  if Shift <> [] then
+    Exit;
+
+  // Navigation is driven only by the grid; OnSelectCell syncs the dataset
+  case Key of
+    VK_DOWN: MoveGridRow(1);
+    VK_UP: MoveGridRow(-1);
+    VK_NEXT: MoveGridRow(Max(1, uList.VisibleRowCount - 1));
+    VK_PRIOR: MoveGridRow(-Max(1, uList.VisibleRowCount - 1));
+  else
+    Exit;
   end;
-  if (Key = VK_UP) then { MOVER SELECAO PARA CIMA = Up }
-  begin
-    // if DBG.Enabled then
-    // begin
-    // if DBG.SelectedRow > 0 then
-    // DBG.SelectedRow:= DBG.SelectedRow - 1;
-    // end;
-    if (qFind.RecordCount > 0) and (qFind.RecNo > 0) then
-      qFind.Prior;
-    Key := 0;
-  end;
-  if (Key = VK_NEXT) then { MOVER SELECAO PARA BAIXO = PageDown }
-  begin
-    if (qFind.RecordCount > 0) and (qFind.RecNo < qFind.RecordCount) then
-      qFind.MoveBy(8);
-    Key := 0;
-  end;
-  if (Key = VK_PRIOR) then { MOVER SELECAO PARA CIMA = PageUp }
-  begin
-    if (qFind.RecordCount > 0) and (qFind.RecNo > 0) then
-      qFind.MoveBy(-8);
-    Key := 0;
-  end;
+  Key := 0;
+end;
+
+procedure TdlgFindTaxon.MoveGridRow(Delta: Integer);
+var
+  NewRow: Integer;
+begin
+  if (FTaxonList.Count = 0) or (not uList.Enabled) then
+    Exit;
+  NewRow := uList.Row + Delta;
+  if NewRow < 0 then
+    NewRow := 0;
+  if NewRow > uList.RowCount - 1 then
+    NewRow := uList.RowCount - 1;
+  uList.Row := NewRow;
 end;
 
 procedure TdlgFindTaxon.FormKeyPress(Sender: TObject; var Key: char);
@@ -212,7 +209,7 @@ begin
     if (EP.Focused) then
     begin
       if (qFind.RecordCount > 0) { and (DBG.CanSetFocus) } then
-        pContentClick(nil);
+        uListClick(nil);
       // DBG.SetFocus;
       Key := #0;
     end
@@ -220,15 +217,13 @@ begin
     if (uList.Focused) then
     begin
       if (qFind.RecordCount > 0) then
-        pContentClick(nil);
+        uListClick(nil);
       Key := #0;
     end;
   end;
 end;
 
 procedure TdlgFindTaxon.FormShow(Sender: TObject);
-var
-  Verna: Integer;
 begin
   //PositionWindow(WindowPos, Self);
   {$IFDEF MSWINDOWS}
@@ -238,8 +233,6 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
-  lblName.DataField := COL_SCIENTIFIC_NAME;
-  lblVernacular.DataField := COL_VERNACULAR_NAME;
   oOrder := COL_SCIENTIFIC_NAME;
   oDirection := 'ASC';
   EP.SetFocus;
@@ -270,21 +263,116 @@ procedure TdlgFindTaxon.TimerFindTimer(Sender: TObject);
 begin
   TimerFind.Enabled := False;
 
+  if Length(Trim(EP.Text)) = 0 then
+    Exit;
+
   uList.Enabled := Pesquisar(EP.Text);
+
+  LoadTaxonMetadataFromDB;
 end;
 
-procedure TdlgFindTaxon.uListPrepareCanvas(Sender: TObject; aCol, aRow: Integer; aState: TGridDrawState);
+procedure TdlgFindTaxon.uListClick(Sender: TObject);
 begin
-  //if (gdSelected in aState) or (gdFocused in aState) then
-  //  pContent.Color := clHighlight
-  //else
-  //  pContent.Color := clWhite;
-  //lblName.BgColor := pContent.Color;
-  //
-  //if qFind.Active then
-  //  lblName.SetHtmlFromStr(qFind.FieldByName('formatted_name').AsString)
-  //else
-  //  lblName.SetHtmlFromStr(EmptyStr);
+  if (qFind.RecordCount > 0) then
+  begin
+    if (UsarValido) then
+    begin
+      Codigo := qFind.FieldByName(COL_TAXON_ID).AsInteger;
+      Nome := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, Codigo);
+    end
+    else
+    begin
+      Codigo := qFind.FieldByName(COL_TAXON_ID).AsInteger;
+      Nome := qFind.FieldByName(COL_SCIENTIFIC_NAME).AsString;
+    end;
+    CodigoStr := IntToStr(Codigo);
+  end;
+
+  ModalResult := mrOK;
+end;
+
+// TCustomGrid.Click fires on every selection change (including keyboard), so confirm only on a real mouse click
+procedure TdlgFindTaxon.uListMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  C, R: Integer;
+begin
+  if Button <> mbLeft then
+    Exit;
+  uList.MouseToCell(X, Y, C, R);
+  if (R >= 0) and (R < FTaxonList.Count) then
+    uListClick(Sender);
+end;
+
+procedure TdlgFindTaxon.uListDrawCell(Sender: TObject; aCol, aRow: Integer; aRect: TRect; aState: TGridDrawState);
+const
+  CellPadding = 6;
+  LineHeight = 20;
+
+  // Truncate text with a trailing ellipsis if it doesn't fit in AMaxWidth
+  function EllipsisText(ACanvas: TCanvas; const AText: String; AMaxWidth: Integer): String;
+  begin
+    Result := AText;
+    if ACanvas.TextWidth(Result) <= AMaxWidth then
+      Exit;
+    while (Length(Result) > 0) and (ACanvas.TextWidth(Result + '...') > AMaxWidth) do
+      Delete(Result, Length(Result), 1);
+    Result := Result + '...';
+  end;
+
+var
+  Grid: TDrawGrid;
+  RText: TRect;
+  TextTop: Integer;
+  Item: TTaxonItem;
+begin
+  Grid := TDrawGrid(Sender);
+
+  if (aCol < 0) then
+    Exit;
+  if (aRow < 0) or (aRow >= FTaxonList.Count) then
+    Exit;
+  Item := FTaxonList[aRow];
+
+  // Background (highlight for selected row)
+  if gdSelected in aState then
+  begin
+    Grid.Canvas.Brush.Color := clHighlight;
+    Grid.Canvas.Font.Color := clHighlightText;
+  end
+  else
+  begin
+    Grid.Canvas.Brush.Color := clWindow;
+    Grid.Canvas.Font.Color := clWindowText;
+  end;
+  Grid.Canvas.FillRect(aRect);
+
+  // Square thumbnail filling the row height on the left, metadata on the right
+  RText := Rect(aRect.Left + CellPadding, aRect.Top + CellPadding, aRect.Right - CellPadding, aRect.Bottom - CellPadding);
+
+  // Metadata (everything except Subtitle), drawn to the right of the thumbnail
+  Grid.Canvas.Font.Italic := True;
+  Grid.Canvas.TextOut(RText.Left, RText.Top, EllipsisText(Grid.Canvas, Item.ScientificName, RText.Width));
+  Grid.Canvas.Font.Italic := False;
+  TextTop := RText.Top + LineHeight;
+
+  if gdSelected in aState then
+  begin
+    Grid.Canvas.Font.Color := clHighlightText;
+  end
+  else
+  begin
+    Grid.Canvas.Font.Color := ActiveTheme.Foreground.TextSecondary;
+  end;
+  Grid.Canvas.TextOut(RText.Left, TextTop, EllipsisText(Grid.Canvas, Trim(Item.VernacularName), RText.Width));
+end;
+
+procedure TdlgFindTaxon.uListSelectCell(Sender: TObject; aCol, aRow: Integer; var CanSelect: Boolean);
+begin
+  if not qFind.Active then
+    Exit;
+
+  if (uList.RowCount > 0) then
+    qFind.RecNo := aRow + 1;
 end;
 
 function TdlgFindTaxon.Pesquisar(aValor: String): Boolean;
@@ -294,6 +382,7 @@ begin
   Result := False;
 
   Criterio := crLike;
+
   // aValor:= Trim(AnsiLowerCase(aValor));
   if ExecRegExpr('^#.+$', aValor) then
   begin
@@ -506,29 +595,36 @@ begin
   end;
 end;
 
-procedure TdlgFindTaxon.lblNameEnter(Sender: TObject);
+procedure TdlgFindTaxon.LoadTaxonMetadataFromDB;
+var
+  Item: TTaxonItem;
 begin
-  pContentClick(Sender);
-end;
+  FTaxonList.Clear;
 
-procedure TdlgFindTaxon.pContentClick(Sender: TObject);
-begin
-  if (qFind.RecordCount > 0) then
-  begin
-    if (UsarValido) then
+  if not qFind.Active then
+    Exit;
+
+  // Avoid re-entrant DataChange events while scrolling through qFind
+  qFind.DisableControls;
+  try
+    qFind.First;
+    while not qFind.EOF do
     begin
-      Codigo := qFind.FieldByName(COL_TAXON_ID).AsInteger;
-      Nome := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, Codigo);
-    end
-    else
-    begin
-      Codigo := qFind.FieldByName(COL_TAXON_ID).AsInteger;
-      Nome := qFind.FieldByName(COL_SCIENTIFIC_NAME).AsString;
+      Item := TTaxonItem.Create;
+      Item.TaxonID := qFind.FieldByName('taxon_id').AsInteger;
+      Item.ScientificName := qFind.FieldByName('scientific_name').AsString;
+      Item.VernacularName := qFind.FieldByName('vernacular_name').AsString;
+
+      FTaxonList.Add(Item);
+      qFind.Next;
     end;
-    CodigoStr := IntToStr(Codigo);
+  finally
+    qFind.EnableControls;
   end;
 
-  ModalResult := mrOK;
+  uList.RowCount := FTaxonList.Count;
+
+  uList.Invalidate;
 end;
 
 procedure TdlgFindTaxon.SetSelect(const aSQL: TStrings; aFilter: TFilterValue;
