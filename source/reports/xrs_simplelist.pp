@@ -389,6 +389,9 @@ begin
   FContextJSON := TJSONObject.Create;
   FContextJSON.Add('report_title', FReportTitle);
   FContextJSON.Add('theme_css', GetThemeCSS);
+  FContextJSON.Add('page_size_css', GetPageSizeCSS);
+  FContextJSON.Add('page_body_width', GetPageBodyWidthCSS);
+  FContextJSON.Add('page_body_min_height', GetPageBodyMinHeightCSS);
 
   ColArray := TJSONArray.Create;
   AddVisibleColumns(ColArray);

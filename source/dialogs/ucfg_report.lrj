@@ -1,0 +1,12 @@
+{"version":1,"strings":[
+{"hash":198433715,"name":"tdlgreportsettings.caption","sourcebytes":[82,101,112,111,114,116,32,115,101,116,116,105,110,103,115],"value":"Report settings"},
+{"hash":39044,"name":"tdlgreportsettings.lblgroupingfield.caption","sourcebytes":[71,114,111,117,112,105,110,103,32,102,105,101,108,100],"value":"Grouping field"},
+{"hash":47925294,"name":"tdlgreportsettings.lblpageorientation.caption","sourcebytes":[80,97,103,101,32,111,114,105,101,110,116,97,116,105,111,110],"value":"Page orientation"},
+{"hash":79284965,"name":"tdlgreportsettings.cbpageorientation.text","sourcebytes":[76,97,110,100,115,99,97,112,101],"value":"Landscape"},
+{"hash":225957749,"name":"tdlgreportsettings.lblpagesize.caption","sourcebytes":[80,97,103,101,32,115,105,122,101],"value":"Page size"},
+{"hash":1092,"name":"tdlgreportsettings.cbpagesize.text","sourcebytes":[65,52],"value":"A4"},
+{"hash":70289749,"name":"tdlgreportsettings.lblcolortheme.caption","sourcebytes":[67,111,108,111,114,32,116,104,101,109,101],"value":"Color theme"},
+{"hash":174287092,"name":"tdlgreportsettings.cbtheme.text","sourcebytes":[67,111,108,111,114,101,100],"value":"Colored"},
+{"hash":4749113,"name":"tdlgreportsettings.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
+{"hash":77089212,"name":"tdlgreportsettings.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
+]}

@@ -29,7 +29,7 @@ uses
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, atshapelinebgra, BCPanel, bctypes,
   Types, ImgList, ToggleSwitch, XolmisDBGrid, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
   mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, BGRABitmap, Math,
-  data_types, data_filters, models_media, modules_core, utils_media;
+  data_types, data_filters, models_media, modules_core, utils_media, xrs_core;
 
 type
   { TStringMemoEditor }
@@ -1236,6 +1236,9 @@ type
   private
     FModule: TModuleController;
     FReportRenderers: TObjectList;
+    FReportPageSize: TXRSPageSize;
+    FReportPageOrientation: TXRSOrientation;
+    FReportColorTheme: TXolmisReportTheme;
     FTableType, FChildTable: TTableType;
     FSearch: TCustomSearch;
     isFiltered: Boolean;
@@ -1426,8 +1429,8 @@ uses
   modules_bands, modules_birds, modules_botany, modules_breeding, modules_gazetteer, modules_institutions,
   modules_methods, modules_people, modules_permits, modules_projects, modules_sampling, modules_sampling_plots,
   modules_sightings, modules_specimens, modules_pois,
-  udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance,
-  xrs_core, xrs_renderer, xrs_simplelist,
+  udlg_loading, udlg_progress, udlg_exportpreview, udlg_bandsbalance, ucfg_report,
+  xrs_renderer, xrs_simplelist,
   {$IFDEF DEBUG}utils_debug,{$ENDIF} uDarkStyleParams,
   udm_main, udm_grid, udm_individuals, udm_breeding, udm_sampling, udm_reports,
   ufrm_main, ufrm_quickentry, udlg_selectrecord, udlg_bandhistory, udlg_gazetteerautofill, udlg_attachmedia,
@@ -4984,9 +4987,11 @@ end;
 procedure TfrmCustomGrid.FormCreate(Sender: TObject);
 begin
   FCanToggle := False;
+  FReportPageSize := xpsA4;
+  FReportPageOrientation := xpoLandscape;
+  FReportColorTheme := xrtBrand;
   FMasterTotal := -1;
   isFiltered := False;
-
   oldAutoSizeCols := False;
   oldSidePanel := False;
   oldSideIndex := -1;
@@ -8906,6 +8911,8 @@ var
   ReportClass: TXolmisReportClass;
   Report: TXolmisReport;
   Renderer: TReportRenderer;
+  Dialog: TdlgReportSettings;
+  Settings: TXolmisReportSettings;
 begin
   if not (Sender is TXRSReportMenuItem) or not Assigned(FModule) or
     not CanPrintTable(FModule.TableType) then
@@ -8918,6 +8925,25 @@ begin
   end;
 
   ReportClass := TXRSReportMenuItem(Sender).ReportClass;
+
+  Dialog := TdlgReportSettings.Create(nil);
+  try
+    Dialog.PageSize := FReportPageSize;
+    Dialog.PageOrientation := FReportPageOrientation;
+    Dialog.ColorTheme := FReportColorTheme;
+    if Dialog.ShowModal <> mrOK then
+      Exit;
+    FReportPageSize := Dialog.PageSize;
+    FReportPageOrientation := Dialog.PageOrientation;
+    FReportColorTheme := Dialog.ColorTheme;
+    Settings.PageSize := Dialog.PageSize;
+    Settings.PageOrientation := Dialog.PageOrientation;
+    Settings.GroupingField := Dialog.GroupingField;
+    Settings.ColorTheme := Dialog.ColorTheme;
+  finally
+    FreeAndNil(Dialog);
+  end;
+
   Report := nil;
   Renderer := TReportRenderer.Create;
   try
@@ -8926,6 +8952,7 @@ begin
       try
         dlgLoading.UpdateProgress(rsProgressPreparing, -1);
         Report := ReportClass.CreateForDataSet(FModule.DataSet, FModule.TableType);
+        Report.ApplySettings(Settings);
         Report.OnProgress := @XRSReportProgress;
         if Report is TReportSimpleList then
           TReportSimpleList(Report).SetSearch(FSearch);

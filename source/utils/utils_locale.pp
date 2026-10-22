@@ -259,6 +259,7 @@ function TranslateSightingJsonValue(const AValue: String): String;
     rsErrorAbsolutePathNotAllowed = 'Absolute path not allowed in GetFullPath: %s';
     rsErrorDatabaseFileAlreadyExists = 'The database file %s already exists. You must create a database using a new file name.';
     rsErrorStartingChromium = 'Error starting Chromium.';
+    rsErrorGeneratingReport = 'Error generating report "%s".';
 
     { Warning messages }
     rsWarningSchemaVersionMismatch = 'Schema version mismatch: file has v%d, expected v%d.';
@@ -1739,7 +1740,12 @@ function TranslateSightingJsonValue(const AValue: String): String;
     rsReportFiltersApplied = 'Applied filters';
     rsReportFilterEmpty = '(empty)';
     rsReportFilterNotEmpty = '(not empty)';
-    rsErrorGeneratingReport = 'Error generating report "%s".';
+
+    rsPageSizeLetter = 'Letter';
+    rsPageOrientationLandscape = 'Landscape';
+    rsPageOrientationPortrait = 'Portrait';
+    rsReportThemeColored = 'Colored';
+    rsReportThemeGrayscale = 'Grayscale';
 
     { Varied captions }
     rsLabelName = 'Database name: *';

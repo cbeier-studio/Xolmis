@@ -795,8 +795,8 @@ O sistema organiza os relatórios em categorias funcionais.
 
 O fluxo quando o usuário dispara a ação para gerar um relatório:
 
-1. (Planejado) Mostra um diálogo de configuração do relatório com:
-    - Seleção de colunas a incluir no relatório;
+1. Mostra um diálogo de configuração do relatório com:
+    - (Planejado) Seleção de colunas a incluir no relatório;
     - Seleção de tema de cores (colorido ou monocromático);
     - Seleção da orientação da página (retrato ou paisagem);
     - Seleção de tamanho de página (A4 - padrão, ou Carta);

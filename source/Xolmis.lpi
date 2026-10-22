@@ -24,7 +24,7 @@
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\languages"/>
-      <ExcludedIdentifiers Count="147">
+      <ExcludedIdentifiers Count="150">
         <Item1 Value="tfrmCustomGrid.Caption"/>
         <Item2 Value="tfrmCustomList.Caption"/>
         <Item3 Value="tdlgProgress.lblTitle.Caption"/>
@@ -172,13 +172,16 @@
         <Item145 Value="tcfgOptions.txtMediaPath.Caption"/>
         <Item146 Value="tcfgOptions.txtThumbnailCacheSize.Caption"/>
         <Item147 Value="tdlgMarkdown.Caption"/>
+        <Item148 Value="tdlgReportSettings.cbPageSize.Text"/>
+        <Item149 Value="tdlgReportSettings.cbPageOrientation.Text"/>
+        <Item150 Value="tdlgReportSettings.cbTheme.Text"/>
       </ExcludedIdentifiers>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="545"/>
+      <BuildNr Value="546"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Christian Beier" LegalCopyright="© 2023-2026 Christian Beier" ProductName="Xolmis" ProductVersion="0.1"/>
     </VersionInfo>
@@ -1705,6 +1708,13 @@
       <Unit>
         <Filename Value="reports\xrs_renderer.pp"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="dialogs\ucfg_report.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dlgReportSettings"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
     <Debugger>

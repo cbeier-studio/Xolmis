@@ -10,7 +10,7 @@
         }
 
         @page {
-            size: A4 landscape;
+            size: {{page_size_css}};
             margin: 18mm 10mm;
 
             @top-left {
@@ -89,12 +89,12 @@
         thead { display: table-header-group; }
         tr { page-break-inside: avoid; }
 
-        /* Na tela, simula a folha A4 (210mm x 297mm - 2 x 10mm de margem) */
+        /* Na tela, simula a folha (tamanho e orientação configurados) menos 2 x 10mm de margem */
         @media screen {
             html { background: #8a8a8a; }
             body {
-                width: 277mm;
-                min-height: 190mm;
+                width: {{page_body_width}};
+                min-height: {{page_body_min_height}};
                 box-sizing: content-box;
                 margin: 10mm auto;
                 padding: 10mm;

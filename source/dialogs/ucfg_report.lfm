@@ -1,0 +1,422 @@
+object dlgReportSettings: TdlgReportSettings
+  Left = 388
+  Height = 364
+  Top = 250
+  Width = 429
+  AutoSize = True
+  BorderStyle = bsDialog
+  Caption = 'Report settings'
+  ClientHeight = 364
+  ClientWidth = 429
+  Constraints.MinWidth = 400
+  Position = poScreenCenter
+  LCLVersion = '4.8.0.0'
+  OnCreate = FormCreate
+  OnShow = FormShow
+  object pClient: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 0
+    Height = 236
+    Top = 0
+    Width = 429
+    Anchors = [akTop, akLeft, akRight]
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 16
+    ClientHeight = 236
+    ClientWidth = 429
+    TabOrder = 0
+    object pGroupingField: TBCPanel
+      Left = 16
+      Height = 47
+      Top = 118
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = True
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 2
+      Visible = False
+      object lblGroupingField: TLabel
+        AnchorSideLeft.Control = pGroupingField
+        AnchorSideTop.Control = pGroupingField
+        AnchorSideTop.Side = asrCenter
+        Left = 16
+        Height = 15
+        Top = 16
+        Width = 76
+        Caption = 'Grouping field'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object cbGroupingField: TComboBox
+        AnchorSideTop.Control = pGroupingField
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = pGroupingField
+        AnchorSideRight.Side = asrBottom
+        Left = 213
+        Height = 23
+        Top = 12
+        Width = 168
+        Anchors = [akTop, akRight]
+        ItemHeight = 15
+        Style = csDropDownList
+        TabOrder = 0
+      end
+    end
+    object pPageOrientation: TBCPanel
+      Left = 16
+      Height = 47
+      Top = 63
+      Width = 397
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = False
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrTopLeftSquare, rrTopRightSquare]
+      TabOrder = 1
+      object lblPageOrientation: TLabel
+        AnchorSideLeft.Control = pPageOrientation
+        AnchorSideTop.Control = pPageOrientation
+        AnchorSideTop.Side = asrCenter
+        Left = 16
+        Height = 15
+        Top = 16
+        Width = 87
+        Caption = 'Page orientation'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object cbPageOrientation: TComboBox
+        AnchorSideTop.Control = pPageOrientation
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = pPageOrientation
+        AnchorSideRight.Side = asrBottom
+        Left = 213
+        Height = 23
+        Top = 12
+        Width = 168
+        Anchors = [akTop, akRight]
+        ItemHeight = 15
+        ItemIndex = 0
+        Items.Strings = (
+          'Landscape'
+          'Portrait'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        Text = 'Landscape'
+      end
+    end
+    object pPageSize: TBCPanel
+      Left = 16
+      Height = 47
+      Top = 16
+      Width = 397
+      Align = alTop
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = True
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      Rounding.RoundOptions = [rrBottomRightSquare, rrBottomLeftSquare]
+      TabOrder = 0
+      object lblPageSize: TLabel
+        AnchorSideLeft.Control = pPageSize
+        AnchorSideTop.Control = pPageSize
+        AnchorSideTop.Side = asrCenter
+        Left = 16
+        Height = 15
+        Top = 16
+        Width = 48
+        Caption = 'Page size'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object cbPageSize: TComboBox
+        AnchorSideTop.Control = pPageSize
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = pPageSize
+        AnchorSideRight.Side = asrBottom
+        Left = 213
+        Height = 23
+        Top = 12
+        Width = 168
+        Anchors = [akTop, akRight]
+        ItemHeight = 15
+        ItemIndex = 0
+        Items.Strings = (
+          'A4'
+          'Letter'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        Text = 'A4'
+      end
+    end
+    object pColorTheme: TBCPanel
+      Left = 16
+      Height = 47
+      Top = 173
+      Width = 397
+      Align = alTop
+      AutoSize = True
+      BorderSpacing.Bottom = 8
+      ChildSizing.LeftRightSpacing = 16
+      ChildSizing.TopBottomSpacing = 12
+      ChildSizing.HorizontalSpacing = 8
+      Background.Color = 16448250
+      Background.Gradient1.StartColor = clWhite
+      Background.Gradient1.EndColor = clBlack
+      Background.Gradient1.GradientType = gtLinear
+      Background.Gradient1.Point1XPercent = 0
+      Background.Gradient1.Point1YPercent = 0
+      Background.Gradient1.Point2XPercent = 0
+      Background.Gradient1.Point2YPercent = 100
+      Background.Gradient2.StartColor = clWhite
+      Background.Gradient2.EndColor = clBlack
+      Background.Gradient2.GradientType = gtLinear
+      Background.Gradient2.Point1XPercent = 0
+      Background.Gradient2.Point1YPercent = 0
+      Background.Gradient2.Point2XPercent = 0
+      Background.Gradient2.Point2YPercent = 100
+      Background.Gradient1EndPercent = 35
+      Background.Style = bbsColor
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BevelWidth = 1
+      Border.Color = 13750737
+      Border.Style = bboSolid
+      BorderBCStyle = bpsBorder
+      FontEx.Color = clDefault
+      FontEx.FontQuality = fqSystemClearType
+      FontEx.Shadow = False
+      FontEx.ShadowRadius = 5
+      FontEx.ShadowOffsetX = 5
+      FontEx.ShadowOffsetY = 5
+      FontEx.Style = []
+      ParentBackground = True
+      Rounding.RoundX = 8
+      Rounding.RoundY = 8
+      TabOrder = 3
+      object lblColorTheme: TLabel
+        AnchorSideLeft.Control = pColorTheme
+        AnchorSideTop.Control = pColorTheme
+        AnchorSideTop.Side = asrCenter
+        Left = 16
+        Height = 15
+        Top = 16
+        Width = 66
+        Caption = 'Color theme'
+        Layout = tlCenter
+        ParentColor = False
+      end
+      object cbTheme: TComboBox
+        AnchorSideTop.Control = pColorTheme
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = pColorTheme
+        AnchorSideRight.Side = asrBottom
+        Left = 213
+        Height = 23
+        Top = 12
+        Width = 168
+        Anchors = [akTop, akRight]
+        ItemHeight = 15
+        ItemIndex = 0
+        Items.Strings = (
+          'Colored'
+          'Grayscale'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+        Text = 'Colored'
+      end
+    end
+  end
+  object lineBottom: TShapeLineBGRA
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = pClient
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 0
+    Height = 2
+    Top = 236
+    Width = 429
+    Anchors = [akTop, akLeft, akRight]
+    LineColor = 9276813
+    ArrowColor = clBlack
+    LineWidth = 1
+  end
+  object pBottom: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = lineBottom
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 0
+    Height = 43
+    Top = 238
+    Width = 429
+    Anchors = [akTop, akLeft, akRight]
+    AutoSize = True
+    BevelOuter = bvNone
+    ChildSizing.LeftRightSpacing = 16
+    ChildSizing.TopBottomSpacing = 8
+    ChildSizing.HorizontalSpacing = 8
+    ChildSizing.EnlargeHorizontal = crsSameSize
+    ChildSizing.ShrinkHorizontal = crsSameSize
+    ChildSizing.ControlsPerLine = 2
+    ClientHeight = 43
+    ClientWidth = 429
+    TabOrder = 1
+    object sbOK: TButton
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = sbCancel
+      Left = 165
+      Height = 27
+      Top = 8
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
+      Caption = 'Apply'
+      Constraints.MinHeight = 27
+      Constraints.MinWidth = 120
+      TabOrder = 0
+      OnClick = sbOKClick
+    end
+    object sbCancel: TButton
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pBottom
+      AnchorSideRight.Side = asrBottom
+      Left = 293
+      Height = 25
+      Top = 9
+      Width = 120
+      Anchors = [akTop, akRight]
+      AutoSize = True
+      Caption = 'Cancel'
+      Constraints.MinWidth = 120
+      ModalResult = 2
+      TabOrder = 1
+    end
+    object btnHelp: TSpeedButton
+      AnchorSideLeft.Control = pBottom
+      AnchorSideTop.Control = pBottom
+      AnchorSideTop.Side = asrCenter
+      Left = 16
+      Height = 26
+      Top = 8
+      Width = 26
+      AutoSize = True
+      Images = DMM.iEdits
+      ImageIndex = 9
+    end
+  end
+end

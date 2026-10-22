@@ -5939,6 +5939,36 @@ msgctxt "tdlgrecverifications.sbinsertrecord.hint"
 msgid "New verification"
 msgstr ""
 
+#: tdlgreportsettings.caption
+msgid "Report settings"
+msgstr ""
+
+#: tdlgreportsettings.lblcolortheme.caption
+msgid "Color theme"
+msgstr ""
+
+#: tdlgreportsettings.lblgroupingfield.caption
+msgid "Grouping field"
+msgstr ""
+
+#: tdlgreportsettings.lblpageorientation.caption
+msgid "Page orientation"
+msgstr ""
+
+#: tdlgreportsettings.lblpagesize.caption
+msgid "Page size"
+msgstr ""
+
+#: tdlgreportsettings.sbcancel.caption
+msgctxt "tdlgreportsettings.sbcancel.caption"
+msgid "Cancel"
+msgstr ""
+
+#: tdlgreportsettings.sbok.caption
+msgctxt "tdlgreportsettings.sbok.caption"
+msgid "Apply"
+msgstr ""
+
 #: tdlgselectrecord.caption
 msgid "Select record"
 msgstr ""
@@ -18649,6 +18679,19 @@ msgctxt "utils_locale.rspageofpages"
 msgid "%d of %d"
 msgstr ""
 
+#: utils_locale.rspageorientationlandscape
+msgctxt "utils_locale.rspageorientationlandscape"
+msgid "Landscape"
+msgstr ""
+
+#: utils_locale.rspageorientationportrait
+msgid "Portrait"
+msgstr ""
+
+#: utils_locale.rspagesizeletter
+msgid "Letter"
+msgstr ""
+
 #: utils_locale.rspartialdateempty
 #, object-pascal-format
 msgctxt "utils_locale.rspartialdateempty"
@@ -19496,6 +19539,15 @@ msgstr ""
 
 #: utils_locale.rsreportsimplelist
 msgid "Simple List"
+msgstr ""
+
+#: utils_locale.rsreportthemecolored
+msgctxt "utils_locale.rsreportthemecolored"
+msgid "Colored"
+msgstr ""
+
+#: utils_locale.rsreportthemegrayscale
+msgid "Grayscale"
 msgstr ""
 
 #: utils_locale.rsreporttitlesimplelist

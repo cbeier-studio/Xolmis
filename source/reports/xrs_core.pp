@@ -15,11 +15,23 @@ type
   TModuleContext = (mcGlobal, mcCaptures, mcTaxonomy, mcLocations);
   TModuleContexts = set of TModuleContext;
 
+  TXRSPageSize = (xpsA4, xpsLetter);
+  TXRSOrientation = (xpoLandscape, xpoPortrait);
+
+  TXolmisReportSettings = record
+    PageSize: TXRSPageSize;
+    PageOrientation: TXRSOrientation;
+    GroupingField: String;
+    ColorTheme: TXolmisReportTheme;
+  end;
+
   { TXolmisReport }
 
   TXolmisReport = class abstract
   private
     FTheme: TXolmisReportTheme;
+    FPageSize: TXRSPageSize;
+    FPageOrientation: TXRSOrientation;
     FHTMLContent: string;
     FOnProgress: TXolmisReportProgressEvent;
   protected
@@ -30,8 +42,15 @@ type
     procedure BuildContent; virtual; abstract;
 
     function GetThemeCSS: string; virtual;
+    { CSS value for the @page "size" descriptor, e.g. "A4 landscape". }
+    function GetPageSizeCSS: string; virtual;
+    { Printable body width and minimum height used to simulate the sheet on screen. }
+    function GetPageBodyWidthCSS: string; virtual;
+    function GetPageBodyMinHeightCSS: string; virtual;
   public
     constructor Create; virtual;
+
+    procedure ApplySettings(const ASettings: TXolmisReportSettings);
 
     procedure GenerateHTML; virtual;
     function ExportToHTML(const AFileName: string): Boolean; virtual;
@@ -42,6 +61,8 @@ type
     class function CreateForDataSet(ADataSet: TDataSet; ATableType: TTableType): TXolmisReport; virtual; abstract;
 
     property Theme: TXolmisReportTheme read FTheme write FTheme;
+    property PageSize: TXRSPageSize read FPageSize write FPageSize;
+    property PageOrientation: TXRSOrientation read FPageOrientation write FPageOrientation;
     property HTMLContent: string read FHTMLContent write FHTMLContent;
     property OnProgress: TXolmisReportProgressEvent read FOnProgress write FOnProgress;
   end;
@@ -80,6 +101,54 @@ implementation
 constructor TXolmisReport.Create;
 begin
   FTheme := xrtBrand;
+  FPageSize := xpsA4;
+  FPageOrientation := xpoLandscape;
+end;
+
+procedure TXolmisReport.ApplySettings(const ASettings: TXolmisReportSettings);
+begin
+  FPageSize := ASettings.PageSize;
+  FPageOrientation := ASettings.PageOrientation;
+  FTheme := ASettings.ColorTheme;
+end;
+
+function TXolmisReport.GetPageSizeCSS: string;
+begin
+  if FPageSize = xpsLetter then
+    Result := 'Letter'
+  else
+    Result := 'A4';
+  if FPageOrientation = xpoPortrait then
+    Result := Result + ' portrait'
+  else
+    Result := Result + ' landscape';
+end;
+
+function TXolmisReport.GetPageBodyWidthCSS: string;
+var
+  W: Double;
+begin
+  // Sheet width minus 2 x 10mm of horizontal margin
+  if FPageSize = xpsLetter then
+    W := 215.9
+  else
+    W := 210;
+  if FPageOrientation = xpoLandscape then
+    if FPageSize = xpsLetter then W := 279.4 else W := 297;
+  Result := FormatFloat('0.#', W - 20, DefaultFormatSettings) + 'mm';
+end;
+
+function TXolmisReport.GetPageBodyMinHeightCSS: string;
+var
+  H: Double;
+begin
+  if FPageSize = xpsLetter then
+    H := 279.4
+  else
+    H := 297;
+  if FPageOrientation = xpoLandscape then
+    if FPageSize = xpsLetter then H := 215.9 else H := 210;
+  Result := FormatFloat('0.#', H - 20, DefaultFormatSettings) + 'mm';
 end;
 
 procedure TXolmisReport.DoProgress(const AMessage: string; APercent: Integer);

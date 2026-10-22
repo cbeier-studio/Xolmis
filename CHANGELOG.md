@@ -13,9 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new fields to Surveys: transport mode, total paused time, total intervals, species limit, and discarded.
 - Added new fields to Sightings: detection modes, evidences, habitats, activities, and doubtful record. 
 - Database documentation in HTML using `database.dbml` file.
+- Report settings dialog (page size, orientation and color theme) shown before generating XRS reports.
 
 ### Changed
 
+- Fixed unreadable selected options in the report settings combo boxes in dark mode.
 - Modules open faster.
 - Dialog for multi selection now uses `TChipsPanel`.
 - Revised the pre-loaded Methods to reduce ambiguity and confusion.

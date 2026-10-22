@@ -5932,6 +5932,36 @@ msgctxt "tdlgrecverifications.sbinsertrecord.hint"
 msgid "New verification"
 msgstr "Nova verificação"
 
+#: tdlgreportsettings.caption
+msgid "Report settings"
+msgstr "Configurações do relatório"
+
+#: tdlgreportsettings.lblcolortheme.caption
+msgid "Color theme"
+msgstr "Tema de cores"
+
+#: tdlgreportsettings.lblgroupingfield.caption
+msgid "Grouping field"
+msgstr "Campo agrupador"
+
+#: tdlgreportsettings.lblpageorientation.caption
+msgid "Page orientation"
+msgstr "Orientação da página"
+
+#: tdlgreportsettings.lblpagesize.caption
+msgid "Page size"
+msgstr "Tamanho da página"
+
+#: tdlgreportsettings.sbcancel.caption
+msgctxt "tdlgreportsettings.sbcancel.caption"
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tdlgreportsettings.sbok.caption
+msgctxt "tdlgreportsettings.sbok.caption"
+msgid "Apply"
+msgstr "Aplicar"
+
 #: tdlgselectrecord.caption
 msgid "Select record"
 msgstr "Selecionar registro"
@@ -18837,6 +18867,19 @@ msgctxt "utils_locale.rspageofpages"
 msgid "%d of %d"
 msgstr "%d de %d"
 
+#: utils_locale.rspageorientationlandscape
+msgctxt "utils_locale.rspageorientationlandscape"
+msgid "Landscape"
+msgstr "Paisagem"
+
+#: utils_locale.rspageorientationportrait
+msgid "Portrait"
+msgstr "Retrato"
+
+#: utils_locale.rspagesizeletter
+msgid "Letter"
+msgstr "Carta"
+
 #: utils_locale.rspartialdateempty
 #, object-pascal-format
 msgctxt "utils_locale.rspartialdateempty"
@@ -19701,6 +19744,15 @@ msgstr "Lista agrupada"
 #: utils_locale.rsreportsimplelist
 msgid "Simple List"
 msgstr "Lista simples"
+
+#: utils_locale.rsreportthemecolored
+msgctxt "utils_locale.rsreportthemecolored"
+msgid "Colored"
+msgstr "Colorido"
+
+#: utils_locale.rsreportthemegrayscale
+msgid "Grayscale"
+msgstr "Tons de cinza"
 
 #: utils_locale.rsreporttitlesimplelist
 #, object-pascal-format
