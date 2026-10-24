@@ -206,6 +206,10 @@ begin
       Column.Add('report_order', 0);
     end;
 
+    // Long text columns get a max width (see .memo in the template) so they do not squeeze the others
+    if Field.DataType in [ftMemo, ftWideMemo, ftFmtMemo] then
+      Column.Strings['css_class'] := Trim(Column.Get('css_class', '') + ' memo');
+
     Order := 0;
     if Assigned(FieldSchema) then
       Order := FieldSchema.ReportOrder;

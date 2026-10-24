@@ -61,6 +61,7 @@
         }
 
         th {
+            overflow-wrap: break-word;
             color: var(--accent-dark);
             border-bottom: 2px solid var(--accent);
         }
@@ -69,6 +70,8 @@
         .numeric { text-align: right; }
         .italic { font-style: italic; }
         .bold { font-weight: bold; }
+        /* Campos Memo: limita a largura para não espremer as demais colunas */
+        td div.memo { max-width: 60mm; white-space: pre-line; }
         td .stack-secondary { color: var(--text-secondary, #666); font-size: 0.9em; }
 
         .filters {
