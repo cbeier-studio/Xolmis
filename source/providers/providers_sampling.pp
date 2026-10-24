@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -36,6 +37,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -54,6 +56,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -70,6 +73,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -87,6 +91,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -103,6 +108,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -118,6 +124,12 @@ constructor TExpeditionsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TExpeditionsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_expeditions_name ON expeditions (expedition_name COLLATE NOCASE); ';
 end;
 
 function TExpeditionsSQL.CreateTable: String;
@@ -307,6 +319,13 @@ constructor TSurveysSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TSurveysSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_surveys_date ON surveys (survey_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_surveys_fullname ON surveys (full_name COLLATE NOCASE); ';
 end;
 
 function TSurveysSQL.CreateTable: String;
@@ -632,6 +651,13 @@ begin
   FBackend := ABackend;
 end;
 
+function TSurveyTeamsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE UNIQUE INDEX IF NOT EXISTS idx_survey_team_survey_person ON survey_team (survey_id, person_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_survey_team_survey ON survey_team (survey_id); ';
+end;
+
 function TSurveyTeamsSQL.CreateTable: String;
 begin
   Result :=
@@ -767,6 +793,12 @@ constructor TNetsEffortSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TNetsEffortSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_nets_effort_survey_netnumber ON nets_effort (survey_id, net_number); ';
 end;
 
 function TNetsEffortSQL.CreateTable: String;
@@ -1015,6 +1047,13 @@ begin
   FBackend := ABackend;
 end;
 
+function TVegetationsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_vegetation_date ON vegetation (sample_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_vegetation_survey ON vegetation (survey_id); ';
+end;
+
 function TVegetationsSQL.CreateTable: String;
 begin
   Result :=
@@ -1214,6 +1253,13 @@ constructor TWeatherLogsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TWeatherLogsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_weather_logs_date ON weather_logs (sample_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_weather_logs_survey ON weather_logs (survey_id); ';
 end;
 
 function TWeatherLogsSQL.CreateTable: String;

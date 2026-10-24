@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -36,6 +37,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause; aParent: TTableType): String;
     function SelectAll(aWhere: TSQLWhereClause; aParent: TTableType): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -55,6 +57,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -72,6 +75,13 @@ constructor TIndividualsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TIndividualsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_individuals_fullname ON individuals (full_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_individuals_taxon ON individuals (taxon_id COLLATE BINARY); ';
 end;
 
 function TIndividualsSQL.CreateTable: String;
@@ -443,6 +453,17 @@ constructor TCapturesSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TCapturesSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_captures_fullname ON captures (full_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_captures_date ON captures (capture_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_captures_taxon ON captures (taxon_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_captures_band ON captures (band_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_captures_type_band ON captures (capture_type, band_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_captures_taxon_date ON captures (taxon_id, capture_date COLLATE BINARY) WHERE active_status = 1;';
 end;
 
 function TCapturesSQL.CreateTable: String;
@@ -1008,6 +1029,12 @@ constructor TFeathersSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TFeathersSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_feathers_date ON feathers (sample_date COLLATE BINARY) WHERE active_status = 1; ';
 end;
 
 function TFeathersSQL.CreateTable: String;

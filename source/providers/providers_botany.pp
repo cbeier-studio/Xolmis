@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectHierarchy: String;
@@ -36,6 +37,19 @@ constructor TBotanicalTaxaSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TBotanicalTaxaSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_botanic_taxa_parent_taxon ON botanic_taxa (parent_taxon_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_botanic_taxa_valid ON botanic_taxa (valid_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_botanic_taxa_order ON botanic_taxa (order_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_botanic_taxa_family ON botanic_taxa (family_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_botanic_taxa_genus ON botanic_taxa (genus_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_botanic_taxa_species ON botanic_taxa (species_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_botanic_taxa_vernacular_name ON botanic_taxa (vernacular_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_botanic_tax_authorship ON botanic_taxa (authorship COLLATE NOCASE); ';
 end;
 
 function TBotanicalTaxaSQL.CreateTable: String;

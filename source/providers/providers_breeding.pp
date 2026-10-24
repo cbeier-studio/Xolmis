@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -36,6 +37,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -52,6 +54,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -70,6 +73,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -87,6 +91,12 @@ constructor TNestsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TNestsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_nests_fullname ON nests (full_name COLLATE NOCASE); ';
 end;
 
 function TNestsSQL.CreateTable: String;
@@ -472,6 +482,13 @@ begin
   FBackend := ABackend;
 end;
 
+function TNestOwnersSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE UNIQUE INDEX IF NOT EXISTS idx_nest_owners_nest_individual ON nest_owners (nest_id, individual_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_nest_owners_nest ON nest_owners (nest_id); ';
+end;
+
 function TNestOwnersSQL.CreateTable: String;
 begin
   Result :=
@@ -603,6 +620,13 @@ constructor TNestRevisionsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TNestRevisionsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_nest_revisions_fullname ON nest_revisions (full_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_nest_revisions_nest ON nest_revisions (nest_id); ';
 end;
 
 function TNestRevisionsSQL.CreateTable: String;
@@ -842,6 +866,14 @@ constructor TEggsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TEggsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_eggs_date ON eggs (measure_date COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_eggs_fullname ON eggs (full_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_eggs_nest ON eggs (nest_id); ';
 end;
 
 function TEggsSQL.CreateTable: String;

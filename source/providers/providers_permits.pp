@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -35,6 +36,15 @@ constructor TPermitsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TPermitsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_permits_number ON permits (permit_number COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_permits_status ON permits (permit_status COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_permits_expire_date ON permits (expire_date COLLATE BINARY) WHERE active_status = 1 AND permit_status IN (''A'', ''P''); ' +
+    'CREATE INDEX IF NOT EXISTS idx_permits_project ON permits (project_id); ';
 end;
 
 function TPermitsSQL.CreateTable: String;

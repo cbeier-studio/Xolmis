@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -35,6 +36,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -50,6 +52,15 @@ constructor TBandsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TBandsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_bands_fullname ON bands (full_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_bands_band_size ON bands (band_size); ' +
+    'CREATE INDEX IF NOT EXISTS idx_bands_number ON bands (band_number COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_band_size_status ON bands (band_size, band_status); ';
 end;
 
 function TBandsSQL.CreateTable: String;
@@ -279,6 +290,13 @@ constructor TBandHistorySQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TBandHistorySQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_band_history_date ON band_history (event_date COLLATE BINARY ASC); ' +
+    'CREATE INDEX IF NOT EXISTS idx_band_history_band ON band_history (band_id); ';
 end;
 
 function TBandHistorySQL.CreateTable: String;

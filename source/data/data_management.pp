@@ -31,7 +31,7 @@ uses
   data_types;
 
 const
-  SCHEMA_VERSION: Integer = 19;
+  SCHEMA_VERSION: Integer = 20;
 
   { System database creation }
   function CreateSystemDatabase(aFilename: String): Boolean;
@@ -230,7 +230,7 @@ begin
   DMM.sysCon.ExecuteDirect(xProvider.Connections.CreateTable);
 
   { Create index based upon "connection_name" in the "connections" table }
-  DMM.sysCon.ExecuteDirect(xProvider.Connections.CreateIndexConnectionName);
+  DMM.sysCon.ExecuteDirect(xProvider.Connections.CreateIndexes);
 end;
 
 procedure CreateTablesMappingTable;
@@ -1570,14 +1570,136 @@ begin
         Result := True;
       end;
 
-      // !!! --- DO NOT FORGET IN VERSION 20 --- !!!
-        // Drop columns from sightings
-        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN detection_type;');
-        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_seen;');
-        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_heard;');
-        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_captured;');
-        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_photographed;');
-        //DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_recorded;');
+      if OldVersion < 20 then
+      begin
+        LogDebug('Upgrading database schema to version 20');
+
+        // 1. Replace Native Indexes with Partial Indexes (Chronological)
+        // Decrease the size of B-Tree and ignores logically deleted records
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_audio_library_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_audio_library_date ON audio_library (recording_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_captures_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_captures_date ON captures (capture_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_documents_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_documents_date ON documents (document_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_eggs_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_eggs_date ON eggs (measure_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_feathers_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_feathers_date ON feathers (sample_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_images_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_images_date ON images (image_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_poi_library_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_poi_library_date ON poi_library (sample_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_project_chronograms_target_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_project_chronograms_target_date ON project_chronograms (target_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_project_expenses_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_project_expenses_date ON project_expenses (expense_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_sightings_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_sightings_date ON sightings (sighting_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_specimens_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_specimens_date ON specimens (collection_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_surveys_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_surveys_date ON surveys (survey_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_preparation_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_preparation_date ON sample_preps (preparation_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_vegetation_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_vegetation_date ON vegetation (sample_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_videos_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_videos_date ON videos (recording_date COLLATE BINARY) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_weather_logs_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_weather_logs_date ON weather_logs (sample_date COLLATE BINARY) WHERE active_status = 1;');
+
+        // 2. Fix Collation in text indexes (BINARY to NOCASE)
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_rank_abbreviation;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_rank_abbreviation ON taxon_ranks (abbreviation COLLATE NOCASE);');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_zoo_taxa_ebird_code;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_zoo_taxa_ebird_code ON zoo_taxa (ebird_code COLLATE NOCASE) WHERE active_status = 1;');
+
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_zoo_taxa_quickcodes;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_zoo_taxa_quickcodes ON zoo_taxa (quick_code COLLATE NOCASE) WHERE active_status = 1;');
+
+        // 3. Composite Indexes for biological reports and filters
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_taxon_date ON captures (taxon_id, capture_date COLLATE BINARY) WHERE active_status = 1;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_taxon_date ON sightings (taxon_id, sighting_date COLLATE BINARY) WHERE active_status = 1;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_hierarchical ON gazetteer (country_id, state_id, site_name COLLATE NOCASE) WHERE active_status = 1;');
+
+        // 4. Foreign Keys (FKs) coverage under ON DELETE/UPDATE CASCADE rules
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_band_history_band ON band_history (band_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_permit ON documents (permit_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_project ON documents (project_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_capture ON documents (capture_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_sighting ON documents (sighting_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_specimen ON documents (specimen_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_eggs_nest ON eggs (nest_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nest_owners_nest ON nest_owners (nest_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nest_revisions_nest ON nest_revisions (nest_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nets_effort_survey ON nets_effort (survey_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permanent_nets_plot ON permanent_nets (sampling_plot_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permits_project ON permits (project_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_poi_library_individual ON poi_library (individual_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_team_project ON project_team (project_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sighting_observers_sighting ON sighting_observers (sighting_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimen_collectors_specimen ON specimen_collectors (specimen_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_survey_team_survey ON survey_team (survey_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_vegetation_survey ON vegetation (survey_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_weather_logs_survey ON weather_logs (survey_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_countries_taxon ON zoo_countries (taxon_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_countries_country ON zoo_countries (country_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_synonyms_taxon ON zoo_synonyms (taxon_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_vernacular_taxon ON zoo_vernacular (taxon_id);');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sampling_plots_locality ON sampling_plots (locality_id) WHERE active_status = 1;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sampling_plots_coordinate ON sampling_plots (longitude, latitude) WHERE active_status = 1;');
+
+        // 5. Optimized for Permits View (get_expired_permits)
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_permits_expire_date;');
+        DMM.sqlCon.ExecuteDirect('CREATE INDEX idx_permits_expire_date ON permits (expire_date COLLATE BINARY) WHERE active_status = 1 AND permit_status IN (''A'', ''P'');');
+
+        // 6. Cleaning old columns migrated to JSON
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN detection_type;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_seen;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_heard;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_captured;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_photographed;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE sightings DROP COLUMN subject_recorded;');
+
+        // 7. Increase field sizes
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures RENAME COLUMN field_number TO field_number_old;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures ADD COLUMN field_number VARCHAR(100);');
+        DMM.sqlCon.ExecuteDirect('UPDATE captures SET field_number = field_number_old WHERE field_number_old NOTNULL;');
+        DMM.sqlCon.ExecuteDirect('ALTER TABLE captures DROP COLUMN field_number_old;');
+
+        // 8. Delete duplicate indexes from table taxon_ranks
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_rank_abbreviation1;');
+        DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_rank_seq1;');
+
+        Result := True;
+      end;
+
+      //if OldVersion < 21 then
+      //begin
+      //  LogDebug('Upgrading database schema to version 21');
+      //
+      //  DMM.sqlCon.ExecuteDirect('DROP INDEX IF EXISTS idx_gazetteer_hierarchical;');
+      //  DMM.sqlCon.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_hierarchical ON gazetteer (country_id, state_id, county_id, municipality_id COLLATE BINARY) WHERE active_status = 1;');
+      //
+      //  Result := True;
+      //end;
 
       if Result then
       begin
@@ -1699,9 +1821,7 @@ begin
   LogDebug('Creating roles table');
   Connection.ExecuteDirect(xProvider.Roles.CreateTable);
 
-  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_roles_name ON roles (' +
-    'role_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Roles.CreateIndexes);
 end;
 
 procedure CreatePermissionsTable(Connection: TSQLConnector);
@@ -1709,13 +1829,7 @@ begin
   LogDebug('Creating permissions table');
   Connection.ExecuteDirect(xProvider.Permissions.CreateTable);
 
-  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_permissions_name ON permissions (' +
-    'permission_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permissions_group ON permissions (' +
-    'permission_group COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Permissions.CreateIndexes);
 end;
 
 procedure CreateRolePermissionsTable(Connection: TSQLConnector);
@@ -1723,9 +1837,7 @@ begin
   LogDebug('Creating role_permissions table');
   Connection.ExecuteDirect(xProvider.RolePermissions.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_role_permissions_role ON role_permissions (' +
-    'role_id, permission_id' +
-  ');');
+  Connection.ExecuteDirect(xProvider.RolePermissions.CreateIndexes);
 end;
 
 procedure CreateUsersTable(Connection: TSQLConnector);
@@ -1733,9 +1845,7 @@ begin
   LogDebug('Creating users table');
   Connection.ExecuteDirect(xProvider.Users.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_user_fullname ON users (' +
-    'full_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Users.CreateIndexes);
 end;
 
 procedure CreateRecordHistoryTable(Connection: TSQLConnector);
@@ -1743,14 +1853,7 @@ begin
   LogDebug('Creating record_history table');
   Connection.ExecuteDirect(xProvider.RecordHistory.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_history_table_record ON record_history (' +
-    'event_table,' +
-    'record_id' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_history_date ON record_history (' +
-    'event_date COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.RecordHistory.CreateIndexes);
 end;
 
 procedure CreateRecordVerificationsTable(Connection: TSQLConnector);
@@ -1782,13 +1885,7 @@ begin
   LogDebug('Creating taxon_ranks table');
   Connection.ExecuteDirect(xProvider.TaxonRanks.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_rank_seq ON taxon_ranks (' +
-    'rank_seq COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_rank_abbreviation ON taxon_ranks (' +
-    'abbreviation COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.TaxonRanks.CreateIndexes);
 end;
 
 procedure CreateZooTaxaTable(Connection: TSQLConnector);
@@ -1796,53 +1893,7 @@ begin
   LogDebug('Creating zoo_taxa table');
   Connection.ExecuteDirect(xProvider.ZooTaxa.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_authorship ON zoo_taxa (' +
-    'authorship COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_ebird_code ON zoo_taxa (' +
-    'ebird_code COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_order ON zoo_taxa (' +
-    'order_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_family ON zoo_taxa (' +
-    'family_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_genus ON zoo_taxa (' +
-    'genus_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_species ON zoo_taxa (' +
-    'species_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_subspecies_group ON zoo_taxa (' +
-    'subspecies_group_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_parent_taxon ON zoo_taxa (' +
-    'parent_taxon_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_concept_id ON zoo_taxa (' +
-    'taxon_concept_id COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_quickcodes ON zoo_taxa (' +
-    'quick_code COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_rank ON zoo_taxa (' +
-    'rank_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_taxa_sort_num ON zoo_taxa (' +
-    'sort_num COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.ZooTaxa.CreateIndexes);
 end;
 
 procedure CreateZooSynonymsTable(Connection: TSQLConnector);
@@ -1850,9 +1901,7 @@ begin
   LogDebug('Creating zoo_synonyms table');
   Connection.ExecuteDirect(xProvider.ZooSynonyms.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_synonyms_name ON zoo_synonyms (' +
-    'scientific_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.ZooSynonyms.CreateIndexes);
 end;
 
 procedure CreateZooVernacularTable(Connection: TSQLConnector);
@@ -1860,9 +1909,7 @@ begin
   LogDebug('Creating zoo_vernacular table');
   Connection.ExecuteDirect(xProvider.ZooVernacular.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_zoo_vernacular_name ON zoo_vernacular (' +
-    'vernacular_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.ZooVernacular.CreateIndexes);
 end;
 
 procedure CreateZooCountriesTable(Connection: TSQLConnector);
@@ -1876,37 +1923,7 @@ begin
   LogDebug('Creating botanic_taxa table');
   Connection.ExecuteDirect(xProvider.BotanicalTaxa.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_parent_taxon ON botanic_taxa (' +
-    'parent_taxon_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_valid ON botanic_taxa (' +
-    'valid_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_order ON botanic_taxa (' +
-    'order_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_family ON botanic_taxa (' +
-    'family_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_genus ON botanic_taxa (' +
-    'genus_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_species ON botanic_taxa (' +
-    'species_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_taxa_vernacular_name ON botanic_taxa (' +
-    'vernacular_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_botanic_tax_authorship ON botanic_taxa (' +
-    'authorship COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.BotanicalTaxa.CreateIndexes);
 end;
 
 procedure CreateMethodsTable(Connection: TSQLConnector);
@@ -1914,13 +1931,7 @@ begin
   LogDebug('Creating methods table');
   Connection.ExecuteDirect(xProvider.Methods.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_abbreviation ON methods (' +
-    'abbreviation COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_methods_ebird_name ON methods (' +
-    'ebird_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Methods.CreateIndexes);
 end;
 
 procedure CreateGazetteerTable(Connection: TSQLConnector);
@@ -1928,38 +1939,7 @@ begin
   LogDebug('Creating gazetteer table');
   Connection.ExecuteDirect(xProvider.Gazetteer.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_site_name ON gazetteer (' +
-    'site_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_fullname ON gazetteer (' +
-    'full_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_ebird_name ON gazetteer (' +
-    'ebird_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_parent_site ON gazetteer (' +
-    'parent_site_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_country ON gazetteer (' +
-    'country_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_state ON gazetteer (' +
-    'state_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_municipality ON gazetteer (' +
-    'municipality_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_gazetteer_coordinate ON gazetteer (' +
-    'longitude,' +
-    'latitude' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Gazetteer.CreateIndexes);
 end;
 
 procedure CreateInstitutionsTable(Connection: TSQLConnector);
@@ -1967,9 +1947,7 @@ begin
   LogDebug('Creating institutions table');
   Connection.ExecuteDirect(xProvider.Institutions.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_institutions_abbreviation ON institutions (' +
-    'abbreviation COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Institutions.CreateIndexes);
 end;
 
 procedure CreatePeopleTable(Connection: TSQLConnector);
@@ -1977,23 +1955,15 @@ begin
   LogDebug('Creating people table');
   Connection.ExecuteDirect(xProvider.People.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_people_fullname ON people (' +
-    'full_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_people_citation ON people (' +
-    'citation COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_people_birthday ON people (' +
-    'birth_date COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.People.CreateIndexes);
 end;
 
 procedure CreateSamplingPlotsTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating sampling_plots table');
   Connection.ExecuteDirect(xProvider.SamplingPlots.CreateTable);
+
+  Connection.ExecuteDirect(xProvider.SamplingPlots.CreateIndexes);
 end;
 
 procedure CreatePermanentNetsTable(Connection: TSQLConnector);
@@ -2001,9 +1971,7 @@ begin
   LogDebug('Creating permanent_nets table');
   Connection.ExecuteDirect(xProvider.PermanentNets.CreateTable);
 
-  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_permanent_nets_plot_net ON permanent_nets (' +
-    'sampling_plot_id, net_number' +
-  ');');
+  Connection.ExecuteDirect(xProvider.PermanentNets.CreateIndexes);
 end;
 
 procedure CreatePermitsTable(Connection: TSQLConnector);
@@ -2011,17 +1979,7 @@ begin
   LogDebug('Creating permits table');
   Connection.ExecuteDirect(xProvider.Permits.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permits_number ON permits (' +
-    'permit_number COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permits_status ON permits (' +
-    'permit_status COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_permits_expire_date ON permits (' +
-    'expire_date COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Permits.CreateIndexes);
 end;
 
 procedure CreateProjectsTable(Connection: TSQLConnector);
@@ -2029,13 +1987,7 @@ begin
   LogDebug('Creating projects table');
   Connection.ExecuteDirect(xProvider.Projects.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_projects_short_title ON projects (' +
-    'short_title COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_projects_protocol_number ON projects (' +
-    'protocol_number COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Projects.CreateIndexes);
 end;
 
 procedure CreateProjectTeamTable(Connection: TSQLConnector);
@@ -2043,9 +1995,7 @@ begin
   LogDebug('Creating project_team table');
   Connection.ExecuteDirect(xProvider.ProjectTeams.CreateTable);
 
-  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_project_team_project_person ON project_team (' +
-    'project_id, person_id' +
-  ');');
+  Connection.ExecuteDirect(xProvider.ProjectTeams.CreateIndexes);
 end;
 
 procedure CreateProjectGoalsTable(connection: TSQLConnector);
@@ -2053,9 +2003,7 @@ begin
   LogDebug('Creating project_goals table');
   Connection.ExecuteDirect(xProvider.ProjectGoals.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_goals_status ON project_goals (' +
-    'goal_status COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.ProjectGoals.CreateIndexes);
 end;
 
 procedure CreateProjectChronogramsTable(connection: TSQLConnector);
@@ -2063,13 +2011,7 @@ begin
   LogDebug('Creating project_chronograms table');
   Connection.ExecuteDirect(xProvider.ProjectChronograms.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_chronograms_target_date ON project_chronograms (' +
-    'target_date COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_chronograms_status ON project_chronograms (' +
-    'progress_status COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.ProjectChronograms.CreateIndexes);
 end;
 
 procedure CreateProjectBudgetsTable(connection: TSQLConnector);
@@ -2077,13 +2019,7 @@ begin
   LogDebug('Creating project_budgets table');
   Connection.ExecuteDirect(xProvider.ProjectBudgets.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_budgets_rubric ON project_budgets (' +
-    'rubric COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_budgets_item ON project_budgets (' +
-    'item_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.ProjectBudgets.CreateIndexes);
 end;
 
 procedure CreateProjectExpensesTable(connection: TSQLConnector);
@@ -2091,9 +2027,7 @@ begin
   LogDebug('Creating project_expenses table');
   Connection.ExecuteDirect(xProvider.ProjectExpenses.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_project_expenses_date ON project_expenses (' +
-    'expense_date COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.ProjectExpenses.CreateIndexes);
 end;
 
 procedure CreateExpeditionsTable(Connection: TSQLConnector);
@@ -2101,9 +2035,7 @@ begin
   LogDebug('Creating expeditions table');
   Connection.ExecuteDirect(xProvider.Expeditions.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_expeditions_name ON expeditions (' +
-    'expedition_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Expeditions.CreateIndexes);
 end;
 
 procedure CreateSurveysTable(Connection: TSQLConnector);
@@ -2111,13 +2043,7 @@ begin
   LogDebug('Creating surveys table');
   Connection.ExecuteDirect(xProvider.Surveys.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_surveys_date ON surveys (' +
-    'survey_date COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_surveys_fullname ON surveys (' +
-    'full_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Surveys.CreateIndexes);
 end;
 
 procedure CreateSurveyTeamTable(Connection: TSQLConnector);
@@ -2125,9 +2051,7 @@ begin
   LogDebug('Creating survey_team table');
   Connection.ExecuteDirect(xProvider.SurveyTeams.CreateTable);
 
-  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_survey_team_survey_person ON survey_team (' +
-    'survey_id, person_id' +
-  ');');
+  Connection.ExecuteDirect(xProvider.SurveyTeams.CreateIndexes);
 end;
 
 procedure CreateNetsEffortTable(Connection: TSQLConnector);
@@ -2135,10 +2059,7 @@ begin
   LogDebug('Creating nets_effort table');
   Connection.ExecuteDirect(xProvider.NetsEffort.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nets_effort_survey_netnumber ON nets_effort (' +
-    'survey_id,' +
-    'net_number' +
-  ');');
+  Connection.ExecuteDirect(xProvider.NetsEffort.CreateIndexes);
 end;
 
 procedure CreateWeatherLogsTable(Connection: TSQLConnector);
@@ -2146,9 +2067,7 @@ begin
   LogDebug('Creating weather_logs table');
   Connection.ExecuteDirect(xProvider.WeatherLogs.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_weather_logs_date ON weather_logs (' +
-    'sample_date COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.WeatherLogs.CreateIndexes);
 end;
 
 procedure CreateVegetationTable(Connection: TSQLConnector);
@@ -2156,9 +2075,7 @@ begin
   LogDebug('Creating vegetation table');
   Connection.ExecuteDirect(xProvider.Vegetations.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_vegetation_date ON vegetation (' +
-    'sample_date COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Vegetations.CreateIndexes);
 end;
 
 procedure CreateBandsTable(Connection: TSQLConnector);
@@ -2166,22 +2083,7 @@ begin
   LogDebug('Creating bands table');
   Connection.ExecuteDirect(xProvider.Bands.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_bands_fullname ON bands (' +
-    'full_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_bands_band_size ON bands (' +
-    'band_size' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_bands_number ON bands (' +
-    'band_number COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_band_size_status ON bands (' +
-    'band_size,' +
-    'band_status' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Bands.CreateIndexes);
 end;
 
 procedure CreateBandHistoryTable(Connection: TSQLConnector);
@@ -2189,9 +2091,7 @@ begin
   LogDebug('Creating band_history table');
   Connection.ExecuteDirect(xProvider.BandHistory.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_band_history_date ON band_history (' +
-    'event_date COLLATE BINARY ASC' +
-  ');');
+  Connection.ExecuteDirect(xProvider.BandHistory.CreateIndexes);
 end;
 
 procedure CreateIndividualsTable(Connection: TSQLConnector);
@@ -2199,13 +2099,7 @@ begin
   LogDebug('Creating individuals table');
   Connection.ExecuteDirect(xProvider.Individuals.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_individuals_fullname ON individuals (' +
-    'full_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_individuals_taxon ON individuals (' +
-    'taxon_id COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Individuals.CreateIndexes);
 end;
 
 procedure CreateSightingsTable(Connection: TSQLConnector);
@@ -2213,23 +2107,15 @@ begin
   LogDebug('Creating sightings table');
   Connection.ExecuteDirect(xProvider.Sightings.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_fullname ON sightings (' +
-    'full_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_taxon ON sightings (' +
-    'taxon_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_sightings_date ON sightings (' +
-    'sighting_date COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Sightings.CreateIndexes);
 end;
 
 procedure CreateSightingObserversTable(Connection: TSQLConnector);
 begin
   LogDebug('Creating sighting_observers table');
   Connection.ExecuteDirect(xProvider.SightingObservers.CreateTable);
+
+  Connection.ExecuteDirect(xProvider.SightingObservers.CreateIndexes);
 end;
 
 procedure CreateCapturesTable(Connection: TSQLConnector);
@@ -2237,36 +2123,15 @@ begin
   LogDebug('Creating captures table');
   Connection.ExecuteDirect(xProvider.Captures.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_fullname ON captures (' +
-    'full_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_date ON captures (' +
-    'capture_date COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_taxon ON captures (' +
-    'taxon_id COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_band ON captures (' +
-    'band_id' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_captures_type_band ON captures (' +
-    'capture_type,' +
-    'band_id' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Captures.CreateIndexes);
 end;
 
 procedure CreateFeathersTable(connection: TSQLConnector);
 begin
   LogDebug('Creating feathers table');
-  connection.ExecuteDirect(xProvider.Feathers.CreateTable);
+  Connection.ExecuteDirect(xProvider.Feathers.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_feathers_date ON feathers (' +
-    'sample_date COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Feathers.CreateIndexes);
 end;
 
 procedure CreateMoltsTable(Connection: TSQLConnector);
@@ -2350,9 +2215,7 @@ begin
   LogDebug('Creating nests table');
   Connection.ExecuteDirect(xProvider.Nests.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nests_fullname ON nests (' +
-    'full_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Nests.CreateIndexes);
 end;
 
 procedure CreateNestOwnersTable(Connection: TSQLConnector);
@@ -2360,9 +2223,7 @@ begin
   LogDebug('Creating nest_owners table');
   Connection.ExecuteDirect(xProvider.NestOwners.CreateTable);
 
-  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_nest_owners_nest_individual ON nest_owners (' +
-    'nest_id, individual_id' +
-  ');');
+  Connection.ExecuteDirect(xProvider.NestOwners.CreateIndexes);
 end;
 
 procedure CreateNestRevisionsTable(Connection: TSQLConnector);
@@ -2370,9 +2231,7 @@ begin
   LogDebug('Creating nest_revisions table');
   Connection.ExecuteDirect(xProvider.NestRevisions.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_nest_revisions_fullname ON nest_revisions (' +
-    'full_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.NestRevisions.CreateIndexes);
 end;
 
 procedure CreateEggsTable(Connection: TSQLConnector);
@@ -2380,13 +2239,7 @@ begin
   LogDebug('Creating eggs table');
   Connection.ExecuteDirect(xProvider.Eggs.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_eggs_date ON eggs (' +
-    'measure_date COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_eggs_fullname ON eggs (' +
-    'full_name COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Eggs.CreateIndexes);
 end;
 
 procedure CreateSpecimensTable(Connection: TSQLConnector);
@@ -2394,17 +2247,7 @@ begin
   LogDebug('Creating specimens table');
   Connection.ExecuteDirect(xProvider.Specimens.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimens_fullname ON specimens (' +
-    'full_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimens_fieldnumber ON specimens (' +
-    'field_number COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_specimens_date ON specimens (' +
-    'collection_date COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Specimens.CreateIndexes);
 end;
 
 procedure CreateSpecimenCollectorsTable(Connection: TSQLConnector);
@@ -2412,9 +2255,7 @@ begin
   LogDebug('Creating specimen_collectors table');
   Connection.ExecuteDirect(xProvider.SpecimenCollectors.CreateTable);
 
-  Connection.ExecuteDirect('CREATE UNIQUE INDEX IF NOT EXISTS idx_collectors_specimen_person ON specimen_collectors (' +
-    'specimen_id, person_id' +
-  ');');
+  Connection.ExecuteDirect(xProvider.SpecimenCollectors.CreateIndexes);
 end;
 
 procedure CreateSamplePrepsTable(Connection: TSQLConnector);
@@ -2422,9 +2263,7 @@ begin
   LogDebug('Creating sample_preps table');
   Connection.ExecuteDirect(xProvider.SamplePreps.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_preparation_date ON sample_preps (' +
-    'preparation_date COLLATE BINARY' +
-  ');');
+  Connection.ExecuteDirect(xProvider.SamplePreps.CreateIndexes);
 end;
 
 procedure CreatePoiLibraryTable(Connection: TSQLConnector);
@@ -2432,17 +2271,7 @@ begin
   LogDebug('Creating poi_library table');
   Connection.ExecuteDirect(xProvider.PoiLibrary.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_poi_library_date ON poi_library (' +
-    'sample_date COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_poi_library_name ON poi_library (' +
-    'poi_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_poi_library_coordinate ON poi_library (' +
-    'longitude, latitude' +
-  ');');
+  Connection.ExecuteDirect(xProvider.PoiLibrary.CreateIndexes);
 end;
 
 procedure CreateImagesTable(Connection: TSQLConnector);
@@ -2450,13 +2279,7 @@ begin
   LogDebug('Creating images table');
   Connection.ExecuteDirect(xProvider.Images.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_images_date ON images (' +
-    'image_date COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_images_file_path ON images (' +
-    'file_path COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Images.CreateIndexes);
 end;
 
 procedure CreateDocumentsTable(Connection: TSQLConnector);
@@ -2464,13 +2287,7 @@ begin
   LogDebug('Creating documents table');
   Connection.ExecuteDirect(xProvider.Documents.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_date ON documents (' +
-    'document_date COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_documents_file_path ON documents (' +
-    'file_path COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Documents.CreateIndexes);
 end;
 
 procedure CreateAudioLibraryTable(Connection: TSQLConnector);
@@ -2478,17 +2295,7 @@ begin
   LogDebug('Creating audio_library table');
   Connection.ExecuteDirect(xProvider.Audios.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_audio_library_date ON audio_library (' +
-    'recording_date COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_audio_library_fullname ON audio_library (' +
-    'full_name COLLATE NOCASE' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_audio_library_file_path ON audio_library (' +
-    'file_path COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Audios.CreateIndexes);
 end;
 
 procedure CreateVideosTable(connection: TSQLConnector);
@@ -2496,13 +2303,7 @@ begin
   LogDebug('Creating videos table');
   connection.ExecuteDirect(xProvider.Videos.CreateTable);
 
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_videos_date ON videos (' +
-    'recording_date COLLATE BINARY' +
-  ');');
-
-  Connection.ExecuteDirect('CREATE INDEX IF NOT EXISTS idx_videos_file_path ON videos (' +
-    'file_path COLLATE NOCASE' +
-  ');');
+  Connection.ExecuteDirect(xProvider.Videos.CreateIndexes);
 end;
 
 procedure CreateNextBirthdaysView(Connection: TSQLConnector);

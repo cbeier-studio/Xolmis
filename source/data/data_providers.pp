@@ -25,6 +25,7 @@ type
 
   IAudiosSQL = interface ['{205440A5-C59C-404D-A91E-3CC6D634C59E}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -34,6 +35,7 @@ type
 
   IBandHistorySQL = interface ['{286DFA7F-4079-4A44-B869-8916488C31DD}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -43,6 +45,7 @@ type
 
   IBandsSQL = interface ['{C6F1C7E3-8A4D-4A9F-9E3B-2F5D9C3D3C33}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -53,6 +56,7 @@ type
 
   IBotanicalTaxaSQL = interface ['{8CB9E5F3-4DBB-4126-8F5E-B72A9B49F47A}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectHierarchy: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -65,6 +69,7 @@ type
 
   ICapturesSQL = interface ['{B5E0B6D2-7F3C-4F8E-8D2A-1E4C8B2C2B22}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause; aParent: TTableType): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause; aParent: TTableType): String;
@@ -77,7 +82,7 @@ type
 
   IConnectionsSQL = interface ['{12B1F797-8D34-4715-B75E-B4F0A2D6C71A}']
     function CreateTable: String;
-    function CreateIndexConnectionName: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -97,6 +102,7 @@ type
 
   IRolesSQL = interface ['{47C9D2CC-6E0B-4F35-B0C9-7D8D4D0C5B8D}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -106,6 +112,7 @@ type
 
   IPermissionsSQL = interface ['{56A8F7A6-4AF4-4EE4-B7B8-9A0A2A9E3A6C}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -115,6 +122,7 @@ type
 
   IRolePermissionsSQL = interface ['{5D5CF5BC-6A05-46A9-8159-94BC2DF1D6D8}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -133,6 +141,7 @@ type
 
   IDocumentsSQL = interface ['{10F46184-FE21-433D-9215-32D35E3B6203}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -142,6 +151,7 @@ type
 
   IEggsSQL = interface ['{D713FF42-E306-4751-92D6-F0DD0A31352E}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -153,6 +163,7 @@ type
 
   IExpeditionsSQL = interface ['{A3C5B2F1-84BB-45F4-8329-8EF3B726AC84}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -164,6 +175,7 @@ type
 
   IFeathersSQL = interface ['{A2D07DA7-1FD3-4851-8AA6-DB6BAE0C3B13}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -175,6 +187,7 @@ type
 
   IGazetteerSQL = interface ['{F83E4B52-4CD2-49CA-BABC-58752AD85599}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectHierarchy: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -188,6 +201,7 @@ type
 
   IImagesSQL = interface ['{05567D81-099A-4FAA-ACA6-FC0419E72215}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -206,6 +220,7 @@ type
 
   IIndividualsSQL = interface ['{A4C9C5C4-9E4E-4E0F-9F4E-0C3F7C1B1A11}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -217,6 +232,7 @@ type
 
   IInstitutionsSQL = interface ['{F733D4BF-AA06-486C-94E9-7B22375701D2}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -237,6 +253,7 @@ type
 
   IMethodsSQL = interface ['{3320E109-B09F-4A23-8540-CA1879A9737C}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -248,6 +265,7 @@ type
 
   INestRevisionsSQL = interface ['{2A961853-A9C1-41AA-B482-53222834AE40}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -259,6 +277,7 @@ type
 
   INestOwnersSQL = interface ['{53A3A73C-2DF3-458F-97A4-6D514A998EFC}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -268,6 +287,7 @@ type
 
   INestsSQL = interface ['{EF7B9ABD-9FEC-44D5-940C-E4A1D14D5F26}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -279,6 +299,7 @@ type
 
   INetsEffortSQL = interface ['{159B2C87-F8F3-402B-B4A9-ECFD3513758E}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -289,6 +310,7 @@ type
 
   IPeopleSQL = interface ['{9A03F3C5-C88F-4488-8F53-A8021604F2AF}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -300,6 +322,7 @@ type
 
   IPermanentNetsSQL = interface ['{C1476CAB-3C9D-4376-9B13-F6854230F587}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -310,6 +333,7 @@ type
 
   IPermitsSQL = interface ['{BF414A34-DB61-4299-9A18-E15EBAD8A6B6}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -321,6 +345,7 @@ type
 
   IPoiLibrarySQL = interface ['{74E7C3FE-B8B0-4E01-B406-5A5440DC94B5}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -330,6 +355,7 @@ type
 
   IProjectBudgetsSQL = interface ['{80E0AF5E-513A-4EA3-BABD-B9168539F4BB}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -340,6 +366,7 @@ type
 
   IProjectChronogramsSQL = interface ['{A68A5690-E8A9-4C0A-AAB5-E699E0128B9E}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -349,6 +376,7 @@ type
 
   IProjectExpensesSQL = interface ['{3A7F0BCC-53BB-4F30-B6C6-3064714B3BB5}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -358,6 +386,7 @@ type
 
   IProjectGoalsSQL = interface ['{4BC7EAE0-F2CE-4236-86FB-7153BA6824BE}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -368,6 +397,7 @@ type
 
   IProjectsSQL = interface ['{DF679DB6-B3B5-41F2-89DA-514CBABFE389}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -379,6 +409,7 @@ type
 
   IProjectTeamsSQL = interface ['{4C0C9314-D7BA-4A5D-9340-48432D84696F}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -388,6 +419,7 @@ type
 
   IRecordHistorySQL = interface ['{661458AD-FA4A-4612-AF5F-84EA91B5EAD8}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll: String;
     function SelectTable: String;
     function Insert: string;
@@ -406,6 +438,7 @@ type
 
   ISamplePrepsSQL = interface ['{8AE525E3-2269-4E9D-B546-C2759377F90B}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -416,6 +449,7 @@ type
 
   ISamplingPlotsSQL = interface ['{EC68F074-5247-4B67-83D0-1BE4C59B0759}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -426,6 +460,7 @@ type
 
   ISightingObserversSQL = interface ['{585123F3-B44D-4BC1-A612-661D63F522CE}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -435,6 +470,7 @@ type
 
   ISightingsSQL = interface ['{06AE4E98-D0E7-42CB-924D-DB6890FDD7BB}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause; aParent: TTableType): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause; aParent: TTableType): String;
@@ -446,6 +482,7 @@ type
 
   ISpecimenCollectorsSQL = interface ['{11D2277F-F611-4836-8FE4-E8799428EE87}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -455,6 +492,7 @@ type
 
   ISpecimensSQL = interface ['{2512FE53-F0DA-4B77-AFB3-93DE7FCEEFEA}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -466,6 +504,7 @@ type
 
   ISurveysSQL = interface ['{70AC5C9D-8167-4441-A385-E335A38213AF}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -477,6 +516,7 @@ type
 
   ISurveyTeamsSQL = interface ['{5F6B6A27-F02E-4D4B-8125-907DF1F2A793}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -486,6 +526,7 @@ type
 
   ITaxonRanksSQL = interface ['{D9BAA210-6466-4264-9B6F-8CE0674AC1F5}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -496,6 +537,7 @@ type
 
   IUsersSQL = interface ['{0B276ABF-6ED7-493D-A778-B0463F09A5B3}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -506,6 +548,7 @@ type
 
   IVegetationsSQL = interface ['{7C7F00AA-DE0E-424B-8910-D403D50FADEC}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -515,6 +558,7 @@ type
 
   IVideosSQL = interface ['{FB8F4615-7249-4BE0-BA3C-0D13899DD1B2}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -524,6 +568,7 @@ type
 
   IWeatherLogsSQL = interface ['{D5D36045-4879-43D4-9788-1CF66A858F50}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -533,6 +578,7 @@ type
 
   IZooCountriesSQL = interface ['{62393E94-2313-42E6-A4D2-698820E519C6}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -543,6 +589,7 @@ type
 
   IZooSynonymsSQL = interface ['{13E07D46-BFA8-49F3-8177-A613668BB02E}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;
@@ -553,6 +600,7 @@ type
 
   IZooTaxaSQL = interface ['{50E78A98-6D91-4BDE-8170-197BF4D03867}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectHierarchy: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
@@ -566,6 +614,7 @@ type
 
   IZooVernacularSQL = interface ['{623C699F-6968-45BD-AED5-1AFDAD85D310}']
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function Insert: string;

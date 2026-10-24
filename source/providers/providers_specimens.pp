@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -36,6 +37,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -52,6 +54,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -68,6 +71,14 @@ constructor TSpecimensSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TSpecimensSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_specimens_fullname ON specimens (full_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_specimens_fieldnumber ON specimens (field_number COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_specimens_date ON specimens (collection_date COLLATE BINARY) WHERE active_status = 1; ';
 end;
 
 function TSpecimensSQL.CreateTable: String;
@@ -334,6 +345,13 @@ begin
   FBackend := ABackend;
 end;
 
+function TSpecimenCollectorsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE UNIQUE INDEX IF NOT EXISTS idx_collectors_specimen_person ON specimen_collectors (specimen_id, person_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_specimen_collectors_specimen ON specimen_collectors (specimen_id); ';
+end;
+
 function TSpecimenCollectorsSQL.CreateTable: String;
 begin
   Result :=
@@ -462,6 +480,12 @@ constructor TSamplePrepsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TSamplePrepsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_preparation_date ON sample_preps (preparation_date COLLATE BINARY) WHERE active_status = 1; ';
 end;
 
 function TSamplePrepsSQL.CreateTable: String;

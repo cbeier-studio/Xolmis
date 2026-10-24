@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -34,6 +35,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -50,6 +52,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -66,6 +69,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -81,6 +85,14 @@ constructor TAudiosSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TAudiosSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_audio_library_date ON audio_library (recording_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_audio_library_fullname ON audio_library (full_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_audio_library_file_path ON audio_library (file_path COLLATE NOCASE); ';
 end;
 
 function TAudiosSQL.CreateTable: String;
@@ -376,6 +388,18 @@ begin
   FBackend := ABackend;
 end;
 
+function TDocumentsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_documents_date ON documents (document_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_documents_file_path ON documents (file_path COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_documents_permit ON documents (permit_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_documents_project ON documents (project_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_documents_capture ON documents (capture_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_documents_sighting ON documents (sighting_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_documents_specimen ON documents (specimen_id); ';
+end;
+
 function TDocumentsSQL.CreateTable: String;
 begin
   Result :=
@@ -612,6 +636,13 @@ constructor TImagesSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TImagesSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_images_date ON images (image_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_images_file_path ON images (file_path COLLATE NOCASE); ';
 end;
 
 function TImagesSQL.CreateTable: String;
@@ -864,6 +895,13 @@ constructor TVideosSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TVideosSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_videos_date ON videos (recording_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_videos_file_path ON videos (file_path COLLATE NOCASE); ';
 end;
 
 function TVideosSQL.CreateTable: String;

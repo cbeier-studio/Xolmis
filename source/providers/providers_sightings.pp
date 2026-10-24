@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function Delete: String;
     function Find(aWhere: TSQLWhereClause; aCriteria: TCriteriaType): String;
     function Insert: String;
@@ -36,6 +37,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function Delete: String;
     function Insert: String;
     function SelectAll(aWhere: TSQLWhereClause): String;
@@ -51,6 +53,15 @@ constructor TSightingsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TSightingsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_sightings_fullname ON sightings (full_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_sightings_taxon ON sightings (taxon_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_sightings_date ON sightings (sighting_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_sightings_taxon_date ON sightings (taxon_id, sighting_date COLLATE BINARY) WHERE active_status = 1; ';
 end;
 
 function TSightingsSQL.CreateTable: String;
@@ -447,6 +458,12 @@ constructor TSightingObserversSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TSightingObserversSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_sighting_observers_sighting ON sighting_observers (sighting_id); ';
 end;
 
 function TSightingObserversSQL.CreateTable: String;

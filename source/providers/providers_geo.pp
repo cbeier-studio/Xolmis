@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectHierarchy: String;
@@ -38,6 +39,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -53,6 +55,19 @@ constructor TGazetteerSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TGazetteerSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_gazetteer_site_name ON gazetteer (site_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_gazetteer_fullname ON gazetteer (full_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_gazetteer_ebird_name ON gazetteer (ebird_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_gazetteer_parent_site ON gazetteer (parent_site_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_gazetteer_country ON gazetteer (country_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_gazetteer_state ON gazetteer (state_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_gazetteer_municipality ON gazetteer (municipality_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_gazetteer_coordinate ON gazetteer (longitude, latitude); ';
 end;
 
 function TGazetteerSQL.CreateTable: String;
@@ -564,6 +579,15 @@ constructor TPoiLibrarySQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TPoiLibrarySQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_poi_library_date ON poi_library (sample_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_poi_library_name ON poi_library (poi_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_poi_library_coordinate ON poi_library (longitude, latitude); ' +
+    'CREATE INDEX IF NOT EXISTS idx_poi_library_individual ON poi_library (individual_id); ';
 end;
 
 function TPoiLibrarySQL.CreateTable: String;

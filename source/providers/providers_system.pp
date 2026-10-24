@@ -18,7 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
-    function CreateIndexConnectionName: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -35,6 +35,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -52,6 +53,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -68,6 +70,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -84,6 +87,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -116,6 +120,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable: String;
     function SelectAll: String;
     function Insert: String;
@@ -199,11 +204,10 @@ begin
   FBackend := ABackend;
 end;
 
-function TConnectionsSQL.CreateIndexConnectionName: String;
+function TConnectionsSQL.CreateIndexes: String;
 begin
   Result :=
-    'CREATE UNIQUE INDEX idx_connection_name ON connections ( ' +
-      'connection_name COLLATE NOCASE );'
+    'CREATE UNIQUE INDEX IF NOT EXISTS idx_connection_name ON connections (connection_name COLLATE NOCASE); ';
 end;
 
 function TConnectionsSQL.CreateTable: String;
@@ -340,6 +344,12 @@ constructor TUsersSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TUsersSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_user_fullname ON users (full_name COLLATE NOCASE); ';
 end;
 
 function TUsersSQL.CreateTable: String;
@@ -556,6 +566,12 @@ begin
   FBackend := ABackend;
 end;
 
+function TRolesSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE UNIQUE INDEX IF NOT EXISTS idx_roles_name ON roles (role_name COLLATE NOCASE); ';
+end;
+
 function TRolesSQL.CreateTable: String;
 begin
   Result := EmptyStr;
@@ -649,6 +665,13 @@ begin
   FBackend := ABackend;
 end;
 
+function TPermissionsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE UNIQUE INDEX IF NOT EXISTS idx_permissions_name ON permissions (permission_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_permissions_group ON permissions (permission_group COLLATE NOCASE); ';
+end;
+
 function TPermissionsSQL.CreateTable: String;
 begin
   Result := EmptyStr;
@@ -740,6 +763,12 @@ constructor TRolePermissionsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TRolePermissionsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_role_permissions_role ON role_permissions (role_id, permission_id); ';
 end;
 
 function TRolePermissionsSQL.CreateTable: String;
@@ -944,6 +973,13 @@ constructor TRecordHistorySQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TRecordHistorySQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_history_table_record ON record_history (event_table, record_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_history_date ON record_history (event_date COLLATE BINARY); ';
 end;
 
 function TRecordHistorySQL.CreateTable: String;

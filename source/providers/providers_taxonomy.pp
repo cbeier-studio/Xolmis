@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -35,6 +36,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectHierarchy: String;
@@ -55,6 +57,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -72,6 +75,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -89,6 +93,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -108,6 +113,13 @@ constructor TTaxonRanksSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TTaxonRanksSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_rank_seq ON taxon_ranks (rank_seq COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_rank_abbreviation ON taxon_ranks (abbreviation COLLATE NOCASE); ';
 end;
 
 function TTaxonRanksSQL.CreateTable: String;
@@ -291,6 +303,23 @@ constructor TZooTaxaSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TZooTaxaSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_authorship ON zoo_taxa (authorship COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_ebird_code ON zoo_taxa (ebird_code COLLATE NOCASE) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_order ON zoo_taxa (order_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_family ON zoo_taxa (family_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_genus ON zoo_taxa (genus_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_species ON zoo_taxa (species_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_subspecies_group ON zoo_taxa (subspecies_group_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_parent_taxon ON zoo_taxa (parent_taxon_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_concept_id ON zoo_taxa (taxon_concept_id COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_quickcodes ON zoo_taxa (quick_code COLLATE NOCASE) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_rank ON zoo_taxa (rank_id COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_taxa_sort_num ON zoo_taxa (sort_num COLLATE BINARY); ';
 end;
 
 function TZooTaxaSQL.CreateTable: String;
@@ -850,6 +879,13 @@ begin
   FBackend := ABackend;
 end;
 
+function TZooVernacularSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_zoo_vernacular_name ON zoo_vernacular (vernacular_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_vernacular_taxon ON zoo_vernacular (taxon_id); ';
+end;
+
 function TZooVernacularSQL.CreateTable: String;
 begin
   Result :=
@@ -1005,6 +1041,13 @@ constructor TZooSynonymsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TZooSynonymsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_zoo_synonyms_name ON zoo_synonyms (scientific_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_synonyms_taxon ON zoo_synonyms (taxon_id); ';
 end;
 
 function TZooSynonymsSQL.CreateTable: String;
@@ -1167,6 +1210,13 @@ constructor TZooCountriesSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TZooCountriesSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_zoo_countries_taxon ON zoo_countries (taxon_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_zoo_countries_country ON zoo_countries (country_id); ';
 end;
 
 function TZooCountriesSQL.CreateTable: String;

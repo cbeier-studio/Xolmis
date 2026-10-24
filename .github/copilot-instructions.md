@@ -9,7 +9,7 @@ Xolmis Desktop é um gerenciador de dados ornitológicos (Free Pascal / Lazarus,
 3. **Siga o padrão do vizinho** quando houver conflito entre este guia e o código existente de uma área; em caso de dúvida real, pergunte.
 4. **Não edite** `source/**/backup/`, `lib/`, `win64/`, `*.lps`, `*.compiled`, `*.res`, binários, nem arquivos `.lfm` à mão sem necessidade (veja UI abaixo).
 5. **Ações destrutivas exigem confirmação**: apagar/sobrescrever arquivos, SQL com `DROP`/`TRUNCATE`/`DELETE`/`ALTER` em tabelas existentes, mexer em arquivos de banco, reescrever histórico git.
-6. **Valide**: compile com `lazbuild` (projeto `source\Xolmis.lpi`; testes em `source\tests\xolmis_test.lpi`). Se não puder compilar/rodar, declare explicitamente o que **não** foi verificado — nunca diga "verificado" sem ter rodado.
+6. **Valide**: compile com `c:\lazarus\lazbuild.exe` (projeto `source\Xolmis.lpi`; testes em `source\tests\xolmis_test.lpi`). Se não puder compilar/rodar, declare explicitamente o que **não** foi verificado — nunca diga "verificado" sem ter rodado.
 7. **Atualize documentação relacionada**: `CHANGELOG.md` (seção `[Unreleased]`, formato Keep a Changelog) para mudanças visíveis ao usuário; `docs/en` e `docs/pt` para novos módulos/funcionalidades; `database.dbml` para mudanças de schema; `source/reports/README.md` para mudanças no XRS.
 8. Comentários de código em **inglês**, só onde o código não é autoexplicativo. APIs públicas novas: comentários **FPDoc**. Mensagens de commit: `feat:`, `fix:`, `docs:`, `test:`, `refactor:`.
 

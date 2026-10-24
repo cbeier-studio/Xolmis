@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -36,6 +37,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -52,6 +54,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -69,6 +72,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -85,6 +89,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -102,6 +107,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -117,6 +123,13 @@ constructor TProjectsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TProjectsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_projects_short_title ON projects (short_title COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_projects_protocol_number ON projects (protocol_number COLLATE NOCASE); ';
 end;
 
 function TProjectsSQL.CreateTable: String;
@@ -341,6 +354,13 @@ begin
   FBackend := ABackend;
 end;
 
+function TProjectTeamsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE UNIQUE INDEX IF NOT EXISTS idx_project_team_project_person ON project_team (project_id, person_id); ' +
+    'CREATE INDEX IF NOT EXISTS idx_project_team_project ON project_team (project_id); ';
+end;
+
 function TProjectTeamsSQL.CreateTable: String;
 begin
   Result :=
@@ -481,6 +501,12 @@ constructor TProjectGoalsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TProjectGoalsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_project_goals_status ON project_goals (goal_status COLLATE NOCASE); ';
 end;
 
 function TProjectGoalsSQL.CreateTable: String;
@@ -633,6 +659,13 @@ begin
   FBackend := ABackend;
 end;
 
+function TProjectChronogramsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_project_chronograms_target_date ON project_chronograms (target_date COLLATE BINARY) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_project_chronograms_status ON project_chronograms (progress_status COLLATE NOCASE); ';
+end;
+
 function TProjectChronogramsSQL.CreateTable: String;
 begin
   Result :=
@@ -780,6 +813,13 @@ constructor TProjectBudgetsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TProjectBudgetsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_project_budgets_rubric ON project_budgets (rubric COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_project_budgets_item ON project_budgets (item_name COLLATE NOCASE); ';
 end;
 
 function TProjectBudgetsSQL.CreateTable: String;
@@ -946,6 +986,12 @@ constructor TProjectExpensesSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TProjectExpensesSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_project_expenses_date ON project_expenses (expense_date COLLATE BINARY) WHERE active_status = 1; ';
 end;
 
 function TProjectExpensesSQL.CreateTable: String;

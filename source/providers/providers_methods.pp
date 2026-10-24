@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -35,6 +36,13 @@ constructor TMethodsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TMethodsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_methods_abbreviation ON methods (abbreviation COLLATE BINARY); ' +
+    'CREATE INDEX IF NOT EXISTS idx_methods_ebird_name ON methods (ebird_name COLLATE NOCASE); ';
 end;
 
 function TMethodsSQL.CreateTable: String;

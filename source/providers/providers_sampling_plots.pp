@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -35,6 +36,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function Insert: String;
@@ -51,6 +53,13 @@ constructor TSamplingPlotsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TSamplingPlotsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_sampling_plots_locality ON sampling_plots (locality_id) WHERE active_status = 1; ' +
+    'CREATE INDEX IF NOT EXISTS idx_sampling_plots_coordinate ON sampling_plots (longitude, latitude) WHERE active_status = 1; ';
 end;
 
 function TSamplingPlotsSQL.CreateTable: String;
@@ -246,6 +255,13 @@ constructor TPermanentNetsSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TPermanentNetsSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE UNIQUE INDEX IF NOT EXISTS idx_permanent_nets_plot_net ON permanent_nets (sampling_plot_id, net_number); ' +
+    'CREATE INDEX IF NOT EXISTS idx_permanent_nets_plot ON permanent_nets (sampling_plot_id); ';
 end;
 
 function TPermanentNetsSQL.CreateTable: String;

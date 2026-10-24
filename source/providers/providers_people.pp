@@ -18,6 +18,7 @@ type
     constructor Create(ABackend: TDatabaseBackend);
 
     function CreateTable: String;
+    function CreateIndexes: String;
     function SelectTable(aWhere: TSQLWhereClause): String;
     function SelectAll(aWhere: TSQLWhereClause): String;
     function SelectDateTree(Grouped: Boolean): String;
@@ -35,6 +36,14 @@ constructor TPeopleSQL.Create(ABackend: TDatabaseBackend);
 begin
   inherited Create;
   FBackend := ABackend;
+end;
+
+function TPeopleSQL.CreateIndexes: String;
+begin
+  Result :=
+    'CREATE INDEX IF NOT EXISTS idx_people_fullname ON people (full_name COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_people_citation ON people (citation COLLATE NOCASE); ' +
+    'CREATE INDEX IF NOT EXISTS idx_people_birthday ON people (birth_date COLLATE BINARY); ';
 end;
 
 function TPeopleSQL.CreateTable: String;
