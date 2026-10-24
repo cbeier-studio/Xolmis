@@ -1735,7 +1735,12 @@ begin
       Application.ProcessMessages;
       LogDebug('Optimize database');
       case aProtocol of
-        dbSqlite:   DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+        dbSqlite:
+        begin
+          DMM.sqlCon.ExecuteDirect('VACUUM;');
+          DMM.sqlCon.ExecuteDirect('ANALYZE;');
+          DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+        end;
         dbFirebird:
         begin
           DMM.sqlCon.ExecuteDirect('ALTER DATABASE SET SWEEP INTERVAL 0;');

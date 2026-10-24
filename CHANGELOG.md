@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed unreadable selected options in the report settings combo boxes in dark mode.
 - Modules open faster.
+- Database statistics are now refreshed (`ANALYZE`) after importing data, avoiding very slow queries (e.g. Sightings) with outdated query planner statistics.
 - Dialog for multi selection now uses `TChipsPanel`.
 - Revised the pre-loaded Methods to reduce ambiguity and confusion.
 - Updated links to Xolmis website.

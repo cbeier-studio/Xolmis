@@ -440,7 +440,7 @@ begin
   else
   begin
     AppendLog(rsSuccessfulImport);
-    DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+    DMM.sqlCon.ExecuteDirect('ANALYZE;');
     lblTitleImportFinished.Caption := rsFinishedImporting;
     lblSubtitleImportFinished.Caption := rsSuccessfulImport;
     icoImportFinished.ImageIndex := 0;

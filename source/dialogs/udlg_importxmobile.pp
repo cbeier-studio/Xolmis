@@ -1058,7 +1058,7 @@ begin
     AppendLog(rsSuccessfulImport);
     DMM.sqlTrans.CommitRetaining;
     LogInfo('Import finished successfully, transaction committed');
-    DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+    DMM.sqlCon.ExecuteDirect('ANALYZE;');
     LogInfo('Database optimized');
     lblTitleProgress.Caption := rsFinishedImporting;
     lblProgressInstruction.Caption := rsSuccessfulImport;
@@ -1308,7 +1308,7 @@ begin
     AppendLog(rsSuccessfulImport);
     DMM.sqlTrans.CommitRetaining;
     LogInfo('Import finished successfully, transaction committed');
-    DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+    DMM.sqlCon.ExecuteDirect('ANALYZE;');
     LogInfo('Database optimized');
     lblTitleProgress.Caption := rsFinishedImporting;
     lblProgressInstruction.Caption := rsSuccessfulImport;
@@ -1781,7 +1781,7 @@ begin
     AppendLog(rsSuccessfulImport);
     DMM.sqlTrans.CommitRetaining;
     LogInfo('Import finished successfully, transaction committed');
-    DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+    DMM.sqlCon.ExecuteDirect('ANALYZE;');
     LogInfo('Database optimized');
     lblTitleProgress.Caption := rsFinishedImporting;
     lblProgressInstruction.Caption := rsSuccessfulImport;

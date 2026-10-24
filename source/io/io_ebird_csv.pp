@@ -271,7 +271,7 @@ begin
         dlgProgress.Text := rsProgressFinishing;
         DMM.sqlTrans.CommitRetaining;
         LogInfo('eBird import finished successfully, transaction committed.');
-        DMM.sqlCon.ExecuteDirect('PRAGMA optimize;');
+        DMM.sqlCon.ExecuteDirect('ANALYZE;');
         LogInfo('Database optimized.');
         MsgDlg(rsTitleImportFile, rsSuccessfulImportEbird, mtInformation);
       end;
