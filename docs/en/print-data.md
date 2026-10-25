@@ -5,49 +5,54 @@ Most modules in Xolmis include a **print button** :material-printer: that opens 
 !!! note
       To print data, the **user must have permission** for that. See details in [Users](users.md).
 
-## Print grid
-
-![Print grid preview](img/print-grid-screen.png)
-
-The **Print grid** option generates a report with the **exact same layout** as the module’s data grid. To use it:
-
-1. Click the print button :material-printer: in the module toolbar.  
-2. Select **Print grid**.  
-3. A preview window will open, where you can send the report to the printer or save it to a file.  
-
-!!! warning "Limitation"
-    As many modules contain numerous columns, a single record may span multiple pages in the generated report. This can result in a large number of pages if the dataset is extensive.
 
 ## Print preview
 
-![Print preview](img/print-preview-screen.png)
-
-Other reports use the **Xolmis print preview window**, which offers more flexibility and a standardized interface. Features include:
+Other reports are generated as an **HTML page** and opened in the **default web browser** of your computer or operating system. The browser acts as the print preview window, so its own features are available, such as:
 
 - **Zoom in/out** – Adjust the view of the report.  
-- **Page navigation** – Move through pages using the controls in the bottom status bar.  
-- **Toolbar options** – Send the report to the printer, configure printer settings, or save the report as PDF.  
+- **Search in page** – Find text in the report (`Ctrl+F`).  
+- **Print and save as PDF** – Use the browser print dialog (`Ctrl+P`).  
+
+!!! note
+    The report is a temporary file and does not need internet access. If you want to keep it, save it as PDF.
 
 ### Send to printer
 
-Click the **Print** button :material-printer: to send the report to a printer. This opens the print dialog, where you can:
+In the browser, press `Ctrl+P` (or use the browser menu **Print**) to send the report to a printer. In the print dialog, you can:
 
 - Select the printer to use.  
 - Define which pages to print.  
 - Set the number of copies.  
 
+The page size and orientation chosen in the report settings dialog are used as the default for printing. Check that the browser's *Margins* option is set to *Default* and that *Background graphics* is enabled if you want the colors of the report.
+
 ### Export PDF
 
-Click the **Save PDF** button :fontawesome-regular-file-pdf: to export the report as a PDF file. This opens the save dialog, where you can:
+In the browser print dialog, choose **Save as PDF** (or **Microsoft Print to PDF**) as the destination and click **Save**. Then:
 
 - Choose the destination folder.  
 - Define the file name.  
 
 Exporting to PDF is recommended for sharing reports digitally or archiving them in project documentation.
 
+### Report settings and profiles
+
+Before a report is generated, the **report settings dialog** lets you choose the page size, page orientation and color theme. For modules with many columns, such as **Captures**, it also offers a **Report profile** to keep the list readable:
+
+| Profile | Content |
+|---------|---------|
+| **All columns** | Every column available for the report. |
+| **Summary** | Location, date, taxon, band, age, sex, status and notes. |
+| **Morphometry** | Measurements: wing chord, tail, tarsus, bill, skull, weight, etc. |
+| **Molt and breeding condition** | Molt, fat, brood patch, cloacal protuberance, skull ossification, etc. |
+| **Samples and photos** | Samples collected, blood parameters and photography data. |
+
+Every profile repeats the identification columns (locality, date/time, bander, type, taxon and band), so each row keeps its context. The profile name is added to the report title.
+
 ## Best practices
 
-- **Choose the right option**: Use *Print grid* for quick exports of raw data, and other options for more polished reports.  
+- **Split wide reports with profiles**: In Captures, generate one report per profile instead of a single report with all columns.  
 - **Limit columns when possible**: Hide unnecessary columns before printing to reduce page count.  
 - **Use PDF for sharing**: Export reports as PDF to ensure compatibility across devices and operating systems.  
 - **Check printer settings**: Configure page size, orientation, and margins to avoid formatting issues.  

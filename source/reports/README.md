@@ -501,6 +501,23 @@ Percentage
 Coordinate
 ```
 
+### 7.1.1 Perfis de Relatório
+
+Um perfil de relatório é um subconjunto nomeado das colunas de uma tabela na listagem simples, usado para dividir listagens com muitas colunas (ex.: capturas) em relatórios mais legíveis. O mecanismo é genérico (`TTableSchema.ReportProfiles`), mas hoje só a tabela de capturas registra perfis.
+
+```pascal
+T.AddReportProfile('morphometry', rsReportProfileMorphometry, 'locality_name,capture_date,...,weight');
+```
+
+- `TReportProfile` guarda `Name` (identificador estável), `Caption` (`resourcestring` exibida ao usuário) e `FieldNames` (nomes de campos do schema).
+- Registro em `RegisterReportProfiles` (`data_schema`), chamado ao final de `RegisterDatabaseSchema`, depois dos `StackReportField`.
+- **Cada perfil deve repetir os campos de identificação** (ex.: em capturas: localidade, data/hora, anilhador, tipo, táxon, anilha) para que cada linha mantenha o contexto.
+- A ordem das colunas continua definida por `ReportOrder` e o empilhamento por `ReportStackWith`; o perfil apenas filtra os campos. `ReportVisible = False` continua excluindo o campo mesmo que listado no perfil.
+- Perfis de capturas: `summary`, `morphometry`, `condition`, `samples`.
+- Seleção: `dlgReportSettings` (`ucfg_report`) lista "Todas as colunas" (sem perfil) e os perfis da tabela (`TableType` deve ser definido antes de `ShowModal`); o resultado vai em `TXolmisReportSettings.ReportProfile`. `TReportSimpleList.ApplySettings` chama `SetProfile`, que filtra as colunas e acrescenta a legenda ao título do relatório. Nome vazio ou desconhecido mostra todas as colunas.
+
+Para ativar perfis em outra tabela, basta registrar os perfis em `RegisterReportProfiles` e adicionar as `resourcestring` correspondentes; o diálogo exibe o seletor automaticamente.
+
 ### 7.2 Seleção de Colunas
 
 Por padrão, os relatórios de listagem devem utilizar apenas as colunas atualmente visíveis ao usuário. A listagem simples atual usa `TField.Visible` para determinar esse conjunto; `DisplayLabel` fornece o rótulo já preparado pelo dataset, com `ReportLabel` como alternativa quando o rótulo estiver vazio. `ReportCSSClass` e `ReportOrder` são aplicados quando definidos.

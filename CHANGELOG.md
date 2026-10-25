@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new fields to Surveys: transport mode, total paused time, total intervals, species limit, and discarded.
 - Added new fields to Sightings: detection modes, evidences, habitats, activities, and doubtful record. 
 - Database documentation in HTML using `database.dbml` file.
+- Added report profiles (column subsets) to the simple list report, selectable in the report settings dialog. Captures have Summary, Morphometry, Molt and breeding condition, and Samples and photos profiles.
 - Report settings dialog (page size, orientation and color theme) shown before generating XRS reports.
 
 ### Changed

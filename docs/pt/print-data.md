@@ -5,49 +5,53 @@ A maioria dos módulos do Xolmis inclui um **botão de impressão** :material-pr
 !!! note
       Para imprimir dados, o **usuário deve ter permissão** para isso. Veja detalhes em [Usuários](users.md).
 
-## Imprimir grade
-
-![Pré-visualização da grade de impressão](img/print-grid-screen.png)
-
-A opção **Imprimir grade** gera um relatório com o **mesmo layout exato** da grade de dados do módulo. Para utilizá-la:
-
-1. Clique no botão de impressão :material-printer: na barra de ferramentas do módulo.  
-2. Selecione **Imprimir grade**.  
-3. Uma janela de pré-visualização será aberta, onde você pode enviar o relatório para a impressora ou salvá-lo em um arquivo.  
-
-!!! warning "Limitação"
-    Como muitos módulos contêm diversas colunas, um único registro pode ocupar várias páginas no relatório gerado. Isso pode resultar em um grande número de páginas se o conjunto de dados for extenso.
-
 ## Pré-visualização de impressão
 
-![Pré-visualização de impressão](img/print-preview-screen.png)
-
-Outros relatórios utilizam a **janela de pré-visualização de impressão do Xolmis**, que oferece mais flexibilidade e uma interface padronizada. Os recursos incluem:
+Os relatórios são gerados como uma **página HTML** e abertos no **navegador padrão** do computador ou do sistema operacional. O navegador funciona como a janela de pré-visualização, e seus próprios recursos ficam disponíveis, como:
 
 - **Zoom in/out** – Ajustar a visualização do relatório.  
-- **Navegação entre páginas** – Percorrer páginas usando os controles na barra de status inferior.  
-- **Opções da barra de ferramentas** – Enviar o relatório para a impressora, configurar opções de impressão ou salvar o relatório como PDF.  
+- **Busca na página** – Localizar texto no relatório (`Ctrl+F`).  
+- **Imprimir e salvar como PDF** – Usar o diálogo de impressão do navegador (`Ctrl+P`).  
+
+!!! note
+    O relatório é um arquivo temporário e não precisa de acesso à internet. Se quiser guardá-lo, salve-o como PDF.
 
 ### Enviar para a impressora
 
-Clique no botão **Imprimir** :material-printer: para enviar o relatório a uma impressora. Isso abrirá o diálogo de impressão, onde você pode:
+No navegador, pressione `Ctrl+P` (ou use o menu **Imprimir** do navegador) para enviar o relatório a uma impressora. No diálogo de impressão, você pode:
 
 - Selecionar a impressora a ser usada.  
 - Definir quais páginas imprimir.  
 - Configurar o número de cópias.  
 
+O tamanho e a orientação da página escolhidos no diálogo de configurações do relatório são usados como padrão na impressão. Verifique se a opção *Margens* do navegador está como *Padrão* e se *Gráficos de segundo plano* está ativada, caso queira manter as cores do relatório.
+
 ### Exportar PDF
 
-Clique no botão **Salvar PDF** :fontawesome-regular-file-pdf: para exportar o relatório como um arquivo PDF. Isso abrirá o diálogo de salvamento, onde você pode:
+No diálogo de impressão do navegador, escolha **Salvar como PDF** (ou **Microsoft Print to PDF**) como destino e clique em **Salvar**. Em seguida:
 
-- Escolher a pasta de destino.  
-- Definir o nome do arquivo.  
+- Escolha a pasta de destino.  
+- Defina o nome do arquivo.  
 
 Exportar para PDF é recomendado para compartilhar relatórios digitalmente ou arquivá-los na documentação de projetos.
 
+### Configurações e perfis do relatório
+
+Antes de gerar o relatório, o **diálogo de configurações do relatório** permite escolher o tamanho e a orientação da página e o tema de cores. Em módulos com muitas colunas, como **Capturas**, ele também oferece um **Perfil do relatório** para manter a listagem legível:
+
+| Perfil | Conteúdo |
+|--------|----------|
+| **Todas as colunas** | Todas as colunas disponíveis para o relatório. |
+| **Resumo** | Local, data, táxon, anilha, idade, sexo, status e notas. |
+| **Morfometria** | Medidas: corda da asa, cauda, tarso, bico, crânio, peso, etc. |
+| **Muda e condição reprodutiva** | Muda, gordura, placa de incubação, protuberância cloacal, ossificação do crânio, etc. |
+| **Amostras e fotos** | Amostras coletadas, parâmetros sanguíneos e dados de fotografia. |
+
+Todos os perfis repetem as colunas de identificação (localidade, data/hora, anilhador, tipo, táxon e anilha), para que cada linha mantenha seu contexto. O nome do perfil é acrescentado ao título do relatório.
+
 ## Boas práticas
 
-- **Escolha a opção correta**: Use *Imprimir grade* para exportações rápidas de dados brutos e outras opções para relatórios mais elaborados.  
+- **Divida relatórios largos com perfis**: Em Capturas, gere um relatório por perfil em vez de um único relatório com todas as colunas.  
 - **Limite colunas quando possível**: Oculte colunas desnecessárias antes de imprimir para reduzir o número de páginas.  
 - **Use PDF para compartilhamento**: Exporte relatórios como PDF para garantir compatibilidade entre dispositivos e sistemas operacionais.  
 - **Verifique as configurações da impressora**: Configure tamanho da página, orientação e margens para evitar problemas de formatação.  
