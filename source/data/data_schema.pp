@@ -8670,6 +8670,12 @@ begin
   StackReportField(DBSchema, tbSurveys, 'duration', 'survey_date');
   StackReportField(DBSchema, tbSurveys, 'transport_mode', 'method_name');
   StackReportField(DBSchema, tbSurveys, 'net_station_name', 'locality_name');
+  StackReportField(DBSchema, tbSurveys, 'start_latitude', 'start_longitude');
+  StackReportField(DBSchema, tbSurveys, 'coordinate_precision', 'start_longitude');
+  StackReportField(DBSchema, tbSurveys, 'end_latitude', 'end_longitude');
+  StackReportField(DBSchema, tbSurveys, 'nets_total', 'observers_tally');
+  StackReportField(DBSchema, tbSurveys, 'max_species', 'observers_tally');
+  StackReportField(DBSchema, tbSurveys, 'distance_total', 'area_total');
   // Sightings
   StackReportField(DBSchema, tbSightings, 'observers_list', 'survey_name');
   StackReportField(DBSchema, tbSightings, 'method_name', 'survey_name');

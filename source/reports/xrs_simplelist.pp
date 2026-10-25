@@ -17,6 +17,8 @@ type
     FTableSchema: TTableSchema;
     FReportTitle: string;
     FFilterLines: TStringList;
+    FParentTitle: string;
+    FParentItems: TStringList;
     function DescribeField(AField: TSearchField): string;
     procedure AddGroupLines(AGroups: TSearchGroups);
     procedure Initialize(ADataSet: TDataSet; ATableSchema: TTableSchema; const AReportTitle: string);
@@ -33,6 +35,11 @@ type
 
     { Describes the active filters in the report header; nothing is shown when there are none. }
     procedure SetSearch(ASearch: TCustomSearch);
+
+    { Describes the current record of the parent table in a box above the list, when the
+      list is a submodule of that parent. The record is read immediately; nothing is shown
+      when the dataset is nil or empty. }
+    procedure SetParentRecord(AParentTable: TTableType; AParentDataSet: TDataSet);
 
     class function GetReportTitle: string; override;
     class function GetContexts: TModuleContexts; override;
@@ -84,12 +91,14 @@ begin
   FReportTitle := AReportTitle;
   FContextJSON := TJSONObject.Create;
   FFilterLines := TStringList.Create;
+  FParentItems := TStringList.Create;
 
   LoadTemplate(REPORT_TEMPLATE_SIMPLE_LIST);
 end;
 
 destructor TReportSimpleList.Destroy;
 begin
+  FParentItems.Free;
   FFilterLines.Free;
   FContextJSON.Free;
   inherited Destroy;
@@ -150,6 +159,68 @@ begin
     Exit;
   AddGroupLines(ASearch.TextFilters);
   AddGroupLines(ASearch.QuickFilters);
+end;
+
+procedure TReportSimpleList.SetParentRecord(AParentTable: TTableType; AParentDataSet: TDataSet);
+var
+  ParentSchema: TTableSchema;
+  FieldSchema: TFieldSchema;
+  Field: TField;
+  Ordered: TFieldSchemaList;
+  I, J: Integer;
+  Text, Caption: string;
+begin
+  FParentTitle := EmptyStr;
+  FParentItems.Clear;
+  if not Assigned(AParentDataSet) or not AParentDataSet.Active or AParentDataSet.IsEmpty or
+    not Assigned(DBSchema) then
+    Exit;
+
+  ParentSchema := DBSchema.GetTable(AParentTable);
+  if not Assigned(ParentSchema) then
+    Exit;
+
+  // Ordered fields first (by ReportOrder), then the remaining ones in schema order
+  Ordered := TFieldSchemaList.Create(False);
+  try
+    for FieldSchema in ParentSchema.Fields do
+      if FieldSchema.ReportVisible and (FieldSchema.ReportOrder > 0) then
+      begin
+        J := Ordered.Count;
+        while (J > 0) and (Ordered[J - 1].ReportOrder > FieldSchema.ReportOrder) do
+          Dec(J);
+        Ordered.Insert(J, FieldSchema);
+      end;
+    for FieldSchema in ParentSchema.Fields do
+      if FieldSchema.ReportVisible and (FieldSchema.ReportOrder <= 0) then
+        Ordered.Add(FieldSchema);
+
+    for I := 0 to Ordered.Count - 1 do
+    begin
+      FieldSchema := Ordered[I];
+      Field := AParentDataSet.FindField(FieldSchema.Name);
+      if Field = nil then
+        Continue;
+      if Field.DataType in [ftMemo, ftWideMemo, ftFmtMemo] then
+        Text := Trim(Field.AsString)
+      else
+        Text := Trim(Field.DisplayText);
+      if Text = EmptyStr then
+        Continue;
+
+      Caption := FieldSchema.ReportLabel;
+      if Caption = EmptyStr then
+        Caption := Field.DisplayLabel;
+      if Caption = EmptyStr then
+        Caption := FieldSchema.Name;
+      FParentItems.Add(Caption + '=' + Text);
+    end;
+  finally
+    Ordered.Free;
+  end;
+
+  if FParentItems.Count > 0 then
+    FParentTitle := Format(rsReportParentRecord, [ParentSchema.DisplayName]);
 end;
 
 procedure TReportSimpleList.AddVisibleColumns(AColumns: TJSONArray);
@@ -385,7 +456,7 @@ end;
 
 procedure TReportSimpleList.FetchData;
 var
-  ColArray, RowArray, FilterArray: TJSONArray;
+  ColArray, RowArray, FilterArray, ParentArray: TJSONArray;
   FilterItem: TJSONObject;
   I: Integer;
 begin
@@ -430,6 +501,21 @@ begin
       FilterArray.Add(FilterItem);
     end;
     FContextJSON.Add('filters', FilterArray);
+  end;
+
+  if FParentItems.Count > 0 then
+  begin
+    FContextJSON.Add('has_parent', True);
+    FContextJSON.Add('parent_title', FParentTitle);
+    ParentArray := TJSONArray.Create;
+    for I := 0 to FParentItems.Count - 1 do
+    begin
+      FilterItem := TJSONObject.Create;
+      FilterItem.Add('label', FParentItems.Names[I]);
+      FilterItem.Add('value', FParentItems.ValueFromIndex[I]);
+      ParentArray.Add(FilterItem);
+    end;
+    FContextJSON.Add('parent_fields', ParentArray);
   end;
 end;
 

@@ -88,6 +88,7 @@ type
     mvLegalNoticePlugin: TLegalNoticePlugin;
     mvMapScalePlugin: TMapScalePlugin;
     cardVideos: TPage;
+    pmPrintChild: TPopupMenu;
     pmvAddVideo: TMenuItem;
     pmvVideoInfo: TMenuItem;
     pmvDelVideo: TMenuItem;
@@ -164,6 +165,7 @@ type
     sbAddFeathersBatch: TSpeedButton;
     sbClearSearch: TColorSpeedButton;
     sbEmptyAddCountries: TSpeedButton;
+    sbPrintChild: TSpeedButton;
     sbVideoInfo: TSpeedButton;
     sbDelVideo: TSpeedButton;
     sbEmptyQuickEntry: TSpeedButton;
@@ -194,7 +196,6 @@ type
     pmdAddDocument: TMenuItem;
     pmdAddLink: TMenuItem;
     pmcNewFeather: TMenuItem;
-    pmPrintFeathers: TMenuItem;
     pmcNewExpenseFromRubric: TMenuItem;
     pmcNewProjectActivityFromGoal: TMenuItem;
     pmcNewProjectGoal: TMenuItem;
@@ -204,7 +205,6 @@ type
     pmrRefresh: TMenuItem;
     pmcNewVegetation: TMenuItem;
     pgChild6: TPage;
-    pmPrintSightingsByObserver: TMenuItem;
     pmAddLink: TMenuItem;
     pmAddDocument: TMenuItem;
     pDocsToolbar: TBCPanel;
@@ -273,7 +273,6 @@ type
     pmAudios: TPopupMenu;
     pmaRefreshAudios: TMenuItem;
     pmaPlayAudio: TMenuItem;
-    pmPrintNestsByTaxon: TMenuItem;
     gridSummary: TDBGrid;
     dsRecycle: TDataSource;
     iButtons: TImageList;
@@ -366,61 +365,6 @@ type
     lblProjectFilter: TLabel;
     cardMap: TPage;
     mapGeo: TMapView;
-    pmPrintSightings: TMenuItem;
-    pmPrintSightingsBySurvey: TMenuItem;
-    pmPrintSightingsByLocality: TMenuItem;
-    pmPrintSightingsByProject: TMenuItem;
-    pmPrintSightingsByTaxon: TMenuItem;
-    pmPrintSpecimens: TMenuItem;
-    pmPrintSpecimensByProject: TMenuItem;
-    pmPrintSpecimensByLocality: TMenuItem;
-    pmPrintSpecimensByTaxon: TMenuItem;
-    pmPrintSpecimensByYear: TMenuItem;
-    pmPrintMethods: TMenuItem;
-    pmPrintBands: TMenuItem;
-    pmPrintBandsByCarrier: TMenuItem;
-    pmPrintBandsWithHistory: TMenuItem;
-    pmPrintBandsByStatus: TMenuItem;
-    pmPrintIndividuals: TMenuItem;
-    pmPrintIndividualsByTaxon: TMenuItem;
-    pmPrintIndividualsByParents: TMenuItem;
-    pmPrintCaptures: TMenuItem;
-    pmPrintCapturesByProject: TMenuItem;
-    pmPrintCapturesByDate: TMenuItem;
-    pmPrintCapturesByLocality: TMenuItem;
-    pmPrintCapturesByTaxon: TMenuItem;
-    pmPrintColoredBands: TMenuItem;
-    pmPrintNests: TMenuItem;
-    pmPrintNestsByProject: TMenuItem;
-    pmPrintNestsByLocality: TMenuItem;
-    pmPrintNestsByPeriod: TMenuItem;
-    pmPrintEggs: TMenuItem;
-    pmPrintEggsByNest: TMenuItem;
-    pmPrintExpeditionsByProject: TMenuItem;
-    pmPrintEggsByLocality: TMenuItem;
-    pmPrintEggsByTaxon: TMenuItem;
-    pmPrintInstitutions: TMenuItem;
-    pmPrintResearchers: TMenuItem;
-    pmPrintProjects: TMenuItem;
-    pmPrintPermits: TMenuItem;
-    pmPrintPermitsByProject: TMenuItem;
-    pmPrintPermitsByExpiration: TMenuItem;
-    pmPrintGazetteer: TMenuItem;
-    pmPrintGazetteerHierarchical: TMenuItem;
-    pmPrintExpeditions: TMenuItem;
-    pmPrintSamplingPlots: TMenuItem;
-    pmPrintSamplingPlotsByLocality: TMenuItem;
-    pmPrintBotanicTaxa: TMenuItem;
-    pmPrintBotanicTaxaRecorded: TMenuItem;
-    pmPrintBotanicTaxaHierarchical: TMenuItem;
-    pmPrintTaxa: TMenuItem;
-    pmPrintTaxaHierarchical: TMenuItem;
-    pmPrintTaxaRecorded: TMenuItem;
-    pmPrintTaxaRecordedByLocality: TMenuItem;
-    pmPrintSurveysByExpedition: TMenuItem;
-    pmPrintSurveys: TMenuItem;
-    pmPrintSurveysByLocality: TMenuItem;
-    pmPrintSurveysByProject: TMenuItem;
     pMapToolbar: TBCPanel;
     pmiAddImage: TMenuItem;
     pmiImageInfo: TMenuItem;
@@ -1173,6 +1117,7 @@ type
     procedure sbOpenDocClick(Sender: TObject);
     procedure sbPlayAudioClick(Sender: TObject);
     procedure sbPlayVideoClick(Sender: TObject);
+    procedure sbPrintChildClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
     procedure sbPriorChildClick(Sender: TObject);
     procedure sbPriorRecordClick(Sender: TObject);
@@ -1329,7 +1274,7 @@ type
     procedure SaveColumnsConfig;
 
     procedure SetGridColumns(aGrid: TDBGrid);
-    procedure SetXRSPrintMenu;
+    procedure SetXRSPrintMenu(aPopupMenu: TPopupMenu);
     procedure XRSReportMenuItemClick(Sender: TObject);
     procedure XRSReportProgress(Sender: TObject; const AMessage: string; APercent: Integer);
 
@@ -1442,6 +1387,7 @@ type
   TXRSReportMenuItem = class(TMenuItem)
   public
     ReportClass: TXolmisReportClass;
+    Controller: TBaseController;
   end;
 
 { Cheap record count for enabling navigation buttons: it avoids a SELECT COUNT(*) on every record change.
@@ -8862,38 +8808,60 @@ begin
   OpenDocument(qVideos.FieldByName(COL_FILE_PATH).AsString);
 end;
 
+procedure TfrmCustomGrid.sbPrintChildClick(Sender: TObject);
+begin
+  SetXRSPrintMenu(pmPrintChild);
+  with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
+    pmPrintChild.Popup(X, Y);
+end;
+
 procedure TfrmCustomGrid.sbPrintClick(Sender: TObject);
 begin
-  SetXRSPrintMenu;
+  SetXRSPrintMenu(pmPrint);
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
     pmPrint.Popup(X, Y);
 end;
 
-procedure TfrmCustomGrid.SetXRSPrintMenu;
+procedure TfrmCustomGrid.SetXRSPrintMenu(aPopupMenu: TPopupMenu);
 var
   I, InsertIndex: Integer;
   ReportClasses: specialize TFPGList<TXolmisReportClass>;
   ReportClass: TXolmisReportClass;
   ReportItem: TXRSReportMenuItem;
+  Controller: TBaseController;
 begin
-  for I := pmPrint.Items.Count - 1 downto 0 do
-    if pmPrint.Items[I] is TXRSReportMenuItem then
-      pmPrint.Items[I].Free;
+  for I := aPopupMenu.Items.Count - 1 downto 0 do
+    if aPopupMenu.Items[I] is TXRSReportMenuItem then
+      aPopupMenu.Items[I].Free;
 
-  if not Assigned(FModule) or not CanPrintTable(FModule.TableType) or
-    not Assigned(FModule.DataSet) or not FModule.DataSet.Active then
+  if not Assigned(FModule) then
     Exit;
 
-  ReportClasses := ReportRegistry.GetReportsForContext(GetModuleContextForTable(FModule.TableType));
+  // The child menu reports on the active submodule; the main menu on the module itself
+  Controller := FModule;
+  if aPopupMenu = pmPrintChild then
+  begin
+    if (FModule.Submodules.Count = 0) or (nbChilds.PageIndex < 0) or
+      (nbChilds.PageIndex >= FModule.Submodules.Count) then
+      Exit;
+    Controller := FModule.Submodules[nbChilds.PageIndex];
+  end;
+
+  if not CanPrintTable(Controller.TableType) or
+    not Assigned(Controller.DataSet) or not Controller.DataSet.Active then
+    Exit;
+
+  ReportClasses := ReportRegistry.GetReportsForContext(GetModuleContextForTable(Controller.TableType));
   try
     InsertIndex := 0;
     for ReportClass in ReportClasses do
     begin
-      ReportItem := TXRSReportMenuItem.Create(pmPrint);
+      ReportItem := TXRSReportMenuItem.Create(aPopupMenu);
       ReportItem.Caption := ReportClass.GetReportTitle;
       ReportItem.ReportClass := ReportClass;
+      ReportItem.Controller := Controller;
       ReportItem.OnClick := @XRSReportMenuItemClick;
-      pmPrint.Items.Insert(InsertIndex, ReportItem);
+      aPopupMenu.Items.Insert(InsertIndex, ReportItem);
       Inc(InsertIndex);
     end;
   finally
@@ -8913,12 +8881,16 @@ var
   Renderer: TReportRenderer;
   Dialog: TdlgReportSettings;
   Settings: TXolmisReportSettings;
+  Controller: TBaseController;
 begin
-  if not (Sender is TXRSReportMenuItem) or not Assigned(FModule) or
-    not CanPrintTable(FModule.TableType) then
+  if not (Sender is TXRSReportMenuItem) or not Assigned(FModule) then
     Exit;
 
-  if not Assigned(FModule.DataSet) or not FModule.DataSet.Active or FModule.DataSet.IsEmpty then
+  Controller := TXRSReportMenuItem(Sender).Controller;
+  if not Assigned(Controller) or not CanPrintTable(Controller.TableType) then
+    Exit;
+
+  if not Assigned(Controller.DataSet) or not Controller.DataSet.Active or Controller.DataSet.IsEmpty then
   begin
     MsgDlg(rsTitleInformation, rsNothingToPrint, mtInformation);
     Exit;
@@ -8951,11 +8923,16 @@ begin
       dlgLoading.Show;
       try
         dlgLoading.UpdateProgress(rsProgressPreparing, -1);
-        Report := ReportClass.CreateForDataSet(FModule.DataSet, FModule.TableType);
+        Report := ReportClass.CreateForDataSet(Controller.DataSet, Controller.TableType);
         Report.ApplySettings(Settings);
         Report.OnProgress := @XRSReportProgress;
         if Report is TReportSimpleList then
-          TReportSimpleList(Report).SetSearch(FSearch);
+        begin
+          if Controller = FModule then
+            TReportSimpleList(Report).SetSearch(FSearch)
+          else
+            TReportSimpleList(Report).SetParentRecord(FModule.TableType, FModule.DataSet);
+        end;
         Renderer.ShowPreview(Report);
       finally
         dlgLoading.Hide;
@@ -10616,6 +10593,7 @@ begin
       sbChildHistory.Enabled := False;
       sbChildVerifications.Enabled := False;
       sbShareChild.Enabled := False;
+      sbPrintChild.Enabled := False;
       sbRefreshChild.Enabled := True;
 
       pSide.Enabled := False;
@@ -10630,6 +10608,7 @@ begin
       sbChildHistory.Enabled := (Cnt > 0);
       sbChildVerifications.Enabled := (Cnt > 0);
       sbShareChild.Enabled := (Cnt > 0) and CanExportTable(FChildTable);
+      sbPrintChild.Enabled := (Cnt > 0) and CanPrintTable(FChildTable);
       sbRefreshChild.Enabled := True;
       sbFirstChild.Enabled := (Cnt > 1) and (aDataSet.RecNo > 1);
       sbPriorChild.Enabled := (Cnt > 1) and (aDataSet.RecNo > 1);
@@ -10650,6 +10629,7 @@ begin
       sbChildHistory.Enabled := False;
       sbChildVerifications.Enabled := False;
       sbShareChild.Enabled := False;
+      sbPrintChild.Enabled := False;
       sbRefreshChild.Enabled := False;
 
       pSide.Enabled := False;

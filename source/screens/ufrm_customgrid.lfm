@@ -8676,6 +8676,28 @@ object frmCustomGrid: TfrmCustomGrid
           ParentShowHint = False
           OnClick = sbAddChildClick
         end
+        object sbPrintChild: TSpeedButton
+          AnchorSideLeft.Control = sbShareChild
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = pChildToolbar
+          AnchorSideTop.Side = asrCenter
+          Left = 482
+          Height = 34
+          Hint = 'Print records'
+          Top = 3
+          Width = 34
+          AutoSize = True
+          BorderSpacing.Right = 20
+          DisabledImageIndex = 94
+          Enabled = False
+          Flat = True
+          Images = iButtons
+          ImageIndex = 93
+          ImageWidth = 24
+          ShowHint = True
+          ParentShowHint = False
+          OnClick = sbPrintChildClick
+        end
       end
       object nbChilds: TNotebook
         Left = 0
@@ -27033,296 +27055,6 @@ object frmCustomGrid: TfrmCustomGrid
     Images = iButtons
     Left = 200
     Top = 64
-    object pmPrintMethods: TMenuItem
-      Caption = 'Methods'
-      Visible = False
-      OnClick = pmPrintMethodsClick
-    end
-    object pmPrintExpeditions: TMenuItem
-      Caption = 'Expeditions'
-      Visible = False
-      OnClick = pmPrintExpeditionsClick
-    end
-    object pmPrintExpeditionsByProject: TMenuItem
-      Caption = 'Expeditions per project'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSurveys: TMenuItem
-      Caption = 'Surveys'
-      Visible = False
-      OnClick = pmPrintSurveysClick
-    end
-    object pmPrintSurveysByExpedition: TMenuItem
-      Caption = 'Surveys per expedition'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSurveysByLocality: TMenuItem
-      Caption = 'Surveys per locality'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSurveysByProject: TMenuItem
-      Caption = 'Surveys per project'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSightings: TMenuItem
-      Caption = 'Sightings'
-      Visible = False
-      OnClick = pmPrintSightingsClick
-    end
-    object pmPrintSightingsBySurvey: TMenuItem
-      Caption = 'Sightings per survey'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSightingsByLocality: TMenuItem
-      Caption = 'Sightings per locality'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSightingsByObserver: TMenuItem
-      Caption = 'Sightings per observer'
-      Visible = False
-      OnClick = pmPrintSightingsByObserverClick
-    end
-    object pmPrintSightingsByProject: TMenuItem
-      Caption = 'Sightings per project'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSightingsByTaxon: TMenuItem
-      Caption = 'Sightings per taxon'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSpecimens: TMenuItem
-      Caption = 'Specimens'
-      Visible = False
-      OnClick = pmPrintSpecimensClick
-    end
-    object pmPrintSpecimensByProject: TMenuItem
-      Caption = 'Specimens per project'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSpecimensByLocality: TMenuItem
-      Caption = 'Specimens per locality'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSpecimensByTaxon: TMenuItem
-      Caption = 'Specimens per taxon'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSpecimensByYear: TMenuItem
-      Caption = 'Specimens per year'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintBands: TMenuItem
-      Caption = 'Bands'
-      Visible = False
-      OnClick = pmPrintBandsClick
-    end
-    object pmPrintBandsByCarrier: TMenuItem
-      Caption = 'Bands per carrier'
-      Visible = False
-      OnClick = pmPrintBandsByCarrierClick
-    end
-    object pmPrintBandsByStatus: TMenuItem
-      Caption = 'Bands per status'
-      Visible = False
-      OnClick = pmPrintBandsByStatusClick
-    end
-    object pmPrintBandsWithHistory: TMenuItem
-      Caption = 'Bands with history'
-      Visible = False
-      OnClick = pmPrintBandsWithHistoryClick
-    end
-    object pmPrintIndividuals: TMenuItem
-      Caption = 'Individuals'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintIndividualsByTaxon: TMenuItem
-      Caption = 'Individuals per taxon'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintIndividualsByParents: TMenuItem
-      Caption = 'Individuals per parents'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintCaptures: TMenuItem
-      Caption = 'Captures'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintCapturesByProject: TMenuItem
-      Caption = 'Captures per project'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintCapturesByDate: TMenuItem
-      Caption = 'Captures per date'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintCapturesByLocality: TMenuItem
-      Caption = 'Captures per locality'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintCapturesByTaxon: TMenuItem
-      Caption = 'Captures per taxon'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintColoredBands: TMenuItem
-      Caption = 'Colored bands combinations'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintFeathers: TMenuItem
-      Caption = 'Feathers'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintNests: TMenuItem
-      Caption = 'Nests'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintNestsByProject: TMenuItem
-      Caption = 'Nests per project'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintNestsByLocality: TMenuItem
-      Caption = 'Nests per locality'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintNestsByPeriod: TMenuItem
-      Caption = 'Nests per period'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintNestsByTaxon: TMenuItem
-      Caption = 'Nests per taxon'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintEggs: TMenuItem
-      Caption = 'Eggs'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintEggsByNest: TMenuItem
-      Caption = 'Eggs per nest'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintEggsByLocality: TMenuItem
-      Caption = 'Eggs per locality'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintEggsByTaxon: TMenuItem
-      Caption = 'Eggs per taxon'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintInstitutions: TMenuItem
-      Caption = 'Institutions'
-      Visible = False
-      OnClick = pmPrintInstitutionsClick
-    end
-    object pmPrintResearchers: TMenuItem
-      Caption = 'Researchers'
-      Visible = False
-      OnClick = pmPrintResearchersClick
-    end
-    object pmPrintProjects: TMenuItem
-      Caption = 'Projects'
-      Visible = False
-      OnClick = pmPrintProjectsClick
-    end
-    object pmPrintPermits: TMenuItem
-      Caption = 'Permits'
-      Visible = False
-      OnClick = pmPrintPermitsClick
-    end
-    object pmPrintPermitsByProject: TMenuItem
-      Caption = 'Permits per project'
-      Visible = False
-      OnClick = pmPrintPermitsByProjectClick
-    end
-    object pmPrintPermitsByExpiration: TMenuItem
-      Caption = 'Permits per expiration date'
-      Visible = False
-      OnClick = pmPrintPermitsByExpirationClick
-    end
-    object pmPrintGazetteer: TMenuItem
-      Caption = 'Gazetteer'
-      Visible = False
-      OnClick = pmPrintGazetteerClick
-    end
-    object pmPrintGazetteerHierarchical: TMenuItem
-      Caption = 'Gazetteer (hierarchical)'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintSamplingPlots: TMenuItem
-      Caption = 'Sampling plots'
-      Visible = False
-      OnClick = pmPrintSamplingPlotsClick
-    end
-    object pmPrintSamplingPlotsByLocality: TMenuItem
-      Caption = 'Sampling plots per locality'
-      Visible = False
-      OnClick = pmPrintSamplingPlotsByLocalityClick
-    end
-    object pmPrintBotanicTaxa: TMenuItem
-      Caption = 'Botanic taxa'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintBotanicTaxaHierarchical: TMenuItem
-      Caption = 'Botanic taxa (hierarchical)'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintBotanicTaxaRecorded: TMenuItem
-      Caption = 'Botanic taxa recorded'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintTaxa: TMenuItem
-      Caption = 'Taxa'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintTaxaHierarchical: TMenuItem
-      Caption = 'Taxa (hierarchical)'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintTaxaRecorded: TMenuItem
-      Caption = 'Taxa recorded'
-      Enabled = False
-      Visible = False
-    end
-    object pmPrintTaxaRecordedByLocality: TMenuItem
-      Caption = 'Taxa recorded per locality'
-      Enabled = False
-      Visible = False
-    end
   end
   object pmAudios: TPopupMenu
     Images = iButtons
@@ -29873,6 +29605,11 @@ object frmCustomGrid: TfrmCustomGrid
     OnStateChange = dsLink7StateChange
     OnDataChange = dsLink7DataChange
     Left = 288
+    Top = 512
+  end
+  object pmPrintChild: TPopupMenu
+    Images = iButtons
+    Left = 56
     Top = 512
   end
 end

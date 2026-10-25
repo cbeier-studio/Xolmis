@@ -89,6 +89,27 @@
         }
         .filters .filter-item + .filter-item::before { content: "\2022"; margin-right: 8px; }
 
+        .parent-record {
+            margin: 0 0 8px;
+            padding: 4px 6px;
+            font-size: 8pt;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 3px;
+            page-break-inside: avoid;
+        }
+        .parent-record .parent-title {
+            display: block;
+            margin: 0 0 3px;
+            color: var(--accent-dark);
+            font-weight: bold;
+        }
+        .parent-record .parent-item {
+            display: inline-block;
+            margin: 0 14px 2px 0;
+        }
+        .parent-record .parent-label { color: var(--text-secondary, #666); }
+
         thead { display: table-header-group; }
         tr { page-break-inside: avoid; }
 
@@ -121,6 +142,13 @@
         {{#filters}}<span class="filter-item">{{text}}</span>{{/filters}}
     </div>
     {{/has_filters}}
+
+    {{#has_parent}}
+    <div class="parent-record">
+        <span class="parent-title">{{parent_title}}</span>
+        {{#parent_fields}}<span class="parent-item"><span class="parent-label">{{label}}:</span> {{value}}</span>{{/parent_fields}}
+    </div>
+    {{/has_parent}}
 
     <table>
         <thead>

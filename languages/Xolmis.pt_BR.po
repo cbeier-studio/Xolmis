@@ -11712,259 +11712,6 @@ msgctxt "tfrmcustomgrid.pmpreceivebands.caption"
 msgid "Receive ordered bands"
 msgstr "Receber pedido de anilhas"
 
-#: tfrmcustomgrid.pmprintbands.caption
-msgctxt "tfrmcustomgrid.pmprintbands.caption"
-msgid "Bands"
-msgstr "Anilhas"
-
-#: tfrmcustomgrid.pmprintbandsbycarrier.caption
-msgid "Bands per carrier"
-msgstr "Anilhas por portador"
-
-#: tfrmcustomgrid.pmprintbandsbystatus.caption
-msgid "Bands per status"
-msgstr "Anilhas por status"
-
-#: tfrmcustomgrid.pmprintbandswithhistory.caption
-msgid "Bands with history"
-msgstr "Anilhas com histórico"
-
-#: tfrmcustomgrid.pmprintbotanictaxa.caption
-msgctxt "tfrmcustomgrid.pmprintbotanictaxa.caption"
-msgid "Botanic taxa"
-msgstr "Táxons botânicos"
-
-#: tfrmcustomgrid.pmprintbotanictaxahierarchical.caption
-msgid "Botanic taxa (hierarchical)"
-msgstr "Táxons botânicos (hierárquico)"
-
-#: tfrmcustomgrid.pmprintbotanictaxarecorded.caption
-msgid "Botanic taxa recorded"
-msgstr "Táxons botânicos registrados"
-
-#: tfrmcustomgrid.pmprintcaptures.caption
-msgctxt "tfrmcustomgrid.pmprintcaptures.caption"
-msgid "Captures"
-msgstr "Capturas"
-
-#: tfrmcustomgrid.pmprintcapturesbydate.caption
-msgid "Captures per date"
-msgstr "Capturas por data"
-
-#: tfrmcustomgrid.pmprintcapturesbylocality.caption
-msgid "Captures per locality"
-msgstr "Capturas por localidade"
-
-#: tfrmcustomgrid.pmprintcapturesbyproject.caption
-msgid "Captures per project"
-msgstr "Capturas por projeto"
-
-#: tfrmcustomgrid.pmprintcapturesbytaxon.caption
-msgid "Captures per taxon"
-msgstr "Capturas por táxon"
-
-#: tfrmcustomgrid.pmprintcoloredbands.caption
-msgid "Colored bands combinations"
-msgstr "Combinações de anilhas coloridas"
-
-#: tfrmcustomgrid.pmprinteggs.caption
-msgctxt "tfrmcustomgrid.pmprinteggs.caption"
-msgid "Eggs"
-msgstr "Ovos"
-
-#: tfrmcustomgrid.pmprinteggsbylocality.caption
-msgid "Eggs per locality"
-msgstr "Ovos por localidade"
-
-#: tfrmcustomgrid.pmprinteggsbynest.caption
-msgid "Eggs per nest"
-msgstr "Ovos por ninho"
-
-#: tfrmcustomgrid.pmprinteggsbytaxon.caption
-msgid "Eggs per taxon"
-msgstr "Ovos por táxon"
-
-#: tfrmcustomgrid.pmprintexpeditions.caption
-msgctxt "tfrmcustomgrid.pmprintexpeditions.caption"
-msgid "Expeditions"
-msgstr "Expedições"
-
-#: tfrmcustomgrid.pmprintexpeditionsbyproject.caption
-msgid "Expeditions per project"
-msgstr "Expedições por projeto"
-
-#: tfrmcustomgrid.pmprintfeathers.caption
-msgctxt "tfrmcustomgrid.pmprintfeathers.caption"
-msgid "Feathers"
-msgstr "Penas"
-
-#: tfrmcustomgrid.pmprintgazetteer.caption
-msgctxt "tfrmcustomgrid.pmprintgazetteer.caption"
-msgid "Gazetteer"
-msgstr "Gazetteer"
-
-#: tfrmcustomgrid.pmprintgazetteerhierarchical.caption
-msgid "Gazetteer (hierarchical)"
-msgstr "Gazetteer (hierárquico)"
-
-#: tfrmcustomgrid.pmprintindividuals.caption
-msgctxt "tfrmcustomgrid.pmprintindividuals.caption"
-msgid "Individuals"
-msgstr "Indivíduos"
-
-#: tfrmcustomgrid.pmprintindividualsbyparents.caption
-msgid "Individuals per parents"
-msgstr "Indivíduos por pais"
-
-#: tfrmcustomgrid.pmprintindividualsbytaxon.caption
-msgid "Individuals per taxon"
-msgstr "Indivíduos por táxon"
-
-#: tfrmcustomgrid.pmprintinstitutions.caption
-msgctxt "tfrmcustomgrid.pmprintinstitutions.caption"
-msgid "Institutions"
-msgstr "Instituições"
-
-#: tfrmcustomgrid.pmprintmethods.caption
-msgctxt "tfrmcustomgrid.pmprintmethods.caption"
-msgid "Methods"
-msgstr "Métodos"
-
-#: tfrmcustomgrid.pmprintnests.caption
-msgctxt "tfrmcustomgrid.pmprintnests.caption"
-msgid "Nests"
-msgstr "Ninhos"
-
-#: tfrmcustomgrid.pmprintnestsbylocality.caption
-msgid "Nests per locality"
-msgstr "Ninhos por localidade"
-
-#: tfrmcustomgrid.pmprintnestsbyperiod.caption
-msgid "Nests per period"
-msgstr "Ninhos por período"
-
-#: tfrmcustomgrid.pmprintnestsbyproject.caption
-msgid "Nests per project"
-msgstr "Ninhos por projeto"
-
-#: tfrmcustomgrid.pmprintnestsbytaxon.caption
-msgid "Nests per taxon"
-msgstr "Ninhos por táxon"
-
-#: tfrmcustomgrid.pmprintpermits.caption
-msgctxt "tfrmcustomgrid.pmprintpermits.caption"
-msgid "Permits"
-msgstr "Licenças"
-
-#: tfrmcustomgrid.pmprintpermitsbyexpiration.caption
-msgid "Permits per expiration date"
-msgstr "Licenças por data de vencimento"
-
-#: tfrmcustomgrid.pmprintpermitsbyproject.caption
-msgid "Permits per project"
-msgstr "Licenças por projeto"
-
-#: tfrmcustomgrid.pmprintprojects.caption
-msgctxt "tfrmcustomgrid.pmprintprojects.caption"
-msgid "Projects"
-msgstr "Projetos"
-
-#: tfrmcustomgrid.pmprintresearchers.caption
-msgctxt "tfrmcustomgrid.pmprintresearchers.caption"
-msgid "Researchers"
-msgstr "Pesquisadores"
-
-#: tfrmcustomgrid.pmprintsamplingplots.caption
-msgctxt "tfrmcustomgrid.pmprintsamplingplots.caption"
-msgid "Sampling plots"
-msgstr "Parcelas amostrais"
-
-#: tfrmcustomgrid.pmprintsamplingplotsbylocality.caption
-msgid "Sampling plots per locality"
-msgstr "Parcelas amostrais por localidade"
-
-#: tfrmcustomgrid.pmprintsightings.caption
-msgctxt "tfrmcustomgrid.pmprintsightings.caption"
-msgid "Sightings"
-msgstr "Observações"
-
-#: tfrmcustomgrid.pmprintsightingsbylocality.caption
-msgid "Sightings per locality"
-msgstr "Observações por localidade"
-
-#: tfrmcustomgrid.pmprintsightingsbyobserver.caption
-msgid "Sightings per observer"
-msgstr "Observações por observador"
-
-#: tfrmcustomgrid.pmprintsightingsbyproject.caption
-msgid "Sightings per project"
-msgstr "Observações por projeto"
-
-#: tfrmcustomgrid.pmprintsightingsbysurvey.caption
-msgid "Sightings per survey"
-msgstr "Observações por amostragem"
-
-#: tfrmcustomgrid.pmprintsightingsbytaxon.caption
-msgid "Sightings per taxon"
-msgstr "Observações por táxon"
-
-#: tfrmcustomgrid.pmprintspecimens.caption
-msgctxt "tfrmcustomgrid.pmprintspecimens.caption"
-msgid "Specimens"
-msgstr "Espécimes"
-
-#: tfrmcustomgrid.pmprintspecimensbylocality.caption
-msgid "Specimens per locality"
-msgstr "Espécimes por localidade"
-
-#: tfrmcustomgrid.pmprintspecimensbyproject.caption
-msgid "Specimens per project"
-msgstr "Espécimes por projeto"
-
-#: tfrmcustomgrid.pmprintspecimensbytaxon.caption
-msgid "Specimens per taxon"
-msgstr "Espécimes por táxon"
-
-#: tfrmcustomgrid.pmprintspecimensbyyear.caption
-msgid "Specimens per year"
-msgstr "Espécimes por ano"
-
-#: tfrmcustomgrid.pmprintsurveys.caption
-msgctxt "tfrmcustomgrid.pmprintsurveys.caption"
-msgid "Surveys"
-msgstr "Amostragens"
-
-#: tfrmcustomgrid.pmprintsurveysbyexpedition.caption
-msgid "Surveys per expedition"
-msgstr "Amostragens por expedição"
-
-#: tfrmcustomgrid.pmprintsurveysbylocality.caption
-msgid "Surveys per locality"
-msgstr "Amostragens por localidade"
-
-#: tfrmcustomgrid.pmprintsurveysbyproject.caption
-msgid "Surveys per project"
-msgstr "Amostragens por projeto"
-
-#: tfrmcustomgrid.pmprinttaxa.caption
-msgctxt "tfrmcustomgrid.pmprinttaxa.caption"
-msgid "Taxa"
-msgstr "Táxons"
-
-#: tfrmcustomgrid.pmprinttaxahierarchical.caption
-msgctxt "tfrmcustomgrid.pmprinttaxahierarchical.caption"
-msgid "Taxa (hierarchical)"
-msgstr "Táxons (hierárquico)"
-
-#: tfrmcustomgrid.pmprinttaxarecorded.caption
-msgctxt "tfrmcustomgrid.pmprinttaxarecorded.caption"
-msgid "Taxa recorded"
-msgstr "Táxons registrados"
-
-#: tfrmcustomgrid.pmprinttaxarecordedbylocality.caption
-msgid "Taxa recorded per locality"
-msgstr "Táxon registrados por localidade"
-
 #: tfrmcustomgrid.pmptransferbandsto.caption
 msgid "Transfer bands to..."
 msgstr "Transferir anilhas para..."
@@ -12478,6 +12225,11 @@ msgstr "Tocar/parar vídeo"
 
 #: tfrmcustomgrid.sbprint.hint
 msgctxt "tfrmcustomgrid.sbprint.hint"
+msgid "Print records"
+msgstr "Imprimir registros"
+
+#: tfrmcustomgrid.sbprintchild.hint
+msgctxt "tfrmcustomgrid.sbprintchild.hint"
 msgid "Print records"
 msgstr "Imprimir registros"
 
@@ -19740,6 +19492,11 @@ msgstr "Gerado no Xolmis Desktop v%s em %s"
 #: utils_locale.rsreportgroupedlist
 msgid "Grouped List"
 msgstr "Lista agrupada"
+
+#: utils_locale.rsreportparentrecord
+#, object-pascal-format
+msgid "Parent record: %s"
+msgstr "Registro-pai: %s"
 
 #: utils_locale.rsreportsimplelist
 msgid "Simple List"
