@@ -8903,6 +8903,7 @@ begin
     Dialog.PageSize := FReportPageSize;
     Dialog.PageOrientation := FReportPageOrientation;
     Dialog.ColorTheme := FReportColorTheme;
+    Dialog.TableType := Controller.TableType;
     if Dialog.ShowModal <> mrOK then
       Exit;
     FReportPageSize := Dialog.PageSize;
@@ -8911,6 +8912,7 @@ begin
     Settings.PageSize := Dialog.PageSize;
     Settings.PageOrientation := Dialog.PageOrientation;
     Settings.GroupingField := Dialog.GroupingField;
+    Settings.ReportProfile := Dialog.ReportProfile;
     Settings.ColorTheme := Dialog.ColorTheme;
   finally
     FreeAndNil(Dialog);

@@ -5959,6 +5959,10 @@ msgstr ""
 msgid "Page size"
 msgstr ""
 
+#: tdlgreportsettings.lblreportprofile.caption
+msgid "Report profile"
+msgstr ""
+
 #: tdlgreportsettings.sbcancel.caption
 msgctxt "tdlgreportsettings.sbcancel.caption"
 msgid "Cancel"
@@ -19292,6 +19296,32 @@ msgstr ""
 #: utils_locale.rsreportparentrecord
 #, object-pascal-format
 msgid "Parent record: %s"
+msgstr ""
+
+#: utils_locale.rsreportprofileall
+msgid "All columns"
+msgstr ""
+
+#: utils_locale.rsreportprofilecondition
+msgid "Molt and breeding condition"
+msgstr ""
+
+#: utils_locale.rsreportprofilemorphometry
+msgid "Morphometry"
+msgstr ""
+
+#: utils_locale.rsreportprofilesamples
+msgid "Samples and photos"
+msgstr ""
+
+#: utils_locale.rsreportprofilesummary
+msgctxt "utils_locale.rsreportprofilesummary"
+msgid "Summary"
+msgstr ""
+
+#: utils_locale.rsreportprofiletitle
+#, object-pascal-format
+msgid "%s - %s"
 msgstr ""
 
 #: utils_locale.rsreportsimplelist

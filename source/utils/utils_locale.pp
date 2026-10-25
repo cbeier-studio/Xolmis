@@ -1741,6 +1741,12 @@ function TranslateSightingJsonValue(const AValue: String): String;
     rsReportParentRecord = 'Parent record: %s';
     rsReportFilterEmpty = '(empty)';
     rsReportFilterNotEmpty = '(not empty)';
+    rsReportProfileTitle = '%s - %s';
+    rsReportProfileAll = 'All columns';
+    rsReportProfileSummary = 'Summary';
+    rsReportProfileMorphometry = 'Morphometry';
+    rsReportProfileCondition = 'Molt and breeding condition';
+    rsReportProfileSamples = 'Samples and photos';
 
     rsPageSizeLetter = 'Letter';
     rsPageOrientationLandscape = 'Landscape';

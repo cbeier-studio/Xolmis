@@ -77,6 +77,22 @@ type
 
   TFieldSchemaList = specialize TFPGObjectList<TFieldSchema>;
 
+  { TReportProfile }
+
+  { A named subset of the table fields shown in the simple list report. }
+  TReportProfile = class
+  public
+    Name: String;
+    Caption: String;
+    FieldNames: TStringList;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function Contains(const AFieldName: String): Boolean;
+  end;
+
+  TReportProfileList = specialize TFPGObjectList<TReportProfile>;
+
   { TTableSchema }
 
   TTableSchema = class
@@ -85,12 +101,16 @@ type
     TableName: String;
     DisplayName: String;
     Fields: TFieldSchemaList;
+    ReportProfiles: TReportProfileList;
     QuickEntrySchemaVersion: Integer;
   public
     constructor Create;
     destructor Destroy; override;
     function GetField(const Name: String): TFieldSchema;
     function GetFieldByDisplayName(const Name: String): TFieldSchema;
+    { Registers a report profile; AFieldNames is a comma-separated list of field names. }
+    procedure AddReportProfile(const AName, ACaption, AFieldNames: String);
+    function FindReportProfile(const AName: String): TReportProfile;
   end;
 
   TTableSchemaList = specialize TFPGObjectList<TTableSchema>;
@@ -305,6 +325,7 @@ begin
   T.Fields.Last.Rules.MaxValue := 999999;
   T.Fields.Last.SummaryEnabled := False;
   T.Fields.Last.ReportOrder := 2;
+  T.Fields.Last.ReportStackWith := 'band_size';
   // Type
   AddField(T, 'band_type', rscType, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'A,F,N,W,T,L,R,C,O';
@@ -315,7 +336,8 @@ begin
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.ReportOrder := 3;
+  T.Fields.Last.ReportOrder := 6;
+  T.Fields.Last.ReportStackWith := 'band_status';
   // Status
   AddField(T, 'band_status', rscStatus, sdtList, True, 5);
   T.Fields.Last.Rules.ValueList := 'O,A,U,R,B,L,T,X';
@@ -328,7 +350,6 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.ReportOrder := 5;
   T.Fields.Last.ReportGroupable := True;
-  T.Fields.Last.ReportStackWith := 'band_type';
   // Prefix
   AddField(T, 'band_prefix', rscPrefix, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'prefix,prefixo';
@@ -364,6 +385,7 @@ begin
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.ReportOrder := 4;
   T.Fields.Last.ReportGroupable := True;
   // Supplier ID
   AddField(T, 'supplier_id', rscSupplierID, sdtInteger, True, 0, False, True, tbInstitutions);
@@ -389,7 +411,7 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_SUPPLIER_NAME;
-  T.Fields.Last.ReportOrder := 4;
+  T.Fields.Last.ReportOrder := 3;
   T.Fields.Last.ReportGroupable := True;
   // Requester ID
   AddField(T, 'requester_id', rscRequesterID, sdtInteger, True, 0, False, True, tbPeople);
@@ -416,7 +438,7 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_REQUESTER_NAME;
-  T.Fields.Last.ReportOrder := 6;
+  T.Fields.Last.ReportOrder := 7;
   T.Fields.Last.ReportGroupable := True;
   // Carrier ID
   AddField(T, 'carrier_id', rscCarrierID, sdtInteger, True, 0, False, True, tbPeople);
@@ -442,7 +464,7 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_CARRIER_NAME;
-  T.Fields.Last.ReportOrder := 7;
+  T.Fields.Last.ReportOrder := 8;
   T.Fields.Last.ReportGroupable := True;
   T.Fields.Last.ReportStackWith := 'requester_name';
   // Individual ID
@@ -466,7 +488,8 @@ begin
   T.Fields.Last.ImportVisible := False;
   T.Fields.Last.QuickEntryVisible := False;
   T.Fields.Last.SummaryEnabled := False;
-  T.Fields.Last.ReportOrder := 8;
+  T.Fields.Last.ReportOrder := 10;
+  T.Fields.Last.ReportStackWith := 'project_name';
   // Project ID
   AddField(T, 'project_id', rscProjectID, sdtInteger, False, 0, False, True, tbProjects);
   T.Fields.Last.Aliases.CommaText := PROJECT_ALIASES;
@@ -502,7 +525,7 @@ begin
   T.Fields.Last.SummaryKind := skCountNotNull;
   T.Fields.Last.SummaryMetrics := [smCount];
   T.Fields.Last.GroupingField := rscNotes;
-  T.Fields.Last.ReportOrder := 10;
+  T.Fields.Last.ReportOrder := 11;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 40);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
@@ -8556,6 +8579,32 @@ begin
     F.ReportStackWith := APrimary;
 end;
 
+procedure RegisterReportProfiles(DB: TDatabaseSchema);
+const
+  CAPTURE_IDENTIFICATION = 'locality_name,capture_date,capture_time,bander_name,annotator_name,capture_type,' +
+    'taxon_name,band_name,removed_band_name';
+var
+  T: TTableSchema;
+begin
+  // Every profile repeats the identification fields so each row keeps its context
+  T := DB.GetTable(tbCaptures);
+  if Assigned(T) then
+  begin
+    T.AddReportProfile('summary', rsReportProfileSummary, CAPTURE_IDENTIFICATION +
+      ',net_station_name,net_number,longitude,latitude,coordinate_precision,subject_age,subject_sex,how_aged,' +
+      'how_sexed,subject_status,escaped,field_number,notes,needs_review');
+    T.AddReportProfile('morphometry', rsReportProfileMorphometry, CAPTURE_IDENTIFICATION +
+      ',right_tarsus,left_tarsus,right_wing_chord,first_secondary_chord,kipps_distance,tail_length,tarsus_length,' +
+      'tarsus_diameter,total_length,skull_length,exposed_culmen,nostril_bill_tip,bill_width,bill_height,weight');
+    T.AddReportProfile('condition', rsReportProfileCondition, CAPTURE_IDENTIFICATION +
+      ',cloacal_protuberance,brood_patch,fat,body_molt,flight_feathers_molt,flight_feathers_wear,molt_limits,' +
+      'skull_ossification,cycle_code,philornis_larvae_tally,feather_mites');
+    T.AddReportProfile('samples', rsReportProfileSamples, CAPTURE_IDENTIFICATION +
+      ',blood_sample,feather_sample,feces_sample,parasite_sample,claw_sample,subject_collected,glucose,hemoglobin,' +
+      'hematocrit,subject_photographed,subject_recorded,photographer_1_name,photographer_2_name,camera_name');
+  end;
+end;
+
 procedure RegisterDatabaseSchema;
 begin
   if Assigned(DBSchema) then
@@ -8612,6 +8661,8 @@ begin
   // People
   StackReportField(DBSchema, tbPeople, 'abbreviation', 'full_name');
   StackReportField(DBSchema, tbPeople, 'citation', 'full_name');
+  StackReportField(DBSchema, tbPeople, 'gender', 'title_treatment');
+  StackReportField(DBSchema, tbPeople, 'death_date', 'birth_date');
   StackReportField(DBSchema, tbPeople, 'id_document_2', 'id_document_1');
   StackReportField(DBSchema, tbPeople, 'phone_1', 'email_addr');
   StackReportField(DBSchema, tbPeople, 'phone_2', 'email_addr');
@@ -8634,7 +8685,7 @@ begin
   StackReportField(DBSchema, tbPermits, 'dispatcher_name', 'project_name');
   // Gazetteer
   StackReportField(DBSchema, tbGazetteer, 'abbreviation', 'site_name');
-  StackReportField(DBSchema, tbGazetteer, 'parent_site_name', 'site_name');
+  //StackReportField(DBSchema, tbGazetteer, 'parent_site_name', 'site_name');
   StackReportField(DBSchema, tbGazetteer, 'latitude', 'longitude');
   StackReportField(DBSchema, tbGazetteer, 'coordinate_precision', 'longitude');
   StackReportField(DBSchema, tbGazetteer, 'state_name', 'municipality_name');
@@ -8657,13 +8708,14 @@ begin
   StackReportField(DBSchema, tbNests, 'latitude', 'longitude');
   StackReportField(DBSchema, tbNests, 'coordinate_precision', 'longitude');
   // Individuals
-  StackReportField(DBSchema, tbIndividuals, 'banding_date', 'band_name');
   StackReportField(DBSchema, tbIndividuals, 'double_band_name', 'band_name');
-  StackReportField(DBSchema, tbIndividuals, 'removed_band_name', 'band_name');
-  StackReportField(DBSchema, tbIndividuals, 'band_change_date', 'band_name');
+  StackReportField(DBSchema, tbIndividuals, 'banding_date', 'band_name');
+  StackReportField(DBSchema, tbIndividuals, 'band_change_date', 'removed_band_name');
   StackReportField(DBSchema, tbIndividuals, 'left_tarsus', 'right_tarsus');
   StackReportField(DBSchema, tbIndividuals, 'left_tibia', 'right_tibia');
   StackReportField(DBSchema, tbIndividuals, 'individual_age', 'individual_sex');
+  StackReportField(DBSchema, tbIndividuals, 'mother_name', 'father_name');
+  StackReportField(DBSchema, tbIndividuals, 'nest_name', 'father_name');
   // Surveys
   StackReportField(DBSchema, tbSurveys, 'start_time', 'survey_date');
   StackReportField(DBSchema, tbSurveys, 'end_time', 'survey_date');
@@ -8744,6 +8796,8 @@ begin
   StackReportField(DBSchema, tbBotanicTaxa, 'authorship', 'scientific_name');
   StackReportField(DBSchema, tbBotanicTaxa, 'vernacular_name', 'scientific_name');
   StackReportField(DBSchema, tbBotanicTaxa, 'rank_name', 'scientific_name');
+
+  RegisterReportProfiles(DBSchema);
 end;
 
 { TFieldSchema }
@@ -9004,18 +9058,62 @@ begin
   end;
 end;
 
+{ TReportProfile }
+
+constructor TReportProfile.Create;
+begin
+  FieldNames := TStringList.Create;
+  FieldNames.CaseSensitive := False;
+end;
+
+destructor TReportProfile.Destroy;
+begin
+  FieldNames.Free;
+  inherited Destroy;
+end;
+
+function TReportProfile.Contains(const AFieldName: String): Boolean;
+begin
+  Result := FieldNames.IndexOf(AFieldName) >= 0;
+end;
+
 { TTableSchema }
 
 constructor TTableSchema.Create;
 begin
   Fields := TFieldSchemaList.Create();
+  ReportProfiles := TReportProfileList.Create();
   QuickEntrySchemaVersion := 1;
 end;
 
 destructor TTableSchema.Destroy;
 begin
+  ReportProfiles.Free;
   Fields.Free;
   inherited Destroy;
+end;
+
+procedure TTableSchema.AddReportProfile(const AName, ACaption, AFieldNames: String);
+var
+  P: TReportProfile;
+begin
+  P := TReportProfile.Create;
+  P.Name := AName;
+  P.Caption := ACaption;
+  P.FieldNames.CommaText := AFieldNames;
+  ReportProfiles.Add(P);
+end;
+
+function TTableSchema.FindReportProfile(const AName: String): TReportProfile;
+var
+  P: TReportProfile;
+begin
+  Result := nil;
+  if AName = EmptyStr then
+    Exit;
+  for P in ReportProfiles do
+    if SameText(P.Name, AName) then
+      Exit(P);
 end;
 
 function TTableSchema.GetField(const Name: String): TFieldSchema;

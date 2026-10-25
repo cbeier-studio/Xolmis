@@ -23,6 +23,7 @@ type
     PageOrientation: TXRSOrientation;
     GroupingField: String;
     ColorTheme: TXolmisReportTheme;
+    ReportProfile: String;
   end;
 
   { TXolmisReport }
@@ -50,7 +51,7 @@ type
   public
     constructor Create; virtual;
 
-    procedure ApplySettings(const ASettings: TXolmisReportSettings);
+    procedure ApplySettings(const ASettings: TXolmisReportSettings); virtual;
 
     procedure GenerateHTML; virtual;
     function ExportToHTML(const AFileName: string): Boolean; virtual;

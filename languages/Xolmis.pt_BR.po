@@ -5952,6 +5952,10 @@ msgstr "Orientação da página"
 msgid "Page size"
 msgstr "Tamanho da página"
 
+#: tdlgreportsettings.lblreportprofile.caption
+msgid "Report profile"
+msgstr "Perfil de relatório"
+
 #: tdlgreportsettings.sbcancel.caption
 msgctxt "tdlgreportsettings.sbcancel.caption"
 msgid "Cancel"
@@ -19497,6 +19501,32 @@ msgstr "Lista agrupada"
 #, object-pascal-format
 msgid "Parent record: %s"
 msgstr "Registro-pai: %s"
+
+#: utils_locale.rsreportprofileall
+msgid "All columns"
+msgstr "Todas colunas"
+
+#: utils_locale.rsreportprofilecondition
+msgid "Molt and breeding condition"
+msgstr "Muda e condição reprodutiva"
+
+#: utils_locale.rsreportprofilemorphometry
+msgid "Morphometry"
+msgstr "Morfometria"
+
+#: utils_locale.rsreportprofilesamples
+msgid "Samples and photos"
+msgstr "Amostras e fotos"
+
+#: utils_locale.rsreportprofilesummary
+msgctxt "utils_locale.rsreportprofilesummary"
+msgid "Summary"
+msgstr "Resumo"
+
+#: utils_locale.rsreportprofiletitle
+#, object-pascal-format
+msgid "%s - %s"
+msgstr "%s - %s"
 
 #: utils_locale.rsreportsimplelist
 msgid "Simple List"

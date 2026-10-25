@@ -72,6 +72,15 @@
         .bold { font-weight: bold; }
         /* Campos Memo: limita a largura para não espremer as demais colunas */
         td div.memo { max-width: 60mm; white-space: pre-line; }
+        td div.tag {
+            display: inline-block;
+            margin: 0 3px 2px 0;
+            padding: 1px 6px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--surface-alt, rgba(128, 128, 128, 0.12));
+            white-space: nowrap;
+        }
         td .stack-secondary { color: var(--text-secondary, #666); font-size: 0.9em; }
 
         .filters {

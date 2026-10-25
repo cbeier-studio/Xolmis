@@ -7,6 +7,7 @@
 {"hash":1092,"name":"tdlgreportsettings.cbpagesize.text","sourcebytes":[65,52],"value":"A4"},
 {"hash":70289749,"name":"tdlgreportsettings.lblcolortheme.caption","sourcebytes":[67,111,108,111,114,32,116,104,101,109,101],"value":"Color theme"},
 {"hash":174287092,"name":"tdlgreportsettings.cbtheme.text","sourcebytes":[67,111,108,111,114,101,100],"value":"Colored"},
+{"hash":201547221,"name":"tdlgreportsettings.lblreportprofile.caption","sourcebytes":[82,101,112,111,114,116,32,112,114,111,102,105,108,101],"value":"Report profile"},
 {"hash":4749113,"name":"tdlgreportsettings.sbok.caption","sourcebytes":[65,112,112,108,121],"value":"Apply"},
 {"hash":77089212,"name":"tdlgreportsettings.sbcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
 ]}

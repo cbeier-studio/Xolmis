@@ -5,7 +5,7 @@ unit xrs_simplelist;
 interface
 
 uses
-  Classes, SysUtils, DB, data_types, data_schema, xrs_core, fpjson, SynCommons;
+  Classes, SysUtils, DB, data_types, data_schema, xrs_core, fpjson, jsonparser, SynCommons;
 
 type
   { TReportSimpleList }
@@ -16,6 +16,8 @@ type
     FDataSet: TDataSet;
     FTableSchema: TTableSchema;
     FReportTitle: string;
+    FBaseTitle: string;
+    FProfile: TReportProfile;
     FFilterLines: TStringList;
     FParentTitle: string;
     FParentItems: TStringList;
@@ -32,6 +34,10 @@ type
     constructor Create(ADataSet: TDataSet; ATableType: TTableType); reintroduce; overload;
     constructor Create(ADataSet: TDataSet; const AReportTitle: string); reintroduce; overload;
     destructor Destroy; override;
+
+    procedure ApplySettings(const ASettings: TXolmisReportSettings); override;
+    { Restricts the columns to a report profile of the table schema; an empty or unknown name shows all columns. }
+    procedure SetProfile(const AProfileName: string);
 
     { Describes the active filters in the report header; nothing is shown when there are none. }
     procedure SetSearch(ASearch: TCustomSearch);
@@ -89,6 +95,7 @@ begin
   FDataSet := ADataSet;
   FTableSchema := ATableSchema;
   FReportTitle := AReportTitle;
+  FBaseTitle := AReportTitle;
   FContextJSON := TJSONObject.Create;
   FFilterLines := TStringList.Create;
   FParentItems := TStringList.Create;
@@ -102,6 +109,24 @@ begin
   FFilterLines.Free;
   FContextJSON.Free;
   inherited Destroy;
+end;
+
+procedure TReportSimpleList.ApplySettings(const ASettings: TXolmisReportSettings);
+begin
+  inherited ApplySettings(ASettings);
+  SetProfile(ASettings.ReportProfile);
+end;
+
+procedure TReportSimpleList.SetProfile(const AProfileName: string);
+begin
+  FProfile := nil;
+  if Assigned(FTableSchema) then
+    FProfile := FTableSchema.FindReportProfile(AProfileName);
+
+  if Assigned(FProfile) then
+    FReportTitle := Format(rsReportProfileTitle, [FBaseTitle, FProfile.Caption])
+  else
+    FReportTitle := FBaseTitle;
 end;
 
 function TReportSimpleList.DescribeField(AField: TSearchField): string;
@@ -252,6 +277,8 @@ begin
       FieldSchema := FTableSchema.GetField(Field.FieldName);
     if UseSchemaVisibility and (not Assigned(FieldSchema) or not FieldSchema.ReportVisible) then
       Continue;
+    if Assigned(FProfile) and (not Assigned(FieldSchema) or not FProfile.Contains(FieldSchema.Name)) then
+      Continue;
 
     Column := TJSONObject.Create;
     Column.Add('field_name', Field.FieldName);
@@ -270,6 +297,7 @@ begin
       Column.Add('css_class', FieldSchema.ReportCssClass);
       Column.Add('report_order', FieldSchema.ReportOrder);
       Column.Add('stack_with', FieldSchema.ReportStackWith);
+      Column.Add('json_array', FieldSchema.DataType = sdtJsonArray);
     end
     else
     begin
@@ -290,12 +318,10 @@ begin
     begin
       PreviousColumn := TJSONObject(AColumns.Items[J - 1]);
       PreviousOrder := PreviousColumn.Get('report_order', 0);
+      // Ordered columns ascending first; unordered ones keep dataset order at the end
       if Order = 0 then
-      begin
-        if PreviousOrder = 0 then
-          Break;
-      end
-      else if (PreviousOrder = 0) or (PreviousOrder > Order) then
+        Break
+      else if (PreviousOrder > 0) and (PreviousOrder <= Order) then
         Break;
       Dec(J);
     end;
@@ -335,6 +361,7 @@ begin
     Item.Add('field_name', Column.Get('field_name', ''));
     Item.Add('label', Column.Get('label', ''));
     Item.Add('css_class', Trim(Column.Get('css_class', '') + ' stack-secondary'));
+    Item.Add('json_array', Column.Get('json_array', False));
 
     Stack := Primary.Get('stack', TJSONArray(nil));
     if Stack = nil then
@@ -371,6 +398,38 @@ procedure TReportSimpleList.AddRows(const AColumns: TJSONArray; ARows: TJSONArra
       Result := F.DisplayText;
   end;
 
+  procedure AddTags(const AFieldName: String; AValues: TJSONArray);
+  var
+    Data: TJSONData;
+    Tag: TJSONObject;
+    K: Integer;
+    S: String;
+  begin
+    S := Trim(FDataSet.FieldByName(AFieldName).AsString);
+    if S = EmptyStr then
+      Exit;
+    try
+      Data := GetJSON(S);
+    except
+      Exit;
+    end;
+    try
+      if Data is TJSONArray then
+        for K := 0 to TJSONArray(Data).Count - 1 do
+        begin
+          S := Trim(TJSONArray(Data).Items[K].AsString);
+          if S = EmptyStr then
+            Continue;
+          Tag := TJSONObject.Create;
+          Tag.Add('value', S);
+          Tag.Add('css_class', 'tag');
+          AValues.Add(Tag);
+        end;
+    finally
+      Data.Free;
+    end;
+  end;
+
 var
   I, J: Integer;
   Bookmark: TBookmark;
@@ -402,15 +461,25 @@ begin
           Cell.Add('values', Values);
           Cells.Add(Cell);
 
-          Item := TJSONObject.Create;
-          Item.Add('value', GetFieldText(Row.Get('field_name', '')));
-          Item.Add('css_class', Row.Get('css_class', ''));
-          Values.Add(Item);
+          if Row.Get('json_array', False) then
+            AddTags(Row.Get('field_name', ''), Values)
+          else
+          begin
+            Item := TJSONObject.Create;
+            Item.Add('value', GetFieldText(Row.Get('field_name', '')));
+            Item.Add('css_class', Row.Get('css_class', ''));
+            Values.Add(Item);
+          end;
 
           Stack := Row.Get('stack', TJSONArray(nil));
           if Stack <> nil then
             for J := 0 to Stack.Count - 1 do
             begin
+              if TJSONObject(Stack.Items[J]).Get('json_array', False) then
+              begin
+                AddTags(TJSONObject(Stack.Items[J]).Get('field_name', ''), Values);
+                Continue;
+              end;
               Text := GetFieldText(TJSONObject(Stack.Items[J]).Get('field_name', ''));
               if Text = EmptyStr then
                 Continue;
