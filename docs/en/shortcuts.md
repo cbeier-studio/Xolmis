@@ -66,6 +66,8 @@ These shortcuts are useful when inserting or editing records in dialogs:
 
 ## Coodinates converter
 
+| Shortcut | Feature |
+| --- | --- |
 | ++ctrl+o++ | Open from file |
 | ++ctrl+s++ | Save to file |
 | ++ctrl+enter++ | Convert coordinates |

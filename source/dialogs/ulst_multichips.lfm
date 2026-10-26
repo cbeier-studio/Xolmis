@@ -97,6 +97,8 @@ object lstMultiChips: TlstMultiChips
     TabOrder = 1
     ColorMode = cmSingleColor
     MultiSelect = True
+    SingleChipColorLight = 12936811
+    SingleChipColorDark = 10175048
   end
   object lblChips: TLabel
     AnchorSideLeft.Control = Owner

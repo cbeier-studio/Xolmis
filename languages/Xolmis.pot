@@ -1110,6 +1110,7 @@ msgid "Is discarded"
 msgstr ""
 
 #: data_columns.rscisdoubtful
+msgctxt "data_columns.rscisdoubtful"
 msgid "Is doubtful"
 msgstr ""
 
@@ -11204,6 +11205,11 @@ msgctxt "tfrmcustomgrid.lblinstitutionfilter.caption"
 msgid "Institution"
 msgstr ""
 
+#: tfrmcustomgrid.lblisdoubtfulfilter.caption
+msgctxt "tfrmcustomgrid.lblisdoubtfulfilter.caption"
+msgid "Is doubtful"
+msgstr ""
+
 #: tfrmcustomgrid.lblmarkedfilter.caption
 msgid "Marked records"
 msgstr ""
@@ -11845,6 +11851,21 @@ msgstr ""
 
 #: tfrmcustomgrid.rbhatchedyes.caption
 msgctxt "tfrmcustomgrid.rbhatchedyes.caption"
+msgid "Yes"
+msgstr ""
+
+#: tfrmcustomgrid.rbisdoubtfulall.caption
+msgctxt "tfrmcustomgrid.rbisdoubtfulall.caption"
+msgid "All"
+msgstr ""
+
+#: tfrmcustomgrid.rbisdoubtfulno.caption
+msgctxt "tfrmcustomgrid.rbisdoubtfulno.caption"
+msgid "No"
+msgstr ""
+
+#: tfrmcustomgrid.rbisdoubtfulyes.caption
+msgctxt "tfrmcustomgrid.rbisdoubtfulyes.caption"
 msgid "Yes"
 msgstr ""
 

@@ -266,7 +266,7 @@ begin
     end;
 
     UserCodigo := FieldByName('user_id').AsInteger;
-    UserNome := FieldByName('full_name').AsString;
+    //UserNome := FieldByName('full_name').AsString;
     UserLogin := FieldByName('user_name').AsString;
 
     Result := True;

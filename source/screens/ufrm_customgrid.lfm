@@ -43,7 +43,7 @@ object frmCustomGrid: TfrmCustomGrid
       Height = 614
       Top = 0
       Width = 464
-      PageIndex = 0
+      PageIndex = 1
       Align = alClient
       TabOrder = 0
       object cardViewRecord: TPage
@@ -106,20 +106,20 @@ object frmCustomGrid: TfrmCustomGrid
           Align = alClient
           BorderStyle = bsNone
           ClientHeight = 515
-          ClientWidth = 464
+          ClientWidth = 447
           ParentBackground = False
           TabOrder = 0
           object bvSpacerFilters: TBevel
             Left = 0
             Height = 15
-            Top = 4723
+            Top = 4775
             Width = 447
             Align = alTop
             Shape = bsSpacer
           end
           object pQuickFiltersContent: TBCPanel
             Left = 0
-            Height = 4723
+            Height = 4775
             Top = 0
             Width = 447
             Align = alTop
@@ -379,7 +379,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTaxonRanksFilters: TBCPanel
               Left = 9
               Height = 375
-              Top = 2970
+              Top = 3022
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -780,7 +780,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pWithRecapturesFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2918
+              Top = 2970
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -884,7 +884,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pFatFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 4416
+              Top = 4468
               Width = 429
               Align = alTop
               AutoSize = True
@@ -1201,7 +1201,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNestFateFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 2811
+              Top = 2863
               Width = 429
               Align = alTop
               AutoSize = True
@@ -1386,7 +1386,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTaxonFilters: TBCPanel
               Left = 9
               Height = 375
-              Top = 3353
+              Top = 3405
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -1511,7 +1511,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pExtinctFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 3972
+              Top = 4024
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -1615,7 +1615,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pWithColorBandsFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2866
+              Top = 2918
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -1719,7 +1719,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSexingFilters: TBCPanel
               Left = 9
               Height = 188
-              Top = 4526
+              Top = 4578
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2111,7 +2111,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSynonymFilters: TBCPanel
               Left = 9
               Height = 88
-              Top = 3876
+              Top = 3928
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2359,7 +2359,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pMoltingFilters: TBCPanel
               Left = 9
               Height = 235
-              Top = 4173
+              Top = 4225
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2839,7 +2839,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTaxonomiesFilters: TBCPanel
               Left = 9
               Height = 132
-              Top = 3736
+              Top = 3788
               Width = 429
               Align = alTop
               AutoSize = True
@@ -3339,7 +3339,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pAgingFilters: TBCPanel
               Left = 9
               Height = 141
-              Top = 4024
+              Top = 4076
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4742,7 +4742,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNidoparasiteFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2603
+              Top = 2655
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4847,7 +4847,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pHatchedFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2707
+              Top = 2759
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4952,7 +4952,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pPhilornisFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2655
+              Top = 2707
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5963,7 +5963,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pReplacedBandFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2759
+              Top = 2811
               Width = 429
               Align = alTop
               AutoSize = True
@@ -6483,7 +6483,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pCategoryFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 4471
+              Top = 4523
               Width = 429
               Align = alTop
               AutoSize = True
@@ -6571,6 +6571,111 @@ object frmCustomGrid: TfrmCustomGrid
                 Text = 'All'
                 TextHint = 'None'
                 OnChange = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+            end
+            object pIsDoubtfulFilter: TBCPanel
+              Left = 9
+              Height = 44
+              Top = 2603
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 12
+              ChildSizing.HorizontalSpacing = 8
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 50
+              Visible = False
+              object icoIsDoubtfulFilter: TImage
+                Left = 16
+                Height = 20
+                Top = 12
+                Width = 30
+                Align = alLeft
+                Center = True
+                ImageIndex = 10
+                Images = iIcons
+              end
+              object lblIsDoubtfulFilter: TLabel
+                Left = 54
+                Height = 20
+                Top = 12
+                Width = 57
+                Align = alLeft
+                Caption = 'Is doubtful'
+                Layout = tlCenter
+                ParentColor = False
+              end
+              object rbIsDoubtfulAll: TRadioButton
+                Left = 295
+                Height = 20
+                Top = 12
+                Width = 32
+                Align = alRight
+                Caption = 'All'
+                Checked = True
+                TabOrder = 2
+                TabStop = True
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+              object rbIsDoubtfulYes: TRadioButton
+                Left = 335
+                Height = 20
+                Top = 12
+                Width = 36
+                Align = alRight
+                Caption = 'Yes'
+                TabOrder = 0
+                OnClick = SetFilters
+                OnKeyDown = FormKeyDown
+                OnKeyPress = FormKeyPress
+              end
+              object rbIsDoubtfulNo: TRadioButton
+                Left = 379
+                Height = 20
+                Top = 12
+                Width = 34
+                Align = alRight
+                Caption = 'No'
+                TabOrder = 1
+                OnClick = SetFilters
                 OnKeyDown = FormKeyDown
                 OnKeyPress = FormKeyPress
               end
@@ -7246,7 +7351,7 @@ object frmCustomGrid: TfrmCustomGrid
             end          
             item
               Title.Caption = 'Name'
-              Width = 386
+              Width = 365
               FieldName = 'document_name'
             end>
           DataSource = dsDocs
@@ -8400,6 +8505,204 @@ object frmCustomGrid: TfrmCustomGrid
       ParentBackground = False
       TabOrder = 1
       Visible = False
+      object nbChilds: TNotebook
+        Left = 0
+        Height = 164
+        Top = 40
+        Width = 671
+        PageIndex = 0
+        Align = alClient
+        TabOrder = 1
+        object pgChild1: TPage
+          object gridChild1: TXolmisDBGrid
+            Left = 0
+            Height = 164
+            Top = 0
+            Width = 671
+            Align = alClient
+            Color = clWindow
+            Columns = <>
+            DataSource = dsLink1
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
+            PopupMenu = pmGridChild
+            TabOrder = 0
+            TitleImageList = iHeaders
+            TitleStyle = tsNative
+            OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
+            OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
+            OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
+            OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
+            OnPrepareCanvas = DBGPrepareCanvas
+            OnSelectEditor = DBGSelectEditor
+          end
+        end
+        object pgChild2: TPage
+          object gridChild2: TXolmisDBGrid
+            Left = 0
+            Height = 164
+            Top = 0
+            Width = 671
+            Align = alClient
+            Color = clWindow
+            Columns = <>
+            DataSource = dsLink2
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
+            PopupMenu = pmGridChild
+            TabOrder = 0
+            TitleImageList = iHeaders
+            TitleStyle = tsNative
+            OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
+            OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
+            OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
+            OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
+            OnPrepareCanvas = DBGPrepareCanvas
+            OnSelectEditor = DBGSelectEditor
+          end
+        end
+        object pgChild3: TPage
+          object gridChild3: TXolmisDBGrid
+            Left = 0
+            Height = 164
+            Top = 0
+            Width = 671
+            Align = alClient
+            Color = clWindow
+            Columns = <>
+            DataSource = dsLink3
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
+            PopupMenu = pmGridChild
+            TabOrder = 0
+            TitleImageList = iHeaders
+            TitleStyle = tsNative
+            OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
+            OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
+            OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
+            OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
+            OnPrepareCanvas = DBGPrepareCanvas
+            OnSelectEditor = DBGSelectEditor
+          end
+        end
+        object pgChild4: TPage
+          object gridChild4: TXolmisDBGrid
+            Left = 0
+            Height = 164
+            Top = 0
+            Width = 671
+            Align = alClient
+            Color = clWindow
+            Columns = <>
+            DataSource = dsLink4
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
+            PopupMenu = pmGridChild
+            TabOrder = 0
+            TitleImageList = iHeaders
+            TitleStyle = tsNative
+            OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
+            OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
+            OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
+            OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
+            OnPrepareCanvas = DBGPrepareCanvas
+            OnSelectEditor = DBGSelectEditor
+          end
+        end
+        object pgChild5: TPage
+          object gridChild5: TXolmisDBGrid
+            Left = 0
+            Height = 164
+            Top = 0
+            Width = 671
+            Align = alClient
+            Color = clWindow
+            Columns = <>
+            DataSource = dsLink5
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
+            PopupMenu = pmGridChild
+            TabOrder = 0
+            TitleImageList = iHeaders
+            TitleStyle = tsNative
+            OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
+            OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
+            OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
+            OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
+            OnPrepareCanvas = DBGPrepareCanvas
+            OnSelectEditor = DBGSelectEditor
+          end
+        end
+        object pgChild6: TPage
+          object gridChild6: TXolmisDBGrid
+            Left = 0
+            Height = 164
+            Top = 0
+            Width = 671
+            Align = alClient
+            Color = clWindow
+            Columns = <>
+            DataSource = dsLink6
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
+            PopupMenu = pmGridChild
+            TabOrder = 0
+            TitleImageList = iHeaders
+            TitleStyle = tsNative
+            OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
+            OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
+            OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
+            OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
+            OnPrepareCanvas = DBGPrepareCanvas
+            OnSelectEditor = DBGSelectEditor
+          end
+        end
+        object pgChild7: TPage
+          object gridChild7: TXolmisDBGrid
+            Left = 0
+            Height = 164
+            Top = 0
+            Width = 671
+            Align = alClient
+            Color = clWindow
+            Columns = <>
+            DataSource = dsLink7
+            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
+            PopupMenu = pmGridChild
+            TabOrder = 0
+            TitleImageList = iHeaders
+            TitleStyle = tsNative
+            OnContextPopup = gridChild1ContextPopup
+            OnDrawColumnCell = DBGDrawColumnCell
+            OnDblClick = gridChild1DblClick
+            OnEditButtonClick = DBGEditButtonClick
+            OnEditingDone = DBGEditingDone
+            OnKeyDown = FormKeyDown
+            OnKeyPress = FormKeyPress
+            OnMouseWheel = DBGMouseWheel
+            OnPrepareCanvas = DBGPrepareCanvas
+            OnSelectEditor = DBGSelectEditor
+          end
+        end
+      end
       object pChildToolbar: TBCPanel
         Left = 0
         Height = 40
@@ -8697,204 +9000,6 @@ object frmCustomGrid: TfrmCustomGrid
           ShowHint = True
           ParentShowHint = False
           OnClick = sbPrintChildClick
-        end
-      end
-      object nbChilds: TNotebook
-        Left = 0
-        Height = 164
-        Top = 40
-        Width = 671
-        PageIndex = 0
-        Align = alClient
-        TabOrder = 1
-        object pgChild1: TPage
-          object gridChild1: TXolmisDBGrid
-            Left = 0
-            Height = 164
-            Top = 0
-            Width = 671
-            Align = alClient
-            Color = clWindow
-            Columns = <>
-            DataSource = dsLink1
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
-            PopupMenu = pmGridChild
-            TabOrder = 0
-            TitleImageList = iHeaders
-            TitleStyle = tsNative
-            OnContextPopup = gridChild1ContextPopup
-            OnDrawColumnCell = DBGDrawColumnCell
-            OnDblClick = gridChild1DblClick
-            OnEditButtonClick = DBGEditButtonClick
-            OnEditingDone = DBGEditingDone
-            OnKeyDown = FormKeyDown
-            OnKeyPress = FormKeyPress
-            OnMouseWheel = DBGMouseWheel
-            OnPrepareCanvas = DBGPrepareCanvas
-            OnSelectEditor = DBGSelectEditor
-          end
-        end
-        object pgChild2: TPage
-          object gridChild2: TXolmisDBGrid
-            Left = 0
-            Height = 164
-            Top = 0
-            Width = 671
-            Align = alClient
-            Color = clWindow
-            Columns = <>
-            DataSource = dsLink2
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
-            PopupMenu = pmGridChild
-            TabOrder = 0
-            TitleImageList = iHeaders
-            TitleStyle = tsNative
-            OnContextPopup = gridChild1ContextPopup
-            OnDrawColumnCell = DBGDrawColumnCell
-            OnDblClick = gridChild1DblClick
-            OnEditButtonClick = DBGEditButtonClick
-            OnEditingDone = DBGEditingDone
-            OnKeyDown = FormKeyDown
-            OnKeyPress = FormKeyPress
-            OnMouseWheel = DBGMouseWheel
-            OnPrepareCanvas = DBGPrepareCanvas
-            OnSelectEditor = DBGSelectEditor
-          end
-        end
-        object pgChild3: TPage
-          object gridChild3: TXolmisDBGrid
-            Left = 0
-            Height = 164
-            Top = 0
-            Width = 671
-            Align = alClient
-            Color = clWindow
-            Columns = <>
-            DataSource = dsLink3
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
-            PopupMenu = pmGridChild
-            TabOrder = 0
-            TitleImageList = iHeaders
-            TitleStyle = tsNative
-            OnContextPopup = gridChild1ContextPopup
-            OnDrawColumnCell = DBGDrawColumnCell
-            OnDblClick = gridChild1DblClick
-            OnEditButtonClick = DBGEditButtonClick
-            OnEditingDone = DBGEditingDone
-            OnKeyDown = FormKeyDown
-            OnKeyPress = FormKeyPress
-            OnMouseWheel = DBGMouseWheel
-            OnPrepareCanvas = DBGPrepareCanvas
-            OnSelectEditor = DBGSelectEditor
-          end
-        end
-        object pgChild4: TPage
-          object gridChild4: TXolmisDBGrid
-            Left = 0
-            Height = 164
-            Top = 0
-            Width = 671
-            Align = alClient
-            Color = clWindow
-            Columns = <>
-            DataSource = dsLink4
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
-            PopupMenu = pmGridChild
-            TabOrder = 0
-            TitleImageList = iHeaders
-            TitleStyle = tsNative
-            OnContextPopup = gridChild1ContextPopup
-            OnDrawColumnCell = DBGDrawColumnCell
-            OnDblClick = gridChild1DblClick
-            OnEditButtonClick = DBGEditButtonClick
-            OnEditingDone = DBGEditingDone
-            OnKeyDown = FormKeyDown
-            OnKeyPress = FormKeyPress
-            OnMouseWheel = DBGMouseWheel
-            OnPrepareCanvas = DBGPrepareCanvas
-            OnSelectEditor = DBGSelectEditor
-          end
-        end
-        object pgChild5: TPage
-          object gridChild5: TXolmisDBGrid
-            Left = 0
-            Height = 164
-            Top = 0
-            Width = 671
-            Align = alClient
-            Color = clWindow
-            Columns = <>
-            DataSource = dsLink5
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
-            PopupMenu = pmGridChild
-            TabOrder = 0
-            TitleImageList = iHeaders
-            TitleStyle = tsNative
-            OnContextPopup = gridChild1ContextPopup
-            OnDrawColumnCell = DBGDrawColumnCell
-            OnDblClick = gridChild1DblClick
-            OnEditButtonClick = DBGEditButtonClick
-            OnEditingDone = DBGEditingDone
-            OnKeyDown = FormKeyDown
-            OnKeyPress = FormKeyPress
-            OnMouseWheel = DBGMouseWheel
-            OnPrepareCanvas = DBGPrepareCanvas
-            OnSelectEditor = DBGSelectEditor
-          end
-        end
-        object pgChild6: TPage
-          object gridChild6: TXolmisDBGrid
-            Left = 0
-            Height = 164
-            Top = 0
-            Width = 671
-            Align = alClient
-            Color = clWindow
-            Columns = <>
-            DataSource = dsLink6
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
-            PopupMenu = pmGridChild
-            TabOrder = 0
-            TitleImageList = iHeaders
-            TitleStyle = tsNative
-            OnContextPopup = gridChild1ContextPopup
-            OnDrawColumnCell = DBGDrawColumnCell
-            OnDblClick = gridChild1DblClick
-            OnEditButtonClick = DBGEditButtonClick
-            OnEditingDone = DBGEditingDone
-            OnKeyDown = FormKeyDown
-            OnKeyPress = FormKeyPress
-            OnMouseWheel = DBGMouseWheel
-            OnPrepareCanvas = DBGPrepareCanvas
-            OnSelectEditor = DBGSelectEditor
-          end
-        end
-        object pgChild7: TPage
-          object gridChild7: TXolmisDBGrid
-            Left = 0
-            Height = 164
-            Top = 0
-            Width = 671
-            Align = alClient
-            Color = clWindow
-            Columns = <>
-            DataSource = dsLink7
-            Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgCancelOnExit, dgAnyButtonCanSelect, dgDisableDelete, dgCellEllipsis, dgRowHighlight, dgDisplayMemoText]
-            PopupMenu = pmGridChild
-            TabOrder = 0
-            TitleImageList = iHeaders
-            TitleStyle = tsNative
-            OnContextPopup = gridChild1ContextPopup
-            OnDrawColumnCell = DBGDrawColumnCell
-            OnDblClick = gridChild1DblClick
-            OnEditButtonClick = DBGEditButtonClick
-            OnEditingDone = DBGEditingDone
-            OnKeyDown = FormKeyDown
-            OnKeyPress = FormKeyPress
-            OnMouseWheel = DBGMouseWheel
-            OnPrepareCanvas = DBGPrepareCanvas
-            OnSelectEditor = DBGSelectEditor
-          end
         end
       end
       object pChildStatus: TBCPanel

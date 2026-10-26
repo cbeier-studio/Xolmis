@@ -51,6 +51,8 @@ Os níveis de acesso definem o escopo de permissões disponíveis para cada usu�
 
 As permissões são definidas para cada nível de acesso e podem ser alteradas se houver necessidade. Para editar as permissões o usuário precisa ter acesso de Administrador. Na tela de Usuários, clique no botão **Níveis de acesso e permissões** na barra de ferramentas acima da lista de usuários. Selecione o nível de acesso que deseja editar na lista da esquerda da tela, e marque e desmarque as permissões desejadas na lista da direita.
 
+![Diálogo de edição de permissões](img/roles-permissions-dialog.png)
+
 !!! warning
     Os níveis de acesso devem respeitar uma hierarquia clara, onde o Administrador é o nível com mais privilégios, seguido de Supervisor, Padrão, Leitor e, por fim, Convidado com o acesso mais restrito. Novos níveis de acesso criados devem ter permissões intermediárias entre Administrador e Convidado.
 

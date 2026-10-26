@@ -18,7 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Fixed unreadable selected options in the report settings combo boxes in dark mode.
 - Modules open faster.
 - Database statistics are now refreshed (`ANALYZE`) after importing data, avoiding very slow queries (e.g. Sightings) with outdated query planner statistics.
 - Dialog for multi selection now uses `TChipsPanel`.
@@ -29,6 +28,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Removed fields from Sightings: captured, seen, heard, photographed, recorded, and detection types.
+
+### Fixed
+
+- Fixed document grid and toolbar being disabled by child dataset state.
+- Centered document type icons in their grid cells.
+- Fixed unreadable selected options in the report settings combo boxes in dark mode.
+- Field not found error in login dialog.
 
 ## [0.1.0] - 2026-09-19
 

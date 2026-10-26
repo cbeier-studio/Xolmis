@@ -47,6 +47,8 @@ Access levels define the scope of permissions available to each user:
 
 Permissions are defined for each access level and can be modified if necessary. To edit permissions, the user must have Administrator access. On the Users screen, click the **Roles and permissions** button in the toolbar above the user list. Select the access level you want to edit from the list on the left side of the screen, then check or uncheck the desired permissions in the list on the right.
 
+![Edit permissions dialog](img/roles-permissions-dialog.png)
+
 !!! warning
     Access levels must follow a clear hierarchy, where Administrator is the level with the most privileges, followed by Supervisor, Standard, Reader, and finally Guest with the most restricted access. Any newly created access levels should have permissions that fall between Administrator and Guest.
 

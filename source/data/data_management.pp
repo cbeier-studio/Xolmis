@@ -145,7 +145,7 @@ const
 
   { Record manipulations }
   function CanEdit(aDataset: TDataset): Boolean;
-  procedure DeleteRecord(aTable: TTableType; aDataSet: TDataSet);
+  procedure DeleteRecord(aTable: TTableType; aDataSet: TDataSet; PromptDelete: Boolean = True);
   procedure DeleteChildRecords(ChildTable: TTableType; ParentField: String; ParentId: Integer);
   procedure RestoreRecord(aTable: TTableType; aDataSet: TDataSet);
   procedure RestoreChildRecords(ChildTable: TTableType; ParentField: String; ParentId: Integer);
@@ -4291,26 +4291,29 @@ begin
 end;
 
 // Inactivate record
-procedure DeleteRecord(aTable: TTableType; aDataSet: TDataSet);
+procedure DeleteRecord(aTable: TTableType; aDataSet: TDataSet; PromptDelete: Boolean);
 var
   Qry: TSQLQuery;
   aKeyField: String;
   aKeyValue: Integer;
 begin
   // Confirmation dialog
-  with DMM.TaskDlg do
+  if PromptDelete then
   begin
-    Title := rsDeleteRecordTitle;
-    Text := rsDeleteRecordPrompt;
-    Caption := rsTitleConfirmation;
-    CommonButtons := [tcbYes, tcbNo];
-    MainIcon := tdiNone;
-    DefaultButton := tcbNo;
-    FooterIcon := tdiInformation;
-    FooterText := rsDeleteRecordFooter;
-    if Execute then
-      if ModalResult = mrNo then
-        Exit;
+    with DMM.TaskDlg do
+    begin
+      Title := rsDeleteRecordTitle;
+      Text := rsDeleteRecordPrompt;
+      Caption := rsTitleConfirmation;
+      CommonButtons := [tcbYes, tcbNo];
+      MainIcon := tdiNone;
+      DefaultButton := tcbNo;
+      FooterIcon := tdiInformation;
+      FooterText := rsDeleteRecordFooter;
+      if Execute then
+        if ModalResult = mrNo then
+          Exit;
+    end;
   end;
 
   aKeyField := GetPrimaryKey(aDataSet);

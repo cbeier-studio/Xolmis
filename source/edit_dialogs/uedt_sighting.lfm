@@ -1317,6 +1317,8 @@ object edtSighting: TedtSighting
           TabOrder = 0
           ColorMode = cmSingleColor
           MultiSelect = True
+          SingleChipColorLight = 12936811
+          SingleChipColorDark = 10175048
         end
       end
       object pEvidences: TPanel
@@ -1362,6 +1364,8 @@ object edtSighting: TedtSighting
           TabOrder = 0
           ColorMode = cmSingleColor
           MultiSelect = True
+          SingleChipColorLight = 12936811
+          SingleChipColorDark = 10175048
         end
       end
       object pActivities: TPanel
@@ -1407,6 +1411,8 @@ object edtSighting: TedtSighting
           TabOrder = 0
           ColorMode = cmSingleColor
           MultiSelect = True
+          SingleChipColorLight = 12936811
+          SingleChipColorDark = 10175048
         end
       end
       object pHabitats: TPanel
@@ -1452,6 +1458,8 @@ object edtSighting: TedtSighting
           TabOrder = 0
           ColorMode = cmSingleColor
           MultiSelect = True
+          SingleChipColorLight = 12936811
+          SingleChipColorDark = 10175048
         end
       end
     end

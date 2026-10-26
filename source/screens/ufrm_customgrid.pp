@@ -69,9 +69,11 @@ type
     gridVideos: TDBGrid;
     icoCategoryFilter: TImage;
     iconSearch: TImage;
+    icoIsDoubtfulFilter: TImage;
     iSearch: TImageList;
     iSearchDark: TImageList;
     lblCategoryFilter: TLabel;
+    lblIsDoubtfulFilter: TLabel;
     lblRecycleStatus: TLabel;
     lblProjectBalance: TLabel;
     lblMapStatus: TLabel;
@@ -95,6 +97,7 @@ type
     pmvPlayVideo: TMenuItem;
     pmvRefreshVideos: TMenuItem;
     pmVideos: TPopupMenu;
+    pIsDoubtfulFilter: TBCPanel;
     pRecycleStatus: TBCPanel;
     pMapStatus: TBCPanel;
     pSearch: TBCPanel;
@@ -160,6 +163,9 @@ type
     qVideosuser_updated: TLongintField;
     qVideosvideo_id: TLongintField;
     qVideosvideo_type: TStringField;
+    rbIsDoubtfulAll: TRadioButton;
+    rbIsDoubtfulNo: TRadioButton;
+    rbIsDoubtfulYes: TRadioButton;
     sbAddChild: TSpeedButton;
     sbAddVideo: TSpeedButton;
     sbAddFeathersBatch: TSpeedButton;
@@ -1318,6 +1324,8 @@ type
     procedure UpdateRowHeights;
 
     procedure UpdateFilterPanels;
+
+    function ValidateMediaFile(const AFilePath: String): TModalResult;
   public
     property TableType: TTableType read FTableType write FTableType;
     property ChildTable: TTableType read FChildTable write FChildTable;
@@ -5486,9 +5494,8 @@ procedure TfrmCustomGrid.gridDocsDrawColumnCell(Sender: TObject; const Rect: TRe
 var
   ImgList: TImageList;
   ImgIndex: Integer;
-  ImgRect: TRect;
   ScaleFactor: Single;
-  TargetWidth, TargetHeight: Int64;
+  IconSize: Integer;
 begin
   ImgIndex := -1;
 
@@ -5522,18 +5529,11 @@ begin
 
       gridDocs.Canvas.FillRect(Rect);
 
-      // Calc scaled dimensions, keeping proportion
-      TargetWidth := Round((Rect.Width - 4) * ScaleFactor); // 2 pixels of margin on both sides
-      TargetHeight := Round((Rect.Height - 4) * ScaleFactor); // 2 pixels of margin on both sides
-
-      // Center image within the cell
-      ImgRect.Left := Rect.Left + (Rect.Width - TargetWidth) div 2;
-      ImgRect.Top := Rect.Top + (Rect.Height - TargetHeight) div 2;
-      ImgRect.Right := ImgRect.Left + TargetWidth;
-      ImgRect.Bottom := ImgRect.Top + TargetHeight;
+      IconSize := Round(16 * ScaleFactor);
 
       // Draw image in the cell
-      ImgList.DrawForPPI(gridDocs.Canvas, ImgRect.Left, ImgRect.Top, ImgIndex, 16, Screen.PixelsPerInch, ScaleFactor);
+      ImgList.DrawForControl(gridDocs.Canvas, Rect.Left + (Rect.Width - IconSize) div 2,
+        Rect.Top + (Rect.Height - IconSize) div 2, ImgIndex, 16, gridDocs);
     end;
   end
   else
@@ -8284,7 +8284,7 @@ begin
       end;
     end;
     DeleteRecord(tbDocuments, qDocs);
-    UpdateDocButtons(qDocs);
+    qDocs.Refresh;
   finally
     isWorking := False;
   end;
@@ -8787,23 +8787,90 @@ begin
 end;
 
 procedure TfrmCustomGrid.sbOpenDocClick(Sender: TObject);
+var
+  Manager: TMediaManager;
 begin
   if qDocs.FieldByName(COL_DOCUMENT_TYPE).AsString = 'url' then
-    OpenUrl(qDocs.FieldByName(COL_DOCUMENT_PATH).AsString)
+  begin
+    OpenUrl(qDocs.FieldByName(COL_FILE_PATH).AsString);
+  end
   else
-    OpenDocument(qDocs.FieldByName(COL_DOCUMENT_PATH).AsString);
+  begin
+    case ValidateMediaFile(qDocs.FieldByName(COL_FILE_PATH).AsString) of
+      mrIgnore: Exit;
+      mrNo:
+      begin
+        if xSettings.DeleteMediaFile then
+        begin
+          Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+          try
+            Manager.RemoveFile(qDocs.FieldByName(COL_FILE_PATH).AsString);
+          finally
+            Manager.Free;
+          end;
+        end;
+        DeleteRecord(tbDocuments, qDocs, False);
+        qDocs.Refresh;
+        Exit;
+      end;
+    end;
+
+    OpenDocument(qDocs.FieldByName(COL_FILE_PATH).AsString);
+  end;
 end;
 
 procedure TfrmCustomGrid.sbPlayAudioClick(Sender: TObject);
+var
+  Manager: TMediaManager;
 begin
   { #todo : Audio player }
+  case ValidateMediaFile(qAudios.FieldByName(COL_FILE_PATH).AsString) of
+    mrIgnore: Exit;
+    mrNo:
+    begin
+      if xSettings.DeleteMediaFile then
+      begin
+        Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+        try
+          Manager.RemoveFile(qAudios.FieldByName(COL_FILE_PATH).AsString);
+        finally
+          Manager.Free;
+        end;
+      end;
+      DeleteRecord(tbAudioLibrary, qAudios, False);
+      qAudios.Refresh;
+      Exit;
+    end;
+  end;
+
   // Temporary solution
-  OpenDocument(qAudios.FieldByName(COL_AUDIO_FILE).AsString);
+  OpenDocument(qAudios.FieldByName(COL_FILE_PATH).AsString);
 end;
 
 procedure TfrmCustomGrid.sbPlayVideoClick(Sender: TObject);
+var
+  Manager: TMediaManager;
 begin
   { #todo : Video player }
+  case ValidateMediaFile(qVideos.FieldByName(COL_FILE_PATH).AsString) of
+    mrIgnore: Exit;
+    mrNo:
+    begin
+      if xSettings.DeleteMediaFile then
+      begin
+        Manager := TMediaManager.Create(xSettings.MediaStorageFolder);
+        try
+          Manager.RemoveFile(qVideos.FieldByName(COL_FILE_PATH).AsString);
+        finally
+          Manager.Free;
+        end;
+      end;
+      DeleteRecord(tbVideos, qVideos, False);
+      qVideos.Refresh;
+      Exit;
+    end;
+  end;
+
   // Temporary solution
   OpenDocument(qVideos.FieldByName(COL_FILE_PATH).AsString);
 end;
@@ -10597,8 +10664,6 @@ begin
       sbShareChild.Enabled := False;
       sbPrintChild.Enabled := False;
       sbRefreshChild.Enabled := True;
-
-      pSide.Enabled := False;
     end;
     dsBrowse:
     begin
@@ -10616,8 +10681,6 @@ begin
       sbPriorChild.Enabled := (Cnt > 1) and (aDataSet.RecNo > 1);
       sbNextChild.Enabled := (Cnt > 1) and (aDataSet.RecNo < Cnt);
       sbLastChild.Enabled := (Cnt > 1) and (aDataSet.RecNo < Cnt);
-
-      pSide.Enabled := True;
     end;
     dsEdit, dsInsert:
     begin
@@ -10633,8 +10696,6 @@ begin
       sbShareChild.Enabled := False;
       sbPrintChild.Enabled := False;
       sbRefreshChild.Enabled := False;
-
-      pSide.Enabled := False;
     end;
   end;
   sbQuickEntryChild.Enabled := sbAddChild.Enabled;
@@ -10801,8 +10862,6 @@ begin
 end;
 
 procedure TfrmCustomGrid.UpdateDocButtons(aDataSet: TDataSet);
-var
-  Cnt, MasterCnt: Integer;
 begin
   if isClosing then
     Exit;
@@ -10818,12 +10877,10 @@ begin
     end;
     dsBrowse:
     begin
-      Cnt := Ord(not aDataSet.IsEmpty);
-      MasterCnt := Ord(not dsLink.DataSet.IsEmpty);
-      sbAddDoc.Enabled := (MasterCnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
-      sbDocInfo.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
-      sbDelDoc.Enabled := (Cnt > 0) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
-      sbOpenDoc.Enabled := (Cnt > 0);
+      sbAddDoc.Enabled := (not dsLink.DataSet.IsEmpty) and not (TSQLQuery(aDataSet).ReadOnly) and CanInsertTable(FTableType);
+      sbDocInfo.Enabled := (not aDataSet.IsEmpty) and not (TSQLQuery(aDataSet).ReadOnly) and CanEditTable(FTableType);
+      sbDelDoc.Enabled := (not aDataSet.IsEmpty) and not (TSQLQuery(aDataSet).ReadOnly) and CanDeleteTable(FTableType);
+      sbOpenDoc.Enabled := (not aDataSet.IsEmpty);
 
     end;
     dsEdit, dsInsert:
@@ -10998,6 +11055,45 @@ begin
   pmvDelVideo.Enabled := sbDelVideo.Enabled;
   pmvPlayVideo.Enabled := sbPlayVideo.Enabled;
   pmvRefreshVideos.Enabled := sbAddVideo.Enabled;
+end;
+
+function TfrmCustomGrid.ValidateMediaFile(const AFilePath: String): TModalResult;
+var
+  dlgTask: TTaskDialog;
+  btnCustom: TTaskDialogBaseButtonItem;
+  FullPath: String;
+begin
+  Result := mrNone;
+
+  if (AFilePath = EmptyStr) then
+    Exit;
+
+  FullPath := ConcatPaths([xSettings.MediaStorageFolder, AFilePath]);
+  if not FileExists(FullPath) then
+  begin
+    dlgTask := TTaskDialog.Create(nil);
+    try
+      dlgTask.Title := rsTitleFileNotFound;
+      dlgTask.Caption := APP_NAME;
+      dlgTask.Text := Format(rsPromptMediaFileNotFound, [FullPath]);
+      dlgTask.MainIcon := tdiQuestion;
+      dlgTask.Flags := dlgTask.Flags + [tfUseCommandLinks];
+      dlgTask.CommonButtons := [];
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsIgnoreAction;
+      btnCustom.ModalResult := mrIgnore;
+
+      btnCustom := dlgTask.Buttons.Add;
+      btnCustom.Caption := rsDeleteRecordTitle;
+      btnCustom.ModalResult := mrNo;
+
+      if dlgTask.Execute then
+        Result := dlgTask.ModalResult;
+    finally
+      dlgTask.Free;
+    end;
+  end;
 end;
 
 procedure TfrmCustomGrid.UpdateFilterPanels;
@@ -11247,6 +11343,8 @@ begin
   pRecordInEbirdFilter.Visible := (fufIsOnEbird in FModule.FilterUiFlags);
   // Out of sample
   pOutOfSampleFilter.Visible := (fufOutOfSample in FModule.FilterUiFlags);
+  // Is doubtful
+  pIsDoubtfulFilter.Visible := (fufIsDoubtful in FModule.FilterUiFlags);
 
   // Sample type
   if (fufSampleType in FModule.FilterUiFlags) then

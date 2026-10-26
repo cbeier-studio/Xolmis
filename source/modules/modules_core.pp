@@ -108,7 +108,7 @@ type
     fufNeedsReview, fufEscaped, fufSupportType, fufIsOnEbird, fufOutOfSample, fufNidoparasitePresence,
     fufPhilornisPresence, fufEggHatched, fufBandReplaced, fufNestFate, fufHaveColorBands, fufHaveRecaptures,
     fufTaxonRanks, fufTaxa, fufTaxonomies, fufSynonyms, fufIsExtinct, fufAgingSpecs, fufAge, fufMoltSpecs,
-    fufFat, fufSexingSpecs, fufSex, fufCategory);
+    fufFat, fufSexingSpecs, fufSex, fufCategory, fufIsDoubtful);
 
   TFilterUiFlags = set of TFilterUiFlag;
 

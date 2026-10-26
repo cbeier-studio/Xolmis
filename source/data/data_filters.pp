@@ -101,6 +101,8 @@ type
   procedure AddTimeIntervalFilter(aSearch: TCustomSearch; const FieldStart, FieldEnd: String; const TimeStart, TimeEnd: String);
   procedure AddCharsAsLikeFilters(aSearch: TCustomSearch; const aFieldName, aDisplayName,
     aValue: String; aUseTablePrefix: Boolean = True);
+  procedure AddJsonArrayFilter(aSearch: TCustomSearch; const aFieldName, aCaption: String;
+    aSelectedValues: TStrings; aUseTablePrefix: Boolean = True);
 
   function TaxonFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String = ''): String;
   function TaxonFilterToSearch(aVirtualTree: TBaseVirtualTree; aSearchGroup: TSearchGroups; aPrefix: String = ''): Integer;
@@ -1010,6 +1012,29 @@ begin
 
   if aSearch.QuickFilters[sf].Fields.Count = 0 then
     aSearch.QuickFilters.Delete(sf);
+end;
+
+procedure AddJsonArrayFilter(aSearch: TCustomSearch; const aFieldName, aCaption: String; aSelectedValues: TStrings;
+  aUseTablePrefix: Boolean);
+var
+  sf, i: Integer;
+  ValList, SqlExpr, FieldRef: String;
+begin
+  if (aSelectedValues = nil) or (aSelectedValues.Count = 0) then
+    Exit;
+
+  ValList := '';
+  for i := 0 to aSelectedValues.Count - 1 do
+  begin
+    if ValList <> '' then
+      ValList := ValList + ', ';
+    ValList := ValList + QuotedStr(aSelectedValues[i]);
+  end;
+
+  sf := aSearch.QuickFilters.Add(TSearchGroup.Create);
+  aSearch.QuickFilters[sf].Fields.Add(
+    TSearchField.Create(aFieldName, aCaption, sdtJsonArray, crJsonContains, aUseTablePrefix, ValList)
+  );
 end;
 
 function TaxonFilterToString(aVirtualTree: TBaseVirtualTree; aPrefix: String): String;

@@ -106,8 +106,8 @@ begin
 
   pChips.BeginUpdate;
   try
-    pChips.SingleChipColorDark := ActiveTheme.Categorical.Jacaranda.Background;
-    pChips.SingleChipColorLight := ActiveTheme.Categorical.Jacaranda.Background;
+    pChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+    pChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
 
     case dlgType of
       cdtDetectionModes:

@@ -101,6 +101,8 @@ begin
     AddBooleanFilter(SearchConfig, COL_EBIRD_AVAILABLE, rscIsInEBird, rbRecordInEbirdYes.Checked, rbRecordInEbirdNo.Checked);
     // Out of sample
     AddBooleanFilter(SearchConfig, COL_OUT_OF_SAMPLE, rscOutOfSample, rbOutOfSampleYes.Checked, rbOutOfSampleNo.Checked);
+    // Is doubtful
+    AddBooleanFilter(SearchConfig, COL_IS_DOUBTFUL, rscIsDoubtful, rbIsDoubtfulYes.Checked, rbIsDoubtfulNo.Checked);
   end;
 end;
 
@@ -131,6 +133,7 @@ begin
 
     rbRecordInEbirdAll.Checked := True;
     rbOutOfSampleAll.Checked := True;
+    rbIsDoubtfulAll.Checked := True;
   end;
 end;
 

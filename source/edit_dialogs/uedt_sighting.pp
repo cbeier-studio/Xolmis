@@ -694,8 +694,8 @@ begin
   pHabitatsChips.BeginUpdate;
   pActivitiesChips.BeginUpdate;
   try
-    pDetectionChips.SingleChipColorDark := ActiveTheme.Categorical.Jacaranda.Background;
-    pDetectionChips.SingleChipColorLight := ActiveTheme.Categorical.Jacaranda.Background;
+    pDetectionChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+    pDetectionChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
     with pDetectionChips do
     begin
       AddChip(rsDetectionVisual, 'visual');
@@ -709,8 +709,8 @@ begin
       AddChip(rsDetectionOther, 'other');
     end;
 
-    pEvidencesChips.SingleChipColorDark := ActiveTheme.Categorical.Jacaranda.Background;
-    pEvidencesChips.SingleChipColorLight := ActiveTheme.Categorical.Jacaranda.Background;
+    pEvidencesChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+    pEvidencesChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
     with pEvidencesChips do
     begin
       AddChip(rsEvidencePhoto, 'photo');
@@ -721,8 +721,8 @@ begin
       AddChip(rsEvidenceOther, 'other');
     end;
 
-    pHabitatsChips.SingleChipColorDark := ActiveTheme.Categorical.Jacaranda.Background;
-    pHabitatsChips.SingleChipColorLight := ActiveTheme.Categorical.Jacaranda.Background;
+    pHabitatsChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+    pHabitatsChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
     with pHabitatsChips do
     begin
       AddChip(rsHabitatForest, 'forest');
@@ -742,8 +742,8 @@ begin
       AddChip(rsHabitatOther, 'other');
     end;
 
-    pActivitiesChips.SingleChipColorDark := ActiveTheme.Categorical.Jacaranda.Background;
-    pActivitiesChips.SingleChipColorLight := ActiveTheme.Categorical.Jacaranda.Background;
+    pActivitiesChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+    pActivitiesChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
     with pActivitiesChips do
     begin
       AddChip(rsActivityResting, 'resting');

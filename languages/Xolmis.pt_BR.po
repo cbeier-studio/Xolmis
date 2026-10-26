@@ -1112,6 +1112,7 @@ msgid "Is discarded"
 msgstr "Descartado"
 
 #: data_columns.rscisdoubtful
+msgctxt "data_columns.rscisdoubtful"
 msgid "Is doubtful"
 msgstr "Duvidoso"
 
@@ -11196,6 +11197,12 @@ msgctxt "tfrmcustomgrid.lblinstitutionfilter.caption"
 msgid "Institution"
 msgstr "Instituição"
 
+#: tfrmcustomgrid.lblisdoubtfulfilter.caption
+#, fuzzy
+msgctxt "tfrmcustomgrid.lblisdoubtfulfilter.caption"
+msgid "Is doubtful"
+msgstr "Duvidoso"
+
 #: tfrmcustomgrid.lblmarkedfilter.caption
 msgid "Marked records"
 msgstr "Registros marcados"
@@ -11835,6 +11842,24 @@ msgstr "Não"
 
 #: tfrmcustomgrid.rbhatchedyes.caption
 msgctxt "tfrmcustomgrid.rbhatchedyes.caption"
+msgid "Yes"
+msgstr "Sim"
+
+#: tfrmcustomgrid.rbisdoubtfulall.caption
+#, fuzzy
+msgctxt "tfrmcustomgrid.rbisdoubtfulall.caption"
+msgid "All"
+msgstr "Tudo"
+
+#: tfrmcustomgrid.rbisdoubtfulno.caption
+#, fuzzy
+msgctxt "tfrmcustomgrid.rbisdoubtfulno.caption"
+msgid "No"
+msgstr "Não"
+
+#: tfrmcustomgrid.rbisdoubtfulyes.caption
+#, fuzzy
+msgctxt "tfrmcustomgrid.rbisdoubtfulyes.caption"
 msgid "Yes"
 msgstr "Sim"
 
@@ -21196,3 +21221,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+

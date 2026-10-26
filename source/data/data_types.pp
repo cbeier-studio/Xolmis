@@ -222,7 +222,7 @@ type
   TCriteriaType = (crNone,
     crLike, crStartLike, crEqual, crNotEqual,
     crBetween, crMoreThan, crLessThan,
-    crNull, crNotNull, crIn, crIntersect
+    crNull, crNotNull, crIn, crIntersect, crJsonContains
   );
   TTableFieldType = (ctString, ctInteger, ctFloat, ctDate, ctTime, ctDateTime, ctBoolean);
   TSearchDataType = (sdtText, sdtInteger, sdtFloat, sdtDate, sdtTime, sdtDateTime, sdtBoolean, sdtList,
@@ -268,7 +268,7 @@ const
   CRITERIA_OPERATORS: array[TCriteriaType] of String = ('',
     'LIKE', 'LIKE', '=', '!=',
     'BETWEEN', '>=', '<=',
-    'ISNULL', 'NOTNULL', 'IN', '');
+    'ISNULL', 'NOTNULL', 'IN', '', '');
   AND_OR_STR: array[TSQLAndOr] of String = ('', 'AND', 'OR');
   TiposCampo: array[TTableFieldType] of String = ('String', 'Integer', 'Float', 'Date', 'Time',
     'DateTime', 'Boolean');
@@ -1120,6 +1120,14 @@ begin
                 else
                   S := Format(Msk, [StartExpr, V2, EndExpr, V1]);
               end;
+              crJsonContains:
+              begin
+                // FValue1 contains already formatted comma-separated values, e.g.: 'tag1', 'tag2'
+                if not UseTablePrefix then
+                  S := Format('EXISTS (SELECT 1 FROM json_each(%s) WHERE value IN (%s))', [FFieldName, FValue1])
+                else
+                  S := Format('EXISTS (SELECT 1 FROM json_each(%s.%s) WHERE value IN (%s))', [FTableAlias, FFieldName, FValue1]);
+              end;
             end;
           end;
 
@@ -1261,6 +1269,14 @@ begin
                   S := Format(Msk, [StartExpr, V1, EndExpr, V1])
                 else
                   S := Format(Msk, [StartExpr, V2, EndExpr, V1]);
+              end;
+              crJsonContains:
+              begin
+                // FValue1 contains already formatted comma-separated values, e.g.: 'tag1', 'tag2'
+                if not UseTablePrefix then
+                  S := Format('EXISTS (SELECT 1 FROM json_each(%s) WHERE value IN (%s))', [FFieldName, FValue1])
+                else
+                  S := Format('EXISTS (SELECT 1 FROM json_each(%s.%s) WHERE value IN (%s))', [FTableAlias, FFieldName, FValue1]);
               end;
             end;
 
