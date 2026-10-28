@@ -679,6 +679,7 @@ msgid "Escaped"
 msgstr ""
 
 #: data_columns.rscevidences
+msgctxt "data_columns.rscevidences"
 msgid "Evidences"
 msgstr ""
 
@@ -11096,6 +11097,16 @@ msgctxt "tfrmcustomgrid.lblcountdatefilter.caption"
 msgid "none selected"
 msgstr ""
 
+#: tfrmcustomgrid.lblcountdetectionfilter.caption
+msgctxt "tfrmcustomgrid.lblcountdetectionfilter.caption"
+msgid "none selected"
+msgstr ""
+
+#: tfrmcustomgrid.lblcountevidencefilter.caption
+msgctxt "tfrmcustomgrid.lblcountevidencefilter.caption"
+msgid "none selected"
+msgstr ""
+
 #: tfrmcustomgrid.lblcountsitefilter.caption
 msgctxt "tfrmcustomgrid.lblcountsitefilter.caption"
 msgid "none selected"
@@ -11118,6 +11129,10 @@ msgstr ""
 
 #: tfrmcustomgrid.lbldatefilter.caption
 msgid "Dates"
+msgstr ""
+
+#: tfrmcustomgrid.lbldetectionfilter.caption
+msgid "Detection mode"
 msgstr ""
 
 #: tfrmcustomgrid.lbleggfilter.caption
@@ -11150,6 +11165,11 @@ msgstr ""
 #: tfrmcustomgrid.lblescapedfilter.caption
 msgctxt "tfrmcustomgrid.lblescapedfilter.caption"
 msgid "Escaped"
+msgstr ""
+
+#: tfrmcustomgrid.lblevidencefilter.caption
+msgctxt "tfrmcustomgrid.lblevidencefilter.caption"
+msgid "Evidences"
 msgstr ""
 
 #: tfrmcustomgrid.lblexpeditionfilter.caption

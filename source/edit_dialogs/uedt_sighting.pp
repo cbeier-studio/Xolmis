@@ -696,6 +696,10 @@ begin
   try
     pDetectionChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
     pDetectionChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+    pDetectionChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+    pDetectionChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+    pDetectionChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+    pDetectionChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
     with pDetectionChips do
     begin
       AddChip(rsDetectionVisual, 'visual');
@@ -711,6 +715,10 @@ begin
 
     pEvidencesChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
     pEvidencesChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+    pEvidencesChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+    pEvidencesChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+    pEvidencesChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+    pEvidencesChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
     with pEvidencesChips do
     begin
       AddChip(rsEvidencePhoto, 'photo');
@@ -723,6 +731,10 @@ begin
 
     pHabitatsChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
     pHabitatsChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+    pHabitatsChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+    pHabitatsChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+    pHabitatsChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+    pHabitatsChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
     with pHabitatsChips do
     begin
       AddChip(rsHabitatForest, 'forest');
@@ -744,6 +756,10 @@ begin
 
     pActivitiesChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
     pActivitiesChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+    pActivitiesChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+    pActivitiesChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+    pActivitiesChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+    pActivitiesChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
     with pActivitiesChips do
     begin
       AddChip(rsActivityResting, 'resting');
@@ -924,6 +940,9 @@ begin
   Qry := nil;
   pObserverChips.ClearSelection;
   pObserverChips.ClearChips;
+
+  pObserverChips.SelectedBorderDark := clHighlight;
+  pObserverChips.SelectedBorderLight := clHighlight;
 
   if FSighting.SurveyId > 0 then
   begin

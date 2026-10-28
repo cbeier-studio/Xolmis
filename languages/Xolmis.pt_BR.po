@@ -681,6 +681,7 @@ msgid "Escaped"
 msgstr "Escapou"
 
 #: data_columns.rscevidences
+msgctxt "data_columns.rscevidences"
 msgid "Evidences"
 msgstr "Evidências"
 
@@ -11088,6 +11089,16 @@ msgctxt "tfrmcustomgrid.lblcountdatefilter.caption"
 msgid "none selected"
 msgstr "nenhum selecionado"
 
+#: tfrmcustomgrid.lblcountdetectionfilter.caption
+msgctxt "tfrmcustomgrid.lblcountdetectionfilter.caption"
+msgid "none selected"
+msgstr "nenhum selecionado"
+
+#: tfrmcustomgrid.lblcountevidencefilter.caption
+msgctxt "tfrmcustomgrid.lblcountevidencefilter.caption"
+msgid "none selected"
+msgstr "nenhum selecionado"
+
 #: tfrmcustomgrid.lblcountsitefilter.caption
 msgctxt "tfrmcustomgrid.lblcountsitefilter.caption"
 msgid "none selected"
@@ -11111,6 +11122,10 @@ msgstr "Ciclo de muda"
 #: tfrmcustomgrid.lbldatefilter.caption
 msgid "Dates"
 msgstr "Datas"
+
+#: tfrmcustomgrid.lbldetectionfilter.caption
+msgid "Detection mode"
+msgstr "Modo de detecção"
 
 #: tfrmcustomgrid.lbleggfilter.caption
 msgctxt "tfrmcustomgrid.lbleggfilter.caption"
@@ -11143,6 +11158,11 @@ msgstr "e"
 msgctxt "tfrmcustomgrid.lblescapedfilter.caption"
 msgid "Escaped"
 msgstr "Escapou"
+
+#: tfrmcustomgrid.lblevidencefilter.caption
+msgctxt "tfrmcustomgrid.lblevidencefilter.caption"
+msgid "Evidences"
+msgstr "Evidências"
 
 #: tfrmcustomgrid.lblexpeditionfilter.caption
 msgctxt "tfrmcustomgrid.lblexpeditionfilter.caption"
@@ -11198,7 +11218,6 @@ msgid "Institution"
 msgstr "Instituição"
 
 #: tfrmcustomgrid.lblisdoubtfulfilter.caption
-#, fuzzy
 msgctxt "tfrmcustomgrid.lblisdoubtfulfilter.caption"
 msgid "Is doubtful"
 msgstr "Duvidoso"
@@ -11846,19 +11865,16 @@ msgid "Yes"
 msgstr "Sim"
 
 #: tfrmcustomgrid.rbisdoubtfulall.caption
-#, fuzzy
 msgctxt "tfrmcustomgrid.rbisdoubtfulall.caption"
 msgid "All"
 msgstr "Tudo"
 
 #: tfrmcustomgrid.rbisdoubtfulno.caption
-#, fuzzy
 msgctxt "tfrmcustomgrid.rbisdoubtfulno.caption"
 msgid "No"
 msgstr "Não"
 
 #: tfrmcustomgrid.rbisdoubtfulyes.caption
-#, fuzzy
 msgctxt "tfrmcustomgrid.rbisdoubtfulyes.caption"
 msgid "Yes"
 msgstr "Sim"
@@ -21221,4 +21237,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-

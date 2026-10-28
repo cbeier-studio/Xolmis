@@ -1018,7 +1018,7 @@ procedure AddJsonArrayFilter(aSearch: TCustomSearch; const aFieldName, aCaption:
   aUseTablePrefix: Boolean);
 var
   sf, i: Integer;
-  ValList, SqlExpr, FieldRef: String;
+  ValList: String;
 begin
   if (aSelectedValues = nil) or (aSelectedValues.Count = 0) then
     Exit;

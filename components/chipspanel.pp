@@ -66,6 +66,8 @@ type
     FChipCornerRadius: Integer;
     FChipSpacing: Integer;
     FChipPadding: Integer;
+    FSelectedBorderLight: TColor;
+    FSelectedBorderDark: TColor;
     FSelectedTextColorLight: TColor;
     FSelectedTextColorDark: TColor;
     FSingleChipColorLight: TColor;
@@ -94,6 +96,8 @@ type
     procedure SetSingleChipColorDark(AValue: TColor);
     procedure SetSingleTextColorLight(AValue: TColor);
     procedure SetSingleTextColorDark(AValue: TColor);
+    procedure SetSelectedBorderLight(AValue: TColor);
+    procedure SetSelectedBorderDark(AValue: TColor);
     procedure SetSelectedTextColorLight(AValue: TColor);
     procedure SetSelectedTextColorDark(AValue: TColor);
     procedure SetUnselectedFillLight(AValue: TColor);
@@ -145,6 +149,8 @@ type
     property Chips: TList read FChips;
     property SelectedChips: TList read FSelectedChips;
 
+    property SelectedBorderLight: TColor read FSelectedBorderLight write SetSelectedBorderLight default $00808080;
+    property SelectedBorderDark: TColor read FSelectedBorderDark write SetSelectedBorderDark default $00C0C0C0;
     property SelectedTextColorLight: TColor read FSelectedTextColorLight write SetSelectedTextColorLight default $00000000;
     property SelectedTextColorDark: TColor read FSelectedTextColorDark write SetSelectedTextColorDark default $00FFFFFF;
 
@@ -288,6 +294,8 @@ begin
   FChipSpacing := 6;
   FChipPadding := 8;
 
+  FSelectedBorderLight := $00808080;
+  FSelectedBorderDark  := $00C0C0C0;
   FSelectedTextColorLight := $00000000;
   FSelectedTextColorDark  := $00FFFFFF;
 
@@ -361,19 +369,22 @@ begin
 
       if Chip.Selected then
       begin
-        // Chip selected: without border, full color with contrasting text
-        Chip.Border.Width := 0;
+        // Chip selected: with border, full color with contrasting text
+        Chip.Border.Width := 1;
+        Chip.Border.Style := bboSolid;
         if FColorMode = cmSingleColor then
         begin
           if FDarkMode then
           begin
             BgColor := FSingleChipColorDark;
             TextColor := FSingleTextColorDark;
+            Chip.Border.Color := FSelectedBorderDark;
           end
           else
           begin
             BgColor := FSingleChipColorLight;
             TextColor := FSingleTextColorLight;
+            Chip.Border.Color := FSelectedBorderLight;
           end;
         end
         else
@@ -386,11 +397,13 @@ begin
           begin
             BgColor := FPaletteDark[Idx mod Length(FPaletteDark)];
             TextColor := FSelectedTextColorDark;
+            Chip.Border.Color := FSelectedBorderDark;
           end
           else
           begin
             BgColor := FPaletteLight[Idx mod Length(FPaletteLight)];
             TextColor := FSelectedTextColorLight;
+            Chip.Border.Color := FSelectedBorderLight;
           end;
         end;
       end
@@ -639,6 +652,24 @@ begin
   if FSelectable <> AValue then
   begin
     FSelectable := AValue;
+    ApplyColorsToChips;
+  end;
+end;
+
+procedure TChipsPanel.SetSelectedBorderDark(AValue: TColor);
+begin
+  if FSelectedBorderDark <> AValue then
+  begin
+    FSelectedBorderDark := AValue;
+    ApplyColorsToChips;
+  end;
+end;
+
+procedure TChipsPanel.SetSelectedBorderLight(AValue: TColor);
+begin
+  if FSelectedBorderLight <> AValue then
+  begin
+    FSelectedBorderLight := AValue;
     ApplyColorsToChips;
   end;
 end;

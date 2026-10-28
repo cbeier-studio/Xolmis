@@ -21,7 +21,7 @@ unit modules_sightings;
 interface
 
 uses
-  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils,
+  Classes, SysUtils, Graphics, Forms, DB, SQLDB, Grids, DBGrids, RegExpr, StrUtils, chipspanel,
   data_types, modules_core;
 
 type
@@ -70,7 +70,7 @@ begin
   FPrintUiFlags := [pufSightings, pufSightingsByLocality, pufSightingsByObserver, pufSightingsByProject,
     pufSightingsBySurvey, pufSightingsByTaxon];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufTimeInterval, fufPerson, fufSurvey, fufMethod,
-    fufIndividual, fufIsOnEbird, fufOutOfSample];
+    fufIndividual, fufIsOnEbird, fufOutOfSample, fufIsDoubtful, fufDetectionModes, fufEvidences];
 
   AddDefaultSort(COL_SIGHTING_DATE, sdDescending);
 
@@ -78,6 +78,9 @@ begin
 end;
 
 procedure TSightingsModuleController.ApplyFilters;
+var
+  SLDetection, SLEvidences: TStrings;
+  i: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
   begin
@@ -103,6 +106,22 @@ begin
     AddBooleanFilter(SearchConfig, COL_OUT_OF_SAMPLE, rscOutOfSample, rbOutOfSampleYes.Checked, rbOutOfSampleNo.Checked);
     // Is doubtful
     AddBooleanFilter(SearchConfig, COL_IS_DOUBTFUL, rscIsDoubtful, rbIsDoubtfulYes.Checked, rbIsDoubtfulNo.Checked);
+    // Detection modes
+    SLDetection := TStringList.Create;
+    SLEvidences := TStringList.Create;
+    try
+      for i := 0 to pDetectionChips.GetSelectedChips.Count - 1 do
+        SLDetection.Add(TChip(pDetectionChips.GetSelectedChips[i]).ID);
+      for i := 0 to pEvidenceChips.GetSelectedChips.Count - 1 do
+        SLEvidences.Add(TChip(pEvidenceChips.GetSelectedChips[i]).ID);
+
+      AddJsonArrayFilter(SearchConfig, COL_DETECTION_MODES, rscDetectionModes, SLDetection);
+      // Evidences
+      AddJsonArrayFilter(SearchConfig, COL_EVIDENCES, rscEvidences, SLEvidences);
+    finally
+      FreeAndNil(SLDetection);
+      FreeAndNil(SLEvidences);
+    end;
   end;
 end;
 

@@ -27,7 +27,7 @@ uses
   fgl, fpjson, jsonparser,
   DBGrids, ExtCtrls, EditBtn, StdCtrls, ComCtrls, Menus, LCLIntf, LCLType, Character, Buttons, CheckLst,
   DBCtrls, laz.VirtualTrees, TAGraph, TASeries, TADbSource, atshapelinebgra, BCPanel, bctypes,
-  Types, ImgList, ToggleSwitch, XolmisDBGrid, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
+  Types, ImgList, ToggleSwitch, XolmisDBGrid, chipspanel, mvMapViewer, mvDE_BGRA, ColorSpeedButton, LazFileUtils,
   mvTypes, mvGpsObj, mvDrawingEngine, mvPluginCommon, mvMapScalePlugin, mvPlugins, BGRABitmap, Math,
   data_types, data_filters, models_media, modules_core, utils_media, xrs_core;
 
@@ -53,6 +53,10 @@ type
   TfrmCustomGrid = class(TForm)
     cbCategoryFilter: TComboBox;
     cbMapProvider: TComboBox;
+    icoEvidenceFilter: TImage;
+    lblCountEvidenceFilter: TLabel;
+    lblEvidenceFilter: TLabel;
+    pDetectionChips: TChipsPanel;
     DBG: TXolmisDBGrid;
     dbgRecycle: TDrawGrid;
     gridChild1: TXolmisDBGrid;
@@ -70,14 +74,18 @@ type
     icoCategoryFilter: TImage;
     iconSearch: TImage;
     icoIsDoubtfulFilter: TImage;
+    icoDetectionFilter: TImage;
     iSearch: TImageList;
     iSearchDark: TImageList;
     lblCategoryFilter: TLabel;
+    lblCountDetectionFilter: TLabel;
     lblIsDoubtfulFilter: TLabel;
     lblRecycleStatus: TLabel;
     lblProjectBalance: TLabel;
     lblMapStatus: TLabel;
     lblRubricBalance: TLabel;
+    lblDetectionFilter: TLabel;
+    pEvidenceChips: TChipsPanel;
     pmcNewOccurrencePoint: TMenuItem;
     pgChild7: TPage;
     pmcAutoSizeColumns: TMenuItem;
@@ -101,6 +109,10 @@ type
     pRecycleStatus: TBCPanel;
     pMapStatus: TBCPanel;
     pSearch: TBCPanel;
+    pDetectionFilters: TBCPanel;
+    pEvidenceFilters: TBCPanel;
+    pTitleDetectionFilter: TPanel;
+    pTitleEvidenceFilter: TPanel;
     pVideosToolbar: TBCPanel;
     pmpBandsBalance: TMenuItem;
     pmgBandHistory: TMenuItem;
@@ -998,6 +1010,8 @@ type
     procedure mapGeoCenterMove(Sender: TObject);
     procedure mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
     procedure pClientResize(Sender: TObject);
+    procedure pDetectionChipsChipClick(Sender: TObject; AChip: TChip);
+    procedure pEvidenceChipsChipClick(Sender: TObject; AChip: TChip);
     procedure pmAddDocumentClick(Sender: TObject);
     procedure pmAddLinkClick(Sender: TObject);
     procedure pmaRefreshAudiosClick(Sender: TObject);
@@ -2717,6 +2731,14 @@ begin
   pEggFilter.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pOutOfSampleFilter.Background.Color := ActiveTheme.Background.CardDefault;
   pOutOfSampleFilter.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pIsDoubtfulFilter.Background.Color := ActiveTheme.Background.CardDefault;
+  pIsDoubtfulFilter.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pDetectionFilters.Background.Color := ActiveTheme.Background.CardDefault;
+  pDetectionFilters.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pTitleDetectionFilter.Color := ActiveTheme.Background.CardDefault;
+  pEvidenceFilters.Background.Color := ActiveTheme.Background.CardDefault;
+  pEvidenceFilters.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pTitleEvidenceFilter.Color := ActiveTheme.Background.CardDefault;
   pNidoparasiteFilter.Background.Color := ActiveTheme.Background.CardDefault;
   pNidoparasiteFilter.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pHatchedFilter.Background.Color := ActiveTheme.Background.CardDefault;
@@ -2745,6 +2767,9 @@ begin
   pPermitTypeFilter.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pReplacedBandFilter.Background.Color := ActiveTheme.Background.CardDefault;
   pReplacedBandFilter.Border.Color := ActiveTheme.System.SolidNeutralFG;
+
+  pDetectionChips.DarkMode := True;
+  pEvidenceChips.DarkMode := True;
 
   // Set filter edits images
   eEggFilter.Images := DMM.iEditsDark;
@@ -2812,6 +2837,9 @@ begin
   icoRecordInEbirdFilter.Images := iIconsDark;
   icoEggFilter.Images := iIconsDark;
   icoOutOfSampleFilter.Images := iIconsDark;
+  icoIsDoubtfulFilter.Images := iIconsDark;
+  icoDetectionFilter.Images := iIconsDark;
+  icoEvidenceFilter.Images := iIconsDark;
   icoNidoparasiteFilter.Images := iIconsDark;
   icoHatchedFilter.Images := iIconsDark;
   icoPhilornisFilter.Images := iIconsDark;
@@ -6305,6 +6333,34 @@ end;
 procedure TfrmCustomGrid.pClientResize(Sender: TObject);
 begin
   pChild.Height := Round((pClient.Height - SplitChild.Height) * FChildPanelFactor);
+end;
+
+procedure TfrmCustomGrid.pDetectionChipsChipClick(Sender: TObject; AChip: TChip);
+begin
+  if pDetectionChips.SelectedChips.Count = 1 then
+    lblCountDetectionFilter.Caption := Format(rsOneSelected, [pDetectionChips.SelectedChips.Count])
+  else
+  if pDetectionChips.SelectedChips.Count > 1 then
+    lblCountDetectionFilter.Caption := Format(rsMoreSelected, [pDetectionChips.SelectedChips.Count])
+  else
+    lblCountDetectionFilter.Caption := rsNoneSelected;
+
+  if FCanToggle then
+    Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.pEvidenceChipsChipClick(Sender: TObject; AChip: TChip);
+begin
+  if pEvidenceChips.SelectedChips.Count = 1 then
+    lblCountEvidenceFilter.Caption := Format(rsOneSelected, [pEvidenceChips.SelectedChips.Count])
+  else
+  if pEvidenceChips.SelectedChips.Count > 1 then
+    lblCountEvidenceFilter.Caption := Format(rsMoreSelected, [pEvidenceChips.SelectedChips.Count])
+  else
+    lblCountEvidenceFilter.Caption := rsNoneSelected;
+
+  if FCanToggle then
+    Search(FSearchString);
 end;
 
 procedure TfrmCustomGrid.pmAddDocumentClick(Sender: TObject);
@@ -11337,6 +11393,64 @@ begin
     cbPermitTypeFilter.Items.CommaText := rsCaptionAll + ',"' + rsPermitBanding + '","' + rsPermitCollection + '","' +
       rsPermitResearch + '","' + rsPermitEntry + '","' + rsPermitTransport + '","' + rsPermitOther + '"';
     pPermitTypeFilter.Visible := True;
+  end;
+
+  // Detection mode
+  if (fufDetectionModes in FModule.FilterUiFlags) then
+  begin
+    pDetectionChips.Color := pDetectionFilters.Background.Color;
+    pDetectionChips.BeginUpdate;
+    try
+      pDetectionChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+      pDetectionChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+      pDetectionChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+      pDetectionChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+      pDetectionChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+      pDetectionChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
+      with pDetectionChips do
+      begin
+        AddChip(rsDetectionVisual, 'visual');
+        AddChip(rsDetectionSong, 'song');
+        AddChip(rsDetectionCall, 'call');
+        AddChip(rsDetectionWingFlapping, 'wing_flapping');
+        AddChip(rsDetectionDrumming, 'drumming');
+        AddChip(rsDetectionCapture, 'capture');
+        AddChip(rsDetectionRemote, 'remote');
+        AddChip(rsDetectionTrack, 'track');
+        AddChip(rsDetectionOther, 'other');
+      end;
+    finally
+      pDetectionChips.EndUpdate;
+    end;
+    pDetectionChips.AutoSize := True;
+    pDetectionFilters.Visible := True;
+  end;
+  // Evidences
+  if (fufEvidences in FModule.FilterUiFlags) then
+  begin
+    pEvidenceChips.Color := pEvidenceFilters.Background.Color;
+    pEvidenceChips.BeginUpdate;
+    try
+      pEvidenceChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+      pEvidenceChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+      pEvidenceChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+      pEvidenceChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+      pEvidenceChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+      pEvidenceChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
+      with pEvidenceChips do
+      begin
+        AddChip(rsEvidencePhoto, 'photo');
+        AddChip(rsEvidenceAudio, 'audio');
+        AddChip(rsEvidenceVideo, 'video');
+        AddChip(rsEvidenceCapture, 'capture');
+        AddChip(rsEvidenceSample, 'sample');
+        AddChip(rsEvidenceOther, 'other');
+      end;
+    finally
+      pEvidenceChips.EndUpdate;
+    end;
+    pEvidenceChips.AutoSize := True;
+    pEvidenceFilters.Visible := True;
   end;
 
   // Is in eBird
