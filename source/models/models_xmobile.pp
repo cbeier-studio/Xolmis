@@ -290,7 +290,7 @@ const
 implementation
 
 uses
-  utils_global, data_getvalue, utils_conversions;
+  utils_locale, utils_global, data_getvalue, utils_conversions;
 
 { TMobilePoi }
 
@@ -414,6 +414,8 @@ begin
 end;
 
 procedure TMobileSpecies.ToSighting(aSighting: TSighting);
+var
+  DetectionMap, HabitatMap, ActivityMap: TTranslationMap;
 begin
   aSighting.TaxonId := GetValidTaxon(FSpeciesName);
   aSighting.OutOfSample := FIsOutOfInventory;
@@ -424,6 +426,69 @@ begin
   aSighting.SubjectDistance := FDistance;
   aSighting.FlightHeight := FFlightHeight;
   aSighting.FlightDirection := FFlightDirection;
+
+  DetectionMap := TTranslationMap.Create;
+  try
+    DetectionMap.Add(rsDetectionVisual, 'visual');
+    DetectionMap.Add(rsDetectionSong, 'song');
+    DetectionMap.Add(rsDetectionCall, 'call');
+    DetectionMap.Add(rsDetectionWingFlapping, 'wing_flapping');
+    DetectionMap.Add(rsDetectionDrumming, 'drumming');
+    DetectionMap.Add(rsDetectionCapture, 'capture');
+    DetectionMap.Add(rsDetectionRemote, 'remote');
+    DetectionMap.Add(rsDetectionTrack, 'track');
+    DetectionMap.Add(rsDetectionOther, 'other');
+
+    aSighting.DetectionModes := ConvertLocalizedCSVToJSONKeys(FDetectionModes, DetectionMap);
+  finally
+    DetectionMap.Free;
+  end;
+
+  HabitatMap := TTranslationMap.Create;
+  try
+    HabitatMap.Add(rsHabitatForest, 'forest');
+    HabitatMap.Add(rsHabitatWoods, 'woods');
+    HabitatMap.Add(rsHabitatSavanna, 'savanna');
+    HabitatMap.Add(rsHabitatShrubs, 'shrubs');
+    HabitatMap.Add(rsHabitatGrassland, 'grassland');
+    HabitatMap.Add(rsHabitatWetland, 'wetland');
+    HabitatMap.Add(rsHabitatCoastal, 'coastal');
+    HabitatMap.Add(rsHabitatMarine, 'marine');
+    HabitatMap.Add(rsHabitatMangrove, 'mangrove');
+    HabitatMap.Add(rsHabitatFreshwater, 'freshwater');
+    HabitatMap.Add(rsHabitatCropland, 'cropland');
+    HabitatMap.Add(rsHabitatUrban, 'urban');
+    HabitatMap.Add(rsHabitatRocky, 'rocky');
+    HabitatMap.Add(rsHabitatDesert, 'desert');
+    HabitatMap.Add(rsHabitatOther, 'other');
+
+    aSighting.Habitats := ConvertLocalizedCSVToJSONKeys(FHabitats, HabitatMap);
+  finally
+    HabitatMap.Free;
+  end;
+
+  ActivityMap := TTranslationMap.Create;
+  try
+    ActivityMap.Add(rsActivityResting, 'resting');
+    ActivityMap.Add(rsActivityFeeding, 'feeding');
+    ActivityMap.Add(rsActivityPreening, 'preening');
+    ActivityMap.Add(rsActivityFlying, 'flying');
+    ActivityMap.Add(rsActivityWalking, 'walking');
+    ActivityMap.Add(rsActivitySwimming, 'swimming');
+    ActivityMap.Add(rsActivityVocalizing, 'vocalizing');
+    ActivityMap.Add(rsActivitySocial, 'social');
+    ActivityMap.Add(rsActivityCourtship, 'courtship');
+    ActivityMap.Add(rsActivityNestBuilding, 'nesting');
+    ActivityMap.Add(rsActivityIncubationBroodCare, 'brooding');
+    ActivityMap.Add(rsActivityTerritorial, 'territorial');
+    ActivityMap.Add(rsActivityVigilance, 'vigilance');
+    ActivityMap.Add(rsActivityPredatorAvoidance, 'predator');
+    ActivityMap.Add(rsActivityOther, 'other');
+
+    aSighting.Activities := ConvertLocalizedCSVToJSONKeys(FActivities, ActivityMap);
+  finally
+    ActivityMap.Free;
+  end;
 end;
 
 { TMobileVegetation }

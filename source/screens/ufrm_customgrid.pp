@@ -11265,6 +11265,7 @@ begin
     begin
       pTaxonFilters.Visible := True;
       LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+      pTaxonFilters.SendToBack;
     end;
     // Dates
     if (fufDates in FModule.FilterUiFlags) then

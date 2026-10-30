@@ -21,7 +21,7 @@ unit utils_conversions;
 interface
 
 uses
-  Classes, SysUtils, StrUtils, Forms, RegExpr, DateUtils, models_record_types;
+  Classes, SysUtils, StrUtils, Forms, RegExpr, DateUtils, fgl, fpjson, models_record_types;
 
 type
   TAbbreviationLevel = (
@@ -30,6 +30,8 @@ type
     ablSecondLetterBoth,  // Nível 3: Ex: JoCSi ou JO.C.SI.
     ablInitialsSequence   // Nível 4: Ex: JCS2
   );
+
+  TTranslationMap = specialize TFPGMap<String, String>;
 
   // Text treatment
   function WildcardWords(aText: String; aWildcard: String = '%'): String;
@@ -105,6 +107,9 @@ type
   function BodySideToStr(const AValue: TBodySide): String;
   function CaptureTypeToStr(const AValue: TCaptureType): String;
   function FeatherTraitToStr(const AValue: TFeatherTrait): String;
+
+  // Convert to JSON Array
+  function ConvertLocalizedCSVToJSONKeys(const ALocalizedCSV: String; AMap: TTranslationMap): String;
 
 implementation
 
@@ -1722,6 +1727,50 @@ begin
     cptSameDay:     Result := 'S';
     cptChangeBand:  Result := 'C';
     cptUnbanded:    Result := 'U';
+  end;
+end;
+
+function ConvertLocalizedCSVToJSONKeys(const ALocalizedCSV: String; AMap: TTranslationMap): String;
+var
+  CSVList: TStringList;
+  JSONArray: TJSONArray;
+  I: Integer;
+  LocalizedValue, JSONKey: String;
+begin
+  // Retorna um array JSON vazio caso a string de entrada não possua dados
+  if Trim(ALocalizedCSV) = '' then
+    Exit('[]');
+
+  CSVList := TStringList.Create;
+  JSONArray := TJSONArray.Create;
+  try
+    // Configura o TStringList para separar estritamente pela vírgula
+    CSVList.StrictDelimiter := True;
+    CSVList.Delimiter := ',';
+    CSVList.DelimitedText := ALocalizedCSV;
+
+    for I := 0 to CSVList.Count - 1 do
+    begin
+      LocalizedValue := Trim(CSVList[I]);
+
+      if LocalizedValue <> '' then
+      begin
+        // Busca o valor traduzido no mapa
+        if AMap.IndexOf(LocalizedValue) >= 0 then
+          JSONKey := AMap.KeyData[LocalizedValue]
+        else
+          JSONKey := LocalizedValue; // Fallback: mantém o valor recebido se a tradução não existir no mapa
+
+        // Adiciona a chave correspondente ao array JSON
+        JSONArray.Add(JSONKey);
+      end;
+    end;
+
+    // Retorna a representação em string do array JSON
+    Result := JSONArray.AsJSON;
+  finally
+    JSONArray.Free;
+    CSVList.Free;
   end;
 end;
 
