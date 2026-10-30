@@ -66,7 +66,6 @@ begin
   FDataSet := DMG.qPois;
   FSupportedMedia := [amtImages, amtAudios, amtDocuments];
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowMap, gufShowImages, gufShowAudios, gufShowDocs];
-  FPrintUiFlags := [];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufTimeInterval, fufPerson, fufSurvey, fufIndividual];
 
   AddDefaultSort(COL_POI_NAME, sdAscending);

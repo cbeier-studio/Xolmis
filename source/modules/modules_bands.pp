@@ -58,7 +58,6 @@ begin
   FSupportedMedia := [];
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowInsertBatch, gufShowMoreOptions,
     gufShowReceiveBands, gufShowTransferBands, gufShowBandsBalance, gufShowBandHistory];
-  FPrintUiFlags := [pufBands, pufBandsByCarrier, pufBandsByStatus, pufBandsWithHistory];
   FFilterUiFlags := [fufMarked, fufBandSize, fufBandStatus, fufBandType, fufBandSource,
     fufPerson, fufInstitution, fufProject];
 

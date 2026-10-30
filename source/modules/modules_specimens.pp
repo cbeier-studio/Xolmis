@@ -86,8 +86,6 @@ begin
   FDataSet := DMG.qSpecimens;
   FSupportedMedia := [amtImages, amtAudios, amtDocuments];
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowMap, gufShowImages, gufShowAudios, gufShowDocs];
-  FPrintUiFlags := [pufSpecimens, pufSpecimensByLocality, pufSpecimensByProject, pufSpecimensByTaxon,
-    pufSpecimensByYear];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufSampleType, fufNest, fufEgg, fufIndividual,
     fufInstitution];
 

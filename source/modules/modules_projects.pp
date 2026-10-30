@@ -107,7 +107,6 @@ begin
   FDataSet := DMG.qProjects;
   FSupportedMedia := [amtDocuments];
   FUiFlags := [gufShowSummary, gufShowDocs];
-  FPrintUiFlags := [pufProjects];
   FFilterUiFlags := [fufMarked, fufDates];
 
   AddDefaultSort(COL_PROJECT_TITLE, sdAscending);

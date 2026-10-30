@@ -104,7 +104,6 @@ begin
   FDataSet := DMG.qIndividuals;
   FSupportedMedia := [amtImages, amtAudios, amtVideos, amtDocuments];
   FUiFlags := [gufShowImages, gufShowVideos, gufShowAudios, gufShowDocs, gufShowSummary, gufShowVerifications];
-  FPrintUiFlags := [pufIndividuals, pufIndividualsByTaxon, pufIndividualsByParents];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufAge, fufSex, fufNest, fufIndividual, fufBandReplaced];
 
   AddDefaultSort(COL_FULL_NAME, sdAscending);
@@ -467,7 +466,6 @@ begin
   FSupportedMedia := [amtImages, amtVideos, amtDocuments];
   FUiFlags := [gufShowImages, gufShowVideos, gufShowDocs, gufShowSummary, gufShowMap,
     gufShowVerifications];
-  FPrintUiFlags := [pufCaptures, pufCapturesByDate, pufCapturesByLocality, pufCapturesByProject, pufCapturesByTaxon];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufCaptureType, fufReleaseStatus, fufAgingSpecs,
     fufSexingSpecs,fufFat, fufMoltSpecs, fufTimeInterval, fufPerson, fufSurvey, fufMethod, fufIndividual,
     fufSamplingPlot, fufNeedsReview, fufEscaped, fufPhilornisPresence, fufBandReplaced];
@@ -1505,7 +1503,6 @@ begin
   FDataSet := DMG.qFeathers;
   FSupportedMedia := [amtImages];
   FUiFlags := [gufShowVerifications, gufShowImages, gufShowSummary, gufShowInsertBatch];
-  FPrintUiFlags := [pufFeathers];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufIndividual, fufPerson, fufTimeInterval];
 
   AddDefaultSort(COL_SAMPLE_DATE, sdDescending);

@@ -122,7 +122,6 @@ begin
   FDataSet := DMG.qNests;
   FSupportedMedia := [amtImages, amtVideos, amtDocuments];
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowMap, gufShowImages, gufShowVideos, gufShowDocs];
-  FPrintUiFlags := [pufNests, pufNestsByDate, pufNestsByLocality, pufNestsByProject, pufNestsByTaxon];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufNestFate, fufSupportPlant, fufSupportType,
     fufPerson, fufProject];
 
@@ -536,7 +535,6 @@ begin
   FDataSet := DMG.qNestRevisions;
   FSupportedMedia := [amtImages, amtVideos];
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowImages, gufShowVideos];
-  FPrintUiFlags := [];
   FFilterUiFlags := [fufMarked, fufDates, fufNestStatus, fufNestStage, fufTimeInterval, fufNest, fufPerson,
     fufNidoparasitePresence, fufPhilornisPresence];
 
@@ -824,7 +822,6 @@ begin
   FDataSet := DMG.qEggs;
   FSupportedMedia := [amtImages];
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowImages];
-  FPrintUiFlags := [pufEggs, pufEggsByLocality, pufEggsByNest, pufEggsByTaxon];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufEggSpecs, fufPerson, fufNest, fufIndividual, fufEggHatched];
 
   AddDefaultSort(COL_FULL_NAME, sdAscending);

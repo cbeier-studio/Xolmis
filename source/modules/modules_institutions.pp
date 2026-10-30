@@ -55,7 +55,6 @@ begin
   FDataSet := DMG.qInstitutions;
   FSupportedMedia := [amtDocuments];
   FUiFlags := [gufShowSummary];
-  FPrintUiFlags := [pufInstitutions];
   FFilterUiFlags := [fufMarked, fufSites];
 
   AddDefaultSort(COL_FULL_NAME, sdAscending);

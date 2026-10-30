@@ -55,7 +55,6 @@ begin
   FDataSet := DMG.qBotany;
   FSupportedMedia := [amtDocuments];
   FUiFlags := [gufShowVerifications, gufShowSummary];
-  FPrintUiFlags := [pufBotanicalTaxa, pufBotanicalTaxaRecorded];
   FFilterUiFlags := [fufMarked, fufTaxonRanks, fufSynonyms];
 
   AddDefaultSort(COL_SCIENTIFIC_NAME, sdAscending);

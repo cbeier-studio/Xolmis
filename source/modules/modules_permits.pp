@@ -56,7 +56,6 @@ begin
   FDataSet := DMG.qPermits;
   FSupportedMedia := [amtDocuments];
   FUiFlags := [gufShowSummary, gufShowDocs];
-  FPrintUiFlags := [pufPermits, pufPermitsByDate, pufPermitsByProject];
   FFilterUiFlags := [fufMarked, fufDates, fufProject, fufPermitType];
 
   AddDefaultSort(COL_PERMIT_NAME, sdAscending);

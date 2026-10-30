@@ -46,61 +46,6 @@ type
 
   TGridUiFlags = set of TGridUiFlag;
 
-  TPrintUiFlag = (
-    // Methods
-    pufMethods,
-    // Expeditions
-    pufExpeditions, pufExpeditionsByProject, pufExpeditionDetails, pufExpeditionSummary,
-    pufExpeditionCaptureRate, pufExpeditionDetectionRate, pufExpeditionDiversityIndicators,
-    pufExpeditionSpeciesChecklist,
-    // Surveys
-    pufSurveys, pufSurveysByExpedition, pufSurveysByLocality, pufSurveysByProject, pufSurveyDetails,
-    pufSurveyCaptureRate, pufSurveyDetectionRate, pufSurveyDiversityIndicators, pufNetEffort,
-    // Sightings
-    pufSightings, pufSightingsBySurvey, pufSightingsByLocality, pufSightingsByObserver, pufSightingsByProject,
-    pufSightingsByTaxon, pufSightingSummary, pufSightingDiversityIndicators, pufSightingPhenology,
-    pufSightingHeatMap,
-    // Specimens
-    pufSpecimens, pufSpecimensByProject, pufSpecimensByLocality, pufSpecimensByTaxon, pufSpecimensByYear,
-    // Bands
-    pufBands, pufBandsByCarrier, pufBandsByStatus, pufBandsWithHistory, pufBandsMovement,
-    pufBandSizesPerSpecies, pufBandUseByPeriod, pufBandNeedPrevisions, pufBandsDischarged,
-    // Individuals
-    pufIndividuals, pufIndividualsByTaxon, pufIndividualsByParents, pufIndividualDetails,
-    pufIndividualRecaptures, pufIndividualMorphometry, pufIndividualMolt, pufIndividualFeatherMeasurements,
-    pufIndividualBreeding, pufIndividualSurvival, pufIndividualMovement,
-    // Captures
-    pufCaptures, pufCapturesByProject, pufCapturesByLocality, pufCapturesByDate, pufCapturesByTaxon,
-    pufCaptureDetails, pufCaptureMorphometryVariation, pufCaptureHeatMap, pufColorBandCombinations,
-    // Feathers
-    pufFeathers,
-    // Nests
-    pufNests, pufNestsByProject, pufNestsByDate, pufNestsByLocality, pufNestsByTaxon, pufNestDetails,
-    pufNestRevisionAgenda, pufNestHatchingRates, pufNestBreedingSuccess, pufNestClutchSize, pufNestSurvival,
-    pufNestCausesOfLoss, pufNestSeasonalitySummary,
-    // Eggs
-    pufEggs, pufEggsByNest, pufEggsByLocality, pufEggsByTaxon,
-    // Institutions
-    pufInstitutions,
-    // Researchers
-    pufResearchers, pufResearcherSummary,
-    // Projects
-    pufProjects, pufProjectDetails, pufProjectChronogram, pufProjectFinancial, pufProjectSummary,
-    // Permits
-    pufPermits, pufPermitsByDate, pufPermitsByProject,
-    // Gazetteer
-    pufGazetteer, pufGazetteerHierarchical, pufGazetteerEffortIndicators, pufGazetteerHeatMap,
-    // Sampling plots
-    pufSamplingPlots, pufSamplingPlotsByLocality,
-    // Botanical taxa
-    pufBotanicalTaxa, pufBotanicalTaxaRecorded, pufBotanicalTaxaHierarchical,
-    // Taxa
-    pufTaxa, pufTaxaRecorded, pufTaxaRecordedByLocality, pufTaxaHierarchical, pufTaxaPhenology,
-    pufTaxaConservationVsEffort
-  );
-
-  TPrintUiFlags = set of TPrintUiFlag;
-
   TFilterUiFlag = (fufMarked, fufSites, fufSiteRank, fufPerson, fufInstitution, fufSurvey, fufProject,
     fufSupportPlant, fufExpedition, fufSamplingPlot, fufIndividual, fufNest, fufEgg, fufMethod, fufDates,
     fufTimeInterval, fufSampleType, fufBandSize, fufBandStatus, fufCaptureType, fufReleaseStatus,
@@ -108,7 +53,8 @@ type
     fufNeedsReview, fufEscaped, fufSupportType, fufIsOnEbird, fufOutOfSample, fufNidoparasitePresence,
     fufPhilornisPresence, fufEggHatched, fufBandReplaced, fufNestFate, fufHaveColorBands, fufHaveRecaptures,
     fufTaxonRanks, fufTaxa, fufTaxonomies, fufSynonyms, fufIsExtinct, fufAgingSpecs, fufAge, fufMoltSpecs,
-    fufFat, fufSexingSpecs, fufSex, fufCategory, fufIsDoubtful, fufDetectionModes, fufEvidences);
+    fufFat, fufSexingSpecs, fufSex, fufCategory, fufIsDoubtful, fufDetectionModes, fufEvidences, fufHabitats,
+    fufActivities);
 
   TFilterUiFlags = set of TFilterUiFlag;
 
@@ -159,7 +105,6 @@ type
   TModuleController = class(TBaseController)
   protected
     FSupportedMedia: TAttachMediaTypes;
-    FPrintUiFlags: TPrintUiFlags;
     FFilterUiFlags: TFilterUiFlags;
 
     FSubmodules: TSubmoduleList;
@@ -173,7 +118,6 @@ type
     function Search(AValue: String): Boolean; virtual; abstract;
     procedure PrepareCanvas(Column: TColumn; Sender: TObject); virtual; abstract;
 
-    property PrintUiFlags: TPrintUiFlags read FPrintUiFlags;
     property FilterUiFlags: TFilterUiFlags read FFilterUiFlags;
     property Submodules: TSubmoduleList read FSubmodules;
   published

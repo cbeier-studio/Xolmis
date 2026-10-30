@@ -54,7 +54,6 @@ begin
   FDataSet := DMG.qMethods;
   FSupportedMedia := [amtDocuments];
   FUiFlags := [gufShowDocs, gufShowSummary];
-  FPrintUiFlags := [pufMethods];
   FFilterUiFlags := [fufMarked, fufCategory];
 
   AddDefaultSort(COL_METHOD_NAME, sdAscending);

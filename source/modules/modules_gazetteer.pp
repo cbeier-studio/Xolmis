@@ -56,7 +56,6 @@ begin
   FSupportedMedia := [amtDocuments];
   FUiFlags := [gufShowVerifications, gufShowMap, gufShowSummary, gufShowMoreOptions, gufShowAddCountries,
     gufShowAddMunicipalities];
-  FPrintUiFlags := [pufGazetteer];
   FFilterUiFlags := [fufMarked, fufSiteRank, fufSites];
 
   AddDefaultSort(COL_SITE_NAME, sdAscending);

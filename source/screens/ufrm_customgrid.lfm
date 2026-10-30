@@ -112,14 +112,14 @@ object frmCustomGrid: TfrmCustomGrid
           object bvSpacerFilters: TBevel
             Left = 0
             Height = 15
-            Top = 4981
+            Top = 5187
             Width = 447
             Align = alTop
             Shape = bsSpacer
           end
           object pQuickFiltersContent: TBCPanel
             Left = 0
-            Height = 4981
+            Height = 5187
             Top = 0
             Width = 447
             Align = alTop
@@ -285,7 +285,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSiteRankFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 650
+              Top = 856
               Width = 429
               Align = alTop
               AutoSize = True
@@ -379,7 +379,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTaxonRanksFilters: TBCPanel
               Left = 9
               Height = 375
-              Top = 3228
+              Top = 3434
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -485,7 +485,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pMaterialFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1795
+              Top = 2001
               Width = 429
               Align = alTop
               AutoSize = True
@@ -585,7 +585,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pMethodFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1255
+              Top = 1461
               Width = 429
               Align = alTop
               AutoSize = True
@@ -673,7 +673,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pBandSizeFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1850
+              Top = 2056
               Width = 429
               Align = alTop
               AutoSize = True
@@ -780,7 +780,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pWithRecapturesFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 3176
+              Top = 3382
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -884,7 +884,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pFatFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 4674
+              Top = 4880
               Width = 429
               Align = alTop
               AutoSize = True
@@ -979,7 +979,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pBandStatusFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1905
+              Top = 2111
               Width = 429
               Align = alTop
               AutoSize = True
@@ -1071,7 +1071,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pDatesFilters: TBCPanel
               Left = 9
               Height = 375
-              Top = 1310
+              Top = 1516
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -1201,7 +1201,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNestFateFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 3069
+              Top = 3275
               Width = 429
               Align = alTop
               AutoSize = True
@@ -1291,7 +1291,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNestSupportFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 2650
+              Top = 2856
               Width = 429
               Align = alTop
               AutoSize = True
@@ -1386,7 +1386,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTaxonFilters: TBCPanel
               Left = 9
               Height = 375
-              Top = 3611
+              Top = 3817
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -1511,7 +1511,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pExtinctFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 4230
+              Top = 4436
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -1615,7 +1615,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pWithColorBandsFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 3124
+              Top = 3330
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -1719,7 +1719,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSexingFilters: TBCPanel
               Left = 9
               Height = 188
-              Top = 4784
+              Top = 4990
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2111,7 +2111,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSynonymFilters: TBCPanel
               Left = 9
               Height = 88
-              Top = 4134
+              Top = 4340
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2359,7 +2359,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pMoltingFilters: TBCPanel
               Left = 9
               Height = 235
-              Top = 4431
+              Top = 4637
               Width = 429
               Align = alTop
               AutoSize = True
@@ -2839,7 +2839,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTaxonomiesFilters: TBCPanel
               Left = 9
               Height = 132
-              Top = 3994
+              Top = 4200
               Width = 429
               Align = alTop
               AutoSize = True
@@ -3128,7 +3128,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pTimeFilters: TBCPanel
               Left = 9
               Height = 94
-              Top = 1693
+              Top = 1899
               Width = 429
               Align = alTop
               AutoSize = True
@@ -3339,7 +3339,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pAgingFilters: TBCPanel
               Left = 9
               Height = 141
-              Top = 4282
+              Top = 4488
               Width = 429
               Align = alTop
               AutoSize = True
@@ -3653,7 +3653,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pPersonFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 705
+              Top = 911
               Width = 429
               Align = alTop
               AutoSize = True
@@ -3741,7 +3741,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pInstitutionFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 760
+              Top = 966
               Width = 429
               Align = alTop
               AutoSize = True
@@ -3829,7 +3829,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSurveyFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 815
+              Top = 1021
               Width = 429
               Align = alTop
               AutoSize = True
@@ -3917,7 +3917,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pProjectFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 870
+              Top = 1076
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4005,7 +4005,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNestFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1145
+              Top = 1351
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4093,7 +4093,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pIndividualFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1090
+              Top = 1296
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4181,7 +4181,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pSamplingPlotFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1035
+              Top = 1241
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4269,7 +4269,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pExpeditionFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 980
+              Top = 1186
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4357,7 +4357,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pPlantFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 925
+              Top = 1131
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4445,7 +4445,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pRecordInEbirdFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2705
+              Top = 2911
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -4549,7 +4549,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pEggFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1200
+              Top = 1406
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4637,7 +4637,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pOutOfSampleFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2757
+              Top = 2963
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4742,7 +4742,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNidoparasiteFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2861
+              Top = 3067
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4847,7 +4847,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pHatchedFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2965
+              Top = 3171
               Width = 429
               Align = alTop
               AutoSize = True
@@ -4952,7 +4952,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pPhilornisFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2913
+              Top = 3119
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5057,7 +5057,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pCaptureTypeFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 1960
+              Top = 2166
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5144,7 +5144,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pCaptureStatusFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 2015
+              Top = 2221
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5231,7 +5231,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pBandTypeFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 2070
+              Top = 2276
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5318,7 +5318,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pBandSourceFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 2125
+              Top = 2331
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5405,7 +5405,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNestStatusFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 2180
+              Top = 2386
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5492,7 +5492,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNestStageFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 2235
+              Top = 2441
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5579,7 +5579,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pEggTraitsFilters: TBCPanel
               Left = 9
               Height = 141
-              Top = 2345
+              Top = 2551
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5876,7 +5876,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pPermitTypeFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 2290
+              Top = 2496
               Width = 429
               Align = alTop
               AutoSize = True
@@ -5963,7 +5963,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pReplacedBandFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 3017
+              Top = 3223
               Width = 429
               Align = alTop
               AutoSize = True
@@ -6068,7 +6068,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pReportedFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2494
+              Top = 2700
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -6172,7 +6172,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pEscapedFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2598
+              Top = 2804
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -6276,7 +6276,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pNeedsReviewFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2546
+              Top = 2752
               Width = 429
               Align = alTop
               BorderSpacing.Bottom = 8
@@ -6483,7 +6483,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pCategoryFilter: TBCPanel
               Left = 9
               Height = 47
-              Top = 4729
+              Top = 4935
               Width = 429
               Align = alTop
               AutoSize = True
@@ -6578,7 +6578,7 @@ object frmCustomGrid: TfrmCustomGrid
             object pIsDoubtfulFilter: TBCPanel
               Left = 9
               Height = 44
-              Top = 2809
+              Top = 3015
               Width = 429
               Align = alTop
               AutoSize = True
@@ -6904,6 +6904,232 @@ object frmCustomGrid: TfrmCustomGrid
                 ColorMode = cmSingleColor
                 MultiSelect = True
                 OnChipClick = pEvidenceChipsChipClick
+              end
+            end
+            object pHabitatFilters: TBCPanel
+              Left = 9
+              Height = 95
+              Top = 650
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 53
+              Visible = False
+              object pTitleHabitatFilter: TPanel
+                Left = 16
+                Height = 36
+                Top = 1
+                Width = 397
+                Align = alTop
+                AutoSize = True
+                BorderSpacing.Top = 1
+                BevelOuter = bvNone
+                ChildSizing.TopBottomSpacing = 8
+                ChildSizing.HorizontalSpacing = 8
+                ClientHeight = 36
+                ClientWidth = 397
+                Color = 16448250
+                ParentBackground = False
+                ParentColor = False
+                TabOrder = 0
+                object lblHabitatFilter: TLabel
+                  Left = 38
+                  Height = 20
+                  Top = 8
+                  Width = 44
+                  Align = alLeft
+                  Caption = 'Habitats'
+                  Layout = tlCenter
+                  ParentColor = False
+                end
+                object lblCountHabitatFilter: TLabel
+                  Left = 324
+                  Height = 20
+                  Top = 8
+                  Width = 73
+                  Align = alRight
+                  Caption = 'none selected'
+                  Font.Color = 6579300
+                  Layout = tlCenter
+                  ParentColor = False
+                  ParentFont = False
+                end
+                object icoHabitatFilter: TImage
+                  Left = 0
+                  Height = 20
+                  Top = 8
+                  Width = 30
+                  Align = alLeft
+                  Center = True
+                  ImageIndex = 15
+                  Images = iIcons
+                end
+              end
+              object pHabitatChips: TChipsPanel
+                Left = 16
+                Height = 50
+                Top = 37
+                Width = 397
+                Align = alTop
+                BevelOuter = bvNone
+                BorderSpacing.Bottom = 8
+                Color = 15658734
+                ControlList = <>
+                FlowLayout = tlTop
+                FlowStyle = fsLeftRightTopBottom
+                ParentColor = False
+                TabOrder = 1
+                ColorMode = cmSingleColor
+                MultiSelect = True
+                OnChipClick = pHabitatChipsChipClick
+              end
+            end
+            object pActivityFilters: TBCPanel
+              Left = 9
+              Height = 95
+              Top = 753
+              Width = 429
+              Align = alTop
+              AutoSize = True
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              Background.Color = 16448250
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 13750737
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 8
+              Rounding.RoundY = 8
+              TabOrder = 54
+              Visible = False
+              object pTitleActivityFilter: TPanel
+                Left = 16
+                Height = 36
+                Top = 1
+                Width = 397
+                Align = alTop
+                AutoSize = True
+                BorderSpacing.Top = 1
+                BevelOuter = bvNone
+                ChildSizing.TopBottomSpacing = 8
+                ChildSizing.HorizontalSpacing = 8
+                ClientHeight = 36
+                ClientWidth = 397
+                Color = 16448250
+                ParentBackground = False
+                ParentColor = False
+                TabOrder = 0
+                object lblActivityFilter: TLabel
+                  Left = 38
+                  Height = 20
+                  Top = 8
+                  Width = 48
+                  Align = alLeft
+                  Caption = 'Activities'
+                  Layout = tlCenter
+                  ParentColor = False
+                end
+                object lblCountActivityFilter: TLabel
+                  Left = 324
+                  Height = 20
+                  Top = 8
+                  Width = 73
+                  Align = alRight
+                  Caption = 'none selected'
+                  Font.Color = 6579300
+                  Layout = tlCenter
+                  ParentColor = False
+                  ParentFont = False
+                end
+                object icoActivityFilter: TImage
+                  Left = 0
+                  Height = 20
+                  Top = 8
+                  Width = 30
+                  Align = alLeft
+                  Center = True
+                  ImageIndex = 17
+                  Images = iIcons
+                end
+              end
+              object pActivityChips: TChipsPanel
+                Left = 16
+                Height = 50
+                Top = 37
+                Width = 397
+                Align = alTop
+                BevelOuter = bvNone
+                BorderSpacing.Bottom = 8
+                Color = 15658734
+                ControlList = <>
+                FlowLayout = tlTop
+                FlowStyle = fsLeftRightTopBottom
+                ParentColor = False
+                TabOrder = 1
+                ColorMode = cmSingleColor
+                MultiSelect = True
+                OnChipClick = pActivityChipsChipClick
               end
             end
           end

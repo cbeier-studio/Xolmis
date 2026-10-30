@@ -108,6 +108,10 @@ begin
   try
     pChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
     pChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+    pChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+    pChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+    pChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+    pChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
 
     case dlgType of
       cdtDetectionModes:

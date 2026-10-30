@@ -53,8 +53,14 @@ type
   TfrmCustomGrid = class(TForm)
     cbCategoryFilter: TComboBox;
     cbMapProvider: TComboBox;
+    icoHabitatFilter: TImage;
+    icoActivityFilter: TImage;
     icoEvidenceFilter: TImage;
+    lblCountHabitatFilter: TLabel;
+    lblCountActivityFilter: TLabel;
     lblCountEvidenceFilter: TLabel;
+    lblHabitatFilter: TLabel;
+    lblActivityFilter: TLabel;
     lblEvidenceFilter: TLabel;
     pDetectionChips: TChipsPanel;
     DBG: TXolmisDBGrid;
@@ -85,6 +91,10 @@ type
     lblMapStatus: TLabel;
     lblRubricBalance: TLabel;
     lblDetectionFilter: TLabel;
+    pHabitatChips: TChipsPanel;
+    pActivityChips: TChipsPanel;
+    pHabitatFilters: TBCPanel;
+    pActivityFilters: TBCPanel;
     pEvidenceChips: TChipsPanel;
     pmcNewOccurrencePoint: TMenuItem;
     pgChild7: TPage;
@@ -112,6 +122,8 @@ type
     pDetectionFilters: TBCPanel;
     pEvidenceFilters: TBCPanel;
     pTitleDetectionFilter: TPanel;
+    pTitleHabitatFilter: TPanel;
+    pTitleActivityFilter: TPanel;
     pTitleEvidenceFilter: TPanel;
     pVideosToolbar: TBCPanel;
     pmpBandsBalance: TMenuItem;
@@ -1009,9 +1021,11 @@ type
     procedure iIconsGetWidthForPPI(Sender: TCustomImageList; AImageWidth, APPI: Integer; var AResultWidth: Integer);
     procedure mapGeoCenterMove(Sender: TObject);
     procedure mapGeoDrawGpsPoint(Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
+    procedure pActivityChipsChipClick(Sender: TObject; AChip: TChip);
     procedure pClientResize(Sender: TObject);
     procedure pDetectionChipsChipClick(Sender: TObject; AChip: TChip);
     procedure pEvidenceChipsChipClick(Sender: TObject; AChip: TChip);
+    procedure pHabitatChipsChipClick(Sender: TObject; AChip: TChip);
     procedure pmAddDocumentClick(Sender: TObject);
     procedure pmAddLinkClick(Sender: TObject);
     procedure pmaRefreshAudiosClick(Sender: TObject);
@@ -2739,6 +2753,12 @@ begin
   pEvidenceFilters.Background.Color := ActiveTheme.Background.CardDefault;
   pEvidenceFilters.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pTitleEvidenceFilter.Color := ActiveTheme.Background.CardDefault;
+  pHabitatFilters.Background.Color := ActiveTheme.Background.CardDefault;
+  pHabitatFilters.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pTitleHabitatFilter.Color := ActiveTheme.Background.CardDefault;
+  pActivityFilters.Background.Color := ActiveTheme.Background.CardDefault;
+  pActivityFilters.Border.Color := ActiveTheme.System.SolidNeutralFG;
+  pTitleActivityFilter.Color := ActiveTheme.Background.CardDefault;
   pNidoparasiteFilter.Background.Color := ActiveTheme.Background.CardDefault;
   pNidoparasiteFilter.Border.Color := ActiveTheme.System.SolidNeutralFG;
   pHatchedFilter.Background.Color := ActiveTheme.Background.CardDefault;
@@ -2770,6 +2790,8 @@ begin
 
   pDetectionChips.DarkMode := True;
   pEvidenceChips.DarkMode := True;
+  pHabitatChips.DarkMode := True;
+  pActivityChips.DarkMode := True;
 
   // Set filter edits images
   eEggFilter.Images := DMM.iEditsDark;
@@ -2840,6 +2862,8 @@ begin
   icoIsDoubtfulFilter.Images := iIconsDark;
   icoDetectionFilter.Images := iIconsDark;
   icoEvidenceFilter.Images := iIconsDark;
+  icoHabitatFilter.Images := iIconsDark;
+  icoActivityFilter.Images := iIconsDark;
   icoNidoparasiteFilter.Images := iIconsDark;
   icoHatchedFilter.Images := iIconsDark;
   icoPhilornisFilter.Images := iIconsDark;
@@ -6330,6 +6354,20 @@ begin
   FChildOpened[aIndex] := True;
 end;
 
+procedure TfrmCustomGrid.pActivityChipsChipClick(Sender: TObject; AChip: TChip);
+begin
+  if pActivityChips.SelectedChips.Count = 1 then
+    lblCountActivityFilter.Caption := Format(rsOneSelected, [pActivityChips.SelectedChips.Count])
+  else
+  if pActivityChips.SelectedChips.Count > 1 then
+    lblCountActivityFilter.Caption := Format(rsMoreSelected, [pActivityChips.SelectedChips.Count])
+  else
+    lblCountActivityFilter.Caption := rsNoneSelected;
+
+  if FCanToggle then
+    Search(FSearchString);
+end;
+
 procedure TfrmCustomGrid.pClientResize(Sender: TObject);
 begin
   pChild.Height := Round((pClient.Height - SplitChild.Height) * FChildPanelFactor);
@@ -6358,6 +6396,20 @@ begin
     lblCountEvidenceFilter.Caption := Format(rsMoreSelected, [pEvidenceChips.SelectedChips.Count])
   else
     lblCountEvidenceFilter.Caption := rsNoneSelected;
+
+  if FCanToggle then
+    Search(FSearchString);
+end;
+
+procedure TfrmCustomGrid.pHabitatChipsChipClick(Sender: TObject; AChip: TChip);
+begin
+  if pHabitatChips.SelectedChips.Count = 1 then
+    lblCountHabitatFilter.Caption := Format(rsOneSelected, [pHabitatChips.SelectedChips.Count])
+  else
+  if pHabitatChips.SelectedChips.Count > 1 then
+    lblCountHabitatFilter.Caption := Format(rsMoreSelected, [pHabitatChips.SelectedChips.Count])
+  else
+    lblCountHabitatFilter.Caption := rsNoneSelected;
 
   if FCanToggle then
     Search(FSearchString);
@@ -11161,333 +11213,410 @@ begin
     Exit;
   end;
 
-  // Band size
-  pBandSizeFilter.Visible := (fufBandSize in FModule.FilterUiFlags);
-  // Band status
-  if (fufBandStatus in FModule.FilterUiFlags) then
-  begin
-    cbBandStatusFilter.Items.Clear;
-    cbBandStatusFilter.Items.Add(rsCaptionAll);
-    cbBandStatusFilter.Items.AddCommaText(rsBandStatusList);
-    pBandStatusFilter.Visible := True;
-  end;
-  // Band type
-  if (fufBandType in FModule.FilterUiFlags) then
-  begin
-    cbBandTypeFilter.Items.Clear;
-    cbBandTypeFilter.Items.Add(rsCaptionAll);
-    cbBandTypeFilter.Items.AddCommaText(rsBandTypeList);
-    pBandTypeFilter.Visible := True;
-  end;
-  // Band source
-  if (fufBandSource in FModule.FilterUiFlags) then
-  begin
-    cbBandSourceFilter.Items.Clear;
-    cbBandSourceFilter.Items.CommaText := rsCaptionAll + ',"' + rsBandAcquiredFromSupplier + '","' +
-      rsBandTransferBetweenBanders + '","' + rsBandLivingBirdBandedByOthers + '","' +
-      rsBandDeadBirdBandedByOthers + '","' + rsBandFoundLoose + '"';
-    pBandSourceFilter.Visible := True;
-  end;
-  // Band reported
-  pReportedFilter.Visible := (fufBandReported in FModule.FilterUiFlags);
-  // Person
-  pPersonFilter.Visible := (fufPerson in FModule.FilterUiFlags);
-  // Institution
-  pInstitutionFilter.Visible := (fufInstitution in FModule.FilterUiFlags);
-  // Project
-  pProjectFilter.Visible := (fufProject in FModule.FilterUiFlags);
-
-  // Taxon ranks
-  if (fufTaxonRanks in FModule.FilterUiFlags) then
-  begin
-    pTaxonRanksFilters.Visible := True;
-    LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
-  end;
-  // Synonyms
-  pSynonymFilters.Visible := (fufSynonyms in FModule.FilterUiFlags);
-
-  // Taxa
-  if (fufTaxa in FModule.FilterUiFlags) then
-  begin
-    pTaxonFilters.Visible := True;
-    LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
-  end;
-  // Dates
-  if (fufDates in FModule.FilterUiFlags) then
-  begin
-    pDatesFilters.Visible := True;
-    LoadDateTreeData(FTableType, tvDateFilter);
-  end;
-  // Sites
-  if (fufSites in FModule.FilterUiFlags) then
-  begin
-    pSiteFilters.Visible := True;
-    LoadSiteTreeData(FTableType, tvSiteFilter, 4);
-  end;
-  // Capture type
-  if (fufCaptureType in FModule.FilterUiFlags) then
-  begin
-    cbCaptureTypeFilter.Items.Clear;
-    cbCaptureTypeFilter.Items.Add(rsCaptionAll);
-    cbCaptureTypeFilter.Items.AddCommaText(rsCaptureTypeList);
-    pCaptureTypeFilter.Visible := True;
-  end;
-  // Release status
-  if (fufReleaseStatus in FModule.FilterUiFlags) then
-  begin
-    cbCaptureStatusFilter.Items.Clear;
-    cbCaptureStatusFilter.Items.CommaText := rsCaptionAll + ',"' + rsStatusNormal + '","' + rsStatusInjured + '","' +
-      rsStatusWingSprain + '","' + rsStatusStressed + '","' + rsStatusDead + '"';
-    pCaptureStatusFilter.Visible := True;
-  end;
-  // Aging specs
-  if (fufAgingSpecs in FModule.FilterUiFlags) then
-  begin
-    cbAgeFilter.Items.Clear;
-    cbAgeFilter.Items.CommaText := rsCaptionAll + ',' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
-      rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
-      rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
-    pAgingFilters.Visible := True;
-  end;
-  // Sexing specs
-  if (fufSexingSpecs in FModule.FilterUiFlags) then
-  begin
-    cbSexFilter.Items.Clear;
-    cbSexFilter.Items.CommaText := rsCaptionAll + ',' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
-    pSexingFilters.Visible := True;
-  end;
-  // Fat
-  pFatFilter.Visible := (fufFat in FModule.FilterUiFlags);
-  // Molt specs
-  pMoltingFilters.Visible := (fufMoltSpecs in FModule.FilterUiFlags);
-  // Time interval
-  pTimeFilters.Visible := (fufTimeInterval in FModule.FilterUiFlags);
-  // Survey
-  pSurveyFilter.Visible := (fufSurvey in FModule.FilterUiFlags);
-  // Method
-  pMethodFilter.Visible := (fufMethod in FModule.FilterUiFlags);
-  // Individual
-  pIndividualFilter.Visible := (fufIndividual in FModule.FilterUiFlags);
-  // Sampling plot
-  pSamplingPlotFilter.Visible := (fufSamplingPlot in FModule.FilterUiFlags);
-  // Needs review
-  pNeedsReviewFilter.Visible := (fufNeedsReview in FModule.FilterUiFlags);
-  // Escaped
-  pEscapedFilter.Visible := (fufEscaped in FModule.FilterUiFlags);
-  // Philornis presence
-  pPhilornisFilter.Visible := (fufPhilornisPresence in FModule.FilterUiFlags);
-  // Band replaced
-  pReplacedBandFilter.Visible := (fufBandReplaced in FModule.FilterUiFlags);
-
-  // Egg specs
-  if (fufEggSpecs in FModule.FilterUiFlags) then
-  begin
-    cbEggShapeFilter.Items.Clear;
-    cbEggShapeFilter.Items.CommaText := rsCaptionAll + ',' + rsEggSpherical + ',' + rsEggElliptical + ',' + rsEggOval + ',' +
-      rsEggPyriform + ',' + rsEggConical + ',' + rsEggBiconical + ',' + rsEggCylindrical + ',' +
-      rsEggLongitudinal + ',' + rsEggUnknown;
-    cbEggPatternFilter.Items.Clear;
-    cbEggPatternFilter.Items.CommaText := rsCaptionAll + ',"' + rsEggSpots + '","' + rsEggBlotches + '","' +
-      rsEggSquiggles + '","' + rsEggStreaks + '","' + rsEggScrawls + '","' + rsEggSpotsSquiggles + '","' +
-      rsEggBlotchesSquiggles + '","' + rsEggUnknown + '"';
-    cbEggTextureFilter.Items.Clear;
-    cbEggTextureFilter.Items.CommaText := rsCaptionAll + ',' + rsEggChalky + ',' + rsEggShiny + ',' + rsEggGlossy + ',' +
-      rsEggPitted + ',' + rsEggUnknown;
-    pEggTraitsFilters.Visible := True;
-  end;
-  // Nest
-  pNestFilter.Visible := (fufNest in FModule.FilterUiFlags);
-  // Egg hatched
-  pHatchedFilter.Visible := (fufEggHatched in FModule.FilterUiFlags);
-
-  // Site rank
-  if (fufSiteRank in FModule.FilterUiFlags) then
-  begin
-    cbSiteRankFilter.Items.Clear;
-    cbSiteRankFilter.Items.Add(rsCaptionAll);
-    cbSiteRankFilter.Items.Add(rsCaptionCountry);
-    cbSiteRankFilter.Items.Add(rsCaptionState);
-    cbSiteRankFilter.Items.Add(rsCaptionRegion);
-    cbSiteRankFilter.Items.Add(rsCaptionMunicipality);
-    cbSiteRankFilter.Items.Add(rsCaptionDistrict);
-    cbSiteRankFilter.Items.Add(rsCaptionLocality);
-    pSiteRankFilter.Visible := True;
-  end;
-
-  // Age
-  if (fufAge in FModule.FilterUiFlags) then
-  begin
-    pSkullOssificationFilter.Visible := False;
-    pHowAgedFilter.Visible := False;
-    pAgeFilter.Rounding.RoundOptions := [];
-    cbAgeFilter.Items.Clear;
-    cbAgeFilter.Items.CommaText := rsCaptionAll + ',' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
-      rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
-      rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
-    pAgingFilters.Visible := True;
-  end;
-  // Sex
-  if (fufSex in FModule.FilterUiFlags) then
-  begin
-    pCloacalProtuberanceFilter.Visible := False;
-    pBroodPatchFilter.Visible := False;
-    pHowSexedFilter.Visible := False;
-    pSexFilter.Rounding.RoundOptions := [];
-    cbSexFilter.Items.Clear;
-    cbSexFilter.Items.CommaText := rsCaptionAll + ',' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
-    pSexingFilters.Visible := True;
-  end;
-
-  // Category
-  if (fufCategory in FModule.FilterUiFlags) then
-  begin
-    cbCategoryFilter.Items.Clear;
-    cbCategoryFilter.Items.Add(rsCaptionAll);
-    LoadMethodCategories(cbCategoryFilter.Items);
-    pCategoryFilter.Visible := True;
-  end;
-
-  // Nest fate
-  if (fufNestFate in FModule.FilterUiFlags) then
-  begin
-    cbNestFateFilter.Items.Clear;
-    cbNestFateFilter.Items.CommaText := rsCaptionAll + ',"' + rsNestLost + '","' + rsNestSuccess + '","' +
-      rsNestUnknown + '"';
-    pNestFateFilter.Visible := True;
-  end;
-  // Support type
-  if (fufSupportType in FModule.FilterUiFlags) then
-  begin
-    cbNestSupportFilter.Items.Clear;
-    cbNestSupportFilter.Items.CommaText := rsCaptionAll + ',"' + rsSupportGround + '","' +
-      rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportLeaves + '","' +
-      rsSupportLedge + '","' + rsSupportRockCliff + '","' + rsSupportRavine + '","' + rsSupportNestBox + '","' +
-      rsSupportAnthropic + '","' + rsSupportOther + '"';
-    pNestSupportFilter.Visible := True;
-  end;
-  // Support plant
-  pPlantFilter.Visible := (fufSupportPlant in FModule.FilterUiFlags);
-
-  // Nest status
-  if (fufNestStatus in FModule.FilterUiFlags) then
-  begin
-    cbNestStatusFilter.Items.Clear;
-    cbNestStatusFilter.Items.CommaText := rsCaptionAll + ',' + rsNestActive + ',' + rsNestInactive + ',' + rsNestUnknown;
-    pNestStatusFilter.Visible := True;
-  end;
-  // Nest stage
-  if (fufNestStage in FModule.FilterUiFlags) then
-  begin
-    cbNestStageFilter.Items.CommaText := rsCaptionAll + ',' + rsNestBuilding + ',' + rsNestLaying + ',' +
-      rsNestIncubating + ',' + rsNestHatching + ',' + rsNestNestling + ',' + rsNestInactive + ',' +
-      rsNestUnknown;
-    pNestStageFilter.Visible := True;
-  end;
-  // Nidoparasite presence
-  pNidoparasiteFilter.Visible := (fufNidoparasitePresence in FModule.FilterUiFlags);
-
-  // Permit type
-  if (fufPermitType in FModule.FilterUiFlags) then
-  begin
-    cbPermitTypeFilter.Items.Clear;
-    cbPermitTypeFilter.Items.CommaText := rsCaptionAll + ',"' + rsPermitBanding + '","' + rsPermitCollection + '","' +
-      rsPermitResearch + '","' + rsPermitEntry + '","' + rsPermitTransport + '","' + rsPermitOther + '"';
-    pPermitTypeFilter.Visible := True;
-  end;
-
-  // Detection mode
-  if (fufDetectionModes in FModule.FilterUiFlags) then
-  begin
-    pDetectionChips.Color := pDetectionFilters.Background.Color;
-    pDetectionChips.BeginUpdate;
-    try
-      pDetectionChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
-      pDetectionChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
-      pDetectionChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
-      pDetectionChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
-      pDetectionChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
-      pDetectionChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
-      with pDetectionChips do
-      begin
-        AddChip(rsDetectionVisual, 'visual');
-        AddChip(rsDetectionSong, 'song');
-        AddChip(rsDetectionCall, 'call');
-        AddChip(rsDetectionWingFlapping, 'wing_flapping');
-        AddChip(rsDetectionDrumming, 'drumming');
-        AddChip(rsDetectionCapture, 'capture');
-        AddChip(rsDetectionRemote, 'remote');
-        AddChip(rsDetectionTrack, 'track');
-        AddChip(rsDetectionOther, 'other');
-      end;
-    finally
-      pDetectionChips.EndUpdate;
+  pQuickFiltersContent.DisableAlign;
+  try
+    // Band size
+    pBandSizeFilter.Visible := (fufBandSize in FModule.FilterUiFlags);
+    // Band status
+    if (fufBandStatus in FModule.FilterUiFlags) then
+    begin
+      cbBandStatusFilter.Items.Clear;
+      cbBandStatusFilter.Items.Add(rsCaptionAll);
+      cbBandStatusFilter.Items.AddCommaText(rsBandStatusList);
+      pBandStatusFilter.Visible := True;
     end;
-    pDetectionChips.AutoSize := True;
-    pDetectionFilters.Visible := True;
-  end;
-  // Evidences
-  if (fufEvidences in FModule.FilterUiFlags) then
-  begin
-    pEvidenceChips.Color := pEvidenceFilters.Background.Color;
-    pEvidenceChips.BeginUpdate;
-    try
-      pEvidenceChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
-      pEvidenceChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
-      pEvidenceChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
-      pEvidenceChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
-      pEvidenceChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
-      pEvidenceChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
-      with pEvidenceChips do
-      begin
-        AddChip(rsEvidencePhoto, 'photo');
-        AddChip(rsEvidenceAudio, 'audio');
-        AddChip(rsEvidenceVideo, 'video');
-        AddChip(rsEvidenceCapture, 'capture');
-        AddChip(rsEvidenceSample, 'sample');
-        AddChip(rsEvidenceOther, 'other');
-      end;
-    finally
-      pEvidenceChips.EndUpdate;
+    // Band type
+    if (fufBandType in FModule.FilterUiFlags) then
+    begin
+      cbBandTypeFilter.Items.Clear;
+      cbBandTypeFilter.Items.Add(rsCaptionAll);
+      cbBandTypeFilter.Items.AddCommaText(rsBandTypeList);
+      pBandTypeFilter.Visible := True;
     end;
-    pEvidenceChips.AutoSize := True;
-    pEvidenceFilters.Visible := True;
+    // Band source
+    if (fufBandSource in FModule.FilterUiFlags) then
+    begin
+      cbBandSourceFilter.Items.Clear;
+      cbBandSourceFilter.Items.CommaText := rsCaptionAll + ',"' + rsBandAcquiredFromSupplier + '","' +
+        rsBandTransferBetweenBanders + '","' + rsBandLivingBirdBandedByOthers + '","' +
+        rsBandDeadBirdBandedByOthers + '","' + rsBandFoundLoose + '"';
+      pBandSourceFilter.Visible := True;
+    end;
+    // Band reported
+    pReportedFilter.Visible := (fufBandReported in FModule.FilterUiFlags);
+    // Person
+    pPersonFilter.Visible := (fufPerson in FModule.FilterUiFlags);
+    // Institution
+    pInstitutionFilter.Visible := (fufInstitution in FModule.FilterUiFlags);
+    // Project
+    pProjectFilter.Visible := (fufProject in FModule.FilterUiFlags);
+
+    // Taxon ranks
+    if (fufTaxonRanks in FModule.FilterUiFlags) then
+    begin
+      pTaxonRanksFilters.Visible := True;
+      LoadTaxaRanks(DMM.sqlCon, clbTaxonRanksFilter);
+    end;
+    // Synonyms
+    pSynonymFilters.Visible := (fufSynonyms in FModule.FilterUiFlags);
+
+    // Taxa
+    if (fufTaxa in FModule.FilterUiFlags) then
+    begin
+      pTaxonFilters.Visible := True;
+      LoadTaxaTreeData(FTableType, tvTaxaFilter, 0);
+    end;
+    // Dates
+    if (fufDates in FModule.FilterUiFlags) then
+    begin
+      pDatesFilters.Visible := True;
+      LoadDateTreeData(FTableType, tvDateFilter);
+    end;
+    // Sites
+    if (fufSites in FModule.FilterUiFlags) then
+    begin
+      pSiteFilters.Visible := True;
+      LoadSiteTreeData(FTableType, tvSiteFilter, 4);
+    end;
+    // Capture type
+    if (fufCaptureType in FModule.FilterUiFlags) then
+    begin
+      cbCaptureTypeFilter.Items.Clear;
+      cbCaptureTypeFilter.Items.Add(rsCaptionAll);
+      cbCaptureTypeFilter.Items.AddCommaText(rsCaptureTypeList);
+      pCaptureTypeFilter.Visible := True;
+    end;
+    // Release status
+    if (fufReleaseStatus in FModule.FilterUiFlags) then
+    begin
+      cbCaptureStatusFilter.Items.Clear;
+      cbCaptureStatusFilter.Items.CommaText := rsCaptionAll + ',"' + rsStatusNormal + '","' + rsStatusInjured + '","' +
+        rsStatusWingSprain + '","' + rsStatusStressed + '","' + rsStatusDead + '"';
+      pCaptureStatusFilter.Visible := True;
+    end;
+    // Aging specs
+    if (fufAgingSpecs in FModule.FilterUiFlags) then
+    begin
+      cbAgeFilter.Items.Clear;
+      cbAgeFilter.Items.CommaText := rsCaptionAll + ',' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
+        rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
+        rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
+      pAgingFilters.Visible := True;
+    end;
+    // Sexing specs
+    if (fufSexingSpecs in FModule.FilterUiFlags) then
+    begin
+      cbSexFilter.Items.Clear;
+      cbSexFilter.Items.CommaText := rsCaptionAll + ',' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
+      pSexingFilters.Visible := True;
+    end;
+    // Fat
+    pFatFilter.Visible := (fufFat in FModule.FilterUiFlags);
+    // Molt specs
+    pMoltingFilters.Visible := (fufMoltSpecs in FModule.FilterUiFlags);
+    // Time interval
+    pTimeFilters.Visible := (fufTimeInterval in FModule.FilterUiFlags);
+    // Survey
+    pSurveyFilter.Visible := (fufSurvey in FModule.FilterUiFlags);
+    // Method
+    pMethodFilter.Visible := (fufMethod in FModule.FilterUiFlags);
+    // Individual
+    pIndividualFilter.Visible := (fufIndividual in FModule.FilterUiFlags);
+    // Sampling plot
+    pSamplingPlotFilter.Visible := (fufSamplingPlot in FModule.FilterUiFlags);
+    // Needs review
+    pNeedsReviewFilter.Visible := (fufNeedsReview in FModule.FilterUiFlags);
+    // Escaped
+    pEscapedFilter.Visible := (fufEscaped in FModule.FilterUiFlags);
+    // Philornis presence
+    pPhilornisFilter.Visible := (fufPhilornisPresence in FModule.FilterUiFlags);
+    // Band replaced
+    pReplacedBandFilter.Visible := (fufBandReplaced in FModule.FilterUiFlags);
+
+    // Egg specs
+    if (fufEggSpecs in FModule.FilterUiFlags) then
+    begin
+      cbEggShapeFilter.Items.Clear;
+      cbEggShapeFilter.Items.CommaText := rsCaptionAll + ',' + rsEggSpherical + ',' + rsEggElliptical + ',' + rsEggOval + ',' +
+        rsEggPyriform + ',' + rsEggConical + ',' + rsEggBiconical + ',' + rsEggCylindrical + ',' +
+        rsEggLongitudinal + ',' + rsEggUnknown;
+      cbEggPatternFilter.Items.Clear;
+      cbEggPatternFilter.Items.CommaText := rsCaptionAll + ',"' + rsEggSpots + '","' + rsEggBlotches + '","' +
+        rsEggSquiggles + '","' + rsEggStreaks + '","' + rsEggScrawls + '","' + rsEggSpotsSquiggles + '","' +
+        rsEggBlotchesSquiggles + '","' + rsEggUnknown + '"';
+      cbEggTextureFilter.Items.Clear;
+      cbEggTextureFilter.Items.CommaText := rsCaptionAll + ',' + rsEggChalky + ',' + rsEggShiny + ',' + rsEggGlossy + ',' +
+        rsEggPitted + ',' + rsEggUnknown;
+      pEggTraitsFilters.Visible := True;
+    end;
+    // Nest
+    pNestFilter.Visible := (fufNest in FModule.FilterUiFlags);
+    // Egg hatched
+    pHatchedFilter.Visible := (fufEggHatched in FModule.FilterUiFlags);
+
+    // Site rank
+    if (fufSiteRank in FModule.FilterUiFlags) then
+    begin
+      cbSiteRankFilter.Items.Clear;
+      cbSiteRankFilter.Items.Add(rsCaptionAll);
+      cbSiteRankFilter.Items.Add(rsCaptionCountry);
+      cbSiteRankFilter.Items.Add(rsCaptionState);
+      cbSiteRankFilter.Items.Add(rsCaptionRegion);
+      cbSiteRankFilter.Items.Add(rsCaptionMunicipality);
+      cbSiteRankFilter.Items.Add(rsCaptionDistrict);
+      cbSiteRankFilter.Items.Add(rsCaptionLocality);
+      pSiteRankFilter.Visible := True;
+    end;
+
+    // Age
+    if (fufAge in FModule.FilterUiFlags) then
+    begin
+      pSkullOssificationFilter.Visible := False;
+      pHowAgedFilter.Visible := False;
+      pAgeFilter.Rounding.RoundOptions := [];
+      cbAgeFilter.Items.Clear;
+      cbAgeFilter.Items.CommaText := rsCaptionAll + ',' + rsAgeUnknown + ',' + rsAgeAdult + ',' + rsAgeJuvenile + ',' +
+        rsAgeFledgling + ',' + rsAgeNestling + ',"' + rsAgeFirstYear + '","' + rsAgeSecondYear + '","' +
+        rsAgeThirdYear + '","' + rsAgeFourthYear + '","' + rsAgeFifthYear + '"';
+      pAgingFilters.Visible := True;
+    end;
+    // Sex
+    if (fufSex in FModule.FilterUiFlags) then
+    begin
+      pCloacalProtuberanceFilter.Visible := False;
+      pBroodPatchFilter.Visible := False;
+      pHowSexedFilter.Visible := False;
+      pSexFilter.Rounding.RoundOptions := [];
+      cbSexFilter.Items.Clear;
+      cbSexFilter.Items.CommaText := rsCaptionAll + ',' + rsSexMale + ',' + rsSexFemale + ',' + rsSexUnknown;
+      pSexingFilters.Visible := True;
+    end;
+
+    // Category
+    if (fufCategory in FModule.FilterUiFlags) then
+    begin
+      cbCategoryFilter.Items.Clear;
+      cbCategoryFilter.Items.Add(rsCaptionAll);
+      LoadMethodCategories(cbCategoryFilter.Items);
+      pCategoryFilter.Visible := True;
+    end;
+
+    // Nest fate
+    if (fufNestFate in FModule.FilterUiFlags) then
+    begin
+      cbNestFateFilter.Items.Clear;
+      cbNestFateFilter.Items.CommaText := rsCaptionAll + ',"' + rsNestLost + '","' + rsNestSuccess + '","' +
+        rsNestUnknown + '"';
+      pNestFateFilter.Visible := True;
+    end;
+    // Support type
+    if (fufSupportType in FModule.FilterUiFlags) then
+    begin
+      cbNestSupportFilter.Items.Clear;
+      cbNestSupportFilter.Items.CommaText := rsCaptionAll + ',"' + rsSupportGround + '","' +
+        rsSupportHerbBush + '","' + rsSupportBranchFork + '","' + rsSupportLeaves + '","' +
+        rsSupportLedge + '","' + rsSupportRockCliff + '","' + rsSupportRavine + '","' + rsSupportNestBox + '","' +
+        rsSupportAnthropic + '","' + rsSupportOther + '"';
+      pNestSupportFilter.Visible := True;
+    end;
+    // Support plant
+    pPlantFilter.Visible := (fufSupportPlant in FModule.FilterUiFlags);
+
+    // Nest status
+    if (fufNestStatus in FModule.FilterUiFlags) then
+    begin
+      cbNestStatusFilter.Items.Clear;
+      cbNestStatusFilter.Items.CommaText := rsCaptionAll + ',' + rsNestActive + ',' + rsNestInactive + ',' + rsNestUnknown;
+      pNestStatusFilter.Visible := True;
+    end;
+    // Nest stage
+    if (fufNestStage in FModule.FilterUiFlags) then
+    begin
+      cbNestStageFilter.Items.CommaText := rsCaptionAll + ',' + rsNestBuilding + ',' + rsNestLaying + ',' +
+        rsNestIncubating + ',' + rsNestHatching + ',' + rsNestNestling + ',' + rsNestInactive + ',' +
+        rsNestUnknown;
+      pNestStageFilter.Visible := True;
+    end;
+    // Nidoparasite presence
+    pNidoparasiteFilter.Visible := (fufNidoparasitePresence in FModule.FilterUiFlags);
+
+    // Permit type
+    if (fufPermitType in FModule.FilterUiFlags) then
+    begin
+      cbPermitTypeFilter.Items.Clear;
+      cbPermitTypeFilter.Items.CommaText := rsCaptionAll + ',"' + rsPermitBanding + '","' + rsPermitCollection + '","' +
+        rsPermitResearch + '","' + rsPermitEntry + '","' + rsPermitTransport + '","' + rsPermitOther + '"';
+      pPermitTypeFilter.Visible := True;
+    end;
+
+    // Detection mode
+    if (fufDetectionModes in FModule.FilterUiFlags) then
+    begin
+      pDetectionChips.Color := pDetectionFilters.Background.Color;
+      pDetectionChips.BeginUpdate;
+      try
+        pDetectionChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+        pDetectionChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+        pDetectionChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+        pDetectionChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+        pDetectionChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+        pDetectionChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
+        with pDetectionChips do
+        begin
+          AddChip(rsDetectionVisual, 'visual');
+          AddChip(rsDetectionSong, 'song');
+          AddChip(rsDetectionCall, 'call');
+          AddChip(rsDetectionWingFlapping, 'wing_flapping');
+          AddChip(rsDetectionDrumming, 'drumming');
+          AddChip(rsDetectionCapture, 'capture');
+          AddChip(rsDetectionRemote, 'remote');
+          AddChip(rsDetectionTrack, 'track');
+          AddChip(rsDetectionOther, 'other');
+        end;
+      finally
+        pDetectionChips.EndUpdate;
+      end;
+      pDetectionChips.AutoSize := True;
+      pDetectionFilters.Visible := True;
+    end;
+    // Evidences
+    if (fufEvidences in FModule.FilterUiFlags) then
+    begin
+      pEvidenceChips.Color := pEvidenceFilters.Background.Color;
+      pEvidenceChips.BeginUpdate;
+      try
+        pEvidenceChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+        pEvidenceChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+        pEvidenceChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+        pEvidenceChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+        pEvidenceChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+        pEvidenceChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
+        with pEvidenceChips do
+        begin
+          AddChip(rsEvidencePhoto, 'photo');
+          AddChip(rsEvidenceAudio, 'audio');
+          AddChip(rsEvidenceVideo, 'video');
+          AddChip(rsEvidenceCapture, 'capture');
+          AddChip(rsEvidenceSample, 'sample');
+          AddChip(rsEvidenceOther, 'other');
+        end;
+      finally
+        pEvidenceChips.EndUpdate;
+      end;
+      pEvidenceChips.AutoSize := True;
+      pEvidenceFilters.Visible := True;
+    end;
+    // Habitats
+    if (fufHabitats in FModule.FilterUiFlags) then
+    begin
+      pHabitatChips.Color := pHabitatFilters.Background.Color;
+      pHabitatChips.BeginUpdate;
+      try
+        pHabitatChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+        pHabitatChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+        pHabitatChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+        pHabitatChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+        pHabitatChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+        pHabitatChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
+        with pHabitatChips do
+        begin
+          AddChip(rsHabitatForest, 'forest');
+          AddChip(rsHabitatWoods, 'woods');
+          AddChip(rsHabitatSavanna, 'savanna');
+          AddChip(rsHabitatShrubs, 'shrubs');
+          AddChip(rsHabitatGrassland, 'grassland');
+          AddChip(rsHabitatWetland, 'wetland');
+          AddChip(rsHabitatCoastal, 'coastal');
+          AddChip(rsHabitatMarine, 'marine');
+          AddChip(rsHabitatMangrove, 'mangrove');
+          AddChip(rsHabitatFreshwater, 'freshwater');
+          AddChip(rsHabitatCropland, 'cropland');
+          AddChip(rsHabitatUrban, 'urban');
+          AddChip(rsHabitatRocky, 'rocky');
+          AddChip(rsHabitatDesert, 'desert');
+          AddChip(rsHabitatOther, 'other');
+        end;
+      finally
+        pHabitatChips.EndUpdate;
+      end;
+      pHabitatChips.AutoSize := True;
+      pHabitatFilters.Visible := True;
+    end;
+    // Activities
+    if (fufActivities in FModule.FilterUiFlags) then
+    begin
+      pActivityChips.Color := pActivityFilters.Background.Color;
+      pActivityChips.BeginUpdate;
+      try
+        pActivityChips.SingleChipColorDark := ActiveTheme.Brand.JacarandaDeep;
+        pActivityChips.SingleChipColorLight := ActiveTheme.Brand.JacarandaContainer;
+        pActivityChips.SelectedBorderDark := ActiveTheme.Brand.JacarandaContainer;
+        pActivityChips.SelectedBorderLight := ActiveTheme.Brand.JacarandaDeep;
+        pActivityChips.SingleTextColorDark := ActiveTheme.Brand.JacarandaContainer;
+        pActivityChips.SingleTextColorLight := ActiveTheme.Brand.JacarandaDeep;
+        with pActivityChips do
+        begin
+          AddChip(rsActivityResting, 'resting');
+          AddChip(rsActivityFeeding, 'feeding');
+          AddChip(rsActivityPreening, 'preening');
+          AddChip(rsActivityFlying, 'flying');
+          AddChip(rsActivityWalking, 'walking');
+          AddChip(rsActivitySwimming, 'swimming');
+          AddChip(rsActivityVocalizing, 'vocalizing');
+          AddChip(rsActivitySocial, 'social');
+          AddChip(rsActivityCourtship, 'courtship');
+          AddChip(rsActivityNestBuilding, 'nesting');
+          AddChip(rsActivityIncubationBroodCare, 'brooding');
+          AddChip(rsActivityTerritorial, 'territorial');
+          AddChip(rsActivityVigilance, 'vigilance');
+          AddChip(rsActivityPredatorAvoidance, 'predator');
+          AddChip(rsActivityOther, 'other');
+        end;
+      finally
+        pActivityChips.EndUpdate;
+      end;
+      pActivityChips.AutoSize := True;
+      pActivityFilters.Visible := True;
+    end;
+
+    // Is in eBird
+    pRecordInEbirdFilter.Visible := (fufIsOnEbird in FModule.FilterUiFlags);
+    // Out of sample
+    pOutOfSampleFilter.Visible := (fufOutOfSample in FModule.FilterUiFlags);
+    // Is doubtful
+    pIsDoubtfulFilter.Visible := (fufIsDoubtful in FModule.FilterUiFlags);
+
+    // Sample type
+    if (fufSampleType in FModule.FilterUiFlags) then
+    begin
+      cbMaterialFilter.Items.Clear;
+      cbMaterialFilter.Items.Add(rsCaptionAll);
+      cbMaterialFilter.Items.Add(rsSpecimenCarcassWhole);
+      cbMaterialFilter.Items.Add(rsSpecimenCarcassPartial);
+      cbMaterialFilter.Items.Add(rsSpecimenNest);
+      cbMaterialFilter.Items.Add(rsSpecimenBones);
+      cbMaterialFilter.Items.Add(rsSpecimenEgg);
+      cbMaterialFilter.Items.Add(rsSpecimenParasites);
+      cbMaterialFilter.Items.Add(rsSpecimenFeathers);
+      cbMaterialFilter.Items.Add(rsSpecimenBlood);
+      cbMaterialFilter.Items.Add(rsSpecimenClaw);
+      cbMaterialFilter.Items.Add(rsSpecimenSwab);
+      cbMaterialFilter.Items.Add(rsSpecimenTissues);
+      cbMaterialFilter.Items.Add(rsSpecimenFeces);
+      cbMaterialFilter.Items.Add(rsSpecimenRegurgite);
+      pMaterialFilter.Visible := True;
+    end;
+    // Egg
+    pEggFilter.Visible := (fufEgg in FModule.FilterUiFlags);
+
+    // Expedition
+    pExpeditionFilter.Visible := (fufExpedition in FModule.FilterUiFlags);
+
+    pTaxonomiesFilters.Visible := (fufTaxonomies in FModule.FilterUiFlags);
+    pExtinctFilter.Visible := (fufIsExtinct in FModule.FilterUiFlags);
+  finally
+    pQuickFiltersContent.EnableAlign;
   end;
-
-  // Is in eBird
-  pRecordInEbirdFilter.Visible := (fufIsOnEbird in FModule.FilterUiFlags);
-  // Out of sample
-  pOutOfSampleFilter.Visible := (fufOutOfSample in FModule.FilterUiFlags);
-  // Is doubtful
-  pIsDoubtfulFilter.Visible := (fufIsDoubtful in FModule.FilterUiFlags);
-
-  // Sample type
-  if (fufSampleType in FModule.FilterUiFlags) then
-  begin
-    cbMaterialFilter.Items.Clear;
-    cbMaterialFilter.Items.Add(rsCaptionAll);
-    cbMaterialFilter.Items.Add(rsSpecimenCarcassWhole);
-    cbMaterialFilter.Items.Add(rsSpecimenCarcassPartial);
-    cbMaterialFilter.Items.Add(rsSpecimenNest);
-    cbMaterialFilter.Items.Add(rsSpecimenBones);
-    cbMaterialFilter.Items.Add(rsSpecimenEgg);
-    cbMaterialFilter.Items.Add(rsSpecimenParasites);
-    cbMaterialFilter.Items.Add(rsSpecimenFeathers);
-    cbMaterialFilter.Items.Add(rsSpecimenBlood);
-    cbMaterialFilter.Items.Add(rsSpecimenClaw);
-    cbMaterialFilter.Items.Add(rsSpecimenSwab);
-    cbMaterialFilter.Items.Add(rsSpecimenTissues);
-    cbMaterialFilter.Items.Add(rsSpecimenFeces);
-    cbMaterialFilter.Items.Add(rsSpecimenRegurgite);
-    pMaterialFilter.Visible := True;
-  end;
-  // Egg
-  pEggFilter.Visible := (fufEgg in FModule.FilterUiFlags);
-
-  // Expedition
-  pExpeditionFilter.Visible := (fufExpedition in FModule.FilterUiFlags);
-
-  pTaxonomiesFilters.Visible := (fufTaxonomies in FModule.FilterUiFlags);
-  pExtinctFilter.Visible := (fufIsExtinct in FModule.FilterUiFlags);
 end;
 
 end.

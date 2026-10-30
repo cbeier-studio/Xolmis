@@ -121,7 +121,6 @@ begin
   FDataSet := DMG.qExpeditions;
   FSupportedMedia := [amtDocuments];
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowDocs];
-  FPrintUiFlags := [pufExpeditions, pufExpeditionsByProject];
   FFilterUiFlags := [fufMarked, fufDates, fufProject];
 
   AddDefaultSort(COL_START_DATE, sdDescending);
@@ -283,7 +282,6 @@ begin
   FSupportedMedia := [amtImages, amtVideos, amtDocuments];
   FUiFlags := [gufShowVerifications, gufShowSummary, gufShowMap, gufShowImages,
     gufShowVideos, gufShowDocs];
-  FPrintUiFlags := [pufSurveys, pufSurveysByExpedition, pufSurveysByLocality, pufSurveysByProject];
   FFilterUiFlags := [fufMarked, fufMethod, fufDates, fufSites, fufTimeInterval, fufSamplingPlot,
     fufExpedition, fufProject];
 

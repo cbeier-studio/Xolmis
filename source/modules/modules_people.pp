@@ -56,7 +56,6 @@ begin
   FDataSet := DMG.qPeople;
   FSupportedMedia := [amtDocuments];
   FUiFlags := [gufShowDocs, gufShowSummary];
-  FPrintUiFlags := [pufResearchers];
   FFilterUiFlags := [fufMarked, fufSites, fufDates, fufInstitution];
 
   AddDefaultSort(COL_FULL_NAME, sdAscending);

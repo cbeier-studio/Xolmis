@@ -56,6 +56,7 @@ msgid "Active"
 msgstr ""
 
 #: data_columns.rscactivities
+msgctxt "data_columns.rscactivities"
 msgid "Activities"
 msgstr ""
 
@@ -945,6 +946,7 @@ msgid "Habitat"
 msgstr ""
 
 #: data_columns.rschabitats
+msgctxt "data_columns.rschabitats"
 msgid "Habitats"
 msgstr ""
 
@@ -11036,6 +11038,11 @@ msgctxt "tfrmcustomgrid.gridvideos.columns[2].title.caption"
 msgid "Fullname"
 msgstr ""
 
+#: tfrmcustomgrid.lblactivityfilter.caption
+msgctxt "tfrmcustomgrid.lblactivityfilter.caption"
+msgid "Activities"
+msgstr ""
+
 #: tfrmcustomgrid.lblagefilter.caption
 msgctxt "tfrmcustomgrid.lblagefilter.caption"
 msgid "Age"
@@ -11092,6 +11099,11 @@ msgctxt "tfrmcustomgrid.lblcloacalprotuberancefilter.caption"
 msgid "Cloacal protuberance"
 msgstr ""
 
+#: tfrmcustomgrid.lblcountactivityfilter.caption
+msgctxt "tfrmcustomgrid.lblcountactivityfilter.caption"
+msgid "none selected"
+msgstr ""
+
 #: tfrmcustomgrid.lblcountdatefilter.caption
 msgctxt "tfrmcustomgrid.lblcountdatefilter.caption"
 msgid "none selected"
@@ -11104,6 +11116,11 @@ msgstr ""
 
 #: tfrmcustomgrid.lblcountevidencefilter.caption
 msgctxt "tfrmcustomgrid.lblcountevidencefilter.caption"
+msgid "none selected"
+msgstr ""
+
+#: tfrmcustomgrid.lblcounthabitatfilter.caption
+msgctxt "tfrmcustomgrid.lblcounthabitatfilter.caption"
 msgid "none selected"
 msgstr ""
 
@@ -11194,6 +11211,11 @@ msgstr ""
 #: tfrmcustomgrid.lblffwearfilter.caption
 msgctxt "tfrmcustomgrid.lblffwearfilter.caption"
 msgid "Flight feathers wear"
+msgstr ""
+
+#: tfrmcustomgrid.lblhabitatfilter.caption
+msgctxt "tfrmcustomgrid.lblhabitatfilter.caption"
+msgid "Habitats"
 msgstr ""
 
 #: tfrmcustomgrid.lblhassynonymsfilter.caption

@@ -67,10 +67,9 @@ begin
   FSupportedMedia := [amtImages, amtAudios, amtVideos, amtDocuments];
   FUiFlags := [gufShowImages, gufShowAudios, gufShowVideos, gufShowDocs, gufShowSummary, gufShowMap,
     gufShowVerifications];
-  FPrintUiFlags := [pufSightings, pufSightingsByLocality, pufSightingsByObserver, pufSightingsByProject,
-    pufSightingsBySurvey, pufSightingsByTaxon];
   FFilterUiFlags := [fufMarked, fufTaxa, fufDates, fufSites, fufTimeInterval, fufPerson, fufSurvey, fufMethod,
-    fufIndividual, fufIsOnEbird, fufOutOfSample, fufIsDoubtful, fufDetectionModes, fufEvidences];
+    fufIndividual, fufIsOnEbird, fufOutOfSample, fufIsDoubtful, fufDetectionModes, fufEvidences, fufHabitats,
+    fufActivities];
 
   AddDefaultSort(COL_SIGHTING_DATE, sdDescending);
 
@@ -79,7 +78,7 @@ end;
 
 procedure TSightingsModuleController.ApplyFilters;
 var
-  SLDetection, SLEvidences: TStrings;
+  SLDetection, SLEvidences, SLHabitats, SLActivities: TStrings;
   i: Integer;
 begin
   with TfrmCustomGrid(FOwner) do
@@ -109,18 +108,30 @@ begin
     // Detection modes
     SLDetection := TStringList.Create;
     SLEvidences := TStringList.Create;
+    SLHabitats := TStringList.Create;
+    SLActivities := TStringList.Create;
     try
       for i := 0 to pDetectionChips.GetSelectedChips.Count - 1 do
         SLDetection.Add(TChip(pDetectionChips.GetSelectedChips[i]).ID);
       for i := 0 to pEvidenceChips.GetSelectedChips.Count - 1 do
         SLEvidences.Add(TChip(pEvidenceChips.GetSelectedChips[i]).ID);
+      for i := 0 to pHabitatChips.GetSelectedChips.Count - 1 do
+        SLHabitats.Add(TChip(pHabitatChips.GetSelectedChips[i]).ID);
+      for i := 0 to pActivityChips.GetSelectedChips.Count - 1 do
+        SLActivities.Add(TChip(pActivityChips.GetSelectedChips[i]).ID);
 
       AddJsonArrayFilter(SearchConfig, COL_DETECTION_MODES, rscDetectionModes, SLDetection);
       // Evidences
       AddJsonArrayFilter(SearchConfig, COL_EVIDENCES, rscEvidences, SLEvidences);
+      // Habitats
+      AddJsonArrayFilter(SearchConfig, COL_HABITATS, rscHabitats, SLHabitats);
+      // Activities
+      AddJsonArrayFilter(SearchConfig, COL_ACTIVITIES, rscActivities, SLActivities);
     finally
       FreeAndNil(SLDetection);
       FreeAndNil(SLEvidences);
+      FreeAndNil(SLHabitats);
+      FreeAndNil(SLActivities);
     end;
   end;
 end;
@@ -153,6 +164,11 @@ begin
     rbRecordInEbirdAll.Checked := True;
     rbOutOfSampleAll.Checked := True;
     rbIsDoubtfulAll.Checked := True;
+
+    pDetectionChips.ClearSelection;
+    pEvidenceChips.ClearSelection;
+    pHabitatChips.ClearSelection;
+    pActivityChips.ClearSelection;
   end;
 end;
 
