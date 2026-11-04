@@ -46,7 +46,6 @@ type
     FReportProfile: String;
     FColorTheme: TXolmisReportTheme;
     procedure ApplyDarkMode;
-    procedure ComboBoxDrawItem(Control: TWinControl; Index: Integer; ARect: TRect; State: TOwnerDrawState);
     procedure GetSettings;
     procedure LoadProfiles;
     procedure SetSettings;
@@ -85,45 +84,6 @@ begin
   pColorTheme.Border.Color := ActiveTheme.Border.Default;
   pReportProfile.Background.Color := ActiveTheme.Background.CardDefault;
   pReportProfile.Border.Color := ActiveTheme.Border.Default;
-
-  cbReportProfile.Style := csOwnerDrawFixed;
-  cbReportProfile.OnDrawItem := @ComboBoxDrawItem;
-  cbPageSize.Style := csOwnerDrawFixed;
-  cbPageSize.OnDrawItem := @ComboBoxDrawItem;
-  cbPageOrientation.Style := csOwnerDrawFixed;
-  cbPageOrientation.OnDrawItem := @ComboBoxDrawItem;
-  cbGroupingField.Style := csOwnerDrawFixed;
-  cbGroupingField.OnDrawItem := @ComboBoxDrawItem;
-  cbTheme.Style := csOwnerDrawFixed;
-  cbTheme.OnDrawItem := @ComboBoxDrawItem;
-end;
-
-procedure TdlgReportSettings.ComboBoxDrawItem(Control: TWinControl; Index: Integer;
-  ARect: TRect; State: TOwnerDrawState);
-var
-  ComboBox: TComboBox;
-  TextStyle: TTextStyle;
-begin
-  ComboBox := TComboBox(Control);
-  if odSelected in State then
-  begin
-    ComboBox.Canvas.Brush.Color := ActiveTheme.Interactive.SelectionBackground;
-    ComboBox.Canvas.Font.Color := ActiveTheme.Interactive.SelectionText;
-  end
-  else
-  begin
-    ComboBox.Canvas.Brush.Color := ComboBox.Color;
-    ComboBox.Canvas.Font.Color := ComboBox.Font.Color;
-  end;
-  ComboBox.Canvas.FillRect(ARect);
-
-  if (Index < 0) or (Index >= ComboBox.Items.Count) then
-    Exit;
-
-  TextStyle := ComboBox.Canvas.TextStyle;
-  TextStyle.Layout := tlCenter;
-  TextStyle.ShowPrefix := True;
-  ComboBox.Canvas.TextRect(ARect, ARect.Left + 4, ARect.Top, ComboBox.Items[Index], TextStyle);
 end;
 
 procedure TdlgReportSettings.FormCreate(Sender: TObject);

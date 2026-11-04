@@ -872,13 +872,28 @@ class function TWin32WSCustomComboBoxDark.CreateHandle(
   const AWinControl: TWinControl; const AParams: TCreateParams): HWND;
 var
   Info: TComboboxInfo;
+  Params: TCreateParams;
 begin
+  Params:= AParams;
   if not (csDesigning in AWinControl.ComponentState) then begin
     AWinControl.Color:= SysColor[COLOR_BTNFACE];
     AWinControl.Font.Color:= SysColor[COLOR_BTNTEXT];
+
+    // The native list paints the selected item in white; owner draw makes LCL
+    // use the scheme highlight color instead
+    case TCustomComboBox(AWinControl).Style of
+      csDropDown: begin
+        TCustomComboBox(AWinControl).Style:= csOwnerDrawEditableFixed;
+        Params.Style:= Params.Style or CBS_OWNERDRAWFIXED;
+      end;
+      csDropDownList: begin
+        TCustomComboBox(AWinControl).Style:= csOwnerDrawFixed;
+        Params.Style:= Params.Style or CBS_OWNERDRAWFIXED;
+      end;
+    end;
   end;
 
-  Result:= inherited CreateHandle(AWinControl, AParams);
+  Result:= inherited CreateHandle(AWinControl, Params);
 
   if not (csDesigning in AWinControl.ComponentState) then begin
     Info.cbSize:= SizeOf(Info);

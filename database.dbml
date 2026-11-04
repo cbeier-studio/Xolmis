@@ -1165,7 +1165,7 @@ Table sightings {
         sighting_date [name: 'idx_sightings_date', note: 'COLLATE BINARY WHERE active_status = 1']
         full_name [name: 'idx_sightings_fullname', note: 'COLLATE NOCASE']
         taxon_id [name: 'idx_sightings_taxon']
-        (taxon_id, sighting_date) [name: 'idx_sightings_taxon_date', note: 'COLLATE BINARY WHERE active_status = 1'],
+        (taxon_id, sighting_date) [name: 'idx_sightings_taxon_date', note: 'COLLATE BINARY WHERE active_status = 1']
     }
 }
 
@@ -1327,7 +1327,7 @@ Table users {
     }
 }
 
-Ref: users.role_id -> roles.role_id [update: cascade]
+Ref: users.role_id > roles.role_id [update: cascade]
 
 Table vegetation {
     vegetation_id integer [primary key, increment, unique, not null]

@@ -323,6 +323,7 @@ end;
 procedure TMobilePoi.ToPoi(aPoi: TPoi);
 begin
   //aPoi.TaxonId := FSpeciesId;
+  aPoi.PoiName := Format('POI #%d', [FId]);
   aPoi.SampleDate := FSampleTime;
   aPoi.SampleTime := FSampleTime;
   aPoi.Longitude := FLongitude;
