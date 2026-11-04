@@ -178,94 +178,43 @@ begin
     case Column.Field.AsString of
       'U': // Used
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SuccessBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
       end;
-      'D': // Available
+      'A': // Available
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemNeutralFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
       end;
       'R': // Removed
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemMediumBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemMediumFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemMediumBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemMediumFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.MediumBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.MediumFG;
       end;
-      'Q': // Broken
+      'B': // Broken
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
       end;
-      'P': // Lost
+      'L': // Lost
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
       end;
       'T': // Transferred
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Dark;
-          TDBGrid(Sender).Canvas.Font.Color := clVioletFG1Dark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clVioletBrand1Light;
-          TDBGrid(Sender).Canvas.Font.Color := clVioletFG2Light;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Jacaranda.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Jacaranda.Foreground;
+      end;
+      'X': // Returned
+      begin
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Azul.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Azul.Foreground;
       end;
       'O': // Ordered
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemAttentionBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemAttentionFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemAttentionBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemAttentionFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.AttentionBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.AttentionFG;
       end;
     end;
   end;

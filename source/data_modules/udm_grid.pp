@@ -1887,6 +1887,7 @@ begin
     'B': aText := rsBandBroken;
     'L': aText := rsBandLost;
     'T': aText := rsBandTransferred;
+    'X': aText := rsBandReturned;
   end;
 
   DisplayText := True;
@@ -1916,7 +1917,10 @@ begin
     Sender.AsString := 'L'
   else
   if aText = rsBandTransferred then
-    Sender.AsString := 'T';
+    Sender.AsString := 'T'
+  else
+  if aText = rsBandReturned then
+    Sender.AsString := 'X';
 end;
 
 procedure TDMG.qBandsband_typeGetText(Sender: TField; var aText: string; DisplayText: Boolean);

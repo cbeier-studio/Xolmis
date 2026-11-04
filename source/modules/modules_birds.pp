@@ -279,42 +279,18 @@ begin
     case Column.Field.AsString of
       'U':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Vinho.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Vinho.Foreground;
       end;
       'M':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemSuccessFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.VerdeFolha.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.VerdeFolha.Foreground;
       end;
       'F':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clSystemCautionFGLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
       end;
     end;
   end
@@ -769,31 +745,23 @@ begin
     case Column.Field.AsString of
       'N':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clBlueBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clBlueBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Azul.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Azul.Foreground;
       end;
       'R', 'S':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SuccessBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.VerdeFolha.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.VerdeFolha.Foreground;
       end;
       'C':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
       end;
       'U':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Vinho.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Vinho.Foreground;
       end;
     end;
   end
@@ -805,14 +773,14 @@ begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'R') or
       (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'S') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.VerdeFolha.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.VerdeFolha.Foreground;
     end
     else
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
     end;
   end
   else
@@ -822,8 +790,8 @@ begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
     end;
   end;
 
@@ -1262,31 +1230,23 @@ begin
     case Column.Field.AsString of
       'N':
       begin
-        if IsDarkModeEnabled then
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clBlueBGDark;
-          TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryDark;
-        end
-        else
-        begin
-          TDBGrid(Sender).Canvas.Brush.Color := clBlueBGLight;
-          TDBGrid(Sender).Canvas.Font.Color := clAccentTextPrimaryLight;
-        end;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Azul.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Azul.Foreground;
       end;
       'R', 'S':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SuccessBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.VerdeFolha.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.VerdeFolha.Foreground;
       end;
       'C':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CautionBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
       end;
       'U':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Vinho.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Vinho.Foreground;
       end;
     end;
   end
@@ -1298,14 +1258,14 @@ begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'R') or
       (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'S') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := clSystemSuccessBGLight;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SuccessFG;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.VerdeFolha.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.VerdeFolha.Foreground;
     end
     else
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
     end;
   end
   else
@@ -1315,8 +1275,8 @@ begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := clSystemCautionBGLight;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CautionFG;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
     end;
   end;
 

@@ -131,16 +131,8 @@ begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (not Column.Field.IsNull) and (Column.Field.AsDateTime < Today) then
     begin
-      if IsDarkModeEnabled then
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGDark;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGDark;
-      end
-      else
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemCriticalBGLight;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemCriticalFGLight;
-      end;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.CriticalBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
     end;
   end;
 end;

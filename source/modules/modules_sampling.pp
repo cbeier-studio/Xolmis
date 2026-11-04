@@ -174,16 +174,8 @@ begin
   begin
     if (Column.Field.AsDateTime > Today) then
     begin
-      if IsDarkModeEnabled then
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-      end
-      else
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-      end;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
     end;
   end;
 end;
@@ -385,16 +377,8 @@ begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (Column.Field.AsDateTime > Today) then
     begin
-      if IsDarkModeEnabled then
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-      end
-      else
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-      end;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
     end;
   end;
 end;
@@ -560,16 +544,8 @@ begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (Column.Field.AsDateTime > Today) then
     begin
-      if IsDarkModeEnabled then
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGDark;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGDark;
-      end
-      else
-      begin
-        TDBGrid(Sender).Canvas.Brush.Color := clSystemSolidNeutralBGLight;
-        TDBGrid(Sender).Canvas.Font.Color := clSystemSolidNeutralFGLight;
-      end;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
     end;
   end;
 end;
