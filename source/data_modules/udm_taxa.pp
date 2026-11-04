@@ -30,7 +30,7 @@ var
 implementation
 
 uses
-  utils_locale;
+  utils_locale, utils_themes;
 
 {$R *.lfm}
 
@@ -39,15 +39,24 @@ uses
 procedure TDMT.DataModuleCreate(Sender: TObject);
 begin
   RecordTypeStyles.StyleByIndex(0).Text := rsTitleCaptures;
+  RecordTypeStyles.StyleByIndex(0).Brush.Color := ChartSeriesColor(0);
   RecordTypeStyles.StyleByIndex(1).Text := rsTitleSightings;
+  RecordTypeStyles.StyleByIndex(1).Brush.Color := ChartSeriesColor(1);
   RecordTypeStyles.StyleByIndex(2).Text := rsTitleNests;
+  RecordTypeStyles.StyleByIndex(2).Brush.Color := ChartSeriesColor(2);
   RecordTypeStyles.StyleByIndex(3).Text := rsTitleEggs;
+  RecordTypeStyles.StyleByIndex(3).Brush.Color := ChartSeriesColor(3);
   RecordTypeStyles.StyleByIndex(4).Text := rsCaptionFeathers;
+  RecordTypeStyles.StyleByIndex(4).Brush.Color := ChartSeriesColor(4);
   RecordTypeStyles.StyleByIndex(5).Text := rsTitleSpecimens;
+  RecordTypeStyles.StyleByIndex(5).Brush.Color := ChartSeriesColor(5);
 
   NestFateStyles.StyleByIndex(0).Text := rsNestLost;
+  NestFateStyles.StyleByIndex(0).Brush.Color := ChartSeriesColor(6);
   NestFateStyles.StyleByIndex(1).Text := rsNestSuccess;
+  NestFateStyles.StyleByIndex(1).Brush.Color := ChartSeriesColor(5);
   NestFateStyles.StyleByIndex(2).Text := rsNestUnknown;
+  NestFateStyles.StyleByIndex(2).Brush.Color := ChartSeriesColor(10);
 end;
 
 end.

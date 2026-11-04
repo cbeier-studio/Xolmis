@@ -8,96 +8,171 @@ uses
   BCPanel, Buttons, Classes, ComCtrls, DB, fgl, mvDE_BGRA, mvMapViewer, mvTypes,
   mvGpsObj, SQLDB, DBCtrls, DBGrids, httpprotocol, LCLIntf, LCLType, ExtCtrls, Menus,
   StdCtrls, ColorSpeedButton, SysUtils, Forms, RegExpr, Controls, Graphics,
-  Dialogs, data_types, Grids, TADbSource, TAGraph, TAGUIConnectorBGRA,
-  TASeries, TASources, Types, mvDrawingEngine;
+  Dialogs, data_types, Grids, attabs, TADbSource, TAGraph, TAGUIConnectorBGRA, Translations,
+  TASeries, TASources, Types, mvDrawingEngine, TACustomSeries, TARadialSeries, TADrawUtils, TAChartUtils, TATools;
 
 type
 
   { TfrmTaxa }
 
   TfrmTaxa = class(TForm)
+    chartNestFate: TChart;
+    chartSeasonality: TChart;
+    chartTools: TChartToolset;
+    chartToolsDataPointHintTool1: TDataPointHintTool;
+    chartYear: TChart;
+    chipConservationStatus: TBCPanel;
+    eSearch: TEdit;
+    gridTaxa: TDBGrid;
+    iconSearch: TImage;
+    lblRecordsMapTitle: TLabel;
+    lblTopLocalitiesTitle: TLabel;
+    mapView: TMapView;
+    pTaxonList: TPanel;
+    pRecordsMap: TBCPanel;
+    pMapLocalities: TPanel;
+    pSearch: TBCPanel;
+    pSummaryIndicators: TFlowPanel;
+    pExternalLinks: TFlowPanel;
+    pBreedingIndicators: TFlowPanel;
+    icoBirdsOfTheWorld: TImage;
+    icoEbird: TImage;
+    icoWikiaves: TImage;
+    icoIucn: TImage;
+    icoGbif: TImage;
+    icoGoogle: TImage;
+    icoGoogleImages: TImage;
+    icoGoogleScholar: TImage;
+    lblTotalRecords: TLabel;
+    lblDistributionTitle: TLabel;
+    lblEbird: TLabel;
+    lblWikiaves: TLabel;
+    lblIucn: TLabel;
+    lblGbif: TLabel;
+    lblGoogle: TLabel;
+    lblGoogleImages: TLabel;
+    lblGoogleScholar: TLabel;
+    lblRecordsPerYearTitle: TLabel;
+    lblSeasonalityTitle: TLabel;
+    lblTotalNests: TLabel;
+    lblNestProductivity: TLabel;
+    lblNestFateTitle: TLabel;
+    lblNestLossCausesTitle: TLabel;
+    monthlySeries: TBarSeries;
+    NestFateSeries: TPieSeries;
+    pChartsYearSeasonality: TPanel;
+    pNestFateLosses: TPanel;
+    pChartRecordsPerYear: TBCPanel;
+    pChartSeasonality: TBCPanel;
+    pTopLocalities: TBCPanel;
+    pTotalNestsIndicator: TBCPanel;
+    pNestProductivityIndicator: TBCPanel;
+    pChartNestFate: TBCPanel;
+    pChartNestLossCauses: TBCPanel;
+    sbClearSearch: TColorSpeedButton;
+    sbOptionsSearch: TColorSpeedButton;
+    scrollCaptures: TScrollBox;
+    scrollBreeding: TScrollBox;
+    scrollQuality: TScrollBox;
+    scrollEcology: TScrollBox;
+    scrollOccurrence: TScrollBox;
+    sbShareRecords: TSpeedButton;
+    sbPrint: TSpeedButton;
+    txtNestProductivity: TLabel;
+    txtSynonyms: TLabel;
+    lblSynonymsTitle: TLabel;
+    lblSightingsCount: TLabel;
+    lblIndividualsCount: TLabel;
+    lblCapturesCount: TLabel;
+    lblSpecimensCount: TLabel;
+    lblNestsCount: TLabel;
+    lblEggsCount: TLabel;
+    lblBirdsOfTheWorld: TLabel;
+    navTabs: TATTabs;
+    nbContent: TNotebook;
+    pDistributionSynonyms: TPanel;
+    pgQuality: TPage;
+    pgEcology: TPage;
+    pgCaptures: TPage;
+    pgBreeding: TPage;
+    pgOccurrence: TPage;
+    pgSummary: TPage;
+    pTotalRecordsIndicator: TBCPanel;
+    chipBirdsOfTheWorld: TBCPanel;
+    chipEbird: TBCPanel;
+    chipWikiaves: TBCPanel;
+    chipIucn: TBCPanel;
+    chipGbif: TBCPanel;
+    chipGoogle: TBCPanel;
+    chipGoogleImage: TBCPanel;
+    chipGoogleScholar: TBCPanel;
+    pDistribution: TBCPanel;
+    pSynonyms: TBCPanel;
+    pSightingsCountIndicator: TBCPanel;
+    pIndividualsCountIndicator: TBCPanel;
+    pCapturesCountIndicator: TBCPanel;
+    pSpecimensCountIndicator: TBCPanel;
+    pNestsCountIndicator: TBCPanel;
+    pEggsCountIndicator: TBCPanel;
+    scrollSummary: TScrollBox;
+    txtDistribution: TDBText;
+    txtExtinctionYear: TDBText;
+    txtHierarchy: TLabel;
+    txtTotalRecords: TLabel;
+    txtSightingsCount: TLabel;
+    txtIndividualsCount: TLabel;
+    txtCapturesCount: TLabel;
+    txtSpecimensCount: TLabel;
+    txtNestsCount: TLabel;
+    txtEggsCount: TLabel;
+    txtTotalNests: TLabel;
+    txtVernacularNames: TLabel;
+    txtConservationStatus: TLabel;
+    pHeader: TBCPanel;
     dsVernacular: TDataSource;
-    gridVernacular: TDBGrid;
     lblEmptyQuery: TLabel;
     pEmptyQueryOptions: TBCPanel;
     sbEmptyClearAll: TSpeedButton;
     sbEmptyGotoSearch: TSpeedButton;
-    txtNestProductivity: TLabel;
-    lblMeanNestProductivity: TLabel;
-    pNestProductivity: TBCPanel;
-    chartNestFate: TChart;
-    NestFateSeries: TPieSeries;
-    pBreedingStats: TPanel;
-    yearlySeries: TBarSeries;
-    chartSeasonality: TChart;
-    chartYear: TChart;
-    monthlySeries: TBarSeries;
+    txtAuthorship: TDBText;
+    txtRank: TDBText;
+    txtScientificName: TDBText;
     chartBGRA: TChartGUIConnectorBGRA;
     dsSynonyms: TDataSource;
     dsChilds: TDataSource;
-    eSearch: TEdit;
-    lblLinkCaptures: TLabel;
-    lblLinkEggs: TLabel;
-    lblLinkNests: TLabel;
-    lblLinkSpecimens: TLabel;
-    lblLinkSightings: TLabel;
-    lblLinkIndividuals: TLabel;
-    mapView: TMapView;
     MvBGRA: TMvBGRADrawingEngine;
     pEmptyQuery: TPanel;
     pmfShowRecordedTaxa: TMenuItem;
     pmOptions: TPopupMenu;
-    pTaxonData: TFlowPanel;
-    gridChilds: TDBGrid;
-    gridSynonyms: TDBGrid;
     iButtons: TImageList;
     iButtonsDark: TImageList;
-    iconSearch: TImage;
-    imgConservation: TImage;
     imgIUCN: TImageList;
     iSearch: TImageList;
     iSearchDark: TImageList;
-    Label5: TLabel;
-    pConservation: TPanel;
-    pConstrainedBox: TPanel;
     pContent: TPanel;
-    pDetails: TPanel;
     pmPrint: TPopupMenu;
     pmPrintTaxa: TMenuItem;
     pmPrintTaxaHierarchical: TMenuItem;
     pmPrintTaxaRecorded: TMenuItem;
     pmPrintTaxaRecordedByLocality: TMenuItem;
-    pScientificName: TPanel;
-    pSideToolbar: TPanel;
-    pTaxonInfo: TPanel;
-    pToolbar: TBCPanel;
-    pSearch: TBCPanel;
-    pTop: TPanel;
-    pViews: TPanel;
-    sbClearSearch: TColorSpeedButton;
-    sbBirdsOfTheWorld: TSpeedButton;
-    sbOptionsSearch: TColorSpeedButton;
-    sbPrint: TSpeedButton;
-    sbShareRecords: TSpeedButton;
-    sbGoogleScholar: TSpeedButton;
-    sbEbird: TSpeedButton;
-    sbGoogleImages: TSpeedButton;
-    sbWikiaves: TSpeedButton;
-    sbIUCNRedList: TSpeedButton;
-    sbGBIF: TSpeedButton;
-    sbGoogleSearch: TSpeedButton;
-    scrollData: TScrollBox;
     SplitRight: TSplitter;
     TimerData: TTimer;
     TimerFind: TTimer;
     dsLink: TDataSource;
-    gridTaxa: TDBGrid;
-    tvHierarchy: TTreeView;
-    txtAuthorship: TDBText;
-    txtDistribution: TDBText;
-    txtExtinctionYear: TDBText;
-    txtRank: TDBText;
-    txtScientificName: TDBText;
+    txtEnglishLang: TLabel;
+    txtVernacularLang: TLabel;
+    txtEnglishNames: TLabel;
+    txtVernacularDiv: TLabel;
+    yearlySeries: TBarSeries;
+    procedure chartToolsDataPointHintTool1Hint(ATool: TDataPointHintTool; const APoint: TPoint; var AHint: String);
+    procedure chipBirdsOfTheWorldClick(Sender: TObject);
+    procedure chipEbirdClick(Sender: TObject);
+    procedure chipGbifClick(Sender: TObject);
+    procedure chipGoogleClick(Sender: TObject);
+    procedure chipGoogleImageClick(Sender: TObject);
+    procedure chipGoogleScholarClick(Sender: TObject);
+    procedure chipIucnClick(Sender: TObject);
+    procedure chipWikiavesClick(Sender: TObject);
     procedure dsLinkDataChange(Sender: TObject; Field: TField);
     procedure dsLinkStateChange(Sender: TObject);
     procedure eSearchChange(Sender: TObject);
@@ -112,29 +187,22 @@ type
       (Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
       var Handled: Boolean);
     procedure gridTaxaPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn; AState: TGridDrawState);
-    procedure lblLinkCapturesClick(Sender: TObject);
-    procedure lblLinkEggsClick(Sender: TObject);
-    procedure lblLinkIndividualsClick(Sender: TObject);
-    procedure lblLinkNestsClick(Sender: TObject);
-    procedure lblLinkSightingsClick(Sender: TObject);
-    procedure lblLinkSpecimensClick(Sender: TObject);
     procedure mapViewDrawGpsPoint
       (Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
+    procedure navTabsTabClick(Sender: TObject);
+    procedure pCapturesCountIndicatorClick(Sender: TObject);
+    procedure pEggsCountIndicatorClick(Sender: TObject);
+    procedure pIndividualsCountIndicatorClick(Sender: TObject);
     procedure pmfShowRecordedTaxaClick(Sender: TObject);
-    procedure sbBirdsOfTheWorldClick(Sender: TObject);
+    procedure pNestsCountIndicatorClick(Sender: TObject);
+    procedure pSightingsCountIndicatorClick(Sender: TObject);
+    procedure pSpecimensCountIndicatorClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
-    procedure sbEbirdClick(Sender: TObject);
     procedure sbEmptyClearAllClick(Sender: TObject);
     procedure sbEmptyGotoSearchClick(Sender: TObject);
-    procedure sbGBIFClick(Sender: TObject);
-    procedure sbGoogleImagesClick(Sender: TObject);
-    procedure sbGoogleScholarClick(Sender: TObject);
-    procedure sbGoogleSearchClick(Sender: TObject);
-    procedure sbIUCNRedListClick(Sender: TObject);
     procedure sbOptionsSearchClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
     procedure sbShareRecordsClick(Sender: TObject);
-    procedure sbWikiavesClick(Sender: TObject);
     procedure scrollDataMouseWheel
       (Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
       var Handled: Boolean);
@@ -155,6 +223,9 @@ type
     procedure GetNestsCount;
     procedure GetEggsCount;
     procedure GetNestProductivity;
+    procedure GetSynonyms;
+    procedure GetVernacular(const TaxonId: Integer);
+    function GetVernacularNameFallback(const TaxonId: Integer): string;
     procedure LoadMonthlyChart;
     procedure LoadNestFateChart;
     procedure LoadRecordsMap;
@@ -207,20 +278,29 @@ begin
   sbClearSearch.Images := iSearchDark;
   sbOptionsSearch.Images := iSearchDark;
 
-  pToolbar.Background.Color := ActiveTheme.Background.CardDefault;
-  pToolbar.Border.Color := ActiveTheme.Border.Default; // clCardBGSecondaryDark;
   sbShareRecords.Images := iButtonsDark;
   sbPrint.Images := iButtonsDark;
 
-  sbGoogleSearch.Images := DMM.iWebDark;
-  sbGoogleImages.Images := DMM.iWebDark;
-  sbGoogleScholar.Images := DMM.iWebDark;
-  sbBirdsOfTheWorld.Images := DMM.iWebDark;
-  sbEbird.Images := DMM.iWebDark;
-  sbWikiaves.Images := DMM.iWebDark;
-  sbIUCNRedList.Images := DMM.iWebDark;
-  sbGBIF.Images := DMM.iWebDark;
+  pContent.Color := clDefault;
 
+  navTabs.ColorBg := clBtnFace;
+  navTabs.ColorTabActive := clBtnFace;
+  navTabs.ColorTabOver := clBtnFace;
+  navTabs.ColorTabPassive := clSolidBGBaseDark;
+  navTabs.ColorFontActive := clTextPrimaryDark;
+  navTabs.ColorFontHot := clTextPrimaryDark;
+
+  icoGoogle.Images := iButtonsDark;
+  icoGoogleImages.Images := iButtonsDark;
+  icoGoogleScholar.Images := iButtonsDark;
+  icoBirdsOfTheWorld.Images := iButtonsDark;
+  icoEbird.Images := iButtonsDark;
+  icoWikiaves.Images := iButtonsDark;
+  icoIUCN.Images := iButtonsDark;
+  icoGBIF.Images := iButtonsDark;
+
+  chartSeasonality.Color := ActiveTheme.Background.CardDefault;
+  chartSeasonality.BackColor := ActiveTheme.Background.CardDefault;
   chartSeasonality.Title.Font.Color := ActiveTheme.Foreground.TextPrimary;
   chartSeasonality.Legend.Font.Color := ActiveTheme.Foreground.TextPrimary;
   chartSeasonality.BottomAxis.Title.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
@@ -228,6 +308,8 @@ begin
   chartSeasonality.LeftAxis.Title.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
   chartSeasonality.LeftAxis.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
 
+  chartYear.Color := ActiveTheme.Background.CardDefault;
+  chartYear.BackColor := ActiveTheme.Background.CardDefault;
   chartYear.Title.Font.Color := ActiveTheme.Foreground.TextPrimary;
   chartYear.Legend.Font.Color := ActiveTheme.Foreground.TextPrimary;
   chartYear.BottomAxis.Title.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
@@ -235,20 +317,222 @@ begin
   chartYear.LeftAxis.Title.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
   chartYear.LeftAxis.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
 
+  chartNestFate.Color := ActiveTheme.Background.CardDefault;
+  chartNestFate.BackColor := ActiveTheme.Background.CardDefault;
   chartNestFate.Title.Font.Color := ActiveTheme.Foreground.TextPrimary;
   chartNestFate.Legend.Font.Color := ActiveTheme.Foreground.TextPrimary;
   NestFateSeries.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
 
-  pNestProductivity.Background.Color := ActiveTheme.Background.SolidSecondary;
-  pNestProductivity.Border.Color := ActiveTheme.Border.Default; // clSystemSolidNeutralFGDark;
+  pNestProductivityIndicator.Background.Color := ActiveTheme.Background.SolidSecondary;
+  pNestProductivityIndicator.Border.Color := ActiveTheme.Border.Control;
 
-  txtScientificName.Font.Color := ActiveTheme.Interactive.WindowTitle;
-  lblLinkCaptures.Font.Color := ActiveTheme.Interactive.Link;
-  lblLinkEggs.Font.Color := ActiveTheme.Interactive.Link;
-  lblLinkIndividuals.Font.Color := ActiveTheme.Interactive.Link;
-  lblLinkNests.Font.Color := ActiveTheme.Interactive.Link;
-  lblLinkSightings.Font.Color := ActiveTheme.Interactive.Link;
-  lblLinkSpecimens.Font.Color := ActiveTheme.Interactive.Link;
+  txtTotalRecords.Font.Color := ActiveTheme.Interactive.WindowTitle;
+
+  pTotalRecordsIndicator.Background.Color := ActiveTheme.Background.CardDefault;
+  pTotalRecordsIndicator.Border.Color := ActiveTheme.Border.Control;
+  pSightingsCountIndicator.Background.Color := ActiveTheme.Background.CardDefault;
+  pSightingsCountIndicator.Border.Color := ActiveTheme.Border.Control;
+  pIndividualsCountIndicator.Background.Color := ActiveTheme.Background.CardDefault;
+  pIndividualsCountIndicator.Border.Color := ActiveTheme.Border.Control;
+  pCapturesCountIndicator.Background.Color := ActiveTheme.Background.CardDefault;
+  pCapturesCountIndicator.Border.Color := ActiveTheme.Border.Control;
+  pSpecimensCountIndicator.Background.Color := ActiveTheme.Background.CardDefault;
+  pSpecimensCountIndicator.Border.Color := ActiveTheme.Border.Control;
+  pNestsCountIndicator.Background.Color := ActiveTheme.Background.CardDefault;
+  pNestsCountIndicator.Border.Color := ActiveTheme.Border.Control;
+  pEggsCountIndicator.Background.Color := ActiveTheme.Background.CardDefault;
+  pEggsCountIndicator.Border.Color := ActiveTheme.Border.Control;
+
+  pDistribution.Background.Color := ActiveTheme.Background.CardDefault;
+  pDistribution.Border.Color := ActiveTheme.Border.Control;
+  pSynonyms.Background.Color := ActiveTheme.Background.CardDefault;
+  pSynonyms.Border.Color := ActiveTheme.Border.Control;
+
+  chipBirdsOfTheWorld.Background.Color := ActiveTheme.Background.CardDefault;
+  chipBirdsOfTheWorld.Border.Color := ActiveTheme.Border.Control;
+  chipEbird.Background.Color := ActiveTheme.Background.CardDefault;
+  chipEbird.Border.Color := ActiveTheme.Border.Control;
+  chipGbif.Background.Color := ActiveTheme.Background.CardDefault;
+  chipGbif.Border.Color := ActiveTheme.Border.Control;
+  chipGoogle.Background.Color := ActiveTheme.Background.CardDefault;
+  chipGoogle.Border.Color := ActiveTheme.Border.Control;
+  chipGoogleImage.Background.Color := ActiveTheme.Background.CardDefault;
+  chipGoogleImage.Border.Color := ActiveTheme.Border.Control;
+  chipGoogleScholar.Background.Color := ActiveTheme.Background.CardDefault;
+  chipGoogleScholar.Border.Color := ActiveTheme.Border.Control;
+  chipIucn.Background.Color := ActiveTheme.Background.CardDefault;
+  chipIucn.Border.Color := ActiveTheme.Border.Control;
+  chipWikiaves.Background.Color := ActiveTheme.Background.CardDefault;
+  chipWikiaves.Border.Color := ActiveTheme.Border.Control;
+
+  pChartRecordsPerYear.Background.Color := ActiveTheme.Background.CardDefault;
+  pChartRecordsPerYear.Border.Color := ActiveTheme.Border.Control;
+  pChartSeasonality.Background.Color := ActiveTheme.Background.CardDefault;
+  pChartSeasonality.Border.Color := ActiveTheme.Border.Control;
+
+  pRecordsMap.Background.Color := ActiveTheme.Background.CardDefault;
+  pRecordsMap.Border.Color := ActiveTheme.Border.Control;
+  pTopLocalities.Background.Color := ActiveTheme.Background.CardDefault;
+  pTopLocalities.Border.Color := ActiveTheme.Border.Control;
+
+  pTotalNestsIndicator.Background.Color := ActiveTheme.Background.CardDefault;
+  pTotalNestsIndicator.Border.Color := ActiveTheme.Border.Control;
+  pNestProductivityIndicator.Background.Color := ActiveTheme.Background.CardDefault;
+  pNestProductivityIndicator.Border.Color := ActiveTheme.Border.Control;
+
+  pChartNestFate.Background.Color := ActiveTheme.Background.CardDefault;
+  pChartNestFate.Border.Color := ActiveTheme.Border.Control;
+  pChartNestLossCauses.Background.Color := ActiveTheme.Background.CardDefault;
+  pChartNestLossCauses.Border.Color := ActiveTheme.Border.Control;
+end;
+
+procedure TfrmTaxa.chartToolsDataPointHintTool1Hint(ATool: TDataPointHintTool; const APoint: TPoint;
+  var AHint: String);
+var
+  ASeries: TBarSeries;
+  AName: String;
+  AValue: Double;
+begin
+  if not (ATool.Series is TBarSeries) then Exit;
+  ASeries := TBarSeries(ATool.Series);
+
+  AName  := ASeries.Styles.Styles[ATool.YIndex].Text;
+  AValue := ASeries.GetYValues(ATool.PointIndex, ATool.YIndex);
+
+  AHint := Format('%s: %d', [AName, Round(AValue)]);
+  // Se quiser incluir o mês:
+  // AHint := Format('Mês %d - %s: %d', [Round(ASeries.GetXValue(ATool.PointIndex)), AName, Round(AValue)]);
+end;
+
+procedure TfrmTaxa.chipBirdsOfTheWorldClick(Sender: TObject);
+var
+  FUrlSearch: String;
+  Url: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('ebird_code').AsString);
+  Url := 'https://birdsoftheworld.org/bow/species/' + FUrlSearch;
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
+end;
+
+procedure TfrmTaxa.chipEbirdClick(Sender: TObject);
+var
+  FUrlSearch: String;
+  Url: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('ebird_code').AsString);
+  Url := 'https://ebird.org/species/' + FUrlSearch;
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
+end;
+
+procedure TfrmTaxa.chipGbifClick(Sender: TObject);
+var
+  FUrlSearch: String;
+  Url: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
+  Url := 'https://www.gbif.org/search?q=' + FUrlSearch;
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
+end;
+
+procedure TfrmTaxa.chipGoogleClick(Sender: TObject);
+var
+  FUrlSearch: String;
+  Url: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
+  Url := 'https://www.google.com/search?q="' + FUrlSearch + '"';
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
+end;
+
+procedure TfrmTaxa.chipGoogleImageClick(Sender: TObject);
+var
+  FUrlSearch: String;
+  Url: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
+  Url := 'https://www.google.com/search?tbm=isch&q="' + FUrlSearch + '"';
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
+end;
+
+procedure TfrmTaxa.chipGoogleScholarClick(Sender: TObject);
+var
+  FUrlSearch: String;
+  Url: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
+  Url := 'https://scholar.google.com/scholar?q="' + FUrlSearch + '"';
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
+end;
+
+procedure TfrmTaxa.chipIucnClick(Sender: TObject);
+var
+  FUrlSearch: String;
+  Url: String;
+begin
+  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
+  Url := 'https://www.iucnredlist.org/search?query=' + FUrlSearch;
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
+end;
+
+procedure TfrmTaxa.chipWikiavesClick(Sender: TObject);
+var
+  FUrlSearch, FVernacular: String;
+  Url: String;
+  FLang: Integer;
+begin
+  FLang := 0;
+  FVernacular := EmptyStr;
+
+  if GetRankType(dsLink.DataSet.FieldByName('rank_id').AsInteger) = trSpecies then
+  begin
+    FLang := GetKey(TBL_LANGUAGES, COL_LANGUAGE_ID, COL_LANGUAGE_NAME, rsPortuguese);
+    FVernacular := GetVernacularName(dsLink.DataSet.FieldByName('taxon_id').AsInteger, FLang);
+    FUrlSearch := HTTPEncode(RemoveDiacritics(FVernacular))
+  end
+  else
+    FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
+  Url := 'https://www.wikiaves.com.br/wiki/' + FUrlSearch;
+  if not HasInternetConnection(Url) then
+  begin
+    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
+    Exit;
+  end;
+  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.dsLinkDataChange(Sender: TObject; Field: TField);
@@ -359,6 +643,13 @@ begin
   if IsDarkModeEnabled then
     ApplyDarkMode;
 
+  navTabs.GetTabData(0).TabCaption := rsTaxonSummary;
+  navTabs.GetTabData(1).TabCaption := rsTaxonOccurrence;
+  navTabs.GetTabData(2).TabCaption := rsTaxonBreeding;
+  navTabs.GetTabData(3).TabCaption := rsTaxonCapturesAndMorphometry;
+  navTabs.GetTabData(4).TabCaption := rsTaxonEcology;
+  navTabs.GetTabData(5).TabCaption := rsTaxonQualityAndGaps;
+
   FSearch := TCustomSearch.Create(tbZooTaxa);
   FSearch.DataSet := DMG.qTaxa;
 
@@ -374,12 +665,29 @@ begin
   pEmptyQuery.AnchorSideLeft.Side := asrRight;
   pEmptyQuery.AnchorSideLeft.Control := SplitRight;
   pEmptyQuery.AnchorSideRight.Side := asrRight;
-  pEmptyQuery.AnchorSideRight.Control := pSideToolbar;
-  pEmptyQuery.AnchorSideTop.Control := gridTaxa;
+  pEmptyQuery.AnchorSideRight.Control := Self;
+  pEmptyQuery.AnchorSideTop.Side := asrTop;
+  pEmptyQuery.AnchorSideTop.Control := pContent;
   pEmptyQuery.AnchorSideBottom.Side := asrBottom;
-  pEmptyQuery.AnchorSideBottom.Control := gridTaxa;
+  pEmptyQuery.AnchorSideBottom.Control := Self;
   pEmptyQuery.Anchors := [akLeft, akRight, akTop, akBottom];
   pEmptyQuery.BringToFront;
+
+  if IsDarkModeEnabled then
+  begin
+    pHeader.Background.Color := ActiveTheme.Brand.JacarandaDeep;
+    pHeader.Border.Color := ActiveTheme.Brand.JacarandaContainer;
+  end
+  else
+  begin
+    pHeader.Background.Color := ActiveTheme.Brand.JacarandaContainer;
+    pHeader.Border.Color := ActiveTheme.Brand.JacarandaDeep;
+  end;
+  if IsDarkModeEnabled then
+    txtScientificName.Font.Color := ActiveTheme.Brand.JacarandaContainer
+  else
+    txtScientificName.Font.Color := ActiveTheme.Brand.JacarandaDeep;
+  txtAuthorship.Font.Color := ActiveTheme.Foreground.TextPrimary;
 
   mapView.CachePath := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, 'map-cache']));
   mapView.Active := True;
@@ -412,8 +720,8 @@ begin
     C := FieldByName('counter').AsInteger;
     Close;
 
-    lblLinkCaptures.Caption := Format(rsTitleCaptures + ' (%d)', [C]);
-    lblLinkCaptures.Enabled := C > 0;
+    txtCapturesCount.Caption := IntToStr(C);
+    txtCapturesCount.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -438,8 +746,8 @@ begin
     C := FieldByName('counter').AsInteger;
     Close;
 
-    lblLinkEggs.Caption := Format(rsTitleEggs + ' (%d)', [C]);
-    lblLinkEggs.Enabled := C > 0;
+    txtEggsCount.Caption := IntToStr(C);
+    txtEggsCount.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -464,8 +772,8 @@ begin
     C := FieldByName('counter').AsInteger;
     Close;
 
-    lblLinkIndividuals.Caption := Format(rsTitleIndividuals + ' (%d)', [C]);
-    lblLinkIndividuals.Enabled := C > 0;
+    txtIndividualsCount.Caption := IntToStr(C);
+    txtIndividualsCount.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -519,8 +827,8 @@ begin
     C := FieldByName('counter').AsInteger;
     Close;
 
-    lblLinkNests.Caption := Format(rsTitleNests + ' (%d)', [C]);
-    lblLinkNests.Enabled := C > 0;
+    txtNestsCount.Caption := IntToStr(C);
+    txtNestsCount.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -545,8 +853,8 @@ begin
     C := FieldByName('counter').AsInteger;
     Close;
 
-    lblLinkSightings.Caption := Format(rsTitleSightings + ' (%d)', [C]);
-    lblLinkSightings.Enabled := C > 0;
+    txtSightingsCount.Caption := IntToStr(C);
+    txtSightingsCount.Enabled := C > 0;
   finally
     FreeAndNil(Qry);
   end;
@@ -571,8 +879,150 @@ begin
     C := FieldByName('counter').AsInteger;
     Close;
 
-    lblLinkSpecimens.Caption := Format(rsTitleSpecimens + ' (%d)', [C]);
-    lblLinkSpecimens.Enabled := C > 0;
+    txtSpecimensCount.Caption := IntToStr(C);
+    txtSpecimensCount.Enabled := C > 0;
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+procedure TfrmTaxa.GetSynonyms;
+var
+  S: String;
+begin
+  S := '';
+
+  if not DMG.qSynonymTaxa.IsEmpty then
+  begin
+    DMG.qSynonymTaxa.DisableControls;
+    try
+      DMG.qSynonymTaxa.First;
+      while not DMG.qSynonymTaxa.EOF do
+      begin
+        if DMG.qSynonymTaxa.RecNo = 1 then
+          S := DMG.qSynonymTaxa.FieldByName(COL_SCIENTIFIC_NAME).AsString
+        else
+          S := S + LineEnding + DMG.qSynonymTaxa.FieldByName(COL_SCIENTIFIC_NAME).AsString;
+        DMG.qSynonymTaxa.Next;
+      end;
+    finally
+      DMG.qSynonymTaxa.EnableControls;
+    end;
+  end;
+
+  if S <> '' then
+  begin
+    txtSynonyms.Caption := S;
+    txtSynonyms.Enabled := True;
+  end
+  else
+  begin
+    txtSynonyms.Caption := rsNoSynonyms;
+    txtSynonyms.Enabled := False;
+  end;
+end;
+
+procedure TfrmTaxa.GetVernacular(const TaxonId: Integer);
+var
+  Lang, FallbackLang: TLanguageID;
+  S, IdiomaApp, MacroLang, CountryCode: string;
+  SeparadorPos: Integer;
+  Qry: TSQLQuery;
+begin
+  S := '';
+  FallbackLang.LanguageCode := 'en';
+
+  txtVernacularLang.Visible := False;
+  txtVernacularNames.Visible := False;
+  txtVernacularDiv.Visible := False;
+
+  Lang := GetLanguageID;
+
+  MacroLang := Lang.LanguageCode;
+  CountryCode := Lang.CountryCode;
+
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+
+    if LowerCase(MacroLang) <> 'en' then
+    begin
+      SQL.Text :=
+        'SELECT v.vernacular_name ' +
+        'FROM zoo_vernacular v ' +
+        'INNER JOIN languages l ON v.language_id = l.language_id ' +
+        'WHERE v.taxon_id = :TaxonId ' +
+        '  AND l.macrolanguage_code = :MacroLang ' +
+        '  AND v.active_status = 1 ' +
+        '  AND l.active_status = 1 ' +
+        'ORDER BY ' +
+        '  CASE WHEN l.country_code = :CountryCode THEN 0 ELSE 1 END ASC, ' +
+        '  v.preferred DESC ' +
+        'LIMIT 1';
+
+      ParamByName('TaxonId').AsInteger := TaxonId;
+      ParamByName('MacroLang').AsString := LowerCase(MacroLang);
+      ParamByName('CountryCode').AsString := UpperCase(CountryCode);
+
+      try
+        Open;
+
+        if not EOF then
+          S := FieldByName('vernacular_name').AsString;
+      finally
+        Close;
+      end;
+
+      if S <> '' then
+      begin
+        if CountryCode <> '' then
+          txtVernacularLang.Caption := UpperCase(Format('%s-%s', [MacroLang, CountryCode]))
+        else
+          txtVernacularLang.Caption := UpperCase(MacroLang);
+        txtVernacularLang.Visible := True;
+        txtVernacularNames.Caption := S;
+        txtVernacularNames.Visible := True;
+        txtVernacularDiv.Visible := True;
+      end;
+    end;
+
+    txtEnglishNames.Caption := GetVernacularNameFallback(TaxonId);
+
+  finally
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TfrmTaxa.GetVernacularNameFallback(const TaxonId: Integer): string;
+var
+  Qry: TSQLQuery;
+begin
+  Result := '';
+  Qry := TSQLQuery.Create(nil);
+  with Qry, SQL do
+  try
+    SQLConnection := DMM.sqlCon;
+    SQLTransaction := DMM.sqlTrans;
+
+    SQL.Text :=
+      'SELECT vernacular_name FROM zoo_vernacular ' +
+      'WHERE taxon_id = :TaxonId AND active_status = 1 ' +
+      'ORDER BY preferred DESC LIMIT 1';
+
+    ParamByName('TaxonId').AsInteger := TaxonId;
+
+    try
+      Open;
+      if not EOF then
+        Result := FieldByName('vernacular_name').AsString
+      else
+        Result := ''; // Ou você pode buscar o nome científico da tabela zoo_taxa
+    finally
+      Close;
+    end;
+
   finally
     FreeAndNil(Qry);
   end;
@@ -638,42 +1088,6 @@ begin
       //    TDBGrid(Sender).Canvas.Font.Color := $00646464;
     end;
   end;
-end;
-
-procedure TfrmTaxa.lblLinkCapturesClick(Sender: TObject);
-begin
-  frmMain.actOpenCapturesExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
-end;
-
-procedure TfrmTaxa.lblLinkEggsClick(Sender: TObject);
-begin
-  frmMain.actOpenEggsExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
-end;
-
-procedure TfrmTaxa.lblLinkIndividualsClick(Sender: TObject);
-begin
-  frmMain.actOpenIndividualsExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
-end;
-
-procedure TfrmTaxa.lblLinkNestsClick(Sender: TObject);
-begin
-  frmMain.actOpenNestsExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
-end;
-
-procedure TfrmTaxa.lblLinkSightingsClick(Sender: TObject);
-begin
-  frmMain.actOpenSightingsExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
-end;
-
-procedure TfrmTaxa.lblLinkSpecimensClick(Sender: TObject);
-begin
-  frmMain.actOpenSpecimensExecute(nil);
-  frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
 end;
 
 procedure TfrmTaxa.LoadMonthlyChart;
@@ -812,49 +1226,59 @@ var
   Qry: TSQLQuery;
   L, S, U: Integer;
 begin
-  DMT.lcsNestFate.Clear;
-  L := 0;
-  S := 0;
-  U := 0;
-
-  Qry := TSQLQuery.Create(nil);
-  with Qry, SQL do
+  chartNestFate.DisableRedrawing;
   try
-    SQLConnection := DMM.sqlCon;
-    SQLTransaction := DMM.sqlTrans;
+    DMT.lcsNestFate.Clear;
+    L := 0;
+    S := 0;
+    U := 0;
 
-    // Load monthly counts
-    Clear;
-    Add('SELECT nest_fate, count(*) AS counter FROM nests');
-    Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
-    Add('GROUP BY nest_fate');
-    Add('ORDER BY nest_fate');
+    Qry := TSQLQuery.Create(nil);
+    with Qry, SQL do
+    try
+      SQLConnection := DMM.sqlCon;
+      SQLTransaction := DMM.sqlTrans;
 
-    ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
-    Open;
-    if RecordCount > 0 then
-    begin
-      First;
-      while not EOF do
+      // Load monthly counts
+      Clear;
+      Add('SELECT nest_fate, count(*) AS counter FROM nests');
+      Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1)');
+      Add('GROUP BY nest_fate');
+      Add('ORDER BY nest_fate');
+
+      ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
+      Open;
+      if RecordCount > 0 then
       begin
-        case FieldByName('nest_fate').AsString of
-          'L': L := FieldByName('counter').AsInteger;
-          'S': S := FieldByName('counter').AsInteger;
-          'U': U := FieldByName('counter').AsInteger;
+        First;
+        while not EOF do
+        begin
+          case FieldByName('nest_fate').AsString of
+            'L': L := FieldByName('counter').AsInteger;
+            'S': S := FieldByName('counter').AsInteger;
+            'U': U := FieldByName('counter').AsInteger;
+          end;
+
+          Next;
         end;
 
-        Next;
+        // Colors are set per item, so zero-value fates can be skipped without shifting colors
+        if L > 0 then
+          DMT.lcsNestFate.Add(0, L, rsNestLost, ChartSeriesColor(3));
+        if S > 0 then
+          DMT.lcsNestFate.Add(0, S, rsNestSuccess, ChartSeriesColor(7));
+        if U > 0 then
+          DMT.lcsNestFate.Add(0, U, rsNestUnknown, ActiveTheme.ChartOthers);
       end;
+      Close;
 
-      // Adicionar ao ChartSource
-      DMT.lcsNestFate.Add(0, L, rsNestLost, clRedBG1Light);
-      DMT.lcsNestFate.Add(0, S, rsNestSuccess, clYellowBGLight);
-      DMT.lcsNestFate.Add(0, U, rsNestUnknown, clSilver);
+    finally
+      FreeAndNil(Qry);
     end;
-    Close;
 
   finally
-    FreeAndNil(Qry);
+    chartNestFate.EnableRedrawing;
+    chartNestFate.Refresh;
   end;
 end;
 
@@ -942,11 +1366,16 @@ var
   RecordTypeIndex, i: Integer;
   RecordTypeMap: specialize TFPGMap<String, Integer>;
   FCounts: TChartCounts;
+  Zeros: TChartCounts;
+  MinYear, MaxYear, y: Integer;
+const
+  MinSpan = 5;
 begin
   DMT.lcsYearly.Clear;
 
   // Initialize the maps
   YearData := specialize TFPGMap<Integer, TChartCounts>.Create;
+  YearData.Sorted := True;
   RecordTypeMap := specialize TFPGMap<String, Integer>.Create;
 
   // Map record_type to indexes
@@ -1057,6 +1486,41 @@ begin
     end;
     Close;
 
+    if YearData.Count > 0 then
+    begin
+      // Intervalo real dos dados
+      MinYear := YearData.Keys[0];
+      MaxYear := YearData.Keys[YearData.Count - 1];
+
+      // Garante um número mínimo de "slots" no eixo
+      if (MaxYear - MinYear + 1) < MinSpan then
+        MinYear := MaxYear - MinSpan + 1;
+
+      // Adiciona TODOS os anos do intervalo, preenchendo com zero os que não têm dados
+      for y := MinYear to MaxYear do
+      begin
+        if YearData.TryGetData(y, FCounts) then
+          DMT.lcsYearly.AddXYList(y, FCounts.YValues)
+        else
+        begin
+          SetLength(Zeros.YValues, RecordTypeMap.Count);
+          FillChar(Zeros.YValues[0], Length(Zeros.YValues) * SizeOf(Double), 0);
+          DMT.lcsYearly.AddXYList(y, Zeros.YValues);
+        end;
+      end;
+
+      chartYear.Extent.UseXMin := True;
+      chartYear.Extent.XMin := MinYear - 0.5;
+      chartYear.Extent.UseXMax := True;
+      chartYear.Extent.XMax := MaxYear + 0.5;
+    end
+    else
+    begin
+      // Sem dados: eixo vazio, mas com extensão fixa para não quebrar o layout
+      chartYear.Extent.UseXMin := False;
+      chartYear.Extent.UseXMax := False;
+    end;
+
   finally
     FreeAndNil(Qry);
     RecordTypeMap.Free;
@@ -1129,6 +1593,11 @@ begin
   ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
 end;
 
+procedure TfrmTaxa.navTabsTabClick(Sender: TObject);
+begin
+  nbContent.PageIndex := navTabs.TabIndex;
+end;
+
 function TfrmTaxa.OccurrInBrazil(aTaxonId: Integer): Boolean;
 var
   BrazilId: Integer;
@@ -1155,25 +1624,64 @@ begin
   end;
 end;
 
+procedure TfrmTaxa.pCapturesCountIndicatorClick(Sender: TObject);
+begin
+  if txtCapturesCount.Enabled then
+  begin
+    frmMain.actOpenCapturesExecute(nil);
+    frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
+  end;
+end;
+
+procedure TfrmTaxa.pEggsCountIndicatorClick(Sender: TObject);
+begin
+  if txtEggsCount.Enabled then
+  begin
+    frmMain.actOpenEggsExecute(nil);
+    frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
+  end;
+end;
+
+procedure TfrmTaxa.pIndividualsCountIndicatorClick(Sender: TObject);
+begin
+  if txtIndividualsCount.Enabled then
+  begin
+    frmMain.actOpenIndividualsExecute(nil);
+    frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
+  end;
+end;
+
 procedure TfrmTaxa.pmfShowRecordedTaxaClick(Sender: TObject);
 begin
   TimerFind.Enabled := False;
   TimerFind.Enabled := True;
 end;
 
-procedure TfrmTaxa.sbBirdsOfTheWorldClick(Sender: TObject);
-var
-  FUrlSearch: String;
-  Url: String;
+procedure TfrmTaxa.pNestsCountIndicatorClick(Sender: TObject);
 begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('ebird_code').AsString);
-  Url := 'https://birdsoftheworld.org/bow/species/' + FUrlSearch;
-  if not HasInternetConnection(Url) then
+  if txtNestsCount.Enabled then
   begin
-    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
-    Exit;
+    frmMain.actOpenNestsExecute(nil);
+    frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
   end;
-  OpenUrl(Url);
+end;
+
+procedure TfrmTaxa.pSightingsCountIndicatorClick(Sender: TObject);
+begin
+  if txtSightingsCount.Enabled then
+  begin
+    frmMain.actOpenSightingsExecute(nil);
+    frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
+  end;
+end;
+
+procedure TfrmTaxa.pSpecimensCountIndicatorClick(Sender: TObject);
+begin
+  if txtSpecimensCount.Enabled then
+  begin
+    frmMain.actOpenSpecimensExecute(nil);
+    frmMain.eSearch.Text := dsLink.DataSet.FieldByName('scientific_name').AsString;
+  end;
 end;
 
 procedure TfrmTaxa.sbClearSearchClick(Sender: TObject);
@@ -1181,21 +1689,6 @@ begin
   eSearch.Clear;
   if eSearch.CanSetFocus then
     eSearch.SetFocus;
-end;
-
-procedure TfrmTaxa.sbEbirdClick(Sender: TObject);
-var
-  FUrlSearch: String;
-  Url: String;
-begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('ebird_code').AsString);
-  Url := 'https://ebird.org/species/' + FUrlSearch;
-  if not HasInternetConnection(Url) then
-  begin
-    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
-    Exit;
-  end;
-  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.sbEmptyClearAllClick(Sender: TObject);
@@ -1208,81 +1701,6 @@ procedure TfrmTaxa.sbEmptyGotoSearchClick(Sender: TObject);
 begin
   if eSearch.CanSetFocus then
     eSearch.SetFocus;
-end;
-
-procedure TfrmTaxa.sbGBIFClick(Sender: TObject);
-var
-  FUrlSearch: String;
-  Url: String;
-begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  Url := 'https://www.gbif.org/search?q=' + FUrlSearch;
-  if not HasInternetConnection(Url) then
-  begin
-    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
-    Exit;
-  end;
-  OpenUrl(Url);
-end;
-
-procedure TfrmTaxa.sbGoogleImagesClick(Sender: TObject);
-var
-  FUrlSearch: String;
-  Url: String;
-begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  Url := 'https://www.google.com/search?tbm=isch&q="' + FUrlSearch + '"';
-  if not HasInternetConnection(Url) then
-  begin
-    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
-    Exit;
-  end;
-  OpenUrl(Url);
-end;
-
-procedure TfrmTaxa.sbGoogleScholarClick(Sender: TObject);
-var
-  FUrlSearch: String;
-  Url: String;
-begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  Url := 'https://scholar.google.com/scholar?q="' + FUrlSearch + '"';
-  if not HasInternetConnection(Url) then
-  begin
-    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
-    Exit;
-  end;
-  OpenUrl(Url);
-end;
-
-procedure TfrmTaxa.sbGoogleSearchClick(Sender: TObject);
-var
-  FUrlSearch: String;
-  Url: String;
-begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  Url := 'https://www.google.com/search?q="' + FUrlSearch + '"';
-  if not HasInternetConnection(Url) then
-  begin
-    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
-    Exit;
-  end;
-  OpenUrl(Url);
-end;
-
-procedure TfrmTaxa.sbIUCNRedListClick(Sender: TObject);
-var
-  FUrlSearch: String;
-  Url: String;
-begin
-  FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  Url := 'https://www.iucnredlist.org/search?query=' + FUrlSearch;
-  if not HasInternetConnection(Url) then
-  begin
-    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
-    Exit;
-  end;
-  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.sbOptionsSearchClick(Sender: TObject);
@@ -1300,32 +1718,6 @@ end;
 procedure TfrmTaxa.sbShareRecordsClick(Sender: TObject);
 begin
   ExportDlg(dsLink.DataSet);
-end;
-
-procedure TfrmTaxa.sbWikiavesClick(Sender: TObject);
-var
-  FUrlSearch, FVernacular: String;
-  Url: String;
-  FLang: Integer;
-begin
-  FLang := 0;
-  FVernacular := EmptyStr;
-
-  if GetRankType(dsLink.DataSet.FieldByName('rank_id').AsInteger) = trSpecies then
-  begin
-    FLang := GetKey(TBL_LANGUAGES, COL_LANGUAGE_ID, COL_LANGUAGE_NAME, rsPortuguese);
-    FVernacular := GetVernacularName(dsLink.DataSet.FieldByName('taxon_id').AsInteger, FLang);
-    FUrlSearch := HTTPEncode(RemoveDiacritics(FVernacular))
-  end
-  else
-    FUrlSearch := HTTPEncode(dsLink.DataSet.FieldByName('scientific_name').AsString);
-  Url := 'https://www.wikiaves.com.br/wiki/' + FUrlSearch;
-  if not HasInternetConnection(Url) then
-  begin
-    MsgDlg(rsTitleNoInternetConnection, rsErrorNoInternetConnection, mtWarning);
-    Exit;
-  end;
-  OpenUrl(Url);
 end;
 
 procedure TfrmTaxa.scrollDataMouseWheel
@@ -1467,51 +1859,112 @@ end;
 
 procedure TfrmTaxa.TimerDataTimer(Sender: TObject);
 var
-  nOrder, nFamily, nGenus, nSpecies, nGroup: TTreeNode;
   aRank: TZooRank;
+  sBreadcrumb: String;
+  Lang: String;
+  N, NSightings, NIndividuals, NCaptures, NSpecimens, NNests, NEggs: Integer;
 begin
   TimerData.Enabled := False;
 
-  aRank := GetRankType(DMG.qTaxa.FieldByName('rank_id').AsInteger);
-  if aRank >= trSuperGenus then
-    txtScientificName.Font.Style := [fsItalic]
-  else
-    txtScientificName.Font.Style := [fsBold];
+  pHeader.DisableAlign;
+  try
+    aRank := GetRankType(DMG.qTaxa.FieldByName('rank_id').AsInteger);
+    if aRank >= trSuperGenus then
+      txtScientificName.Font.Style := [fsItalic]
+    else
+      txtScientificName.Font.Style := [fsBold];
 
-  case DMG.qTaxa.FieldByName('iucn_status').AsString of
-    'LC': imgConservation.ImageIndex := 1;
-    'NT': imgConservation.ImageIndex := 2;
-    'VU': imgConservation.ImageIndex := 3;
-    'EN': imgConservation.ImageIndex := 4;
-    'CR': imgConservation.ImageIndex := 5;
-    'EW': imgConservation.ImageIndex := 6;
-    'EX': imgConservation.ImageIndex := 7;
-    'DD': imgConservation.ImageIndex := 8;
-  else
-    imgConservation.ImageIndex := 0;
-  end;
-
-  tvHierarchy.Items.Clear;
-  if dsLink.DataSet.FieldByName('order_id').AsInteger > 0 then
-  begin
-    nOrder := tvHierarchy.Items.Add(nil, GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('order_id').AsInteger));
-    if dsLink.DataSet.FieldByName('family_id').AsInteger > 0 then
-    begin
-      nFamily := tvHierarchy.Items.AddChild(nOrder, GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('family_id').AsInteger));
-      if dsLink.DataSet.FieldByName('genus_id').AsInteger > 0 then
+    case DMG.qTaxa.FieldByName('iucn_status').AsString of
+      'LC':
       begin
-        nGenus := tvHierarchy.Items.AddChild(nFamily, GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('genus_id').AsInteger));
-        if dsLink.DataSet.FieldByName('species_id').AsInteger > 0 then
+        chipConservationStatus.Background.Color := ActiveTheme.System.SuccessBG;
+        chipConservationStatus.Border.Color := ActiveTheme.System.SuccessFG;
+        txtConservationStatus.Font.Color := ActiveTheme.System.SuccessSolid;
+        txtConservationStatus.Caption := 'LC - ' + rsLeastConcern;
+      end;
+      'NT':
+      begin
+        chipConservationStatus.Background.Color := ActiveTheme.System.CautionBG;
+        chipConservationStatus.Border.Color := ActiveTheme.System.CautionFG;
+        txtConservationStatus.Font.Color := ActiveTheme.System.CautionSolid;
+        txtConservationStatus.Caption := 'NT - ' + rsNearThreatened;
+      end;
+      'VU':
+      begin
+        chipConservationStatus.Background.Color := ActiveTheme.System.MediumBG;
+        chipConservationStatus.Border.Color := ActiveTheme.System.MediumFG;
+        txtConservationStatus.Font.Color := ActiveTheme.System.MediumFG;
+        txtConservationStatus.Caption := 'VU - ' + rsVulnerable;
+      end;
+      'EN':
+      begin
+        chipConservationStatus.Background.Color := ActiveTheme.Categorical.RosaOrquidea.Background;
+        chipConservationStatus.Border.Color := ActiveTheme.Categorical.RosaOrquidea.Foreground;
+        txtConservationStatus.Font.Color := ActiveTheme.Categorical.RosaOrquidea.Foreground;
+        txtConservationStatus.Caption := 'EN - ' + rsEndangered;
+      end;
+      'CR':
+      begin
+        chipConservationStatus.Background.Color := ActiveTheme.System.CriticalBG;
+        chipConservationStatus.Border.Color := ActiveTheme.System.CriticalFG;
+        txtConservationStatus.Font.Color := ActiveTheme.System.CriticalSolid;
+        txtConservationStatus.Caption := 'CR - ' + rsCriticallyEndangered;
+      end;
+      'EW':
+      begin
+        chipConservationStatus.Background.Color := ActiveTheme.AccentPalette.Base;
+        chipConservationStatus.Border.Color := ActiveTheme.AccentPalette.Dark2;
+        txtConservationStatus.Font.Color := ActiveTheme.AccentPalette.Dark3;
+        txtConservationStatus.Caption := 'EW - ' + rsExtinctInTheWild;
+      end;
+      'EX':
+      begin
+        chipConservationStatus.Background.Color := ActiveTheme.Foreground.TextPrimary;
+        chipConservationStatus.Border.Color := ActiveTheme.Border.Control;
+        txtConservationStatus.Font.Color := ActiveTheme.Foreground.TextOnAccentPrimary;
+        txtConservationStatus.Caption := 'EX - ' + rsExtinct;
+      end;
+      'DD':
+      begin
+        chipConservationStatus.Background.Color := ActiveTheme.Categorical.Outros.Background;
+        chipConservationStatus.Border.Color := ActiveTheme.Categorical.Outros.Foreground;
+        txtConservationStatus.Font.Color := ActiveTheme.Categorical.Outros.Foreground;
+        txtConservationStatus.Caption := 'DD - ' + rsDataDeficient;
+      end
+    else
+      chipConservationStatus.Background.Color := ActiveTheme.Categorical.Outros.Background;
+      chipConservationStatus.Border.Color := ActiveTheme.Categorical.Outros.Foreground;
+      txtConservationStatus.Font.Color := ActiveTheme.Categorical.Outros.Foreground;
+      txtConservationStatus.Caption := 'NE - ' + rsNotEvaluated;
+    end;
+    chipConservationStatus.ParentBackground := True;
+
+    GetVernacular(dsLink.DataSet.FieldByName('taxon_id').AsInteger);
+
+    sBreadcrumb := '';
+    if dsLink.DataSet.FieldByName('order_id').AsInteger > 0 then
+    begin
+      sBreadcrumb := GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('order_id').AsInteger);
+      if (dsLink.DataSet.FieldByName('family_id').AsInteger > 0) and (aRank > trFamily) then
+      begin
+        sBreadcrumb := sBreadcrumb + ' › ' + GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('family_id').AsInteger);
+        if (dsLink.DataSet.FieldByName('genus_id').AsInteger > 0) and (aRank > trGenus) then
         begin
-          nSpecies := tvHierarchy.Items.AddChild(nGenus, GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('species_id').AsInteger));
-          if dsLink.DataSet.FieldByName('subspecies_group_id').AsInteger > 0 then
+          sBreadcrumb := sBreadcrumb + ' › ' + GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('genus_id').AsInteger);
+          if (dsLink.DataSet.FieldByName('species_id').AsInteger > 0) and (aRank > trSpecies) then
           begin
-            nGroup := tvHierarchy.Items.AddChild(nSpecies, GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('subspecies_group_id').AsInteger));
+            sBreadcrumb := sBreadcrumb + ' › ' + GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('species_id').AsInteger);
+            if (dsLink.DataSet.FieldByName('subspecies_group_id').AsInteger > 0) and (aRank > trSubspecies) then
+            begin
+              sBreadcrumb := sBreadcrumb + ' › ' + GetName(TBL_ZOO_TAXA, COL_SCIENTIFIC_NAME, COL_TAXON_ID, dsLink.DataSet.FieldByName('subspecies_group_id').AsInteger);
+            end;
           end;
         end;
       end;
     end;
-    tvHierarchy.FullExpand;
+    txtHierarchy.Caption := sBreadcrumb;
+  finally
+    pHeader.EnableAlign;
   end;
 
   if dsLink.DataSet.RecordCount > 0 then
@@ -1533,15 +1986,46 @@ begin
     dsChilds.DataSet.Refresh;
   end;
 
-  GetSightingsCount;
-  GetIndividualsCount;
-  GetCapturesCount;
-  GetSpecimensCount;
-  GetNestsCount;
-  GetEggsCount;
+  pSummaryIndicators.DisableAlign;
+  try
+    GetSightingsCount;
+    GetIndividualsCount;
+    GetCapturesCount;
+    GetSpecimensCount;
+    GetNestsCount;
+    GetEggsCount;
 
-  sbWikiaves.Visible := OccurrInBrazil(dsLink.DataSet.FieldByName('taxon_id').AsInteger);
-  sbBirdsOfTheWorld.Visible := dsLink.DataSet.FieldByName('ebird_code').AsString <> EmptyStr;
+    NSightings := StrToIntDef(txtSightingsCount.Caption, 0);
+    NIndividuals := StrToIntDef(txtIndividualsCount.Caption, 0);
+    NCaptures := StrToIntDef(txtCapturesCount.Caption, 0);
+    NSpecimens := StrToIntDef(txtSpecimensCount.Caption, 0);
+    NNests := StrToIntDef(txtNestsCount.Caption, 0);
+    NEggs := StrToIntDef(txtEggsCount.Caption, 0);
+    N := NSightings + NIndividuals + NCaptures + NSpecimens + NNests + NEggs;
+    txtTotalRecords.Caption := IntToStr(N);
+    txtTotalNests.Caption := IntToStr(NNests);
+  finally
+    pSummaryIndicators.EnableAlign;
+  end;
+
+  pSynonyms.DisableAlign;
+  try
+    GetSynonyms;
+    if aRank >= trSuperGenus then
+      txtSynonyms.Font.Style := [fsItalic]
+    else
+      txtSynonyms.Font.Style := [];
+  finally
+    pSynonyms.EnableAlign;
+  end;
+
+  pExternalLinks.DisableAlign;
+  try
+    chipWikiaves.Visible := OccurrInBrazil(dsLink.DataSet.FieldByName('taxon_id').AsInteger);
+    chipBirdsOfTheWorld.Visible := dsLink.DataSet.FieldByName('ebird_code').AsString <> EmptyStr;
+  finally
+    pExternalLinks.EnableAlign;
+  end;
 
   LoadRecordsMap;
 

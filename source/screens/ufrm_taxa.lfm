@@ -7,70 +7,38 @@ object frmTaxa: TfrmTaxa
   ClientHeight = 636
   ClientWidth = 1179
   Color = clWindow
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyPress = FormKeyPress
   OnResize = FormResize
   OnShow = FormShow
-  object gridTaxa: TDBGrid
+  object pTaxonList: TPanel
     AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = pTop
-    AnchorSideTop.Side = asrBottom
+    AnchorSideTop.Control = Owner
     AnchorSideRight.Control = SplitRight
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 0
-    Height = 584
-    Top = 52
+    Height = 636
+    Top = 0
     Width = 320
     Anchors = [akTop, akLeft, akRight, akBottom]
-    AutoFillColumns = True
-    Color = clWindow
-    Columns = <    
-      item
-        Title.Caption = 'Taxon'
-        Width = 287
-        FieldName = 'scientific_name'
-      end    
-      item
-        Title.Caption = 'Rank ID'
-        Width = 0
-        Visible = False
-        FieldName = 'rank_id'
-      end>
-    DataSource = dsLink
-    Options = [dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
-    TabOrder = 0
-    TitleStyle = tsNative
-    OnMouseWheel = gridTaxaMouseWheel
-    OnPrepareCanvas = gridTaxaPrepareCanvas
-  end
-  object pTop: TPanel
-    AnchorSideLeft.Control = Owner
-    AnchorSideTop.Control = Owner
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    Left = 0
-    Height = 52
-    Top = 0
-    Width = 1179
-    Anchors = [akTop, akLeft, akRight]
     BevelOuter = bvNone
-    ClientHeight = 52
-    ClientWidth = 1179
-    Color = clWindow
+    ClientHeight = 636
+    ClientWidth = 320
     ParentBackground = False
-    ParentColor = False
-    TabOrder = 1
+    TabOrder = 3
     object pSearch: TBCPanel
-      AnchorSideLeft.Control = pTop
-      AnchorSideTop.Control = pTop
-      AnchorSideTop.Side = asrCenter
+      AnchorSideLeft.Control = pTaxonList
+      AnchorSideTop.Control = pTaxonList
+      AnchorSideRight.Control = pTaxonList
+      AnchorSideRight.Side = asrBottom
       Left = 16
       Height = 29
-      Top = 12
+      Top = 10
       Width = 288
+      Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Left = 16
       BorderSpacing.Top = 10
       BorderSpacing.Right = 16
@@ -239,23 +207,91 @@ object frmTaxa: TfrmTaxa
         StateDisabled.BorderWidth = 0
       end
     end
-    object pToolbar: TBCPanel
-      AnchorSideLeft.Control = pSearch
-      AnchorSideLeft.Side = asrBottom
-      AnchorSideTop.Control = pTop
-      AnchorSideTop.Side = asrCenter
-      AnchorSideRight.Control = pTop
+    object gridTaxa: TDBGrid
+      AnchorSideLeft.Control = pTaxonList
+      AnchorSideTop.Control = pSearch
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = pTaxonList
       AnchorSideRight.Side = asrBottom
-      Left = 320
-      Height = 49
-      Top = 2
-      Width = 859
+      AnchorSideBottom.Control = pTaxonList
+      AnchorSideBottom.Side = asrBottom
+      Left = 0
+      Height = 587
+      Top = 49
+      Width = 320
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      AutoFillColumns = True
+      Color = clWindow
+      Columns = <      
+        item
+          Title.Caption = 'Taxon'
+          Width = 287
+          FieldName = 'scientific_name'
+        end      
+        item
+          Title.Caption = 'Rank ID'
+          Width = 0
+          Visible = False
+          FieldName = 'rank_id'
+        end>
+      DataSource = dsLink
+      Options = [dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+      TabOrder = 1
+      TitleStyle = tsNative
+      OnMouseWheel = gridTaxaMouseWheel
+      OnPrepareCanvas = gridTaxaPrepareCanvas
+    end
+  end
+  object SplitRight: TSplitter
+    AnchorSideTop.Control = Owner
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 320
+    Height = 636
+    Top = 0
+    Width = 6
+    Align = alNone
+    Anchors = [akTop, akBottom]
+    ResizeStyle = rsLine
+    OnMoved = SplitRightMoved
+  end
+  object pContent: TPanel
+    AnchorSideLeft.Control = SplitRight
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 326
+    Height = 636
+    Top = 0
+    Width = 853
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BevelOuter = bvNone
+    ClientHeight = 636
+    ClientWidth = 853
+    Color = 16382457
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object pHeader: TBCPanel
+      AnchorSideLeft.Control = pContent
+      AnchorSideTop.Control = pContent
+      AnchorSideRight.Control = pContent
+      AnchorSideRight.Side = asrBottom
+      Left = 16
+      Height = 170
+      Top = 16
+      Width = 821
       Anchors = [akTop, akLeft, akRight]
+      AutoSize = True
       BorderSpacing.Left = 16
       BorderSpacing.Top = 16
+      BorderSpacing.Right = 16
       ChildSizing.LeftRightSpacing = 16
-      ChildSizing.TopBottomSpacing = 8
-      Background.Color = 15987699
+      ChildSizing.TopBottomSpacing = 16
+      Background.Color = clBtnFace
       Background.Gradient1.StartColor = clWhite
       Background.Gradient1.EndColor = clBlack
       Background.Gradient1.GradientType = gtLinear
@@ -274,8 +310,7 @@ object frmTaxa: TfrmTaxa
       Background.Style = bbsColor
       BevelInner = bvNone
       BevelOuter = bvNone
-      BevelWidth = 0
-      Border.Color = 13750737
+      BevelWidth = 1
       Border.Style = bboSolid
       BorderBCStyle = bpsBorder
       FontEx.Color = clDefault
@@ -286,964 +321,2760 @@ object frmTaxa: TfrmTaxa
       FontEx.ShadowOffsetY = 5
       FontEx.Style = []
       ParentBackground = False
-      Rounding.RoundX = 8
-      Rounding.RoundY = 8
-      TabOrder = 1
-      object sbShareRecords: TSpeedButton
-        AnchorSideLeft.Control = pToolbar
-        AnchorSideTop.Control = pToolbar
-        AnchorSideTop.Side = asrCenter
-        Left = 16
-        Height = 34
-        Hint = 'Export records'
-        Top = 7
-        Width = 34
-        AutoSize = True
-        BorderSpacing.Right = 20
-        DisabledImageIndex = 13
-        Enabled = False
-        Flat = True
-        Images = iButtons
-        ImageIndex = 12
-        ImageWidth = 24
-        ShowHint = True
-        ParentShowHint = False
-        OnClick = sbShareRecordsClick
-      end
-      object sbPrint: TSpeedButton
-        AnchorSideLeft.Control = sbShareRecords
-        AnchorSideLeft.Side = asrBottom
-        AnchorSideTop.Control = pToolbar
-        AnchorSideTop.Side = asrCenter
-        Left = 70
-        Height = 34
-        Hint = 'Print records'
-        Top = 7
-        Width = 34
-        AutoSize = True
-        BorderSpacing.Right = 20
-        DisabledImageIndex = 94
-        Enabled = False
-        Flat = True
-        Images = iButtons
-        ImageIndex = 93
-        ImageWidth = 24
-        ShowHint = True
-        ParentShowHint = False
-        OnClick = sbPrintClick
-      end
-    end
-  end
-  object pSideToolbar: TPanel
-    AnchorSideTop.Control = pTop
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = Owner
-    AnchorSideRight.Side = asrBottom
-    AnchorSideBottom.Control = Owner
-    AnchorSideBottom.Side = asrBottom
-    Left = 1129
-    Height = 584
-    Top = 52
-    Width = 50
-    Anchors = [akTop, akRight, akBottom]
-    AutoSize = True
-    BevelOuter = bvNone
-    ChildSizing.LeftRightSpacing = 8
-    ChildSizing.TopBottomSpacing = 16
-    ChildSizing.VerticalSpacing = 8
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
-    ChildSizing.ControlsPerLine = 1
-    ClientHeight = 584
-    ClientWidth = 50
-    Color = clWindow
-    ParentBackground = False
-    ParentColor = False
-    TabOrder = 2
-    object sbGoogleSearch: TSpeedButton
-      Tag = 1
-      Left = 8
-      Height = 34
-      Hint = 'Googe Search'
-      Top = 16
-      Width = 34
-      AllowAllUp = True
-      AutoSize = True
-      DisabledImageIndex = 41
-      Flat = True
-      Images = DMM.iWeb
-      ImageIndex = 0
-      ImageWidth = 24
-      ShowCaption = False
-      ShowHint = True
-      ParentShowHint = False
-      OnClick = sbGoogleSearchClick
-    end
-    object sbGoogleImages: TSpeedButton
-      Tag = 2
-      Left = 8
-      Height = 34
-      Hint = 'Google Images'
-      Top = 58
-      Width = 34
-      AllowAllUp = True
-      AutoSize = True
-      DisabledImageIndex = 47
-      Flat = True
-      Images = DMM.iWeb
-      ImageIndex = 0
-      ImageWidth = 24
-      ShowCaption = False
-      ShowHint = True
-      ParentShowHint = False
-      OnClick = sbGoogleImagesClick
-    end
-    object sbGoogleScholar: TSpeedButton
-      Tag = 3
-      Left = 8
-      Height = 34
-      Hint = 'Google Scholar'
-      Top = 100
-      Width = 34
-      AllowAllUp = True
-      AutoSize = True
-      DisabledImageIndex = 57
-      Flat = True
-      Images = DMM.iWeb
-      ImageIndex = 1
-      ImageWidth = 24
-      ShowCaption = False
-      ShowHint = True
-      ParentShowHint = False
-      OnClick = sbGoogleScholarClick
-    end
-    object sbBirdsOfTheWorld: TSpeedButton
-      Tag = 4
-      Left = 8
-      Height = 34
-      Hint = 'Birds of the World'
-      Top = 142
-      Width = 34
-      AllowAllUp = True
-      AutoSize = True
-      DisabledImageIndex = 39
-      Flat = True
-      Images = DMM.iWeb
-      ImageIndex = 2
-      ImageWidth = 24
-      ShowCaption = False
-      ShowHint = True
-      ParentShowHint = False
-      OnClick = sbBirdsOfTheWorldClick
-    end
-    object sbEbird: TSpeedButton
-      Tag = 4
-      Left = 8
-      Height = 34
-      Hint = 'eBird'
-      Top = 184
-      Width = 34
-      AllowAllUp = True
-      AutoSize = True
-      DisabledImageIndex = 39
-      Flat = True
-      Images = DMM.iWeb
-      ImageIndex = 3
-      ImageWidth = 24
-      ShowCaption = False
-      ShowHint = True
-      ParentShowHint = False
-      OnClick = sbEbirdClick
-    end
-    object sbWikiaves: TSpeedButton
-      Tag = 8
-      Left = 8
-      Height = 34
-      Hint = 'WikiAves'
-      Top = 226
-      Width = 34
-      AllowAllUp = True
-      AutoSize = True
-      DisabledImageIndex = 90
-      Flat = True
-      Images = DMM.iWeb
-      ImageIndex = 4
-      ImageWidth = 24
-      ShowCaption = False
-      ShowHint = True
-      ParentShowHint = False
-      OnClick = sbWikiavesClick
-    end
-    object sbIUCNRedList: TSpeedButton
-      Tag = 8
-      Left = 8
-      Height = 34
-      Hint = 'IUCN Red List'
-      Top = 268
-      Width = 34
-      AllowAllUp = True
-      AutoSize = True
-      DisabledImageIndex = 90
-      Flat = True
-      Images = DMM.iWeb
-      ImageIndex = 5
-      ImageWidth = 24
-      ShowCaption = False
-      ShowHint = True
-      ParentShowHint = False
-      OnClick = sbIUCNRedListClick
-    end
-    object sbGBIF: TSpeedButton
-      Tag = 8
-      Left = 8
-      Height = 34
-      Hint = 'GBIF'
-      Top = 310
-      Width = 34
-      AllowAllUp = True
-      AutoSize = True
-      DisabledImageIndex = 90
-      Flat = True
-      Images = DMM.iWeb
-      ImageIndex = 8
-      ImageWidth = 24
-      ShowCaption = False
-      ShowHint = True
-      ParentShowHint = False
-      OnClick = sbGBIFClick
-    end
-  end
-  object SplitRight: TSplitter
-    AnchorSideTop.Control = pTop
-    AnchorSideTop.Side = asrBottom
-    AnchorSideBottom.Control = Owner
-    AnchorSideBottom.Side = asrBottom
-    Left = 320
-    Height = 584
-    Top = 52
-    Width = 6
-    Align = alNone
-    Anchors = [akTop, akBottom]
-    ResizeStyle = rsLine
-    OnMoved = SplitRightMoved
-  end
-  object pContent: TPanel
-    AnchorSideLeft.Control = SplitRight
-    AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = pTop
-    AnchorSideTop.Side = asrBottom
-    AnchorSideRight.Control = pSideToolbar
-    AnchorSideBottom.Control = Owner
-    AnchorSideBottom.Side = asrBottom
-    Left = 326
-    Height = 584
-    Top = 52
-    Width = 803
-    Anchors = [akTop, akLeft, akRight, akBottom]
-    BevelOuter = bvNone
-    ClientHeight = 584
-    ClientWidth = 803
-    Color = clWindow
-    ParentBackground = False
-    ParentColor = False
-    TabOrder = 4
-    object pScientificName: TPanel
-      AnchorSideLeft.Control = pContent
-      AnchorSideLeft.Side = asrCenter
-      AnchorSideTop.Control = pContent
-      Left = 18
-      Height = 90
-      Top = 0
-      Width = 766
-      AutoSize = True
-      BevelOuter = bvNone
-      ChildSizing.LeftRightSpacing = 16
-      ChildSizing.TopBottomSpacing = 8
-      ChildSizing.HorizontalSpacing = 8
-      ChildSizing.VerticalSpacing = 4
-      ChildSizing.Layout = cclLeftToRightThenTopToBottom
-      ChildSizing.ControlsPerLine = 1
-      ClientHeight = 90
-      ClientWidth = 766
-      Constraints.MaxWidth = 766
-      Constraints.MinWidth = 766
-      ParentBackground = False
+      Rounding.RoundX = 12
+      Rounding.RoundY = 12
       TabOrder = 0
       object txtScientificName: TDBText
+        AnchorSideLeft.Control = pHeader
+        AnchorSideTop.Control = txtRank
+        AnchorSideTop.Side = asrBottom
         Left = 16
-        Height = 30
-        Top = 8
-        Width = 163
+        Height = 35
+        Top = 39
+        Width = 230
+        BorderSpacing.Left = 16
+        BorderSpacing.Top = 8
+        BorderSpacing.Right = 8
+        BorderSpacing.Bottom = 4
         DataField = 'scientific_name'
         DataSource = dsLink
-        Font.Color = 13066075
-        Font.Height = -21
+        Font.Height = -29
+        Font.Name = 'Fira Sans'
+        Font.Style = [fsItalic]
         ParentFont = False
       end
       object txtAuthorship: TDBText
+        AnchorSideLeft.Control = txtScientificName
+        AnchorSideTop.Control = txtScientificName
+        AnchorSideTop.Side = asrBottom
         Left = 16
         Height = 21
-        Top = 42
-        Width = 163
+        Top = 78
+        Width = 94
+        BorderSpacing.Right = 8
+        BorderSpacing.Bottom = 4
         DataField = 'authorship'
         DataSource = dsLink
         Font.Color = 6579300
         Font.Height = -16
         ParentFont = False
       end
+      object chipConservationStatus: TBCPanel
+        AnchorSideTop.Control = pHeader
+        AnchorSideRight.Control = pHeader
+        AnchorSideRight.Side = asrBottom
+        Left = 669
+        Height = 31
+        Top = 16
+        Width = 136
+        Anchors = [akTop, akRight]
+        AutoSize = True
+        BorderSpacing.Top = 16
+        BorderSpacing.Right = 16
+        BorderSpacing.Bottom = 4
+        ChildSizing.LeftRightSpacing = 16
+        ChildSizing.TopBottomSpacing = 8
+        Background.Color = clBtnFace
+        Background.Gradient1.StartColor = clWhite
+        Background.Gradient1.EndColor = clBlack
+        Background.Gradient1.GradientType = gtLinear
+        Background.Gradient1.Point1XPercent = 0
+        Background.Gradient1.Point1YPercent = 0
+        Background.Gradient1.Point2XPercent = 0
+        Background.Gradient1.Point2YPercent = 100
+        Background.Gradient2.StartColor = clWhite
+        Background.Gradient2.EndColor = clBlack
+        Background.Gradient2.GradientType = gtLinear
+        Background.Gradient2.Point1XPercent = 0
+        Background.Gradient2.Point1YPercent = 0
+        Background.Gradient2.Point2XPercent = 0
+        Background.Gradient2.Point2YPercent = 100
+        Background.Gradient1EndPercent = 35
+        Background.Style = bbsColor
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BevelWidth = 1
+        Border.Style = bboSolid
+        BorderBCStyle = bpsBorder
+        FontEx.Color = clDefault
+        FontEx.FontQuality = fqSystemClearType
+        FontEx.Shadow = False
+        FontEx.ShadowRadius = 5
+        FontEx.ShadowOffsetX = 5
+        FontEx.ShadowOffsetY = 5
+        FontEx.Style = [fsBold]
+        ParentBackground = False
+        Rounding.RoundX = 13
+        Rounding.RoundY = 13
+        TabOrder = 0
+        object txtConservationStatus: TLabel
+          Left = 16
+          Height = 15
+          Top = 8
+          Width = 104
+          Caption = 'NE - Not Evaluated'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+      end
       object txtRank: TDBText
+        AnchorSideLeft.Control = pHeader
+        AnchorSideTop.Control = pHeader
         Left = 16
         Height = 15
-        Top = 67
-        Width = 163
+        Top = 16
+        Width = 45
         DataField = 'rank_name'
         DataSource = dsLink
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object pConservation: TPanel
-        Left = 693
-        Height = 74
-        Top = 8
-        Width = 57
-        Align = alRight
-        BevelOuter = bvNone
-        ClientHeight = 74
-        ClientWidth = 57
-        ParentBackground = False
-        TabOrder = 0
-        object txtExtinctionYear: TDBText
-          AnchorSideLeft.Control = imgConservation
-          AnchorSideLeft.Side = asrCenter
-          AnchorSideTop.Control = imgConservation
-          AnchorSideTop.Side = asrBottom
-          Left = -15
-          Height = 15
-          Top = 46
-          Width = 87
-          Alignment = taCenter
-          DataField = 'extinction_year'
-          DataSource = dsLink
-        end
-        object imgConservation: TImage
-          AnchorSideLeft.Control = pConservation
-          AnchorSideLeft.Side = asrCenter
-          AnchorSideTop.Control = pConservation
-          Left = 4
-          Height = 46
-          Top = 0
-          Width = 48
-          Center = True
-          ImageWidth = 48
-          Images = imgIUCN
-          Proportional = True
-        end
+      object txtVernacularNames: TLabel
+        AnchorSideLeft.Control = txtVernacularLang
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = txtAuthorship
+        AnchorSideTop.Side = asrBottom
+        Left = 59
+        Height = 25
+        Top = 103
+        Width = 170
+        BorderSpacing.Left = 8
+        BorderSpacing.Right = 8
+        BorderSpacing.Bottom = 4
+        Caption = 'txtVernacularNames'
+        Font.Height = -19
+        ParentFont = False
+        Visible = False
+      end
+      object txtHierarchy: TLabel
+        AnchorSideLeft.Control = txtScientificName
+        AnchorSideTop.Control = txtEnglishNames
+        AnchorSideTop.Side = asrBottom
+        Left = 16
+        Height = 21
+        Top = 132
+        Width = 84
+        Caption = 'txtHierarchy'
+        Font.Height = -16
+        ParentFont = False
+      end
+      object txtExtinctionYear: TDBText
+        AnchorSideLeft.Control = chipConservationStatus
+        AnchorSideLeft.Side = asrCenter
+        AnchorSideTop.Control = chipConservationStatus
+        AnchorSideTop.Side = asrBottom
+        Left = 694
+        Height = 15
+        Top = 51
+        Width = 87
+        Alignment = taCenter
+        DataField = 'extinction_year'
+        DataSource = dsLink
+      end
+      object txtEnglishLang: TLabel
+        AnchorSideLeft.Control = txtVernacularDiv
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = txtVernacularLang
+        AnchorSideTop.Side = asrCenter
+        Left = 253
+        Height = 15
+        Top = 108
+        Width = 15
+        BorderSpacing.Left = 8
+        BorderSpacing.Right = 8
+        BorderSpacing.Bottom = 4
+        Caption = 'EN'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object txtVernacularLang: TLabel
+        AnchorSideLeft.Control = pHeader
+        AnchorSideTop.Control = txtVernacularNames
+        AnchorSideTop.Side = asrCenter
+        Left = 16
+        Height = 15
+        Top = 108
+        Width = 35
+        BorderSpacing.Bottom = 4
+        Caption = 'PT-BR'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Visible = False
+      end
+      object txtEnglishNames: TLabel
+        AnchorSideLeft.Control = txtEnglishLang
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = txtAuthorship
+        AnchorSideTop.Side = asrBottom
+        Left = 276
+        Height = 25
+        Top = 103
+        Width = 140
+        BorderSpacing.Bottom = 4
+        Caption = 'txtEnglishNames'
+        Font.Height = -19
+        ParentFont = False
+      end
+      object txtVernacularDiv: TLabel
+        AnchorSideLeft.Control = txtVernacularNames
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = txtAuthorship
+        AnchorSideTop.Side = asrBottom
+        Left = 237
+        Height = 25
+        Top = 103
+        Width = 8
+        BorderSpacing.Bottom = 4
+        Caption = '•'
+        Font.Height = -19
+        ParentFont = False
+        Visible = False
+      end
+      object sbShareRecords: TSpeedButton
+        AnchorSideTop.Control = sbPrint
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = sbPrint
+        Left = 679
+        Height = 26
+        Top = 128
+        Width = 63
+        Anchors = [akTop, akRight]
+        AutoSize = True
+        BorderSpacing.Right = 8
+        Caption = 'Export'
+        DisabledImageIndex = 13
+        Flat = True
+        Images = iButtons
+        ImageIndex = 12
+        OnClick = sbShareRecordsClick
+      end
+      object sbPrint: TSpeedButton
+        AnchorSideRight.Control = pHeader
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = pHeader
+        AnchorSideBottom.Side = asrBottom
+        Left = 750
+        Height = 26
+        Top = 128
+        Width = 55
+        Anchors = [akRight, akBottom]
+        AutoSize = True
+        Caption = 'Print'
+        DisabledImageIndex = 94
+        Flat = True
+        Images = iButtons
+        ImageIndex = 93
+        OnClick = sbPrintClick
       end
     end
-    object scrollData: TScrollBox
+    object navTabs: TATTabs
       AnchorSideLeft.Control = pContent
-      AnchorSideTop.Control = pScientificName
+      AnchorSideTop.Control = pHeader
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = pContent
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Side = asrBottom
+      Left = 16
+      Height = 45
+      Top = 194
+      Width = 821
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 16
+      BorderSpacing.Top = 8
+      BorderSpacing.Right = 16
+      ParentColor = False
+      Tabs = <      
+        item
+          TabCaption = 'Summary'
+        end      
+        item
+          TabCaption = 'Occurrence'
+        end      
+        item
+          TabCaption = 'Breeding'
+        end      
+        item
+          TabCaption = 'Captures and morphometry'
+          TabVisible = False
+        end      
+        item
+          TabCaption = 'Ecology'
+          TabVisible = False
+        end      
+        item
+          TabCaption = 'Quality and gaps'
+          TabVisible = False
+        end>
+      DoubleBuffered = True
+      ColorBg = 16382457
+      ColorSeparator = 8945535
+      ColorTabActive = 16382457
+      ColorTabPassive = 16250871
+      ColorTabOver = 16382457
+      ColorActiveMark = 16226706
+      ColorFont = 9276813
+      ColorFontModified = 9787178
+      ColorFontActive = 1776411
+      ColorFontHot = 1776411
+      ColorCloseBgOver = clNone
+      ColorCloseBorderOver = clNone
+      ColorCloseXOver = 6316256
+      ColorArrow = 8945535
+      ColorArrowOver = 1776411
+      OptButtonLayout = ','
+      OptVarWidth = True
+      OptFillWidth = False
+      OptTruncateCaption = acsmRight
+      OptTabHeight = 41
+      OptSpaceBetweenTabs = 4
+      OptSpaceBetweenLines = 0
+      OptSpaceInitial = 8
+      OptSpaceBeforeText = 12
+      OptSpaceAfterText = 16
+      OptSpaceXRight = 12
+      OptSpaceXSize = 14
+      OptSpaceModifiedCircle = 6
+      OptColoredBandSize = 3
+      OptActiveMarkSize = 2
+      OptCaptionAlignment = taCenter
+      OptShowFlat = True
+      OptShowFlatSepar = False
+      OptShowXRounded = False
+      OptShowXButtons = atbxShowNone
+      OptShowPlusTab = False
+      OptShowPinnedText = ' '
+      OptShowEntireColor = True
+      OptActiveFontStyle = [fsBold]
+      OptActiveFontStyleUsed = True
+      OptHotFontStyle = []
+      OptHotFontStyleUsed = True
+      OptMouseMiddleClickClose = True
+      OptMouseDragEnabled = False
+      OptMouseDragOutEnabled = False
+      OptHintForX = 'Close tab'
+      OptHintForPlus = 'Add tab'
+      OptHintForArrowLeft = 'Scroll tabs left'
+      OptHintForArrowRight = 'Scroll tabs right'
+      OptHintForArrowMenu = 'Show tabs list'
+      OptHintForUser0 = '0'
+      OptHintForUser1 = '1'
+      OptHintForUser2 = '2'
+      OptHintForUser3 = '3'
+      OptHintForUser4 = '4'
+      OnTabClick = navTabsTabClick
+    end
+    object nbContent: TNotebook
+      AnchorSideLeft.Control = pContent
+      AnchorSideTop.Control = navTabs
       AnchorSideTop.Side = asrBottom
       AnchorSideRight.Control = pContent
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Control = pContent
       AnchorSideBottom.Side = asrBottom
       Left = 0
-      Height = 494
-      Top = 90
-      Width = 803
-      HorzScrollBar.Page = 1
-      VertScrollBar.Page = 494
+      Height = 397
+      Top = 239
+      Width = 853
+      PageIndex = 0
       Anchors = [akTop, akLeft, akRight, akBottom]
-      BorderStyle = bsNone
-      ClientHeight = 494
-      ClientWidth = 786
-      Constraints.MinWidth = 586
-      Color = clWindow
-      ParentBackground = False
-      ParentColor = False
-      TabOrder = 1
-      OnMouseWheel = scrollDataMouseWheel
-      object pConstrainedBox: TPanel
-        AnchorSideLeft.Control = scrollData
-        AnchorSideLeft.Side = asrCenter
-        AnchorSideTop.Control = scrollData
-        Left = 18
-        Height = 1872
-        Top = 0
-        Width = 750
-        BevelOuter = bvNone
-        ClientHeight = 1872
-        ClientWidth = 750
-        Color = clWindow
-        Constraints.MinWidth = 749
-        ParentBackground = False
-        ParentColor = False
-        TabOrder = 0
-        object pTaxonInfo: TPanel
+      TabOrder = 2
+      object pgSummary: TPage
+        object scrollSummary: TScrollBox
+          AnchorSideLeft.Control = pgSummary
+          AnchorSideTop.Control = pgSummary
+          AnchorSideRight.Control = pgSummary
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pgSummary
+          AnchorSideBottom.Side = asrBottom
           Left = 0
-          Height = 436
+          Height = 397
           Top = 0
-          Width = 750
-          Align = alTop
-          AutoSize = True
-          BevelOuter = bvNone
-          ChildSizing.EnlargeHorizontal = crsSameSize
-          ChildSizing.ShrinkHorizontal = crsSameSize
-          ChildSizing.Layout = cclLeftToRightThenTopToBottom
-          ChildSizing.ControlsPerLine = 2
-          ClientHeight = 436
-          ClientWidth = 750
+          Width = 853
+          HorzScrollBar.Page = 333
+          VertScrollBar.Page = 397
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderStyle = bsNone
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 16
+          ChildSizing.HorizontalSpacing = 8
+          ChildSizing.VerticalSpacing = 8
+          ClientHeight = 397
+          ClientWidth = 836
           ParentBackground = False
           TabOrder = 0
-          object pDetails: TPanel
-            Left = 0
-            Height = 436
-            Top = 0
-            Width = 375
+          object pSummaryIndicators: TFlowPanel
+            AnchorSideLeft.Control = scrollSummary
+            AnchorSideTop.Control = scrollSummary
+            AnchorSideRight.Control = scrollSummary
+            AnchorSideRight.Side = asrBottom
+            Left = 16
+            Height = 95
+            Top = 16
+            Width = 804
+            Anchors = [akTop, akLeft, akRight]
+            AutoSize = True
             BevelOuter = bvNone
-            ChildSizing.LeftRightSpacing = 16
-            ChildSizing.HorizontalSpacing = 8
-            ChildSizing.VerticalSpacing = 4
-            ClientHeight = 436
-            ClientWidth = 375
-            ParentBackground = False
+            BorderSpacing.Left = 16
+            BorderSpacing.Top = 16
+            BorderSpacing.Right = 16
+            ControlList = <            
+              item
+                Control = pTotalRecordsIndicator
+                WrapAfter = waAuto
+                Index = 0
+              end            
+              item
+                Control = pSightingsCountIndicator
+                WrapAfter = waAuto
+                Index = 1
+              end            
+              item
+                Control = pIndividualsCountIndicator
+                WrapAfter = waAuto
+                Index = 2
+              end            
+              item
+                Control = pCapturesCountIndicator
+                WrapAfter = waAuto
+                Index = 3
+              end            
+              item
+                Control = pSpecimensCountIndicator
+                WrapAfter = waAuto
+                Index = 4
+              end            
+              item
+                Control = pNestsCountIndicator
+                WrapAfter = waAuto
+                Index = 5
+              end            
+              item
+                Control = pEggsCountIndicator
+                WrapAfter = waAuto
+                Index = 6
+              end>
+            FlowLayout = tlTop
+            FlowStyle = fsLeftRightTopBottom
             TabOrder = 0
-            object txtDistribution: TDBText
-              Left = 16
-              Height = 15
-              Top = 231
-              Width = 343
-              Align = alTop
-              DataField = 'distribution'
-              DataSource = dsLink
-              WordWrap = True
-            end
-            object Label5: TLabel
-              Left = 16
-              Height = 15
-              Top = 212
-              Width = 343
-              Align = alTop
-              Caption = 'Geographical distribution'
-              Font.Color = 6579300
-              ParentFont = False
-            end
-            object gridVernacular: TDBGrid
-              Left = 16
-              Height = 208
+            object pTotalRecordsIndicator: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Left = 0
+              Height = 87
               Top = 0
-              Width = 343
-              Align = alTop
-              AutoFillColumns = True
-              BorderStyle = bsNone
-              Color = clWindow
-              Columns = <              
-                item
-                  SizePriority = 0
-                  Title.Caption = 'Language'
-                  Width = 90
-                  FieldName = 'language_name'
-                end              
-                item
-                  Title.Caption = 'Vernacular name'
-                  Width = 253
-                  FieldName = 'vernacular_name'
-                end>
-              Constraints.MinHeight = 140
-              DataSource = dsVernacular
-              FixedCols = 0
-              Options = [dgTitles, dgTabs, dgConfirmDelete, dgCancelOnExit]
-              Scrollbars = ssAutoVertical
+              Width = 100
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              Constraints.MinWidth = 100
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
               TabOrder = 0
-              TitleStyle = tsNative
+              object lblTotalRecords: TLabel
+                AnchorSideLeft.Control = pTotalRecordsIndicator
+                AnchorSideTop.Control = txtTotalRecords
+                AnchorSideTop.Side = asrBottom
+                Left = 16
+                Height = 15
+                Top = 56
+                Width = 66
+                Caption = 'total records'
+                ParentFont = False
+              end
+              object txtTotalRecords: TLabel
+                AnchorSideLeft.Control = pTotalRecordsIndicator
+                AnchorSideTop.Control = pTotalRecordsIndicator
+                AnchorSideRight.Side = asrBottom
+                Left = 16
+                Height = 36
+                Top = 16
+                Width = 18
+                BorderSpacing.Left = 16
+                BorderSpacing.Top = 8
+                BorderSpacing.Right = 8
+                BorderSpacing.Bottom = 4
+                Caption = '0'
+                Font.Height = -29
+                Font.Name = 'Fira Code'
+                ParentFont = False
+              end
+            end
+            object pSightingsCountIndicator: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 108
+              Height = 87
+              Top = 0
+              Width = 100
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              Constraints.MinWidth = 100
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 1
+              OnClick = pSightingsCountIndicatorClick
+              object lblSightingsCount: TLabel
+                AnchorSideLeft.Control = pSightingsCountIndicator
+                AnchorSideTop.Control = txtSightingsCount
+                AnchorSideTop.Side = asrBottom
+                Cursor = crHandPoint
+                Left = 16
+                Height = 15
+                Top = 56
+                Width = 48
+                Caption = 'sightings'
+                ParentFont = False
+                OnClick = pSightingsCountIndicatorClick
+              end
+              object txtSightingsCount: TLabel
+                AnchorSideLeft.Control = pSightingsCountIndicator
+                AnchorSideTop.Control = pSightingsCountIndicator
+                AnchorSideRight.Side = asrBottom
+                Cursor = crHandPoint
+                Left = 16
+                Height = 36
+                Top = 16
+                Width = 18
+                BorderSpacing.Left = 16
+                BorderSpacing.Top = 8
+                BorderSpacing.Right = 8
+                BorderSpacing.Bottom = 4
+                Caption = '0'
+                Font.Height = -29
+                Font.Name = 'Fira Code'
+                ParentFont = False
+                OnClick = pSightingsCountIndicatorClick
+              end
+            end
+            object pIndividualsCountIndicator: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 216
+              Height = 87
+              Top = 0
+              Width = 100
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              Constraints.MinWidth = 100
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 2
+              OnClick = pIndividualsCountIndicatorClick
+              object lblIndividualsCount: TLabel
+                AnchorSideLeft.Control = pIndividualsCountIndicator
+                AnchorSideTop.Control = txtIndividualsCount
+                AnchorSideTop.Side = asrBottom
+                Cursor = crHandPoint
+                Left = 16
+                Height = 15
+                Top = 56
+                Width = 57
+                Caption = 'individuals'
+                ParentFont = False
+                OnClick = pIndividualsCountIndicatorClick
+              end
+              object txtIndividualsCount: TLabel
+                AnchorSideLeft.Control = pIndividualsCountIndicator
+                AnchorSideTop.Control = pIndividualsCountIndicator
+                Cursor = crHandPoint
+                Left = 16
+                Height = 36
+                Top = 16
+                Width = 18
+                BorderSpacing.Left = 16
+                BorderSpacing.Top = 8
+                BorderSpacing.Right = 8
+                BorderSpacing.Bottom = 4
+                Caption = '0'
+                Font.Height = -29
+                Font.Name = 'Fira Code'
+                ParentFont = False
+                OnClick = pIndividualsCountIndicatorClick
+              end
+            end
+            object pCapturesCountIndicator: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 324
+              Height = 87
+              Top = 0
+              Width = 100
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              Constraints.MinWidth = 100
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 3
+              OnClick = pCapturesCountIndicatorClick
+              object lblCapturesCount: TLabel
+                AnchorSideLeft.Control = pCapturesCountIndicator
+                AnchorSideTop.Control = txtCapturesCount
+                AnchorSideTop.Side = asrBottom
+                Cursor = crHandPoint
+                Left = 16
+                Height = 15
+                Top = 56
+                Width = 45
+                Caption = 'captures'
+                ParentFont = False
+                OnClick = pCapturesCountIndicatorClick
+              end
+              object txtCapturesCount: TLabel
+                AnchorSideLeft.Control = pCapturesCountIndicator
+                AnchorSideTop.Control = pCapturesCountIndicator
+                Cursor = crHandPoint
+                Left = 16
+                Height = 36
+                Top = 16
+                Width = 18
+                BorderSpacing.Left = 16
+                BorderSpacing.Top = 8
+                BorderSpacing.Right = 8
+                BorderSpacing.Bottom = 4
+                Caption = '0'
+                Font.Height = -29
+                Font.Name = 'Fira Code'
+                ParentFont = False
+                OnClick = pCapturesCountIndicatorClick
+              end
+            end
+            object pSpecimensCountIndicator: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 432
+              Height = 87
+              Top = 0
+              Width = 100
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              Constraints.MinWidth = 100
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 4
+              OnClick = pSpecimensCountIndicatorClick
+              object lblSpecimensCount: TLabel
+                AnchorSideLeft.Control = pSpecimensCountIndicator
+                AnchorSideTop.Control = txtSpecimensCount
+                AnchorSideTop.Side = asrBottom
+                Cursor = crHandPoint
+                Left = 16
+                Height = 15
+                Top = 56
+                Width = 56
+                Caption = 'specimens'
+                ParentFont = False
+                OnClick = pSpecimensCountIndicatorClick
+              end
+              object txtSpecimensCount: TLabel
+                AnchorSideLeft.Control = pSpecimensCountIndicator
+                AnchorSideTop.Control = pSpecimensCountIndicator
+                Cursor = crHandPoint
+                Left = 16
+                Height = 36
+                Top = 16
+                Width = 18
+                BorderSpacing.Left = 16
+                BorderSpacing.Top = 8
+                BorderSpacing.Right = 8
+                BorderSpacing.Bottom = 4
+                Caption = '0'
+                Font.Height = -29
+                Font.Name = 'Fira Code'
+                ParentFont = False
+                OnClick = pSpecimensCountIndicatorClick
+              end
+            end
+            object pNestsCountIndicator: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 540
+              Height = 87
+              Top = 0
+              Width = 100
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              Constraints.MinWidth = 100
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 5
+              OnClick = pNestsCountIndicatorClick
+              object lblNestsCount: TLabel
+                AnchorSideLeft.Control = pNestsCountIndicator
+                AnchorSideTop.Control = txtNestsCount
+                AnchorSideTop.Side = asrBottom
+                Cursor = crHandPoint
+                Left = 16
+                Height = 15
+                Top = 56
+                Width = 27
+                Caption = 'nests'
+                ParentFont = False
+                OnClick = pNestsCountIndicatorClick
+              end
+              object txtNestsCount: TLabel
+                AnchorSideLeft.Control = pNestsCountIndicator
+                AnchorSideTop.Control = pNestsCountIndicator
+                Cursor = crHandPoint
+                Left = 16
+                Height = 36
+                Top = 16
+                Width = 18
+                BorderSpacing.Left = 16
+                BorderSpacing.Top = 8
+                BorderSpacing.Right = 8
+                BorderSpacing.Bottom = 4
+                Caption = '0'
+                Font.Height = -29
+                Font.Name = 'Fira Code'
+                ParentFont = False
+                OnClick = pNestsCountIndicatorClick
+              end
+            end
+            object pEggsCountIndicator: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 648
+              Height = 87
+              Top = 0
+              Width = 100
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              Constraints.MinWidth = 100
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 6
+              OnClick = pEggsCountIndicatorClick
+              object lblEggsCount: TLabel
+                AnchorSideLeft.Control = pEggsCountIndicator
+                AnchorSideTop.Control = txtEggsCount
+                AnchorSideTop.Side = asrBottom
+                Cursor = crHandPoint
+                Left = 16
+                Height = 15
+                Top = 56
+                Width = 25
+                Caption = 'eggs'
+                ParentFont = False
+                OnClick = pEggsCountIndicatorClick
+              end
+              object txtEggsCount: TLabel
+                AnchorSideLeft.Control = pEggsCountIndicator
+                AnchorSideTop.Control = pEggsCountIndicator
+                Cursor = crHandPoint
+                Left = 16
+                Height = 36
+                Top = 16
+                Width = 18
+                BorderSpacing.Left = 16
+                BorderSpacing.Top = 8
+                BorderSpacing.Right = 8
+                BorderSpacing.Bottom = 4
+                Caption = '0'
+                Font.Height = -29
+                Font.Name = 'Fira Code'
+                ParentFont = False
+                OnClick = pEggsCountIndicatorClick
+              end
             end
           end
-          object pViews: TPanel
-            Left = 375
-            Height = 436
-            Top = 0
-            Width = 375
+          object pDistributionSynonyms: TPanel
+            AnchorSideLeft.Control = scrollSummary
+            AnchorSideTop.Control = pSummaryIndicators
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = scrollSummary
+            AnchorSideRight.Side = asrBottom
+            Left = 16
+            Height = 72
+            Top = 119
+            Width = 804
+            Anchors = [akTop, akLeft, akRight]
+            AutoSize = True
             BevelOuter = bvNone
+            ChildSizing.HorizontalSpacing = 8
             ChildSizing.VerticalSpacing = 8
             ChildSizing.EnlargeHorizontal = crsSameSize
             ChildSizing.EnlargeVertical = crsSameSize
             ChildSizing.ShrinkHorizontal = crsSameSize
             ChildSizing.ShrinkVertical = crsSameSize
-            ChildSizing.Layout = cclTopToBottomThenLeftToRight
-            ChildSizing.ControlsPerLine = 3
-            ClientHeight = 436
-            ClientWidth = 375
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 72
+            ClientWidth = 804
             ParentBackground = False
             TabOrder = 1
-            object tvHierarchy: TTreeView
-              Left = 0
-              Height = 140
-              Top = 0
-              Width = 375
-              BorderStyle = bsNone
-              Constraints.MinHeight = 140
-              ScrollBars = ssAutoVertical
-              TabOrder = 0
-            end
-            object gridSynonyms: TDBGrid
-              Left = 0
-              Height = 140
-              Top = 148
-              Width = 375
-              AutoFillColumns = True
-              BorderStyle = bsNone
-              Color = clWindow
-              Columns = <              
-                item
-                  Title.Caption = 'Synonyms'
-                  Width = 375
-                  FieldName = 'scientific_name'
-                end>
-              Constraints.MinHeight = 140
-              DataSource = dsSynonyms
-              FixedCols = 0
-              Options = [dgTitles, dgTabs, dgConfirmDelete, dgCancelOnExit]
-              Scrollbars = ssAutoVertical
-              TabOrder = 1
-              TitleStyle = tsNative
-            end
-            object gridChilds: TDBGrid
-              Left = 0
-              Height = 140
-              Top = 296
-              Width = 375
-              AutoEdit = False
-              AutoFillColumns = True
-              BorderStyle = bsNone
-              Color = clWindow
-              Columns = <              
-                item
-                  Title.Caption = 'Subordinate taxa'
-                  Width = 375
-                  FieldName = 'scientific_name'
-                end>
-              Constraints.MinHeight = 140
-              DataSource = dsChilds
-              FixedCols = 0
-              Options = [dgTitles, dgTabs, dgConfirmDelete, dgCancelOnExit]
-              Scrollbars = ssAutoVertical
-              TabOrder = 2
-              TitleStyle = tsNative
-            end
-          end
-        end
-        object pTaxonData: TFlowPanel
-          Left = 0
-          Height = 50
-          Top = 436
-          Width = 750
-          Align = alTop
-          BevelOuter = bvNone
-          ControlList = <          
-            item
-              Control = lblLinkSightings
-              WrapAfter = waAuto
-              Index = 0
-            end          
-            item
-              Control = lblLinkIndividuals
-              WrapAfter = waAuto
-              Index = 1
-            end          
-            item
-              Control = lblLinkCaptures
-              WrapAfter = waAuto
-              Index = 2
-            end          
-            item
-              Control = lblLinkSpecimens
-              WrapAfter = waAuto
-              Index = 3
-            end          
-            item
-              Control = lblLinkNests
-              WrapAfter = waAuto
-              Index = 4
-            end          
-            item
-              Control = lblLinkEggs
-              WrapAfter = waAuto
-              Index = 5
-            end>
-          FlowLayout = tlTop
-          FlowStyle = fsLeftRightTopBottom
-          TabOrder = 1
-          object lblLinkSightings: TLabel
-            Cursor = crHandPoint
-            Left = 16
-            Height = 20
-            Top = 8
-            Width = 83
-            Anchors = []
-            BorderSpacing.Left = 16
-            BorderSpacing.Top = 8
-            BorderSpacing.Right = 16
-            BorderSpacing.Bottom = 8
-            Caption = 'Sightings (0)'
-            Font.Color = 13066075
-            Font.Height = -15
-            ParentFont = False
-            OnClick = lblLinkSightingsClick
-            OnMouseEnter = txtValidNameMouseEnter
-            OnMouseLeave = txtValidNameMouseLeave
-          end
-          object lblLinkIndividuals: TLabel
-            Cursor = crHandPoint
-            Left = 131
-            Height = 20
-            Top = 8
-            Width = 93
-            Anchors = []
-            BorderSpacing.Left = 16
-            BorderSpacing.Top = 8
-            BorderSpacing.Right = 16
-            BorderSpacing.Bottom = 8
-            Caption = 'Individuals (0)'
-            Font.Color = 13066075
-            Font.Height = -15
-            ParentFont = False
-            OnClick = lblLinkIndividualsClick
-            OnMouseEnter = txtValidNameMouseEnter
-            OnMouseLeave = txtValidNameMouseLeave
-          end
-          object lblLinkCaptures: TLabel
-            Cursor = crHandPoint
-            Left = 256
-            Height = 20
-            Top = 8
-            Width = 80
-            Anchors = []
-            BorderSpacing.Left = 16
-            BorderSpacing.Top = 8
-            BorderSpacing.Right = 16
-            BorderSpacing.Bottom = 8
-            Caption = 'Captures (0)'
-            Font.Color = 13066075
-            Font.Height = -15
-            ParentFont = False
-            OnClick = lblLinkCapturesClick
-            OnMouseEnter = txtValidNameMouseEnter
-            OnMouseLeave = txtValidNameMouseLeave
-          end
-          object lblLinkSpecimens: TLabel
-            Cursor = crHandPoint
-            Left = 368
-            Height = 20
-            Top = 8
-            Width = 93
-            Anchors = []
-            BorderSpacing.Left = 16
-            BorderSpacing.Top = 8
-            BorderSpacing.Right = 16
-            BorderSpacing.Bottom = 8
-            Caption = 'Specimens (0)'
-            Font.Color = 13066075
-            Font.Height = -15
-            ParentFont = False
-            OnClick = lblLinkSpecimensClick
-            OnMouseEnter = txtValidNameMouseEnter
-            OnMouseLeave = txtValidNameMouseLeave
-          end
-          object lblLinkNests: TLabel
-            Cursor = crHandPoint
-            Left = 493
-            Height = 20
-            Top = 8
-            Width = 58
-            Anchors = []
-            BorderSpacing.Left = 16
-            BorderSpacing.Top = 8
-            BorderSpacing.Right = 16
-            BorderSpacing.Bottom = 8
-            Caption = 'Nests (0)'
-            Font.Color = 13066075
-            Font.Height = -15
-            ParentFont = False
-            OnClick = lblLinkNestsClick
-            OnMouseEnter = txtValidNameMouseEnter
-            OnMouseLeave = txtValidNameMouseLeave
-          end
-          object lblLinkEggs: TLabel
-            Cursor = crHandPoint
-            Left = 583
-            Height = 20
-            Top = 8
-            Width = 54
-            Anchors = []
-            BorderSpacing.Left = 16
-            BorderSpacing.Top = 8
-            BorderSpacing.Right = 16
-            BorderSpacing.Bottom = 8
-            Caption = 'Eggs (0)'
-            Font.Color = 13066075
-            Font.Height = -15
-            ParentFont = False
-            OnClick = lblLinkEggsClick
-            OnMouseEnter = txtValidNameMouseEnter
-            OnMouseLeave = txtValidNameMouseLeave
-          end
-        end
-        object mapView: TMapView
-          Left = 0
-          Height = 363
-          Top = 486
-          Width = 750
-          Align = alTop
-          DownloadEngine = mapView.BuiltInDLE
-          DrawingEngine = MvBGRA
-          Layers = <>
-          Font.Color = clBlack
-          MapProvider = 'OpenStreetMap Standard'
-          ParentFont = False
-          POITextBgOpacity = 0.550000011920929
-          TabOrder = 2
-          OnDrawGpsPoint = mapViewDrawGpsPoint
-        end
-        object chartSeasonality: TChart
-          Left = 0
-          Height = 320
-          Top = 865
-          Width = 750
-          AxisList = <          
-            item
-              Grid.Visible = False
-              AxisPen.Visible = True
-              Marks.LabelBrush.Style = bsClear
-              Minors = <>
-              Title.LabelFont.Orientation = 900
-              Title.Visible = True
-              Title.Caption = 'Number of records'
-              Title.LabelBrush.Style = bsClear
-            end          
-            item
-              Grid.Visible = False
-              Intervals.Count = 1
-              Intervals.MaxLength = 12
-              Intervals.MinLength = 12
-              Intervals.Options = [aipUseCount, aipUseMaxLength, aipUseMinLength, aipInteger]
-              Alignment = calBottom
-              AxisPen.Visible = True
-              Marks.LabelBrush.Style = bsClear
-              Marks.Range.Max = 12
-              Marks.Range.Min = 1
-              Marks.Range.UseMax = True
-              Marks.Range.UseMin = True
-              Minors = <>
-              Range.Max = 12
-              Range.Min = 1
-              Title.Visible = True
-              Title.Caption = 'Month'
-              Title.LabelBrush.Style = bsClear
-            end>
-          Extent.XMax = 12
-          Extent.XMin = 1
-          Frame.Visible = False
-          GUIConnector = chartBGRA
-          Legend.SymbolFrame.Visible = False
-          Legend.Visible = True
-          Title.Text.Strings = (
-            'Seasonality'
-          )
-          Title.Visible = True
-          Align = alTop
-          BorderSpacing.Top = 16
-          ParentColor = True
-          object monthlySeries: TBarSeries
-            Legend.Multiplicity = lmStyle
-            Title = 'Captures'
-            BarBrush.Color = 4946723
-            BarPen.Color = clGray
-            BarWidthStyle = bwPercentMin
-            Source = DMT.lcsMonthly
-            Styles = DMT.RecordTypeStyles
-          end
-        end
-        object chartYear: TChart
-          Left = 0
-          Height = 320
-          Top = 1201
-          Width = 750
-          AxisList = <          
-            item
-              Grid.Visible = False
-              AxisPen.Visible = True
-              Marks.LabelBrush.Style = bsClear
-              Minors = <>
-              Title.LabelFont.Orientation = 900
-              Title.Visible = True
-              Title.Caption = 'Number of records'
-              Title.LabelBrush.Style = bsClear
-            end          
-            item
-              Grid.Visible = False
-              Intervals.Count = 1
-              Intervals.MaxLength = 12
-              Intervals.MinLength = 12
-              Intervals.Options = [aipInteger]
-              Alignment = calBottom
-              AxisPen.Visible = True
-              Marks.LabelBrush.Style = bsClear
-              Marks.Range.Max = 12
-              Marks.Range.Min = 1
-              Minors = <>
-              Range.Max = 12
-              Range.Min = 1
-              Title.Visible = True
-              Title.Caption = 'Year'
-              Title.LabelBrush.Style = bsClear
-            end>
-          Extent.XMax = 12
-          Extent.XMin = 1
-          Frame.Visible = False
-          GUIConnector = chartBGRA
-          Legend.Visible = True
-          Title.Text.Strings = (
-            'Records per year'
-          )
-          Title.Visible = True
-          Align = alTop
-          BorderSpacing.Top = 16
-          ParentColor = True
-          object yearlySeries: TBarSeries
-            Legend.Multiplicity = lmStyle
-            BarBrush.Color = 4946723
-            BarPen.Color = clGray
-            BarWidthStyle = bwPercentMin
-            Source = DMT.lcsYearly
-            Styles = DMT.RecordTypeStyles
-          end
-        end
-        object pBreedingStats: TPanel
-          Left = 0
-          Height = 295
-          Top = 1537
-          Width = 750
-          Align = alTop
-          BorderSpacing.Top = 16
-          BevelOuter = bvNone
-          ClientHeight = 295
-          ClientWidth = 750
-          ParentBackground = False
-          TabOrder = 5
-          object pNestProductivity: TBCPanel
-            Left = 0
-            Height = 295
-            Top = 0
-            Width = 170
-            Align = alLeft
-            BorderSpacing.Right = 16
-            ChildSizing.LeftRightSpacing = 16
-            ChildSizing.TopBottomSpacing = 16
-            Background.Color = 16448250
-            Background.Gradient1.StartColor = clWhite
-            Background.Gradient1.EndColor = clBlack
-            Background.Gradient1.GradientType = gtLinear
-            Background.Gradient1.Point1XPercent = 0
-            Background.Gradient1.Point1YPercent = 0
-            Background.Gradient1.Point2XPercent = 0
-            Background.Gradient1.Point2YPercent = 100
-            Background.Gradient2.StartColor = clWhite
-            Background.Gradient2.EndColor = clBlack
-            Background.Gradient2.GradientType = gtLinear
-            Background.Gradient2.Point1XPercent = 0
-            Background.Gradient2.Point1YPercent = 0
-            Background.Gradient2.Point2XPercent = 0
-            Background.Gradient2.Point2YPercent = 100
-            Background.Gradient1EndPercent = 35
-            Background.Style = bbsColor
-            BevelInner = bvNone
-            BevelOuter = bvRaised
-            BevelWidth = 1
-            Border.Color = 13750737
-            Border.Style = bboSolid
-            BorderBCStyle = bpsBorder
-            FontEx.Color = clDefault
-            FontEx.FontQuality = fqSystemClearType
-            FontEx.Shadow = False
-            FontEx.ShadowRadius = 5
-            FontEx.ShadowOffsetX = 5
-            FontEx.ShadowOffsetY = 5
-            FontEx.Style = []
-            ParentBackground = False
-            Rounding.RoundX = 8
-            Rounding.RoundY = 8
-            TabOrder = 0
-            object txtNestProductivity: TLabel
-              AnchorSideLeft.Control = pNestProductivity
-              AnchorSideTop.Control = pNestProductivity
-              AnchorSideTop.Side = asrCenter
-              Left = 17
-              Height = 59
-              Top = 118
-              Width = 23
-              Caption = '0'
-              Font.Height = -43
-              ParentFont = False
-            end
-            object lblMeanNestProductivity: TLabel
-              AnchorSideLeft.Control = pNestProductivity
-              AnchorSideTop.Control = txtNestProductivity
-              AnchorSideTop.Side = asrBottom
-              AnchorSideRight.Control = pNestProductivity
+            object pDistribution: TBCPanel
               AnchorSideRight.Side = asrBottom
-              Left = 17
-              Height = 42
-              Top = 177
-              Width = 136
-              Anchors = [akTop, akLeft, akRight]
-              Caption = 'mean nest productivity'
-              Font.Height = -16
-              ParentFont = False
-              WordWrap = True
+              Left = 0
+              Height = 72
+              Top = 0
+              Width = 398
+              AutoSize = True
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 0
+              object lblDistributionTitle: TLabel
+                Left = 16
+                Height = 21
+                Top = 16
+                Width = 366
+                Align = alTop
+                BorderSpacing.Bottom = 4
+                Caption = 'Geographical range'
+                Font.Height = -16
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object txtDistribution: TDBText
+                Left = 16
+                Height = 15
+                Top = 41
+                Width = 366
+                Align = alTop
+                DataField = 'distribution'
+                DataSource = dsLink
+                WordWrap = True
+              end
+            end
+            object pSynonyms: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Left = 406
+              Height = 72
+              Top = 0
+              Width = 398
+              AutoSize = True
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 1
+              object lblSynonymsTitle: TLabel
+                Left = 16
+                Height = 21
+                Top = 16
+                Width = 366
+                Align = alTop
+                BorderSpacing.Bottom = 4
+                Caption = 'Synonyms'
+                Font.Height = -16
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object txtSynonyms: TLabel
+                Left = 16
+                Height = 15
+                Top = 41
+                Width = 366
+                Align = alTop
+                BorderSpacing.Bottom = 4
+                Caption = 'txtSynonyms'
+                ParentFont = False
+                WordWrap = True
+              end
             end
           end
-          object chartNestFate: TChart
-            Left = 186
-            Height = 295
-            Top = 0
-            Width = 564
-            AxisList = <            
+          object pExternalLinks: TFlowPanel
+            AnchorSideLeft.Control = scrollSummary
+            AnchorSideTop.Control = pDistributionSynonyms
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = scrollSummary
+            AnchorSideRight.Side = asrBottom
+            Left = 16
+            Height = 80
+            Top = 207
+            Width = 804
+            Anchors = [akTop, akLeft, akRight]
+            AutoSize = True
+            BevelOuter = bvNone
+            BorderSpacing.Top = 16
+            ControlList = <            
               item
-                Visible = False
-                Marks.LabelBrush.Style = bsClear
-                Minors = <>
-                Title.LabelFont.Orientation = 900
-                Title.LabelBrush.Style = bsClear
+                Control = chipBirdsOfTheWorld
+                WrapAfter = waAuto
+                Index = 0
               end            
               item
-                Visible = False
-                Alignment = calBottom
-                Marks.LabelBrush.Style = bsClear
-                Minors = <>
-                Title.LabelBrush.Style = bsClear
+                Control = chipEbird
+                WrapAfter = waAuto
+                Index = 1
+              end            
+              item
+                Control = chipWikiaves
+                WrapAfter = waAuto
+                Index = 2
+              end            
+              item
+                Control = chipIucn
+                WrapAfter = waAuto
+                Index = 3
+              end            
+              item
+                Control = chipGbif
+                WrapAfter = waAuto
+                Index = 4
+              end            
+              item
+                Control = chipGoogle
+                WrapAfter = waAuto
+                Index = 5
+              end            
+              item
+                Control = chipGoogleImage
+                WrapAfter = waAuto
+                Index = 6
+              end            
+              item
+                Control = chipGoogleScholar
+                WrapAfter = waAuto
+                Index = 7
               end>
-            Frame.Visible = False
-            GUIConnector = chartBGRA
-            Title.Text.Strings = (
-              'Nest fate'
-            )
-            Title.Visible = True
-            Align = alClient
-            Color = clWindow
-            object NestFateSeries: TPieSeries
-              Legend.Visible = False
-              EdgePen.Color = clGray
-              InnerRadiusPercent = 70
-              Marks.Format = '%2:s'
-              Marks.Frame.Color = clWindow
-              Marks.Frame.Visible = False
-              Marks.LabelBrush.Color = clWindow
-              Marks.LinkPen.Visible = False
-              Marks.Style = smsLabel
-              Source = DMT.lcsNestFate
-              Styles = DMT.NestFateStyles
+            FlowLayout = tlTop
+            FlowStyle = fsLeftRightTopBottom
+            TabOrder = 2
+            object chipBirdsOfTheWorld: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 0
+              Height = 32
+              Top = 0
+              Width = 151
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 8
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 0
+              OnClick = chipBirdsOfTheWorldClick
+              object lblBirdsOfTheWorld: TLabel
+                Cursor = crHandPoint
+                Left = 16
+                Height = 16
+                Top = 8
+                Width = 95
+                Align = alLeft
+                BorderSpacing.Bottom = 4
+                Caption = 'Birds of the World'
+                ParentFont = False
+                OnClick = chipBirdsOfTheWorldClick
+              end
+              object icoBirdsOfTheWorld: TImage
+                AnchorSideLeft.Control = lblBirdsOfTheWorld
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = lblBirdsOfTheWorld
+                AnchorSideTop.Side = asrCenter
+                Cursor = crHandPoint
+                Left = 119
+                Height = 16
+                Top = 8
+                Width = 16
+                AutoSize = True
+                BorderSpacing.Left = 8
+                Center = True
+                ImageIndex = 100
+                Images = iButtons
+                OnClick = chipBirdsOfTheWorldClick
+              end
+            end
+            object chipEbird: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 159
+              Height = 32
+              Top = 0
+              Width = 83
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 8
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 1
+              OnClick = chipEbirdClick
+              object lblEbird: TLabel
+                Cursor = crHandPoint
+                Left = 16
+                Height = 16
+                Top = 8
+                Width = 27
+                Align = alLeft
+                BorderSpacing.Bottom = 4
+                Caption = 'eBird'
+                ParentFont = False
+                OnClick = chipEbirdClick
+              end
+              object icoEbird: TImage
+                AnchorSideLeft.Control = lblEbird
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = lblEbird
+                AnchorSideTop.Side = asrCenter
+                Cursor = crHandPoint
+                Left = 51
+                Height = 16
+                Top = 8
+                Width = 16
+                AutoSize = True
+                BorderSpacing.Left = 8
+                Center = True
+                ImageIndex = 100
+                Images = iButtons
+                OnClick = chipEbirdClick
+              end
+            end
+            object chipWikiaves: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 250
+              Height = 32
+              Top = 0
+              Width = 102
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 8
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 2
+              OnClick = chipWikiavesClick
+              object lblWikiaves: TLabel
+                Cursor = crHandPoint
+                Left = 16
+                Height = 16
+                Top = 8
+                Width = 46
+                Align = alLeft
+                BorderSpacing.Bottom = 4
+                Caption = 'Wikiaves'
+                ParentFont = False
+                OnClick = chipWikiavesClick
+              end
+              object icoWikiaves: TImage
+                AnchorSideLeft.Control = lblWikiaves
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = lblWikiaves
+                AnchorSideTop.Side = asrCenter
+                Cursor = crHandPoint
+                Left = 70
+                Height = 16
+                Top = 8
+                Width = 16
+                AutoSize = True
+                BorderSpacing.Left = 8
+                Center = True
+                ImageIndex = 100
+                Images = iButtons
+                OnClick = chipWikiavesClick
+              end
+            end
+            object chipIucn: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 360
+              Height = 32
+              Top = 0
+              Width = 128
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 8
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 3
+              OnClick = chipIucnClick
+              object lblIucn: TLabel
+                Cursor = crHandPoint
+                Left = 16
+                Height = 16
+                Top = 8
+                Width = 72
+                Align = alLeft
+                BorderSpacing.Bottom = 4
+                Caption = 'IUCN Red List'
+                ParentFont = False
+                OnClick = chipIucnClick
+              end
+              object icoIucn: TImage
+                AnchorSideLeft.Control = lblIucn
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = lblIucn
+                AnchorSideTop.Side = asrCenter
+                Cursor = crHandPoint
+                Left = 96
+                Height = 16
+                Top = 8
+                Width = 16
+                AutoSize = True
+                BorderSpacing.Left = 8
+                Center = True
+                ImageIndex = 100
+                Images = iButtons
+                OnClick = chipIucnClick
+              end
+            end
+            object chipGbif: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 496
+              Height = 32
+              Top = 0
+              Width = 80
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 8
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 4
+              OnClick = chipGbifClick
+              object lblGbif: TLabel
+                Cursor = crHandPoint
+                Left = 16
+                Height = 16
+                Top = 8
+                Width = 24
+                Align = alLeft
+                BorderSpacing.Bottom = 4
+                Caption = 'GBIF'
+                ParentFont = False
+                OnClick = chipGbifClick
+              end
+              object icoGbif: TImage
+                AnchorSideLeft.Control = lblGbif
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = lblGbif
+                AnchorSideTop.Side = asrCenter
+                Cursor = crHandPoint
+                Left = 48
+                Height = 16
+                Top = 8
+                Width = 16
+                AutoSize = True
+                BorderSpacing.Left = 8
+                Center = True
+                ImageIndex = 100
+                Images = iButtons
+                OnClick = chipGbifClick
+              end
+            end
+            object chipGoogle: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 584
+              Height = 32
+              Top = 0
+              Width = 132
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 8
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 5
+              OnClick = chipGoogleClick
+              object lblGoogle: TLabel
+                Cursor = crHandPoint
+                Left = 16
+                Height = 16
+                Top = 8
+                Width = 76
+                Align = alLeft
+                BorderSpacing.Bottom = 4
+                Caption = 'Google Search'
+                ParentFont = False
+                OnClick = chipGoogleClick
+              end
+              object icoGoogle: TImage
+                AnchorSideLeft.Control = lblGoogle
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = lblGoogle
+                AnchorSideTop.Side = asrCenter
+                Cursor = crHandPoint
+                Left = 100
+                Height = 16
+                Top = 8
+                Width = 16
+                AutoSize = True
+                BorderSpacing.Left = 8
+                Center = True
+                ImageIndex = 100
+                Images = iButtons
+                OnClick = chipGoogleClick
+              end
+            end
+            object chipGoogleImage: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 0
+              Height = 32
+              Top = 40
+              Width = 135
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 8
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 6
+              OnClick = chipGoogleImageClick
+              object lblGoogleImages: TLabel
+                Cursor = crHandPoint
+                Left = 16
+                Height = 16
+                Top = 8
+                Width = 79
+                Align = alLeft
+                BorderSpacing.Bottom = 4
+                Caption = 'Google Images'
+                ParentFont = False
+                OnClick = chipGoogleImageClick
+              end
+              object icoGoogleImages: TImage
+                AnchorSideLeft.Control = lblGoogleImages
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = lblGoogleImages
+                AnchorSideTop.Side = asrCenter
+                Cursor = crHandPoint
+                Left = 103
+                Height = 16
+                Top = 8
+                Width = 16
+                AutoSize = True
+                BorderSpacing.Left = 8
+                Center = True
+                ImageIndex = 100
+                Images = iButtons
+                OnClick = chipGoogleImageClick
+              end
+            end
+            object chipGoogleScholar: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Cursor = crHandPoint
+              Left = 143
+              Height = 32
+              Top = 40
+              Width = 136
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 8
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 7
+              OnClick = chipGoogleScholarClick
+              object lblGoogleScholar: TLabel
+                Cursor = crHandPoint
+                Left = 16
+                Height = 16
+                Top = 8
+                Width = 80
+                Align = alLeft
+                BorderSpacing.Bottom = 4
+                Caption = 'Google Scholar'
+                ParentFont = False
+                OnClick = chipGoogleScholarClick
+              end
+              object icoGoogleScholar: TImage
+                AnchorSideLeft.Control = lblGoogleScholar
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = lblGoogleScholar
+                AnchorSideTop.Side = asrCenter
+                Cursor = crHandPoint
+                Left = 104
+                Height = 16
+                Top = 8
+                Width = 16
+                AutoSize = True
+                BorderSpacing.Left = 8
+                Center = True
+                ImageIndex = 100
+                Images = iButtons
+                OnClick = chipGoogleScholarClick
+              end
             end
           end
+          object pChartsYearSeasonality: TPanel
+            AnchorSideLeft.Control = scrollSummary
+            AnchorSideTop.Control = pExternalLinks
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = scrollSummary
+            AnchorSideRight.Side = asrBottom
+            Left = 16
+            Height = 377
+            Top = 295
+            Width = 804
+            Anchors = [akTop, akLeft, akRight]
+            AutoSize = True
+            BevelOuter = bvNone
+            ChildSizing.HorizontalSpacing = 8
+            ChildSizing.VerticalSpacing = 8
+            ChildSizing.EnlargeHorizontal = crsSameSize
+            ChildSizing.EnlargeVertical = crsSameSize
+            ChildSizing.ShrinkHorizontal = crsSameSize
+            ChildSizing.ShrinkVertical = crsSameSize
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 377
+            ClientWidth = 804
+            ParentBackground = False
+            TabOrder = 3
+            object pChartRecordsPerYear: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Left = 0
+              Height = 377
+              Top = 0
+              Width = 398
+              AutoSize = True
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 0
+              object lblRecordsPerYearTitle: TLabel
+                Left = 16
+                Height = 21
+                Top = 16
+                Width = 366
+                Align = alTop
+                BorderSpacing.Bottom = 4
+                Caption = 'Records per Year'
+                Font.Height = -16
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object chartYear: TChart
+                AnchorSideLeft.Control = pChartRecordsPerYear
+                AnchorSideTop.Control = lblRecordsPerYearTitle
+                AnchorSideTop.Side = asrBottom
+                AnchorSideRight.Control = pChartRecordsPerYear
+                AnchorSideRight.Side = asrBottom
+                Left = 16
+                Height = 320
+                Top = 41
+                Width = 366
+                AxisList = <                
+                  item
+                    Grid.Visible = False
+                    AxisPen.Visible = True
+                    Marks.LabelFont.Height = -11
+                    Marks.LabelBrush.Style = bsClear
+                    Minors = <>
+                    Title.LabelFont.Orientation = 900
+                    Title.Visible = True
+                    Title.Caption = 'Number of records'
+                    Title.LabelBrush.Style = bsClear
+                  end                
+                  item
+                    Grid.Visible = False
+                    Intervals.Count = 1
+                    Intervals.MaxLength = 12
+                    Intervals.MinLength = 12
+                    Intervals.NiceSteps = '1|2|5'
+                    Intervals.Options = [aipUseNiceSteps, aipInteger]
+                    Alignment = calBottom
+                    AxisPen.Visible = True
+                    Marks.LabelFont.Height = -11
+                    Marks.LabelBrush.Style = bsClear
+                    Marks.Range.Max = 12
+                    Marks.Range.Min = 1
+                    Minors = <>
+                    Range.Max = 12
+                    Range.Min = 1
+                    Title.Visible = True
+                    Title.Caption = 'Year'
+                    Title.LabelBrush.Style = bsClear
+                  end>
+                Extent.XMax = 12
+                Extent.XMin = 1
+                Frame.Visible = False
+                GUIConnector = chartBGRA
+                Legend.Alignment = laBottomCenter
+                Legend.BackgroundBrush.Style = bsClear
+                Legend.ColumnCount = 3
+                Legend.Frame.Visible = False
+                Legend.Visible = True
+                Margins.Bottom = 0
+                Title.Text.Strings = (
+                  'Records per year'
+                )
+                Toolset = chartTools
+                Anchors = [akTop, akLeft, akRight]
+                Color = clWhite
+                object yearlySeries: TBarSeries
+                  Legend.Multiplicity = lmStyle
+                  BarBrush.Color = 4946723
+                  BarPen.Color = clGray
+                  BarWidthStyle = bwPercentMin
+                  Source = DMT.lcsYearly
+                  StackedNaN = snDoNotDraw
+                  Styles = DMT.RecordTypeStyles
+                end
+              end
+            end
+            object pChartSeasonality: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Left = 406
+              Height = 377
+              Top = 0
+              Width = 398
+              AutoSize = True
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 1
+              object lblSeasonalityTitle: TLabel
+                Left = 16
+                Height = 21
+                Top = 16
+                Width = 366
+                Align = alTop
+                BorderSpacing.Bottom = 4
+                Caption = 'Seasonality'
+                Font.Height = -16
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object chartSeasonality: TChart
+                AnchorSideLeft.Control = pChartSeasonality
+                AnchorSideTop.Control = lblSeasonalityTitle
+                AnchorSideTop.Side = asrBottom
+                AnchorSideRight.Control = pChartSeasonality
+                AnchorSideRight.Side = asrBottom
+                Left = 16
+                Height = 320
+                Top = 41
+                Width = 366
+                AxisList = <                
+                  item
+                    Grid.Visible = False
+                    AxisPen.Visible = True
+                    Marks.LabelFont.Height = -11
+                    Marks.LabelBrush.Style = bsClear
+                    Minors = <>
+                    Title.LabelFont.Orientation = 900
+                    Title.Visible = True
+                    Title.Caption = 'Number of records'
+                    Title.LabelBrush.Style = bsClear
+                  end                
+                  item
+                    Grid.Visible = False
+                    Intervals.Count = 1
+                    Intervals.MaxLength = 12
+                    Intervals.MinLength = 12
+                    Intervals.Options = [aipUseCount, aipUseMaxLength, aipUseMinLength, aipInteger]
+                    Alignment = calBottom
+                    AxisPen.Visible = True
+                    Marks.LabelFont.Height = -11
+                    Marks.LabelBrush.Style = bsClear
+                    Marks.Range.Max = 12
+                    Marks.Range.Min = 1
+                    Marks.Range.UseMax = True
+                    Marks.Range.UseMin = True
+                    Minors = <>
+                    Range.Max = 12.5
+                    Range.Min = 0.5
+                    Range.UseMax = True
+                    Range.UseMin = True
+                    Title.Visible = True
+                    Title.Caption = 'Month'
+                    Title.LabelBrush.Style = bsClear
+                  end>
+                Extent.UseXMax = True
+                Extent.UseXMin = True
+                Extent.XMax = 12.5
+                Extent.XMin = 0.5
+                Frame.Visible = False
+                GUIConnector = chartBGRA
+                Legend.Alignment = laBottomCenter
+                Legend.BackgroundBrush.Style = bsClear
+                Legend.ColumnCount = 3
+                Legend.Frame.Visible = False
+                Legend.SymbolFrame.Visible = False
+                Legend.Visible = True
+                Margins.Bottom = 0
+                Title.Text.Strings = (
+                  'Seasonality'
+                )
+                Toolset = chartTools
+                Anchors = [akTop, akLeft, akRight]
+                Color = clWhite
+                object monthlySeries: TBarSeries
+                  Legend.Multiplicity = lmStyle
+                  Title = 'Captures'
+                  BarBrush.Color = 4946723
+                  BarPen.Color = clGray
+                  BarPen.Style = psClear
+                  BarWidthStyle = bwPercentMin
+                  Source = DMT.lcsMonthly
+                  StackedNaN = snDoNotDraw
+                  Styles = DMT.RecordTypeStyles
+                end
+              end
+            end
+          end
+        end
+      end
+      object pgOccurrence: TPage
+        object scrollOccurrence: TScrollBox
+          AnchorSideLeft.Control = pgOccurrence
+          AnchorSideTop.Control = pgOccurrence
+          AnchorSideRight.Control = pgOccurrence
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pgOccurrence
+          AnchorSideBottom.Side = asrBottom
+          Left = 0
+          Height = 346
+          Top = 0
+          Width = 853
+          HorzScrollBar.Page = 303
+          VertScrollBar.Page = 346
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderStyle = bsNone
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 16
+          ChildSizing.VerticalSpacing = 8
+          ClientHeight = 346
+          ClientWidth = 853
+          ParentBackground = False
+          TabOrder = 0
+          object pMapLocalities: TPanel
+            AnchorSideLeft.Control = scrollOccurrence
+            AnchorSideTop.Control = scrollOccurrence
+            AnchorSideRight.Control = scrollOccurrence
+            AnchorSideRight.Side = asrBottom
+            Left = 16
+            Height = 420
+            Top = 16
+            Width = 804
+            Anchors = [akTop, akLeft, akRight]
+            AutoSize = True
+            BevelOuter = bvNone
+            ChildSizing.HorizontalSpacing = 8
+            ChildSizing.VerticalSpacing = 8
+            ChildSizing.EnlargeHorizontal = crsSameSize
+            ChildSizing.EnlargeVertical = crsSameSize
+            ChildSizing.ShrinkHorizontal = crsSameSize
+            ChildSizing.ShrinkVertical = crsSameSize
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 420
+            ClientWidth = 804
+            ParentBackground = False
+            TabOrder = 0
+            object pRecordsMap: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Left = 0
+              Height = 420
+              Top = 0
+              Width = 398
+              AutoSize = True
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 0
+              object lblRecordsMapTitle: TLabel
+                Left = 16
+                Height = 21
+                Top = 16
+                Width = 366
+                Align = alTop
+                BorderSpacing.Bottom = 4
+                Caption = 'Records map'
+                Font.Height = -16
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object mapView: TMapView
+                AnchorSideLeft.Control = pRecordsMap
+                AnchorSideTop.Control = lblRecordsMapTitle
+                AnchorSideTop.Side = asrBottom
+                AnchorSideRight.Control = pRecordsMap
+                AnchorSideRight.Side = asrBottom
+                Left = 16
+                Height = 363
+                Top = 41
+                Width = 366
+                Anchors = [akTop, akLeft, akRight]
+                DownloadEngine = mapView.BuiltInDLE
+                DrawingEngine = MvBGRA
+                Layers = <>
+                Font.Color = clBlack
+                MapProvider = 'OpenStreetMap Standard'
+                ParentFont = False
+                POITextBgOpacity = 0.550000011920929
+                TabOrder = 0
+                OnDrawGpsPoint = mapViewDrawGpsPoint
+              end
+            end
+            object pTopLocalities: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Left = 406
+              Height = 420
+              Top = 0
+              Width = 398
+              AutoSize = True
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 1
+              Visible = False
+              object lblTopLocalitiesTitle: TLabel
+                Left = 16
+                Height = 21
+                Top = 16
+                Width = 366
+                Align = alTop
+                BorderSpacing.Bottom = 4
+                Caption = 'Top localities'
+                Font.Height = -16
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+            end
+          end
+        end
+      end
+      object pgBreeding: TPage
+        object scrollBreeding: TScrollBox
+          AnchorSideLeft.Control = pgBreeding
+          AnchorSideTop.Control = pgBreeding
+          AnchorSideRight.Control = pgBreeding
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pgBreeding
+          AnchorSideBottom.Side = asrBottom
+          Left = 0
+          Height = 397
+          Top = 0
+          Width = 853
+          HorzScrollBar.Page = 301
+          VertScrollBar.Page = 397
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderStyle = bsNone
+          ChildSizing.LeftRightSpacing = 16
+          ChildSizing.TopBottomSpacing = 16
+          ChildSizing.VerticalSpacing = 8
+          ClientHeight = 397
+          ClientWidth = 853
+          ParentBackground = False
+          TabOrder = 0
+          object pBreedingIndicators: TFlowPanel
+            AnchorSideRight.Side = asrBottom
+            Left = 16
+            Height = 95
+            Top = 16
+            Width = 753
+            Anchors = [akTop, akLeft, akRight]
+            AutoSize = True
+            BevelOuter = bvNone
+            BorderSpacing.Left = 16
+            BorderSpacing.Top = 16
+            BorderSpacing.Right = 16
+            ControlList = <            
+              item
+                Control = pTotalNestsIndicator
+                WrapAfter = waAuto
+                Index = 0
+              end            
+              item
+                Control = pNestProductivityIndicator
+                WrapAfter = waAuto
+                Index = 1
+              end>
+            FlowLayout = tlTop
+            FlowStyle = fsLeftRightTopBottom
+            TabOrder = 0
+            object pTotalNestsIndicator: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Left = 0
+              Height = 87
+              Top = 0
+              Width = 100
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              Constraints.MinWidth = 100
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 0
+              object lblTotalNests: TLabel
+                AnchorSideLeft.Control = pTotalNestsIndicator
+                AnchorSideTop.Control = txtTotalNests
+                AnchorSideTop.Side = asrBottom
+                Left = 16
+                Height = 15
+                Top = 56
+                Width = 27
+                Caption = 'nests'
+                ParentFont = False
+              end
+              object txtTotalNests: TLabel
+                AnchorSideLeft.Control = pTotalNestsIndicator
+                AnchorSideTop.Control = pTotalNestsIndicator
+                AnchorSideRight.Side = asrBottom
+                Left = 16
+                Height = 36
+                Top = 16
+                Width = 18
+                BorderSpacing.Left = 16
+                BorderSpacing.Top = 8
+                BorderSpacing.Right = 8
+                BorderSpacing.Bottom = 4
+                Caption = '0'
+                Font.Height = -29
+                Font.Name = 'Fira Code'
+                ParentFont = False
+              end
+            end
+            object pNestProductivityIndicator: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Left = 108
+              Height = 87
+              Top = 0
+              Width = 121
+              Anchors = []
+              AutoSize = True
+              BorderSpacing.Right = 8
+              BorderSpacing.Bottom = 8
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              Constraints.MinWidth = 100
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 1
+              object lblNestProductivity: TLabel
+                AnchorSideLeft.Control = pNestProductivityIndicator
+                AnchorSideTop.Control = txtNestProductivity
+                AnchorSideTop.Side = asrBottom
+                Left = 16
+                Height = 15
+                Top = 56
+                Width = 89
+                Caption = 'nest productivity'
+                ParentFont = False
+              end
+              object txtNestProductivity: TLabel
+                AnchorSideLeft.Control = pNestProductivityIndicator
+                AnchorSideTop.Control = pNestProductivityIndicator
+                AnchorSideRight.Side = asrBottom
+                Left = 16
+                Height = 36
+                Top = 16
+                Width = 18
+                BorderSpacing.Left = 16
+                BorderSpacing.Top = 8
+                BorderSpacing.Right = 8
+                BorderSpacing.Bottom = 4
+                Caption = '0'
+                Font.Height = -29
+                Font.Name = 'Fira Code'
+                ParentFont = False
+              end
+            end
+          end
+          object pNestFateLosses: TPanel
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Side = asrBottom
+            Left = 16
+            Height = 352
+            Top = 119
+            Width = 753
+            Anchors = [akTop, akLeft, akRight]
+            AutoSize = True
+            BevelOuter = bvNone
+            ChildSizing.HorizontalSpacing = 8
+            ChildSizing.VerticalSpacing = 8
+            ChildSizing.EnlargeHorizontal = crsSameSize
+            ChildSizing.EnlargeVertical = crsSameSize
+            ChildSizing.ShrinkHorizontal = crsSameSize
+            ChildSizing.ShrinkVertical = crsSameSize
+            ChildSizing.Layout = cclLeftToRightThenTopToBottom
+            ChildSizing.ControlsPerLine = 2
+            ClientHeight = 352
+            ClientWidth = 753
+            ParentBackground = False
+            TabOrder = 1
+            object pChartNestFate: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Left = 0
+              Height = 352
+              Top = 0
+              Width = 372
+              AutoSize = True
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 0
+              object lblNestFateTitle: TLabel
+                Left = 16
+                Height = 21
+                Top = 16
+                Width = 340
+                Align = alTop
+                BorderSpacing.Bottom = 4
+                Caption = 'Nest fate'
+                Font.Height = -16
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+              object chartNestFate: TChart
+                AnchorSideLeft.Control = pChartNestFate
+                AnchorSideTop.Control = lblNestFateTitle
+                AnchorSideTop.Side = asrBottom
+                AnchorSideRight.Control = pChartNestFate
+                AnchorSideRight.Side = asrBottom
+                Left = 16
+                Height = 295
+                Top = 41
+                Width = 340
+                AxisList = <                
+                  item
+                    Visible = False
+                    Marks.LabelBrush.Style = bsClear
+                    Minors = <>
+                    Title.LabelFont.Orientation = 900
+                    Title.LabelBrush.Style = bsClear
+                  end                
+                  item
+                    Visible = False
+                    Alignment = calBottom
+                    Marks.LabelBrush.Style = bsClear
+                    Minors = <>
+                    Title.LabelBrush.Style = bsClear
+                  end>
+                Frame.Visible = False
+                GUIConnector = chartBGRA
+                Title.Text.Strings = (
+                  'Nest fate'
+                )
+                Toolset = chartTools
+                Anchors = [akTop, akLeft, akRight]
+                Color = clWindow
+                object NestFateSeries: TPieSeries
+                  Legend.Visible = False
+                  EdgePen.Color = clGray
+                  EdgePen.Style = psClear
+                  InnerRadiusPercent = 70
+                  Marks.Format = '%2:s'
+                  Marks.Frame.Color = clWindow
+                  Marks.Frame.Visible = False
+                  Marks.LabelBrush.Color = clWindow
+                  Marks.LinkPen.Visible = False
+                  Marks.Style = smsLabel
+                  Source = DMT.lcsNestFate
+                end
+              end
+            end
+            object pChartNestLossCauses: TBCPanel
+              AnchorSideRight.Side = asrBottom
+              Left = 380
+              Height = 352
+              Top = 0
+              Width = 373
+              AutoSize = True
+              ChildSizing.LeftRightSpacing = 16
+              ChildSizing.TopBottomSpacing = 16
+              Background.Color = clWhite
+              Background.Gradient1.StartColor = clWhite
+              Background.Gradient1.EndColor = clBlack
+              Background.Gradient1.GradientType = gtLinear
+              Background.Gradient1.Point1XPercent = 0
+              Background.Gradient1.Point1YPercent = 0
+              Background.Gradient1.Point2XPercent = 0
+              Background.Gradient1.Point2YPercent = 100
+              Background.Gradient2.StartColor = clWhite
+              Background.Gradient2.EndColor = clBlack
+              Background.Gradient2.GradientType = gtLinear
+              Background.Gradient2.Point1XPercent = 0
+              Background.Gradient2.Point1YPercent = 0
+              Background.Gradient2.Point2XPercent = 0
+              Background.Gradient2.Point2YPercent = 100
+              Background.Gradient1EndPercent = 35
+              Background.Style = bbsColor
+              BevelInner = bvNone
+              BevelOuter = bvNone
+              BevelWidth = 1
+              Border.Color = 9997706
+              Border.Style = bboSolid
+              BorderBCStyle = bpsBorder
+              FontEx.Color = clDefault
+              FontEx.FontQuality = fqSystemClearType
+              FontEx.Shadow = False
+              FontEx.ShadowRadius = 5
+              FontEx.ShadowOffsetX = 5
+              FontEx.ShadowOffsetY = 5
+              FontEx.Style = []
+              ParentBackground = False
+              Rounding.RoundX = 12
+              Rounding.RoundY = 12
+              TabOrder = 1
+              Visible = False
+              object lblNestLossCausesTitle: TLabel
+                Left = 16
+                Height = 21
+                Top = 16
+                Width = 341
+                Align = alTop
+                BorderSpacing.Bottom = 4
+                Caption = 'Nest loss causes'
+                Font.Height = -16
+                Font.Style = [fsBold]
+                ParentFont = False
+              end
+            end
+          end
+        end
+      end
+      object pgCaptures: TPage
+        object scrollCaptures: TScrollBox
+          AnchorSideLeft.Control = pgCaptures
+          AnchorSideTop.Control = pgCaptures
+          AnchorSideRight.Control = pgCaptures
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pgCaptures
+          AnchorSideBottom.Side = asrBottom
+          Left = 0
+          Height = 346
+          Top = 0
+          Width = 853
+          HorzScrollBar.Page = 1
+          VertScrollBar.Page = 1
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderStyle = bsNone
+          ParentBackground = False
+          TabOrder = 0
+        end
+      end
+      object pgEcology: TPage
+        object scrollEcology: TScrollBox
+          AnchorSideLeft.Control = pgEcology
+          AnchorSideTop.Control = pgEcology
+          AnchorSideRight.Control = pgEcology
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pgEcology
+          AnchorSideBottom.Side = asrBottom
+          Left = 0
+          Height = 346
+          Top = 0
+          Width = 853
+          HorzScrollBar.Page = 1
+          VertScrollBar.Page = 1
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderStyle = bsNone
+          ParentBackground = False
+          TabOrder = 0
+        end
+      end
+      object pgQuality: TPage
+        object scrollQuality: TScrollBox
+          AnchorSideLeft.Control = pgQuality
+          AnchorSideTop.Control = pgQuality
+          AnchorSideRight.Control = pgQuality
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pgQuality
+          AnchorSideBottom.Side = asrBottom
+          Left = 0
+          Height = 346
+          Top = 0
+          Width = 853
+          HorzScrollBar.Page = 1
+          VertScrollBar.Page = 1
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderStyle = bsNone
+          ParentBackground = False
+          TabOrder = 0
         end
       end
     end
@@ -1259,7 +3090,7 @@ object frmTaxa: TfrmTaxa
     Color = clWhite
     ParentBackground = False
     ParentColor = False
-    TabOrder = 5
+    TabOrder = 1
     Visible = False
     object pEmptyQueryOptions: TBCPanel
       AnchorSideLeft.Control = pEmptyQuery
@@ -2096,7 +3927,7 @@ object frmTaxa: TfrmTaxa
   end
   object TimerData: TTimer
     Enabled = False
-    Interval = 200
+    Interval = 150
     OnTimer = TimerDataTimer
     Left = 144
     Top = 208
@@ -11986,5 +13817,14 @@ object frmTaxa: TfrmTaxa
     DataSet = DMG.qVernacularTaxa
     Left = 64
     Top = 200
+  end
+  object chartTools: TChartToolset
+    Left = 216
+    Top = 344
+    object chartToolsDataPointHintTool1: TDataPointHintTool
+      GrabRadius = 6
+      ActiveCursor = crHandPoint
+      OnHint = chartToolsDataPointHintTool1Hint
+    end
   end
 end

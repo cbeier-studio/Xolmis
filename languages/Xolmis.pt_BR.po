@@ -2316,7 +2316,7 @@ msgstr "Status"
 
 #: data_columns.rscstddev
 msgid "Std. dev."
-msgstr "Desvio Padrão"
+msgstr "DP"
 
 #: data_columns.rscstderr
 msgid "Std. error"
@@ -13581,14 +13581,6 @@ msgctxt "tfrmtaxa.esearch.texthint"
 msgid "Search"
 msgstr "Pesquisar"
 
-#: tfrmtaxa.gridchilds.columns[0].title.caption
-msgid "Subordinate taxa"
-msgstr "Táxons subordinados"
-
-#: tfrmtaxa.gridsynonyms.columns[0].title.caption
-msgid "Synonyms"
-msgstr "Sinônimos"
-
 #: tfrmtaxa.gridtaxa.columns[0].title.caption
 msgctxt "tfrmtaxa.gridtaxa.columns[0].title.caption"
 msgid "Taxon"
@@ -13599,52 +13591,100 @@ msgctxt "tfrmtaxa.gridtaxa.columns[1].title.caption"
 msgid "Rank ID"
 msgstr "Nível ID"
 
-#: tfrmtaxa.gridvernacular.columns[0].title.caption
-msgctxt "tfrmtaxa.gridvernacular.columns[0].title.caption"
-msgid "Language"
-msgstr "Idioma"
+#: tfrmtaxa.lblcapturescount.caption
+msgid "captures"
+msgstr "capturas"
 
-#: tfrmtaxa.gridvernacular.columns[1].title.caption
-msgctxt "tfrmtaxa.gridvernacular.columns[1].title.caption"
-msgid "Vernacular name"
-msgstr "Nome vernacular"
-
-#: tfrmtaxa.label5.caption
-msgid "Geographical distribution"
+#: tfrmtaxa.lbldistributiontitle.caption
+msgctxt "tfrmtaxa.lbldistributiontitle.caption"
+msgid "Geographical range"
 msgstr "Distribuição geográfica"
+
+#: tfrmtaxa.lbleggscount.caption
+msgid "eggs"
+msgstr "ovos"
 
 #: tfrmtaxa.lblemptyquery.caption
 msgctxt "tfrmtaxa.lblemptyquery.caption"
 msgid "Result query is empty"
 msgstr "Resultado da busca está vazio"
 
-#: tfrmtaxa.lbllinkcaptures.caption
-msgid "Captures (0)"
-msgstr "Capturas (0)"
+#: tfrmtaxa.lblgoogle.caption
+msgid "Google Search"
+msgstr "Google Busca"
 
-#: tfrmtaxa.lbllinkeggs.caption
-msgid "Eggs (0)"
-msgstr "Ovos (0)"
+#: tfrmtaxa.lblgoogleimages.caption
+msgctxt "tfrmtaxa.lblgoogleimages.caption"
+msgid "Google Images"
+msgstr "Google Imagens"
 
-#: tfrmtaxa.lbllinkindividuals.caption
-msgid "Individuals (0)"
-msgstr "Indivíduos (0)"
+#: tfrmtaxa.lblgooglescholar.caption
+msgctxt "tfrmtaxa.lblgooglescholar.caption"
+msgid "Google Scholar"
+msgstr "Google Acadêmico"
 
-#: tfrmtaxa.lbllinknests.caption
-msgid "Nests (0)"
-msgstr "Ninhos (0)"
+#: tfrmtaxa.lblindividualscount.caption
+msgid "individuals"
+msgstr "indivíduos"
 
-#: tfrmtaxa.lbllinksightings.caption
-msgid "Sightings (0)"
-msgstr "Observações (0)"
+#: tfrmtaxa.lblnestfatetitle.caption
+msgctxt "tfrmtaxa.lblnestfatetitle.caption"
+msgid "Nest fate"
+msgstr "Destino do ninho"
 
-#: tfrmtaxa.lbllinkspecimens.caption
-msgid "Specimens (0)"
-msgstr "Espécimes (0)"
+#: tfrmtaxa.lblnestlosscausestitle.caption
+msgid "Nest loss causes"
+msgstr "Causas de perda de ninhos"
 
-#: tfrmtaxa.lblmeannestproductivity.caption
-msgid "mean nest productivity"
-msgstr "produtividade média do ninho"
+#: tfrmtaxa.lblnestproductivity.caption
+msgid "nest productivity"
+msgstr "produtividade dos ninhos"
+
+#: tfrmtaxa.lblnestscount.caption
+msgctxt "tfrmtaxa.lblnestscount.caption"
+msgid "nests"
+msgstr "ninhos"
+
+#: tfrmtaxa.lblrecordsmaptitle.caption
+msgid "Records map"
+msgstr "Mapa de registros"
+
+#: tfrmtaxa.lblrecordsperyeartitle.caption
+msgctxt "tfrmtaxa.lblrecordsperyeartitle.caption"
+msgid "Records per Year"
+msgstr "Registros por ano"
+
+#: tfrmtaxa.lblseasonalitytitle.caption
+msgctxt "tfrmtaxa.lblseasonalitytitle.caption"
+msgid "Seasonality"
+msgstr "Sazonalidade"
+
+#: tfrmtaxa.lblsightingscount.caption
+msgid "sightings"
+msgstr "observações"
+
+#: tfrmtaxa.lblspecimenscount.caption
+msgid "specimens"
+msgstr "espécimes"
+
+#: tfrmtaxa.lblsynonymstitle.caption
+msgctxt "tfrmtaxa.lblsynonymstitle.caption"
+msgid "Synonyms"
+msgstr "Sinônimos"
+
+#: tfrmtaxa.lbltoplocalitiestitle.caption
+msgid "Top localities"
+msgstr "Localidades com mais registros"
+
+#: tfrmtaxa.lbltotalnests.caption
+msgctxt "tfrmtaxa.lbltotalnests.caption"
+msgid "nests"
+msgstr "ninhos"
+
+#: tfrmtaxa.lbltotalrecords.caption
+msgctxt "tfrmtaxa.lbltotalrecords.caption"
+msgid "total records"
+msgstr "registros totais"
 
 #: tfrmtaxa.pmfshowrecordedtaxa.caption
 msgid "Show only the recorded taxa"
@@ -13669,18 +13709,10 @@ msgstr "Táxons registrados"
 msgid "Taxa recorded by locality"
 msgstr "Táxons registrados por localidade"
 
-#: tfrmtaxa.sbbirdsoftheworld.hint
-msgid "Birds of the World"
-msgstr "Birds of the World"
-
 #: tfrmtaxa.sbclearsearch.hint
 msgctxt "tfrmtaxa.sbclearsearch.hint"
 msgid "Clear search"
 msgstr "Limpar busca"
-
-#: tfrmtaxa.sbebird.hint
-msgid "eBird"
-msgstr "eBird"
 
 #: tfrmtaxa.sbemptyclearall.caption
 msgctxt "tfrmtaxa.sbemptyclearall.caption"
@@ -13691,44 +13723,20 @@ msgstr "Limpar todos os filtros"
 msgid "Go to the search box"
 msgstr "Ir para o campo de busca"
 
-#: tfrmtaxa.sbgbif.hint
-msgid "GBIF"
-msgstr "GBIF"
-
-#: tfrmtaxa.sbgoogleimages.hint
-msgid "Google Images"
-msgstr "Google Imagens"
-
-#: tfrmtaxa.sbgooglescholar.hint
-msgid "Google Scholar"
-msgstr "Google Acadêmico"
-
-#: tfrmtaxa.sbgooglesearch.hint
-msgid "Googe Search"
-msgstr "Pesquisa do Google"
-
-#: tfrmtaxa.sbiucnredlist.hint
-msgid "IUCN Red List"
-msgstr "Lista Vermelha da IUCN"
-
 #: tfrmtaxa.sboptionssearch.hint
 msgctxt "tfrmtaxa.sboptionssearch.hint"
 msgid "Options"
 msgstr "Opções"
 
-#: tfrmtaxa.sbprint.hint
-msgctxt "tfrmtaxa.sbprint.hint"
-msgid "Print records"
-msgstr "Imprimir registros"
+#: tfrmtaxa.sbprint.caption
+msgctxt "tfrmtaxa.sbprint.caption"
+msgid "Print"
+msgstr "Imprimir"
 
-#: tfrmtaxa.sbsharerecords.hint
-msgctxt "tfrmtaxa.sbsharerecords.hint"
-msgid "Export records"
-msgstr "Exportar registros"
-
-#: tfrmtaxa.sbwikiaves.hint
-msgid "WikiAves"
-msgstr "WikiAves"
+#: tfrmtaxa.sbsharerecords.caption
+msgctxt "tfrmtaxa.sbsharerecords.caption"
+msgid "Export"
+msgstr "Exportar"
 
 #: tlstbreedingstatus.caption
 msgid "Breeding and behavior code"
@@ -15227,6 +15235,10 @@ msgctxt "utils_locale.rscreatingbackup"
 msgid "Creating backup..."
 msgstr "Criando backup..."
 
+#: utils_locale.rscriticallyendangered
+msgid "Critically Endangered"
+msgstr "Criticamente em perigo"
+
 #: utils_locale.rscyclenotselected
 msgctxt "utils_locale.rscyclenotselected"
 msgid "No item were selected in one or more columns."
@@ -15245,6 +15257,10 @@ msgstr "Escuro"
 #: utils_locale.rsdarkmode
 msgid "Dark mode"
 msgstr "Modo escuro"
+
+#: utils_locale.rsdatadeficient
+msgid "Data Deficient"
+msgstr "Dados deficientes"
 
 #: utils_locale.rsdatebandchange
 msgctxt "utils_locale.rsdatebandchange"
@@ -15875,6 +15891,10 @@ msgstr "Listras"
 msgctxt "utils_locale.rseggunknown"
 msgid "Unknown"
 msgstr "Indeterminada"
+
+#: utils_locale.rsendangered
+msgid "Endangered"
+msgstr "Em perigo"
 
 #: utils_locale.rsenglish
 msgctxt "utils_locale.rsenglish"
@@ -16510,6 +16530,15 @@ msgstr "Exportando XLSX"
 #: utils_locale.rsexportingxml
 msgid "Exporting XML"
 msgstr "Exportando XML"
+
+#: utils_locale.rsextinct
+msgctxt "utils_locale.rsextinct"
+msgid "Extinct"
+msgstr "Extinto"
+
+#: utils_locale.rsextinctinthewild
+msgid "Extinct in the Wild"
+msgstr "Extinto na natureza"
 
 #: utils_locale.rsfactoryresetprompt
 msgctxt "utils_locale.rsfactoryresetprompt"
@@ -17322,6 +17351,10 @@ msgstr "Latitude: <font color=\"$00C75F5B\">%s</font>"
 msgid "Latitude: %s"
 msgstr "Latitude: %s"
 
+#: utils_locale.rsleastconcern
+msgid "Least Concern"
+msgstr "Pouco preocupante"
+
 #: utils_locale.rsleftleg
 #, object-pascal-format
 msgctxt "utils_locale.rsleftleg"
@@ -17886,6 +17919,10 @@ msgctxt "utils_locale.rsnamenotfound"
 msgid "not found"
 msgstr "não encontrado"
 
+#: utils_locale.rsnearthreatened
+msgid "Near Threatened"
+msgstr "Quase ameaçado"
+
 #: utils_locale.rsnestactive
 msgctxt "utils_locale.rsnestactive"
 msgid "Active"
@@ -18084,6 +18121,10 @@ msgctxt "utils_locale.rsnorecordsfound"
 msgid "No records found!"
 msgstr "Nenhum registro encontrado!"
 
+#: utils_locale.rsnosynonyms
+msgid "This taxon do not have synonyms."
+msgstr "Este táxon não possui sinônimos."
+
 #: utils_locale.rsnotapplicable
 msgctxt "utils_locale.rsnotapplicable"
 msgid "Not applicable"
@@ -18093,6 +18134,10 @@ msgstr "Não aplicável"
 msgctxt "utils_locale.rsnotestr"
 msgid "Note"
 msgstr "Nota"
+
+#: utils_locale.rsnotevaluated
+msgid "Not Evaluated"
+msgstr "Não avaliado"
 
 #: utils_locale.rsnotfullname
 msgctxt "utils_locale.rsnotfullname"
@@ -20340,6 +20385,32 @@ msgctxt "utils_locale.rssystemencoding"
 msgid "System encoding"
 msgstr "Codificação do sistema"
 
+#: utils_locale.rstaxonbreeding
+msgid "Breeding"
+msgstr ""
+
+#: utils_locale.rstaxoncapturesandmorphometry
+msgid "Captures and Morphometry"
+msgstr ""
+
+#: utils_locale.rstaxonecology
+msgid "Ecology"
+msgstr ""
+
+#: utils_locale.rstaxonoccurrence
+msgid "Occurrence"
+msgstr ""
+
+#: utils_locale.rstaxonqualityandgaps
+msgid "Quality and Gaps"
+msgstr ""
+
+#: utils_locale.rstaxonsummary
+#, fuzzy
+msgctxt "utils_locale.rstaxonsummary"
+msgid "Summary"
+msgstr "Resumo"
+
 #: utils_locale.rsteam
 msgctxt "utils_locale.rsteam"
 msgid "Team"
@@ -21215,6 +21286,10 @@ msgctxt "utils_locale.rsviewreportaction"
 msgid "View report"
 msgstr "Ver relatório"
 
+#: utils_locale.rsvulnerable
+msgid "Vulnerable"
+msgstr "Vulnerável"
+
 #: utils_locale.rswarningschemaversionmismatch
 #, object-pascal-format
 msgid "Schema version mismatch: file has v%d, expected v%d."
@@ -21259,3 +21334,4 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
+

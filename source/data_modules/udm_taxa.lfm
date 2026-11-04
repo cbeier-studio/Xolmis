@@ -20,36 +20,42 @@ object DMT: TDMT
       item
         Brush.Color = 11564616
         Pen.Color = clGray
+        Pen.Style = psClear
         Text = 'Captures'
         UseFont = False
       end    
       item
         Brush.Color = 15124148
         Pen.Color = clGray
+        Pen.Style = psClear
         Text = 'Sightings'
         UseFont = False
       end    
       item
         Brush.Color = 2326243
         Pen.Color = clGray
+        Pen.Style = psClear
         Text = 'Nests'
         UseFont = False
       end    
       item
         Brush.Color = 8108782
         Pen.Color = clGray
+        Pen.Style = psClear
         Text = 'Eggs'
         UseFont = False
       end    
       item
         Brush.Color = 3841633
         Pen.Color = clGray
+        Pen.Style = psClear
         Text = 'Feathers'
         UseFont = False
       end    
       item
         Brush.Color = 9363119
         Pen.Color = clGray
+        Pen.Style = psClear
         Text = 'Specimens'
         UseFont = False
       end>
@@ -57,6 +63,7 @@ object DMT: TDMT
     Top = 400
   end
   object lcsNestFate: TListChartSource
+    Sorted = True
     Left = 168
     Top = 136
   end
@@ -65,18 +72,24 @@ object DMT: TDMT
       item
         Brush.Color = 6315471
         Pen.Color = clGray
-        Text = 'Loss'
+        Pen.Style = psClear
+        Pointer.Style = psFullStar
+        Text = 'Lost'
         UseFont = False
       end    
       item
         Brush.Color = 11564616
         Pen.Color = clGray
+        Pen.Style = psClear
+        Pointer.Style = psDownTriangle
         Text = 'Success'
         UseFont = False
       end    
       item
         Brush.Color = 8289918
         Pen.Color = clGray
+        Pen.Style = psClear
+        Pointer.Style = psStar
         Text = 'Unknown'
         UseFont = False
       end>

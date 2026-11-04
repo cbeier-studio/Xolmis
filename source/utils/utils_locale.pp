@@ -1732,6 +1732,25 @@ function TranslateSightingJsonValue(const AValue: String): String;
     rsDistributionContinuousDense = 'Continuous and dense cover';
     rsDistributionContinuousDenseEdge = 'Continuous and dense cover with clear edge with other stratum';
 
+    { Conservation status }
+    rsLeastConcern = 'Least Concern';
+    rsNearThreatened = 'Near Threatened';
+    rsVulnerable = 'Vulnerable';
+    rsEndangered = 'Endangered';
+    rsCriticallyEndangered = 'Critically Endangered';
+    rsExtinctInTheWild = 'Extinct in the Wild';
+    rsExtinct = 'Extinct';
+    rsDataDeficient = 'Data Deficient';
+    rsNotEvaluated = 'Not Evaluated';
+
+    rsNoSynonyms = 'This taxon do not have synonyms.';
+    rsTaxonSummary = 'Summary';
+    rsTaxonOccurrence = 'Occurrence';
+    rsTaxonBreeding = 'Breeding';
+    rsTaxonCapturesAndMorphometry = 'Captures and Morphometry';
+    rsTaxonEcology = 'Ecology';
+    rsTaxonQualityAndGaps = 'Quality and Gaps';
+
     { Reports }
     rsReportSimpleList = 'Simple List';
     rsReportGroupedList = 'Grouped List';
