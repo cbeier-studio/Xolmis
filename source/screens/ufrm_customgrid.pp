@@ -1574,16 +1574,16 @@ begin
   FCounterBadge.OnMouseEnter := @TabMouseEnter;
   FCounterBadge.OnMouseLeave := @TabMouseLeave;
   FCounterBadge.Border.Style := bboNone;
-  //if IsDarkModeEnabled then
-  //begin
-    FCounterBadge.Border.Color := ActiveTheme.Interactive.WindowTitle; // $00C75F5B;
-    FCounterBadge.Background.Color := ActiveTheme.Interactive.WindowTitle; // $00C75F5B;
-  //end
-  //else
-  //begin
-  //  FCounterBadge.Border.Color := ActiveTheme.Interactive.WindowTitle; // $00C75F5B;
-  //  FCounterBadge.Background.Color := ActiveTheme.Interactive.WindowTitle; // $00C75F5B;
-  //end;
+  if IsDarkModeEnabled then
+  begin
+    FCounterBadge.Border.Color := ActiveTheme.Brand.JacarandaContainer;
+    FCounterBadge.Background.Color := ActiveTheme.Brand.JacarandaContainer;
+  end
+  else
+  begin
+    FCounterBadge.Border.Color := ActiveTheme.Brand.JacarandaCore;
+    FCounterBadge.Background.Color := ActiveTheme.Brand.JacarandaCore;
+  end;
   FCounterBadge.Color := Self.Background.Color;
   FCounterBadge.AnchorVerticalCenterTo(Self);
   FCounterBadge.AnchorSide[akLeft].Side := asrRight;
@@ -1603,7 +1603,7 @@ begin
   FCounterLabel.BorderSpacing.Top := 2;
   FCounterLabel.BorderSpacing.Bottom := 2;
   FCounterLabel.Font.Style := [fsBold];
-  FCounterLabel.Font.Color := ActiveTheme.Interactive.AccentText; // $00FAEBE8;
+  FCounterLabel.Font.Color := ActiveTheme.Foreground.TextOnAccentPrimary; // $00FAEBE8;
   FCounterLabel.AutoSize := True;
   FCounterLabel.Layout := tlCenter;
   FCounterLabel.Align := alClient;
@@ -4202,8 +4202,8 @@ begin
   //else
   //if IsDarkModeEnabled then
   //begin
-    BgColor := ActiveTheme.Categorical.Jacaranda.Background;
-    FontColor := ActiveTheme.Categorical.Jacaranda.Foreground;
+    BgColor := ActiveTheme.Categorical.Anil.Background;
+    FontColor := ActiveTheme.Categorical.Anil.Foreground;
   //end
   //else
   //begin

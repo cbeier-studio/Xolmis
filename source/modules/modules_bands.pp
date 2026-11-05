@@ -203,18 +203,18 @@ begin
       end;
       'T': // Transferred
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Jacaranda.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Jacaranda.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.AlternativeBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.AlternativeFG;
       end;
       'X': // Returned
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Azul.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Azul.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.AttentionBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.AttentionFG;
       end;
       'O': // Ordered
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.AttentionBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.AttentionFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
       end;
     end;
   end;

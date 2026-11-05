@@ -295,8 +295,8 @@ var
 begin
   if JsonText = '' then Exit;
 
-  BgColor := ActiveTheme.Categorical.Jacaranda.Background;
-  FontColor := ActiveTheme.Categorical.Jacaranda.Foreground;
+  BgColor := ActiveTheme.Categorical.Anil.Background;
+  FontColor := ActiveTheme.Categorical.Anil.Foreground;
 
   Arr := GetJSON(JsonText) as TJSONArray;
   try

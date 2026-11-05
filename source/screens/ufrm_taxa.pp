@@ -1898,9 +1898,9 @@ begin
       end;
       'EN':
       begin
-        chipConservationStatus.Background.Color := ActiveTheme.Categorical.RosaOrquidea.Background;
-        chipConservationStatus.Border.Color := ActiveTheme.Categorical.RosaOrquidea.Foreground;
-        txtConservationStatus.Font.Color := ActiveTheme.Categorical.RosaOrquidea.Foreground;
+        chipConservationStatus.Background.Color := ActiveTheme.Categorical.Pitanga.Background;
+        chipConservationStatus.Border.Color := ActiveTheme.Categorical.Pitanga.Foreground;
+        txtConservationStatus.Font.Color := ActiveTheme.Categorical.Pitanga.Foreground;
         txtConservationStatus.Caption := 'EN - ' + rsEndangered;
       end;
       'CR':
@@ -1912,16 +1912,16 @@ begin
       end;
       'EW':
       begin
-        chipConservationStatus.Background.Color := ActiveTheme.AccentPalette.Base;
-        chipConservationStatus.Border.Color := ActiveTheme.AccentPalette.Dark2;
-        txtConservationStatus.Font.Color := ActiveTheme.AccentPalette.Dark3;
+        chipConservationStatus.Background.Color := ActiveTheme.System.AlternativeBG;
+        chipConservationStatus.Border.Color := ActiveTheme.System.AlternativeFG;
+        txtConservationStatus.Font.Color := ActiveTheme.System.AlternativeSolid;
         txtConservationStatus.Caption := 'EW - ' + rsExtinctInTheWild;
       end;
       'EX':
       begin
-        chipConservationStatus.Background.Color := ActiveTheme.Foreground.TextPrimary;
-        chipConservationStatus.Border.Color := ActiveTheme.Border.Control;
-        txtConservationStatus.Font.Color := ActiveTheme.Foreground.TextOnAccentPrimary;
+        chipConservationStatus.Background.Color := clBlack;
+        chipConservationStatus.Border.Color := clWhite;
+        txtConservationStatus.Font.Color := clWhite;
         txtConservationStatus.Caption := 'EX - ' + rsExtinct;
       end;
       'DD':

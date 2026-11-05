@@ -279,18 +279,18 @@ begin
     case Column.Field.AsString of
       'U':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Vinho.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Vinho.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Pitanga.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Pitanga.Foreground;
       end;
       'M':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.VerdeFolha.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.VerdeFolha.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Bromelia.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Bromelia.Foreground;
       end;
       'F':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.IpeAmarelo.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.IpeAmarelo.Foreground;
       end;
     end;
   end
@@ -745,23 +745,23 @@ begin
     case Column.Field.AsString of
       'N':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Azul.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Azul.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Genciana.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Genciana.Foreground;
       end;
       'R', 'S':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.VerdeFolha.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.VerdeFolha.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Mandacaru.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Mandacaru.Foreground;
       end;
       'C':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.IpeAmarelo.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.IpeAmarelo.Foreground;
       end;
       'U':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Vinho.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Vinho.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Pitanga.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Pitanga.Foreground;
       end;
     end;
   end
@@ -773,14 +773,14 @@ begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'R') or
       (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'S') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.VerdeFolha.Background;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.VerdeFolha.Foreground;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Mandacaru.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Mandacaru.Foreground;
     end
     else
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.IpeAmarelo.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.IpeAmarelo.Foreground;
     end;
   end
   else
@@ -790,8 +790,8 @@ begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.IpeAmarelo.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.IpeAmarelo.Foreground;
     end;
   end;
 
@@ -1230,23 +1230,23 @@ begin
     case Column.Field.AsString of
       'N':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Azul.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Azul.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Genciana.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Genciana.Foreground;
       end;
       'R', 'S':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.VerdeFolha.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.VerdeFolha.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Mandacaru.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Mandacaru.Foreground;
       end;
       'C':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.IpeAmarelo.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.IpeAmarelo.Foreground;
       end;
       'U':
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Vinho.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Vinho.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Pitanga.Background;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Pitanga.Foreground;
       end;
     end;
   end
@@ -1258,14 +1258,14 @@ begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'R') or
       (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'S') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.VerdeFolha.Background;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.VerdeFolha.Foreground;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Mandacaru.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Mandacaru.Foreground;
     end
     else
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.IpeAmarelo.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.IpeAmarelo.Foreground;
     end;
   end
   else
@@ -1275,8 +1275,8 @@ begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CAPTURE_TYPE).Field.AsString = 'C') then
     begin
-      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.AmbarTerra.Background;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.AmbarTerra.Foreground;
+      //TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.IpeAmarelo.Background;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.IpeAmarelo.Foreground;
     end;
   end;
 

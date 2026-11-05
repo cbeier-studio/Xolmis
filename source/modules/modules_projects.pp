@@ -364,8 +364,8 @@ begin
     case Column.Field.AsString of
       'T':     // To do
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Azul.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Azul.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.AttentionBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.AttentionFG;
       end;
       'P':     // In progress
       begin
@@ -389,13 +389,13 @@ begin
       end;
       'C':    // Cancelled
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
       end;
       'F':   // Activity Done
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.Categorical.Jacaranda.Background;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.Categorical.Jacaranda.Foreground;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.AlternativeBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.AlternativeFG;
       end;
     end;
   end;

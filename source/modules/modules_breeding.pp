@@ -281,8 +281,8 @@ begin
     case Column.Field.AsString of
       'U':       // Unknown
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
       end;
       'L':       // Lost
       begin
@@ -508,8 +508,8 @@ begin
     case Column.Field.AsString of
       'U':       // Unknown
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
       end;
       'L':       // Lost
       begin
@@ -629,8 +629,8 @@ begin
     case Column.Field.AsString of
       'U':       // Unknown
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
       end;
       'I':       // Inactive
       begin
@@ -795,8 +795,8 @@ begin
     case Column.Field.AsString of
       'U':       // Unknown
       begin
-        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
-        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+        TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+        TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
       end;
       'I':       // Inactive
       begin

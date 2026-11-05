@@ -174,8 +174,8 @@ begin
   begin
     if (Column.Field.AsDateTime > Today) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
     end;
   end;
 end;
@@ -377,8 +377,8 @@ begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (Column.Field.AsDateTime > Today) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
     end;
   end;
 end;
@@ -544,8 +544,8 @@ begin
     SetBoldFont(TDBGrid(Sender).Canvas.Font);
     if (Column.Field.AsDateTime > Today) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
     end;
   end;
 end;

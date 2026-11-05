@@ -34,52 +34,77 @@ uses
 const
   { ===== Xolmis Design System v2 — new tokens ===== }
 
-  { Categorical palette (10 + Outros). BG/FG are used for tags and grid cells.
-    In charts use FG (vivid in light, light tone in dark) as the series colour. }
-  clCatJacarandaBGLight      = TColor($00FDF2F5); // #F5F2FD
-  clCatJacarandaFGLight      = TColor($009B4248); // #48429B
-  clCatJacarandaBGDark       = TColor($0065373E); // #3E3765
-  clCatJacarandaFGDark       = TColor($00F2CDD5); // #D5CDF2
-  clCatVerdeFolhaBGLight     = TColor($00E3F6F1); // #F1F6E3
-  clCatVerdeFolhaFGLight     = TColor($000B7854); // #54780B
-  clCatVerdeFolhaBGDark      = TColor($00134333); // #334313
-  clCatVerdeFolhaFGDark      = TColor($007EDDBE); // #BEDD7E
-  clCatVinhoBGLight          = TColor($00F2F1FC); // #FCF1F2
-  clCatVinhoFGLight          = TColor($00350D84); // #840D35
-  clCatVinhoBGDark           = TColor($00362B64); // #642B36
-  clCatVinhoFGDark           = TColor($00CBC4F9); // #F9C4CB
-  clCatTealBGLight           = TColor($00F6F7E8); // #E8F7F6
-  clCatTealFGLight           = TColor($007A791F); // #1F797A
-  clCatTealBGDark            = TColor($0044441C); // #1C4444
-  clCatTealFGDark            = TColor($00E0DF8D); // #8DDFE0
-  clCatAmbarTerraBGLight     = TColor($00E9F2FC); // #FCF2E9
-  clCatAmbarTerraFGLight     = TColor($00044672); // #724604
-  clCatAmbarTerraBGDark      = TColor($001A3852); // #52381A
-  clCatAmbarTerraFGDark      = TColor($009CCAF6); // #F6CA9C
-  clCatAzulBGLight           = TColor($00FFF4ED); // #EDF4FF
-  clCatAzulFGLight           = TColor($00A27136); // #3671A2
-  clCatAzulBGDark            = TColor($00584026); // #264058
-  clCatAzulFGDark            = TColor($00F7D4B8); // #B8D4F7
-  clCatRosaOrquideaBGLight   = TColor($00F4F1FC); // #FCF1F4
-  clCatRosaOrquideaFGLight   = TColor($006826BD); // #BD2668
-  clCatRosaOrquideaBGDark    = TColor($003E2966); // #66293E
-  clCatRosaOrquideaFGDark    = TColor($00D2C4F7); // #F7C4D2
-  clCatAmeixaBGLight         = TColor($00F8F0FC); // #FCF0F8
-  clCatAmeixaFGLight         = TColor($00621C75); // #751C62
-  clCatAmeixaBGDark          = TColor($004F2E5A); // #5A2E4F
-  clCatAmeixaFGDark          = TColor($00E9C0FB); // #FBC0E9
-  clCatOlivaCinzaBGLight     = TColor($00ECF4F5); // #F5F4EC
-  clCatOlivaCinzaFGLight     = TColor($0045676B); // #6B6745
-  clCatOlivaCinzaBGDark      = TColor($002D3E40); // #403E2D
-  clCatOlivaCinzaFGDark      = TColor($00ACD3D8); // #D8D3AC
-  clCatPinhoBGLight          = TColor($00F3F6EB); // #EBF6F3
-  clCatPinhoFGLight          = TColor($0048511C); // #1C5148
-  clCatPinhoBGDark           = TColor($003D4229); // #29423D
-  clCatPinhoFGDark           = TColor($00D1DCA6); // #A6DCD1
-  clCatOutrosBGLight         = TColor($00F5F3F1); // #F1F3F5
-  clCatOutrosFGLight         = TColor($0063594F); // #4F5963
-  clCatOutrosBGDark          = TColor($00403A36); // #363A40
-  clCatOutrosFGDark          = TColor($00D4CEC9); // #C9CED4
+  { Categorical palette (16 + Outros). BG/FG are used for tags and grid cells (FG = readable text on BG).
+    For chart series use clChartSeries* / ChartSeriesColor, not these pairs. 'Pedra' is the neutral of the
+    palette; 'Outros' has the same colours and is used for the overflow bucket. }
+  clCatMandacaruBGLight         = TColor($00E6F7E0); // #E0F7E6
+  clCatMandacaruFGLight         = TColor($0031541B); // #1B5431
+  clCatMandacaruBGDark          = TColor($0025331F); // #1F3325
+  clCatMandacaruFGDark          = TColor($00C7E2BD); // #BDE2C7
+  clCatGencianaBGLight          = TColor($00FFF1E7); // #E7F1FF
+  clCatGencianaFGLight          = TColor($007F481A); // #1A487F
+  clCatGencianaBGDark           = TColor($00442F1E); // #1E2F44
+  clCatGencianaFGDark           = TColor($00FFDABE); // #BEDAFF
+  clCatIpeAmareloBGLight        = TColor($00D3F0F8); // #F8F0D3
+  clCatIpeAmareloFGLight        = TColor($00004756); // #564700
+  clCatIpeAmareloBGDark         = TColor($00142E34); // #342E14
+  clCatIpeAmareloFGDark         = TColor($00A9D8E4); // #E4D8A9
+  clCatPitangaBGLight           = TColor($00E9EBFF); // #FFEBE9
+  clCatPitangaFGLight           = TColor($00282A78); // #782A28
+  clCatPitangaBGDark            = TColor($00212344); // #442321
+  clCatPitangaFGDark            = TColor($00C3C8FF); // #FFC8C3
+  clCatBromeliaBGLight          = TColor($00FBF6D9); // #D9F6FB
+  clCatBromeliaFGLight          = TColor($005B5200); // #00525B
+  clCatBromeliaBGDark           = TColor($00363318); // #183336
+  clCatBromeliaFGDark           = TColor($00E9E1B2); // #B2E1E9
+  clCatQuaresmeiraBGLight       = TColor($00FFECF4); // #F4ECFF
+  clCatQuaresmeiraFGLight       = TColor($00763556); // #563576
+  clCatQuaresmeiraBGDark        = TColor($00412733); // #332741
+  clCatQuaresmeiraFGDark        = TColor($00FECCE2); // #E2CCFE
+  clCatHibiscoBGLight           = TColor($00F0EAFF); // #FFEAF0
+  clCatHibiscoFGLight           = TColor($00482973); // #732948
+  clCatHibiscoBGDark            = TColor($002E2342); // #42232E
+  clCatHibiscoFGDark            = TColor($00D8C5FF); // #FFC5D8
+  clCatCajuBGLight              = TColor($00E0ECFF); // #FFECE0
+  clCatCajuFGLight              = TColor($0000366F); // #6F3600
+  clCatCajuBGDark               = TColor($0017273F); // #3F2717
+  clCatCajuFGDark               = TColor($00AECDFC); // #FCCDAE
+  clCatVitoriaRegiaBGLight      = TColor($00F1F7DD); // #DDF7F1
+  clCatVitoriaRegiaFGLight      = TColor($004A5405); // #05544A
+  clCatVitoriaRegiaBGDark       = TColor($002F331C); // #1C332F
+  clCatVitoriaRegiaFGDark       = TColor($00DAE2B8); // #B8E2DA
+  clCatSamambaiaBGLight         = TColor($00D6F5EB); // #EBF5D6
+  clCatSamambaiaFGLight         = TColor($00004F3F); // #3F4F00
+  clCatSamambaiaBGDark          = TColor($0017312A); // #2A3117
+  clCatSamambaiaFGDark          = TColor($00AEDFD0); // #D0DFAE
+  clCatAnilBGLight              = TColor($00FFEFEC); // #ECEFFF
+  clCatAnilFGLight              = TColor($007F3F3C); // #3C3F7F
+  clCatAnilBGDark               = TColor($00442B28); // #282B44
+  clCatAnilFGDark               = TColor($00FFD4CE); // #CED4FF
+  clCatOrquideaBGLight          = TColor($00FCE8FF); // #FFE8FC
+  clCatOrquideaFGLight          = TColor($00632E67); // #672E63
+  clCatOrquideaBGDark           = TColor($003A243C); // #3C243A
+  clCatOrquideaFGDark           = TColor($00F0C6F5); // #F5C6F0
+  clCatJatobaBGLight            = TColor($00E3EDFC); // #FCEDE3
+  clCatJatobaFGLight            = TColor($002C405E); // #5E402C
+  clCatJatobaBGDark             = TColor($00232B37); // #372B23
+  clCatJatobaFGDark             = TColor($00C3D2EA); // #EAD2C3
+  clCatArdosiaBGLight           = TColor($00F7F1EB); // #EBF1F7
+  clCatArdosiaFGLight           = TColor($0055493E); // #3E4955
+  clCatArdosiaBGDark            = TColor($00332E2A); // #2A2E33
+  clCatArdosiaFGDark            = TColor($00E2D9D0); // #D0D9E2
+  clCatLiquenBGLight            = TColor($00ECF2ED); // #EDF2EC
+  clCatLiquenFGLight            = TColor($003F4B41); // #414B3F
+  clCatLiquenBGDark             = TColor($002A2F2B); // #2B2F2A
+  clCatLiquenFGDark             = TColor($00D0DAD2); // #D2DAD0
+  clCatPedraBGLight             = TColor($00ECF0F2); // #F2F0EC
+  clCatPedraFGLight             = TColor($003F474C); // #4C473F
+  clCatPedraBGDark              = TColor($002A2D2F); // #2F2D2A
+  clCatPedraFGDark              = TColor($00D1D7DB); // #DBD7D1
+  clCatOutrosBGLight            = TColor($00ECF0F2); // #F2F0EC
+  clCatOutrosFGLight            = TColor($003F474C); // #4C473F
+  clCatOutrosBGDark             = TColor($002A2D2F); // #2F2D2A
+  clCatOutrosFGDark             = TColor($00D1D7DB); // #DBD7D1
 
   { Solid status colours (icons, indicators, solid badges). Container/on-container remain in clSystem*BG/FG. }
   clAttentionSolidLight      = TColor($00BD7702); // #0277BD
@@ -199,18 +224,26 @@ const
   clSystemSuccessFGLight      = TColor($00205E1B); // #1B5E20
   clSystemCautionFGLight      = TColor($00003E7A); // #7A3E00
   clSystemCriticalFGLight     = TColor($000B0E41); // #410E0B
-  clSystemNeutralFGLight      = TColor($0063594F); // #4F5963
+  clSystemNeutralFGLight      = TColor($00454944); // #444945
   clSystemSolidNeutralFGLight = TColor($0063594F); // #4F5963
   clSystemMediumFGLight       = TColor($00003B8F); // #8F3B00
+  clSystemAlternativeFGLight  = TColor($00722E4C); // #4C2E72
 
   clSystemAttentionBGLight      = TColor($00FDF2E1); // #E1F2FD
-  clSystemSolidAttentionBGLight = TColor($00FDF2E1); // #E1F2FD
   clSystemSuccessBGLight        = TColor($00E9F5E8); // #E8F5E9
   clSystemCautionBGLight        = TColor($00D6F0FF); // #FFF0D6
   clSystemCriticalBGLight       = TColor($00DCDEF9); // #F9DEDC
-  clSystemNeutralBGLight        = TColor($00F5F3F1); // #F1F3F5
+  clSystemNeutralBGLight        = TColor($00E3E8E2); // #E2E8E3
   clSystemSolidNeutralBGLight   = TColor($00F5F3F1); // #F1F3F5
   clSystemMediumBGLight         = TColor($00D5E6FF); // #FFE6D5
+  clSystemAlternativeBGLight    = TColor($00F8EAF1); // #F1EAF8
+
+  clSystemSolidAttentionBGLight = TColor($00BD7702); // #0277BD
+  clSystemSolidSuccessBGLight   = TColor($00327D2E); // #2E7D32
+  clSystemSolidCautionBGLight   = TColor($000953B4); // #B45309
+  clSystemSolidCriticalBGLight  = TColor($001E26B3); // #B3261E
+  clSystemSolidMediumBGLight    = TColor($00003B8F); // #8F3B00
+  clSystemSolidAlternativeBGLight = TColor($00A5426F); // #6F42A5
 
   clVioletFGLight       = TColor($00C75F5B); // rgb(91, 95, 199)
   clVioletFG2Light      = TColor($00B2524F); // rgb(79, 82, 178)
@@ -242,36 +275,36 @@ const
   clAccentDark3  = TColor($0066252A); // #2A2566
 
   // Tag colors
-  clTagBlueBGLight = clCatAzulBGLight;
-  clTagBlueFGLight = clCatAzulFGLight;
-  clTagLeafGreenBGLight = clCatVerdeFolhaBGLight;
-  clTagLeafGreenFGLight = clCatVerdeFolhaFGLight;
-  clTagGoldBGLight = clCatAmbarTerraBGLight;
-  clTagGoldFGLight = clCatAmbarTerraFGLight;
-  clTagBurntOrangeBGLight = clCatAmbarTerraBGLight;
-  clTagBurntOrangeFGLight = clCatAmbarTerraFGLight;
-  clTagRedBGLight = clCatVinhoBGLight;
-  clTagRedFGLight = clCatVinhoFGLight;
-  clTagVioletBGLight = clCatAmeixaBGLight;
-  clTagVioletFGLight = clCatAmeixaFGLight;
-  clTagCyanBGLight = clCatTealBGLight;
-  clTagCyanFGLight = clCatTealFGLight;
-  clTagWaterGreenBGLight = clCatOlivaCinzaBGLight;
-  clTagWaterGreenFGLight = clCatOlivaCinzaFGLight;
-  clTagGreyBGLight = clCatOutrosBGLight;
-  clTagGreyFGLight = clCatOutrosFGLight;
-  clTagTerracotaBGLight = clCatAmbarTerraBGLight;
-  clTagTerracotaFGLight = clCatAmbarTerraFGLight;
-  clTagNavyBlueBGLight = clCatJacarandaBGLight;
-  clTagNavyBlueFGLight = clCatJacarandaFGLight;
-  clTagMossGreenBGLight = clCatPinhoBGLight;
-  clTagMossGreenFGLight = clCatPinhoFGLight;
-  clTagPinkBGLight = clCatRosaOrquideaBGLight;
-  clTagPinkFGLight = clCatRosaOrquideaFGLight;
-  clTagBrightOrangeBGLight = clCatAmbarTerraBGLight;
-  clTagBrightOrangeFGLight = clCatAmbarTerraFGLight;
-  clTagTealBGLight = clCatTealBGLight;
-  clTagTealFGLight = clCatTealFGLight;
+  clTagBlueBGLight = clCatGencianaBGLight;
+  clTagBlueFGLight = clCatGencianaFGLight;
+  clTagLeafGreenBGLight = clCatMandacaruBGLight;
+  clTagLeafGreenFGLight = clCatMandacaruFGLight;
+  clTagGoldBGLight = clCatIpeAmareloBGLight;
+  clTagGoldFGLight = clCatIpeAmareloFGLight;
+  clTagBurntOrangeBGLight = clCatCajuBGLight;
+  clTagBurntOrangeFGLight = clCatCajuFGLight;
+  clTagRedBGLight = clCatPitangaBGLight;
+  clTagRedFGLight = clCatPitangaFGLight;
+  clTagVioletBGLight = clCatQuaresmeiraBGLight;
+  clTagVioletFGLight = clCatQuaresmeiraFGLight;
+  clTagCyanBGLight = clCatBromeliaBGLight;
+  clTagCyanFGLight = clCatBromeliaFGLight;
+  clTagWaterGreenBGLight = clCatLiquenBGLight;
+  clTagWaterGreenFGLight = clCatLiquenFGLight;
+  clTagGreyBGLight = clCatPedraBGLight;
+  clTagGreyFGLight = clCatPedraFGLight;
+  clTagTerracotaBGLight = clCatJatobaBGLight;
+  clTagTerracotaFGLight = clCatJatobaFGLight;
+  clTagNavyBlueBGLight = clCatAnilBGLight;
+  clTagNavyBlueFGLight = clCatAnilFGLight;
+  clTagMossGreenBGLight = clCatSamambaiaBGLight;
+  clTagMossGreenFGLight = clCatSamambaiaFGLight;
+  clTagPinkBGLight = clCatHibiscoBGLight;
+  clTagPinkFGLight = clCatHibiscoFGLight;
+  clTagBrightOrangeBGLight = clCatCajuBGLight;
+  clTagBrightOrangeFGLight = clCatCajuFGLight;
+  clTagTealBGLight = clCatVitoriaRegiaBGLight;
+  clTagTealFGLight = clCatVitoriaRegiaFGLight;
 
 const
   { Dark mode }
@@ -307,18 +340,26 @@ const
   clSystemSuccessFGDark      = TColor($00BBE4B7); // #B7E4BB
   clSystemCautionFGDark      = TColor($00A0D9FF); // #FFD9A0
   clSystemCriticalFGDark     = TColor($00C4C9FF); // #FFC9C4
-  clSystemNeutralFGDark      = TColor($00D4CEC9); // #C9CED4
+  clSystemNeutralFGDark      = TColor($00D1D6D0); // #D0D6D1
   clSystemSolidNeutralFGDark = TColor($00D4CEC9); // #C9CED4
   clSystemMediumFGDark       = TColor($00A0C2FF); // #FFC2A0
+  clSystemAlternativeFGDark  = TColor($00F2CCE0); // #E0CCF2
 
   clSystemAttentionBGDark      = TColor($004F3512); // #12354F
-  clSystemSolidAttentionBGDark = TColor($004F3512); // #12354F
   clSystemSuccessBGDark        = TColor($00243D1F); // #1F3D24
   clSystemCautionBGDark        = TColor($0010304A); // #4A3010
   clSystemCriticalBGDark       = TColor($001B1F5C); // #5C1F1B
-  clSystemNeutralBGDark        = TColor($00403A36); // #363A40
+  clSystemNeutralBGDark        = TColor($002E322D); // #2D322E
   clSystemSolidNeutralBGDark   = TColor($00403A36); // #363A40
   clSystemMediumBGDark         = TColor($0010224E); // #4E2210
+  clSystemAlternativeBGDark    = TColor($00422935); // #352942
+
+  clSystemSolidAttentionBGDark = TColor($00F0B85C); // #5CB8F0
+  clSystemSolidSuccessBGDark   = TColor($0076CF6F); // #6FCF76
+  clSystemSolidCautionBGDark   = TColor($0054B4FF); // #FFB454
+  clSystemSolidCriticalBGDark  = TColor($00808AFF); // #FF8A80
+  clSystemSolidMediumBGDark    = TColor($00A0C2FF); // #FFC2A0
+  clSystemSolidAlternativeBGDark = TColor($00DE9AB9); // #B99ADE
 
   clVioletFG1Dark    = TColor($00F5857F); // rgb(127, 133, 245)
   clVioletFG2Dark    = TColor($00F79992); // rgb(146, 153, 247)
@@ -387,36 +428,36 @@ const
   clLightPeachChart       = TColor($00A5BFFF); // rgb(255, 191, 165)
 
   // Tag colors
-  clTagBlueBGDark = clCatAzulBGDark;
-  clTagBlueFGDark = clCatAzulFGDark;
-  clTagLeafGreenBGDark = clCatVerdeFolhaBGDark;
-  clTagLeafGreenFGDark = clCatVerdeFolhaFGDark;
-  clTagGoldBGDark = clCatAmbarTerraBGDark;
-  clTagGoldFGDark = clCatAmbarTerraFGDark;
-  clTagBurntOrangeBGDark = clCatAmbarTerraBGDark;
-  clTagBurntOrangeFGDark = clCatAmbarTerraFGDark;
-  clTagRedBGDark = clCatVinhoBGDark;
-  clTagRedFGDark = clCatVinhoFGDark;
-  clTagVioletBGDark = clCatAmeixaBGDark;
-  clTagVioletFGDark = clCatAmeixaFGDark;
-  clTagCyanBGDark = clCatTealBGDark;
-  clTagCyanFGDark = clCatTealFGDark;
-  clTagWaterGreenBGDark = clCatOlivaCinzaBGDark;
-  clTagWaterGreenFGDark = clCatOlivaCinzaFGDark;
-  clTagGreyBGDark = clCatOutrosBGDark;
-  clTagGreyFGDark = clCatOutrosFGDark;
-  clTagTerracotaBGDark = clCatAmbarTerraBGDark;
-  clTagTerracotaFGDark = clCatAmbarTerraFGDark;
-  clTagNavyBlueBGDark = clCatJacarandaBGDark;
-  clTagNavyBlueFGDark = clCatJacarandaFGDark;
-  clTagMossGreenBGDark = clCatPinhoBGDark;
-  clTagMossGreenFGDark = clCatPinhoFGDark;
-  clTagPinkBGDark = clCatRosaOrquideaBGDark;
-  clTagPinkFGDark = clCatRosaOrquideaFGDark;
-  clTagBrightOrangeBGDark = clCatAmbarTerraBGDark;
-  clTagBrightOrangeFGDark = clCatAmbarTerraFGDark;
-  clTagTealBGDark = clCatTealBGDark;
-  clTagTealFGDark = clCatTealFGDark;
+  clTagBlueBGDark = clCatGencianaBGDark;
+  clTagBlueFGDark = clCatGencianaFGDark;
+  clTagLeafGreenBGDark = clCatMandacaruBGDark;
+  clTagLeafGreenFGDark = clCatMandacaruFGDark;
+  clTagGoldBGDark = clCatIpeAmareloBGDark;
+  clTagGoldFGDark = clCatIpeAmareloFGDark;
+  clTagBurntOrangeBGDark = clCatCajuBGDark;
+  clTagBurntOrangeFGDark = clCatCajuFGDark;
+  clTagRedBGDark = clCatPitangaBGDark;
+  clTagRedFGDark = clCatPitangaFGDark;
+  clTagVioletBGDark = clCatQuaresmeiraBGDark;
+  clTagVioletFGDark = clCatQuaresmeiraFGDark;
+  clTagCyanBGDark = clCatBromeliaBGDark;
+  clTagCyanFGDark = clCatBromeliaFGDark;
+  clTagWaterGreenBGDark = clCatLiquenBGDark;
+  clTagWaterGreenFGDark = clCatLiquenFGDark;
+  clTagGreyBGDark = clCatPedraBGDark;
+  clTagGreyFGDark = clCatPedraFGDark;
+  clTagTerracotaBGDark = clCatJatobaBGDark;
+  clTagTerracotaFGDark = clCatJatobaFGDark;
+  clTagNavyBlueBGDark = clCatAnilBGDark;
+  clTagNavyBlueFGDark = clCatAnilFGDark;
+  clTagMossGreenBGDark = clCatSamambaiaBGDark;
+  clTagMossGreenFGDark = clCatSamambaiaFGDark;
+  clTagPinkBGDark = clCatHibiscoBGDark;
+  clTagPinkFGDark = clCatHibiscoFGDark;
+  clTagBrightOrangeBGDark = clCatCajuBGDark;
+  clTagBrightOrangeFGDark = clCatCajuFGDark;
+  clTagTealBGDark = clCatVitoriaRegiaBGDark;
+  clTagTealFGDark = clCatVitoriaRegiaFGDark;
 
 const
   { Dark mode - extended default/control colors }
@@ -485,6 +526,7 @@ type
     NeutralFG: TColor;
     SolidNeutralFG: TColor;
     MediumFG: TColor;
+    AlternativeFG: TColor;
     AttentionBG: TColor;
     SolidAttentionBG: TColor;
     SuccessBG: TColor;
@@ -493,10 +535,13 @@ type
     NeutralBG: TColor;
     SolidNeutralBG: TColor;
     MediumBG: TColor;
+    AlternativeBG: TColor;
     AttentionSolid: TColor;
     SuccessSolid: TColor;
     CautionSolid: TColor;
     CriticalSolid: TColor;
+    MediumSolid: TColor;
+    AlternativeSolid: TColor;
     OnSolid: TColor;
   end;
 
@@ -582,14 +627,16 @@ type
     FolhaCampo: TColor;
   end;
 
-  { Categorical palette (10 + Outros). Background/Foreground are ready to use in tags and
-    grid cells for the active theme; Foreground is also the chart series colour.
-    Items gives access by index (0..10) for charts and dynamic categories. }
+  { Categorical palette (16 + Outros). Background/Foreground are ready to use in tags and
+    grid cells for the active theme. Items gives access by index (0..16) for dynamic categories;
+    Pedra (15) is the palette neutral and Outros (16) is the overflow bucket (same colours).
+    Charts use ChartSeries/ChartSeriesColor instead. }
   TCategoricalColors = record
     case Integer of
-      0: (Jacaranda, VerdeFolha, Vinho, Teal, AmbarTerra, Azul, RosaOrquidea,
-          Ameixa, OlivaCinza, Pinho, Outros: TTagColorPair);
-      1: (Items: array[0..10] of TTagColorPair);
+      0: (Mandacaru, Genciana, IpeAmarelo, Pitanga, Bromelia, Quaresmeira, Hibisco, Caju,
+          VitoriaRegia, Samambaia, Anil, Orquidea, Jatoba, Ardosia, Liquen, Pedra,
+          Outros: TTagColorPair);
+      1: (Items: array[0..16] of TTagColorPair);
   end;
 
   { Complete color theme — all groups that UI controls should reference }
@@ -778,6 +825,7 @@ begin
     NeutralFG      := clSystemNeutralFGDark;
     SolidNeutralFG := clSystemSolidNeutralFGDark;
     MediumFG       := clSystemMediumFGDark;
+    AlternativeFG  := clSystemAlternativeFGDark;
     AttentionBG     := clSystemAttentionBGDark;
     SolidAttentionBG:= clSystemSolidAttentionBGDark;
     SuccessBG       := clSystemSuccessBGDark;
@@ -786,10 +834,13 @@ begin
     NeutralBG       := clSystemNeutralBGDark;
     SolidNeutralBG  := clSystemSolidNeutralBGDark;
     MediumBG        := clSystemMediumBGDark;
+    AlternativeBG   := clSystemAlternativeBGDark;
     AttentionSolid  := clAttentionSolidDark;
     SuccessSolid    := clSuccessSolidDark;
     CautionSolid    := clCautionSolidDark;
     CriticalSolid   := clCriticalSolidDark;
+    MediumSolid     := clSystemSolidMediumBGDark;
+    AlternativeSolid := clSystemSolidAlternativeBGDark;
     OnSolid         := clOnSolidDark;
   end;
 
@@ -897,28 +948,40 @@ begin
   // Categorical palette (dark: tonal background + light text)
   with ActiveTheme.Categorical do
   begin
-    Jacaranda.Background    := clCatJacarandaBGDark;
-    Jacaranda.Foreground    := clCatJacarandaFGDark;
-    VerdeFolha.Background   := clCatVerdeFolhaBGDark;
-    VerdeFolha.Foreground   := clCatVerdeFolhaFGDark;
-    Vinho.Background        := clCatVinhoBGDark;
-    Vinho.Foreground        := clCatVinhoFGDark;
-    Teal.Background         := clCatTealBGDark;
-    Teal.Foreground         := clCatTealFGDark;
-    AmbarTerra.Background   := clCatAmbarTerraBGDark;
-    AmbarTerra.Foreground   := clCatAmbarTerraFGDark;
-    Azul.Background         := clCatAzulBGDark;
-    Azul.Foreground         := clCatAzulFGDark;
-    RosaOrquidea.Background := clCatRosaOrquideaBGDark;
-    RosaOrquidea.Foreground := clCatRosaOrquideaFGDark;
-    Ameixa.Background       := clCatAmeixaBGDark;
-    Ameixa.Foreground       := clCatAmeixaFGDark;
-    OlivaCinza.Background   := clCatOlivaCinzaBGDark;
-    OlivaCinza.Foreground   := clCatOlivaCinzaFGDark;
-    Pinho.Background        := clCatPinhoBGDark;
-    Pinho.Foreground        := clCatPinhoFGDark;
-    Outros.Background       := clCatOutrosBGDark;
-    Outros.Foreground       := clCatOutrosFGDark;
+    Mandacaru.Background        := clCatMandacaruBGDark;
+    Mandacaru.Foreground        := clCatMandacaruFGDark;
+    Genciana.Background         := clCatGencianaBGDark;
+    Genciana.Foreground         := clCatGencianaFGDark;
+    IpeAmarelo.Background       := clCatIpeAmareloBGDark;
+    IpeAmarelo.Foreground       := clCatIpeAmareloFGDark;
+    Pitanga.Background          := clCatPitangaBGDark;
+    Pitanga.Foreground          := clCatPitangaFGDark;
+    Bromelia.Background         := clCatBromeliaBGDark;
+    Bromelia.Foreground         := clCatBromeliaFGDark;
+    Quaresmeira.Background      := clCatQuaresmeiraBGDark;
+    Quaresmeira.Foreground      := clCatQuaresmeiraFGDark;
+    Hibisco.Background          := clCatHibiscoBGDark;
+    Hibisco.Foreground          := clCatHibiscoFGDark;
+    Caju.Background             := clCatCajuBGDark;
+    Caju.Foreground             := clCatCajuFGDark;
+    VitoriaRegia.Background     := clCatVitoriaRegiaBGDark;
+    VitoriaRegia.Foreground     := clCatVitoriaRegiaFGDark;
+    Samambaia.Background        := clCatSamambaiaBGDark;
+    Samambaia.Foreground        := clCatSamambaiaFGDark;
+    Anil.Background             := clCatAnilBGDark;
+    Anil.Foreground             := clCatAnilFGDark;
+    Orquidea.Background         := clCatOrquideaBGDark;
+    Orquidea.Foreground         := clCatOrquideaFGDark;
+    Jatoba.Background           := clCatJatobaBGDark;
+    Jatoba.Foreground           := clCatJatobaFGDark;
+    Ardosia.Background          := clCatArdosiaBGDark;
+    Ardosia.Foreground          := clCatArdosiaFGDark;
+    Liquen.Background           := clCatLiquenBGDark;
+    Liquen.Foreground           := clCatLiquenFGDark;
+    Pedra.Background            := clCatPedraBGDark;
+    Pedra.Foreground            := clCatPedraFGDark;
+    Outros.Background           := clCatOutrosBGDark;
+    Outros.Foreground           := clCatOutrosFGDark;
   end;
 end;
 
@@ -980,6 +1043,7 @@ begin
     NeutralFG      := clSystemNeutralFGLight;
     SolidNeutralFG := clSystemSolidNeutralFGLight;
     MediumFG       := clSystemMediumFGLight;
+    AlternativeFG  := clSystemAlternativeFGLight;
     AttentionBG     := clSystemAttentionBGLight;
     SolidAttentionBG:= clSystemSolidAttentionBGLight;
     SuccessBG       := clSystemSuccessBGLight;
@@ -988,10 +1052,13 @@ begin
     NeutralBG       := clSystemNeutralBGLight;
     SolidNeutralBG  := clSystemSolidNeutralBGLight;
     MediumBG        := clSystemMediumBGLight;
+    AlternativeBG   := clSystemAlternativeBGLight;
     AttentionSolid  := clAttentionSolidLight;
     SuccessSolid    := clSuccessSolidLight;
     CautionSolid    := clCautionSolidLight;
     CriticalSolid   := clCriticalSolidLight;
+    MediumSolid     := clSystemSolidMediumBGLight;
+    AlternativeSolid := clSystemSolidAlternativeBGLight;
     OnSolid         := clOnSolidLight;
   end;
 
@@ -1096,31 +1163,43 @@ begin
   ActiveTheme.ChartSeries[7] := clChartSeries8Light;
   ActiveTheme.ChartOthers := clChartOthersLight;
 
-  // Categorical palette (light: pastel background + vivid text)
+  // Categorical palette (light: pastel background + dark text)
   with ActiveTheme.Categorical do
   begin
-    Jacaranda.Background    := clCatJacarandaBGLight;
-    Jacaranda.Foreground    := clCatJacarandaFGLight;
-    VerdeFolha.Background   := clCatVerdeFolhaBGLight;
-    VerdeFolha.Foreground   := clCatVerdeFolhaFGLight;
-    Vinho.Background        := clCatVinhoBGLight;
-    Vinho.Foreground        := clCatVinhoFGLight;
-    Teal.Background         := clCatTealBGLight;
-    Teal.Foreground         := clCatTealFGLight;
-    AmbarTerra.Background   := clCatAmbarTerraBGLight;
-    AmbarTerra.Foreground   := clCatAmbarTerraFGLight;
-    Azul.Background         := clCatAzulBGLight;
-    Azul.Foreground         := clCatAzulFGLight;
-    RosaOrquidea.Background := clCatRosaOrquideaBGLight;
-    RosaOrquidea.Foreground := clCatRosaOrquideaFGLight;
-    Ameixa.Background       := clCatAmeixaBGLight;
-    Ameixa.Foreground       := clCatAmeixaFGLight;
-    OlivaCinza.Background   := clCatOlivaCinzaBGLight;
-    OlivaCinza.Foreground   := clCatOlivaCinzaFGLight;
-    Pinho.Background        := clCatPinhoBGLight;
-    Pinho.Foreground        := clCatPinhoFGLight;
-    Outros.Background       := clCatOutrosBGLight;
-    Outros.Foreground       := clCatOutrosFGLight;
+    Mandacaru.Background        := clCatMandacaruBGLight;
+    Mandacaru.Foreground        := clCatMandacaruFGLight;
+    Genciana.Background         := clCatGencianaBGLight;
+    Genciana.Foreground         := clCatGencianaFGLight;
+    IpeAmarelo.Background       := clCatIpeAmareloBGLight;
+    IpeAmarelo.Foreground       := clCatIpeAmareloFGLight;
+    Pitanga.Background          := clCatPitangaBGLight;
+    Pitanga.Foreground          := clCatPitangaFGLight;
+    Bromelia.Background         := clCatBromeliaBGLight;
+    Bromelia.Foreground         := clCatBromeliaFGLight;
+    Quaresmeira.Background      := clCatQuaresmeiraBGLight;
+    Quaresmeira.Foreground      := clCatQuaresmeiraFGLight;
+    Hibisco.Background          := clCatHibiscoBGLight;
+    Hibisco.Foreground          := clCatHibiscoFGLight;
+    Caju.Background             := clCatCajuBGLight;
+    Caju.Foreground             := clCatCajuFGLight;
+    VitoriaRegia.Background     := clCatVitoriaRegiaBGLight;
+    VitoriaRegia.Foreground     := clCatVitoriaRegiaFGLight;
+    Samambaia.Background        := clCatSamambaiaBGLight;
+    Samambaia.Foreground        := clCatSamambaiaFGLight;
+    Anil.Background             := clCatAnilBGLight;
+    Anil.Foreground             := clCatAnilFGLight;
+    Orquidea.Background         := clCatOrquideaBGLight;
+    Orquidea.Foreground         := clCatOrquideaFGLight;
+    Jatoba.Background           := clCatJatobaBGLight;
+    Jatoba.Foreground           := clCatJatobaFGLight;
+    Ardosia.Background          := clCatArdosiaBGLight;
+    Ardosia.Foreground          := clCatArdosiaFGLight;
+    Liquen.Background           := clCatLiquenBGLight;
+    Liquen.Foreground           := clCatLiquenFGLight;
+    Pedra.Background            := clCatPedraBGLight;
+    Pedra.Foreground            := clCatPedraFGLight;
+    Outros.Background           := clCatOutrosBGLight;
+    Outros.Foreground           := clCatOutrosFGLight;
   end;
 end;
 
@@ -1129,7 +1208,7 @@ begin
   if AIndex < 0 then
     Result := ActiveTheme.Categorical.Outros
   else
-    Result := ActiveTheme.Categorical.Items[AIndex mod 10];
+    Result := ActiveTheme.Categorical.Items[AIndex mod 16];
 end;
 
 function ChartSeriesColor(AIndex: Integer): TColor;

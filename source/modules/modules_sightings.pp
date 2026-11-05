@@ -228,12 +228,12 @@ begin
   begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_OUT_OF_SAMPLE).Field.AsBoolean = True) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
     end;
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
     begin
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalSolid;
     end
     else
     begin
@@ -428,12 +428,12 @@ begin
   begin
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_OUT_OF_SAMPLE).Field.AsBoolean = True) then
     begin
-      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.SolidNeutralBG;
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.SolidNeutralFG;
+      TDBGrid(Sender).Canvas.Brush.Color := ActiveTheme.System.NeutralBG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.NeutralFG;
     end;
     if (TDBGrid(Sender).Columns.ColumnByFieldname(COL_CUSTOM_TAXON_NAME).Field.AsString <> EmptyStr) then
     begin
-      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalFG;
+      TDBGrid(Sender).Canvas.Font.Color := ActiveTheme.System.CriticalSolid;
     end
     else
     begin
