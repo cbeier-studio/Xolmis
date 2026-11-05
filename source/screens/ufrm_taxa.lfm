@@ -2274,9 +2274,11 @@ object frmTaxa: TfrmTaxa
                     Alignment = calBottom
                     AxisPen.Visible = True
                     Marks.LabelFont.Height = -11
+                    Marks.LabelFont.Orientation = 450
                     Marks.LabelBrush.Style = bsClear
                     Marks.Range.Max = 12
                     Marks.Range.Min = 1
+                    Marks.RotationCenter = rcRight
                     Minors = <>
                     Range.Max = 12
                     Range.Min = 1
@@ -2434,8 +2436,7 @@ object frmTaxa: TfrmTaxa
                   Legend.Multiplicity = lmStyle
                   Title = 'Captures'
                   BarBrush.Color = 4946723
-                  BarPen.Color = clGray
-                  BarPen.Style = psClear
+                  BarPen.Color = clWindow
                   BarWidthStyle = bwPercentMin
                   Source = DMT.lcsMonthly
                   StackedNaN = snDoNotDraw

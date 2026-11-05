@@ -350,11 +350,11 @@ begin
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM gazetteer AS g ' +
-      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
-      'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
-      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
-      'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
-      'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
+      //'LEFT JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
+      'LEFT JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'LEFT JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
+      'LEFT JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
+      'LEFT JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (g.active_status = 1) ';
 
   if (aTableFilter = tbSurveys) or (aTableFilter = tbNone) then
@@ -367,11 +367,11 @@ begin
         'p.site_name AS country_name ' +
       'FROM surveys AS sv ' +
       'JOIN SiteDetails AS g ON sv.locality_id = g.site_id ' +
-      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
-      'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
-      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
-      'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
-      'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
+      //'LEFT JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
+      'LEFT JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'LEFT JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
+      'LEFT JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
+      'LEFT JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (sv.active_status = 1) ';
   if (aTableFilter = tbNone) then
     Result := Result + 'UNION ';
@@ -384,12 +384,12 @@ begin
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM captures AS c ' +
-      'JOIN SiteDetails AS g ON c.locality_id = g.site_id ' +
-      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
-      'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
-      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
-      'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
-      'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
+      'LEFT JOIN SiteDetails AS g ON c.locality_id = g.site_id ' +
+      //'LEFT JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
+      'LEFT JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'LEFT JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
+      'LEFT JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
+      'LEFT JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (c.active_status = 1) ';
   if (aTableFilter = tbNone) then
     Result := Result + 'UNION ';
@@ -402,12 +402,12 @@ begin
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM feathers AS ft ' +
-      'JOIN SiteDetails AS g ON ft.locality_id = g.site_id ' +
-      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
-      'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
-      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
-      'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
-      'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
+      'LEFT JOIN SiteDetails AS g ON ft.locality_id = g.site_id ' +
+      //'LEFT JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
+      'LEFT JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'LEFT JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
+      'LEFT JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
+      'LEFT JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (ft.active_status = 1) ';
   if (aTableFilter = tbNone) then
     Result := Result + 'UNION ';
@@ -420,12 +420,12 @@ begin
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM sightings AS st ' +
-      'JOIN SiteDetails AS g ON st.locality_id = g.site_id ' +
-      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
-      'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
-      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
-      'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
-      'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
+      'LEFT JOIN SiteDetails AS g ON st.locality_id = g.site_id ' +
+      //'LEFT JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
+      'LEFT JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'LEFT JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
+      'LEFT JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
+      'LEFT JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (st.active_status = 1) ';
   if (aTableFilter = tbNone) then
     Result := Result + 'UNION ';
@@ -438,12 +438,12 @@ begin
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM nests AS n ' +
-      'JOIN SiteDetails AS g ON n.locality_id = g.site_id ' +
-      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
-      'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
-      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
-      'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
-      'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
+      'LEFT JOIN SiteDetails AS g ON n.locality_id = g.site_id ' +
+      //'LEFT JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
+      'LEFT JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'LEFT JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
+      'LEFT JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
+      'LEFT JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (n.active_status = 1) ';
   if (aTableFilter = tbNone) then
     Result := Result + 'UNION ';
@@ -455,10 +455,10 @@ begin
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM institutions AS it ' +
-      'JOIN SiteDetails AS m ON it.municipality_id = m.site_id ' +
-      'JOIN SiteDetails AS o ON it.county_id = o.site_id ' +
-      'JOIN SiteDetails AS s ON it.state_id = s.site_id ' +
-      'JOIN SiteDetails AS p ON it.country_id = p.site_id ' +
+      'LEFT JOIN SiteDetails AS m ON it.municipality_id = m.site_id ' +
+      'LEFT JOIN SiteDetails AS o ON it.county_id = o.site_id ' +
+      'LEFT JOIN SiteDetails AS s ON it.state_id = s.site_id ' +
+      'LEFT JOIN SiteDetails AS p ON it.country_id = p.site_id ' +
       'WHERE (it.active_status = 1) ';
   if (aTableFilter = tbNone) then
     Result := Result + 'UNION ';
@@ -470,10 +470,10 @@ begin
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM people AS pp ' +
-      'JOIN SiteDetails AS m ON pp.municipality_id = m.site_id ' +
-      'JOIN SiteDetails AS o ON pp.county_id = o.site_id ' +
-      'JOIN SiteDetails AS s ON pp.state_id = s.site_id ' +
-      'JOIN SiteDetails AS p ON pp.country_id = p.site_id ' +
+      'LEFT JOIN SiteDetails AS m ON pp.municipality_id = m.site_id ' +
+      'LEFT JOIN SiteDetails AS o ON pp.county_id = o.site_id ' +
+      'LEFT JOIN SiteDetails AS s ON pp.state_id = s.site_id ' +
+      'LEFT JOIN SiteDetails AS p ON pp.country_id = p.site_id ' +
       'WHERE (pp.active_status = 1) ';
   if (aTableFilter = tbNone) then
     Result := Result + 'UNION ';
@@ -486,12 +486,12 @@ begin
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM specimens AS sp ' +
-      'JOIN SiteDetails AS g ON sp.locality_id = g.site_id ' +
-      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
-      'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
-      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
-      'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
-      'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
+      'LEFT JOIN SiteDetails AS g ON sp.locality_id = g.site_id ' +
+      //'LEFT JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
+      'LEFT JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'LEFT JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
+      'LEFT JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
+      'LEFT JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (sp.active_status = 1) ';
   if (aTableFilter = tbNone) then
     Result := Result + 'UNION ';
@@ -504,12 +504,12 @@ begin
         's.site_name AS state_name, ' +
         'p.site_name AS country_name ' +
       'FROM sampling_plots AS pl ' +
-      'JOIN SiteDetails AS g ON pl.locality_id = g.site_id ' +
-      //'JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
-      'JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
-      'JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
-      'JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
-      'JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
+      'LEFT JOIN SiteDetails AS g ON pl.locality_id = g.site_id ' +
+      //'LEFT JOIN SiteDetails AS l ON g.locality_id = l.site_id ' +
+      'LEFT JOIN SiteDetails AS m ON g.municipality_id = m.site_id ' +
+      'LEFT JOIN SiteDetails AS o ON g.county_id = o.site_id ' +
+      'LEFT JOIN SiteDetails AS s ON g.state_id = s.site_id ' +
+      'LEFT JOIN SiteDetails AS p ON g.country_id = p.site_id ' +
       'WHERE (pl.active_status = 1) ';
 
   if (aTableFilter = tbInstitutions) then

@@ -20,42 +20,36 @@ object DMT: TDMT
       item
         Brush.Color = 11564616
         Pen.Color = clGray
-        Pen.Style = psClear
         Text = 'Captures'
         UseFont = False
       end    
       item
         Brush.Color = 15124148
         Pen.Color = clGray
-        Pen.Style = psClear
         Text = 'Sightings'
         UseFont = False
       end    
       item
         Brush.Color = 2326243
         Pen.Color = clGray
-        Pen.Style = psClear
         Text = 'Nests'
         UseFont = False
       end    
       item
         Brush.Color = 8108782
         Pen.Color = clGray
-        Pen.Style = psClear
         Text = 'Eggs'
         UseFont = False
       end    
       item
         Brush.Color = 3841633
         Pen.Color = clGray
-        Pen.Style = psClear
         Text = 'Feathers'
         UseFont = False
       end    
       item
         Brush.Color = 9363119
         Pen.Color = clGray
-        Pen.Style = psClear
         Text = 'Specimens'
         UseFont = False
       end>

@@ -132,24 +132,24 @@ const
     lightness so that neighbours in a stack stay distinguishable. Light = >= 3:1 on light surfaces;
     Dark = >= 4.8:1 on dark cards. Min dE2000 between any two series: 18.4 (light) / 11.3 (dark), with
     colour-vision-deficiency simulation. Names: Jacaranda, Laranja, Pinho, RosaAntigo, Ameixa, Salvia, OlivaEscuro, AzulLago. }
-  clChartSeries1Light        = TColor($00C5666B); // #6B66C5 Jacarandá
-  clChartSeries1Dark         = TColor($00E8858D); // #8D85E8
-  clChartSeries2Light        = TColor($001B7AD5); // #D57A1B Laranja
-  clChartSeries2Dark         = TColor($006DB0FE); // #FEB06D
-  clChartSeries3Light        = TColor($00546832); // #326854 Pinho
-  clChartSeries3Dark         = TColor($00869C65); // #659C86
-  clChartSeries4Light        = TColor($008E7CB3); // #B37C8E Rosa-antigo
-  clChartSeries4Dark         = TColor($00C4B1EC); // #ECB1C4
-  clChartSeries5Light        = TColor($007B2B8F); // #8F2B7B Ameixa
-  clChartSeries5Dark         = TColor($00BB6CD3); // #D36CBB
-  clChartSeries6Light        = TColor($00669271); // #719266 Sálvia
-  clChartSeries6Dark         = TColor($009CCBA8); // #A8CB9C
-  clChartSeries7Light        = TColor($00145351); // #515314 Oliva-escuro
-  clChartSeries7Dark         = TColor($00529495); // #959452
-  clChartSeries8Light        = TColor($00C89659); // #5996C8 Azul-lago
-  clChartSeries8Dark         = TColor($00FBC78C); // #8CC7FB
-  clChartOthersLight         = TColor($00857A6F); // #6F7A85
-  clChartOthersDark          = TColor($00A3988E); // #8E98A3
+  clChartSeries1Light        = TColor($004F852B); // #2B854F Mandacaru
+  clChartSeries1Dark         = TColor($004F852B); // #2B854F Mandacaru
+  clChartSeries2Light        = TColor($00C67129); // #2971C6 Genciana
+  clChartSeries2Dark         = TColor($00C67129); // #2971C6 Genciana
+  clChartSeries3Light        = TColor($000290AC); // #AC9002 Ipê-amarelo
+  clChartSeries3Dark         = TColor($000290AC); // #AC9002 Ipê-amarelo
+  clChartSeries4Light        = TColor($003E3FC4); // #C43F3E Pitanga
+  clChartSeries4Dark         = TColor($003E3FC4); // #C43F3E Pitanga
+  clChartSeries5Light        = TColor($00B2A10D); // #0DA1B2 Bromélia
+  clChartSeries5Dark         = TColor($00B2A10D); // #0DA1B2 Bromélia
+  clChartSeries6Light        = TColor($00B85185); // #8551B8 Quaresmeira
+  clChartSeries6Dark         = TColor($00B85185); // #8551B8 Quaresmeira
+  clChartSeries7Light        = TColor($00763EBD); // #BD3E76 Hibisco
+  clChartSeries7Dark         = TColor($00763EBD); // #BD3E76 Hibisco
+  clChartSeries8Light        = TColor($00196FCF); // #CF6F19 Caju
+  clChartSeries8Dark         = TColor($00196FCF); // #CF6F19 Caju
+  clChartOthersLight         = TColor($00859199); // #999185 Pedra / Outros
+  clChartOthersDark          = TColor($00859199); // #999185 Pedra / Outros
 
   { Print theme (XRS Print Optimized): black on white, categories by hatch pattern + label }
   clPrintInk                 = TColor($00000000); // #000000
