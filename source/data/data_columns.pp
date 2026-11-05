@@ -561,6 +561,7 @@ resourcestring
 
   procedure AddPercentSelect(aDataSet: TSQLQuery);
   procedure AddTotalJoin(aDataSet: TSQLQuery; const aWhereText: String; const AFilterWhere: String = '');
+  procedure BuildJsonArrayCount(aDataSet: TSQLQuery; const aWhereText, AField: String);
   procedure BuildCountGrouped(aDataSet: TSQLQuery; const aWhereText, AExpr, AFilterField: String);
   procedure BuildCountGroupedJoin(aDataSet: TSQLQuery; const aWhereText, ANameExpr,
     AJoinExpr, AKeyField: String);
@@ -667,6 +668,28 @@ begin
   if AFilterWhere <> EmptyStr then
     aDataSet.SQL.Add('  WHERE ' + AFilterWhere);
   aDataSet.SQL.Add(') AS t');
+end;
+
+// Counts each value of a JSON array column. A record with several values is counted once per
+// value, so the tally sum can exceed the number of records; percent is relative to records with values.
+procedure BuildJsonArrayCount(aDataSet: TSQLQuery; const aWhereText, AField: String);
+var
+  FilterWhere: String;
+begin
+  FilterWhere := 'COALESCE(TRIM(' + AField + '), '''') NOT IN ('''', ''[]'', ''null'') ' +
+    'AND json_valid(' + AField + ') AND json_type(' + AField + ') = ''array''';
+
+  aDataSet.SQL.Add('SELECT x.name, x.tally');
+  AddPercentSelect(aDataSet);
+  aDataSet.SQL.Add('FROM (');
+  aDataSet.SQL.Add('  SELECT CAST(j.value AS TEXT) AS name, COUNT(*) AS tally');
+  aDataSet.SQL.Add('  FROM (' + aWhereText + ') AS s, json_each(s.' + AField + ') AS j');
+  aDataSet.SQL.Add('  WHERE ' + FilterWhere);
+  aDataSet.SQL.Add('    AND COALESCE(TRIM(CAST(j.value AS TEXT)), '''') <> ''''');
+  aDataSet.SQL.Add('  GROUP BY name');
+  aDataSet.SQL.Add(') AS x');
+  AddTotalJoin(aDataSet, aWhereText, FilterWhere);
+  aDataSet.SQL.Add('ORDER BY x.tally DESC');
 end;
 
 procedure BuildCountGrouped(aDataSet: TSQLQuery; const aWhereText, AExpr, AFilterField: String);
@@ -2720,7 +2743,10 @@ begin
 
     case F.SummaryKind of
       skCount:
-        BuildCountGrouped(aDataSet, aWhereText, GroupExpr, GroupExpr);
+        if F.DataType = sdtJsonArray then
+          BuildJsonArrayCount(aDataSet, aWhereText, F.Name)
+        else
+          BuildCountGrouped(aDataSet, aWhereText, GroupExpr, GroupExpr);
       skSum:
         BuildBooleanSum(aDataSet, aWhereText, F.Name, F.DisplayName);
       skCountNotNull:

@@ -6897,7 +6897,6 @@ begin
   T.Fields.Last.Aliases.CommaText := 'direction,flight direction,direção,direção de voo';
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Detection type - removed in v6
   //AddField(T, 'detection_type', rscDetectionType, sdtText, False, 30);
   //T.Fields.Last.Aliases.CommaText := 'detection,detection type,detecção,tipo de detecção';
@@ -6907,37 +6906,32 @@ begin
   // Detection modes - added in v6
   AddField(T, 'detection_modes_json', rscDetectionModes, sdtJsonArray, False);
   T.Fields.Last.ExportName := 'detection_modes';
-  T.Fields.Last.Aliases.CommaText := 'detection,detection type,detection modes,detecção,tipo de detecção,modo de detecção';
-  T.Fields.Last.SummaryKind := skCount;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  T.Fields.Last.Aliases.CommaText := 'detection,detection type,detection modes,detecção,tipo de detecção,  modo de detecção';
+    T.Fields.Last.SummaryKind := skCount;
+    T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Evidences - added in v6
   AddField(T, 'evidences_json', rscEvidences, sdtJsonArray, False);
   T.Fields.Last.ExportName := 'evidences';
-  T.Fields.Last.Aliases.CommaText := 'evidences,evidências';
-  T.Fields.Last.SummaryKind := skCount;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  T.Fields.Last.Aliases.CommaText :=   'evidences,evidências';
+    T.Fields.Last.SummaryKind := skCount;
+    T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Breeding status
   AddField(T, 'breeding_status', rscBreedingCode, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'breeding code,breeding status,código reprodutivo,estado reprodutivo,status reprodutivo';
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := COL_TAXON_NAME;
   // Habitats - added in v6
   AddField(T, 'habitats_json', rscHabitats, sdtJsonArray, False);
   T.Fields.Last.ExportName := 'habitats';
-  T.Fields.Last.Aliases.CommaText := 'habitats,ambientes';
-  T.Fields.Last.SummaryKind := skCount;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  T.Fields.Last.Aliases.CommaText :=   'habitats,ambientes';
+    T.Fields.Last.SummaryKind := skCount;
+    T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Activities - added in v6
   AddField(T, 'activities_json', rscActivities, sdtJsonArray, False);
   T.Fields.Last.ExportName := 'activities';
-  T.Fields.Last.Aliases.CommaText := 'activities,behavior,atividades,comportamento';
-  T.Fields.Last.SummaryKind := skCount;
-  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
-  T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  T.Fields.Last.Aliases.CommaText :=   'activities,behavior,atividades,comportamento';
+    T.Fields.Last.SummaryKind := skCount;
+    T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   // Mackinnon list number
   AddField(T, 'mackinnon_list_num', rscMackinnonList, sdtInteger);
   T.Fields.Last.ExportName := 'mackinnon_list_number';
