@@ -476,6 +476,7 @@ Chave de tradução utilizada nos cabeçalhos.
 #### ReportCSSClass
 
 Classe CSS aplicada à coluna.
+Campos de data e hora recebem automaticamente a classe `nowrap` para evitar quebras dentro dos valores.
 
 Exemplos:
 ```
@@ -484,6 +485,7 @@ date
 numeric
 currency
 scientific
+nowrap
 ```
 
 #### ReportFormat

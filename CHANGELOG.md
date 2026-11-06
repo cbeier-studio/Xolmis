@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new fields to Sightings: detection modes, evidences, habitats, activities, and doubtful record. 
 - Database documentation in HTML using `database.dbml` file.
 - Added report profiles (column subsets) to the simple list report, selectable in the report settings dialog. Captures have Summary, Morphometry, Molt and breeding condition, and Samples and photos profiles.
+- Added Summary, Detection and ecology, and Location and status report profiles to Sightings.
 - Report settings dialog (page size, orientation and color theme) shown before generating XRS reports.
 
 ### Changed
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Revised the pre-loaded Methods to reduce ambiguity and confusion.
 - Updated links to Xolmis website.
 - Updated **Countries States Cities Database** to v3.2-export.8.
+- Revamped Taxa module UI.
 
 ### Removed
 
@@ -31,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Date and time values no longer wrap in the middle of the value in simple list reports.
 - Fixed document grid and toolbar being disabled by child dataset state.
 - Centered document type icons in their grid cells.
 - Fixed unreadable selected options in the report settings combo boxes in dark mode.

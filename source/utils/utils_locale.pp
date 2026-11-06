@@ -1766,6 +1766,8 @@ function TranslateSightingJsonValue(const AValue: String): String;
     rsReportProfileMorphometry = 'Morphometry';
     rsReportProfileCondition = 'Molt and breeding condition';
     rsReportProfileSamples = 'Samples and photos';
+    rsReportProfileDetection = 'Detection and ecology';
+    rsReportProfileLocation = 'Location and status';
 
     rsPageSizeLetter = 'Letter';
     rsPageOrientationLandscape = 'Landscape';

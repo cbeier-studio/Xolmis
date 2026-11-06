@@ -298,6 +298,8 @@ begin
       Column.Add('report_order', FieldSchema.ReportOrder);
       Column.Add('stack_with', FieldSchema.ReportStackWith);
       Column.Add('json_array', FieldSchema.DataType = sdtJsonArray);
+      if FieldSchema.DataType in [sdtDate, sdtTime, sdtDateTime] then
+        Column.Strings['css_class'] := Trim(Column.Get('css_class', '') + ' nowrap');
     end
     else
     begin

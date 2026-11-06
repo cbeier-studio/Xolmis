@@ -13638,6 +13638,26 @@ msgstr ""
 msgid "individuals"
 msgstr ""
 
+#: tfrmtaxa.lblmaplegendcaptures.caption
+msgctxt "tfrmtaxa.lblmaplegendcaptures.caption"
+msgid "Captures"
+msgstr ""
+
+#: tfrmtaxa.lblmaplegendnests.caption
+msgctxt "tfrmtaxa.lblmaplegendnests.caption"
+msgid "Nests"
+msgstr ""
+
+#: tfrmtaxa.lblmaplegendsightings.caption
+msgctxt "tfrmtaxa.lblmaplegendsightings.caption"
+msgid "Sightings"
+msgstr ""
+
+#: tfrmtaxa.lblmaplegendspecimens.caption
+msgctxt "tfrmtaxa.lblmaplegendspecimens.caption"
+msgid "Specimens"
+msgstr ""
+
 #: tfrmtaxa.lblnestfatetitle.caption
 msgctxt "tfrmtaxa.lblnestfatetitle.caption"
 msgid "Nest fate"
@@ -19412,6 +19432,14 @@ msgstr ""
 
 #: utils_locale.rsreportprofilecondition
 msgid "Molt and breeding condition"
+msgstr ""
+
+#: utils_locale.rsreportprofiledetection
+msgid "Detection and ecology"
+msgstr ""
+
+#: utils_locale.rsreportprofilelocation
+msgid "Location and status"
 msgstr ""
 
 #: utils_locale.rsreportprofilemorphometry

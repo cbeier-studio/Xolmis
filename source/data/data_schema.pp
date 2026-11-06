@@ -6676,6 +6676,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_SURVEY_NAME;
   T.Fields.Last.ReportGroupable := True;
+  T.Fields.Last.ReportOrder := 1;
   // Observers list - added in v5
   AddField(T, 'observers_list', rscObservers, sdtText);
   T.Fields.Last.IsVirtual := True;
@@ -6731,6 +6732,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_METHOD_NAME;
   T.Fields.Last.ReportGroupable := True;
+  T.Fields.Last.ReportOrder := 2;
   // Locality ID
   AddField(T, 'locality_id', rscLocalityID, sdtInteger, False, 0, False, True, tbGazetteer);
   T.Fields.Last.Aliases.CommaText := LOCALITY_ALIASES;
@@ -6756,6 +6758,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_LOCALITY_NAME;
   T.Fields.Last.ReportGroupable := True;
+  T.Fields.Last.ReportOrder := 3;
   // Longitude
   AddField(T, 'longitude', rscLongitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -180;
@@ -6766,6 +6769,7 @@ begin
   T.Fields.Last.SizePriority := 0;
   T.Fields.Last.Alignment := taRightJustify;
   T.Fields.Last.SummaryEnabled := False;
+  T.Fields.Last.ReportOrder := 18;
   // Latitude
   AddField(T, 'latitude', rscLatitude, sdtFloat);
   T.Fields.Last.Rules.MinValue := -90;
@@ -6795,6 +6799,7 @@ begin
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_SIGHTING_DATE;
+  T.Fields.Last.ReportOrder := 5;
   // Time
   AddField(T, 'sighting_time', rscTime, sdtTime);
   T.Fields.Last.Aliases.CommaText := TIME_ALIASES + ',sighting time,record time,hora da observação,hora do avistamento,' +
@@ -6829,6 +6834,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
   T.Fields.Last.ReportGroupable := True;
+  T.Fields.Last.ReportOrder := 6;
   // Custom taxon name
   // added in v4
   AddField(T, 'custom_taxon_name', rscCustomTaxonName, sdtText, False, 120);
@@ -6864,6 +6870,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := COL_INDIVIDUAL_NAME;
   T.Fields.Last.ReportGroupable := True;
+  T.Fields.Last.ReportOrder := 17;
   // Quantity
   AddField(T, 'subjects_tally', rscIndividuals, sdtInteger);
   T.Fields.Last.ExportName := 'total_quantity';
@@ -6873,6 +6880,7 @@ begin
   T.Fields.Last.SummaryKind := skGroupStats;
   T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  T.Fields.Last.ReportOrder := 7;
   // Distance
   AddField(T, 'subject_distance', rscDistanceM, sdtFloat);
   T.Fields.Last.ExportName := 'distance';
@@ -6882,6 +6890,7 @@ begin
   T.Fields.Last.SummaryKind := skGroupStats;
   T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  T.Fields.Last.ReportOrder := 8;
   // Flight height
   AddField(T, 'flight_height', rscFlightHeight, sdtFloat);
   T.Fields.Last.Aliases.CommaText := 'height,flight height,height_m,height (m),flight height (m),altura,altura de voo,' +
@@ -6907,31 +6916,36 @@ begin
   AddField(T, 'detection_modes_json', rscDetectionModes, sdtJsonArray, False);
   T.Fields.Last.ExportName := 'detection_modes';
   T.Fields.Last.Aliases.CommaText := 'detection,detection type,detection modes,detecção,tipo de detecção,  modo de detecção';
-    T.Fields.Last.SummaryKind := skCount;
-    T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.ReportOrder := 13;
   // Evidences - added in v6
   AddField(T, 'evidences_json', rscEvidences, sdtJsonArray, False);
   T.Fields.Last.ExportName := 'evidences';
   T.Fields.Last.Aliases.CommaText :=   'evidences,evidências';
-    T.Fields.Last.SummaryKind := skCount;
-    T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.ReportOrder := 14;
   // Breeding status
   AddField(T, 'breeding_status', rscBreedingCode, sdtText, False, 30);
   T.Fields.Last.Aliases.CommaText := 'breeding code,breeding status,código reprodutivo,estado reprodutivo,status reprodutivo';
   T.Fields.Last.SummaryKind := skCount;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.ReportOrder := 12;
   // Habitats - added in v6
   AddField(T, 'habitats_json', rscHabitats, sdtJsonArray, False);
   T.Fields.Last.ExportName := 'habitats';
   T.Fields.Last.Aliases.CommaText :=   'habitats,ambientes';
-    T.Fields.Last.SummaryKind := skCount;
-    T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.ReportOrder := 15;
   // Activities - added in v6
   AddField(T, 'activities_json', rscActivities, sdtJsonArray, False);
   T.Fields.Last.ExportName := 'activities';
   T.Fields.Last.Aliases.CommaText :=   'activities,behavior,atividades,comportamento';
-    T.Fields.Last.SummaryKind := skCount;
-    T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.SummaryKind := skCount;
+  T.Fields.Last.SummaryMetrics := [smCount, smPercent];
+  T.Fields.Last.ReportOrder := 16;
   // Mackinnon list number
   AddField(T, 'mackinnon_list_num', rscMackinnonList, sdtInteger);
   T.Fields.Last.ExportName := 'mackinnon_list_number';
@@ -6939,6 +6953,7 @@ begin
     'lista de mackinnon,número da lista de mackinnon,nº da lista de mackinnon,número da lista,nº da lista';
   T.Fields.Last.SummaryEnabled := False;
   T.Fields.Last.ReportGroupable := True;
+  T.Fields.Last.ReportOrder := 4;
   // Captured - removed in v6
   //AddField(T, 'subject_captured', rscCaptured, sdtBoolean);
   //T.Fields.Last.ExportName := 'captured';
@@ -6991,6 +7006,7 @@ begin
   T.Fields.Last.SummaryKind := skGroupStats;
   T.Fields.Last.SummaryMetrics := [smMean, smMin, smMax, smStdDev, smStdErr, smQuartiles, smMedian];
   T.Fields.Last.GroupingField := COL_TAXON_NAME;
+  T.Fields.Last.ReportOrder := 11;
   // Recaptures
   AddField(T, 'recaptures_tally', rscRecaptures, sdtInteger);
   T.Fields.Last.Aliases.CommaText := 'recaptures,# recaptures,recapturas,# recapturas';
@@ -7010,6 +7026,7 @@ begin
   T.Fields.Last.Aliases.CommaText := 'males,# males,number of males,nr of males,machos,# machos,número de machos,nº de machos';
   T.Fields.Last.Alignment := taRightJustify;
   T.Fields.Last.SummaryEnabled := False;
+  T.Fields.Last.ReportOrder := 9;
   // Females
   AddField(T, 'females_tally', rscFemales, sdtText, False, 10);
   T.Fields.Last.Aliases.CommaText := 'females,#females,number of females,nr of females,fêmeas,# fêmeas,número de fêmeas,nº de fêmeas';
@@ -7025,6 +7042,7 @@ begin
   T.Fields.Last.Aliases.CommaText := 'adults,# adults,adultos,# adultos';
   T.Fields.Last.Alignment := taRightJustify;
   T.Fields.Last.SummaryEnabled := False;
+  T.Fields.Last.ReportOrder := 10;
   // Immatures
   AddField(T, 'immatures_tally', rscImmatures, sdtText, False, 10);
   T.Fields.Last.ExportName := 'juveniles_tally';
@@ -7046,6 +7064,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := rscIsInEBird;
   T.Fields.Last.ReportGroupable := True;
+  T.Fields.Last.ReportOrder := 20;
   // Out of sample
   // renamed "not_surveying" -> "out_of_sample" - v3
   AddField(T, 'out_of_sample', rscOutOfSample, sdtBoolean);
@@ -7056,7 +7075,8 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := rscOutOfSample;
   T.Fields.Last.ReportGroupable := True;
-  // Out of sample - added in v6
+  T.Fields.Last.ReportOrder := 19;
+  // Is doubtful - added in v6
   AddField(T, 'is_doubtful', rscIsDoubtful, sdtBoolean);
   T.Fields.Last.DefaultValue := 0;
   T.Fields.Last.Aliases.CommaText := 'doubtful,is doubtful,doubtful record,duvidoso,registro duvidoso';
@@ -7065,6 +7085,7 @@ begin
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := rscIsDoubtful;
   T.Fields.Last.ReportGroupable := True;
+  T.Fields.Last.ReportOrder := 18;
   // Notes
   AddField(T, 'notes', rscNotes, sdtText);
   T.Fields.Last.Aliases.CommaText := NOTES_ALIASES;
@@ -7073,6 +7094,7 @@ begin
   T.Fields.Last.SummaryKind := skCountNotNull;
   T.Fields.Last.SummaryMetrics := [smCount, smPercent];
   T.Fields.Last.GroupingField := rscNotes;
+  T.Fields.Last.ReportOrder := 21;
   // Full name
   AddField(T, 'full_name', rscFullName, sdtText, False, 100);
   T.Fields.Last.Aliases.CommaText := FULLNAME_ALIASES;
@@ -8577,6 +8599,7 @@ procedure RegisterReportProfiles(DB: TDatabaseSchema);
 const
   CAPTURE_IDENTIFICATION = 'locality_name,capture_date,capture_time,bander_name,annotator_name,capture_type,' +
     'taxon_name,band_name,removed_band_name';
+  SIGHTING_IDENTIFICATION = 'survey_name,observers_list,locality_name,sighting_date,sighting_time,taxon_name';
 var
   T: TTableSchema;
 begin
@@ -8596,6 +8619,20 @@ begin
     T.AddReportProfile('samples', rsReportProfileSamples, CAPTURE_IDENTIFICATION +
       ',blood_sample,feather_sample,feces_sample,parasite_sample,claw_sample,subject_collected,glucose,hemoglobin,' +
       'hematocrit,subject_photographed,subject_recorded,photographer_1_name,photographer_2_name,camera_name');
+  end;
+
+  T := DB.GetTable(tbSightings);
+  if Assigned(T) then
+  begin
+    T.AddReportProfile('summary', rsReportProfileSummary, SIGHTING_IDENTIFICATION +
+      ',mackinnon_list_num,subjects_tally,males_tally,females_tally,not_sexed_tally,adults_tally,immatures_tally,' +
+      'not_aged_tally,new_captures_tally,recaptures_tally,unbanded_tally');
+    T.AddReportProfile('detection', rsReportProfileDetection, SIGHTING_IDENTIFICATION +
+      ',detection_modes_json,evidences_json,breeding_status,habitats_json,activities_json,flight_direction,' +
+      'flight_height,subject_distance');
+    T.AddReportProfile('location', rsReportProfileLocation, SIGHTING_IDENTIFICATION +
+      ',longitude,latitude,coordinate_precision,custom_taxon_name,individual_name,ebird_available,out_of_sample,' +
+      'is_doubtful,notes');
   end;
 end;
 

@@ -13627,6 +13627,26 @@ msgstr "Google Acadêmico"
 msgid "individuals"
 msgstr "indivíduos"
 
+#: tfrmtaxa.lblmaplegendcaptures.caption
+msgctxt "tfrmtaxa.lblmaplegendcaptures.caption"
+msgid "Captures"
+msgstr "Capturas"
+
+#: tfrmtaxa.lblmaplegendnests.caption
+msgctxt "tfrmtaxa.lblmaplegendnests.caption"
+msgid "Nests"
+msgstr "Ninhos"
+
+#: tfrmtaxa.lblmaplegendsightings.caption
+msgctxt "tfrmtaxa.lblmaplegendsightings.caption"
+msgid "Sightings"
+msgstr "Observações"
+
+#: tfrmtaxa.lblmaplegendspecimens.caption
+msgctxt "tfrmtaxa.lblmaplegendspecimens.caption"
+msgid "Specimens"
+msgstr "Espécimes"
+
 #: tfrmtaxa.lblnestfatetitle.caption
 msgctxt "tfrmtaxa.lblnestfatetitle.caption"
 msgid "Nest fate"
@@ -19618,6 +19638,14 @@ msgstr "Todas colunas"
 msgid "Molt and breeding condition"
 msgstr "Muda e condição reprodutiva"
 
+#: utils_locale.rsreportprofiledetection
+msgid "Detection and ecology"
+msgstr "Detecção e ecologia"
+
+#: utils_locale.rsreportprofilelocation
+msgid "Location and status"
+msgstr "Localização e status"
+
 #: utils_locale.rsreportprofilemorphometry
 msgid "Morphometry"
 msgstr "Morfometria"
@@ -20387,26 +20415,25 @@ msgstr "Codificação do sistema"
 
 #: utils_locale.rstaxonbreeding
 msgid "Breeding"
-msgstr ""
+msgstr "Reprodução"
 
 #: utils_locale.rstaxoncapturesandmorphometry
 msgid "Captures and Morphometry"
-msgstr ""
+msgstr "Capturas e morfometria"
 
 #: utils_locale.rstaxonecology
 msgid "Ecology"
-msgstr ""
+msgstr "Ecologia"
 
 #: utils_locale.rstaxonoccurrence
 msgid "Occurrence"
-msgstr ""
+msgstr "Ocorrência"
 
 #: utils_locale.rstaxonqualityandgaps
 msgid "Quality and Gaps"
-msgstr ""
+msgstr "Qualidade e lacunas"
 
 #: utils_locale.rstaxonsummary
-#, fuzzy
 msgctxt "utils_locale.rstaxonsummary"
 msgid "Summary"
 msgstr "Resumo"
@@ -21334,4 +21361,3 @@ msgstr "Valor errado"
 msgctxt "utils_locale.rsyear"
 msgid "Year"
 msgstr "Ano"
-
