@@ -4,12 +4,14 @@ O módulo **Táxons** é dedicado à consulta e visualização da taxonomia orni
 
 Abra o módulo Táxons no menu principal: **Taxonomia → Táxons**.
 
+![Tela do módulo Táxons](img/taxa-module.png)
+
 ## Pesquisa de táxons
 
 Para exibir táxons, é necessário realizar uma pesquisa. A caixa de pesquisa está localizada no canto superior esquerdo do módulo e inclui um **botão de opções**. Você pode escolher:
 
-- **Mostrar apenas os táxons registrados** – Exibe apenas os táxons que possuem registros no banco de dados.  
-- **Mostrar todos os táxons** – Exibe a taxonomia completa, mesmo que não existam registros para determinado táxon.  
+- **Mostrar apenas os táxons registrados** - Exibe apenas os táxons que possuem registros no banco de dados.  
+- **Mostrar todos os táxons** - Exibe a taxonomia completa, mesmo que não existam registros para determinado táxon.  
 
 Essa flexibilidade permite focar tanto no seu conjunto de dados quanto na hierarquia taxonômica mais ampla.
 
@@ -18,35 +20,69 @@ Essa flexibilidade permite focar tanto no seu conjunto de dados quanto na hierar
 
 ## Informações do táxon
 
-Quando um táxon é selecionado, o módulo exibe informações detalhadas, incluindo:
+Quando um táxon é selecionado, o módulo exibe informações detalhadas em um cabeçalho, incluindo:
 
-- **Nome científico** e **autoridade**  
-- **Categoria taxonômica** (espécie, gênero, família etc.)  
-- **Estado de conservação** 
-- **Nomes vernaculares** (inglês, espanhol, português etc.) 
+- **Categoria taxonômica:** espécie, gênero, família etc.  
+- **Nome científico:** nome científico do táxon.
+- **Autoridade:** nome do autor que descreveu o táxon.
+- **Estado de conservação:** status global de conservação do táxon (IUCN Red List).
+- **Nomes vernaculares:** nome em inglês e no idioma atual do Xolmis, se disponível.
+- **Hierarquia taxonômica:** Ordem, família, gênero e espécie.
+
+O restante das informações estão disponíveis nas abas, abaixo do cabeçalho.
+
+## Resumo
+
+Na aba **Resumo**, o módulo apresenta informações gerais sobre o táxon selecionado, incluindo:
+
+- **Indicadores:**
+    - Total de registros
+    - Número de observações
+    - Número de indivíduos
+    - Número de capturas
+    - Número de ninhos
+    - Número de ovos
+    - Número de espécimes
 - **Distribuição geográfica**  
-- **Hierarquia taxonômica** (táxons superiores e subordinados)  
-- **Sinônimos** (nomes alternativos usados na literatura)  
-- **Táxons subordinados** (ex.: espécies dentro de um gênero)  
+- **Sinônimos** (nomes alternativos usados na literatura)
+- **Links externos:** abertos no navegador padrão, permitindo acesso rápido a artigos científicos, imagens, mapas de distribuição e informações de conservação.
+    - [Birds of the World](https://birdsoftheworld.org)  
+    - [eBird](https://ebird.org)  
+    - [Wikiaves](https://www.wikiaves.com.br)  
+    - [IUCN Red List](https://www.iucnredlist.org)  
+    - [GBIF](https://www.gbif.org)
+    - [Google Search](https://www.google.com)  
+    - [Google Images](https://www.google.com/images)  
+    - [Google Scholar](https://scholar.google.com)
+- **Gráficos:**
+    - Registros por ano
+    - Sazonalidade
 
-Além disso, o módulo mostra **links para outros módulos** contendo registros do táxon selecionado, junto com o número de registros em cada um. Ao clicar no nome de um módulo, ele é aberto diretamente, filtrado para exibir os registros do táxon escolhido.
+### Gráfico de registros por ano
 
-## Pesquisa de táxons na web
+O **gráfico de registros por ano** exibe:
 
-Com um táxon selecionado, é possível buscar rapidamente informações externas usando os botões na barra lateral direita. Atualmente, os sites suportados incluem:
+- **Eixo X** - Anos.  
+- **Eixo Y** - Número de registros.  
+- **Cores** - Diferentes tipos de registros empilhados em cada barra.  
 
-- [Google Search](https://www.google.com)  
-- [Google Images](https://www.google.com/images)  
-- [Google Scholar](https://scholar.google.com)  
-- [Birds of the World](https://birdsoftheworld.org)  
-- [eBird](https://ebird.org)  
-- [Wikiaves](https://www.wikiaves.com.br)  
-- [IUCN Red List](https://www.iucnredlist.org)  
-- [GBIF](https://www.gbif.org)  
+Esse gráfico ajuda a acompanhar tendências de longo prazo na coleta de dados, monitoramento de espécies e esforço de pesquisa.
 
-A pesquisa é aberta no navegador padrão, permitindo acesso rápido a artigos científicos, imagens, mapas de distribuição e informações de conservação.
+### Gráfico de sazonalidade
 
-## Mapa de registros
+O **gráfico de sazonalidade** mostra um gráfico de barras com:
+
+- **Eixo X** - Meses do ano.  
+- **Eixo Y** - Número de registros.  
+- **Cores** - Cada tipo de registro é representado por uma cor diferente, empilhada em cada barra.  
+
+Esse gráfico é útil para identificar padrões sazonais na ocorrência de espécies, atividade reprodutiva ou migração.
+
+## Ocorrência
+
+A aba **Ocorrência** apresenta informações sobre a presença de táxons em diferentes locais e períodos.
+
+### Mapa de registros
 
 A **visualização em mapa** exibe todos os registros com coordenadas geográficas como pontos coloridos.
 
@@ -56,29 +92,19 @@ A **visualização em mapa** exibe todos os registros com coordenadas geográfic
 
 Essa visualização ajuda a identificar padrões de distribuição espacial dos táxons em levantamentos e projetos.
 
-## Gráfico de sazonalidade
+## Reprodução
 
-O **gráfico de sazonalidade** mostra um gráfico de barras com:
+A aba **Reprodução** fornece informações sobre a biologia reprodutiva dos táxons, incluindo destinos de ninhos, produtividade e sucesso reprodutivo.
 
-- **Eixo X** – Meses do ano.  
-- **Eixo Y** – Número de registros.  
-- **Cores** – Cada tipo de registro é representado por uma cor diferente, empilhada em cada barra.  
+- **Indicadores:**
+    - Total de ninhos
+    - Produtividade média dos ninhos
+- **Gráficos:**
+    - Destino dos ninhos
 
-Esse gráfico é útil para identificar padrões sazonais na ocorrência de espécies, atividade reprodutiva ou migração.
+### Gráfico de destino dos ninhos
 
-## Gráfico de registros por ano
-
-O **gráfico de registros por ano** exibe:
-
-- **Eixo X** – Anos.  
-- **Eixo Y** – Número de registros.  
-- **Cores** – Diferentes tipos de registros empilhados em cada barra.  
-
-Esse gráfico ajuda a acompanhar tendências de longo prazo na coleta de dados, monitoramento de espécies e esforço de pesquisa.
-
-## Gráfico de destinos de ninhos
-
-O **gráfico de destinos de ninhos** apresenta:
+O **gráfico de destino dos ninhos** apresenta:
 
 - Um **gráfico de rosca** mostrando proporções dos resultados dos ninhos:  
     - Desconhecido  
@@ -99,9 +125,9 @@ Essa visualização apoia estudos ecológicos e de conservação ao resumir resu
 
 O módulo Táxons está interligado a várias partes do Xolmis:
 
-- **[Observações](sightings.md)** – observações vinculadas a táxons.  
-- **[Capturas](captures.md)** – registros de anilhamento e medições associados a táxons.  
-- **[Ninhos](nests.md) e [Ovos](eggs.md)** – dados reprodutivos vinculados a espécies específicas.  
-- **[Relatórios](print-data.md) e [Exportações](exporting-data.md)** – resumos de táxons podem ser incluídos em relatórios e exportados para análise externa.  
+- **[Observações](sightings.md)** - observações vinculadas a táxons.  
+- **[Capturas](captures.md)** - registros de anilhamento e medições associados a táxons.  
+- **[Ninhos](nests.md) e [Ovos](eggs.md)** - dados reprodutivos vinculados a espécies específicas.  
+- **[Relatórios](print-data.md) e [Exportações](exporting-data.md)** - resumos de táxons podem ser incluídos em relatórios e exportados para análise externa.  
 
 Ao usar o módulo Táxons, os pesquisadores obtêm uma **visão centralizada da taxonomia**, garantindo compatibilidade com padrões globais e possibilitando insights ecológicos mais profundos.

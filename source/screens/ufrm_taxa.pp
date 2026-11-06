@@ -7,7 +7,7 @@ interface
 uses
   BCPanel, Buttons, Classes, ComCtrls, DB, fgl, mvDE_BGRA, mvMapViewer, mvTypes,
   mvGpsObj, SQLDB, DBCtrls, DBGrids, httpprotocol, LCLIntf, LCLType, ExtCtrls, Menus,
-  StdCtrls, ColorSpeedButton, SysUtils, Forms, RegExpr, Controls, Graphics,
+  StdCtrls, ColorSpeedButton, BGRAShape, SysUtils, Forms, RegExpr, Controls, Graphics,
   Dialogs, data_types, Grids, attabs, TADbSource, TAGraph, TAGUIConnectorBGRA, Translations,
   TASeries, TASources, Types, mvDrawingEngine, TACustomSeries, TARadialSeries, TADrawUtils, TAChartUtils, TATools;
 
@@ -16,6 +16,15 @@ type
   { TfrmTaxa }
 
   TfrmTaxa = class(TForm)
+    SaveChartDlg: TSaveDialog;
+    sbCopyNestFateChart: TSpeedButton;
+    sbCopySeasonalityChart: TSpeedButton;
+    sbSaveNestFateChart: TSpeedButton;
+    sbSaveSeasonalityChart: TSpeedButton;
+    shpMapLegendSightings: TBGRAShape;
+    shpMapLegendCaptures: TBGRAShape;
+    shpMapLegendNests: TBGRAShape;
+    shpMapLegendSpecimens: TBGRAShape;
     chartNestFate: TChart;
     chartSeasonality: TChart;
     chartTools: TChartToolset;
@@ -25,9 +34,18 @@ type
     eSearch: TEdit;
     gridTaxa: TDBGrid;
     iconSearch: TImage;
+    lblMapLegendSightings: TLabel;
+    lblMapLegendCaptures: TLabel;
+    lblMapLegendNests: TLabel;
+    lblMapLegendSpecimens: TLabel;
     lblRecordsMapTitle: TLabel;
     lblTopLocalitiesTitle: TLabel;
     mapView: TMapView;
+    pMapLegendSightings: TPanel;
+    pMapLegendCaptures: TPanel;
+    pMapLegendNests: TPanel;
+    pMapLegendSpecimens: TPanel;
+    pMapLegend: TPanel;
     pTaxonList: TPanel;
     pRecordsMap: TBCPanel;
     pMapLocalities: TPanel;
@@ -78,6 +96,8 @@ type
     scrollOccurrence: TScrollBox;
     sbShareRecords: TSpeedButton;
     sbPrint: TSpeedButton;
+    sbSaveRecordsYearChart: TSpeedButton;
+    sbCopyRecordsYearChart: TSpeedButton;
     txtNestProductivity: TLabel;
     txtSynonyms: TLabel;
     lblSynonymsTitle: TLabel;
@@ -198,10 +218,16 @@ type
     procedure pSightingsCountIndicatorClick(Sender: TObject);
     procedure pSpecimensCountIndicatorClick(Sender: TObject);
     procedure sbClearSearchClick(Sender: TObject);
+    procedure sbCopyNestFateChartClick(Sender: TObject);
+    procedure sbCopyRecordsYearChartClick(Sender: TObject);
+    procedure sbCopySeasonalityChartClick(Sender: TObject);
     procedure sbEmptyClearAllClick(Sender: TObject);
     procedure sbEmptyGotoSearchClick(Sender: TObject);
     procedure sbOptionsSearchClick(Sender: TObject);
     procedure sbPrintClick(Sender: TObject);
+    procedure sbSaveNestFateChartClick(Sender: TObject);
+    procedure sbSaveRecordsYearChartClick(Sender: TObject);
+    procedure sbSaveSeasonalityChartClick(Sender: TObject);
     procedure sbShareRecordsClick(Sender: TObject);
     procedure scrollDataMouseWheel
       (Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
@@ -231,6 +257,7 @@ type
     procedure LoadRecordsMap;
     procedure LoadYearlyChart;
     function OccurrInBrazil(aTaxonId: Integer): Boolean;
+    procedure SaveChart(const AChart: TChart);
     function Search(AValue: String): Boolean;
     procedure SetSearchString(aValue: String);
     procedure UpdateButtons;
@@ -248,7 +275,7 @@ uses
   data_search, data_getvalue, data_consts,
   models_record_types, models_taxonomy, models_access_control, models_users,
   ufrm_main, udm_main, udm_grid, udm_taxa,
-  uDarkStyleParams;
+  uDarkStyleParams, TADrawerSVG, TADrawerBGRA;
 
 {$R *.lfm}
 
@@ -372,6 +399,7 @@ begin
 
   pRecordsMap.Background.Color := ActiveTheme.Background.CardDefault;
   pRecordsMap.Border.Color := ActiveTheme.Border.Control;
+  pMapLegend.Color := ActiveTheme.Background.CardDefault;
   pTopLocalities.Background.Color := ActiveTheme.Background.CardDefault;
   pTopLocalities.Border.Color := ActiveTheme.Border.Control;
 
@@ -390,18 +418,31 @@ procedure TfrmTaxa.chartToolsDataPointHintTool1Hint(ATool: TDataPointHintTool; c
   var AHint: String);
 var
   ASeries: TBarSeries;
+  APie: TPieSeries;
   AName: String;
   AValue: Double;
 begin
-  if not (ATool.Series is TBarSeries) then Exit;
-  ASeries := TBarSeries(ATool.Series);
+  if (ATool.Series is TPieSeries) then
+  begin
+    APie := TPieSeries(ATool.Series);
 
-  AName  := ASeries.Styles.Styles[ATool.YIndex].Text;
-  AValue := ASeries.GetYValues(ATool.PointIndex, ATool.YIndex);
+    //AName  := APie.Source. Styles.Styles[ATool.YIndex].Text;
+    AValue := APie.GetYValues(ATool.PointIndex, ATool.YIndex);
 
-  AHint := Format('%s: %d', [AName, Round(AValue)]);
-  // Se quiser incluir o mês:
-  // AHint := Format('Mês %d - %s: %d', [Round(ASeries.GetXValue(ATool.PointIndex)), AName, Round(AValue)]);
+    AHint := Format('%d', [Round(AValue)]);
+  end;
+
+  if (ATool.Series is TBarSeries) then
+  begin
+    ASeries := TBarSeries(ATool.Series);
+
+    AName  := ASeries.Styles.Styles[ATool.YIndex].Text;
+    AValue := ASeries.GetYValues(ATool.PointIndex, ATool.YIndex);
+
+    AHint := Format('%s: %d', [AName, Round(AValue)]);
+    // Se quiser incluir o mês:
+    // AHint := Format('Mês %d - %s: %d', [Round(ASeries.GetXValue(ATool.PointIndex)), AName, Round(AValue)]);
+  end;
 end;
 
 procedure TfrmTaxa.chipBirdsOfTheWorldClick(Sender: TObject);
@@ -691,6 +732,14 @@ begin
 
   mapView.CachePath := IncludeTrailingPathDelimiter(ConcatPaths([AppDataDir, 'map-cache']));
   mapView.Active := True;
+  shpMapLegendSightings.FillColor := clCatGencianaBGLight;
+  shpMapLegendSightings.BorderColor := clCatGencianaFGLight;
+  shpMapLegendCaptures.FillColor := clCatMandacaruBGLight;
+  shpMapLegendCaptures.BorderColor := clCatMandacaruFGLight;
+  shpMapLegendNests.FillColor := clCatIpeAmareloBGLight;
+  shpMapLegendNests.BorderColor := clCatIpeAmareloFGLight;
+  shpMapLegendSpecimens.FillColor := clCatQuaresmeiraBGLight;
+  shpMapLegendSpecimens.BorderColor := clCatQuaresmeiraFGLight;
 
   chartSeasonality.Title.Text.Text := rsSeasonality;
   chartSeasonality.LeftAxis.Title.Caption := rsNumberOfRecords;
@@ -1557,28 +1606,28 @@ begin
     // >> Sighting
     if APoint.IdOwner = 1 then
     begin
-      ADrawer.BrushColor := clLightYellowChart; //clYellowFG4Dark;
-      ADrawer.PenColor := clYellowChart; //clYellowBGLight;
+      ADrawer.BrushColor := clCatGencianaBGLight;
+      ADrawer.PenColor := clCatGencianaFGLight;
     end
     else
     // >> Nest
     if APoint.IdOwner = 2 then
     begin
-      ADrawer.BrushColor := clLightRedChart; //clRedFGDark;
-      ADrawer.PenColor := clRedChart; //clRedBGLight;
+      ADrawer.BrushColor := clCatIpeAmareloBGLight;
+      ADrawer.PenColor := clCatIpeAmareloFGLight;
     end
     else
     // >> Specimen
     if APoint.IdOwner = 3 then
     begin
-      ADrawer.BrushColor := clLightVioletChart; //clVioletFG1Dark;
-      ADrawer.PenColor := clVioletChart; //clVioletBG2Dark;
+      ADrawer.BrushColor := clCatQuaresmeiraBGLight;
+      ADrawer.PenColor := clCatQuaresmeiraFGLight;
     end
     else
     // >> Capture
     begin
-      ADrawer.BrushColor := clLightLimeGreenChart; //clGreenBGDark;
-      ADrawer.PenColor := clLimeGreenChart; //clGreenFG2Light;
+      ADrawer.BrushColor := clCatMandacaruBGLight;
+      ADrawer.PenColor := clCatMandacaruFGLight;
     end;
     ADrawer.BrushStyle := bsSolid;
     ADrawer.PenWidth := 2;
@@ -1684,11 +1733,55 @@ begin
   end;
 end;
 
+procedure TfrmTaxa.SaveChart(const AChart: TChart);
+begin
+  if SaveChartDlg.Execute then
+  begin
+    case SaveChartDlg.FilterIndex of
+      0:
+      begin
+        SaveChartDlg.DefaultExt := '.jpg';
+        AChart.SaveToFile(TJPEGImage, SaveChartDlg.FileName);
+      end;
+      1:
+      begin
+        SaveChartDlg.DefaultExt := '.png';
+        AChart.SaveToFile(TPortableNetworkGraphic, SaveChartDlg.FileName);
+      end;
+      2:
+      begin
+        SaveChartDlg.DefaultExt := '.svg';
+        AChart.SaveToSVGFile(SaveChartDlg.FileName);
+      end;
+      3:
+      begin
+        SaveChartDlg.DefaultExt := '.bmp';
+        AChart.SaveToBitmapFile(SaveChartDlg.FileName);
+      end;
+    end;
+  end;
+end;
+
 procedure TfrmTaxa.sbClearSearchClick(Sender: TObject);
 begin
   eSearch.Clear;
   if eSearch.CanSetFocus then
     eSearch.SetFocus;
+end;
+
+procedure TfrmTaxa.sbCopyNestFateChartClick(Sender: TObject);
+begin
+  chartNestFate.CopyToClipboardBitmap;
+end;
+
+procedure TfrmTaxa.sbCopyRecordsYearChartClick(Sender: TObject);
+begin
+  chartYear.CopyToClipboardBitmap;
+end;
+
+procedure TfrmTaxa.sbCopySeasonalityChartClick(Sender: TObject);
+begin
+  chartSeasonality.CopyToClipboardBitmap;
 end;
 
 procedure TfrmTaxa.sbEmptyClearAllClick(Sender: TObject);
@@ -1713,6 +1806,21 @@ procedure TfrmTaxa.sbPrintClick(Sender: TObject);
 begin
   with TSpeedButton(Sender).ClientToScreen(point(0, TSpeedButton(Sender).Height + 1)) do
     pmPrint.Popup(X, Y);
+end;
+
+procedure TfrmTaxa.sbSaveNestFateChartClick(Sender: TObject);
+begin
+  SaveChart(chartNestFate);
+end;
+
+procedure TfrmTaxa.sbSaveRecordsYearChartClick(Sender: TObject);
+begin
+  SaveChart(chartYear);
+end;
+
+procedure TfrmTaxa.sbSaveSeasonalityChartClick(Sender: TObject);
+begin
+  SaveChart(chartSeasonality);
 end;
 
 procedure TfrmTaxa.sbShareRecordsClick(Sender: TObject);
