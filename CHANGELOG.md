@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Scientific-name abbreviation searches using the first two or three letters of the genus and specific epithet.
 - Added new fields to Methods: allows species repetition, has time limit, has species limit, requires spatial data, and allows transport mode.
 - Added new fields to Surveys: transport mode, total paused time, total intervals, species limit, and discarded.
 - Added new fields to Sightings: detection modes, evidences, habitats, activities, and doubtful record. 

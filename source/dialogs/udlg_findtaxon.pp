@@ -89,7 +89,7 @@ var
 implementation
 
 uses
-  utils_locale, utils_global, data_getvalue, data_consts, utils_conversions, utils_themes, uDarkStyleParams;
+  utils_locale, utils_global, data_getvalue, data_consts, data_search, utils_conversions, utils_themes, uDarkStyleParams;
 
 {$R *.lfm}
 
@@ -378,6 +378,7 @@ end;
 function TdlgFindTaxon.Pesquisar(aValor: String): Boolean;
 var
   Criterio: TCriteriaType;
+  GenusPrefix, EpithetPrefix: String;
 begin
   Result := False;
 
@@ -413,6 +414,19 @@ begin
       LogDebug('Search: ' + aValor);
       {$ENDIF}
       SetSelect(SQL, fvReset, Criterio);
+      if Criterio = crLike then
+      begin
+        if TryScientificNamePrefixes(Trim(aValor), GenusPrefix, EpithetPrefix) then
+        begin
+          Params.ParamByName('ABBRGENUS').AsString := GenusPrefix;
+          Params.ParamByName('ABBREPITHET').AsString := EpithetPrefix;
+        end
+        else
+        begin
+          Params.ParamByName('ABBRGENUS').Clear;
+          Params.ParamByName('ABBREPITHET').Clear;
+        end;
+      end;
       case xSettings.VernacularNamesLanguage of
         0: ParamByName('LANG').AsInteger := GetLanguageKey(rsPortuguese);
         1: ParamByName('LANG').AsInteger := GetLanguageKey(rsEnglish);
@@ -655,7 +669,10 @@ begin
         begin
           Add('WHERE ((t.scientific_name ' + Operador + ' :VALPARAM)');
           Add('   OR (t.ebird_code ' + Operador + ' :VALPARAM)');
-          Add('   OR (t.quick_code ' + Operador + ' :VALPARAM))');
+          Add('   OR (t.quick_code ' + Operador + ' :VALPARAM)');
+          if aCriteria = crLike then
+            Add('   OR ' + ScientificNamePrefixSQL('t.scientific_name', ':ABBRGENUS', ':ABBREPITHET'));
+          Add(')');
 
           if not (tfAll in FiltroTaxon) then
             GetRankFilter(aSQL, FiltroTaxon);
@@ -687,7 +704,10 @@ begin
         fvNone: ;
         fvReset:
           begin
-            Add('WHERE (s.scientific_name ' + Operador + ' :VALPARAM)');
+            Add('WHERE ((s.scientific_name ' + Operador + ' :VALPARAM)');
+            if aCriteria = crLike then
+              Add('   OR ' + ScientificNamePrefixSQL('s.scientific_name', ':ABBRGENUS', ':ABBREPITHET'));
+            Add(')');
             Add('AND (s.active_status = 1)');
           end;
         fvAll:
@@ -730,4 +750,3 @@ begin
 end;
 
 end.
-

@@ -1392,8 +1392,8 @@ begin
         begin
           poi := TGPSPointOfInterest.CreateFrom(rp);
           case category of
-            0: poi.Name := rsCaptionSighting + ': ' + FieldByName('full_name').AsString;
-            1: poi.Name := rsCaptionCapture + ': ' + FieldByName('full_name').AsString;
+            0: poi.Name := rsCaptionCapture + ': ' + FieldByName('full_name').AsString;
+            1: poi.Name := rsCaptionSighting + ': ' + FieldByName('full_name').AsString;
             2: poi.Name := rsCaptionNest + ': ' + FieldByName('full_name').AsString;
             3: poi.Name := rsCaptionSpecimen + ': ' + FieldByName('full_name').AsString;
           end;
@@ -1886,6 +1886,7 @@ begin
   {$ENDIF}
   FSearch.TextFilters.Clear;
   FSearch.QuickFilters.Clear;
+  FSearch.ScientificNameSearch := Trim(AValue);
 
   gridTaxa.BeginUpdate;
   try
@@ -2196,4 +2197,3 @@ begin
 end;
 
 end.
-

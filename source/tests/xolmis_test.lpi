@@ -111,6 +111,11 @@
         <UnitName Value="test_data_setparam"/>
       </Unit>
       <Unit>
+        <Filename Value="test_data_search.pp"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="test_data_search"/>
+      </Unit>
+      <Unit>
         <Filename Value="test_models_xmobile.pp"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="test_models_xmobile"/>

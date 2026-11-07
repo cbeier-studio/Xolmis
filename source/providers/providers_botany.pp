@@ -31,6 +31,8 @@ type
 
 implementation
 
+uses data_search;
+
 { TBotanicalTaxaSQL }
 
 constructor TBotanicalTaxaSQL.Create(ABackend: TDatabaseBackend);
@@ -97,7 +99,10 @@ begin
     swcNone: ;
     swcFindText:
     begin
-      Result := Result + 'WHERE (lower(scientific_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ';
+      Result := Result + 'WHERE ((lower(scientific_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM))';
+      if aCriteria = crLike then
+        Result := Result + ' OR ' + ScientificNamePrefixSQL('scientific_name', ':ABBRGENUS', ':ABBREPITHET', FBackend);
+      Result := Result + ') ';
       if not (tfAll in aRankFilter) then
       begin
         if (tfMain in aRankFilter) then
@@ -313,4 +318,3 @@ begin
 end;
 
 end.
-

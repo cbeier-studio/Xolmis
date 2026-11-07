@@ -26,6 +26,12 @@ uses
   { SQL Select and filtering }
   function GetModifier(aModifier: String): TFilterValue;
 
+  {** Splits a four- or six-letter scientific-name abbreviation into LIKE prefixes. }
+  function TryScientificNamePrefixes(const AValue: String; out AGenus, AEpithet: String): Boolean;
+  {** Builds a predicate using trusted field and parameter expressions. }
+  function ScientificNamePrefixSQL(const AField, AGenus, AEpithet: String;
+    ABackend: TDatabaseBackend = dbSqlite): String;
+
   procedure SetSelectSQL(const aSQL: TStrings; aTable: TTableType; var aAlias: String);
 
   procedure SetMethodsSQL(const aSQL: TStrings; aFilter: TFilterValue;
@@ -107,6 +113,47 @@ begin
   else
   if MatchStr(aModifier, HASHTAG_PRINT_QUEUE) then { #fila }
     Result := fvQueued;
+end;
+
+function TryScientificNamePrefixes(const AValue: String; out AGenus, AEpithet: String): Boolean;
+var
+  I, Half: Integer;
+begin
+  AGenus := '';
+  AEpithet := '';
+  Result := Length(AValue) in [4, 6];
+  if not Result then Exit;
+  for I := 1 to Length(AValue) do
+    if not (AValue[I] in ['A'..'Z', 'a'..'z']) then
+      Exit(False);
+  Half := Length(AValue) div 2;
+  AGenus := Copy(AValue, 1, Half) + '%';
+  AEpithet := Copy(AValue, Half + 1, Half) + '%';
+end;
+
+function ScientificNamePrefixSQL(const AField, AGenus, AEpithet: String;
+  ABackend: TDatabaseBackend): String;
+var
+  SpacePosition, GenusExpr, EpithetExpr: String;
+begin
+  case ABackend of
+    dbSqlite: SpacePosition := 'instr(' + AField + ', '' '')';
+    dbPostgre: SpacePosition := 'strpos(' + AField + ', '' '')';
+    dbMaria: SpacePosition := 'locate('' '', ' + AField + ')';
+    dbFirebird: SpacePosition := 'position('' '' in ' + AField + ')';
+  end;
+  if ABackend = dbFirebird then
+  begin
+    GenusExpr := 'substring(' + AField + ' from 1 for ' + SpacePosition + ' - 1)';
+    EpithetExpr := 'substring(' + AField + ' from ' + SpacePosition + ' + 1)';
+  end
+  else
+  begin
+    GenusExpr := 'substr(' + AField + ', 1, ' + SpacePosition + ' - 1)';
+    EpithetExpr := 'substr(' + AField + ', ' + SpacePosition + ' + 1)';
+  end;
+  Result := '(' + SpacePosition + ' > 0 AND lower(' + GenusExpr + ') LIKE lower(' +
+    AGenus + ') AND lower(' + EpithetExpr + ') LIKE lower(' + AEpithet + '))';
 end;
 
 // ----------------------------------------------------------------------------
@@ -1027,4 +1074,3 @@ begin
 end;
 
 end.
-

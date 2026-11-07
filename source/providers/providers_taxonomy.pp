@@ -105,7 +105,7 @@ type
 implementation
 
 uses
-  utils_global;
+  utils_global, data_search;
 
 { TTaxonRanksSQL }
 
@@ -379,7 +379,10 @@ begin
     swcFindText:
     begin
       Result := Result +
-        'WHERE (lower(t.scientific_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ';
+        'WHERE ((lower(t.scientific_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM))';
+      if aCriteria = crLike then
+        Result := Result + ' OR ' + ScientificNamePrefixSQL('t.scientific_name', ':ABBRGENUS', ':ABBREPITHET', FBackend);
+      Result := Result + ') ';
       if not (tfAll in aRankFilter) then
       begin
         if (tfMain in aRankFilter) then
@@ -528,7 +531,10 @@ begin
       swcNone: ;
       swcFindText:
         begin
-          Result := Result + 'WHERE (lower(s.scientific_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM)) ';
+          Result := Result + 'WHERE ((lower(s.scientific_name) ' + CRITERIA_OPERATORS[aCriteria] + ' lower(:VALPARAM))';
+          if aCriteria = crLike then
+            Result := Result + ' OR ' + ScientificNamePrefixSQL('s.scientific_name', ':ABBRGENUS', ':ABBREPITHET', FBackend);
+          Result := Result + ') ';
           Result := Result + 'AND (s.active_status = 1) ';
         end;
       swcActiveAll:
@@ -1364,4 +1370,3 @@ begin
 end;
 
 end.
-

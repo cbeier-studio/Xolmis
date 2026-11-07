@@ -38,6 +38,10 @@ If you only remember fragments of a word or are unsure of the spelling, use the 
 !!! example
     `abro+pus` will return all taxa containing "Abroscopus".
 
+### Scientific-name abbreviations
+
+In taxon searches and modules with a taxon field, enter four or six letters: the first half matches the beginning of the genus and the second half the beginning of the specific epithet. For example, `pija` and `pipjac` both match *Pipile jacutinga*. Regular search matches are also included. The abbreviation is not applied when using `=` or `$`.
+
 ## Filtering data
 
 Search and filters can be applied simultaneously, making it possible to refine results with high precision.

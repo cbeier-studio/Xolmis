@@ -120,7 +120,7 @@ implementation
 
 uses
   utils_locale, utils_global, utils_conversions, utils_dialogs, utils_themes,
-  data_getvalue, data_providers, data_consts,
+  data_getvalue, data_providers, data_consts, data_search,
   uDarkStyleParams;
 
 {$R *.lfm}
@@ -885,6 +885,7 @@ end;
 function TdlgFind.Search(aValue: String): Boolean;
 var
   Criterio: TCriteriaType;
+  GenusPrefix, EpithetPrefix: String;
 begin
   Result := False;
 
@@ -918,6 +919,19 @@ begin
       LogDebug('Search value: ' + aValue);
       {$ENDIF}
       SetSelect(SQL, fvReset, Criterio);
+      if (FTableType in [tbZooTaxa, tbBotanicTaxa]) and (Criterio = crLike) then
+      begin
+        if TryScientificNamePrefixes(Trim(aValue), GenusPrefix, EpithetPrefix) then
+        begin
+          Params.ParamByName('ABBRGENUS').AsString := GenusPrefix;
+          Params.ParamByName('ABBREPITHET').AsString := EpithetPrefix;
+        end
+        else
+        begin
+          Params.ParamByName('ABBRGENUS').Clear;
+          Params.ParamByName('ABBREPITHET').Clear;
+        end;
+      end;
       case Criterio of
         crLike:
           begin
@@ -1113,4 +1127,3 @@ begin
 end;
 
 end.
-

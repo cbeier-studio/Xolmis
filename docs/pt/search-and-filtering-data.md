@@ -38,6 +38,10 @@ Se você lembra apenas fragmentos de uma palavra ou não tem certeza da grafia, 
 !!! example
     `abro+pus` retornará todos os táxons que contenham "Abroscopus".
 
+### Abreviações de nomes científicos
+
+Nas buscas de táxons e nos módulos com campo de táxon, digite quatro ou seis letras: a primeira metade corresponde ao início do gênero e a segunda ao início do epíteto específico. Por exemplo, `pija` e `pipjac` encontram *Pipile jacutinga*. Os resultados da busca normal também são incluídos. A abreviação não é aplicada com `=` ou `$`.
+
 ## Filtrando dados
 
 Buscas e filtros podem ser aplicados simultaneamente, tornando possível refinar resultados com alta precisão.

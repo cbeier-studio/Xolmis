@@ -381,6 +381,7 @@ type
     FSQLWhere: TStrings;
     FGroupBy: TStrings;
     FSQLOrderBy: String;
+    FScientificNameSearch: String;
     function GetFieldCount: Integer;
     function GetRecordCount: Integer;
     function GetSQLString: String;
@@ -403,6 +404,8 @@ type
     property SQLWhere: TStrings read FSQLWhere;
     property GroupBy: TStrings read FGroupBy;
     property SQLOrderBy: String read FSQLOrderBy;
+    {** Original text input, including any search operator. }
+    property ScientificNameSearch: String read FScientificNameSearch write FScientificNameSearch;
   end;
 
 type
@@ -841,6 +844,7 @@ var
   i, f: Integer;
   S, AndOrWhere, Msk, aSort: String;
   V1, V2, StartExpr, EndExpr: String;
+  GenusPrefix, EpithetPrefix, ScientificField: String;
 
   function GetSplitDateRangeExpr(const aYearField, aMonthField, aDayField: String): String;
   begin
@@ -1005,6 +1009,14 @@ begin
   // Add SELECT ... FROM ... statements
   SetSelectSQL(FDataSet.SQL, FTableType, FTableAlias);
   AndOrWhere := 'WHERE ';
+  ScientificField := '';
+  if TryScientificNamePrefixes(FScientificNameSearch, GenusPrefix, EpithetPrefix) then
+    case FTableType of
+      tbZooTaxa, tbBotanicTaxa: ScientificField := FTableAlias + '.scientific_name';
+      tbIndividuals, tbCaptures, tbFeathers, tbSightings, tbSpecimens, tbNests,
+      tbEggs, tbPoiLibrary: ScientificField := 'z.scientific_name';
+      tbNestRevisions: ScientificField := 'z1.scientific_name';
+    end;
 
   // Add TextFilters in WHERE clause
   if FQuickFilters.Count > 0 then
@@ -1291,6 +1303,14 @@ begin
           FDataSet.SQL.Add(S);
           FSQLWhere.Add(S);
         end;
+        // Keep abbreviation matches in the text OR group, not in the quick filters.
+        if (i = 0) and (FTextFilters[i].AndOr = aoOr) and (ScientificField <> '') then
+        begin
+          S := 'OR ' + ScientificNamePrefixSQL(ScientificField,
+            QuotedStr(GenusPrefix), QuotedStr(EpithetPrefix));
+          FDataSet.SQL.Add(S);
+          FSQLWhere.Add(S);
+        end;
         // Close parenthesis, and AND/OR groups
         FDataSet.SQL.Add(')');
         FSQLWhere.Add(')');
@@ -1374,6 +1394,7 @@ end;
 procedure TCustomSearch.Reset;
 begin
   FRecordActive := rsActive;
+  FScientificNameSearch := '';
   FTextFilters.Clear;
   FQuickFilters.Clear;
 end;

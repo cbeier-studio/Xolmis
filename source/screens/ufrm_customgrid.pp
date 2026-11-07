@@ -9569,6 +9569,7 @@ begin
     {$ENDIF}
     FSearch.TextFilters.Clear;
     FSearch.QuickFilters.Clear;
+    FSearch.ScientificNameSearch := Trim(aValue);
     FMasterTotal := -1;
     lblRecordStatus.Caption := rsLoadingRecords;
 

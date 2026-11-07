@@ -225,7 +225,7 @@ object frmTaxa: TfrmTaxa
       Columns = <      
         item
           Title.Caption = 'Taxon'
-          Width = 287
+          Width = 308
           FieldName = 'scientific_name'
         end      
         item
@@ -675,7 +675,7 @@ object frmTaxa: TfrmTaxa
       Height = 452
       Top = 239
       Width = 853
-      PageIndex = 1
+      PageIndex = 0
       Anchors = [akTop, akLeft, akRight, akBottom]
       TabOrder = 2
       object pgSummary: TPage
