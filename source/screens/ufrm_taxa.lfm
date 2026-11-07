@@ -2254,13 +2254,15 @@ object frmTaxa: TfrmTaxa
                 Width = 366
                 AxisList = <                
                   item
-                    Grid.Visible = False
+                    Grid.Color = clSilver
+                    Intervals.NiceSteps = '1|2|5|10|20|50|100|200|500'
+                    Intervals.Options = [aipUseMaxLength, aipUseMinLength, aipUseNiceSteps, aipInteger]
                     AxisPen.Visible = True
                     Marks.LabelFont.Height = -11
                     Marks.LabelBrush.Style = bsClear
                     Minors = <>
+                    Range.UseMin = True
                     Title.LabelFont.Orientation = 900
-                    Title.Visible = True
                     Title.Caption = 'Number of records'
                     Title.LabelBrush.Style = bsClear
                   end                
@@ -2282,12 +2284,13 @@ object frmTaxa: TfrmTaxa
                     Minors = <>
                     Range.Max = 12
                     Range.Min = 1
-                    Title.Visible = True
                     Title.Caption = 'Year'
                     Title.LabelBrush.Style = bsClear
                   end>
                 Extent.XMax = 12
                 Extent.XMin = 1
+                ExtentSizeLimit.UseYMin = True
+                ExtentSizeLimit.YMin = 2
                 Frame.Visible = False
                 GUIConnector = chartBGRA
                 Legend.Alignment = laBottomCenter
@@ -2412,13 +2415,15 @@ object frmTaxa: TfrmTaxa
                 Width = 366
                 AxisList = <                
                   item
-                    Grid.Visible = False
+                    Grid.Color = clSilver
+                    Intervals.NiceSteps = '1|2|5|10|20|50|100|200|500'
+                    Intervals.Options = [aipUseMaxLength, aipUseMinLength, aipUseNiceSteps, aipInteger]
                     AxisPen.Visible = True
                     Marks.LabelFont.Height = -11
                     Marks.LabelBrush.Style = bsClear
                     Minors = <>
+                    Range.UseMin = True
                     Title.LabelFont.Orientation = 900
-                    Title.Visible = True
                     Title.Caption = 'Number of records'
                     Title.LabelBrush.Style = bsClear
                   end                
@@ -2441,7 +2446,6 @@ object frmTaxa: TfrmTaxa
                     Range.Min = 0.5
                     Range.UseMax = True
                     Range.UseMin = True
-                    Title.Visible = True
                     Title.Caption = 'Month'
                     Title.LabelBrush.Style = bsClear
                   end>
@@ -2631,6 +2635,7 @@ object frmTaxa: TfrmTaxa
                 Font.Color = clBlack
                 MapProvider = 'OpenStreetMap Standard'
                 ParentFont = False
+                PluginManager = MvPluginMan
                 POITextBgOpacity = 0.550000011920929
                 TabOrder = 0
                 OnDrawGpsPoint = mapViewDrawGpsPoint
@@ -14594,5 +14599,25 @@ object frmTaxa: TfrmTaxa
     Filter = 'JPEG|*.jpg;*.jpeg|PNG|*.png|SVG|*.svg|Bitmap|*.bmp'
     Left = 70
     Top = 272
+  end
+  object MvPluginMan: TMvPluginManager
+    Left = 272
+    Top = 409
+    object mvpMarkerHintPlugin: TMarkerHintPlugin
+      MapView = mapView
+      Tolerance = 8
+      AutoHideHint = True
+      HideInterval = 3000
+      OnCreateHintWindow = mvpMarkerHintPluginCreateHintWindow
+    end
+    object mvpLegalNoticePlugin: TLegalNoticePlugin
+      MapView = mapView
+      LegalNotice = 'Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]'
+      Position = lnpTopRight
+    end
+    object mvpMapScalePlugin: TMapScalePlugin
+      MapView = mapView
+      WidthMax = 200
+    end
   end
 end

@@ -13717,6 +13717,11 @@ msgctxt "tfrmtaxa.lbltotalrecords.caption"
 msgid "total records"
 msgstr ""
 
+#: tfrmtaxa.mvplegalnoticeplugin.legalnotice
+msgctxt "tfrmtaxa.mvplegalnoticeplugin.legalnotice"
+msgid "Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"
+msgstr ""
+
 #: tfrmtaxa.pmfshowrecordedtaxa.caption
 msgid "Show only the recorded taxa"
 msgstr ""

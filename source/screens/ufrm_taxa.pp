@@ -5,17 +5,21 @@ unit ufrm_taxa;
 interface
 
 uses
-  BCPanel, Buttons, Classes, ComCtrls, DB, fgl, mvDE_BGRA, mvMapViewer, mvTypes,
-  mvGpsObj, SQLDB, DBCtrls, DBGrids, httpprotocol, LCLIntf, LCLType, ExtCtrls, Menus,
-  StdCtrls, ColorSpeedButton, BGRAShape, SysUtils, Forms, RegExpr, Controls, Graphics,
-  Dialogs, data_types, Grids, attabs, TADbSource, TAGraph, TAGUIConnectorBGRA, Translations,
-  TASeries, TASources, Types, mvDrawingEngine, TACustomSeries, TARadialSeries, TADrawUtils, TAChartUtils, TATools;
+  BCPanel, Buttons, Classes, ComCtrls, DB, fgl, mvDE_BGRA, mvMapViewer, mvTypes, mvGpsObj, SQLDB, DBCtrls, DBGrids,
+  httpprotocol, LCLIntf, LCLType, ExtCtrls, Menus, StdCtrls, ColorSpeedButton, BGRAShape, SysUtils, Forms, RegExpr,
+  Controls, Graphics, Dialogs, data_types, Grids, attabs, TADbSource, TAGraph, TAGUIConnectorBGRA, Translations,
+  TASeries, TASources, Types, mvDrawingEngine, mvPluginCommon, mvMarkerPlugins, mvPlugins, mvMapScalePlugin,
+  TACustomSeries, TARadialSeries, TADrawUtils, TAChartUtils, TATools;
 
 type
 
   { TfrmTaxa }
 
   TfrmTaxa = class(TForm)
+    MvPluginMan: TMvPluginManager;
+    mvpLegalNoticePlugin: TLegalNoticePlugin;
+    mvpMapScalePlugin: TMapScalePlugin;
+    mvpMarkerHintPlugin: TMarkerHintPlugin;
     SaveChartDlg: TSaveDialog;
     sbCopyNestFateChart: TSpeedButton;
     sbCopySeasonalityChart: TSpeedButton;
@@ -209,6 +213,7 @@ type
     procedure gridTaxaPrepareCanvas(sender: TObject; DataCol: Integer; Column: TColumn; AState: TGridDrawState);
     procedure mapViewDrawGpsPoint
       (Sender: TObject; ADrawer: TMvCustomDrawingEngine; APoint: TGpsPoint);
+    procedure mvpMarkerHintPluginCreateHintWindow(AMapView: TMapView; out AHintWindow: THintWindow);
     procedure navTabsTabClick(Sender: TObject);
     procedure pCapturesCountIndicatorClick(Sender: TObject);
     procedure pEggsCountIndicatorClick(Sender: TObject);
@@ -334,6 +339,7 @@ begin
   chartSeasonality.BottomAxis.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
   chartSeasonality.LeftAxis.Title.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
   chartSeasonality.LeftAxis.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
+  chartSeasonality.LeftAxis.Grid.Color := ActiveTheme.Border.Default;
 
   chartYear.Color := ActiveTheme.Background.CardDefault;
   chartYear.BackColor := ActiveTheme.Background.CardDefault;
@@ -343,6 +349,7 @@ begin
   chartYear.BottomAxis.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
   chartYear.LeftAxis.Title.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
   chartYear.LeftAxis.Marks.LabelFont.Color := ActiveTheme.Foreground.TextPrimary;
+  chartYear.LeftAxis.Grid.Color := ActiveTheme.Border.Default;
 
   chartNestFate.Color := ActiveTheme.Background.CardDefault;
   chartNestFate.BackColor := ActiveTheme.Background.CardDefault;
@@ -1351,16 +1358,16 @@ begin
     SQLConnection := DMM.sqlCon;
     SQLTransaction := DMM.sqlTrans;
     // Load coordinates from database
-    Add('SELECT DISTINCT longitude, latitude, ''C'' AS record_type FROM captures');
+    Add('SELECT DISTINCT full_name, longitude, latitude, ''C'' AS record_type FROM captures');
     Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (longitude NOTNULL) AND (latitude NOTNULL)');
     Add('UNION');
-    Add('SELECT DISTINCT longitude, latitude, ''S'' AS record_type FROM sightings');
+    Add('SELECT DISTINCT full_name, longitude, latitude, ''S'' AS record_type FROM sightings');
     Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (longitude NOTNULL) AND (latitude NOTNULL)');
     Add('UNION');
-    Add('SELECT DISTINCT longitude, latitude, ''N'' AS record_type FROM nests');
+    Add('SELECT DISTINCT full_name, longitude, latitude, ''N'' AS record_type FROM nests');
     Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (longitude NOTNULL) AND (latitude NOTNULL)');
     Add('UNION');
-    Add('SELECT DISTINCT longitude, latitude, ''E'' AS record_type FROM specimens');
+    Add('SELECT DISTINCT full_name, longitude, latitude, ''E'' AS record_type FROM specimens');
     Add('WHERE (taxon_id = :taxon_id) AND (active_status = 1) AND (longitude NOTNULL) AND (latitude NOTNULL)');
 
     ParamByName('taxon_id').AsInteger := dsLink.DataSet.FieldByName('taxon_id').AsInteger;
@@ -1383,7 +1390,13 @@ begin
         rp.Lat := FieldByName('latitude').AsFloat;
         if (not (rp.Lon = 0) and not (rp.Lat = 0)) then
         begin
-          poi := TGpsPoint.CreateFrom(rp);
+          poi := TGPSPointOfInterest.CreateFrom(rp);
+          case category of
+            0: poi.Name := rsCaptionSighting + ': ' + FieldByName('full_name').AsString;
+            1: poi.Name := rsCaptionCapture + ': ' + FieldByName('full_name').AsString;
+            2: poi.Name := rsCaptionNest + ': ' + FieldByName('full_name').AsString;
+            3: poi.Name := rsCaptionSpecimen + ': ' + FieldByName('full_name').AsString;
+          end;
 
           mapView.GPSItems.Add(poi, category);
         end;
@@ -1639,7 +1652,12 @@ begin
   ext := ADrawer.TextExtent(APoint.Name);
   ADrawer.BrushColor := clWhite;
   ADrawer.BrushStyle := bsClear;
-  ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
+  //ADrawer.TextOut(P.X - ext.CX div 2, P.Y + 5, APoint.Name);
+end;
+
+procedure TfrmTaxa.mvpMarkerHintPluginCreateHintWindow(AMapView: TMapView; out AHintWindow: THintWindow);
+begin
+  AHintWindow := THintWindow.Create(AMapView);
 end;
 
 procedure TfrmTaxa.navTabsTabClick(Sender: TObject);

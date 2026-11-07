@@ -64,5 +64,6 @@
 {"hash":228404697,"name":"tfrmtaxa.pmprinttaxahierarchical.caption","sourcebytes":[84,97,120,97,32,40,104,105,101,114,97,114,99,104,105,99,97,108,41],"value":"Taxa (hierarchical)"},
 {"hash":19447140,"name":"tfrmtaxa.pmprinttaxarecorded.caption","sourcebytes":[84,97,120,97,32,114,101,99,111,114,100,101,100],"value":"Taxa recorded"},
 {"hash":47660265,"name":"tfrmtaxa.pmprinttaxarecordedbylocality.caption","sourcebytes":[84,97,120,97,32,114,101,99,111,114,100,101,100,32,98,121,32,108,111,99,97,108,105,116,121],"value":"Taxa recorded by locality"},
-{"hash":238172657,"name":"tfrmtaxa.pmfshowrecordedtaxa.caption","sourcebytes":[83,104,111,119,32,111,110,108,121,32,116,104,101,32,114,101,99,111,114,100,101,100,32,116,97,120,97],"value":"Show only the recorded taxa"}
+{"hash":238172657,"name":"tfrmtaxa.pmfshowrecordedtaxa.caption","sourcebytes":[83,104,111,119,32,111,110,108,121,32,116,104,101,32,114,101,99,111,114,100,101,100,32,116,97,120,97],"value":"Show only the recorded taxa"},
+{"hash":156378045,"name":"tfrmtaxa.mvplegalnoticeplugin.legalnotice","sourcebytes":[77,97,112,32,100,97,116,97,32,102,114,111,109,32,91,104,116,116,112,115,58,47,47,119,119,119,46,111,112,101,110,115,116,114,101,101,116,109,97,112,46,111,114,103,47,99,111,112,121,114,105,103,104,116,32,79,112,101,110,83,116,114,101,101,116,77,97,112,32,97,110,100,32,99,111,110,116,114,105,98,117,116,111,114,115,93],"value":"Map data from [https://www.openstreetmap.org/copyright OpenStreetMap and contributors]"}
 ]}
